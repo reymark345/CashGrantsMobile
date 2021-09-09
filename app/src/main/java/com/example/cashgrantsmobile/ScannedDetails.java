@@ -69,23 +69,15 @@ public class ScannedDetails extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String resultUri = extras.getString("CashCardImage");
-
-//            Bitmap bitmap = (Bitmap) intent.getParcelableExtra("CashCardImage");
             String value = extras.getString("cashCardNumber");
-
-//            mPreviewCashcard.setImageBitmap(bitmap);
             edtCashCard.setText(value);
-
-            //uri
             Uri myUri = Uri.parse(resultUri);
-
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),myUri);
                 mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 187, 250, false));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            mPreviewCashcard.setImageURI(myUri);
         }
 //        if (ContextCompat.checkSelfPermission(ScannedDetails.this, Manifest.permission.CAMERA)
 //        != PackageManager.PERMISSION_GRANTED){
@@ -114,50 +106,50 @@ public class ScannedDetails extends AppCompatActivity {
         btnSubmit.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String Cardresult = edtCashCard.getText().toString();
+                String household = edtHhnumber.getText().toString();
+                String seriesno = edtSeriesno.getText().toString();
+                String idCard = btnrescanBeneId.getText().toString();
+                int length = Cardresult.length();
 
-                try{
-                    sqLiteHelper.insertData(
-                            edtCashCard.getText().toString().trim(),
-                            edtHhnumber.getText().toString().trim(),
-                            edtSeriesno.getText().toString().trim(),
-                            imageViewToByte(mPreviewCashCard),
-                            imageViewToByte(mPreview4PsId)
-                    );
-                    Toast.makeText(getApplicationContext(), "Added successfully", Toast.LENGTH_SHORT).show();
-                    edtHhnumber.setText("");
-                    edtSeriesno.setText("");
-                    Intent intent = new Intent(ScannedDetails.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                if (Cardresult.matches("[0-9 ]+") && !household.matches("") && !seriesno.matches("") && idCard.equals("RE-SCAN") && length==23 ){
+                    try{
+                        sqLiteHelper.insertData(
+                                edtCashCard.getText().toString().trim(),
+                                edtHhnumber.getText().toString().trim(),
+                                edtSeriesno.getText().toString().trim(),
+                                imageViewToByte(mPreviewCashCard),
+                                imageViewToByte(mPreview4PsId)
+                        );
+                        Toast.makeText(getApplicationContext(), "Added successfully", Toast.LENGTH_SHORT).show();
+                        edtHhnumber.setText("");
+                        edtSeriesno.setText("");
+                        Intent intent = new Intent(ScannedDetails.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
 
+                    }
+                    catch (Exception e ){
+                        Toast.makeText(getApplicationContext(), "error "+e, Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+
+                    }
                 }
-                catch (Exception e ){
-                    Toast.makeText(getApplicationContext(), "error "+e, Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-
+                else if (idCard.equals("Scan")){
+                    Toast.makeText(getApplicationContext(), "Please Scan 4P's Id", Toast.LENGTH_SHORT).show();
                 }
-
-
-
-//                String Cardresult = CardResult.getText().toString();
-//                String household = txtHhnumber.getText().toString();
-//                String seriesno = txtSeriesno.getText().toString();
-//                if (Cardresult.length() != 23 ){
-//                    Toast.makeText(ScannedDetails.this, "Cash card number was not in length" + CardResult.length(), Toast.LENGTH_SHORT).show();
-//                }
-//                else if (household.matches("")){
-//                    Toast.makeText(ScannedDetails.this," Household number is empty ", Toast.LENGTH_SHORT).show();
-//                }
-//                else if (seriesno.matches("")){
-//                    Toast.makeText(ScannedDetails.this," Series number is empty ", Toast.LENGTH_SHORT).show();
-//                }
-//                else if (Cardresult.matches("[0-9]+")){
-//                    Toast.makeText(ScannedDetails.this," Success numbers all ", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    Toast.makeText(ScannedDetails.this, "Error" + Cardresult, Toast.LENGTH_SHORT).show();
-//
-//                }
+                else if (household.matches("") || seriesno.matches("")){
+                    Toast.makeText(getApplicationContext(), "Please don't leave a blank", Toast.LENGTH_SHORT).show();
+                }
+                else if (!Cardresult.matches("[0-9 ]+")){
+                    Toast.makeText(getApplicationContext(), "Cash card contains character", Toast.LENGTH_SHORT).show();
+                }
+                else if (length!=23 ){
+                    Toast.makeText(getApplicationContext(), "Cash cash was not enough length", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Error please contact IT administrator", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
