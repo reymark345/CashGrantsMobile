@@ -164,7 +164,6 @@ public class ScanCashCard extends AppCompatActivity {
                     } else {
                         pickCamera();
 //                        Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
-
                     }
                 }
             case STORAGE_REQUEST_CODE:
@@ -174,9 +173,7 @@ public class ScanCashCard extends AppCompatActivity {
                     if (writeStorageAccepted) {
                         pickGallery();
                     } else {
-
 //                        Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
-
                     }
                 }
                 break;
@@ -220,16 +217,32 @@ public class ScanCashCard extends AppCompatActivity {
                     }
 
                     String sTextFromET=sb.toString().replaceAll("\\s+", "");
+                    sTextFromET = sTextFromET.replace("B", "6");
                     sTextFromET = sTextFromET.replace("b", "6");
                     sTextFromET = sTextFromET.replace("L", "6");
+                    sTextFromET = sTextFromET.replace("G", "6");
+                    sTextFromET = sTextFromET.replace("%", "6");
                     sTextFromET = sTextFromET.replace("?", "7");
                     sTextFromET = sTextFromET.replace("D", "0");
                     sTextFromET = sTextFromET.replace("a", "8");
-                    sTextFromET = sTextFromET.replace("G", "6");
+                    sTextFromET = sTextFromET.replace("A", "8");
+                    sTextFromET = sTextFromET.replace("e", "8");
+                    sTextFromET = sTextFromET.replace("E", "8");
+                    sTextFromET = sTextFromET.replace("S", "5");
+                    sTextFromET = sTextFromET.replace("l", "1");
+                    sTextFromET = sTextFromET.replace("+", "7");
+                    sTextFromET = sTextFromET.replace("}", "7");
                     sTextFromET = sTextFromET.replaceAll("....", "$0 ");
 
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
-                    i.putExtra("cashCardNumber",sTextFromET);
+                    if (sTextFromET.length() >23){
+                        String limitString = sTextFromET.substring(0,23);
+                        i.putExtra("cashCardNumber",limitString);
+                    }
+                    else{
+                        i.putExtra("cashCardNumber",sTextFromET);
+                    }
+
                     //camera
                     i.putExtra("CashCardImage",image_uri.toString());
                     startActivity(i);
