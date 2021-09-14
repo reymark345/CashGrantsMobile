@@ -70,7 +70,7 @@ public class ScanCashCard extends AppCompatActivity {
         btn_scan.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showImageImportDialog();
+                pickCamera();
 
             }
         });

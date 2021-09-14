@@ -20,35 +20,76 @@
         android:orientation="vertical"
         android:background="@drawable/selector_fieldset_background">
 
-        <EditText
-            android:id="@+id/Idresult"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Cash Card Number"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="10dp"
+            android:id="@+id/til_cashCard"
+            app:counterEnabled="true"
+            app:counterMaxLength="23"
+            app:endIconMode="clear_text"
+            app:helperText="Good valid!"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="10dp"
-            />
+            android:layout_marginLeft="10dp"
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_creditcard"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
-        <EditText
-            android:id="@+id/hhNo"
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="23"
+                android:hint="Cash Card no."
+                android:id="@+id/Idresult"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Household number"
-            android:layout_below="@id/Idresult"
-            android:layout_marginTop="40dp"
+            android:id="@+id/til_household"
+            app:endIconMode="clear_text"
+            app:helperText="Mandatory"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_household"
+            android:layout_below="@+id/til_cashCard"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
-        <EditText
-            android:id="@+id/seriesNo"
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Household."
+                android:id="@+id/hhNo"
+                android:layout_below="@id/Idresult"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_seriesno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Series number"
-            android:layout_below="@id/hhNo"
-            android:layout_marginTop="40dp"
+            app:endIconMode="clear_text"
+            app:helperText="Mandatory"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_series"
+            android:layout_below="@+id/til_household"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Series no."
+                android:id="@+id/seriesNo"
+                android:inputType="number"
+                android:layout_below="@id/hhNo"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </RelativeLayout>
     <TextView
