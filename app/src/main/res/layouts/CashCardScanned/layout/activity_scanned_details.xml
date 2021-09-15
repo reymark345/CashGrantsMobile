@@ -61,7 +61,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Household."
+                android:hint="Household no."
                 android:id="@+id/hhNo"
                 android:layout_below="@id/Idresult"/>
         </com.google.android.material.textfield.TextInputLayout>

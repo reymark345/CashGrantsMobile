@@ -39,17 +39,11 @@ public class ScannedDetails extends AppCompatActivity {
     ImageView mPreview4PsId, mPreviewCashCard;
     Button btnSubmit, btnrescanCashCard, btnrescanBeneId;
     TextInputLayout tilCashCard, tilHousehold, tilSeriesNo;
-    boolean isAllFieldsChecked = false;
-
-
-
 
     private int prevCount = 0;
     private boolean isAtSpaceDelimiter(int currCount) {
         return currCount == 4 || currCount == 9 || currCount == 14 || currCount == 19;
     }
-
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +83,9 @@ public class ScannedDetails extends AppCompatActivity {
 
 
 
-        textWacher();
+        CashCardOnChange();
+        HouseholdOnChanged();
+        SeriesOnChanged();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String resultUri = extras.getString("CashCardImage");
@@ -136,9 +132,6 @@ public class ScannedDetails extends AppCompatActivity {
                 String idCard = btnrescanBeneId.getText().toString();
                 int length = Cardresult.length();
 
-
-//                isAllFieldsChecked = CheckAllFields();
-
                 if (Cardresult.matches("[0-9 ]+") && !household.matches("") && !seriesno.matches("") && idCard.equals("RE-SCAN") && length==23 ){
                     try{
                         sqLiteHelper.insertData(
@@ -165,20 +158,19 @@ public class ScannedDetails extends AppCompatActivity {
                 else if (!household.matches("") && !seriesno.matches("") ){
                     tilHousehold.setError(null);
                     tilSeriesNo.setError(null);
-                    Toast.makeText(getApplicationContext(), "PAAA", Toast.LENGTH_SHORT).show();
+
                 }
 
                 if (!seriesno.matches("")){
                     tilSeriesNo.setError(null);
-                    Toast.makeText(getApplicationContext(), "SERRRR", Toast.LENGTH_SHORT).show();
+
                 }
                 if (seriesno.matches("")){
                     tilSeriesNo.setError("Please filled this blank");
-                    Toast.makeText(getApplicationContext(), "Please don't leave a blank", Toast.LENGTH_SHORT).show();
+
                 }
                 if (household.matches("")){
                     tilHousehold.setError("Please filled this blank");
-                    Toast.makeText(getApplicationContext(), "aaaaa", Toast.LENGTH_SHORT).show();
 
                 }
                 if (!household.matches("")){
@@ -191,14 +183,12 @@ public class ScannedDetails extends AppCompatActivity {
                     tilCashCard.setError("Not enough length");
                 }
 
-
-//                else if (idCard.equals("Scan")){
-//                    Toast.makeText(getApplicationContext(), "Please Scan 4P's Id", Toast.LENGTH_SHORT).show();
-//                }
-//                else if (!Cardresult.matches("[0-9 ]+")){
-//                    tilCashCard.setError("Cash Card contains Character");
-//                    Toast.makeText(getApplicationContext(), "Cash card contains character", Toast.LENGTH_SHORT).show();
-//                }
+                if (idCard.equals("Scan")){
+                    Toast.makeText(getApplicationContext(), "Please Scan 4P's Id", Toast.LENGTH_SHORT).show();
+                }
+                if (!Cardresult.matches("[0-9 ]+")){
+                    tilCashCard.setError("Cash Card contains a character");
+                }
 
 //                else {
 //                    Toast.makeText(getApplicationContext(), "Error please contact IT administrator", Toast.LENGTH_SHORT).show();
@@ -229,7 +219,7 @@ public class ScannedDetails extends AppCompatActivity {
         }
     }
 
-    public void textWacher(){
+    public void CashCardOnChange(){
         edtCashCard.addTextChangedListener(new TextWatcher() {
             private static final char space = ' ';
             private boolean isDelete;
@@ -262,6 +252,51 @@ public class ScannedDetails extends AppCompatActivity {
             }
         });
     }
+    public void HouseholdOnChanged(){
+        edtHhnumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilHousehold.setError("Please filled this blank");
+                }
+                else{
+                    tilHousehold.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+    public void SeriesOnChanged(){
+        edtSeriesno.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilSeriesNo.setError("Please filled this blank");
+                }
+                else{
+                    tilSeriesNo.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
     private boolean shouldIncrementOrDecrement(int currCount, boolean shouldIncrement) {
         if (shouldIncrement) {
             return prevCount <= currCount && isAtSpaceDelimiter(currCount);
@@ -280,31 +315,6 @@ public class ScannedDetails extends AppCompatActivity {
         edtCashCard.setSelection(sb.length());
     }
 
-    private boolean CheckAllFields() {
-        String Cardresult = edtCashCard.getText().toString();
-        String household = edtHhnumber.getText().toString();
-        String seriesno = edtSeriesno.getText().toString();
-        String idCard = btnrescanBeneId.getText().toString();
-        int length = Cardresult.length();
 
-
-        if (Cardresult.length() == 0) {
-            tilCashCard.setError("This field is required");
-            return false;
-        }
-
-        if (household.length() == 0) {
-            tilHousehold.setError("This field is required");
-            return false;
-        }
-
-        if (seriesno.length() == 0) {
-            tilSeriesNo.setError("This field is required");
-            return false;
-        }
-
-        // after all validation return true.
-        return true;
-    }
 
 }
