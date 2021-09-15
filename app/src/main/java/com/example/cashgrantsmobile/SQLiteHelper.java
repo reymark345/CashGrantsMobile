@@ -34,6 +34,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.executeInsert();
     }
 
+    public void insertDarkModeStatus(String status){
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "INSERT INTO DarkMode VALUES (NULL,?)";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, status);
+        statement.executeInsert();
+    }
+
     public void updateData(String cash_card, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
         SQLiteDatabase database = getWritableDatabase();
 
@@ -46,6 +55,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.bindBlob(4, cc_image);
         statement.bindBlob(5, id_image);
         statement.bindDouble(6, (double)id);
+        statement.execute();
+        database.close();
+    }
+    public void updateDarkmodeStatus(String status, int id) {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "UPDATE DarkMode SET status = ? WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.bindString(1, status);
+        statement.bindDouble(2, (double)id);
         statement.execute();
         database.close();
     }

@@ -21,7 +21,7 @@
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginLeft="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:text="Mobile App"
+        android:text="Cash Grants"
         android:textColor="@color/white"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
@@ -64,15 +64,49 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            <TextView
+<!--            <Switch-->
+<!--                android:id="@+id/textViews"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:switchMinWidth="56dp"-->
+<!--                android:checked="false"-->
+<!--                android:textOff="OFF"-->
+<!--                android:textOn="ON"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"/>-->
+
+            <ImageButton
                 android:id="@+id/textViews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/more"
-                android:textColor="@color/primary"
-                android:textSize="@dimen/_12ssp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+
+<!--            <Button-->
+<!--                android:id="@+id/textViews"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/ic_night"-->
+<!--                android:textSize="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                />-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/textViews"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/more"-->
+<!--                android:textColor="@color/primary"-->
+<!--                android:textSize="@dimen/_12ssp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"/>-->
 
             <LinearLayout
                 android:id="@+id/layoutClients"
@@ -102,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="395"
+                    android:text="0"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/_16ssp"/>
             </LinearLayout>
@@ -169,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="82"
+                    android:text="0"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/_16ssp"/>
             </LinearLayout>

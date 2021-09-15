@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/drawable/ic_creditcard.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/drawable/ic_launcher_background.xml" value="0.184375" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/drawable/ic_location.xml" value="0.184375" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/drawable/ic_qrcode.xml" value="0.184375" />
@@ -17,9 +18,10 @@
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layout/dashboard_item_2.xml" value="0.1" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layout/dashboard_item_3.xml" value="0.16822916666666668" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layout/dashboard_item_4.xml" value="0.1" />
+        <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/drawable/textbackground.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/ScanCashCard.xml" value="0.184375" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scan_cash_card.xml" value="0.184375" />
-        <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scanned_details.xml" value="0.1640625" />
+        <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scanned_details.xml" value="0.22" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_items.xml" value="0.1640625" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_list.xml" value="0.184375" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/layouts/Inventory/menu/menu_main.xml" value="0.184375" />
