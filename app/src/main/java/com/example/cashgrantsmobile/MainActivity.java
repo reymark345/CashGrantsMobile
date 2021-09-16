@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         InventoryList.setOnClickListener(new View.OnClickListener() {
-            @Override
+            @Override 
             public void onClick(View v) {
                 new android.os.Handler(Looper.getMainLooper()).postDelayed(
                         new Runnable() {
