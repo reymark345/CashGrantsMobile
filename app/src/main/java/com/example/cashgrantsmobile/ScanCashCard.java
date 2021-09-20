@@ -2,11 +2,11 @@ package com.example.cashgrantsmobile;
 
 
 
-import static android.content.ContentValues.TAG;
+
+import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,27 +17,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.util.SparseArray;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.IOException;
 
 
 public class ScanCashCard extends AppCompatActivity {
@@ -233,6 +227,9 @@ public class ScanCashCard extends AppCompatActivity {
                     sTextFromET = sTextFromET.replace("+", "7");
                     sTextFromET = sTextFromET.replace("}", "7");
                     sTextFromET = sTextFromET.replaceAll("....", "$0 ");
+
+
+                    sqLiteHelper.insertScannedCashCard(sTextFromET);
 
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
                     if (sTextFromET.length() >23){

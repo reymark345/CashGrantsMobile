@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createDatabase(){
         sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no, card_scanning_status)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
     }
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void InventoryListCount(){
-        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card,hh_number,series_number,id_image FROM CgList");
+        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
         int z = cursor.getCount();
         txtInventoryCount.setText(String.valueOf(z));
         txtPendingCount.setText(String.valueOf(z));

@@ -1,10 +1,14 @@
 package com.example.cashgrantsmobile;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.nfc.Tag;
+import android.util.Log;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
@@ -19,14 +23,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(sql);
     }
 
-    public void insertData(String cash_card, String hh_number,String series_number ,byte[] cc_image,byte[] id_image){
+    public void insertData(String cash_card_actual_no, String hh_number,String series_number ,byte[] cc_image,byte[] id_image){
         SQLiteDatabase database = getWritableDatabase();
         String sql = "INSERT INTO CgList VALUES (NULL,?, ?, ?, ?, ?)";
 
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
 
-        statement.bindString(1, cash_card);
+        statement.bindString(1, cash_card_actual_no);
         statement.bindString(2, hh_number);
         statement.bindString(3, series_number);
         statement.bindBlob(4, cc_image);
@@ -43,7 +47,50 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.executeInsert();
     }
 
-    public void updateData(String cash_card, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
+    public void insertScannedCashCard(String scannedCashCard){
+
+        try {
+
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "INSERT INTO CgList VALUES (NULL,?,?,?,?,?,?,0)";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.clearBindings();
+            statement.bindString(1, "");
+            statement.bindString(2, "");
+            statement.bindString(3, "");
+            statement.bindString(4,"");
+            statement.bindString(5,"");
+            statement.bindString(6, scannedCashCard);
+
+            statement.executeInsert();
+            Log.v(TAG,"insertt");
+
+        }catch(Exception e){
+
+            Log.v(TAG,"heloo");
+
+            Log.v(TAG,e.toString());
+            Log.v(TAG,"heloos");
+
+        }
+
+
+    }
+
+    public void updateSubmitData(String cash_card_actual_no, String hh_number,String series_number, byte[] cc_image, byte[] id_image) {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "UPDATE CgList SET cash_card_actual_no = ?, hh_number = ?, series_number = ?, cc_image=?, id_image =?, card_scanning_status = 1  WHERE id = (SELECT max(id) FROM CGList)";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.bindString(1, cash_card_actual_no);
+        statement.bindString(2, hh_number);
+        statement.bindString(3, series_number);
+        statement.bindBlob(4, cc_image);
+        statement.bindBlob(5, id_image);
+        statement.execute();
+        database.close();
+    }
+
+    public void updateInvetoryData(String cash_card, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
         SQLiteDatabase database = getWritableDatabase();
 
         String sql = "UPDATE CgList SET name = ?, price = ?, image = ? WHERE id = ?";
