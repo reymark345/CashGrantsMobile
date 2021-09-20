@@ -1,26 +1,37 @@
 package com.example.cashgrantsmobile;
 
-
+import static android.content.ContentValues.TAG;
 
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
+
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.textfield.TextInputLayout;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
 
 public class ScannedDetails extends AppCompatActivity {
 
@@ -38,6 +49,13 @@ public class ScannedDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanned_details);
+
+
+
+        //database connection
+//        sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
+//        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB)");
+
 
         //EdiText
         edtCashCard = findViewById(R.id.Idresult);
@@ -63,6 +81,8 @@ public class ScannedDetails extends AppCompatActivity {
         tilHousehold = findViewById(R.id.til_household);
         tilSeriesNo = findViewById(R.id.til_seriesno);
 
+
+
         CashCardOnChange();
         HouseholdOnChanged();
         SeriesOnChanged();
@@ -79,6 +99,11 @@ public class ScannedDetails extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+//        if (ContextCompat.checkSelfPermission(ScannedDetails.this, Manifest.permission.CAMERA)
+//        != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(ScannedDetails.this, new String[]{Manifest.permission.CAMERA}, 101);
+//        }
+
         btnrescanBeneId.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,9 +114,11 @@ public class ScannedDetails extends AppCompatActivity {
         btnrescanCashCard.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "No function yet to be update using Inheritance", Toast.LENGTH_SHORT).show();
-//                ScanCashCard action = new ScanCashCard();
-//                action.pickCamera();
+                ScanCashCard action = new ScanCashCard();
+                action.pickCamera();
+
+//                Intent intent = new Intent(ScannedDetails.this, InventoryList.class);
+//                startActivity(intent);
             }
         });
 
@@ -163,6 +190,10 @@ public class ScannedDetails extends AppCompatActivity {
                     tilCashCard.setError("Cash Card contains a character");
                 }
 
+//                else {
+//                    Toast.makeText(getApplicationContext(), "Error please contact IT administrator", Toast.LENGTH_SHORT).show();
+//                }
+
             }
         });
     }
@@ -227,6 +258,7 @@ public class ScannedDetails extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
@@ -257,6 +289,7 @@ public class ScannedDetails extends AppCompatActivity {
                     tilSeriesNo.setError(null);
                 }
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
 

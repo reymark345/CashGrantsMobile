@@ -12,10 +12,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
+
+
     public void queryData(String sql){
         SQLiteDatabase database = getWritableDatabase();
         database.execSQL(sql);
     }
+
     public void insertData(String cash_card, String hh_number,String series_number ,byte[] cc_image,byte[] id_image){
         SQLiteDatabase database = getWritableDatabase();
         String sql = "INSERT INTO CgList VALUES (NULL,?, ?, ?, ?, ?)";

@@ -1,19 +1,31 @@
 package com.example.cashgrantsmobile;
 
 
+
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.SparseArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,11 +37,14 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.IOException;
+
 
 public class ScanCashCard extends AppCompatActivity {
 
     ImageView mPreviewIv;
     private static final int CAMERA_REQUEST_CODE = 200;
+    private static final int STORAGE_REQUEST_CODE = 400;
     private static final int IMAGE_PICK_GALLER_CODE = 1000;
     public static final int IMAGE_PICK_CAMERA_CODE = 1001;
 
@@ -46,6 +61,8 @@ public class ScanCashCard extends AppCompatActivity {
         mPreviewIv = findViewById(R.id.imageIv);
         mPreviewIv .setVisibility(View.INVISIBLE);
         btn_scan = (Button) findViewById(R.id.btnScan);
+
+
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         StoragePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -59,6 +76,48 @@ public class ScanCashCard extends AppCompatActivity {
         });
     }
 
+
+    public void showImageImportDialog() {
+        String [] items ={ "Camera ", " Gallery "};
+        AlertDialog.Builder dialog = new AlertDialog.Builder(ScanCashCard.this);
+        dialog.setTitle("Select Image");
+        dialog.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(i ==0){
+                    if(!checkCameraPermission()){
+                        requestCameraPermission();
+                    }
+                    else{
+                        pickCamera();
+                        //allowed permission
+                    }
+                    //cammera
+                }
+                if (i ==1){
+                    if(!checkStoragePermission()){
+                        requestStoragePermission();
+                    }
+                    else{
+                        pickGallery();
+                        //allowed permission
+                    }
+
+                    //gallery
+                }
+            }
+        });
+        dialog.create().show();
+    }
+
+    private void pickGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_PICK_GALLER_CODE);
+
+
+    }
+
     public void pickCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "NewPic");
@@ -67,6 +126,27 @@ public class ScanCashCard extends AppCompatActivity {
         Intent cameraIntent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
         startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA_CODE);
+    }
+
+    private void requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, StoragePermission, STORAGE_REQUEST_CODE);
+
+    }
+
+
+    private boolean checkStoragePermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+
+    public void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
+    }
+
+    private boolean checkCameraPermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==(PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
     }
 
     @Override
@@ -83,8 +163,20 @@ public class ScanCashCard extends AppCompatActivity {
                         pickCamera();
                     } else {
                         pickCamera();
+//                        Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
                     }
                 }
+            case STORAGE_REQUEST_CODE:
+                if (grantResults.length > 0) {
+                    boolean writeStorageAccepted = grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED;
+                    if (writeStorageAccepted) {
+                        pickGallery();
+                    } else {
+//                        Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
         }
     }
 
