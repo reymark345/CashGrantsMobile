@@ -90,8 +90,10 @@ public class ScannedDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "No function yet to be update using Inheritance", Toast.LENGTH_SHORT).show();
+
 //                ScanCashCard action = new ScanCashCard();
 //                action.pickCamera();
+                
             }
         });
 
