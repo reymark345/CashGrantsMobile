@@ -1,6 +1,7 @@
 package com.example.cashgrantsmobile;
 
 
+
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,10 +22,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-
 public class ScannedDetails extends AppCompatActivity {
 
-    EditText edtCashCard, edtHhNumber, edtSeriesNo;
+    EditText edtCashCard, edtHhnumber, edtSeriesno;
     ImageView mPreview4PsId, mPreviewCashCard;
     Button btnSubmit, btnrescanCashCard, btnrescanBeneId;
     TextInputLayout tilCashCard, tilHousehold, tilSeriesNo;
@@ -41,14 +41,15 @@ public class ScannedDetails extends AppCompatActivity {
 
         //EdiText
         edtCashCard = findViewById(R.id.Idresult);
-        edtHhNumber = (EditText) findViewById(R.id.hhNo);
-        edtSeriesNo = (EditText) findViewById(R.id.seriesNo);
+        edtHhnumber = (EditText) findViewById(R.id.hhNo);
+        edtSeriesno = (EditText) findViewById(R.id.seriesNo);
 
         //ImageView
         mPreview4PsId = findViewById(R.id.PsID);
         mPreviewCashCard = findViewById(R.id.ScannedImage);
 
         //buttons
+
         btnrescanCashCard = (Button) findViewById(R.id.rescanCashCard);
         btnrescanBeneId = (Button) findViewById(R.id.rescanBeneId);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
@@ -88,9 +89,9 @@ public class ScannedDetails extends AppCompatActivity {
         btnrescanCashCard.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "No function yet to be update using Inheritance", Toast.LENGTH_SHORT).show();
 //                ScanCashCard action = new ScanCashCard();
 //                action.pickCamera();
-                Toast.makeText(getApplicationContext(), "OnGoing Inheritance", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -99,33 +100,25 @@ public class ScannedDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String Cardresult = edtCashCard.getText().toString();
-                String household = edtHhNumber.getText().toString();
-                String seriesno = edtSeriesNo.getText().toString();
+                String household = edtHhnumber.getText().toString();
+                String seriesno = edtSeriesno.getText().toString();
                 String idCard = btnrescanBeneId.getText().toString();
                 int length = Cardresult.length();
 
                 if (Cardresult.matches("[0-9 ]+") && !household.matches("") && !seriesno.matches("") && idCard.equals("RE-SCAN") && length==23 ){
                     try{
-//                        sqLiteHelper.insertData(
-//                                edtCashCard.getText().toString().trim(),
-//                                edtHhNumber.getText().toString().trim(),
-//                                edtSeriesNo.getText().toString().trim(),
-//                                imageViewToByte(mPreviewCashCard),
-//                                imageViewToByte(mPreview4PsId)
-//                        );
                         sqLiteHelper.updateSubmitData(
                                 edtCashCard.getText().toString().trim(),
-                                edtHhNumber.getText().toString().trim(),
-                                edtSeriesNo.getText().toString().trim(),
+                                edtHhnumber.getText().toString().trim(),
+                                edtSeriesno.getText().toString().trim(),
                                 imageViewToByte(mPreviewCashCard),
                                 imageViewToByte(mPreview4PsId)
                         );
                         Toast.makeText(getApplicationContext(), "Added successfully", Toast.LENGTH_SHORT).show();
-                        edtHhNumber.setText("");
-                        edtSeriesNo.setText("");
                         Intent intent = new Intent(ScannedDetails.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
+
                     }
                     catch (Exception e ){
                         Toast.makeText(getApplicationContext(), "error "+e, Toast.LENGTH_SHORT).show();
@@ -166,6 +159,7 @@ public class ScannedDetails extends AppCompatActivity {
                 if (!Cardresult.matches("[0-9 ]+")){
                     tilCashCard.setError("Cash Card contains a character");
                 }
+
             }
         });
     }
@@ -193,8 +187,11 @@ public class ScannedDetails extends AppCompatActivity {
 
     public void CashCardOnChange(){
         edtCashCard.addTextChangedListener(new TextWatcher() {
+            private static final char space = ' ';
+            private boolean isDelete;
             @Override
             public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+
             }
 
             @Override
@@ -222,12 +219,11 @@ public class ScannedDetails extends AppCompatActivity {
         });
     }
     public void HouseholdOnChanged(){
-        edtSeriesNo.addTextChangedListener(new TextWatcher() {
+        edtHhnumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
@@ -244,7 +240,7 @@ public class ScannedDetails extends AppCompatActivity {
         });
     }
     public void SeriesOnChanged(){
-        edtSeriesNo.addTextChangedListener(new TextWatcher() {
+        edtSeriesno.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -258,7 +254,6 @@ public class ScannedDetails extends AppCompatActivity {
                     tilSeriesNo.setError(null);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -283,4 +278,7 @@ public class ScannedDetails extends AppCompatActivity {
         edtCashCard.setText(sb.toString());
         edtCashCard.setSelection(sb.length());
     }
+
+
+
 }

@@ -76,7 +76,7 @@ public class InventoryListAdapter extends BaseAdapter {
             holder.imageView.setImageBitmap(bitmap);
         }
         else{
-            holder.imageView.setImageResource(R.drawable.ic_creditcard);
+            holder.imageView.setImageResource(R.drawable.ic_image);
         }
         if(idImage.length > 1)
         {
@@ -84,7 +84,7 @@ public class InventoryListAdapter extends BaseAdapter {
             holder.mPreviewCashCard.setImageBitmap(bitmap2);
         }
         else{
-            holder.mPreviewCashCard.setImageResource(R.drawable.ic_creditcard);
+            holder.mPreviewCashCard.setImageResource(R.drawable.ic_image);
         }
         return row;
     }
