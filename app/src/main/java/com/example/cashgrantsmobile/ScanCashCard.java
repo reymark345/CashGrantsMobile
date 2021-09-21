@@ -211,18 +211,19 @@ public class ScanCashCard extends AppCompatActivity {
                     }
 
                     String sTextFromET=sb.toString().replaceAll("\\s+", "");
-                    sTextFromET = sTextFromET.replace("B", "6");
-                    sTextFromET = sTextFromET.replace("b", "6");
-                    sTextFromET = sTextFromET.replace("L", "6");
-                    sTextFromET = sTextFromET.replace("G", "6");
-                    sTextFromET = sTextFromET.replace("%", "6");
-                    sTextFromET = sTextFromET.replace("?", "7");
-                    sTextFromET = sTextFromET.replace("D", "0");
                     sTextFromET = sTextFromET.replace("a", "8");
                     sTextFromET = sTextFromET.replace("A", "8");
+                    sTextFromET = sTextFromET.replace("B", "6");
+                    sTextFromET = sTextFromET.replace("b", "6");
+                    sTextFromET = sTextFromET.replace("D", "0");
                     sTextFromET = sTextFromET.replace("e", "8");
                     sTextFromET = sTextFromET.replace("E", "8");
+                    sTextFromET = sTextFromET.replace("L", "6");
                     sTextFromET = sTextFromET.replace("S", "5");
+                    sTextFromET = sTextFromET.replace("G", "6");
+                    sTextFromET = sTextFromET.replace("O", "0");
+                    sTextFromET = sTextFromET.replace("%", "6");
+                    sTextFromET = sTextFromET.replace("?", "7");
                     sTextFromET = sTextFromET.replace("l", "1");
                     sTextFromET = sTextFromET.replace("+", "7");
                     sTextFromET = sTextFromET.replace("}", "7");

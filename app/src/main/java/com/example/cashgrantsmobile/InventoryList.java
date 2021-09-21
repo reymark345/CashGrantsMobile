@@ -6,11 +6,18 @@ import static android.content.ContentValues.TAG;
 
 import android.database.Cursor;
 import android.database.CursorWindow;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.GridView;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -20,6 +27,8 @@ public class InventoryList extends AppCompatActivity {
     ArrayList<Inventory> list;
     InventoryListAdapter adapter = null;
     String cashCardNumber;
+
+    ImageView ImvTempCashCard;
 
 
     @Override
@@ -44,7 +53,6 @@ public class InventoryList extends AppCompatActivity {
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
-                byte[] CashCardImage = cursor.getBlob(4);
                 if (cursor.getString(1).matches("")){
                     cashCardNumber = cursor.getString(6);
                 }
@@ -53,6 +61,7 @@ public class InventoryList extends AppCompatActivity {
                 }
                 String hhNumber = cursor.getString(2);
                 String seriesNumber = cursor.getString(3);
+                byte[] CashCardImage = cursor.getBlob(4);
                 byte[] idImage = cursor.getBlob(5);
                 list.add(new Inventory(cashCardNumber, hhNumber,seriesNumber, CashCardImage, idImage, id));
             }
