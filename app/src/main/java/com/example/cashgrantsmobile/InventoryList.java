@@ -3,38 +3,21 @@ package com.example.cashgrantsmobile;
 
 import static android.content.ContentValues.TAG;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+
 import android.database.Cursor;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Looper;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -43,13 +26,15 @@ public class InventoryList extends AppCompatActivity {
     GridView gridView;
     ArrayList<Inventory> list;
     InventoryListAdapter adapter = null;
+    String cashCardNumber;
+
+    ImageView ImvTempCashCard;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_list);
-
         gridView = (GridView) findViewById(R.id.gridView);
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
@@ -64,12 +49,16 @@ public class InventoryList extends AppCompatActivity {
         }
 
         try {
-
-            Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card,hh_number,series_number,cc_image, id_image FROM CgList");
+            Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
-                String cashCardNumber = cursor.getString(1);
+                if (cursor.getString(1).matches("")){
+                    cashCardNumber = cursor.getString(6);
+                }
+                else{
+                    cashCardNumber = cursor.getString(1);
+                }
                 String hhNumber = cursor.getString(2);
                 String seriesNumber = cursor.getString(3);
                 byte[] CashCardImage = cursor.getBlob(4);
@@ -77,17 +66,15 @@ public class InventoryList extends AppCompatActivity {
                 list.add(new Inventory(cashCardNumber, hhNumber,seriesNumber, CashCardImage, idImage, id));
             }
             adapter.notifyDataSetChanged();
-
         }
         catch (Exception e){
-            Log.d(TAG, "run: "+ e);
-            Toast.makeText(InventoryList.this, " see "+ e, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Error: "+ e);
         }
 //        try {
 //
 //
 //            // get all data from sqlite
-//            Cursor cursor = ScannedDetails.sqLiteHelper.getData("SELECT id,cash_card,hh_number,series_number,id_image FROM CgList limit 500");
+//            Cursor cursor = ScannedDetails.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,id_image FROM CgList limit 500");
 //            list.clear();
 //            while (cursor.moveToNext()) {
 //                int id = cursor.getInt(0);
