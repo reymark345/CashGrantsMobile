@@ -45,6 +45,7 @@ public class ScanCashCard extends AppCompatActivity {
     String cameraPermission[];
     String StoragePermission[];
     Button btn_scan;
+    public static boolean scanned = true;
 
     Uri image_uri;
 
@@ -55,8 +56,7 @@ public class ScanCashCard extends AppCompatActivity {
         mPreviewIv = findViewById(R.id.imageIv);
         mPreviewIv .setVisibility(View.INVISIBLE);
         btn_scan = (Button) findViewById(R.id.btnScan);
-
-
+        
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         StoragePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -221,16 +221,18 @@ public class ScanCashCard extends AppCompatActivity {
                     sTextFromET = sTextFromET.replace("L", "6");
                     sTextFromET = sTextFromET.replace("S", "5");
                     sTextFromET = sTextFromET.replace("G", "6");
-                    sTextFromET = sTextFromET.replace("O", "0");
                     sTextFromET = sTextFromET.replace("%", "6");
+                    sTextFromET = sTextFromET.replace("&", "6");
                     sTextFromET = sTextFromET.replace("?", "7");
                     sTextFromET = sTextFromET.replace("l", "1");
                     sTextFromET = sTextFromET.replace("+", "7");
                     sTextFromET = sTextFromET.replace("}", "7");
+                    sTextFromET = sTextFromET.replace("O", "0");
                     sTextFromET = sTextFromET.replaceAll("....", "$0 ");
 
 
                     sqLiteHelper.insertScannedCashCard(sTextFromET);
+                    ScannedDetails.scanned = true;
 
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
                     if (sTextFromET.length() >23){
@@ -240,7 +242,6 @@ public class ScanCashCard extends AppCompatActivity {
                     else{
                         i.putExtra("cashCardNumber",sTextFromET);
                     }
-
                     //camera
                     i.putExtra("CashCardImage",image_uri.toString());
                     startActivity(i);
