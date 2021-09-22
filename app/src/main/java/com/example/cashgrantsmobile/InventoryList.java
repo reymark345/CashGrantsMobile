@@ -3,6 +3,7 @@ package com.example.cashgrantsmobile;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorWindow;
 import android.graphics.Color;
@@ -39,7 +40,7 @@ public class InventoryList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                v.setBackgroundColor(Color.YELLOW);
+//                v.setBackgroundColor(Color.YELLOW);
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Are you sure?")
                         .setContentText("Please choose corresponding action")
@@ -49,13 +50,12 @@ public class InventoryList extends AppCompatActivity {
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                Toast.makeText(InventoryList.this, "Update", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                Toast.makeText(InventoryList.this, "Exclude", Toast.LENGTH_SHORT).show();
+                                Long l= new Long(id);
+                                int i=l.intValue();
+                                ScannedDetails.scanned = false;
+                                Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
+                                in.putExtra("updateData", i);
+                                startActivity(in);
                             }
                         })
                         .show();
@@ -70,7 +70,6 @@ public class InventoryList extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         try {
             Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList");
             list.clear();

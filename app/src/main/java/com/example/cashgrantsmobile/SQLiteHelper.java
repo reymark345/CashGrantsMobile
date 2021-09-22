@@ -90,7 +90,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.close();
     }
 
-    public void updateInvetoryData(String cash_card, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
+    public void updateInventoryData(String cash_card, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
         SQLiteDatabase database = getWritableDatabase();
 
         String sql = "UPDATE CgList SET name = ?, price = ?, image = ? WHERE id = ?";
