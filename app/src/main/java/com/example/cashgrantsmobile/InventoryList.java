@@ -3,26 +3,21 @@ package com.example.cashgrantsmobile;
 
 import static android.content.ContentValues.TAG;
 
-
 import android.database.Cursor;
 import android.database.CursorWindow;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class InventoryList extends AppCompatActivity {
 
@@ -30,9 +25,6 @@ public class InventoryList extends AppCompatActivity {
     ArrayList<Inventory> list;
     InventoryListAdapter adapter = null;
     String cashCardNumber;
-
-    ImageView ImvTempCashCard;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,8 +39,26 @@ public class InventoryList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
-                Toast.makeText(InventoryList.this,"click" + id, Toast.LENGTH_SHORT).show();
+                v.setBackgroundColor(Color.YELLOW);
+                new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Are you sure?")
+                        .setContentText("Please choose corresponding action")
+                        .setCancelText("Update")
+                        .setConfirmText("Exclude")
+                        .showCancelButton(true)
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                Toast.makeText(InventoryList.this, "Update", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                Toast.makeText(InventoryList.this, "Exclude", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
             }
         });
 
