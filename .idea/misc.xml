@@ -36,8 +36,11 @@
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/drawable/ic_qrcode.xml" value="0.21197916666666666" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/drawable/ic_search.xml" value="0.21197916666666666" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/drawable/selector_fieldset_background.xml" value="0.37447916666666664" />
+        <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layout/activity_main.xml" value="0.2586050724637681" />
+        <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scan_cash_card.xml" value="0.2586050724637681" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scanned_details.xml" value="0.3078125" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_items.xml" value="0.35625" />
+        <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_list.xml" value="0.2586050724637681" />
       </map>
     </option>
   </component>
@@ -50,7 +53,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.22" />
+        <option name="scale" value="0.35625" />
       </ProjectState>
     </option>
   </component>
