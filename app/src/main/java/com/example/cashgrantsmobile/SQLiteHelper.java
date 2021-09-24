@@ -89,6 +89,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
+    public void updateInventoryList(String cash_card_actual_no, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "UPDATE CgList SET cash_card_actual_no = ?, hh_number = ?, series_number = ?, cc_image=?, id_image =?, card_scanning_status = 1  WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.bindString(1, cash_card_actual_no);
+        statement.bindString(2, hh_number);
+        statement.bindString(3, series_number);
+        statement.bindBlob(4, cc_image);
+        statement.bindBlob(5, id_image);
+        statement.bindDouble(6, id);
+        statement.execute();
+        database.close();
+    }
 
     public void updateInventoryData(String cash_card, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
         SQLiteDatabase database = getWritableDatabase();
