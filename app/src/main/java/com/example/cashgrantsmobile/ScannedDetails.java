@@ -165,6 +165,7 @@ public class ScannedDetails extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        
         else if (!household.matches("") && !seriesno.matches("") ){
             tilHousehold.setError(null);
             tilSeriesNo.setError(null);
