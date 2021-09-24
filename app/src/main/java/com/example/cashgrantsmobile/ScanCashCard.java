@@ -32,6 +32,8 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 
 public class ScanCashCard extends AppCompatActivity {
@@ -230,10 +232,18 @@ public class ScanCashCard extends AppCompatActivity {
                     sTextFromET = sTextFromET.replace("O", "0");
                     sTextFromET = sTextFromET.replaceAll("....", "$0 ");
 
+                    //save temp database
+                    image_uri = Uri.parse(image_uri.toString());
+                    try {
+                        Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
+                        mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 187, 250, false));
+                        sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //---
 
-                    sqLiteHelper.insertScannedCashCard(sTextFromET);
                     ScannedDetails.scanned = true;
-
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
                     if (sTextFromET.length() >23){
                         String limitString = sTextFromET.substring(0,23);
@@ -253,4 +263,13 @@ public class ScanCashCard extends AppCompatActivity {
             }
         }
     }
+    public static byte[] imageViewToByte(ImageView image) {
+        Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 120, 120, false));
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
 }

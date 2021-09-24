@@ -47,7 +47,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.executeInsert();
     }
 
-    public void insertScannedCashCard(String scannedCashCard){
+    public void insertScannedCashCard(String scannedCashCard,byte[] cc_image){
 
         try {
 
@@ -58,12 +58,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindString(1, "");
             statement.bindString(2, "");
             statement.bindString(3, "");
-            statement.bindString(4,"");
+            statement.bindBlob(4, cc_image);
             statement.bindString(5,"");
             statement.bindString(6, scannedCashCard);
 
             statement.executeInsert();
-            Log.v(TAG,"insertt");
+            Log.v(TAG,"Not insert");
 
         }catch(Exception e){
 
