@@ -1,23 +1,16 @@
 package com.example.cashgrantsmobile;
 
-
-
-import static android.content.ContentValues.TAG;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import static com.example.cashgrantsmobile.ScanCashCard.imageViewToByte;
-import static com.example.cashgrantsmobile.ScanCashCard.scanned;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -37,12 +29,14 @@ public class ScannedDetails extends AppCompatActivity {
     ImageView mPreview4PsId, mPreviewCashCard;
     Button btnSubmit, btnrescanCashCard, btnrescanBeneId;
     TextInputLayout tilCashCard, tilHousehold, tilSeriesNo;
-
     public static boolean scanned;
-
-
     private int prevCount = 0;
+    public int id = 0;
     private String cashCardNumber;
+    String blankMessage = "Please filled this blank";
+    Intent intent;
+
+
 
     private boolean isAtSpaceDelimiter(int currCount) {
         return currCount == 4 || currCount == 9 || currCount == 14 || currCount == 19;
@@ -114,10 +108,8 @@ public class ScannedDetails extends AppCompatActivity {
                                 public void onClick(SweetAlertDialog sDialog) {
                                     submit();
                                 }
-                            })
-                            .show();
+                            }).show();
                 }
-
             }
         });
     }
@@ -145,40 +137,48 @@ public class ScannedDetails extends AppCompatActivity {
 
         if (Cardresult.matches("[0-9 ]+") && !household.matches("") && !seriesno.matches("") && idCard.equals("RE-SCAN") && length==23 ){
             try{
-                sqLiteHelper.updateSubmitData(
-                        edtCashCard.getText().toString().trim(),
-                        edtHhnumber.getText().toString().trim(),
-                        edtSeriesno.getText().toString().trim(),
-                        imageViewToByte(mPreviewCashCard),
-                        imageViewToByte(mPreview4PsId)
-                );
-                Intent intent = new Intent(ScannedDetails.this, MainActivity.class);
+                if ( scanned ==true){
+                    sqLiteHelper.updateSubmitData(
+                            edtCashCard.getText().toString().trim(),
+                            edtHhnumber.getText().toString().trim(),
+                            edtSeriesno.getText().toString().trim(),
+                            imageViewToByte(mPreviewCashCard),
+                            imageViewToByte(mPreview4PsId)
+                    );
+                    intent = new Intent(ScannedDetails.this, MainActivity.class);
+                }
+                else{
+                    sqLiteHelper.updateInventoryList(
+                            edtCashCard.getText().toString().trim(),
+                            edtHhnumber.getText().toString().trim(),
+                            edtSeriesno.getText().toString().trim(),
+                            imageViewToByte(mPreviewCashCard),
+                            imageViewToByte(mPreview4PsId),id
+                    );
+                    intent = new Intent(ScannedDetails.this, InventoryList.class);
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
             }
             catch (Exception e ){
                 Toast.makeText(getApplicationContext(), "error "+e, Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
+        
         else if (!household.matches("") && !seriesno.matches("") ){
             tilHousehold.setError(null);
             tilSeriesNo.setError(null);
-
         }
 
         if (!seriesno.matches("")){
             tilSeriesNo.setError(null);
-
         }
         if (seriesno.matches("")){
-            tilSeriesNo.setError("Please filled this blank");
-
+            tilSeriesNo.setError(blankMessage);
         }
         if (household.matches("")){
-            tilHousehold.setError("Please filled this blank");
-
+            tilHousehold.setError(blankMessage);
         }
         if (!household.matches("")){
             tilHousehold.setError(null);
@@ -196,18 +196,13 @@ public class ScannedDetails extends AppCompatActivity {
         if (!Cardresult.matches("[0-9 ]+")){
             tilCashCard.setError("Cash Card contains a character");
         }
-
     }
 
     public void CashCardOnChange(){
         edtCashCard.addTextChangedListener(new TextWatcher() {
-            private static final char space = ' ';
-            private boolean isDelete;
             @Override
             public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() !=23){
@@ -217,7 +212,6 @@ public class ScannedDetails extends AppCompatActivity {
                     tilCashCard.setError(null);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 String field = s.toString();
@@ -241,7 +235,7 @@ public class ScannedDetails extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilHousehold.setError("Please filled this blank");
+                    tilHousehold.setError(blankMessage);
                 }
                 else{
                     tilHousehold.setError(null);
@@ -262,7 +256,7 @@ public class ScannedDetails extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilSeriesNo.setError("Please filled this blank");
+                    tilSeriesNo.setError(blankMessage);
                 }
                 else{
                     tilSeriesNo.setError(null);
@@ -311,13 +305,13 @@ public class ScannedDetails extends AppCompatActivity {
             }
         }
         else{
+            Intent in = getIntent();
+            int updateId = in.getIntExtra("updateData", 0);
+            id = updateId+1;
             btnrescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
-            Intent in = getIntent();
-            int idd = in.getIntExtra("updateData", 0);
-            int z = (idd+1);
             try {
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+z);
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
                         cashCardNumber = cursor.getString(6);
@@ -343,4 +337,3 @@ public class ScannedDetails extends AppCompatActivity {
         }
     }
 }
-
