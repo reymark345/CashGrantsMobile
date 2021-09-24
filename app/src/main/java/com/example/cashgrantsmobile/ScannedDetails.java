@@ -4,6 +4,7 @@ package com.example.cashgrantsmobile;
 
 import static android.content.ContentValues.TAG;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
+import static com.example.cashgrantsmobile.ScanCashCard.imageViewToByte;
 import static com.example.cashgrantsmobile.ScanCashCard.scanned;
 
 import android.content.Intent;
@@ -121,15 +122,7 @@ public class ScannedDetails extends AppCompatActivity {
         });
     }
 
-    public static byte[] imageViewToByte(ImageView image) {
-        Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-        image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 120, 120, false));
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
 
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
