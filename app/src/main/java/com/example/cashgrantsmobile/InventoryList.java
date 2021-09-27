@@ -6,20 +6,15 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorWindow;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
-
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -41,7 +36,7 @@ public class InventoryList extends AppCompatActivity {
         mToolbars = findViewById(R.id.mainToolbar);
         setSupportActionBar(mToolbars);
         getSupportActionBar().setTitle("Inventory List");
-        
+
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
         gridView.setAdapter(adapter);
