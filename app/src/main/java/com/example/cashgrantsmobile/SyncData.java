@@ -39,8 +39,6 @@ public class SyncData extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),"Syncing please wait", Toast.LENGTH_SHORT).show();
                             }
                         }).show();
-
-
             }
         });
 
