@@ -9,12 +9,17 @@ import android.database.CursorWindow;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -26,12 +31,17 @@ public class InventoryList extends AppCompatActivity {
     ArrayList<Inventory> list;
     InventoryListAdapter adapter = null;
     String cashCardNumber;
+    private Toolbar mToolbars;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_list);
         gridView = (GridView) findViewById(R.id.gridView);
+        mToolbars = findViewById(R.id.mainToolbar);
+        setSupportActionBar(mToolbars);
+        getSupportActionBar().setTitle("Inventory List");
+        
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
         gridView.setAdapter(adapter);
@@ -151,6 +161,13 @@ public class InventoryList extends AppCompatActivity {
 //                return true;
 //            }
 //        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
     }
 
 //    ImageView imageViewFood;
