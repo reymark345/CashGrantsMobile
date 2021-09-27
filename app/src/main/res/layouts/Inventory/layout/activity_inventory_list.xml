@@ -14,8 +14,8 @@
             android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:backgroundTint="@android:color/white"
+            android:background="@color/primary"
+            android:backgroundTint="@color/background"
             app:liftOnScroll="true"/>
     </com.google.android.material.appbar.AppBarLayout>
 
