@@ -3,23 +3,22 @@ package com.example.cashgrantsmobile;
 
 import static android.content.ContentValues.TAG;
 
-
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorWindow;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.ByteArrayOutputStream;
+import androidx.appcompat.widget.Toolbar;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class InventoryList extends AppCompatActivity {
 
@@ -27,18 +26,47 @@ public class InventoryList extends AppCompatActivity {
     ArrayList<Inventory> list;
     InventoryListAdapter adapter = null;
     String cashCardNumber;
-
-    ImageView ImvTempCashCard;
-
+    private Toolbar mToolbars;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_list);
         gridView = (GridView) findViewById(R.id.gridView);
+        mToolbars = findViewById(R.id.mainToolbar);
+        setSupportActionBar(mToolbars);
+        getSupportActionBar().setTitle("Inventory List");
+
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
         gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+//                v.setBackgroundColor(Color.YELLOW);
+                new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Are you sure?")
+                        .setContentText("Please choose corresponding action")
+                        .setCancelText("Update")
+                        .setConfirmText("Exclude")
+                        .showCancelButton(true)
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                Long l= new Long(id);
+                                int i=l.intValue();
+                                ScannedDetails.scanned = false;
+                                Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
+                                in.putExtra("updateData", i);
+                                startActivity(in);
+                            }
+                        })
+                        .show();
+            }
+        });
+
 
         try {
             Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
@@ -47,7 +75,6 @@ public class InventoryList extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         try {
             Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList");
             list.clear();
@@ -129,6 +156,13 @@ public class InventoryList extends AppCompatActivity {
 //                return true;
 //            }
 //        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
     }
 
 //    ImageView imageViewFood;

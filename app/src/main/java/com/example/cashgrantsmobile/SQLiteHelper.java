@@ -47,7 +47,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.executeInsert();
     }
 
-    public void insertScannedCashCard(String scannedCashCard){
+    public void insertScannedCashCard(String scannedCashCard,byte[] cc_image){
 
         try {
 
@@ -58,12 +58,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindString(1, "");
             statement.bindString(2, "");
             statement.bindString(3, "");
-            statement.bindString(4,"");
+            statement.bindBlob(4, cc_image);
             statement.bindString(5,"");
             statement.bindString(6, scannedCashCard);
 
             statement.executeInsert();
-            Log.v(TAG,"insertt");
+            Log.v(TAG,"Not insert");
 
         }catch(Exception e){
 
@@ -89,8 +89,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
+    public void updateInventoryList(String cash_card_actual_no, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "UPDATE CgList SET cash_card_actual_no = ?, hh_number = ?, series_number = ?, cc_image=?, id_image =?, card_scanning_status = 1  WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.bindString(1, cash_card_actual_no);
+        statement.bindString(2, hh_number);
+        statement.bindString(3, series_number);
+        statement.bindBlob(4, cc_image);
+        statement.bindBlob(5, id_image);
+        statement.bindDouble(6, id);
+        statement.execute();
+        database.close();
+    }
 
-    public void updateInvetoryData(String cash_card, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
+    public void updateInventoryData(String cash_card, String hh_number,String series_number, byte[] cc_image, byte[] id_image, int id) {
         SQLiteDatabase database = getWritableDatabase();
 
         String sql = "UPDATE CgList SET name = ?, price = ?, image = ? WHERE id = ?";

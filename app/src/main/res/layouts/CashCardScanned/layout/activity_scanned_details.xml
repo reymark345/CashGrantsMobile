@@ -123,7 +123,7 @@
             android:textSize="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"/>
-        
+
         <Button
             android:id="@+id/rescanBeneId"
             android:layout_width="wrap_content"
@@ -168,7 +168,7 @@
             android:layout_below="@id/tViewId"
             android:background="@drawable/round_outline"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_creditcard"
+            app:srcCompat="@drawable/ic_image"
             />
 
         <ImageView
