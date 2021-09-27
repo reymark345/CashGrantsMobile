@@ -84,20 +84,16 @@ public class MainActivity extends AppCompatActivity {
         InventoryList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                Intent intent = new Intent(MainActivity.this, InventoryList.class);
-                                startActivity(intent);
-                            }
-                        },
-                        300);
+                Intent intent = new Intent(MainActivity.this, InventoryList.class);
+                startActivity(intent);
+
             }
         });
         SyncData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Sync Data",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, SyncData.class);
+                startActivity(intent);
             }
         });
         Logout.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +145,4 @@ public class MainActivity extends AppCompatActivity {
         txtPendingCount.setText(String.valueOf(z));
 
     }
-
-
-
 }
