@@ -62,4 +62,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.github.f0ris.sweetalert:library:1.5.6'
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
+
 }
