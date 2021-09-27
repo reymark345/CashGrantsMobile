@@ -15,23 +15,23 @@ public class InventoryListAdapter extends BaseAdapter {
 
     private Context context;
     private  int layout;
-    private ArrayList<Inventory> foodsList;
+    private ArrayList<Inventory> inventoryList;
 
     public InventoryListAdapter(Context context, int layout, ArrayList<Inventory> foodsList) {
         this.context = context;
         this.layout = layout;
-        this.foodsList = foodsList;
+        this.inventoryList = foodsList;
 
     }
 
     @Override
     public int getCount() {
-        return foodsList.size();
+        return inventoryList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return foodsList.get(position);
+        return inventoryList.get(position);
     }
 
     @Override
@@ -63,10 +63,10 @@ public class InventoryListAdapter extends BaseAdapter {
         else {
             holder = (ViewHolder) row.getTag();
         }
-        Inventory inventory = foodsList.get(position);
-        holder.txtName.setText(inventory.getName());
-        holder.txtPrice.setText(inventory.getPrice());
-        holder.txtSeriesNo.setText(inventory.getSeriesNumber());
+        Inventory inventory = inventoryList.get(position);
+        holder.txtName.setText("CC no: "+inventory.getName());
+        holder.txtPrice.setText("HH no: "+ inventory.getPrice());
+        holder.txtSeriesNo.setText("Series no: "+inventory.getSeriesNumber());
 
         byte[] CashCardImage = inventory.getImage();
         byte[] idImage = inventory.getIdImage();
