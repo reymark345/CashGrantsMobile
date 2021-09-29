@@ -1,4 +1,4 @@
-package com.example.cashgrantsmobile.internet;
+package com.example.cashgrantsmobile.Internet;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

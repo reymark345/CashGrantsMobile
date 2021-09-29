@@ -29,17 +29,17 @@
             android:theme="@style/Base.Theme.AppCompat" />
 
         <activity
-            android:name=".ScanCashCard"
+            android:name=".Scanner.ScanCashCard"
             android:parentActivityName=".MainActivity"/>
 
         <activity
-            android:name=".ScannedDetails"
-            android:parentActivityName=".ScanCashCard"/>
+            android:name=".Scanner.ScannedDetails"
+            android:parentActivityName=".Scanner.ScanCashCard"/>
         <activity
-            android:name=".InventoryList"
+            android:name=".Inventory.InventoryList"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".SyncData"
+            android:name=".Sync.SyncData"
             android:parentActivityName=".MainActivity"/>
 
     </application>

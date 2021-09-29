@@ -1,4 +1,4 @@
-package com.example.cashgrantsmobile.internet;
+package com.example.cashgrantsmobile.Internet;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

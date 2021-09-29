@@ -1,6 +1,5 @@
-package com.example.cashgrantsmobile;
+package com.example.cashgrantsmobile.Sync;
 
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -11,7 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.cashgrantsmobile.internet.NetworkChangeListener;
+import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Internet.NetworkChangeListener;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 

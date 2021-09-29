@@ -1,7 +1,7 @@
-package com.example.cashgrantsmobile;
+package com.example.cashgrantsmobile.Scanner;
 
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
-import static com.example.cashgrantsmobile.ScanCashCard.imageViewToByte;
+import static com.example.cashgrantsmobile.Scanner.ScanCashCard.imageViewToByte;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cashgrantsmobile.Inventory.InventoryList;
+import com.example.cashgrantsmobile.MainActivity;
+import com.example.cashgrantsmobile.R;
 import com.google.android.material.textfield.TextInputLayout;
 import java.io.IOException;
 

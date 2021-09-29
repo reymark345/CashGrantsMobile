@@ -1,4 +1,4 @@
-package com.example.cashgrantsmobile;
+package com.example.cashgrantsmobile.Database;
 
 import static android.content.ContentValues.TAG;
 

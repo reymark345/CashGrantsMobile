@@ -1,4 +1,4 @@
-package com.example.cashgrantsmobile;
+package com.example.cashgrantsmobile.Inventory;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.cashgrantsmobile.R;
+
 import java.util.ArrayList;
 
 public class InventoryListAdapter extends BaseAdapter {

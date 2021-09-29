@@ -1,4 +1,4 @@
-package com.example.cashgrantsmobile;
+package com.example.cashgrantsmobile.Inventory;
 
 public class Inventory {
     private int id;
