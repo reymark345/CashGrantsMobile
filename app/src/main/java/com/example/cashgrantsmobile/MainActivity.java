@@ -7,21 +7,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.UiModeManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.cashgrantsmobile.Database.SQLiteHelper;
+import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         InventoryList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, InventoryList.class);
+                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Inventory.InventoryList.class);
                 startActivity(intent);
 
             }
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         SyncData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SyncData.class);
+                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Sync.SyncData.class);
                 startActivity(intent);
             }
         });

@@ -1,4 +1,4 @@
-package com.example.cashgrantsmobile;
+package com.example.cashgrantsmobile.Inventory;
 
 
 import static android.content.ContentValues.TAG;
@@ -15,6 +15,11 @@ import android.widget.GridView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.cashgrantsmobile.MainActivity;
+import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Scanner.ScannedDetails;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
