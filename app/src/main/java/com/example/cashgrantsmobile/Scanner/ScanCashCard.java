@@ -1,4 +1,4 @@
-package com.example.cashgrantsmobile;
+package com.example.cashgrantsmobile.Scanner;
 
 
 
@@ -26,6 +26,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.cashgrantsmobile.R;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;

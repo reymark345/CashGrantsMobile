@@ -1,20 +1,30 @@
-package com.example.cashgrantsmobile;
+package com.example.cashgrantsmobile.Inventory;
 
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorWindow;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.cashgrantsmobile.MainActivity;
+import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Scanner.ScannedDetails;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -40,27 +50,37 @@ public class InventoryList extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
         gridView.setAdapter(adapter);
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-//                v.setBackgroundColor(Color.YELLOW);
+                Long l= new Long(id);
+                int i=l.intValue();
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Are you sure?")
                         .setContentText("Please choose corresponding action")
-                        .setCancelText("Update")
-                        .setConfirmText("Exclude")
+                        .setConfirmText("Update")
+                        .setCancelText("Exclude")
                         .showCancelButton(true)
-                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                Long l= new Long(id);
-                                int i=l.intValue();
+
                                 ScannedDetails.scanned = false;
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
                                 in.putExtra("updateData", i);
                                 startActivity(in);
+                            }
+                        })
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sqLiteHelper.excludeData(i);
+//                                adapter.notifyDataSetChanged();
+//                                gridView.setAdapter(adapter);
+                                finish();
+                                startActivity(getIntent());
+                                Toast.makeText(InventoryList.this, "Successfully excluded", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .show();
@@ -76,7 +96,7 @@ public class InventoryList extends AppCompatActivity {
             e.printStackTrace();
         }
         try {
-            Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
@@ -90,7 +110,9 @@ public class InventoryList extends AppCompatActivity {
                 String seriesNumber = cursor.getString(3);
                 byte[] CashCardImage = cursor.getBlob(4);
                 byte[] idImage = cursor.getBlob(5);
-                list.add(new Inventory(cashCardNumber, hhNumber,seriesNumber, CashCardImage, idImage, id));
+                int status = cursor.getInt(7);
+                list.add(new Inventory(cashCardNumber, hhNumber,seriesNumber, CashCardImage, idImage,status, id));
+
             }
             adapter.notifyDataSetChanged();
         }
@@ -157,6 +179,8 @@ public class InventoryList extends AppCompatActivity {
 //            }
 //        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
