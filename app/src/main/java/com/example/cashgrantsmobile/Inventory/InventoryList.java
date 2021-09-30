@@ -3,6 +3,8 @@ package com.example.cashgrantsmobile.Inventory;
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorWindow;
@@ -12,6 +14,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -51,21 +55,29 @@ public class InventoryList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 //                v.setBackgroundColor(Color.YELLOW);
+                Long l= new Long(id);
+                int i=l.intValue();
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Are you sure?")
                         .setContentText("Please choose corresponding action")
-                        .setCancelText("Update")
-                        .setConfirmText("Exclude")
+                        .setConfirmText("Update")
+                        .setCancelText("Exclude")
                         .showCancelButton(true)
-                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                Long l= new Long(id);
-                                int i=l.intValue();
+
                                 ScannedDetails.scanned = false;
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
                                 in.putExtra("updateData", i);
                                 startActivity(in);
+                            }
+                        })
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sqLiteHelper.excludeData(i);
+                                Toast.makeText(InventoryList.this, "Successfully excluded", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .show();
@@ -81,7 +93,7 @@ public class InventoryList extends AppCompatActivity {
             e.printStackTrace();
         }
         try {
-            Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);

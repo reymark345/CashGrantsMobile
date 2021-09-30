@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.nfc.Tag;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
@@ -86,6 +87,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.bindString(3, series_number);
         statement.bindBlob(4, cc_image);
         statement.bindBlob(5, id_image);
+        statement.execute();
+        database.close();
+    }
+    public void excludeData(int i) {
+        int z = i+1;
+        Log.v(TAG,"NANA" + z);
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "UPDATE CgList SET card_scanning_status = ?  WHERE id = 1  ";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.bindLong(6, 0);
         statement.execute();
         database.close();
     }

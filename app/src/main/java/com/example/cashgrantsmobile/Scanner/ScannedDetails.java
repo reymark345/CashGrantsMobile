@@ -29,9 +29,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ScannedDetails extends AppCompatActivity {
 
-    EditText edtCashCard, edtHhnumber, edtSeriesno;
+    EditText edtCashCard, edtHhNumber, edtSeriesNo;
     ImageView mPreview4PsId, mPreviewCashCard;
-    Button btnSubmit, btnrescanCashCard, btnrescanBeneId;
+    Button btnSubmit, btnRescanCashCard, btnRescanBeneId;
     TextInputLayout tilCashCard, tilHousehold, tilSeriesNo;
     public static boolean scanned;
     private int prevCount = 0;
@@ -52,8 +52,8 @@ public class ScannedDetails extends AppCompatActivity {
 
         //EdiText
         edtCashCard = findViewById(R.id.Idresult);
-        edtHhnumber = (EditText) findViewById(R.id.hhNo);
-        edtSeriesno = (EditText) findViewById(R.id.seriesNo);
+        edtHhNumber = (EditText) findViewById(R.id.hhNo);
+        edtSeriesNo = (EditText) findViewById(R.id.seriesNo);
 
         //ImageView
         mPreview4PsId = findViewById(R.id.PsID);
@@ -61,8 +61,8 @@ public class ScannedDetails extends AppCompatActivity {
 
         //buttons
 
-        btnrescanCashCard = (Button) findViewById(R.id.rescanCashCard);
-        btnrescanBeneId = (Button) findViewById(R.id.rescanBeneId);
+        btnRescanCashCard = (Button) findViewById(R.id.rescanCashCard);
+        btnRescanBeneId = (Button) findViewById(R.id.rescanBeneId);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
         //round ImageView
@@ -78,14 +78,14 @@ public class ScannedDetails extends AppCompatActivity {
         SeriesOnChanged();
         getData();
 
-        btnrescanBeneId.setOnClickListener( new View.OnClickListener() {
+        btnRescanBeneId.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, 101);
             }
         });
-        btnrescanCashCard.setOnClickListener( new View.OnClickListener() {
+        btnRescanCashCard.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "No function yet, to be update using Inheritance", Toast.LENGTH_SHORT).show();
@@ -127,25 +127,25 @@ public class ScannedDetails extends AppCompatActivity {
         if (requestCode == 101){
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             mPreview4PsId.setImageBitmap(bitmap);
-            btnrescanBeneId.setText("RE-SCAN");
+            btnRescanBeneId.setText("RE-SCAN");
         }
     }
 
     public void submit(){
 
-        String Cardresult = edtCashCard.getText().toString();
-        String household = edtHhnumber.getText().toString();
-        String seriesno = edtSeriesno.getText().toString();
-        String idCard = btnrescanBeneId.getText().toString();
-        int length = Cardresult.length();
+        String CardResult = edtCashCard.getText().toString();
+        String household = edtHhNumber.getText().toString();
+        String seriesNo = edtSeriesNo.getText().toString();
+        String idCard = btnRescanBeneId.getText().toString();
+        int length = CardResult.length();
 
-        if (Cardresult.matches("[0-9 ]+") && !household.matches("") && !seriesno.matches("") && idCard.equals("RE-SCAN") && length==23 ){
+        if (CardResult.matches("[0-9 ]+") && !household.matches("") && !seriesNo.matches("") && idCard.equals("RE-SCAN") && length==23 ){
             try{
                 if ( scanned ==true){
                     sqLiteHelper.updateSubmitData(
                             edtCashCard.getText().toString().trim(),
-                            edtHhnumber.getText().toString().trim(),
-                            edtSeriesno.getText().toString().trim(),
+                            edtHhNumber.getText().toString().trim(),
+                            edtSeriesNo.getText().toString().trim(),
                             imageViewToByte(mPreviewCashCard),
                             imageViewToByte(mPreview4PsId)
                     );
@@ -154,8 +154,8 @@ public class ScannedDetails extends AppCompatActivity {
                 else{
                     sqLiteHelper.updateInventoryList(
                             edtCashCard.getText().toString().trim(),
-                            edtHhnumber.getText().toString().trim(),
-                            edtSeriesno.getText().toString().trim(),
+                            edtHhNumber.getText().toString().trim(),
+                            edtSeriesNo.getText().toString().trim(),
                             imageViewToByte(mPreviewCashCard),
                             imageViewToByte(mPreview4PsId),id
                     );
@@ -170,15 +170,15 @@ public class ScannedDetails extends AppCompatActivity {
             }
         }
         
-        else if (!household.matches("") && !seriesno.matches("") ){
+        else if (!household.matches("") && !seriesNo.matches("") ){
             tilHousehold.setError(null);
             tilSeriesNo.setError(null);
         }
 
-        if (!seriesno.matches("")){
+        if (!seriesNo.matches("")){
             tilSeriesNo.setError(null);
         }
-        if (seriesno.matches("")){
+        if (seriesNo.matches("")){
             tilSeriesNo.setError(blankMessage);
         }
         if (household.matches("")){
@@ -187,7 +187,7 @@ public class ScannedDetails extends AppCompatActivity {
         if (!household.matches("")){
             tilHousehold.setError(null);
         }
-        if (!Cardresult.matches("[0-9 ]+")){
+        if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Invalid format");
         }
         if (length!=23 ){
@@ -197,7 +197,7 @@ public class ScannedDetails extends AppCompatActivity {
         if (idCard.equals("Scan")){
             Toast.makeText(getApplicationContext(), "Please Scan 4P's Id", Toast.LENGTH_SHORT).show();
         }
-        if (!Cardresult.matches("[0-9 ]+")){
+        if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Cash Card contains a character");
         }
     }
@@ -231,7 +231,7 @@ public class ScannedDetails extends AppCompatActivity {
         });
     }
     public void HouseholdOnChanged(){
-        edtHhnumber.addTextChangedListener(new TextWatcher() {
+        edtHhNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -252,7 +252,7 @@ public class ScannedDetails extends AppCompatActivity {
         });
     }
     public void SeriesOnChanged(){
-        edtSeriesno.addTextChangedListener(new TextWatcher() {
+        edtSeriesNo.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -312,7 +312,7 @@ public class ScannedDetails extends AppCompatActivity {
             Intent in = getIntent();
             int updateId = in.getIntExtra("updateData", 0);
             id = updateId+1;
-            btnrescanBeneId.setText("RE-SCAN");
+            btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
@@ -332,8 +332,8 @@ public class ScannedDetails extends AppCompatActivity {
                     mPreviewCashCard.setImageBitmap(bmpCashCard);
                     mPreview4PsId.setImageBitmap(bmpId);
                     edtCashCard.setText(cashCardNumber);
-                    edtHhnumber.setText(hhNumber);
-                    edtSeriesno.setText(seriesNumber);
+                    edtHhNumber.setText(hhNumber);
+                    edtSeriesNo.setText(seriesNumber);
                 }
             }catch (Exception e){
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
