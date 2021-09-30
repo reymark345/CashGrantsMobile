@@ -46,7 +46,6 @@ public class InventoryList extends AppCompatActivity {
         mToolbars = findViewById(R.id.mainToolbar);
         setSupportActionBar(mToolbars);
         getSupportActionBar().setTitle("Inventory List");
-
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
         gridView.setAdapter(adapter);
