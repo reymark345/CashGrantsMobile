@@ -3,6 +3,7 @@ package com.example.cashgrantsmobile.Inventory;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,8 @@ public class InventoryListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
 
+
+
         View row = view;
         ViewHolder holder = new ViewHolder();
 
@@ -67,9 +70,18 @@ public class InventoryListAdapter extends BaseAdapter {
             holder = (ViewHolder) row.getTag();
         }
         Inventory inventory = inventoryList.get(position);
-        holder.txtName.setText("CC no: "+inventory.getName());
-        holder.txtPrice.setText("HH no: "+ inventory.getPrice());
-        holder.txtSeriesNo.setText("Series no: "+inventory.getSeriesNumber());
+        holder.txtName.setText(inventory.getName());
+        holder.txtPrice.setText(inventory.getPrice());
+        holder.txtSeriesNo.setText(inventory.getSeriesNumber());
+
+        int status = inventory.getStatus();
+
+        if (status==0){
+            row.setBackgroundColor(Color.parseColor("#FEF8DD"));
+        }
+        else{
+            row.setBackgroundColor(Color.parseColor("#FFF7F7FA"));
+        }
 
         byte[] CashCardImage = inventory.getImage();
         byte[] idImage = inventory.getIdImage();

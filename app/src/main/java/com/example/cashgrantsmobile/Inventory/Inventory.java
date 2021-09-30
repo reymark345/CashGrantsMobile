@@ -7,13 +7,15 @@ public class Inventory {
     private String seriesNumber;
     private byte[] image;
     private byte[] idImage;
+    private int status;
 
-    public Inventory(String name, String price,String seriesNumber, byte[] image,byte[] idImage, int id) {
+    public Inventory(String name, String price, String seriesNumber, byte[] image, byte[] idImage, int status, int id) {
         this.name = name;
         this.price = price;
         this.seriesNumber = seriesNumber;
         this.image = image;
         this.idImage = idImage;
+        this.status = status;
         this.id = id;
     }
 
@@ -61,6 +63,18 @@ public class Inventory {
     public byte[] getIdImage() {
         return idImage;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(String name) {
+        this.status = status;
+    }
+
+
+
+
 
     public void setIdImage(byte[] idImage) {
         this.idImage = idImage;
