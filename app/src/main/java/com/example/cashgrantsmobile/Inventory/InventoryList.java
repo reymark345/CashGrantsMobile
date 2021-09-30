@@ -50,20 +50,10 @@ public class InventoryList extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
         gridView.setAdapter(adapter);
-
-
-
-
-
-
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
-
-
                 Long l= new Long(id);
                 int i=l.intValue();
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
