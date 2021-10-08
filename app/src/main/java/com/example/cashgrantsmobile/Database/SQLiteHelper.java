@@ -49,6 +49,25 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void updateScannedCashCard(String scannedCashCard,byte[] cc_image){
+
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+//            String sql = "INSERT INTO CgList VALUES (NULL,?,?,?,?,?,?,0)";
+            String sql = "UPDATE CgList SET cash_card_actual_no = ?,cc_image=? WHERE id = (SELECT max(id) FROM CGList) ";
+            SQLiteStatement statement = database.compileStatement(sql);
+//            statement.clearBindings();
+
+            statement.bindString(1, scannedCashCard);
+            statement.bindBlob(2, cc_image);
+            statement.execute();
+            database.close();
+        }
+        catch(Exception e){
+            Log.v(TAG,e.toString());
+        }
+    }
+
     public void updateSubmitData(String cash_card_actual_no, String hh_number,String series_number, byte[] cc_image, byte[] id_image) {
         SQLiteDatabase database = getWritableDatabase();
         String sql = "UPDATE CgList SET cash_card_actual_no = ?, hh_number = ?, series_number = ?, cc_image=?, id_image =?, card_scanning_status = 1  WHERE id = (SELECT max(id) FROM CGList)";
