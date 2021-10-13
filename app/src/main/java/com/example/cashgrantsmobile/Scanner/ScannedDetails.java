@@ -270,7 +270,7 @@ public class ScannedDetails extends AppCompatActivity {
                             imageViewToByte(mPreviewCashCard),
                             imageViewToByte(mPreview4PsId)
                     );
-                    intent = new Intent(ScannedDetails.this, MainActivity.class);
+                    intent = new Intent(ScannedDetails.this, ScanCashCard.class);
                 }
                 else{
                     sqLiteHelper.updateInventoryList(

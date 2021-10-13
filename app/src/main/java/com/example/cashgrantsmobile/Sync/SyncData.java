@@ -1,5 +1,6 @@
 package com.example.cashgrantsmobile.Sync;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -20,10 +21,14 @@ public class SyncData extends AppCompatActivity {
     private Button btnSync;
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
+    public String variableGlobalclassname ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_data);
+
+
 
         btnSync = findViewById(R.id.btnSync);
         mToolbars = findViewById(R.id.mainToolbar);
@@ -41,22 +46,17 @@ public class SyncData extends AppCompatActivity {
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-
-
                                 IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
                                 registerReceiver(networkChangeListener, filter);
-//                                Toast.makeText(getApplicationContext(),"Syncing please wait", Toast.LENGTH_SHORT).show();
+                                if (networkChangeListener.connection ==true){
+                                    Intent intent = new Intent(SyncData.this, SpinnerLoading.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             }
-                        })
-                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                Toast.makeText(getApplicationContext(),"Syncing please wait", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .show();
-            }
-        });
+                        }).show();
+                }
+            });
     }
     @Override
     protected void onStart() {
@@ -70,6 +70,4 @@ public class SyncData extends AppCompatActivity {
         unregisterReceiver(networkChangeListener);
         super.onStop();
     }
-
-
 }

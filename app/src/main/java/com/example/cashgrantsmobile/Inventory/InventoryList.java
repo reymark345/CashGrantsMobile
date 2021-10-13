@@ -69,6 +69,7 @@ public class InventoryList extends AppCompatActivity {
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
                                 in.putExtra("updateData", i);
                                 startActivity(in);
+                                finish();
                             }
                         })
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
