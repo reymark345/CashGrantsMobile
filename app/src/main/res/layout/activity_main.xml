@@ -7,12 +7,25 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
+
     <View
         android:id="@+id/viewHeaderBackground"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_125sdp"
         android:background="@color/primary"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/validation"
+        tools:ignore="MissingConstraints" />
+
+
 
     <TextView
         android:id="@+id/textTitle"
@@ -28,6 +41,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
+
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/_26sdp"
         android:layout_height="@dimen/_26sdp"
@@ -39,6 +53,8 @@
         app:layout_constraintTop_toTopOf="@id/textTitle"
         app:tint="@color/white"
         />
+
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardHeader"
         android:layout_width="match_parent"

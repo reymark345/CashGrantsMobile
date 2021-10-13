@@ -14,11 +14,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cashgrantsmobile.Database.SQLiteHelper;
 import com.example.cashgrantsmobile.Scanner.ScanCashCard;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         txtPendingCount =(TextView)findViewById(R.id.txtPending);
         //Button
         DarkMode =(ImageButton) findViewById(R.id.textViews);
+
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
+        Sprite doubleBounce = new DoubleBounce();
+        progressBar.setIndeterminateDrawable(doubleBounce);
+
         darkModeStatus();
         InventoryListCount();
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA)

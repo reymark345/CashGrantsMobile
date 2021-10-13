@@ -37,8 +37,10 @@
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/drawable/ic_search.xml" value="0.21197916666666666" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/drawable/selector_fieldset_background.xml" value="0.37447916666666664" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/drawable/white_search.xml" value="0.20052083333333334" />
-        <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layout/activity_main.xml" value="0.2586050724637681" />
+        <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layout/Spinnerload.xml" value="0.184375" />
+        <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layout/activity_main.xml" value="0.13333333333333333" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layout/check_internet_dialog.xml" value="0.14221014492753623" />
+        <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layout/spinner_load.xml" value="0.184375" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/drawable/button_shape.xml" value="0.1" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/drawable/ic_nowifi.xml" value="0.1" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/drawable/ic_search_black_24dp.xml" value="0.20052083333333334" />
@@ -60,7 +62,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.13333333333333333" />
+        <option name="scale" value="0.14221014492753623" />
       </ProjectState>
     </option>
   </component>

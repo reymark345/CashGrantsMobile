@@ -41,6 +41,9 @@
         <activity
             android:name=".Sync.SyncData"
             android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".Sync.SpinnerLoading"
+            android:parentActivityName=".Sync.SyncData"/>
 
     </application>
 
