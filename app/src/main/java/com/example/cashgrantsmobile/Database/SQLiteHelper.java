@@ -11,6 +11,9 @@ import android.nfc.Tag;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -31,9 +34,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public void insertScannedCashCard(String scannedCashCard,byte[] cc_image){
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(new Date());
+
         try {
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "INSERT INTO CgList VALUES (NULL,?,?,?,?,?,?,0)";
+            String sql = "INSERT INTO CgList VALUES (NULL,?,?,?,?,?,?,0,?)";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.clearBindings();
             statement.bindString(1, "");
@@ -42,6 +48,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindBlob(4, cc_image);
             statement.bindString(5,"");
             statement.bindString(6, scannedCashCard);
+            statement.bindString(7, strDate);
             statement.executeInsert();
         }
         catch(Exception e){
