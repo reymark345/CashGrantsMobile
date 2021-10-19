@@ -64,11 +64,14 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 101);
         }
 
+
+
         CashCardScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScanCashCard.class);
                 startActivity(intent);
+                finish();
             }
         });
         DarkMode.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Inventory.InventoryList.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -99,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Sync.SyncData.class);
                 startActivity(intent);
+                finish();
             }
         });
         Logout.setOnClickListener(new View.OnClickListener() {
