@@ -12,5 +12,8 @@
     <color name="dashboard_item_4">#8B72FF</color>
     <color name="validation">#FF03DAC5</color>
     <color name="syncing">#252C4B</color>
+    <color name="lightGrey">#EAEAEA</color>
+    <color name="textHeadline">#434343</color>
+    <color name="textDescription">#686868</color>
 
 </resources>

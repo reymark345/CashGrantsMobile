@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CashGrantsMobile">
         <activity
-            android:name=".MainActivity"
+            android:name=".Splash.Activity_Splash_Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,6 +44,10 @@
         <activity
             android:name=".Sync.SpinnerLoading"
             android:parentActivityName=".Sync.SyncData"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:parentActivityName=".Splash.Activity_Splash_Login"/>
 
     </application>
 
