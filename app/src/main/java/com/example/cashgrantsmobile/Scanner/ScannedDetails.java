@@ -2,15 +2,19 @@ package com.example.cashgrantsmobile.Scanner;
 
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import static com.example.cashgrantsmobile.Scanner.ScanCashCard.imageViewToByte;
+
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +26,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cashgrantsmobile.Inventory.InventoryList;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.textfield.TextInputLayout;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
 import java.io.IOException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -39,6 +49,10 @@ public class ScannedDetails extends AppCompatActivity {
     private String cashCardNumber;
     String blankMessage = "Please filled this blank";
     Intent intent;
+
+    Uri image_uri;
+
+    ImageView mPreviewIv;
 
 
 
@@ -58,6 +72,10 @@ public class ScannedDetails extends AppCompatActivity {
         //ImageView
         mPreview4PsId = findViewById(R.id.PsID);
         mPreviewCashCard = findViewById(R.id.ScannedImage);
+
+
+        mPreviewIv = findViewById(R.id.imgUri);
+        mPreviewIv .setVisibility(View.INVISIBLE);
 
         //buttons
 
@@ -88,7 +106,15 @@ public class ScannedDetails extends AppCompatActivity {
         btnRescanCashCard.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "No function yet, to be update using Inheritance", Toast.LENGTH_SHORT).show();
+
+                pickCamera();
+
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent, 102);
+
+//                Toast.makeText(getApplicationContext(), "No function yet, to be update using Inheritance", Toast.LENGTH_SHORT).show();
+
+
 //                ScanCashCard action = new ScanCashCard();
 //                action.pickCamera();
             }
@@ -118,7 +144,15 @@ public class ScannedDetails extends AppCompatActivity {
         });
     }
 
-
+    public void pickCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "CashCardRes-can");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Image to Text");
+        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+        Intent cameraIntent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+        startActivityForResult(cameraIntent, 102);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -129,7 +163,94 @@ public class ScannedDetails extends AppCompatActivity {
             mPreview4PsId.setImageBitmap(bitmap);
             btnRescanBeneId.setText("RE-SCAN");
         }
+        else{
+            if (resultCode == RESULT_OK){
+                if (requestCode == 102){
+
+                    CropImage.activity(image_uri).setGuidelines(CropImageView.Guidelines.ON).start(this);
+                }
+            }
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if(resultCode ==RESULT_OK){
+                    Uri resultUri = result.getUri();
+                    resultUri.getPath();
+                    mPreviewIv.setImageURI(resultUri);
+                    BitmapDrawable bitmapDrawable = (BitmapDrawable)mPreviewIv.getDrawable();
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    TextRecognizer recognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+
+                    if(!recognizer.isOperational()){
+                        Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                        SparseArray<TextBlock> items = recognizer.detect(frame);
+                        StringBuilder sb = new StringBuilder();
+
+                        for (int i = 0; i<items.size(); i++){
+                            TextBlock myItem = items.valueAt(i);
+                            sb.append(myItem.getValue());
+                            sb.append("\n");
+                        }
+
+                        String sTextFromET=sb.toString().replaceAll("\\s+", "");
+                        sTextFromET = sTextFromET.replace("a", "8");
+                        sTextFromET = sTextFromET.replace("A", "8");
+                        sTextFromET = sTextFromET.replace("B", "6");
+                        sTextFromET = sTextFromET.replace("b", "6");
+                        sTextFromET = sTextFromET.replace("D", "0");
+                        sTextFromET = sTextFromET.replace("e", "8");
+                        sTextFromET = sTextFromET.replace("E", "8");
+                        sTextFromET = sTextFromET.replace("L", "6");
+                        sTextFromET = sTextFromET.replace("S", "5");
+                        sTextFromET = sTextFromET.replace("G", "6");
+                        sTextFromET = sTextFromET.replace("%", "6");
+                        sTextFromET = sTextFromET.replace("&", "6");
+                        sTextFromET = sTextFromET.replace("?", "7");
+                        sTextFromET = sTextFromET.replace("l", "1");
+                        sTextFromET = sTextFromET.replace("+", "7");
+                        sTextFromET = sTextFromET.replace("}", "7");
+                        sTextFromET = sTextFromET.replace("O", "0");
+                        sTextFromET = sTextFromET.replaceAll("....", "$0 ");
+
+                        //save temp database
+                        image_uri = Uri.parse(image_uri.toString());
+                        try {
+                            Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
+                            mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 187, 250, false));
+                            sqLiteHelper.updateScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        //---
+
+                        ScannedDetails.scanned = true;
+                        Intent i = new Intent(ScannedDetails.this, ScannedDetails.class);
+                        if (sTextFromET.length() >23){
+                            String limitString = sTextFromET.substring(0,23);
+                            edtCashCard.setText(limitString);
+                        }
+                        else{
+                            edtCashCard.setText(sTextFromET);
+                        }
+                        try {
+                            Bitmap bitmaps = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
+                            mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmaps, 187, 250, false));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+                    Exception error = result.getError();
+                    Toast.makeText(this,""+error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
+
+
 
     public void submit(){
 
@@ -149,7 +270,7 @@ public class ScannedDetails extends AppCompatActivity {
                             imageViewToByte(mPreviewCashCard),
                             imageViewToByte(mPreview4PsId)
                     );
-                    intent = new Intent(ScannedDetails.this, MainActivity.class);
+                    intent = new Intent(ScannedDetails.this, ScanCashCard.class);
                 }
                 else{
                     sqLiteHelper.updateInventoryList(
@@ -169,7 +290,7 @@ public class ScannedDetails extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        
+
         else if (!household.matches("") && !seriesNo.matches("") ){
             tilHousehold.setError(null);
             tilSeriesNo.setError(null);

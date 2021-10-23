@@ -14,11 +14,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cashgrantsmobile.Database.SQLiteHelper;
 import com.example.cashgrantsmobile.Scanner.ScanCashCard;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         txtPendingCount =(TextView)findViewById(R.id.txtPending);
         //Button
         DarkMode =(ImageButton) findViewById(R.id.textViews);
+
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
+        Sprite doubleBounce = new DoubleBounce();
+        progressBar.setIndeterminateDrawable(doubleBounce);
+
         darkModeStatus();
         InventoryListCount();
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA)
@@ -56,11 +64,14 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 101);
         }
 
+
+
         CashCardScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScanCashCard.class);
                 startActivity(intent);
+                finish();
             }
         });
         DarkMode.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Inventory.InventoryList.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -91,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Sync.SyncData.class);
                 startActivity(intent);
+                finish();
             }
         });
         Logout.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createDatabase(){
         sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
     }
 

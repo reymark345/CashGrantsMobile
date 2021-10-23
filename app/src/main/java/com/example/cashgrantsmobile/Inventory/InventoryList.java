@@ -11,6 +11,7 @@ import android.database.CursorWindow;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 import com.example.cashgrantsmobile.Scanner.ScannedDetails;
 
 import java.lang.reflect.Field;
@@ -69,6 +71,7 @@ public class InventoryList extends AppCompatActivity {
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
                                 in.putExtra("updateData", i);
                                 startActivity(in);
+                                finish();
                             }
                         })
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -186,6 +189,15 @@ public class InventoryList extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return true;
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent intent = new Intent(InventoryList.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 //    ImageView imageViewFood;

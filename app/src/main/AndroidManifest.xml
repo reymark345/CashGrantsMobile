@@ -10,13 +10,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/cglogo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CashGrantsMobile">
         <activity
-            android:name=".MainActivity"
+            android:name=".Splash.Activity_Splash_Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,6 +41,13 @@
         <activity
             android:name=".Sync.SyncData"
             android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".Sync.SpinnerLoading"
+            android:parentActivityName=".Sync.SyncData"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:parentActivityName=".Splash.Activity_Splash_Login"/>
 
     </application>
 
