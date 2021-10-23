@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 
+
 public class Activity_Splash_Login extends AppCompatActivity {
 
     Button BtnLogin;
