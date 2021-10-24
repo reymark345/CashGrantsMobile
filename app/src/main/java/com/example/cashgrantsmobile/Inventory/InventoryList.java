@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.cashgrantsmobile.MainActivity;
@@ -39,6 +40,8 @@ public class InventoryList extends AppCompatActivity {
     InventoryListAdapter adapter = null;
     String cashCardNumber;
     private Toolbar mToolbars;
+    int status;
+    String DialogStatus;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,11 +60,18 @@ public class InventoryList extends AppCompatActivity {
                                     int position, long id) {
                 Long l= new Long(id);
                 int i=l.intValue();
+                int stats = i+1;
+
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,card_scanning_status FROM CgList WHERE id ="+stats);
+                while (cursor.moveToNext()) {
+                    status = cursor.getInt(1);
+                }
+                if (status==0){DialogStatus ="Include";}else{DialogStatus ="Exclude";}
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Are you sure?")
                         .setContentText("Please choose corresponding action")
                         .setConfirmText("Update")
-                        .setCancelText("Exclude")
+                        .setCancelText(DialogStatus)
                         .showCancelButton(true)
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
@@ -71,18 +81,18 @@ public class InventoryList extends AppCompatActivity {
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
                                 in.putExtra("updateData", i);
                                 startActivity(in);
-                                finish();
+//                                finish();
                             }
                         })
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                sqLiteHelper.excludeData(i);
+                                sqLiteHelper.excludeData(i,status);
 //                                adapter.notifyDataSetChanged();
 //                                gridView.setAdapter(adapter);
-                                finish();
+
                                 startActivity(getIntent());
-                                Toast.makeText(InventoryList.this, "Successfully excluded", Toast.LENGTH_SHORT).show();
+//                                finish();
                             }
                         })
                         .show();
