@@ -35,64 +35,87 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/txtCcText"
+        android:text="Cash Card number:"
+        android:textSize="13sp"
+        android:hint="Cash Card no."
+        android:textColor="@color/primary"
+        android:layout_toRightOf="@+id/imgId"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="17dp"
+        android:layout_marginLeft="-11dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold|italic"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/txtName"
         android:text="Cash Card number"
         android:textSize="10sp"
-        android:textColor="@color/primary"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/imgId"
         android:textAlignment="center"
         android:layout_alignParentRight="true"
         android:layout_marginRight="17dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="30dp"
         android:textStyle="bold"
-
         />
 
     <TextView
-        android:id="@+id/txtPrice"
+        android:id="@+id/txtHHno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtName"
-        android:layout_alignEnd="@+id/txtName"
-        android:layout_alignRight="@+id/txtName"
-        android:layout_marginLeft="5dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="50dp"
-        android:text="HHnumber"
-        android:textAlignment="center"
-        android:textColor="@color/secondary_text"
-        android:textSize="10sp"
-        android:textStyle="bold"/>
+        android:layout_marginLeft="-11dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="50dp"
+        android:text="Household number:"
+        android:textColor="@color/primary"
+        android:textSize="13sp"
+        android:textStyle="bold|italic"/>
 
     <TextView
-        android:text="SeriesNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtPrice"
+        android:text="HHNumber"
+        android:textSize="10sp"
+        android:layout_below="@+id/txtHHno"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/imgId"
+        android:textAlignment="center"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="17dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/txtSeries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPrice"
+        android:layout_marginLeft="-11dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="75dp"
+        android:text="Series number:"
+        android:textColor="@color/primary"
+        android:textSize="13sp"
+        android:textStyle="bold|italic"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtSeriesNumber"
+        android:text="SeriesNumber"
         android:textSize="10sp"
-        android:textColor="@color/secondary_text"
+        android:layout_below="@+id/txtSeries"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/imgId"
         android:textAlignment="center"
-        android:layout_below="@+id/txtPrice"
-        android:layout_alignRight="@+id/txtName"
-        android:layout_alignEnd="@+id/txtName"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="17dp"
+        android:layout_marginLeft="5dp"
         android:textStyle="bold"/>
-
-<!--    <Button-->
-<!--        android:text="Update"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/txtPrics"-->
-<!--        android:textSize="8sp"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:textAlignment="center"-->
-<!--        android:layout_below="@+id/txtSeriesNumber"-->
-<!--        android:layout_alignRight="@+id/txtSeriesNumber"-->
-<!--        android:layout_alignEnd="@+id/txtName"-->
-<!--        android:layout_marginTop="5dp"-->
-<!--        android:layout_marginRight="10dp"-->
-<!--        android:layout_marginLeft="20dp"-->
-<!--        android:layout_marginEnd="30dp" />-->
 </RelativeLayout>
