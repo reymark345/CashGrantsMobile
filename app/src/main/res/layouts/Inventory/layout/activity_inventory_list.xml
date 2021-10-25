@@ -4,9 +4,9 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundDisplay"
     >
-    
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
-            android:backgroundTint="@color/background"
+            android:backgroundTint="@color/backgroundDisplay"
             app:liftOnScroll="true"/>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -29,5 +29,7 @@
         android:layout_centerHorizontal="true"
         android:columnWidth="300dp"
         android:gravity="center"
+        android:background="@color/primary"
+        android:backgroundTint="@color/backgroundDisplay"
         android:numColumns="auto_fit" />
 </RelativeLayout>

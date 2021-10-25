@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:background="@color/background"
+    android:background="@color/backgroundDisplay"
     android:layout_height="match_parent">
 
     <ImageView
@@ -39,7 +39,7 @@
         android:text="Cash Card number:"
         android:textSize="13sp"
         android:hint="Cash Card no."
-        android:textColor="@color/primary"
+        android:textColor="@color/primary_text"
         android:layout_toRightOf="@+id/imgId"
         android:layout_alignParentRight="true"
         android:layout_marginRight="17dp"
@@ -53,7 +53,7 @@
         android:id="@+id/txtName"
         android:text="Cash Card number"
         android:textSize="10sp"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_text"
         android:layout_toRightOf="@+id/imgId"
         android:textAlignment="center"
         android:layout_alignParentRight="true"
@@ -72,7 +72,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="50dp"
         android:text="Household number:"
-        android:textColor="@color/primary"
+        android:textColor="@color/primary_text"
         android:textSize="13sp"
         android:textStyle="bold|italic"/>
 
@@ -83,7 +83,7 @@
         android:text="HHNumber"
         android:textSize="10sp"
         android:layout_below="@+id/txtHHno"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_text"
         android:layout_toRightOf="@+id/imgId"
         android:textAlignment="center"
         android:layout_alignParentRight="true"
@@ -100,7 +100,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="75dp"
         android:text="Series number:"
-        android:textColor="@color/primary"
+        android:textColor="@color/primary_text"
         android:textSize="13sp"
         android:textStyle="bold|italic"/>
 
@@ -111,7 +111,7 @@
         android:text="SeriesNumber"
         android:textSize="10sp"
         android:layout_below="@+id/txtSeries"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_text"
         android:layout_toRightOf="@+id/imgId"
         android:textAlignment="center"
         android:layout_alignParentRight="true"

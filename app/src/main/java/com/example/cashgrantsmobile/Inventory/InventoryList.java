@@ -2,13 +2,11 @@ package com.example.cashgrantsmobile.Inventory;
 
 
 import static android.content.ContentValues.TAG;
-
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorWindow;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,18 +14,12 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
-import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 import com.example.cashgrantsmobile.Scanner.ScannedDetails;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -58,6 +50,7 @@ public class InventoryList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+
                 Long l= new Long(id);
                 int i=l.intValue();
                 int stats = i+1;
@@ -90,7 +83,6 @@ public class InventoryList extends AppCompatActivity {
                                 sqLiteHelper.excludeData(i,status);
 //                                adapter.notifyDataSetChanged();
 //                                gridView.setAdapter(adapter);
-
                                 startActivity(getIntent());
 //                                finish();
                             }
