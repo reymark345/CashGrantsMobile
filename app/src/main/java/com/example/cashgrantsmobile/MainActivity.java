@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private String night = "true";
     private String light = "false";
 
+    public String hello;
+
     String status;
 
     @Override
