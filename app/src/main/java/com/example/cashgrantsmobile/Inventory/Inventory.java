@@ -51,7 +51,6 @@ public class Inventory {
         this.seriesNumber = seriesNumber;
     }
 
-
     public byte[] getImage() {
         return image;
     }
@@ -71,10 +70,6 @@ public class Inventory {
     public void setStatus(String name) {
         this.status = status;
     }
-
-
-
-
 
     public void setIdImage(byte[] idImage) {
         this.idImage = idImage;

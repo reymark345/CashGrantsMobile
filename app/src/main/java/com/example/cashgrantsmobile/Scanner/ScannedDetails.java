@@ -270,7 +270,10 @@ public class ScannedDetails extends AppCompatActivity {
                             imageViewToByte(mPreviewCashCard),
                             imageViewToByte(mPreview4PsId)
                     );
-                    intent = new Intent(ScannedDetails.this, ScanCashCard.class);
+                    String value="Added Successfully";
+                    intent= new Intent(ScannedDetails.this, ScanCashCard.class);
+                    intent.putExtra("toast",value);
+
                 }
                 else{
                     sqLiteHelper.updateInventoryList(
