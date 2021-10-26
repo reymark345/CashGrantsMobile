@@ -84,7 +84,7 @@ public class InventoryList extends AppCompatActivity {
 //                                adapter.notifyDataSetChanged();
 //                                gridView.setAdapter(adapter);
                                 startActivity(getIntent());
-//                                finish();
+                                finish();
                             }
                         })
                         .show();
