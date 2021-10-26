@@ -11,7 +11,6 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -64,6 +63,7 @@ dependencies {
     implementation 'com.github.f0ris.sweetalert:library:1.5.6'
     implementation 'com.google.android.material:material:1.2.0-alpha03'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
 
 
 }
