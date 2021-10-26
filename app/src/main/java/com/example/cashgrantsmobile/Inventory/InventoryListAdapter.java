@@ -84,11 +84,22 @@ public class InventoryListAdapter extends BaseAdapter {
         holder.txtSeriesNo.setText(inventory.getSeriesNumber());
         int status = inventory.getStatus();
         if (status==0 && DarkModeStatus.matches("false")){
-            row.setBackgroundColor(Color.parseColor("#FEF8DD"));
+              //exclude and white
+            row.setBackgroundColor(Color.parseColor("#FEF8DD")); //
         }
         else if(status==0 && DarkModeStatus.matches("true")){
+            //exclude and dark
             row.setBackgroundColor(Color.parseColor("#282828"));
         }
+        else if (status==1 && DarkModeStatus.matches("false")) {
+            //include and white
+            row.setBackgroundColor(Color.parseColor("#F7F7FA")); // white background color you are using
+        }
+        else if (status==1 && DarkModeStatus.matches("true")) {
+            //include and white
+            row.setBackgroundColor(Color.parseColor("#252C4B")); // white background color you are using
+        }
+
         byte[] CashCardImage = inventory.getImage();
         byte[] idImage = inventory.getIdImage();
         if(CashCardImage.length > 1)
