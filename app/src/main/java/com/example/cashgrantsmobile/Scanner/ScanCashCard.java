@@ -65,7 +65,6 @@ public class ScanCashCard extends AppCompatActivity {
         if (extras != null) {
             String value = extras.getString("toast");
             Toasty.success(this,""+value, Toasty.LENGTH_SHORT).show();
-
         }
         
         cameraPermission = new String[]{Manifest.permission.CAMERA,

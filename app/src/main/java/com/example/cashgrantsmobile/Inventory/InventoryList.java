@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +25,7 @@ import com.example.cashgrantsmobile.Scanner.ScannedDetails;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 
 
 public class InventoryList extends AppCompatActivity {
@@ -33,6 +36,7 @@ public class InventoryList extends AppCompatActivity {
     String cashCardNumber;
     private Toolbar mToolbars;
     int status;
+    byte[] id_image;
     String DialogStatus;
 
     @Override
@@ -41,6 +45,13 @@ public class InventoryList extends AppCompatActivity {
         setContentView(R.layout.activity_inventory_list);
         gridView = (GridView) findViewById(R.id.gridView);
         mToolbars = findViewById(R.id.mainToolbar);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("ExcludeInclude");
+            Toasty.success(this,value+"d", Toasty.LENGTH_SHORT).show();
+        }
+
         setSupportActionBar(mToolbars);
         getSupportActionBar().setTitle("Inventory List");
         list = new ArrayList<>();
@@ -55,9 +66,10 @@ public class InventoryList extends AppCompatActivity {
                 int i=l.intValue();
                 int stats = i+1;
 
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,card_scanning_status FROM CgList WHERE id ="+stats);
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,id_image,card_scanning_status FROM CgList WHERE id ="+stats);
                 while (cursor.moveToNext()) {
-                    status = cursor.getInt(1);
+                    id_image = cursor.getBlob(1);
+                    status = cursor.getInt(2);
                 }
                 if (status==0){DialogStatus ="Include";}else{DialogStatus ="Exclude";}
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
@@ -80,11 +92,20 @@ public class InventoryList extends AppCompatActivity {
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                sqLiteHelper.excludeData(i,status);
-//                                adapter.notifyDataSetChanged();
-//                                gridView.setAdapter(adapter);
-                                startActivity(getIntent());
-                                finish();
+                                if (id_image.length ==1){
+                                    Toasty.error(getApplicationContext(),"Update data first ", Toasty.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    sqLiteHelper.excludeData(i,status);
+                                    Intent in = new Intent(getApplicationContext(), InventoryList.class);
+                                    in.putExtra("ExcludeInclude", DialogStatus);
+                                    startActivity(in);
+
+//                                    startActivity(getIntent());
+//                                    Toasty.error(getApplicationContext(),"Success ", Toasty.LENGTH_SHORT).show();
+                                    finish();
+
+                                }
                             }
                         })
                         .show();
