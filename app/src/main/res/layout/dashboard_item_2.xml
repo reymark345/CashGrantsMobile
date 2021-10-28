@@ -65,7 +65,7 @@
                 android:text="Inventory List"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/_14ssp"
-                app:layout_constraintEnd_toStartOf="@id/textAmount"
+                app:layout_constraintEnd_toStartOf="@id/txtInventoryAmount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 

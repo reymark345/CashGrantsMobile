@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,15 +49,10 @@ public class ScannedDetails extends AppCompatActivity {
     private int prevCount = 0;
     public int id = 0;
     private String cashCardNumber;
-    String blankMessage = "Please filled this blank";
+    String blankMessage = "Please fill this blank";
     Intent intent;
-
     Uri image_uri;
-
     ImageView mPreviewIv;
-
-
-
     private boolean isAtSpaceDelimiter(int currCount) {
         return currCount == 4 || currCount == 9 || currCount == 14 || currCount == 19;
     }
@@ -464,5 +460,14 @@ public class ScannedDetails extends AppCompatActivity {
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent intent = new Intent(ScannedDetails.this, ScanCashCard.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

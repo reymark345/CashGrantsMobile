@@ -155,6 +155,5 @@ public class MainActivity extends AppCompatActivity {
         int z = cursor.getCount();
         txtInventoryCount.setText(String.valueOf(z));
         txtPendingCount.setText(String.valueOf(z));
-
     }
 }

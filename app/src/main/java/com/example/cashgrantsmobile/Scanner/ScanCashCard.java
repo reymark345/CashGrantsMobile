@@ -14,6 +14,7 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -23,7 +24,9 @@ import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
@@ -52,6 +55,7 @@ public class ScanCashCard extends AppCompatActivity {
     Button btn_scan;
     public static boolean scanned = true;
     Uri image_uri;
+    TextView ScannedCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,11 @@ public class ScanCashCard extends AppCompatActivity {
         mPreviewIv = findViewById(R.id.imageIv);
         mPreviewIv .setVisibility(View.INVISIBLE);
         btn_scan = (Button) findViewById(R.id.btnScan);
+        ScannedCount = (TextView) findViewById(R.id.ScannedCount);
+
+        TotalScanned();
+
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -77,6 +86,8 @@ public class ScanCashCard extends AppCompatActivity {
                 showImageImportDialog();
             }
         });
+
+
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -213,6 +224,7 @@ public class ScanCashCard extends AppCompatActivity {
                     //camera
                     i.putExtra("CashCardImage",image_uri.toString());
                     startActivity(i);
+                    finish();
                 }
             }
             else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
@@ -228,6 +240,11 @@ public class ScanCashCard extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
         byte[] byteArray = stream.toByteArray();
         return byteArray;
+    }
+    public void TotalScanned(){
+        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
+        int z = cursor.getCount();
+        ScannedCount.setText("Total Scanned: " + String.valueOf(z));
     }
 
 }
