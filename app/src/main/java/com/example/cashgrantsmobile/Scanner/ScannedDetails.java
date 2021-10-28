@@ -36,6 +36,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.IOException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 
 public class ScannedDetails extends AppCompatActivity {
 
@@ -319,7 +320,7 @@ public class ScannedDetails extends AppCompatActivity {
         }
 
         if (idCard.equals("Scan")){
-            Toast.makeText(getApplicationContext(), "Please Scan 4P's Id", Toast.LENGTH_SHORT).show();
+            Toasty.error(this,"Please Scan 4P's Id", Toasty.LENGTH_SHORT).show();
         }
         if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Cash Card contains a character");
