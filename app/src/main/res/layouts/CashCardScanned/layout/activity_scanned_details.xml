@@ -99,6 +99,7 @@
         android:background="@color/background"
         android:layout_marginLeft="20dp"
         android:text="Cash Card Scanner"
+        android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp" />
 
@@ -117,10 +118,12 @@
 
         <TextView
             android:id="@+id/tViewId"
-            android:text="4P's Id"
+            android:text="4P's ID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"/>
 
@@ -142,6 +145,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
             android:layout_below="@id/rescanBeneId"/>
@@ -193,6 +198,7 @@
             android:layout_marginRight="15dp"
             android:layout_alignParentRight="true"
             android:text="Image Details"
+            android:fontFamily="sans-serif-condensed"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="15dp" />
 
