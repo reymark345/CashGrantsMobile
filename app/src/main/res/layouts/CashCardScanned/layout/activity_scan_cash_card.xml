@@ -35,6 +35,23 @@
         android:textSize="15dp" />
 
 
+    <TextView
+        android:id="@+id/ScannedCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@color/background"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_margin="90dp"
+        android:layout_below="@id/textView1"
+        android:text="Total Scanned"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:textSize="15dp" />
+
+
     <ImageView
         android:id ="@+id/sas"
         android:height ="60dp"
