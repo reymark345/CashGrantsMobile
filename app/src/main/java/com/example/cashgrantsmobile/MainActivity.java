@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean EnableNightMode = false;
     private String night = "true";
     private String light = "false";
-
-    public String hello;
-
     String status;
 
     @Override
@@ -65,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 101);
         }
-
-
 
         CashCardScanner.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -141,8 +141,9 @@ public class ScanCashCard extends AppCompatActivity {
                     if (cameraAccepted && writeStorageAccepted) {
                         pickCamera();
                     } else {
-//                        pickCamera();
-                        Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+                        pickCamera();
+//                        Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+
                     }
                 }
         }
@@ -200,26 +201,24 @@ public class ScanCashCard extends AppCompatActivity {
                     sTextFromET = sTextFromET.replace("}", "7");
                     sTextFromET = sTextFromET.replace("O", "0");
                     sTextFromET = sTextFromET.replaceAll("....", "$0 ");
-
                     //save temp database
                     image_uri = Uri.parse(image_uri.toString());
+                    ScannedDetails.scanned = true;
+                    Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
                     try {
                         Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                         mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 187, 250, false));
-                        sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
+                        if (sTextFromET.length() >23){
+                            String limitString = sTextFromET.substring(0,23);
+                            i.putExtra("cashCardNumber",limitString);
+                            sqLiteHelper.insertScannedCashCard(limitString,imageViewToByte(mPreviewIv));
+                        }
+                        else{
+                            i.putExtra("cashCardNumber",sTextFromET);
+                            sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
-                    //---
-
-                    ScannedDetails.scanned = true;
-                    Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
-                    if (sTextFromET.length() >23){
-                        String limitString = sTextFromET.substring(0,23);
-                        i.putExtra("cashCardNumber",limitString);
-                    }
-                    else{
-                        i.putExtra("cashCardNumber",sTextFromET);
                     }
                     //camera
                     i.putExtra("CashCardImage",image_uri.toString());
