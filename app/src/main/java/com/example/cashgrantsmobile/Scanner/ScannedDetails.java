@@ -464,7 +464,8 @@ public class ScannedDetails extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            Intent intent = new Intent(ScannedDetails.this, ScanCashCard.class);
+            if (scanned==true){intent = new Intent(ScannedDetails.this, ScanCashCard.class);}
+            else{intent = new Intent(ScannedDetails.this, InventoryList.class);}
             startActivity(intent);
             finish();
         }
