@@ -1,10 +1,14 @@
 package com.example.cashgrantsmobile;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.Intent;
@@ -18,10 +22,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.cashgrantsmobile.Database.SQLiteHelper;
 import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.google.android.material.navigation.NavigationView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private String night = "true";
     private String light = "false";
     String status;
+
+    DrawerLayout drawerlayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +62,16 @@ public class MainActivity extends AppCompatActivity {
         txtPendingCount =(TextView)findViewById(R.id.txtPending);
         //Button
         DarkMode =(ImageButton) findViewById(R.id.textViews);
+
+        drawerlayout = findViewById(R.id.drawerlayout);
+        navigationView = findViewById(R.id.navigationview);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerlayout,toolbar,R.string.navigation_open,R.string.navigation_close);
+        drawerlayout.addDrawerListener(toggle);
+        toggle.syncState();
+
 
         ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
         Sprite doubleBounce = new DoubleBounce();
