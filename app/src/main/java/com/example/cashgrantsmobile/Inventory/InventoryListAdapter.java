@@ -32,9 +32,7 @@ public class InventoryListAdapter extends BaseAdapter {
         this.context = context;
         this.layout = layout;
         this.inventoryList = foodsList;
-
     }
-
     @Override
     public int getCount() {
         return inventoryList.size();

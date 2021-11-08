@@ -103,17 +103,7 @@ public class ScannedDetails extends AppCompatActivity {
         btnRescanCashCard.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 pickCamera();
-
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, 102);
-
-//                Toast.makeText(getApplicationContext(), "No function yet, to be update using Inheritance", Toast.LENGTH_SHORT).show();
-
-
-//                ScanCashCard action = new ScanCashCard();
-//                action.pickCamera();
             }
         });
 
@@ -451,10 +441,11 @@ public class ScannedDetails extends AppCompatActivity {
                     Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
                     Bitmap bmpId = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
                     mPreviewCashCard.setImageBitmap(bmpCashCard);
-                    mPreview4PsId.setImageBitmap(bmpId);
                     edtCashCard.setText(cashCardNumber);
                     edtHhNumber.setText(hhNumber);
                     edtSeriesNo.setText(seriesNumber);
+                    if (in.hasExtra("EmptyImageView")) {mPreview4PsId.setImageResource(R.drawable.ic_image); }
+                    else{mPreview4PsId.setImageBitmap(bmpId); }
                 }
             }catch (Exception e){
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
