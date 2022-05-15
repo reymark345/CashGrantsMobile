@@ -18,8 +18,6 @@ public class Activity_Splash_Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_login);
         BtnLogin = (Button) findViewById(R.id.btnAccess);
-
-
         BtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

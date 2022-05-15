@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +37,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.IOException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 
 public class ScannedDetails extends AppCompatActivity {
 
@@ -47,15 +49,10 @@ public class ScannedDetails extends AppCompatActivity {
     private int prevCount = 0;
     public int id = 0;
     private String cashCardNumber;
-    String blankMessage = "Please filled this blank";
+    String blankMessage = "Please fill this blank";
     Intent intent;
-
     Uri image_uri;
-
     ImageView mPreviewIv;
-
-
-
     private boolean isAtSpaceDelimiter(int currCount) {
         return currCount == 4 || currCount == 9 || currCount == 14 || currCount == 19;
     }
@@ -106,17 +103,7 @@ public class ScannedDetails extends AppCompatActivity {
         btnRescanCashCard.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 pickCamera();
-
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, 102);
-
-//                Toast.makeText(getApplicationContext(), "No function yet, to be update using Inheritance", Toast.LENGTH_SHORT).show();
-
-
-//                ScanCashCard action = new ScanCashCard();
-//                action.pickCamera();
             }
         });
 
@@ -270,7 +257,10 @@ public class ScannedDetails extends AppCompatActivity {
                             imageViewToByte(mPreviewCashCard),
                             imageViewToByte(mPreview4PsId)
                     );
-                    intent = new Intent(ScannedDetails.this, ScanCashCard.class);
+                    String value="Added Successfully";
+                    intent= new Intent(ScannedDetails.this, ScanCashCard.class);
+                    intent.putExtra("toast",value);
+
                 }
                 else{
                     sqLiteHelper.updateInventoryList(
@@ -316,7 +306,7 @@ public class ScannedDetails extends AppCompatActivity {
         }
 
         if (idCard.equals("Scan")){
-            Toast.makeText(getApplicationContext(), "Please Scan 4P's Id", Toast.LENGTH_SHORT).show();
+            Toasty.error(this,"Please Scan 4P's Id", Toasty.LENGTH_SHORT).show();
         }
         if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Cash Card contains a character");
@@ -451,14 +441,25 @@ public class ScannedDetails extends AppCompatActivity {
                     Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
                     Bitmap bmpId = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
                     mPreviewCashCard.setImageBitmap(bmpCashCard);
-                    mPreview4PsId.setImageBitmap(bmpId);
                     edtCashCard.setText(cashCardNumber);
                     edtHhNumber.setText(hhNumber);
                     edtSeriesNo.setText(seriesNumber);
+                    if (in.hasExtra("EmptyImageView")) {mPreview4PsId.setImageResource(R.drawable.ic_image); }
+                    else{mPreview4PsId.setImageBitmap(bmpId); }
                 }
             }catch (Exception e){
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (scanned==true){intent = new Intent(ScannedDetails.this, ScanCashCard.class);}
+            else{intent = new Intent(ScannedDetails.this, InventoryList.class);}
+            startActivity(intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

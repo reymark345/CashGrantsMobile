@@ -87,13 +87,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
-    public void excludeData(int i) {
+    public void excludeData(int i, int status) {
+        if (status == 0){status =1;}
+        else {status =0;}
         int idd = i+1;
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE CgList SET card_scanning_status = ?  WHERE id = ? ";
+        String sql = "UPDATE CgList SET card_scanning_status = ?,card_scanning_status = ? WHERE id = ? ";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.bindLong(1, 0);
-        statement.bindLong(2, idd);
+        statement.bindLong(2, status);
+        statement.bindLong(3, idd);
         statement.execute();
         database.close();
     }

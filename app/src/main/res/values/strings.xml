@@ -4,4 +4,7 @@
     <string name="shot_views">Shot Views</string>
     <string name="more">more</string>
     <string name="allRightsReserved">All rights reserved <i>DSWD CARAGA <b>2021</b></i></string>
+
+    <string name="navigation_open">Open Navigation drawer</string>
+    <string name="navigation_close">Close Navigation drawer</string>
 </resources>

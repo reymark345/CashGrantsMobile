@@ -1,6 +1,7 @@
 package com.example.cashgrantsmobile.Inventory;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -10,8 +11,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Scanner.ScannedDetails;
 
 import java.util.ArrayList;
 
@@ -20,14 +26,13 @@ public class InventoryListAdapter extends BaseAdapter {
     private Context context;
     private  int layout;
     private ArrayList<Inventory> inventoryList;
+    String DarkModeStatus;
 
     public InventoryListAdapter(Context context, int layout, ArrayList<Inventory> foodsList) {
         this.context = context;
         this.layout = layout;
         this.inventoryList = foodsList;
-
     }
-
     @Override
     public int getCount() {
         return inventoryList.size();
@@ -50,8 +55,10 @@ public class InventoryListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-
-
+        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,status FROM DarkMode");
+        while (cursor.moveToNext()) {
+            DarkModeStatus = cursor.getString(1);
+        }
 
         View row = view;
         ViewHolder holder = new ViewHolder();
@@ -73,14 +80,22 @@ public class InventoryListAdapter extends BaseAdapter {
         holder.txtName.setText(inventory.getName());
         holder.txtPrice.setText(inventory.getPrice());
         holder.txtSeriesNo.setText(inventory.getSeriesNumber());
-
         int status = inventory.getStatus();
-
-        if (status==0){
-            row.setBackgroundColor(Color.parseColor("#FEF8DD"));
+        if (status==0 && DarkModeStatus.matches("false")){
+              //exclude and white
+            row.setBackgroundColor(Color.parseColor("#FEF8DD")); //
         }
-        else{
-            row.setBackgroundColor(Color.parseColor("#FFF7F7FA"));
+        else if(status==0 && DarkModeStatus.matches("true")){
+            //exclude and dark
+            row.setBackgroundColor(Color.parseColor("#282828"));
+        }
+        else if (status==1 && DarkModeStatus.matches("false")) {
+            //include and white
+            row.setBackgroundColor(Color.parseColor("#F7F7FA")); // white background color you are using
+        }
+        else if (status==1 && DarkModeStatus.matches("true")) {
+            //include and white
+            row.setBackgroundColor(Color.parseColor("#252C4B")); // white background color you are using
         }
 
         byte[] CashCardImage = inventory.getImage();

@@ -15,7 +15,8 @@
     <color name="lightGrey">#EAEAEA</color>
     <color name="textHeadline">#434343</color>
     <color name="textDescription">#686868</color>
-
+    <color name="black">#000000</color>
+    <color name="backgroundDisplay">#F7F7FA</color>
 
 <!-- DE colors -->
     <color name="colorOnPrimaryDemo">#fff</color>

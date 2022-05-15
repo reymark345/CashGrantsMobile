@@ -15,8 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CashGrantsMobile">
+<!--        android:name=".Splash.Activity_Splash_Login"-->
         <activity
-            android:name=".Splash.Activity_Splash_Login"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,9 +46,9 @@
             android:name=".Sync.SpinnerLoading"
             android:parentActivityName=".Sync.SyncData"/>
 
-        <activity
-            android:name=".MainActivity"
-            android:parentActivityName=".Splash.Activity_Splash_Login"/>
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:parentActivityName=".Splash.Activity_Splash_Login"/>-->
 
     </application>
 
