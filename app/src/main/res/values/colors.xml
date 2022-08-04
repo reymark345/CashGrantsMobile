@@ -26,4 +26,26 @@
     <color name="colorAccentDemo">#665815</color>
 
 
+    <color name="dark_one">#dcdcdc</color>
+    <color name="dark_two">#dcdcdc</color>
+    <color name="dark_three">#dcdcdc</color>
+
+    <color name="orange_one">#e65252</color>
+    <color name="orange_two">#e65252</color>
+    <color name="orange_three">#e65252</color>
+
+
+    <array name="active">
+        <item>@color/orange_one</item>
+        <item>@color/orange_two</item>
+        <item>@color/orange_three</item>
+    </array>
+
+    <array name="inactive">
+        <item>@color/dark_one</item>
+        <item>@color/dark_two</item>
+        <item>@color/dark_three</item>
+    </array>
+
+
 </resources>

@@ -46,6 +46,10 @@
             android:name=".Sync.SpinnerLoading"
             android:parentActivityName=".Sync.SyncData"/>
 
+        <activity
+            android:name=".Scanner.ActivityHome"
+            android:parentActivityName=".Scanner.ScanCashCard"/>
+
 <!--        <activity-->
 <!--            android:name=".MainActivity"-->
 <!--            android:parentActivityName=".Splash.Activity_Splash_Login"/>-->
