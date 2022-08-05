@@ -71,7 +71,7 @@ public class ScanCashCard extends AppCompatActivity {
     public static boolean scanned = true;
     Uri image_uri;
     TextView ScannedCount;
-    String household;
+    String household = "";
 
     //onboard
 
@@ -92,6 +92,8 @@ public class ScanCashCard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_cash_card);
+        mPreviewIv = findViewById(R.id.imageIv);
+        mPreviewIv .setVisibility(View.INVISIBLE);
 
 //        btn_scan = (Button) findViewById(R.id.btnScan);
 //        ScannedCount = (TextView) findViewById(R.id.ScannedCount);
@@ -124,7 +126,7 @@ public class ScanCashCard extends AppCompatActivity {
         introPref = new IntroPref(this);
         if (!introPref.isFirstTimeLaunch()) {
             launchHomeScreen();
-            finish();
+//            finish();
         }
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -141,26 +143,27 @@ public class ScanCashCard extends AppCompatActivity {
                 R.layout.intro_one,
                 R.layout.intro_two,
                 R.layout.intro_three
+
         };
 
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edt_hh = findViewById(R.id.edt_hh_no);
-                household = edt_hh.getText().toString();
+//                edt_hh = findViewById(R.id.edt_hh_no);
+//                household = edt_hh.getText().toString();
 
                 int current = getItem(+1);
-
-                if (household.matches("")){
-                    Toasty.error(getApplicationContext(),"Required", Toasty.LENGTH_SHORT).show();
-                }
-                else if (current < layouts.length) {
+//
+//                if (household.matches("")){
+//                    Toasty.error(getApplicationContext(),"Required", Toasty.LENGTH_SHORT).show();
+//                }
+                if (current < layouts.length) {
                     viewPager.setCurrentItem(current);
                 }
 
-//                else {
-//                    launchHomeScreen();
-//                }
+                else {
+                    launchHomeScreen();
+                }
             }
         });
 
@@ -362,9 +365,6 @@ public class ScanCashCard extends AppCompatActivity {
 
 
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-
-
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -373,12 +373,15 @@ public class ScanCashCard extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-            if (household.matches("")){
-                Toasty.error(getApplicationContext(),"Required", Toasty.LENGTH_SHORT).show();
-            }
-            if (position == layouts.length - 1) {
-                tvNext.setText("SCAN");
+//            edt_hh = findViewById(R.id.edt_hh_no);
+//            household = edt_hh.getText().toString();
+//
+//            if (household.matches("")){
+//                Toasty.error(getApplicationContext(),"Required", Toasty.LENGTH_SHORT).show();
+//            }
 
+             if (position == layouts.length - 1) {
+                tvNext.setText("SCAN");
 
                 Toasty.success(getApplicationContext(),"START", Toasty.LENGTH_SHORT).show();
             } else {
@@ -449,9 +452,10 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        introPref.setIsFirstTimeLaunch(false);
-        startActivity(new Intent(ScanCashCard.this, ActivityHome.class));
-        finish();
+//        introPref.setIsFirstTimeLaunch(false);
+        showImageImportDialog();
+//        startActivity(new Intent(ScanCashCard.this, ActivityHome.class));
+//        finish();
     }
 
 
