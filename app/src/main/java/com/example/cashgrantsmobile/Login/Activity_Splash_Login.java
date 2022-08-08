@@ -35,6 +35,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.google.android.material.textfield.TextInputLayout;
 import com.vishnusivadas.advanced_httpurlconnection.FetchData;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
@@ -43,8 +46,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
-
+import javax.net.ssl.SSLContext;
 
 
 public class Activity_Splash_Login extends AppCompatActivity {
@@ -60,6 +65,20 @@ public class Activity_Splash_Login extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnAccess);
         edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
+
+        try {
+            ProviderInstaller.installIfNeeded(getApplicationContext());
+            SSLContext sslContext;
+            sslContext = SSLContext.getInstance("TLSv1.2");
+            sslContext.init(null, null, null);
+            sslContext.createSSLEngine();
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException
+                | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,12 +90,13 @@ public class Activity_Splash_Login extends AppCompatActivity {
                         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                         BASE_URL  = sh.getString("urlBased", "");
 
-                        String username, password;
-                        username = String.valueOf(edtUsername.getText());
+                        String email, password, device;
+                        email = String.valueOf(edtUsername.getText());
                         password = String.valueOf(edtPassword.getText());
+                        device = "mobile";
                         String result ="";
 
-                        if(!username.equals("") && !password.equals("")){
+                        if(!email.equals("") && !password.equals("")){
                             //Start ProgressBar first (Set visibility VISIBLE)
                             Handler handler = new Handler(Looper.getMainLooper());
                             handler.post(new Runnable() {
@@ -84,15 +104,17 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                 public void run() {
                                     try{
 
-                                        String[] field = new String[2];
+                                        String[] field = new String[3];
                                         field[0] = "username";
                                         field[1] = "password";
+                                        field[2] = "device_name";
 
                                         //Creating array for data
-                                        String[] data = new String[2];
-                                        data[0] = username;
-                                        data[1] = password;
-                                        PutData putData = new PutData(BASE_URL+"/api/v1/staff/granteelists", "POST", field, data);
+                                        String[] data = new String[3];
+                                        data[0] = "admin@admin.com";
+                                        data[1] = "password";
+                                        data[2] = "mobile";
+                                        PutData putData = new PutData("http://cgtracking.test/api/v1/staff/auth/login", "POST", field, data);
                                         if (putData.startPut()) {
                                             if (putData.onComplete()) {
                                                 String result = putData.getResult();
