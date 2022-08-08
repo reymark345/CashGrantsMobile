@@ -85,7 +85,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                     try{
 
                                         String[] field = new String[2];
-                                        field[0] = "id_no";
+                                        field[0] = "username";
                                         field[1] = "password";
 
                                         //Creating array for data
@@ -98,6 +98,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                                 String result = putData.getResult();
                                                 try
                                                 {
+                                                    Toasty.error(Activity_Splash_Login.this, "Result "+result, Toast.LENGTH_SHORT, true).show();
 //                                                    JSONArray jsonArray = new JSONArray(result);
 //                                                    JSONObject jsonObject1 = jsonArray.getJSONObject(0);
 //                                                    JSONArray ar = (JSONArray) jsonObject1.get("result");
