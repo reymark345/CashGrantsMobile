@@ -1,5 +1,6 @@
 package com.example.cashgrantsmobile.Login;
 
+import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import static com.google.android.gms.vision.L.TAG;
 
 import android.content.Intent;
@@ -20,10 +21,12 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cashgrantsmobile.Database.SQLiteHelper;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 
 import es.dmoral.toasty.Toasty;
+import com.example.cashgrantsmobile.Database.SQLiteHelper;
 
 
 import android.app.Dialog;
@@ -72,6 +75,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
     Button btnLogin;
     EditText edtUsername, edtPassword;
     String BASE_URL = "http://cgtracking.test";
+    public static SQLiteHelper sqLiteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnAccess);
         edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
+        createDatabase();
 
         try {
             ProviderInstaller.installIfNeeded(getApplicationContext());
@@ -118,7 +123,16 @@ public class Activity_Splash_Login extends AppCompatActivity {
                             try {
                                 JSONObject data = new JSONObject(response);
                                 String status = data.getString("status");
-                                Toasty.success(Activity_Splash_Login.this, status, Toast.LENGTH_SHORT, true).show();
+                                String token = data.getString("token");
+
+                                sqLiteHelper.insertToken(token);
+
+
+                                Toasty.success(Activity_Splash_Login.this, token, Toast.LENGTH_SHORT, true).show();
+
+
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -170,5 +184,12 @@ public class Activity_Splash_Login extends AppCompatActivity {
 //                Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
 //                startActivity(intent);
 //                finish();
+    }
+
+    public void createDatabase(){
+        sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS tokens(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR)");
     }
 }

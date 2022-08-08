@@ -56,6 +56,39 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void insertDefaultToken(){
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "INSERT INTO token VALUES (NULL,?)";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.clearBindings();
+            statement.bindString(1, "");
+            statement.executeInsert();
+
+        }
+        catch(Exception e){
+            Log.v(TAG,"token");
+        }
+    }
+
+    public void insertToken(String token){
+        try {
+            insertDefaultToken();
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE token SET tokens = ? WHERE id = 1";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindString(1, token);
+            statement.execute();
+            database.close();
+
+            Log.v(TAG,"success Token");
+        }
+        catch(Exception e){
+            Log.v(TAG,"token");
+            Log.v(TAG,e.toString());
+        }
+    }
+
     public void updateScannedCashCard(String scannedCashCard,byte[] cc_image){
 
         try {
