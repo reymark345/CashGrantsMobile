@@ -1,5 +1,7 @@
 package com.example.cashgrantsmobile.Login;
 
+import static com.google.android.gms.vision.L.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 
@@ -35,6 +47,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.google.android.material.textfield.TextInputLayout;
 import com.vishnusivadas.advanced_httpurlconnection.FetchData;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
@@ -43,8 +58,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
-
+import javax.net.ssl.SSLContext;
 
 
 public class Activity_Splash_Login extends AppCompatActivity {
@@ -60,120 +80,95 @@ public class Activity_Splash_Login extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnAccess);
         edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
+
+        try {
+            ProviderInstaller.installIfNeeded(getApplicationContext());
+            SSLContext sslContext;
+            sslContext = SSLContext.getInstance("TLSv1.2");
+            sslContext.init(null, null, null);
+            sslContext.createSSLEngine();
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException
+                | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "s " + username + " " + password ,Toast.LENGTH_SHORT).show();
-                btnLogin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            public void onClick(View view) {
 
-                        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                        BASE_URL  = sh.getString("urlBased", "");
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                BASE_URL  = sh.getString("urlBased", "");
 
-                        String username, password;
-                        username = String.valueOf(edtUsername.getText());
-                        password = String.valueOf(edtPassword.getText());
-                        String result ="";
+                String username, password, device;
+                username = String.valueOf(edtUsername.getText());
+                password = String.valueOf(edtPassword.getText());
+                device = "mobile";
 
-                        if(!username.equals("") && !password.equals("")){
-                            //Start ProgressBar first (Set visibility VISIBLE)
-                            Handler handler = new Handler(Looper.getMainLooper());
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try{
+                if(!username.equals("") && !password.equals("")){
+                    String url = "http://172.26.153.104/cgtracking/public/api/v1/staff/auth/login";
 
-                                        String[] field = new String[2];
-                                        field[0] = "username";
-                                        field[1] = "password";
+                    // creating a new variable for our request queue
+                    RequestQueue queue = Volley.newRequestQueue(Activity_Splash_Login.this);
 
-                                        //Creating array for data
-                                        String[] data = new String[2];
-                                        data[0] = username;
-                                        data[1] = password;
-                                        PutData putData = new PutData(BASE_URL+"/api/v1/staff/granteelists", "POST", field, data);
-                                        if (putData.startPut()) {
-                                            if (putData.onComplete()) {
-                                                String result = putData.getResult();
-                                                try
-                                                {
-                                                    Toasty.error(Activity_Splash_Login.this, "Result "+result, Toast.LENGTH_SHORT, true).show();
-//                                                    JSONArray jsonArray = new JSONArray(result);
-//                                                    JSONObject jsonObject1 = jsonArray.getJSONObject(0);
-//                                                    JSONArray ar = (JSONArray) jsonObject1.get("result");
-//                                                    JSONObject jsonObject2 = ar.getJSONObject(0);
-
-//                                                    message = jsonObject1.optString("message");
-//                                                    type = jsonObject1.optString("type");
-//                                                    token = jsonObject1.optString("token");
-//                                                    id_number = jsonObject2.optString("id_no");
-//                                                    fname = jsonObject2.optString("first_name");
-//                                                    lname = jsonObject2.optString("last_name");
-//                                                    user_id = jsonObject2.optString("user_id");
-//                                                    role = jsonObject2.optString("role_name");
-//                                                    image = jsonObject2.optString("image");
-//                                                    role_id = jsonObject2.optString("user_role");
-
-//                                                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-//                                                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
-//
-//                                                    myEdit.putString("idNo", id_number);
-//                                                    myEdit.putString("firstName", fname);
-//                                                    myEdit.putString("lastName", lname);
-//                                                    myEdit.putString("userId", user_id);
-//                                                    myEdit.putString("roleName", role);
-//                                                    myEdit.putString("imageUrl", image);
-//                                                    myEdit.putString("roleId", role_id);
-//                                                    myEdit.putString("token", token);
-//                                                    myEdit.commit();
-
-
-//                                                    if (type.matches("success")){
-//                                                        //                                            Toast.makeText(getApplicationContext(), "test " + id, Toast.LENGTH_SHORT).show();
-//                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                                                        startActivity(intent);
-//                                                        finish();
-//                                                    }
-//                                                    else{
-//                                                        Toasty.error(Activity_Splash_Login.this, message, Toast.LENGTH_SHORT, true).show();
-//                                                    }
-
-                                                }
-//                                                catch (JSONException e)
-                                                catch (Exception e)
-                                                {
-                                                    Toasty.error(Activity_Splash_Login.this, "ID no./Password is wrong", Toast.LENGTH_SHORT, true).show();
-                                                }
-
-                                            }
-                                        }
-
-                                    }
-
-                                    catch (Exception e){
-                                        Toast.makeText(getApplicationContext(), "Errs " + e, Toast.LENGTH_SHORT).show();
-                                    }
-
-
-                                    //End Write and Read data with URL
-                                }
-                            });
-
+                    // in this we are calling a post method.
+                    StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            // on below line we are displaying a success toast message.
+                            try {
+                                JSONObject data = new JSONObject(response);
+                                String status = data.getString("status");
+                                Toasty.success(Activity_Splash_Login.this, status, Toast.LENGTH_SHORT, true).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                        else {
-                            Toasty.error(Activity_Splash_Login.this, "All fields required ", Toast.LENGTH_SHORT, true).show();
+                    }, new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // method to handle errors.
+                            try {
+                                String responseBody = new String(error.networkResponse.data, "utf-8");
+                                JSONObject data = new JSONObject(responseBody);
+                                JSONArray errors = data.getJSONArray("errors");
+                                JSONObject jsonMessage = errors.getJSONObject(0);
+                                String message = jsonMessage.getString("message");
+                                Toasty.warning(Activity_Splash_Login.this, message, Toast.LENGTH_SHORT, true).show();
+                            } catch (JSONException | UnsupportedEncodingException e) {
+                                Toasty.warning(Activity_Splash_Login.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
+                            }
                         }
-                    }
-                });
 
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            // below line we are creating a map for
+                            // storing our values in key and value pair.
+                            Map<String, String> params = new HashMap<String, String>();
 
+                            // on below line we are passing our key
+                            // and value pair to our parameters.
+                            params.put("username", username);
+                            params.put("password", password);
+                            params.put("device_name", device);
 
+                            // at last we are
+                            // returning our params.
+                            return params;
+                        }
+                    };
+                    // below line is to make
+                    // a json object request.
+                    queue.add(request);
+                }
+                else {
+                    Toasty.error(Activity_Splash_Login.this, "All fields required ", Toast.LENGTH_SHORT, true).show();
+                }
+            }
+        });
 
 //                Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
 //                startActivity(intent);
 //                finish();
-            }
-        });
     }
 }
