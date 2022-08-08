@@ -77,17 +77,6 @@
                         android:textStyle="bold"
                         />
 
-                    <Button
-                        android:layout_width="45dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        android:padding="10dp"
-                        android:layout_marginRight="10dp"
-                        android:id="@+id/editProfile"
-                        android:drawableLeft="@drawable/ic_edit"
-                        android:textSize="10dp"
-                        android:textStyle="bold" />
 
                 </LinearLayout>
 

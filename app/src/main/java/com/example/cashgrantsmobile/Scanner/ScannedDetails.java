@@ -168,7 +168,7 @@ public class ScannedDetails extends AppCompatActivity {
                     TextRecognizer recognizer = new TextRecognizer.Builder(getApplicationContext()).build();
 
                     if(!recognizer.isOperational()){
-                        Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,"Error this",Toast.LENGTH_SHORT).show();
                     }
                     else{
                         Frame frame = new Frame.Builder().setBitmap(bitmap).build();
