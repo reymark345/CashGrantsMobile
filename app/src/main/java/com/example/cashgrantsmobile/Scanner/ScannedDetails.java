@@ -205,7 +205,7 @@ public class ScannedDetails extends AppCompatActivity {
                         image_uri = Uri.parse(image_uri.toString());
                         try {
                             Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
-                            mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 187, 250, false));
+                            mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
                             sqLiteHelper.updateScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -223,7 +223,7 @@ public class ScannedDetails extends AppCompatActivity {
                         }
                         try {
                             Bitmap bitmaps = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
-                            mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmaps, 187, 250, false));
+                            mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmaps, 374, 500, false));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -413,7 +413,7 @@ public class ScannedDetails extends AppCompatActivity {
                 Uri myUri = Uri.parse(resultUri);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),myUri);
-                    mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 187, 250, false));
+                    mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
