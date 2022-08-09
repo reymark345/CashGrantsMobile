@@ -56,13 +56,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertDefaultToken(){
+    public void insertDefaultToken(String token){
         try {
             SQLiteDatabase database = getWritableDatabase();
             String sql = "INSERT INTO token VALUES (NULL,?)";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.clearBindings();
-            statement.bindString(1, "");
+            statement.bindString(1, token);
             statement.executeInsert();
 
         }
@@ -71,16 +71,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertToken(String token){
+    public void updateToken(String token){
         try {
-            insertDefaultToken();
+
             SQLiteDatabase database = getWritableDatabase();
             String sql = "UPDATE token SET tokens = ? WHERE id = 1";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.bindString(1, token);
             statement.execute();
             database.close();
-
             Log.v(TAG,"success Token");
         }
         catch(Exception e){

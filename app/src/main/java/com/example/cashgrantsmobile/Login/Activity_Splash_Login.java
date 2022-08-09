@@ -85,6 +85,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
         edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         createDatabase();
+        generateToken();
 
         try {
             ProviderInstaller.installIfNeeded(getApplicationContext());
@@ -101,6 +102,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                 BASE_URL  = sh.getString("urlBased", "");
 
@@ -110,7 +113,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
                 device = "mobile";
 
                 if(!username.equals("") && !password.equals("")){
-                    String url = "http://172.26.153.104/cgtracking/public/api/v1/staff/auth/login";
+                    String url = "http://172.31.249.76/cgtracking/public/api/v1/staff/auth/login";
+//                    String url = "https://crg-finance-svr.entdswd.local/cgtracking/api/v1/staff/auth/login";
 
                     // creating a new variable for our request queue
                     RequestQueue queue = Volley.newRequestQueue(Activity_Splash_Login.this);
@@ -125,12 +129,22 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                 String status = data.getString("status");
                                 String token = data.getString("token");
 
-                                sqLiteHelper.insertToken(token);
 
+                                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                                String tokenStats = sh.getString("tokenStatus", "");
 
-                                Toasty.success(Activity_Splash_Login.this, token, Toast.LENGTH_SHORT, true).show();
-
-
+                                if (tokenStats.matches("1")){
+                                    sqLiteHelper.updateToken(token);
+                                    Toasty.success(Activity_Splash_Login.this, "1111 "+token, Toast.LENGTH_SHORT, true).show();
+                                }
+                                else{
+                                    sqLiteHelper.insertDefaultToken(token);
+                                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                    myEdit.putString("tokenStatus", "1");
+                                    myEdit.commit();
+                                    Toasty.error(Activity_Splash_Login.this, "2222 "+token, Toast.LENGTH_SHORT, true).show();
+                                }
 
 
                             } catch (JSONException e) {
@@ -191,5 +205,14 @@ public class Activity_Splash_Login extends AppCompatActivity {
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS tokens(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR)");
+    }
+    public void generateToken(){
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        if (!sharedPreferences.contains("tokenStatus")) {
+            myEdit.putString("tokenStatus", "0");
+            myEdit.commit();
+            Toasty.success(Activity_Splash_Login.this, "1111 ", Toast.LENGTH_SHORT, true).show();
+        }
     }
 }

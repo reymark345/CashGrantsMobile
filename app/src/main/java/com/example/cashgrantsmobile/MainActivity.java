@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_main);
-        createDatabase();
+//        createDatabase();
         //CardView
         CashCardScanner = (CardView) findViewById(R.id.CardScan);
         InventoryList = (CardView) findViewById(R.id.inventoryList);
