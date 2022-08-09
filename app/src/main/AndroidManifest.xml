@@ -16,11 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CashGrantsMobile">
-
-<!--        android:name=".Login.Activity_Splash_Login"-->
+<!--        android:name=".MainActivity"-->
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Login.Activity_Splash_Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +53,7 @@
             android:parentActivityName=".Scanner.ScanCashCard"/>
 
         <activity
-            android:name=".Login.Activity_Splash_Login"
+            android:name=".MainActivity"
             android:parentActivityName=".Login.Activity_Splash_Login"/>
 
     </application>

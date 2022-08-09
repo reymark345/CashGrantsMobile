@@ -50,6 +50,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.security.ProviderInstaller;
@@ -129,13 +130,11 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                 String status = data.getString("status");
                                 String token = data.getString("token");
 
-
                                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                                 String tokenStats = sh.getString("tokenStatus", "");
 
                                 if (tokenStats.matches("1")){
                                     sqLiteHelper.updateToken(token);
-                                    Toasty.success(Activity_Splash_Login.this, "1111 "+token, Toast.LENGTH_SHORT, true).show();
                                 }
                                 else{
                                     sqLiteHelper.insertDefaultToken(token);
@@ -143,8 +142,15 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                     myEdit.putString("tokenStatus", "1");
                                     myEdit.commit();
-                                    Toasty.error(Activity_Splash_Login.this, "2222 "+token, Toast.LENGTH_SHORT, true).show();
+
                                 }
+
+                                Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+
+
+
 
 
                             } catch (JSONException e) {
