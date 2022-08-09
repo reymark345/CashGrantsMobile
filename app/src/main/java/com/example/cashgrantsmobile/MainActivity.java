@@ -1,5 +1,7 @@
 package com.example.cashgrantsmobile;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -11,10 +13,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 
 
 import com.example.cashgrantsmobile.Database.SQLiteHelper;
+import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
@@ -125,7 +130,15 @@ public class MainActivity extends AppCompatActivity {
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Logout",Toast.LENGTH_SHORT).show();
+                sqLiteHelper.deleteAccess();
+
+                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putString("tokenStatus", "0");
+                myEdit.commit();
+                Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -134,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS token(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS Api(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR, user_id VARCHAR, email VARCHAR, mobile VARCHAR, name VARCHAR, username VARCHAR )");
     }
 
     public void darkModeStatus(){

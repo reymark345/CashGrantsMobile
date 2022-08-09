@@ -56,34 +56,46 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertDefaultToken(String token){
+    public void insertDefaultUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "INSERT INTO token VALUES (NULL,?)";
+            String sql = "INSERT INTO Api VALUES (1,?,?,?,?,?,?)";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.clearBindings();
             statement.bindString(1, token);
+            statement.bindString(2, user_id);
+            statement.bindString(3, email);
+            statement.bindString(4, mobile);
+            statement.bindString(5, name);
+            statement.bindString(6, username);
             statement.executeInsert();
+
+            Log.v(TAG,"insertDefault");
 
         }
         catch(Exception e){
-            Log.v(TAG,"token");
+            Log.v(TAG,"insertDefault na error ");
         }
     }
-
-    public void updateToken(String token){
+    public void updateUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
-
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE token SET tokens = ? WHERE id = 1";
+
+            String sql = "UPDATE Api SET token = ?,user_id=?, email=?,mobile=?,name=?,username=? WHERE id = 1";
+
             SQLiteStatement statement = database.compileStatement(sql);
             statement.bindString(1, token);
+            statement.bindString(2, user_id);
+            statement.bindString(3, email);
+            statement.bindString(4, mobile);
+            statement.bindString(5, name);
+            statement.bindString(6, username);
             statement.execute();
             database.close();
             Log.v(TAG,"success Token");
         }
         catch(Exception e){
-            Log.v(TAG,"token");
+            Log.v(TAG,"error Token");
             Log.v(TAG,e.toString());
         }
     }
@@ -161,6 +173,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return database.rawQuery(sql, null);
     }
 
+    public  void deleteAccess() {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "DELETE FROM Api";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.execute();
+        database.close();
+    }
+
     public  void deleteData(int id) {
         SQLiteDatabase database = getWritableDatabase();
 
@@ -192,7 +213,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public void insertData(String cash_card_actual_no, String hh_number,String series_number ,byte[] cc_image,byte[] id_image){
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "INSERT INTO CgList VALUES (NULL,?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO CgList VALUES (1,?, ?, ?, ?, ?)";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
         statement.bindString(1, cash_card_actual_no);

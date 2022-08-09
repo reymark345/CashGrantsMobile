@@ -151,13 +151,15 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tvSkip.setVisibility(View.VISIBLE);
+                edt_hh = findViewById(R.id.edt_hh_no);
+                edt_id_no = findViewById(R.id.edtIdno);
 
                 int current = getItem(+1);
                 String required_field = "This field is required!";
 
                 if (current == 1) {
                     String household = "";
-                    edt_hh = findViewById(R.id.edt_hh_no);
+
                     household = edt_hh.getText().toString();
                     if (household.matches("")){
                         tilHhId = findViewById(R.id.til_hhid);
@@ -171,7 +173,7 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 } else if (current == 2) {
                     String id_no = "";
-                    edt_id_no = findViewById(R.id.edtIdno);
+
                     id_no = edt_id_no.getText().toString();
                     if (id_no.matches("")){
                         tilIdNo = findViewById(R.id.til_Idno);
@@ -183,6 +185,13 @@ public class ScanCashCard extends AppCompatActivity {
                     else {
                         launchHomeScreen();
                     }
+                }
+                if (current < layouts.length) {
+//                    tilIdNo.setError(null);
+                    viewPager.setCurrentItem(current);
+                }
+                else {
+                    launchHomeScreen();
                 }
 
             }
