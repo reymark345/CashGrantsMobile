@@ -45,6 +45,7 @@ import com.example.cashgrantsmobile.R;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
@@ -65,7 +66,7 @@ public class ScanCashCard extends AppCompatActivity {
     public static boolean scanned = true;
     Uri image_uri;
     TextView ScannedCount;
-    String household = "";
+
 
     //onboard
 
@@ -76,8 +77,8 @@ public class ScanCashCard extends AppCompatActivity {
     private int[] layouts;
     private TextView[] dots;
     private MyViewPagerAdapter viewPagerAdapter;
-
-    EditText edt_hh;
+    TextInputLayout tilHhId, tilIdNo;
+    EditText edt_hh, edt_id_no;
 
     //end onboard
 
@@ -143,28 +144,47 @@ public class ScanCashCard extends AppCompatActivity {
         if (current ==1) {
             tvSkip.setVisibility(View.GONE);
             // move to next screen
-            Toasty.success(getApplicationContext(),"dsaf", Toasty.LENGTH_SHORT).show();
+//            Toasty.success(getApplicationContext(),"dsaf", Toasty.LENGTH_SHORT).show();
         }
 
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tvSkip.setVisibility(View.VISIBLE);
-//                edt_hh = findViewById(R.id.edt_hh_no);
-//                household = edt_hh.getText().toString();
-//
+
                 int current = getItem(+1);
-////
-//                if (household.matches("")){
-//                    Toasty.error(getApplicationContext(),"Required", Toasty.LENGTH_SHORT).show();
-//                }
-                if (current < layouts.length) {
-                    viewPager.setCurrentItem(current);
+                String required_field = "This field is required!";
+
+                if (current == 1) {
+                    String household = "";
+                    edt_hh = findViewById(R.id.edt_hh_no);
+                    household = edt_hh.getText().toString();
+                    if (household.matches("")){
+                        tilHhId = findViewById(R.id.til_hhid);
+                        tilHhId.setError(required_field);
+                    } else if (current < layouts.length) {
+                        tilHhId.setError(null);
+                        viewPager.setCurrentItem(current);
+                    }
+                    else {
+                        launchHomeScreen();
+                    }
+                } else if (current == 2) {
+                    String id_no = "";
+                    edt_id_no = findViewById(R.id.edtIdno);
+                    id_no = edt_id_no.getText().toString();
+                    if (id_no.matches("")){
+                        tilIdNo = findViewById(R.id.til_Idno);
+                        tilIdNo.setError(required_field);
+                    } else if (current < layouts.length) {
+                        tilIdNo.setError(null);
+                        viewPager.setCurrentItem(current);
+                    }
+                    else {
+                        launchHomeScreen();
+                    }
                 }
 
-                else {
-                    launchHomeScreen();
-                }
             }
         });
         tvSkip.setOnClickListener(new View.OnClickListener() {

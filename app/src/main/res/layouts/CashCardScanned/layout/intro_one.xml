@@ -37,13 +37,14 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_Idno"
+                    android:id="@+id/til_hhid"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
+                    app:errorEnabled="true"
                     app:counterEnabled="true"
                     app:counterMaxLength="12"
                     app:endIconMode="clear_text"
