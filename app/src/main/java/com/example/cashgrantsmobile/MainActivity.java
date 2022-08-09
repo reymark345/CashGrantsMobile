@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS token(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
     }
 
     public void darkModeStatus(){
