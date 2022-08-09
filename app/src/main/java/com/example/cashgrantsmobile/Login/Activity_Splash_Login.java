@@ -65,10 +65,17 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 
 public class Activity_Splash_Login extends AppCompatActivity {
@@ -102,8 +109,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                NukeSSLCerts.nuke();
 
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                 BASE_URL  = sh.getString("urlBased", "");
@@ -114,8 +120,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
                 device = "mobile";
 
                 if(!username.equals("") && !password.equals("")){
-                    String url = "http://172.31.249.76/cgtracking/public/api/v1/staff/auth/login";
-//                    String url = "https://crg-finance-svr.entdswd.local/cgtracking/api/v1/staff/auth/login";
+//                    String url = "http://172.31.249.76/cgtracking/public/api/v1/staff/auth/login";
+                    String url = "https://crg-finance-svr.entdswd.local/cgtracking/api/v1/staff/auth/login";
 
                     // creating a new variable for our request queue
                     RequestQueue queue = Volley.newRequestQueue(Activity_Splash_Login.this);
@@ -171,6 +177,10 @@ public class Activity_Splash_Login extends AppCompatActivity {
                             } catch (JSONException | UnsupportedEncodingException e) {
                                 Toasty.warning(Activity_Splash_Login.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
                             }
+                            catch (Exception e) {
+//                                Toasty.error(Activity_Splash_Login.this, e.toString(), Toast.LENGTH_SHORT, true).show();
+                                Toasty.error(Activity_Splash_Login.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
+                            }
                         }
 
                     }) {
@@ -221,4 +231,39 @@ public class Activity_Splash_Login extends AppCompatActivity {
             Toasty.success(Activity_Splash_Login.this, "1111 ", Toast.LENGTH_SHORT, true).show();
         }
     }
+
+    public static class NukeSSLCerts {
+        protected static final String TAG = "NukeSSLCerts";
+
+        public static void nuke() {
+            try {
+                TrustManager[] trustAllCerts = new TrustManager[] {
+                        new X509TrustManager() {
+                            public X509Certificate[] getAcceptedIssuers() {
+                                X509Certificate[] myTrustedAnchors = new X509Certificate[0];
+                                return myTrustedAnchors;
+                            }
+
+                            @Override
+                            public void checkClientTrusted(X509Certificate[] certs, String authType) {}
+
+                            @Override
+                            public void checkServerTrusted(X509Certificate[] certs, String authType) {}
+                        }
+                };
+
+                SSLContext sc = SSLContext.getInstance("SSL");
+                sc.init(null, trustAllCerts, new SecureRandom());
+                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+                HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String arg0, SSLSession arg1) {
+                        return true;
+                    }
+                });
+            } catch (Exception e) {
+            }
+        }
+    }
+
 }
