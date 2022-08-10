@@ -56,6 +56,10 @@
             android:name=".MainActivity"
             android:parentActivityName=".Login.Activity_Splash_Login"/>
 
+        <activity
+            android:name=".Signatories.Accomplish"
+            android:parentActivityName=".Scanner.ScannedDetails"/>
+
     </application>
 
 </manifest>
