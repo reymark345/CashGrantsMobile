@@ -31,10 +31,10 @@
     <LinearLayout
         android:id="@+id/layoutDots"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="25dp"
+        android:layout_height="50dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:background="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
@@ -44,8 +44,9 @@
         android:layout_margin="15dp"
         android:layout_marginBottom="25dp"
         android:text="PREV"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -56,8 +57,9 @@
         android:layout_margin="15dp"
         android:layout_marginBottom="25dp"
         android:text="NEXT"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
