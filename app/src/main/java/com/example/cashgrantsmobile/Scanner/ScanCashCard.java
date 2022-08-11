@@ -83,7 +83,7 @@ public class ScanCashCard extends AppCompatActivity {
 
     //onboard
 
-    private TextView tvNext, tvSkip;
+    private TextView tvNext, tvPrev;
     private ViewPager viewPager;
     private LinearLayout layoutDots;
     private IntroPref introPref;
@@ -92,12 +92,53 @@ public class ScanCashCard extends AppCompatActivity {
     private MyViewPagerAdapter viewPagerAdapter;
     TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee;
     TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilCurrentGranteeNumber, tilIsAvailable, tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3;
-    EditText edt_hh, edt_fullname, edt_client_status, edt_address, edt_set, edt_contact_no, edt_assigned;
+    TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
+    TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
+    EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned;
     EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3;
-    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3;
+    EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks;
+    EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
+    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory;
 
     String[] Ans = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"Male", "Female"};
+    String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
+    String[] ClientStatus = new String[]{
+            "1 - Active",
+            "14 - No Eligible (0-18 y/o) for CVS Monitoring (Certified by RPMO)",
+            "15 - No Eligible member of HH for CVS monitoring",
+            "12 - Moved out of the Area Without Notice",
+            "7 - Delisted due to non-compliance",
+            "29 - Delisted due to Aging Inactive Status in the Program",
+            "19 - Grants Temporarily On-Hold",
+            "5 - GRS delisted due to Misbehavior",
+            "6 - Duplicates",
+            "8 - Waived",
+            "10 - GRS delisted due to Disqualification",
+            "17 - GRS (Not Eligible - Regular Income)",
+            "3 - Graduated Due to Improved Level of Well-Being",
+            "9 - Not Registered",
+            "13 - Validated Not Poor due to Change of Address",
+            "21 - RPMO Approved Household for NPMO Processing",
+            "22 - Unlocated households",
+            "24 - GRS: Suspended grants due to misbehavior of HH",
+            "01 - Active",
+            "02 - Delisted by the Field Office",
+            "04 - Delisted (Fraud)",
+            "05 - GRS (Fraud)",
+            "06 - Duplicates (within MCCT)",
+            "08 - Waived",
+            "11 - Moved to non-PP Area",
+            "29 - Household Integrated to the PPIS",
+            "51 - Graduated (Included in the PPIS)",
+            "53 - Pending Registration (HH also Encoded in PPIS)",
+            "54 - Delisted (HH also in PPIS)",
+            "56 - Inactive (No Longer Interested)",
+            "59 - Eligible Child/ren not Selected for CVS Monitoring",
+            "61 - Graduated (Not included in the PPIS)"
+    };
+    String[] Status = new String[]{"Ongoing (card as collateral)", "Ongoing (card is on-hand)", "Retrieved"};
+    String[] Offense = new String[]{"1st Offense", "2nd Offense", "3rd Offense"};
 
     //end onboard
 
@@ -111,8 +152,6 @@ public class ScanCashCard extends AppCompatActivity {
 
 //        btn_scan = (Button) findViewById(R.id.btnScan);
 //        ScannedCount = (TextView) findViewById(R.id.ScannedCount);
-
-
 
 
         TotalScanned();
@@ -147,7 +186,7 @@ public class ScanCashCard extends AppCompatActivity {
         }
 
         tvNext = findViewById(R.id.tvNext);
-        tvSkip = findViewById(R.id.tvSkip);
+        tvPrev = findViewById(R.id.tvPrev);
         viewPager = findViewById(R.id.viewPager);
         layoutDots = findViewById(R.id.layoutDots);
 
@@ -158,15 +197,15 @@ public class ScanCashCard extends AppCompatActivity {
             R.layout.intro_four
         };
 
+        tvPrev.setVisibility(View.INVISIBLE);
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvSkip.setVisibility(View.VISIBLE);
 
                 boolean isValidationError = false;
                 String required_field = "This field is required!";
 
-                int current = getItem(+1);
+                int current = getItem(1);
 
                 if (current == 1) {
                     String household = "";
@@ -183,7 +222,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                     edt_hh = findViewById(R.id.edtHhId);
                     edt_fullname = findViewById(R.id.edtFullname);
-                    edt_client_status = findViewById(R.id.edtClientStatus);
+                    spinClientStatus = findViewById(R.id.spinnerClientStatus);
                     edt_address = findViewById(R.id.edtAddress);
                     spinSex = findViewById(R.id.spinnerSex);
                     edt_set = findViewById(R.id.edtSet);
@@ -193,7 +232,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                     household = edt_hh.getText().toString();
                     fullname = edt_fullname.getText().toString();
-                    client_status = edt_client_status.getText().toString();
+                    client_status = spinClientStatus.getText().toString();
                     address = edt_address.getText().toString();
                     sex = spinSex.getText().toString();
                     hh_set = edt_set.getText().toString();
@@ -367,8 +406,6 @@ public class ScanCashCard extends AppCompatActivity {
                         isValidationError = false;
                     }
 
-                } else if (current == 3) {
-                    isValidationError = false;
                 }
 
                 if (isValidationError) {
@@ -376,6 +413,7 @@ public class ScanCashCard extends AppCompatActivity {
                 } else {
                     Toasty.success(getApplicationContext(), "All fields are valid!", Toast.LENGTH_SHORT).show();
                     if (current < layouts.length) {
+                        tvPrev.setVisibility(View.VISIBLE);
                         viewPager.setCurrentItem(current);
                     }
                     else {
@@ -387,21 +425,21 @@ public class ScanCashCard extends AppCompatActivity {
 
             }
         });
-        tvSkip.setOnClickListener(new View.OnClickListener() {
+        tvPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int current = getItem(+1);
-//                if (current == 1){
-                    viewPager.setCurrentItem(current-1);
-//                    tvSkip.setVisibility(View.GONE);
-//                }
-//                else if (current < layouts.length) {
-//                    // move to next screen
-//                    viewPager.setCurrentItem(current-2);
-//                }
-//                else {
-//                    viewPager.setCurrentItem(current-2);
-//                }
+                int current = viewPager.getCurrentItem();
+
+                if (current > 0) {
+                    current = current - 1;
+                    viewPager.setCurrentItem(current);
+                }
+
+                if (current == 0){
+                    tvPrev.setVisibility(View.INVISIBLE);
+                } else {
+                    tvPrev.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -637,22 +675,24 @@ public class ScanCashCard extends AppCompatActivity {
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
 
-            Toast.makeText(getApplicationContext(),"Flag position " + position,Toast.LENGTH_SHORT).show();
-
-            if (position == 1) {
+            if (position == 0) {
                 spinSex = findViewById(R.id.spinnerSex);
                 spinAnswer = findViewById(R.id.spinnerMinorGrantee);
+                spinClientStatus = findViewById(R.id.spinnerClientStatus);
 
                 ArrayAdapter<String> adapterSex = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Sex);
                 ArrayAdapter<String> adapterAns = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
+                ArrayAdapter<String> adapterClientStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ClientStatus);
 
                 adapterSex.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterAns.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterClientStatus.setDropDownViewResource(simple_spinner_dropdown_item);
 
                 spinSex.setAdapter(adapterSex);
                 spinAnswer.setAdapter(adapterAns);
-            } else if (position == 2) {
-                String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
+                spinClientStatus.setAdapter(adapterClientStatus);
+
+            } else if (position == 1) {
 
                 spinIsAvail = findViewById(R.id.spinnerIsAvailable);
                 spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
@@ -750,6 +790,60 @@ public class ScanCashCard extends AppCompatActivity {
                         }
                     }
                 });
+            } else if (position == 2) {
+                edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
+
+                edt_date_withdrawn.setFocusable(false);
+                edt_date_withdrawn.setClickable(true);
+
+                edt_date_withdrawn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_date_withdrawn);
+                    }
+                });
+            } else if (position == 3) {
+                edt_pawning_date = findViewById(R.id.edtPawningDate);
+                edt_date_retrieved = findViewById(R.id.edtDateRetrieved);
+                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
+                spinStatus = findViewById(R.id.spinnerStatus);
+                spinOffenseHistory = findViewById(R.id.spinnerOffenseHistory);
+
+                ArrayAdapter<String> adapterStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Status);
+                ArrayAdapter<String> adapterOffenseHistory = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Offense);
+
+                adapterStatus.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterOffenseHistory.setDropDownViewResource(simple_spinner_dropdown_item);
+
+                spinStatus.setAdapter(adapterStatus);
+                spinOffenseHistory.setAdapter(adapterOffenseHistory);
+
+                edt_pawning_date.setFocusable(false);
+                edt_pawning_date.setClickable(true);
+                edt_date_retrieved.setFocusable(false);
+                edt_date_retrieved.setClickable(true);
+                edt_offense_history_date.setFocusable(false);
+                edt_offense_history_date.setClickable(true);
+
+                edt_pawning_date.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_pawning_date);
+                    }
+                });
+                edt_date_retrieved.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_date_retrieved);
+                    }
+                });
+                edt_offense_history_date.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_offense_history_date);
+                    }
+                });
+
             }
 
             return view;
@@ -773,7 +867,7 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     private int getItem(int i) {
-        return viewPager.getCurrentItem() + 1;
+        return viewPager.getCurrentItem() + i;
     }
 
     private void launchHomeScreen() {

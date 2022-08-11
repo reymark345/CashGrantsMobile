@@ -72,7 +72,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtClientStatus"
+                        android:id="@+id/edtNmaReason"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:hint="Reason for NMA"
