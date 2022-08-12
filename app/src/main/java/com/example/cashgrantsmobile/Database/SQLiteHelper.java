@@ -39,7 +39,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         try {
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "INSERT INTO CgList VALUES (NULL,?,?,?,?,?,?,0,?)";
+            String sql = "INSERT INTO CgList VALUES (NULL,?,?,?,?,?,?,0,?,?,?,?)";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.clearBindings();
             statement.bindString(1, "");
@@ -49,6 +49,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindString(5,"");
             statement.bindString(6, scannedCashCard);
             statement.bindString(7, strDate);
+            statement.bindString(8, "");
+            statement.bindString(9, "");
+            statement.bindString(10, "");
             statement.executeInsert();
         }
         catch(Exception e){
@@ -130,6 +133,25 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.bindBlob(5, id_image);
         statement.execute();
         database.close();
+    }
+    public void updateAccomplishSignature(int current_idd,byte[] signature) {
+        try {
+
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE CgList SET accomplish_img =? WHERE id = ?";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindBlob(1, signature);
+            statement.bindLong(2, current_idd);
+            statement.execute();
+            database.close();
+            Log.v(TAG,"ni updates");
+        }
+        catch (Exception e){
+            Log.v(TAG,"wala ni update "+e);
+        }
+
+
+
     }
     public void excludeData(int i, int status) {
         if (status == 0){status =1;}

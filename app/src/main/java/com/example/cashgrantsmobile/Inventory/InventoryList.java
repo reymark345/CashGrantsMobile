@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorWindow;
 import android.os.Bundle;
@@ -83,6 +84,13 @@ public class InventoryList extends AppCompatActivity {
                             public void onClick(SweetAlertDialog sDialog) {
                                 ScannedDetails.scanned = false;
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                myEdit.putString("signatureAccomplishment", "false");
+                                myEdit.putInt("updateMoriah", i);
+                                myEdit.putString("identifier", "true");
+                                myEdit.commit();
 
                                 if (id_image.length ==1){
                                     in.putExtra("updateData", i);

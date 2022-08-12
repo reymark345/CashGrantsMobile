@@ -52,7 +52,7 @@ public class ScannedDetails extends AppCompatActivity {
     public static boolean scanned;
     public static boolean signature;
     private int prevCount = 0;
-    public int id = 0;
+    public static int id = 0, max_id=0;
     private String cashCardNumber;
     String blankMessage = "Please fill this blank";
     Intent intent;
@@ -61,6 +61,8 @@ public class ScannedDetails extends AppCompatActivity {
     private boolean isAtSpaceDelimiter(int currCount) {
         return currCount == 4 || currCount == 9 || currCount == 14 || currCount == 19;
     }
+    int dataUp =0;
+    int detailScan=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +108,7 @@ public class ScannedDetails extends AppCompatActivity {
         CashCardOnChange();
         HouseholdOnChanged();
         SeriesOnChanged();
+        getMaxID();
         getData();
         signatoriesValidation();
 
@@ -152,8 +155,39 @@ public class ScannedDetails extends AppCompatActivity {
         btn_Accomplished.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ScannedDetails.this, Accomplish.class);
+
+
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                String falses = sh.getString("identifier", "");
+
+                int moriah = sh.getInt("updateMoriah", 0);
+
+
+
+                Intent in = getIntent();
+                dataUp = in.getIntExtra("updateData", 0);
+                Toast.makeText(getApplicationContext(), "Acc ni" + dataUp + " " + id, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), Accomplish.class);
+                intent.putExtra("conditionForSignature", moriah);
+
+                Log.v(TAG,"moriah " + dataUp + " " +moriah);
                 startActivity(intent);
+
+
+//                if (dataUp==0){
+//                    Intent in = getIntent();
+//                    dataUp = in.getIntExtra("updateData", 0);
+//                    Toast.makeText(getApplicationContext(), "Acc ni" + dataUp + " " + id, Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(getApplicationContext(), Accomplish.class);
+//                    intent.putExtra("conditionForSignature", dataUp);
+//                    Log.v(TAG,"moriah " + dataUp + " " +id);
+//
+//
+//                    startActivity(intent);
+//
+//                }
+//                else {
+
 //                finish();
             }
         });
@@ -170,15 +204,15 @@ public class ScannedDetails extends AppCompatActivity {
                 mAccomplished.setImageBitmap(Bitmap.createScaledBitmap(bmp, 374, 500, false));
 //                image.setImageBitmap(bmp);
 
-                Toast.makeText(this, "111111111 ", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "111111111 ", Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(this, "22222222", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "22222222", Toast.LENGTH_SHORT).show();
             }
 
         }
         catch (Exception e){
-            Toast.makeText(this, "Error kayah ni" + e, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Error kayah ni" + e, Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -459,15 +493,28 @@ public class ScannedDetails extends AppCompatActivity {
     public void getData(){
 
 
+        Intent in = getIntent();
+        detailScan = in.getIntExtra("detailScan", 0);
+        Log.v(TAG,"detailsScan" + detailScan);
+
+
+
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-        String accomplishment = sh.getString("signatureAccomplishment", "");
+        String signatories = sh.getString("signatureAccomplishment", "");
+        String identifier = sh.getString("identifier", "");
 
+//        if (identifier.matches("true")){
+//            intent.putExtra("detailScan", (signatureCondition+1));
+//            Log.v(TAG,"unta 1" + identifier + " " + (signatureCondition+1));
+//        }
+//        else {
+//            intent.putExtra("detailScan", signatureCondition);
+//            Log.v(TAG,"unta 2" + identifier);
+//        }
 
-        Toast.makeText(ScannedDetails.this, "testt" + accomplishment, Toast.LENGTH_SHORT).show();
-        Log.v(TAG,"accomni" + accomplishment);
-
-
-        if (scanned ==true && accomplishment.matches("false")){
+        if (scanned ==true && !signatories.matches("true")){
+            Toast.makeText(ScannedDetails.this, "this is 1" + signatories, Toast.LENGTH_SHORT).show();
+            Log.v(TAG,"FIRSTSCANNED");
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 String resultUri = extras.getString("CashCardImage");
@@ -481,16 +528,60 @@ public class ScannedDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
         }
-        else{
-            Intent in = getIntent();
+        else if (signatories.matches("true") && detailScan==0 && identifier.matches("false")){
+            Log.v(TAG,"SECONDSCANNED" + dataUp);
             int updateId = in.getIntExtra("updateData", 0);
             id = updateId+1;
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no, accomplish_img FROM CgList WHERE id="+max_id);
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1).matches("")){
+                        cashCardNumber = cursor.getString(6);
+                    }
+                    else{
+                        cashCardNumber = cursor.getString(1);
+                    }
+                    String hhNumber = cursor.getString(2);
+                    String seriesNumber = cursor.getString(3);
+                    byte[] CashCardImage = cursor.getBlob(4);
+                    byte[] granteeImage = cursor.getBlob(5);
+                    byte[] accomplish = cursor.getBlob(7);
+                    Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
+                    mPreviewCashCard.setImageBitmap(bmpCashCard);
+
+
+                    //Grantee
+                    if(granteeImage.length > 1){Bitmap grantee = BitmapFactory.decodeByteArray(granteeImage, 0, granteeImage.length);mPreviewGrantee.setImageBitmap(grantee);}
+                    else{mPreviewGrantee.setImageResource(R.drawable.ic_image);}
+
+                    //accomplish
+                    if(accomplish.length > 1){Bitmap accomplishedBy = BitmapFactory.decodeByteArray(accomplish, 0, accomplish.length);mAccomplished.setImageBitmap(accomplishedBy);}
+                    else{mAccomplished.setImageResource(R.drawable.ic_image);}
+
+
+
+                    edtCashCard.setText(cashCardNumber);
+                    edtHhNumber.setText(hhNumber);
+                    edtSeriesNo.setText(seriesNumber);
+//                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
+//                    else{mPreviewGrantee.setImageBitmap(bmpId); }
+                }
+            }catch (Exception e){
+                Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if (detailScan!=0){
+            int updateId = in.getIntExtra("updateData", 0);
+            id = updateId+1;
+            Log.v(TAG,"lastt" + detailScan);
+            btnRescanBeneId.setText("RE-SCAN");
+            btnSubmit.setText("UPDATE");
+            try {
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no, accomplish_img FROM CgList WHERE id="+(detailScan+1));
+//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
                         cashCardNumber = cursor.getString(6);
@@ -502,9 +593,50 @@ public class ScannedDetails extends AppCompatActivity {
                     String seriesNumber = cursor.getString(3);
                     byte[] CashCardImage = cursor.getBlob(4);
                     byte[] idImage = cursor.getBlob(5);
+                    byte[] accomplish = cursor.getBlob(7);
+
                     Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
                     Bitmap bmpId = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
+                    Bitmap accomplishedBy = BitmapFactory.decodeByteArray(accomplish, 0, accomplish.length);
                     mPreviewCashCard.setImageBitmap(bmpCashCard);
+                    mAccomplished.setImageBitmap(accomplishedBy);
+                    edtCashCard.setText(cashCardNumber);
+                    edtHhNumber.setText(hhNumber);
+                    edtSeriesNo.setText(seriesNumber);
+                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
+                    else{mPreviewGrantee.setImageBitmap(bmpId); }
+                }
+            }catch (Exception e){
+                Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            int updateId = in.getIntExtra("updateData", 0);
+            id = updateId+1;
+            Log.v(TAG,"3rdScanned" + max_id + "id " + id);
+            btnRescanBeneId.setText("RE-SCAN");
+            btnSubmit.setText("UPDATE");
+            try {
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no, accomplish_img FROM CgList WHERE id="+id);
+//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1).matches("")){
+                        cashCardNumber = cursor.getString(6);
+                    }
+                    else{
+                        cashCardNumber = cursor.getString(1);
+                    }
+                    String hhNumber = cursor.getString(2);
+                    String seriesNumber = cursor.getString(3);
+                    byte[] CashCardImage = cursor.getBlob(4);
+                    byte[] idImage = cursor.getBlob(5);
+                    byte[] accomplish = cursor.getBlob(7);
+
+                    Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
+                    Bitmap bmpId = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
+                    Bitmap accomplishedBy = BitmapFactory.decodeByteArray(accomplish, 0, accomplish.length);
+                    mPreviewCashCard.setImageBitmap(bmpCashCard);
+                    mAccomplished.setImageBitmap(accomplishedBy);
                     edtCashCard.setText(cashCardNumber);
                     edtHhNumber.setText(hhNumber);
                     edtSeriesNo.setText(seriesNumber);
@@ -527,9 +659,32 @@ public class ScannedDetails extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
     public void signatoriesValidation (){
-        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-        SharedPreferences.Editor myEdit = sharedPreferences.edit();
-        myEdit.putString("signatureAccomplishment", "false");
-        myEdit.commit();
+
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String signatories = sh.getString("signatureAccomplishment", "");
+        if (!signatories.matches("true")){
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString("signatureAccomplishment", "false");
+            myEdit.commit();
+        }
+    }
+
+    public void getMaxID(){
+        try {
+            Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT max(id) FROM CGList");
+            while (cursor.moveToNext()) {
+                max_id = cursor.getInt(0);
+            }
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putInt("maxIdScanned", max_id);
+            myEdit.commit();
+
+            Toast.makeText(ScannedDetails.this, "Max IDD" + max_id, Toast.LENGTH_SHORT).show();
+            Log.v(TAG,"test Maxs"+max_id);
+        }catch (Exception e){
+            Log.v(TAG,"test Maxa"+e);
+        }
     }
 }

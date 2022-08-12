@@ -2,6 +2,9 @@ package com.example.cashgrantsmobile.Signatories;
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
+import static com.example.cashgrantsmobile.Scanner.ScanCashCard.imageViewToByte;
+import static com.example.cashgrantsmobile.Scanner.ScannedDetails.id;
 import static com.example.cashgrantsmobile.Scanner.ScannedDetails.signature;
 
 import android.content.Intent;
@@ -32,6 +35,12 @@ public class Accomplish extends AppCompatActivity {
         Button buttonSignature = findViewById(R.id.btnSubmit);
         Button buttonClear = findViewById(R.id.btnClear);
         ImageView imageViewSignature = findViewById(R.id.imageSignature);
+        imageViewSignature.setVisibility(View.INVISIBLE);
+
+        Intent in = getIntent();
+        int signatureCondition = in.getIntExtra("conditionForSignature", 0);
+
+        Log.v(TAG,"walay value?" + id + " "+signatureCondition);
 
         buttonClear.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -57,13 +66,33 @@ public class Accomplish extends AppCompatActivity {
                     myEdit.putString("signatureAccomplishment", "true");
                     myEdit.commit();
 
-//                    String sign = "true";
+                    SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                    String identifier = sh.getString("identifier", "");
+
+                    if (signatureCondition ==0 && identifier.matches("false")){
+                        int currentId = sh.getInt("maxIdScanned", 0);
+
+                        sqLiteHelper.updateAccomplishSignature(
+                                currentId,
+                                imageViewToByte(imageViewSignature)
+                        );
+                        Log.v(TAG,"samplee zerro" + signatureCondition);
+                    }
+                    else {
+                        sqLiteHelper.updateAccomplishSignature(
+                                (signatureCondition+1),
+                                imageViewToByte(imageViewSignature)
+                        );
+
+                        Log.v(TAG,"samplee 1" + signatureCondition);
+
+                    }
+
                     Intent intent = new Intent(getApplicationContext(), ScannedDetails.class);
-                    intent.putExtra("imageAccomplish", byteArray);
-//                    intent.putExtra("signatureValidation", sign);
+                    intent.putExtra("detailScan", signatureCondition);
                     startActivity(intent);
 
-
+//
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Error" + e, Toast.LENGTH_SHORT).show();
                     Log.v(TAG,"Error ni " + e);
