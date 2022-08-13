@@ -49,18 +49,6 @@
                     android:background="@drawable/selector_fieldset_background"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tViewId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_cashCard"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="sans-serif-condensed"
-                        android:text="Cash card"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_cashCard"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -85,8 +73,20 @@
                             android:maxLength="23" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <TextView
+                        android:id="@+id/tViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_cashCard"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Cash card"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
                     <Button
-                        android:id="@+id/rescanBeneId"
+                        android:id="@+id/rescanCashCard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_cashCard"
@@ -100,7 +100,7 @@
                         android:id="@+id/tViewCashCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/PsID"
+                        android:layout_below="@id/ScannedImage"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="sans-serif-condensed"
@@ -109,10 +109,10 @@
                         android:textStyle="bold" />
 
                     <Button
-                        android:id="@+id/rescanCashCard"
+                        android:id="@+id/rescanBeneId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/rescanBeneId"
+                        android:layout_below="@id/rescanCashCard"
                         android:layout_alignRight="@id/tViewCashCard"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="80dp"
@@ -121,7 +121,18 @@
                         android:textColor="@color/white" />
 
                     <ImageView
-                        android:id="@+id/PsID"
+                        android:id="@+id/ScannedImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewId"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+                    <ImageView
+                        android:id="@+id/imgUri"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_below="@id/tViewId"
@@ -147,7 +158,7 @@
 
 
                     <ImageView
-                        android:id="@+id/ScannedImage"
+                        android:id="@+id/PsID"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_below="@id/tViewCashCard"
@@ -175,7 +186,7 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_accomplished_by"
+                        android:id="@+id/til_household"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -188,7 +199,7 @@
                         app:startIconDrawable="@drawable/ic_creditcard">
 
                         <EditText
-                            android:id="@+id/edt_accomplished_by"
+                            android:id="@+id/hhNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Accomplished by"
@@ -199,7 +210,7 @@
                         android:id="@+id/btn_Accomplished"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_accomplished_by"
+                        android:layout_below="@+id/til_household"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="50dp"
                         android:layout_marginRight="30dp"
@@ -210,7 +221,7 @@
                         android:id="@+id/tViewAccomplished"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_accomplished_by"
+                        android:layout_below="@+id/til_household"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-condensed"
@@ -247,7 +258,7 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_informant"
+                        android:id="@+id/til_seriesno"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -260,7 +271,7 @@
                         app:startIconDrawable="@drawable/ic_creditcard">
 
                         <EditText
-                            android:id="@+id/edt_informant"
+                            android:id="@+id/seriesNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Informant"
@@ -271,7 +282,7 @@
                         android:id="@+id/btn_informant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_informant"
+                        android:layout_below="@+id/til_seriesno"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="50dp"
                         android:layout_marginRight="30dp"
@@ -282,7 +293,7 @@
                         android:id="@+id/tViewAccomplished1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_informant"
+                        android:layout_below="@+id/til_seriesno"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-condensed"

@@ -1,235 +1,409 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background"
-    tools:context=".Scanner.ScannedDetails">
-
-    <RelativeLayout
-        android:id="@+id/linear2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/btnSubmit"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical"
-        android:background="@drawable/selector_fieldset_background">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/til_cashCard"
-            app:counterEnabled="true"
-            app:counterMaxLength="23"
-            app:endIconMode="clear_text"
-            app:helperText="Good valid!"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            app:helperTextTextColor="@color/validation"
-            app:startIconDrawable="@drawable/ic_creditcard"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLength="23"
-                android:hint="Cash Card no."
-                android:id="@+id/Idresult"
-                android:inputType="number"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/til_household"
-            app:endIconMode="clear_text"
-            app:helperText="Mandatory"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            app:helperTextTextColor="@color/validation"
-            app:startIconDrawable="@drawable/ic_household"
-            android:layout_below="@+id/til_cashCard"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Accomplished by:"
-                android:id="@+id/hhNo"
-                android:layout_below="@id/Idresult"/>
-        </com.google.android.material.textfield.TextInputLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_seriesno"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="clear_text"
-            app:helperText="Mandatory"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            app:helperTextTextColor="@color/validation"
-            app:startIconDrawable="@drawable/ic_series"
-            android:layout_below="@+id/til_household"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Informant"
-                android:id="@+id/seriesNo"
-                android:inputType="number"
-                android:layout_below="@id/hhNo"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/textView1"
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:layout_marginLeft="20dp"
-        android:text="Cash Card Scanner"
-        android:fontFamily="sans-serif-condensed"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="15dp" />
+        android:layout_height="match_parent">
 
-
-    <RelativeLayout
-        android:id="@+id/linearl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/btnSubmit"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="330dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical"
-        android:background="@drawable/selector_fieldset_background">
-
-        <TextView
-            android:id="@+id/tViewId"
-            android:text="4P's ID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"/>
-
-        <Button
-            android:id="@+id/rescanBeneId"
+        <RelativeLayout
+            android:id="@+id/firstGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@id/tViewId"
-            android:text="Scan"
-            android:layout_marginTop="80dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/white"
-            />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="Scanned details"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/tViewCashCard"
-            android:text="Cash Card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_below="@id/rescanBeneId"/>
-
-        <Button
-            android:id="@+id/rescanCashCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rescanBeneId"
-            android:text="Re-scan"
-            android:layout_alignRight="@id/tViewCashCard"
-            android:layout_marginTop="80dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/white"/>
-
-        <ImageView
-            android:id ="@+id/PsID"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@id/tViewId"
-            android:background="@drawable/round_outline"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_image"
-            />
-
-        <ImageView
-            android:id ="@+id/ScannedImage"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_below="@id/tViewCashCard"
-            android:background="@drawable/round_outline"
-            android:scaleType="fitXY"
-            app:srcCompat="@mipmap/ic_launcher"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@color/background"
-            android:layout_marginRight="15dp"
-            android:layout_alignParentRight="true"
-            android:text="Image Details"
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="15dp" />
+                <RelativeLayout
+                    android:id="@+id/linearl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/btnSubmit"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/selector_fieldset_background"
+                    android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgUri"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_below="@id/tViewId"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/round_outline"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_image" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_cashCard"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="23"
+                        app:endIconMode="clear_text"
+                        app:helperText="Good valid!"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
 
-    </RelativeLayout>
+                        <EditText
+                            android:id="@+id/Idresult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Cash Card no."
+                            android:inputType="number"
+                            android:maxLength="23" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_cashCard"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Cash card"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/rescanCashCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_cashCard"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginRight="30dp"
+                        android:text="SCAN"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tViewCashCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ScannedImage"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Grantee"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/rescanBeneId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rescanCashCard"
+                        android:layout_alignRight="@id/tViewCashCard"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="80dp"
+                        android:layout_marginRight="30dp"
+                        android:text="SCAN"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/ScannedImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewId"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+
+                    <ImageView
+                        android:id="@+id/imgUri"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewId"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/textView2"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:background="@color/background"-->
+                    <!--                        android:layout_marginRight="15dp"-->
+                    <!--                        android:layout_alignParentRight="true"-->
+                    <!--                        android:text="Image Details"-->
+                    <!--                        android:fontFamily="sans-serif-condensed"-->
+                    <!--                        android:textAppearance="?android:attr/textAppearanceLarge"-->
+                    <!--                        android:textSize="15dp" />-->
 
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/mybutton"
-        android:text="SUBMIT"
-        android:textColor="@color/white"
-        android:textSize="30dp" />
+                    <ImageView
+                        android:id="@+id/PsID"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewCashCard"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+
+                </RelativeLayout>
 
 
+                <!--  Accomplished  by  -->
+                <RelativeLayout
+                    android:id="@+id/linearl2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/selector_fieldset_background"
+                    android:orientation="vertical">
 
-</RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_household"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperText="Good valid!"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtAccomplish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Accomplished by"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btn_Accomplished"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_household"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginRight="30dp"
+                        android:text="Sign"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tViewAccomplished"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_household"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Accomplished Signature"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/imgAccomplished"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewAccomplished"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+
+                </RelativeLayout>
+
+                <!--  Informant  -->
+
+                <RelativeLayout
+                    android:id="@+id/linearl3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/selector_fieldset_background"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_seriesno"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperText="Good valid!"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtInformant"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informant"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btn_informant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_seriesno"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginRight="30dp"
+                        android:text="SIGN"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tViewAccomplished1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_seriesno"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Informant Signature"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/imgInformant"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewAccomplished1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+
+                </RelativeLayout>
+
+                <!--  Attested  by  -->
+
+                <RelativeLayout
+                    android:id="@+id/linearl4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/selector_fieldset_background"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_attested"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperText="Good valid!"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edt_attested"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Attested by"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btn_attested"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_attested"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="51dp"
+                        android:layout_marginRight="30dp"
+                        android:text="SIGN"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tViewAttested"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_attested"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Attested Signature"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/imgAttested"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewAttested"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/mybutton"
+                    android:text="SUBMIT"
+                    android:textColor="@color/white"
+                    android:textSize="30dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+</LinearLayout>

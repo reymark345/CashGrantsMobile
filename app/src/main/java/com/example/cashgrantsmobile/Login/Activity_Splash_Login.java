@@ -99,7 +99,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String tokenStats = sh.getString("tokenStatus", "");
 
-        Log.v(ContentValues.TAG,"makaulit " +tokenStats);
+        Log.v(ContentValues.TAG,"token " +tokenStats);
 
         if(tokenStats.matches("1")){
             Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
@@ -241,7 +241,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
     public void createDatabase(){
         sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, accomplish_by VARCHAR, informant VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP, accomplish_img BLOB , informant_image BLOB, attested_img BLOB, attested VARCHAR)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS Api(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR, user_id VARCHAR, email VARCHAR, mobile VARCHAR, name VARCHAR, username VARCHAR )");
     }
