@@ -3,6 +3,7 @@ package com.example.cashgrantsmobile.Login;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import static com.google.android.gms.vision.L.TAG;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -95,6 +96,17 @@ public class Activity_Splash_Login extends AppCompatActivity {
         createDatabase();
         generateToken();
 
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String tokenStats = sh.getString("tokenStatus", "");
+
+        Log.v(ContentValues.TAG,"token " +tokenStats);
+
+        if(tokenStats.matches("1")){
+            Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         try {
             ProviderInstaller.installIfNeeded(getApplicationContext());
             SSLContext sslContext;
@@ -133,31 +145,42 @@ public class Activity_Splash_Login extends AppCompatActivity {
                             // on below line we are displaying a success toast message.
                             try {
                                 JSONObject data = new JSONObject(response);
+                                JSONObject dataObject = data.getJSONObject("data");
+
                                 String status = data.getString("status");
                                 String token = data.getString("token");
+                                String user_id = dataObject.getString("id");
+                                String email = dataObject.getString("email");
+                                String mobile = dataObject.getString("mobile");
+                                String name = dataObject.getString("name");
+                                String username = dataObject.getString("username");
 
-                                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                                String tokenStats = sh.getString("tokenStatus", "");
+                                if (status.matches("success")){
 
-                                if (tokenStats.matches("1")){
-                                    sqLiteHelper.updateToken(token);
+                                    SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                                    String tokenStats = sh.getString("tokenStatus", "");
+
+                                    if (tokenStats.matches("1")){
+                                        sqLiteHelper.updateUser(token,user_id,email,mobile,name,username);
+                                        Toasty.success(Activity_Splash_Login.this, "updateUser", Toast.LENGTH_SHORT, true).show();
+                                    }
+                                    else{
+                                        sqLiteHelper.insertDefaultUser(token,user_id,email,mobile,name,username);
+                                        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                                        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                        myEdit.putString("tokenStatus", "1");
+                                        myEdit.commit();
+
+                                        Toasty.success(Activity_Splash_Login.this, "InsertUser", Toast.LENGTH_SHORT, true).show();
+
+                                    }
+                                    Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                                 else{
-                                    sqLiteHelper.insertDefaultToken(token);
-                                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                                    myEdit.putString("tokenStatus", "1");
-                                    myEdit.commit();
-
+                                    Toasty.success(Activity_Splash_Login.this, "Please contact Administrator", Toast.LENGTH_SHORT, true).show();
                                 }
-
-                                Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-
-
-
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -218,9 +241,9 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
     public void createDatabase(){
         sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, accomplish_by VARCHAR, informant VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP, accomplish_img BLOB , informant_image BLOB, attested_img BLOB, attested VARCHAR)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS tokens(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS Api(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR, user_id VARCHAR, email VARCHAR, mobile VARCHAR, name VARCHAR, username VARCHAR )");
     }
     public void generateToken(){
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);

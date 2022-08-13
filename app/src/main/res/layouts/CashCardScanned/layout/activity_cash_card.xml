@@ -93,7 +93,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="60dp"
                         android:layout_marginRight="30dp"
-                        android:text="SCAN"
+                        android:text="Scan"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -131,7 +131,6 @@
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
                         app:srcCompat="@drawable/ic_image" />
-
                     <ImageView
                         android:id="@+id/imgUri"
                         android:layout_width="90dp"
@@ -200,7 +199,7 @@
                         app:startIconDrawable="@drawable/ic_creditcard">
 
                         <EditText
-                            android:id="@+id/edtAccomplish"
+                            android:id="@+id/hhNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Accomplished by"
@@ -215,7 +214,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="50dp"
                         android:layout_marginRight="30dp"
-                        android:text="Sign"
+                        android:text="Scan"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -272,7 +271,7 @@
                         app:startIconDrawable="@drawable/ic_creditcard">
 
                         <EditText
-                            android:id="@+id/edtInformant"
+                            android:id="@+id/seriesNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Informant"
@@ -287,7 +286,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="50dp"
                         android:layout_marginRight="30dp"
-                        android:text="SIGN"
+                        android:text="Scan"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -344,7 +343,7 @@
                         app:startIconDrawable="@drawable/ic_creditcard">
 
                         <EditText
-                            android:id="@+id/edt_attested"
+                            android:id="@+id/edt_informant1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Attested by"
@@ -357,9 +356,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_attested"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="51dp"
+                        android:layout_marginTop="50dp"
                         android:layout_marginRight="30dp"
-                        android:text="SIGN"
+                        android:text="Scan"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -400,10 +399,21 @@
                     android:text="SUBMIT"
                     android:textColor="@color/white"
                     android:textSize="30dp" />
+
+
+
             </LinearLayout>
+
+
+
 
         </RelativeLayout>
 
 
+
+
     </ScrollView>
+
+
+
 </LinearLayout>

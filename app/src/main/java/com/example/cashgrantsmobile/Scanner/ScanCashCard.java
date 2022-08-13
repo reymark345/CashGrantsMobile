@@ -21,9 +21,11 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -153,8 +155,8 @@ public class ScanCashCard extends AppCompatActivity {
 //        btn_scan = (Button) findViewById(R.id.btnScan);
 //        ScannedCount = (TextView) findViewById(R.id.ScannedCount);
 
+//        TotalScanned();
 
-        TotalScanned();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("toast");
@@ -420,6 +422,13 @@ public class ScanCashCard extends AppCompatActivity {
                         launchHomeScreen();
                     }
                 }
+                if (current < layouts.length) {
+//                    tilIdNo.setError(null);
+                    viewPager.setCurrentItem(current);
+                }
+                else {
+                    launchHomeScreen();
+                }
 
                 Toast.makeText(getApplicationContext(),"current_page" + current,Toast.LENGTH_SHORT).show();
 
@@ -568,7 +577,22 @@ public class ScanCashCard extends AppCompatActivity {
                     sTextFromET = sTextFromET.replaceAll("....", "$0 ");
                     //save temp database
                     image_uri = Uri.parse(image_uri.toString());
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                    myEdit.putString("signatureAccomplishment", "false");
+                    myEdit.putString("identifier", "false");
+                    myEdit.putInt("updateMoriah", 0);
+                    myEdit.commit();
+
+
+                    SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                    String falses = sh.getString("identifier", "");
+
+
+
                     ScannedDetails.scanned = true;
+
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
                     try {
                         Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
@@ -582,6 +606,7 @@ public class ScanCashCard extends AppCompatActivity {
                             i.putExtra("cashCardNumber",sTextFromET);
                             sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
                         }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -597,6 +622,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
         }
     }
+
     public static byte[] imageViewToByte(ImageView image) {
         Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
         image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 120, 120, false));
@@ -606,7 +632,7 @@ public class ScanCashCard extends AppCompatActivity {
         return byteArray;
     }
     public void TotalScanned(){
-        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
+        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
         int z = cursor.getCount();
 //        ScannedCount.setText("Total Scanned: " + String.valueOf(z));
     }

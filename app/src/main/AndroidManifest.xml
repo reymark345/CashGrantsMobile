@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CashGrantsMobile">
+
+<!--        android:name=".MainActivity"-->
 <!--        android:name=".Login.Activity_Splash_Login"-->
+<!--        android:name=".MainActivity"-->
+
 
         <activity
             android:name=".MainActivity"
@@ -55,6 +59,18 @@
         <activity
             android:name=".Login.Activity_Splash_Login"
             android:parentActivityName=".Login.Activity_Splash_Login"/>
+
+        <activity
+            android:name=".Signatories.Accomplish"
+            android:parentActivityName=".Scanner.ScannedDetails"/>
+
+        <activity
+            android:name=".Signatories.Informant"
+            android:parentActivityName=".Scanner.ScannedDetails"/>
+
+        <activity
+            android:name=".Signatories.Attested"
+            android:parentActivityName=".Scanner.ScannedDetails"/>
 
     </application>
 
