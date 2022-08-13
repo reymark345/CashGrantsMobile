@@ -133,7 +133,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
                 if(!username.equals("") && !password.equals("")){
 //                    String url = "http://172.31.249.76/cgtracking/public/api/v1/staff/auth/login";
-                    String url = "https://crg-finance-svr.entdswd.local/cgtracking/api/v1/staff/auth/login";
+                    String url = "http://192.168.1.9/cgtracking/public/api/v1/staff/auth/login";
 
                     // creating a new variable for our request queue
                     RequestQueue queue = Volley.newRequestQueue(Activity_Splash_Login.this);
@@ -244,6 +244,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, hh_number VARCHAR,series_number VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS Api(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR, user_id VARCHAR, email VARCHAR, mobile VARCHAR, name VARCHAR, username VARCHAR )");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_database_monitoring(id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR, hh_id VARCHAR, client_status VARCHAR, address VARCHAR, sex VARCHAR, hh_set_group VARCHAR, current_grantee_card_number VARCHAR, other_card_number_1 VARCHAR, other_card_holder_name_1 VARCHAR, other_card_number_2 VARCHAR, other_card_holder_name_2 VARCHAR, other_card_number_3 VARCHAR, other_card_holder_name_3 VARCHAR, upload_history_id INTEGER, created_at TIMESTAMP, updated_at TIMESTAMP, validated_at TIMESTAMP)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_database_monitoring_details(id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR, hh_id VARCHAR, client_status VARCHAR, address VARCHAR, sex VARCHAR, hh_set_group VARCHAR, assigned_staff VARCHAR, minor_grantee VARCHAR, contact INTEGER, current_grantee_card_release_date DATE, current_grantee_card_release_place VARCHAR, current_grantee_card_release_by VARCHAR, current_grantee_is_available VARCHAR, current_grantee_reason VARCHAR, current_grantee_card_number VARCHAR, other_card_number_1 VARCHAR, other_card_holder_name_1 VARCHAR, other_card_number_2 VARCHAR, other_card_holder_name_2 VARCHAR, other_card_number_3 VARCHAR, other_card_holder_name_3 VARCHAR, other_card_is_available VARCHAR, other_card_reason VARCHAR, nma_amount DECIMAL, nma_date_claimed DATE, nma_reason VARCHAR, nma_remarks VARCHAR, pawn_name_of_lender VARCHAR, pawn_date DATE, pawn_retrieved_date DATE, pawn_status VARCHAR, pawn_reason VARCHAR, pawn_offense_history, pawn_offense_date DATE, pawn_remarks VARCHAR, pawn_intervention_staff VARCHAR, pawn_other_details VARCHAR, accomplish_e_signature BLOB, informant_e_signature BLOB, attested_by_e_signature BLOB, attested_by_full_name VARCHAR, other_card_number_series_1 VARCHAR, other_card_number_series_2 VARCHAR, other_card_number_series_3 VARCHAR, emv_database_monitoring_id INTEGER, current_grantee_card_number_series VARCHAR, user_id INTEGER, sync_at TIMESTAMP, created_at TIMESTAMP, updated_at TIMESTAMP)");
     }
     public void generateToken(){
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);

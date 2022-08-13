@@ -42,6 +42,9 @@
             android:name=".Inventory.InventoryList"
             android:parentActivityName=".MainActivity"/>
         <activity
+            android:name=".Pull.PullData"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".Sync.SyncData"
             android:parentActivityName=".MainActivity"/>
         <activity
