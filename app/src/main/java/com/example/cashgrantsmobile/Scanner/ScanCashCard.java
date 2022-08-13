@@ -344,7 +344,15 @@ public class ScanCashCard extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
                     myEdit.putString("signatureAccomplishment", "false");
+                    myEdit.putString("identifier", "false");
+                    myEdit.putInt("updateMoriah", 0);
                     myEdit.commit();
+
+
+                    SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                    String falses = sh.getString("identifier", "");
+
+
 
                     ScannedDetails.scanned = true;
 

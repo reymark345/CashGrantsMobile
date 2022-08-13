@@ -69,6 +69,8 @@ public class Accomplish extends AppCompatActivity {
                     SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                     String identifier = sh.getString("identifier", "");
 
+                    Intent intent = new Intent(getApplicationContext(), ScannedDetails.class);
+
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
 
@@ -76,6 +78,7 @@ public class Accomplish extends AppCompatActivity {
                                 currentId,
                                 imageViewToByte(imageViewSignature)
                         );
+                        intent.putExtra("detailScan", 0);
                         Log.v(TAG,"samplee zerro" + signatureCondition);
                     }
                     else {
@@ -83,13 +86,13 @@ public class Accomplish extends AppCompatActivity {
                                 (signatureCondition+1),
                                 imageViewToByte(imageViewSignature)
                         );
-
+                        intent.putExtra("detailScan", signatureCondition);
                         Log.v(TAG,"samplee 1" + signatureCondition);
 
                     }
 
-                    Intent intent = new Intent(getApplicationContext(), ScannedDetails.class);
-                    intent.putExtra("detailScan", signatureCondition);
+
+
                     startActivity(intent);
 
 //

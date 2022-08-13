@@ -38,6 +38,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -63,6 +64,7 @@ public class ScannedDetails extends AppCompatActivity {
     }
     int dataUp =0;
     int detailScan=0;
+    int grante_no = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,43 +157,18 @@ public class ScannedDetails extends AppCompatActivity {
         btn_Accomplished.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                String falses = sh.getString("identifier", "");
-
                 int moriah = sh.getInt("updateMoriah", 0);
-
-
-
                 Intent in = getIntent();
                 dataUp = in.getIntExtra("updateData", 0);
                 Toast.makeText(getApplicationContext(), "Acc ni" + dataUp + " " + id, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), Accomplish.class);
                 intent.putExtra("conditionForSignature", moriah);
-
                 Log.v(TAG,"moriah " + dataUp + " " +moriah);
                 startActivity(intent);
-
-
-//                if (dataUp==0){
-//                    Intent in = getIntent();
-//                    dataUp = in.getIntExtra("updateData", 0);
-//                    Toast.makeText(getApplicationContext(), "Acc ni" + dataUp + " " + id, Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getApplicationContext(), Accomplish.class);
-//                    intent.putExtra("conditionForSignature", dataUp);
-//                    Log.v(TAG,"moriah " + dataUp + " " +id);
-//
-//
-//                    startActivity(intent);
-//
-//                }
-//                else {
-
-//                finish();
             }
         });
-        getSignatories();
+//        getSignatories();
 
     }
 
@@ -233,8 +210,34 @@ public class ScannedDetails extends AppCompatActivity {
 
         if (requestCode == 101){
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            mPreviewGrantee.setImageBitmap(bitmap);
+//            mPreviewGrantee.setImageBitmap(bitmap);
+
+            mPreviewGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+
+            if (grante_no !=0){
+                sqLiteHelper.updateGrantee(
+                        grante_no,
+                        imageViewToByte(mPreviewGrantee)
+                );
+
+
+
+                Log.v(TAG,"1stdown" + grante_no + " " + id);
+            }
+            else{
+                sqLiteHelper.updateGrantee(
+                        id,
+                        imageViewToByte(mPreviewGrantee)
+                );
+                Log.v(TAG,"2nddown" + grante_no + " " + id);
+
+            }
+
+
             btnRescanBeneId.setText("RE-SCAN");
+            Log.v(TAG,"hala gantee save");
         }
         else{
             if (resultCode == RESULT_OK){
@@ -513,6 +516,7 @@ public class ScannedDetails extends AppCompatActivity {
 //        }
 
         if (scanned ==true && !signatories.matches("true")){
+            grante_no = max_id;
             Toast.makeText(ScannedDetails.this, "this is 1" + signatories, Toast.LENGTH_SHORT).show();
             Log.v(TAG,"FIRSTSCANNED");
             Bundle extras = getIntent().getExtras();
@@ -530,6 +534,7 @@ public class ScannedDetails extends AppCompatActivity {
             }
         }
         else if (signatories.matches("true") && detailScan==0 && identifier.matches("false")){
+
             Log.v(TAG,"SECONDSCANNED" + dataUp);
             int updateId = in.getIntExtra("updateData", 0);
             id = updateId+1;
@@ -576,7 +581,7 @@ public class ScannedDetails extends AppCompatActivity {
         else if (detailScan!=0){
             int updateId = in.getIntExtra("updateData", 0);
             id = updateId+1;
-            Log.v(TAG,"lastt" + detailScan);
+            Log.v(TAG,"SIGNATORIES" + signatories + "identifier" + identifier + "details SCAN" + detailScan);
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {

@@ -149,9 +149,22 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         catch (Exception e){
             Log.v(TAG,"wala ni update "+e);
         }
+    }
+    public void updateGrantee(int current_idd,byte[] grantee) {
+        try {
 
-
-
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE CgList SET id_image =? WHERE id = ?";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindBlob(1, grantee);
+            statement.bindLong(2, current_idd);
+            statement.execute();
+            database.close();
+            Log.v(TAG,"ni update ang grantee");
+        }
+        catch (Exception e){
+            Log.v(TAG,"wala ni update grantee "+e);
+        }
     }
     public void excludeData(int i, int status) {
         if (status == 0){status =1;}
