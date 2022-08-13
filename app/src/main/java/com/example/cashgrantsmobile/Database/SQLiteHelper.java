@@ -154,14 +154,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,"wala ni update "+e);
         }
     }
-    public void updateInformantSignature(int current_idd,byte[] signature) {
+    public void updateInformantSignature(int current_idd,String accomplish,String informant,String attested ,byte[] signature) {
         try {
 
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE CgList SET informant_image =? WHERE id = ?";
+            String sql = "UPDATE CgList SET informant_image =?,accomplish_by = ?,informant = ?,attested = ? WHERE id = ?";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.bindBlob(1, signature);
-            statement.bindLong(2, current_idd);
+            statement.bindString(2, accomplish);
+            statement.bindString(3, informant);
+            statement.bindString(4, attested);
+            statement.bindLong(5, current_idd);
             statement.execute();
             database.close();
             Log.v(TAG,"ni updates");
@@ -170,14 +173,18 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,"wala ni update "+e);
         }
     }
-    public void updateAttestedSignature(int current_idd,byte[] signature) {
+
+    public void updateAttestedSignature(int current_idd,String accomplish,String informant,String attested ,byte[] signature) {
         try {
 
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE CgList SET attested_img =? WHERE id = ?";
+            String sql = "UPDATE CgList SET attested_img =?,accomplish_by = ?,informant = ?,attested = ? WHERE id = ?";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.bindBlob(1, signature);
-            statement.bindLong(2, current_idd);
+            statement.bindString(2, accomplish);
+            statement.bindString(3, informant);
+            statement.bindString(4, attested);
+            statement.bindLong(5, current_idd);
             statement.execute();
             database.close();
             Log.v(TAG,"ni updates");

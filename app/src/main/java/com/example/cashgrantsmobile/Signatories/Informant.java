@@ -38,6 +38,10 @@ public class Informant extends AppCompatActivity {
 
         Intent in = getIntent();
         int signatureCondition = in.getIntExtra("conditionForSignature", 0);
+        int edtAccomplish = in.getIntExtra("edtAccomplish", 0);
+        String edtAccomplished = in.getStringExtra("edtAccomplish");
+        String edtInformant = in.getStringExtra("edtInformant");
+        String edtAttested = in.getStringExtra("edtAttest");
 
         Log.v(TAG,"walay value?" + id + " "+signatureCondition);
 
@@ -75,6 +79,9 @@ public class Informant extends AppCompatActivity {
 
                         sqLiteHelper.updateInformantSignature(
                                 currentId,
+                                edtAccomplished,
+                                edtInformant,
+                                edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
                         intent.putExtra("detailScan", 0);
@@ -83,6 +90,9 @@ public class Informant extends AppCompatActivity {
                     else {
                         sqLiteHelper.updateInformantSignature(
                                 (signatureCondition+1),
+                                edtAccomplished,
+                                edtInformant,
+                                edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
                         intent.putExtra("detailScan", signatureCondition);

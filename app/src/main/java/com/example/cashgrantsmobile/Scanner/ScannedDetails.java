@@ -185,6 +185,9 @@ public class ScannedDetails extends AppCompatActivity {
                 dataUp = in.getIntExtra("updateData", 0);
                 Intent intent = new Intent(getApplicationContext(), Informant.class);
                 intent.putExtra("conditionForSignature", moriah);
+                intent.putExtra("edtAccomplish", edtAccomplishBy.getText().toString());
+                intent.putExtra("edtInformant", edtInformant.getText().toString());
+                intent.putExtra("edtAttest", edtAttested.getText().toString());
                 startActivity(intent);
             }
         });
@@ -197,6 +200,9 @@ public class ScannedDetails extends AppCompatActivity {
                 dataUp = in.getIntExtra("updateData", 0);
                 Intent intent = new Intent(getApplicationContext(), Attested.class);
                 intent.putExtra("conditionForSignature", moriah);
+                intent.putExtra("edtAccomplish", edtAccomplishBy.getText().toString());
+                intent.putExtra("edtInformant", edtInformant.getText().toString());
+                intent.putExtra("edtAttest", edtAttested.getText().toString());
                 startActivity(intent);
             }
         });
