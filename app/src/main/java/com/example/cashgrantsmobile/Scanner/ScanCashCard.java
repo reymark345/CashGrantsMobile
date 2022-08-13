@@ -3,7 +3,10 @@ package com.example.cashgrantsmobile.Scanner;
 
 
 
+import static android.R.layout.simple_spinner_dropdown_item;
+import static androidx.core.content.ContentProviderCompat.requireContext;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
+import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +17,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +33,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.text.InputType;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -36,10 +41,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.cashgrantsmobile.MainActivity;
@@ -52,6 +62,9 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -72,15 +85,62 @@ public class ScanCashCard extends AppCompatActivity {
 
     //onboard
 
-    private TextView tvNext, tvSkip;
+    private TextView tvNext, tvPrev;
     private ViewPager viewPager;
     private LinearLayout layoutDots;
     private IntroPref introPref;
     private int[] layouts;
     private TextView[] dots;
     private MyViewPagerAdapter viewPagerAdapter;
-    TextInputLayout tilHhId, tilIdNo;
-    EditText edt_hh, edt_id_no;
+    TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee;
+    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilCurrentGranteeNumber, tilIsAvailable, tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3;
+    TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
+    TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
+    EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned;
+    EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3;
+    EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks;
+    EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
+    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory;
+
+    String[] Ans = new String[]{"Yes", "No"};
+    String[] Sex = new String[]{"Male", "Female"};
+    String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
+    String[] ClientStatus = new String[]{
+            "1 - Active",
+            "14 - No Eligible (0-18 y/o) for CVS Monitoring (Certified by RPMO)",
+            "15 - No Eligible member of HH for CVS monitoring",
+            "12 - Moved out of the Area Without Notice",
+            "7 - Delisted due to non-compliance",
+            "29 - Delisted due to Aging Inactive Status in the Program",
+            "19 - Grants Temporarily On-Hold",
+            "5 - GRS delisted due to Misbehavior",
+            "6 - Duplicates",
+            "8 - Waived",
+            "10 - GRS delisted due to Disqualification",
+            "17 - GRS (Not Eligible - Regular Income)",
+            "3 - Graduated Due to Improved Level of Well-Being",
+            "9 - Not Registered",
+            "13 - Validated Not Poor due to Change of Address",
+            "21 - RPMO Approved Household for NPMO Processing",
+            "22 - Unlocated households",
+            "24 - GRS: Suspended grants due to misbehavior of HH",
+            "01 - Active",
+            "02 - Delisted by the Field Office",
+            "04 - Delisted (Fraud)",
+            "05 - GRS (Fraud)",
+            "06 - Duplicates (within MCCT)",
+            "08 - Waived",
+            "11 - Moved to non-PP Area",
+            "29 - Household Integrated to the PPIS",
+            "51 - Graduated (Included in the PPIS)",
+            "53 - Pending Registration (HH also Encoded in PPIS)",
+            "54 - Delisted (HH also in PPIS)",
+            "56 - Inactive (No Longer Interested)",
+            "59 - Eligible Child/ren not Selected for CVS Monitoring",
+            "61 - Graduated (Not included in the PPIS)"
+    };
+    String[] Status = new String[]{"Ongoing (card as collateral)", "Ongoing (card is on-hand)", "Retrieved"};
+    String[] Offense = new String[]{"1st Offense", "2nd Offense", "3rd Offense"};
 
     //end onboard
 
@@ -94,7 +154,9 @@ public class ScanCashCard extends AppCompatActivity {
 
 //        btn_scan = (Button) findViewById(R.id.btnScan);
 //        ScannedCount = (TextView) findViewById(R.id.ScannedCount);
+
 //        TotalScanned();
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("toast");
@@ -126,58 +188,234 @@ public class ScanCashCard extends AppCompatActivity {
         }
 
         tvNext = findViewById(R.id.tvNext);
-        tvSkip = findViewById(R.id.tvSkip);
+        tvPrev = findViewById(R.id.tvPrev);
         viewPager = findViewById(R.id.viewPager);
         layoutDots = findViewById(R.id.layoutDots);
 
         layouts = new int[]{
-                R.layout.intro_one,
-                R.layout.intro_two,
-                R.layout.intro_three,
-                R.layout.intro_four
-
+            R.layout.intro_one,
+            R.layout.intro_two,
+            R.layout.intro_three,
+            R.layout.intro_four
         };
 
-        int current = getItem(+1);
-        if (current ==1) {
-            tvSkip.setVisibility(View.GONE);
-            // move to next screen
-//            Toasty.success(getApplicationContext(),"dsaf", Toasty.LENGTH_SHORT).show();
-        }
-
+        tvPrev.setVisibility(View.INVISIBLE);
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvSkip.setVisibility(View.VISIBLE);
-                edt_hh = findViewById(R.id.edt_hh_no);
-                edt_id_no = findViewById(R.id.edtIdno);
 
-                int current = getItem(+1);
+                boolean isValidationError = false;
                 String required_field = "This field is required!";
+
+                int current = getItem(1);
 
                 if (current == 1) {
                     String household = "";
+                    String fullname = "";
+                    String client_status = "";
+                    String address = "";
+                    String sex = "";
+                    String hh_set = "";
+                    String contact_no = "";
+                    String assigned = "";
+                    String minor_grantee = "";
+
+                    isValidationError = false;
+
+                    edt_hh = findViewById(R.id.edtHhId);
+                    edt_fullname = findViewById(R.id.edtFullname);
+                    spinClientStatus = findViewById(R.id.spinnerClientStatus);
+                    edt_address = findViewById(R.id.edtAddress);
+                    spinSex = findViewById(R.id.spinnerSex);
+                    edt_set = findViewById(R.id.edtSet);
+                    edt_contact_no = findViewById(R.id.edtContactNo);
+                    edt_assigned = findViewById(R.id.edtAssigned);
+                    spinAnswer = findViewById(R.id.spinnerMinorGrantee);
 
                     household = edt_hh.getText().toString();
-                    if (household.matches("")){
-                        tilHhId = findViewById(R.id.til_hhid);
-                        tilHhId.setError(required_field);
-                    } else if (current < layouts.length) {
-                        tilHhId.setError(null);
-                        viewPager.setCurrentItem(current);
-                    }
-                    else {
-                        launchHomeScreen();
-                    }
-                } else if (current == 2) {
-                    String id_no = "";
+                    fullname = edt_fullname.getText().toString();
+                    client_status = spinClientStatus.getText().toString();
+                    address = edt_address.getText().toString();
+                    sex = spinSex.getText().toString();
+                    hh_set = edt_set.getText().toString();
+                    contact_no = edt_contact_no.getText().toString();
+                    assigned = edt_assigned.getText().toString();
+                    minor_grantee = spinAnswer.getText().toString();
 
-                    id_no = edt_id_no.getText().toString();
-                    if (id_no.matches("")){
-                        tilIdNo = findViewById(R.id.til_Idno);
-                        tilIdNo.setError(required_field);
-                    } else if (current < layouts.length) {
-                        tilIdNo.setError(null);
+                    tilHhId = findViewById(R.id.til_hhid);
+                    tilFullname = findViewById(R.id.til_fullname);
+                    tilClientStatus = findViewById(R.id.til_clientstatus);
+                    tilAddress = findViewById(R.id.til_address);
+                    tilSex = findViewById(R.id.til_sex);
+                    tilSet = findViewById(R.id.til_set);
+                    tilContactNo = findViewById(R.id.til_contact_no);
+
+
+                    if (household.matches("")){
+                        tilHhId.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        tilHhId.setError(null);
+                        isValidationError = false;
+                    }
+
+                    if (fullname.matches("")){
+                        tilFullname.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        tilFullname.setError(null);
+                        isValidationError = false;
+                    }
+
+                    if (client_status.matches("")){
+                        tilClientStatus.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        tilClientStatus.setError(null);
+                        isValidationError = false;
+                    }
+
+                    if (address.matches("")){
+                        tilAddress.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        tilAddress.setError(null);
+                        isValidationError = false;
+                    }
+
+                    if (sex.matches("")){
+                        tilSex.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        tilSex.setError(null);
+                        isValidationError = false;
+                    }
+
+                    if (hh_set.matches("")){
+                        tilSet.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        tilSet.setError(null);
+                        isValidationError = false;
+                    }
+
+                    if (contact_no.matches("")){
+                        tilContactNo.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        tilContactNo.setError(null);
+                        isValidationError = false;
+                    }
+
+                } else if (current == 2) {
+                    String card_released = "";
+                    String who_released = "";
+                    String place_released = "";
+                    String current_grantee_number = "";
+                    String is_available = "";
+                    String is_available_reason = "";
+                    String other_card_number_1 = "";
+                    String other_card_holder_name_1 = "";
+                    String other_is_available_1 = "";
+                    String other_is_available_reason_1 = "";
+                    String other_card_number_2 = "";
+                    String other_card_holder_name_2 = "";
+                    String other_is_available_2 = "";
+                    String other_is_available_reason_2 = "";
+                    String other_card_number_3 = "";
+                    String other_card_holder_name_3 = "";
+                    String other_is_available_3 = "";
+                    String other_is_available_reason_3 = "";
+
+                    isValidationError = false;
+
+                    edt_card_released = findViewById(R.id.edtCardReleased);
+                    edt_who_released = findViewById(R.id.edtWhoReleased);
+                    edt_place_released = findViewById(R.id.edtPlaceReleased);
+                    edt_current_grantee_number = findViewById(R.id.edtCurrentGranteeNumber);
+                    spinIsAvail = findViewById(R.id.spinnerIsAvailable);
+                    spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
+                    edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
+                    edt_other_card_holder_name_1 = findViewById(R.id.edtOtherCardHolderName1);
+                    spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
+                    spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
+                    edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
+                    edt_other_card_holder_name_2 = findViewById(R.id.edtOtherCardHolderName2);
+                    spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
+                    spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
+                    edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
+                    edt_other_card_holder_name_3 = findViewById(R.id.edtOtherCardHolderName3);
+                    spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
+                    spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
+
+                    card_released = edt_card_released.getText().toString();
+                    who_released = edt_who_released.getText().toString();
+                    place_released = edt_place_released.getText().toString();
+                    current_grantee_number = edt_current_grantee_number.getText().toString();
+                    is_available = spinIsAvail.getText().toString();
+                    is_available_reason = spinIsAvailReason.getText().toString();
+                    other_card_number_1 = edt_other_card_number_1.getText().toString();
+                    other_card_holder_name_1 = edt_other_card_holder_name_1.getText().toString();
+                    other_is_available_1 = spinIsAvail1.getText().toString();
+                    other_is_available_reason_1 = spinIsAvailReason1.getText().toString();
+                    other_card_number_2 = edt_other_card_number_2.getText().toString();
+                    other_card_holder_name_2 = edt_other_card_holder_name_2.getText().toString();
+                    other_is_available_2 = spinIsAvail2.getText().toString();
+                    other_is_available_reason_2 = spinIsAvailReason2.getText().toString();
+                    other_card_number_3 = edt_other_card_number_3.getText().toString();
+                    other_card_holder_name_3 = edt_other_card_holder_name_3.getText().toString();
+                    other_is_available_3 = spinIsAvail3.getText().toString();
+                    other_is_available_reason_3 = spinIsAvailReason3.getText().toString();
+
+                    tilCardReleased = findViewById(R.id.til_cardreleased);
+                    tilWhoReleased = findViewById(R.id.til_whoreleased);
+                    tilPlaceReleased = findViewById(R.id.til_placereleased);
+                    tilCurrentGranteeNumber = findViewById(R.id.til_currentgranteenumber);
+                    tilIsAvailable = findViewById(R.id.til_isavailable);
+
+                    if (card_released.matches("")) {
+                        tilCardReleased.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        isValidationError = false;
+                    }
+
+                    if (who_released.matches("")) {
+                        tilWhoReleased.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        isValidationError = false;
+                    }
+
+                    if (place_released.matches("")) {
+                        tilPlaceReleased.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        isValidationError = false;
+                    }
+
+                    if (current_grantee_number.matches("")) {
+                        tilCurrentGranteeNumber.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        isValidationError = false;
+                    }
+
+                    if (is_available.matches("")) {
+                        tilIsAvailable.setError(required_field);
+                        isValidationError = true;
+                    } else {
+                        isValidationError = false;
+                    }
+
+                }
+
+                if (isValidationError) {
+                    Toasty.warning(getApplicationContext(), "Please fill-in all required fields!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toasty.success(getApplicationContext(), "All fields are valid!", Toast.LENGTH_SHORT).show();
+                    if (current < layouts.length) {
+                        tvPrev.setVisibility(View.VISIBLE);
                         viewPager.setCurrentItem(current);
                     }
                     else {
@@ -192,22 +430,24 @@ public class ScanCashCard extends AppCompatActivity {
                     launchHomeScreen();
                 }
 
+                Toast.makeText(getApplicationContext(),"current_page" + current,Toast.LENGTH_SHORT).show();
+
             }
         });
-        tvSkip.setOnClickListener(new View.OnClickListener() {
+        tvPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int current = getItem(+1);
-                if (current ==2){
-                    viewPager.setCurrentItem(current-2);
-                    tvSkip.setVisibility(View.GONE);
+                int current = viewPager.getCurrentItem();
+
+                if (current > 0) {
+                    current = current - 1;
+                    viewPager.setCurrentItem(current);
                 }
-                else if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current-2);
-                }
-                else {
-                    viewPager.setCurrentItem(current-2);
+
+                if (current == 0){
+                    tvPrev.setVisibility(View.INVISIBLE);
+                } else {
+                    tvPrev.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -218,6 +458,7 @@ public class ScanCashCard extends AppCompatActivity {
 
         addBottomDots(0);
         changeStatusBarColor();
+
 
 
         //end onboard
@@ -449,6 +690,7 @@ public class ScanCashCard extends AppCompatActivity {
         LayoutInflater layoutInflater;
 
         public MyViewPagerAdapter() {
+
         }
 
         @NonNull
@@ -458,6 +700,178 @@ public class ScanCashCard extends AppCompatActivity {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
+
+            if (position == 0) {
+                spinSex = findViewById(R.id.spinnerSex);
+                spinAnswer = findViewById(R.id.spinnerMinorGrantee);
+                spinClientStatus = findViewById(R.id.spinnerClientStatus);
+
+                ArrayAdapter<String> adapterSex = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Sex);
+                ArrayAdapter<String> adapterAns = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
+                ArrayAdapter<String> adapterClientStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ClientStatus);
+
+                adapterSex.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterAns.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterClientStatus.setDropDownViewResource(simple_spinner_dropdown_item);
+
+                spinSex.setAdapter(adapterSex);
+                spinAnswer.setAdapter(adapterAns);
+                spinClientStatus.setAdapter(adapterClientStatus);
+
+            } else if (position == 1) {
+
+                spinIsAvail = findViewById(R.id.spinnerIsAvailable);
+                spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
+                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
+                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
+                spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
+                spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
+                spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
+                spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
+                edt_card_released = findViewById(R.id.edtCardReleased);
+
+                ArrayAdapter<String> adapterIsAvail = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
+                ArrayAdapter<String> adapterIsAvail1 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
+                ArrayAdapter<String> adapterIsAvail2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
+                ArrayAdapter<String> adapterIsAvail3 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
+
+                ArrayAdapter<String> adapterIsAvailReason = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
+                ArrayAdapter<String> adapterIsAvailReason1 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
+                ArrayAdapter<String> adapterIsAvailReason2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
+                ArrayAdapter<String> adapterIsAvailReason3 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
+
+                adapterIsAvail.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterIsAvail1.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterIsAvail2.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterIsAvail3.setDropDownViewResource(simple_spinner_dropdown_item);
+
+                adapterIsAvailReason.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterIsAvailReason1.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterIsAvailReason2.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterIsAvailReason3.setDropDownViewResource(simple_spinner_dropdown_item);
+
+                spinIsAvail.setAdapter(adapterIsAvail);
+                spinIsAvail1.setAdapter(adapterIsAvail1);
+                spinIsAvail2.setAdapter(adapterIsAvail2);
+                spinIsAvail3.setAdapter(adapterIsAvail3);
+
+                spinIsAvailReason.setAdapter(adapterIsAvailReason);
+                spinIsAvailReason1.setAdapter(adapterIsAvailReason1);
+                spinIsAvailReason2.setAdapter(adapterIsAvailReason2);
+                spinIsAvailReason3.setAdapter(adapterIsAvailReason3);
+
+                edt_card_released.setFocusable(false);
+                edt_card_released.setClickable(true);
+
+                edt_card_released.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_card_released);
+                    }
+                });
+                spinIsAvailReason.setEnabled(false);
+                spinIsAvail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinIsAvail.getText().toString().matches("Yes")) {
+                            spinIsAvailReason.setEnabled(false);
+                        } else {
+                            spinIsAvailReason.setEnabled(true);
+                        }
+                    }
+                });
+
+                spinIsAvailReason1.setEnabled(false);
+                spinIsAvail1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinIsAvail1.getText().toString().matches("Yes")) {
+                            spinIsAvailReason1.setEnabled(false);
+                        } else {
+                            spinIsAvailReason1.setEnabled(true);
+                        }
+                    }
+                });
+
+                spinIsAvailReason2.setEnabled(false);
+                spinIsAvail2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinIsAvail2.getText().toString().matches("Yes")) {
+                            spinIsAvailReason2.setEnabled(false);
+                        } else {
+                            spinIsAvailReason2.setEnabled(true);
+                        }
+                    }
+                });
+
+                spinIsAvailReason3.setEnabled(false);
+                spinIsAvail3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinIsAvail3.getText().toString().matches("Yes")) {
+                            spinIsAvailReason3.setEnabled(false);
+                        } else {
+                            spinIsAvailReason3.setEnabled(true);
+                        }
+                    }
+                });
+            } else if (position == 2) {
+                edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
+
+                edt_date_withdrawn.setFocusable(false);
+                edt_date_withdrawn.setClickable(true);
+
+                edt_date_withdrawn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_date_withdrawn);
+                    }
+                });
+            } else if (position == 3) {
+                edt_pawning_date = findViewById(R.id.edtPawningDate);
+                edt_date_retrieved = findViewById(R.id.edtDateRetrieved);
+                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
+                spinStatus = findViewById(R.id.spinnerStatus);
+                spinOffenseHistory = findViewById(R.id.spinnerOffenseHistory);
+
+                ArrayAdapter<String> adapterStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Status);
+                ArrayAdapter<String> adapterOffenseHistory = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Offense);
+
+                adapterStatus.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterOffenseHistory.setDropDownViewResource(simple_spinner_dropdown_item);
+
+                spinStatus.setAdapter(adapterStatus);
+                spinOffenseHistory.setAdapter(adapterOffenseHistory);
+
+                edt_pawning_date.setFocusable(false);
+                edt_pawning_date.setClickable(true);
+                edt_date_retrieved.setFocusable(false);
+                edt_date_retrieved.setClickable(true);
+                edt_offense_history_date.setFocusable(false);
+                edt_offense_history_date.setClickable(true);
+
+                edt_pawning_date.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_pawning_date);
+                    }
+                });
+                edt_date_retrieved.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_date_retrieved);
+                    }
+                });
+                edt_offense_history_date.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_offense_history_date);
+                    }
+                });
+
+            }
+
             return view;
         }
 
@@ -479,7 +893,7 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     private int getItem(int i) {
-        return viewPager.getCurrentItem() + 1;
+        return viewPager.getCurrentItem() + i;
     }
 
     private void launchHomeScreen() {
@@ -493,6 +907,23 @@ public class ScanCashCard extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    private void showDateDialog(final EditText date_in) {
+        final Calendar calendar=Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener dateSetListener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+                date_in.setText(simpleDateFormat.format(calendar.getTime()));
+
+            }
+        };
+
+        new DatePickerDialog(ScanCashCard.this,dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
 

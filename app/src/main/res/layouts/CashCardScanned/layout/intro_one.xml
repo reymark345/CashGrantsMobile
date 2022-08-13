@@ -3,21 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="I.Demographics"
+        android:textColor="@color/white"
+        android:layout_margin="15dp"
+        android:textStyle="bold"
+        android:text="I. Demographics"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp" />
 
     <ScrollView
+        android:background="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
@@ -34,26 +36,24 @@
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
-
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_hhid"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginRight="10dp"
                     app:errorEnabled="true"
                     app:counterEnabled="true"
                     app:counterMaxLength="12"
                     app:endIconMode="clear_text"
-                    app:helperText="Good valid!"
+                    app:helperText="Search Household ID!"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_hh">
 
                     <EditText
-                        android:id="@+id/edt_hh_no"
+                        android:id="@+id/edtHhId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Household no."
@@ -92,86 +92,165 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
                     app:endIconMode="clear_text"
-                    app:helperText="Mandatory"
+                    app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_person">
 
                     <EditText
-                        android:id="@+id/edtFirstname"
+                        android:id="@+id/edtFullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/edtIdno"
                         android:hint="Full name:"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_middlename"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:id="@+id/til_clientstatus"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/til_fullname"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    app:endIconMode="clear_text"
-                    app:helperText="Optional"
+                    app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_client">
 
-                    <EditText
-                        android:id="@+id/edtMiddleName"
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/spinnerClientStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/edtFirstname"
                         android:hint="Client status"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_address"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_clientstatus"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:endIconMode="clear_text"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_location_on_24">
+
+                    <EditText
+                        android:id="@+id/edtAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Address"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/til_sex"
+                    app:helperText="Required"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    app:helperTextTextColor="@color/validation"
+                    android:layout_below="@+id/til_address"
+                    app:startIconDrawable="@drawable/ic_baseline_supervised_user_circle_24"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/spinnerSex"
+                        android:editable="false"
+                        android:layout_width= "match_parent"
+                        android:hint="Sex"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_set"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_middlename"
+                    android:layout_below="@+id/til_sex"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     app:endIconMode="clear_text"
-                    app:helperText="Mandatory"
+                    app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_assigned">
 
                     <EditText
-                        android:id="@+id/edtSchedule"
+                        android:id="@+id/edtSet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/edtLastname"
-                        android:hint="Assigned C/ML:"
+                        android:hint="Set"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_lastname"
+                    android:id="@+id/til_contact_no"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_schedule"
+                    android:layout_below="@+id/til_set"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     app:endIconMode="clear_text"
-                    app:helperText="Mandatory"
+                    app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_address">
+                    app:startIconDrawable="@drawable/ic_baseline_phone_android_24">
 
                     <EditText
-                        android:id="@+id/edtLastname"
+                        android:id="@+id/edtContactNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/edtSchedule"
-                        android:hint="Address"
+                        android:hint="Contact No."
                         android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_assigned"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_contact_no"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:endIconMode="clear_text"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                    <EditText
+                        android:id="@+id/edtAssigned"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Assigned C/ML"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/til_minor_grantee"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="80dp"
+                    app:helperTextTextColor="@color/validation"
+                    android:layout_below="@+id/til_assigned"
+                    app:startIconDrawable="@drawable/ic_baseline_escalator_warning_24"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/spinnerMinorGrantee"
+                        android:layout_width= "match_parent"
+                        android:hint="Minor Grantee"
+                        android:layout_height="wrap_content"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
              </LinearLayout>
@@ -179,7 +258,4 @@
 
         </RelativeLayout>
     </ScrollView>
-
-
-
 </LinearLayout>
