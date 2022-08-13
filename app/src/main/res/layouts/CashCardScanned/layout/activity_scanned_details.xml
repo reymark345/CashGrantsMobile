@@ -200,7 +200,7 @@
                         app:startIconDrawable="@drawable/ic_creditcard">
 
                         <EditText
-                            android:id="@+id/hhNo"
+                            android:id="@+id/edtAccomplish"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Accomplished by"
@@ -272,7 +272,7 @@
                         app:startIconDrawable="@drawable/ic_creditcard">
 
                         <EditText
-                            android:id="@+id/seriesNo"
+                            android:id="@+id/edtInformant"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Informant"
@@ -344,7 +344,7 @@
                         app:startIconDrawable="@drawable/ic_creditcard">
 
                         <EditText
-                            android:id="@+id/edt_informant1"
+                            android:id="@+id/edt_attested"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Attested by"

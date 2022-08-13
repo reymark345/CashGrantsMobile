@@ -94,11 +94,7 @@ public class ScanCashCard extends AppCompatActivity {
 
 //        btn_scan = (Button) findViewById(R.id.btnScan);
 //        ScannedCount = (TextView) findViewById(R.id.ScannedCount);
-
-
-
-
-        TotalScanned();
+//        TotalScanned();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("toast");
@@ -395,7 +391,7 @@ public class ScanCashCard extends AppCompatActivity {
         return byteArray;
     }
     public void TotalScanned(){
-        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
+        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
         int z = cursor.getCount();
 //        ScannedCount.setText("Total Scanned: " + String.valueOf(z));
     }

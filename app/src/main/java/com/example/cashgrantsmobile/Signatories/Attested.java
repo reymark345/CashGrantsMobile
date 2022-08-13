@@ -1,11 +1,9 @@
 package com.example.cashgrantsmobile.Signatories;
 
 import static android.content.ContentValues.TAG;
-
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import static com.example.cashgrantsmobile.Scanner.ScanCashCard.imageViewToByte;
 import static com.example.cashgrantsmobile.Scanner.ScannedDetails.id;
-import static com.example.cashgrantsmobile.Scanner.ScannedDetails.signature;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,18 +16,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Scanner.ScannedDetails;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import java.io.ByteArrayOutputStream;
 
-public class Accomplish extends AppCompatActivity {
+public class Attested extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.accomplished_signature);
+        setContentView(R.layout.attested_signature);
 
         SignaturePad signaturePad = findViewById(R.id.signature_pad);
         Button buttonSignature = findViewById(R.id.btnSubmit);
@@ -39,12 +38,6 @@ public class Accomplish extends AppCompatActivity {
 
         Intent in = getIntent();
         int signatureCondition = in.getIntExtra("conditionForSignature", 0);
-        int edtAccomplish = in.getIntExtra("edtAccomplish", 0);
-        String edtAccomplished = in.getStringExtra("edtAccomplish");
-        String edtInformant = in.getStringExtra("edtInformant");
-        String edtAttested = in.getStringExtra("edtAttest");
-
-
 
         Log.v(TAG,"walay value?" + id + " "+signatureCondition);
 
@@ -80,26 +73,20 @@ public class Accomplish extends AppCompatActivity {
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
 
-                        sqLiteHelper.updateAccomplishSignature(
+                        sqLiteHelper.updateAttestedSignature(
                                 currentId,
-                                edtAccomplished,
-                                edtInformant,
-                                edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
                         intent.putExtra("detailScan", 0);
-                        Log.v(TAG,"samplee zerro" +  edtAttested);
+                        Log.v(TAG,"samplee zerro" + signatureCondition);
                     }
                     else {
-                        sqLiteHelper.updateAccomplishSignature(
+                        sqLiteHelper.updateAttestedSignature(
                                 (signatureCondition+1),
-                                edtAccomplished,
-                                edtInformant,
-                                edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
                         intent.putExtra("detailScan", signatureCondition);
-                        Log.v(TAG,"samplee 1" + edtAttested);
+                        Log.v(TAG,"samplee 1" + signatureCondition);
 
                     }
 

@@ -130,7 +130,7 @@ public class InventoryList extends AppCompatActivity {
             e.printStackTrace();
         }
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
