@@ -67,7 +67,7 @@
                     android:layout_gravity="right">
 
                     <Button
-                        android:id="@+id/editPassword"
+                        android:id="@+id/btnSearchHh"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"

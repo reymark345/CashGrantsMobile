@@ -54,6 +54,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Signatories.Informant;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -77,13 +78,14 @@ public class ScanCashCard extends AppCompatActivity {
 
     String cameraPermission[];
     String StoragePermission[];
-    Button btn_scan;
+    Button btn_search_hh;
     public static boolean scanned = true;
     Uri image_uri;
     TextView ScannedCount;
 
 
     //onboard
+
 
     private TextView tvNext, tvPrev;
     private ViewPager viewPager;
@@ -151,12 +153,9 @@ public class ScanCashCard extends AppCompatActivity {
         setContentView(R.layout.cash_card_scanner_entries);
         mPreviewIv = findViewById(R.id.imageIv);
         mPreviewIv .setVisibility(View.INVISIBLE);
-
-//        btn_scan = (Button) findViewById(R.id.btnScan);
 //        ScannedCount = (TextView) findViewById(R.id.ScannedCount);
 
 //        TotalScanned();
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("toast");
@@ -232,6 +231,7 @@ public class ScanCashCard extends AppCompatActivity {
                     edt_contact_no = findViewById(R.id.edtContactNo);
                     edt_assigned = findViewById(R.id.edtAssigned);
                     spinAnswer = findViewById(R.id.spinnerMinorGrantee);
+
 
                     household = edt_hh.getText().toString();
                     fullname = edt_fullname.getText().toString();
@@ -692,7 +692,21 @@ public class ScanCashCard extends AppCompatActivity {
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
 
+            edt_hh = findViewById(R.id.edtHhId);
+
+
             if (position == 0) {
+                btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
+
+                btn_search_hh.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toasty.warning(getApplicationContext(), "Button Clicked" + edt_hh.getText().toString(), Toast.LENGTH_SHORT).show();
+//
+                    }
+                });
+
+
                 spinSex = findViewById(R.id.spinnerSex);
                 spinAnswer = findViewById(R.id.spinnerMinorGrantee);
                 spinClientStatus = findViewById(R.id.spinnerClientStatus);

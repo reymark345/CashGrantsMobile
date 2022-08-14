@@ -20,45 +20,45 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class SyncData extends AppCompatActivity {
     private Toolbar mToolbars;
     private Button btnSync;
-//    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     public String variableGlobalclassname ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cash_card);
-//        setContentView(R.layout.sync_data);
+//        setContentView(R.layout.activity_cash_card);
+        setContentView(R.layout.sync_data);
 
 
 
-//        btnSync = findViewById(R.id.btnSync);
-//        mToolbars = findViewById(R.id.mainToolbar);
-//        setSupportActionBar(mToolbars);
-//        getSupportActionBar().setTitle("Sync Data");
+        btnSync = findViewById(R.id.btnSync);
+        mToolbars = findViewById(R.id.mainToolbar);
+        setSupportActionBar(mToolbars);
+        getSupportActionBar().setTitle("Sync Data");
 
-//        btnSync.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new SweetAlertDialog(SyncData.this, SweetAlertDialog.WARNING_TYPE)
-//                        .setTitleText("Are you sure?")
-//                        .setContentText("Please Confirm to Sync Data")
-//                        .setConfirmText("Sync Now")
-//                        .showCancelButton(false)
-//                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                            @Override
-//                            public void onClick(SweetAlertDialog sDialog) {
-//                                IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-//                                registerReceiver(networkChangeListener, filter);
-//                                if (networkChangeListener.connection ==true){
-//                                    Intent intent = new Intent(SyncData.this, SpinnerLoading.class);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                            }
-//                        }).show();
-//                }
-//            });
+        btnSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SweetAlertDialog(SyncData.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Are you sure?")
+                        .setContentText("Please Confirm to Sync Data")
+                        .setConfirmText("Sync Now")
+                        .showCancelButton(false)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+                                registerReceiver(networkChangeListener, filter);
+                                if (networkChangeListener.connection ==true){
+                                    Intent intent = new Intent(SyncData.this, SpinnerLoading.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        }).show();
+                }
+            });
     }
 
     @Override
@@ -70,16 +70,16 @@ public class SyncData extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-//    @Override
-//    protected void onStart() {
-//        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-//        registerReceiver(networkChangeListener, filter);
-//        super.onStart();
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        unregisterReceiver(networkChangeListener);
-//        super.onStop();
-//    }
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
+    }
 }
