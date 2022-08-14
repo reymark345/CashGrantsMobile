@@ -123,15 +123,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateSubmitData(String cash_card_actual_no, String accomplishBy,String informant, byte[] cc_image, byte[] id_image) {
+    public void updateSubmitData(String cash_card_actual_no, String accomplishBy,String informant, byte[] cc_image, byte[] id_image, String attested) {
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE CgList SET cash_card_actual_no = ?, accomplish_by = ?, informant = ?, cc_image=?, id_image =?, card_scanning_status = 1  WHERE id = (SELECT max(id) FROM CGList)";
+        String sql = "UPDATE CgList SET cash_card_actual_no = ?, accomplish_by = ?, informant = ?, cc_image=?, id_image =?, attested =?, card_scanning_status = 1  WHERE id = (SELECT max(id) FROM CGList)";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.bindString(1, cash_card_actual_no);
         statement.bindString(2, accomplishBy);
         statement.bindString(3, informant);
         statement.bindBlob(4, cc_image);
         statement.bindBlob(5, id_image);
+        statement.bindString(6, attested);
         statement.execute();
         database.close();
     }
@@ -222,16 +223,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
-    public void updateInventoryList(String cash_card_actual_no, String accomplishBy,String informant, byte[] cc_image, byte[] id_image, int id) {
+    public void updateInventoryList(String cash_card_actual_no, String accomplishBy,String informant, byte[] cc_image, byte[] id_image, int id, String attested) {
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE CgList SET cash_card_actual_no = ?, accomplish_by = ?, informant = ?, cc_image=?, id_image =?, card_scanning_status = 1  WHERE id = ?";
+        String sql = "UPDATE CgList SET cash_card_actual_no = ?, accomplish_by = ?, informant = ?, cc_image=?, id_image =?, attested=? , card_scanning_status = 1  WHERE id = ?";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.bindString(1, cash_card_actual_no);
         statement.bindString(2, accomplishBy);
         statement.bindString(3, informant);
         statement.bindBlob(4, cc_image);
         statement.bindBlob(5, id_image);
-        statement.bindDouble(6, id);
+        statement.bindString(6, attested);
+        statement.bindDouble(7, id);
         statement.execute();
         database.close();
     }

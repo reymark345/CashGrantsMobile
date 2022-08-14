@@ -374,7 +374,7 @@ public class ScannedDetails extends AppCompatActivity {
         String idCard = btnRescanBeneId.getText().toString();
         int length = CardResult.length();
 
-        if (CardResult.matches("[0-9 ]+") && !household.matches("") && !seriesNo.matches("") && !attested.matches("") && idCard.equals("RE-SCAN") && length==23 ){
+        if (CardResult.matches("[0-9 ]+") && !household.matches("") && !seriesNo.matches("") && idCard.equals("RE-SCAN") && length==23 ){
             try{
 
                 if ( scanned ==true){
@@ -383,7 +383,8 @@ public class ScannedDetails extends AppCompatActivity {
                             edtAccomplishBy.getText().toString().trim(),
                             edtInformant.getText().toString().trim(),
                             imageViewToByte(mPreviewCashCard),
-                            imageViewToByte(mPreviewGrantee)
+                            imageViewToByte(mPreviewGrantee),
+                            edtAttested.getText().toString().trim()
                     );
 
                     String value="Added Successfully";
@@ -398,7 +399,8 @@ public class ScannedDetails extends AppCompatActivity {
                             edtAccomplishBy.getText().toString().trim(),
                             edtInformant.getText().toString().trim(),
                             imageViewToByte(mPreviewCashCard),
-                            imageViewToByte(mPreviewGrantee),id
+                            imageViewToByte(mPreviewGrantee),id,
+                            edtAttested.getText().toString().trim()
                     );
                     intent = new Intent(ScannedDetails.this, InventoryList.class);
                 }
@@ -430,12 +432,7 @@ public class ScannedDetails extends AppCompatActivity {
         if (!household.matches("")){
             tilAttested.setError(null);
         }
-        if (attested.matches("")){
-            tilAttested.setError(blankMessage);
-        }
-        if (!attested.matches("")){
-            tilHousehold.setError(null);
-        }
+
         if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Invalid format");
         }
