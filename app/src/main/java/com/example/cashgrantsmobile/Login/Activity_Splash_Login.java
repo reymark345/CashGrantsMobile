@@ -83,7 +83,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
     Button btnLogin;
     EditText edtUsername, edtPassword;
-    String BASE_URL = "http://cgtracking.test";
+    String BASE_URL = "http://192.168.1.7/cgtracking/public";
     public static SQLiteHelper sqLiteHelper;
 
     @Override
@@ -132,6 +132,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
                 device = "mobile";
 
                 if(!username.equals("") && !password.equals("")){
+                    //String url = "http://192.168.1.7/cgtracking/public/api/v1/staff/auth/login";
+
                     String url = "https://crg-finance-svr.entdswd.local/cgtracking/api/v1/staff/auth/login";
                     // creating a new variable for our request queue
                     RequestQueue queue = Volley.newRequestQueue(Activity_Splash_Login.this);
