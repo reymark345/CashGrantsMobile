@@ -39,6 +39,7 @@ public class Attested extends AppCompatActivity {
         Intent in = getIntent();
         int signatureCondition = in.getIntExtra("conditionForSignature", 0);
         int edtAccomplish = in.getIntExtra("edtAccomplish", 0);
+        String edtCashCard = in.getStringExtra("edtCashCard");
         String edtAccomplished = in.getStringExtra("edtAccomplish");
         String edtInformant = in.getStringExtra("edtInformant");
         String edtAttested = in.getStringExtra("edtAttest");
@@ -79,6 +80,7 @@ public class Attested extends AppCompatActivity {
 
                         sqLiteHelper.updateAttestedSignature(
                                 currentId,
+                                edtCashCard,
                                 edtAccomplished,
                                 edtInformant,
                                 edtAttested,
@@ -90,6 +92,7 @@ public class Attested extends AppCompatActivity {
                     else {
                         sqLiteHelper.updateAttestedSignature(
                                 (signatureCondition+1),
+                                edtCashCard,
                                 edtAccomplished,
                                 edtInformant,
                                 edtAttested,

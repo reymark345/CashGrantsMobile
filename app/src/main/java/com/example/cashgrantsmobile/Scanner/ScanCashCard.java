@@ -161,7 +161,9 @@ public class ScanCashCard extends AppCompatActivity {
         if (extras != null) {
             String value = extras.getString("toast");
             Toasty.success(this,""+value, Toasty.LENGTH_SHORT).show();
+            extras.clear();
         }
+
 
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -581,6 +583,7 @@ public class ScanCashCard extends AppCompatActivity {
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
                     myEdit.putString("signatureAccomplishment", "false");
                     myEdit.putString("identifier", "false");
+                    myEdit.putString("granteeBtn", "false");
                     myEdit.putInt("updateMoriah", 0);
                     myEdit.commit();
 
