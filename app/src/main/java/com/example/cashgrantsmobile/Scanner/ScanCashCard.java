@@ -191,6 +191,7 @@ public class ScanCashCard extends AppCompatActivity {
         tvPrev = findViewById(R.id.tvPrev);
         viewPager = findViewById(R.id.viewPager);
         layoutDots = findViewById(R.id.layoutDots);
+        tvPrev.setVisibility(View.INVISIBLE);
 
         layouts = new int[]{
             R.layout.intro_one,
@@ -198,8 +199,6 @@ public class ScanCashCard extends AppCompatActivity {
             R.layout.intro_three,
             R.layout.intro_four
         };
-
-        tvPrev.setVisibility(View.INVISIBLE);
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +209,7 @@ public class ScanCashCard extends AppCompatActivity {
                 int current = getItem(1);
 
                 if (current == 1) {
+                    tvPrev.setVisibility(View.VISIBLE);
                     String household = "";
                     String fullname = "";
                     String client_status = "";
@@ -443,7 +443,6 @@ public class ScanCashCard extends AppCompatActivity {
                     current = current - 1;
                     viewPager.setCurrentItem(current);
                 }
-
                 if (current == 0){
                     tvPrev.setVisibility(View.INVISIBLE);
                 } else {
