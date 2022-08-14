@@ -253,7 +253,6 @@ public class Activity_Splash_Login extends AppCompatActivity {
         if (!sharedPreferences.contains("tokenStatus")) {
             myEdit.putString("tokenStatus", "0");
             myEdit.commit();
-            Toasty.success(Activity_Splash_Login.this, "1111 ", Toast.LENGTH_SHORT, true).show();
         }
     }
 
