@@ -418,9 +418,9 @@ public class ScanCashCard extends AppCompatActivity {
                         tvPrev.setVisibility(View.VISIBLE);
                         viewPager.setCurrentItem(current);
                     }
-                    else {
-                        launchHomeScreen();
-                    }
+//                    else {
+//                        launchHomeScreen();
+//                    }
                 }
                 if (current < layouts.length) {
 //                    tilIdNo.setError(null);
