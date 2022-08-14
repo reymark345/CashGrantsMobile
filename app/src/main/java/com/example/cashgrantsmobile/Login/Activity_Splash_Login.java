@@ -132,9 +132,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
                 device = "mobile";
 
                 if(!username.equals("") && !password.equals("")){
-//                    String url = "http://172.31.249.76/cgtracking/public/api/v1/staff/auth/login";
-                    String url = "http://192.168.1.9/cgtracking/public/api/v1/staff/auth/login";
-
+                    String url = "https://crg-finance-svr.entdswd.local/cgtracking/api/v1/staff/auth/login";
                     // creating a new variable for our request queue
                     RequestQueue queue = Volley.newRequestQueue(Activity_Splash_Login.this);
 
@@ -162,7 +160,6 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
                                     if (tokenStats.matches("1")){
                                         sqLiteHelper.updateUser(token,user_id,email,mobile,name,username);
-                                        Toasty.success(Activity_Splash_Login.this, "updateUser", Toast.LENGTH_SHORT, true).show();
                                     }
                                     else{
                                         sqLiteHelper.insertDefaultUser(token,user_id,email,mobile,name,username);
@@ -170,9 +167,6 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                         SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                         myEdit.putString("tokenStatus", "1");
                                         myEdit.commit();
-
-                                        Toasty.success(Activity_Splash_Login.this, "InsertUser", Toast.LENGTH_SHORT, true).show();
-
                                     }
                                     Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
                                     startActivity(intent);
