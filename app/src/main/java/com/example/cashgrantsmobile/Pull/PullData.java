@@ -1,9 +1,11 @@
 package com.example.cashgrantsmobile.Pull;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -20,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Sync.SyncData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,7 +66,7 @@ public class PullData extends AppCompatActivity {
             btnPull.setEnabled(false);
         }
 
-        String url = "http://192.168.1.9/cgtracking/public/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
+        String url = "http://192.168.1.12/cgtracking/public/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
 
         // creating a new variable for our request queue
         RequestQueue queue = Volley.newRequestQueue(PullData.this);
@@ -170,5 +173,14 @@ public class PullData extends AppCompatActivity {
                 pullEmvData(false);
             }
         });
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent intent = new Intent(PullData.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
