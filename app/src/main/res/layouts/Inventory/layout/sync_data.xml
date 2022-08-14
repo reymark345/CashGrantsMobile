@@ -15,17 +15,87 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
+            app:title="Sync Data"
             android:backgroundTint="@color/background"
             app:liftOnScroll="true"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <GridView
-        android:layout_marginTop="50dp"
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:indeterminate="false"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="200dp"
+        app:mpb_showProgressBackground="true"
+        app:mpb_progressStyle="horizontal"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+
+    <TextView
+        android:id="@+id/progressCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_alignLeft="@id/progressBar"
+        android:layout_below="@id/progressBar"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="23dp"
+        android:text="%"
+        android:layout_alignLeft="@id/progressBar"
+        android:layout_below="@id/progressBar"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/progressFigure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_alignRight="@id/progressBar"
+        android:layout_below="@id/progressBar"
+        android:layout_marginRight="42dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:layout_alignRight="@id/progressBar"
+        android:layout_below="@id/progressBar"
+        android:layout_marginRight="33dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/progressFigureLast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_alignRight="@id/progressBar"
+        android:layout_below="@id/progressBar"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <GridView
         android:id="@+id/gridView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:layout_marginBottom="80dp"
         android:columnWidth="300dp"
         android:gravity="center"
         android:numColumns="auto_fit" />
