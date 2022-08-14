@@ -95,11 +95,11 @@ public class ScanCashCard extends AppCompatActivity {
     private TextView[] dots;
     private MyViewPagerAdapter viewPagerAdapter;
     TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee;
-    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilCurrentGranteeNumber, tilIsAvailable, tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3;
+    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3;
     TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
     TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
     EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned;
-    EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3;
+    EditText edt_card_released, edt_who_released, edt_place_released, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3;
     EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks;
     EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
     AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory;
@@ -312,7 +312,6 @@ public class ScanCashCard extends AppCompatActivity {
                     String card_released = "";
                     String who_released = "";
                     String place_released = "";
-                    String current_grantee_number = "";
                     String is_available = "";
                     String is_available_reason = "";
                     String other_card_number_1 = "";
@@ -327,13 +326,15 @@ public class ScanCashCard extends AppCompatActivity {
                     String other_card_holder_name_3 = "";
                     String other_is_available_3 = "";
                     String other_is_available_reason_3 = "";
+                    String other_card_number_series_1 = "";
+                    String other_card_number_series_2 = "";
+                    String other_card_number_series_3 = "";
 
                     isValidationError = false;
 
                     edt_card_released = findViewById(R.id.edtCardReleased);
                     edt_who_released = findViewById(R.id.edtWhoReleased);
                     edt_place_released = findViewById(R.id.edtPlaceReleased);
-                    edt_current_grantee_number = findViewById(R.id.edtCurrentGranteeNumber);
                     spinIsAvail = findViewById(R.id.spinnerIsAvailable);
                     spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
                     edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
@@ -348,11 +349,14 @@ public class ScanCashCard extends AppCompatActivity {
                     edt_other_card_holder_name_3 = findViewById(R.id.edtOtherCardHolderName3);
                     spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
                     spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
+                    edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
+                    edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
+                    edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
+
 
                     card_released = edt_card_released.getText().toString();
                     who_released = edt_who_released.getText().toString();
                     place_released = edt_place_released.getText().toString();
-                    current_grantee_number = edt_current_grantee_number.getText().toString();
                     is_available = spinIsAvail.getText().toString();
                     is_available_reason = spinIsAvailReason.getText().toString();
                     other_card_number_1 = edt_other_card_number_1.getText().toString();
@@ -367,11 +371,13 @@ public class ScanCashCard extends AppCompatActivity {
                     other_card_holder_name_3 = edt_other_card_holder_name_3.getText().toString();
                     other_is_available_3 = spinIsAvail3.getText().toString();
                     other_is_available_reason_3 = spinIsAvailReason3.getText().toString();
+                    other_card_number_series_1 = edt_other_card_number_series_1.getText().toString();
+                    other_card_number_series_2 = edt_other_card_number_series_2.getText().toString();
+                    other_card_number_series_3 = edt_other_card_number_series_3.getText().toString();
 
                     tilCardReleased = findViewById(R.id.til_cardreleased);
                     tilWhoReleased = findViewById(R.id.til_whoreleased);
                     tilPlaceReleased = findViewById(R.id.til_placereleased);
-                    tilCurrentGranteeNumber = findViewById(R.id.til_currentgranteenumber);
                     tilIsAvailable = findViewById(R.id.til_isavailable);
 
                     if (card_released.matches("")) {
@@ -390,13 +396,6 @@ public class ScanCashCard extends AppCompatActivity {
 
                     if (place_released.matches("")) {
                         tilPlaceReleased.setError(required_field);
-                        isValidationError = true;
-                    } else {
-                        isValidationError = false;
-                    }
-
-                    if (current_grantee_number.matches("")) {
-                        tilCurrentGranteeNumber.setError(required_field);
                         isValidationError = true;
                     } else {
                         isValidationError = false;
