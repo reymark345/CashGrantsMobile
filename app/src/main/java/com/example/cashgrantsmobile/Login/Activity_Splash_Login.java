@@ -160,6 +160,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
                                     if (tokenStats.matches("1")){
                                         sqLiteHelper.updateUser(token,user_id,email,mobile,name,username);
+                                        Toasty.success(Activity_Splash_Login.this, "Login Successfully", Toast.LENGTH_SHORT, true).show();
                                     }
                                     else{
                                         sqLiteHelper.insertDefaultUser(token,user_id,email,mobile,name,username);
@@ -167,6 +168,9 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                         SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                         myEdit.putString("tokenStatus", "1");
                                         myEdit.commit();
+
+                                        Toasty.success(Activity_Splash_Login.this, "Login Successfully", Toast.LENGTH_SHORT, true).show();
+
                                     }
                                     Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
                                     startActivity(intent);

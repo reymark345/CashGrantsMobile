@@ -33,6 +33,8 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.android.material.navigation.NavigationView;
 
+import es.dmoral.toasty.Toasty;
+
 public class MainActivity extends AppCompatActivity {
 
     CardView CashCardScanner, InventoryList, PullData, SyncData, Logout;
@@ -147,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 myEdit.putString("tokenStatus", "0");
                 myEdit.commit();
+                Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
                 Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
                 startActivity(intent);
                 finish();
