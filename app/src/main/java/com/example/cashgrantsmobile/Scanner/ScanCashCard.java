@@ -209,7 +209,6 @@ public class ScanCashCard extends AppCompatActivity {
                 int current = getItem(1);
 
                 if (current == 1) {
-                    tvPrev.setVisibility(View.VISIBLE);
                     String household = "";
                     String fullname = "";
                     String client_status = "";
@@ -418,20 +417,10 @@ public class ScanCashCard extends AppCompatActivity {
                         tvPrev.setVisibility(View.VISIBLE);
                         viewPager.setCurrentItem(current);
                     }
-//                    else {
-//                        launchHomeScreen();
-//                    }
+                    else {
+                        launchHomeScreen();
+                    }
                 }
-                if (current < layouts.length) {
-//                    tilIdNo.setError(null);
-                    viewPager.setCurrentItem(current);
-                }
-                else {
-                    launchHomeScreen();
-                }
-
-                Toast.makeText(getApplicationContext(),"current_page" + current,Toast.LENGTH_SHORT).show();
-
             }
         });
         tvPrev.setOnClickListener(new View.OnClickListener() {
