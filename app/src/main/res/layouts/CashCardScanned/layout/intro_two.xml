@@ -94,33 +94,11 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_currentgranteenumber"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/til_placereleased"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                app:endIconMode="clear_text"
-                app:helperText="Required"
-                app:helperTextTextColor="@color/validation"
-                app:startIconDrawable="@drawable/ic_creditcard">
-
-                <EditText
-                    android:id="@+id/edtCurrentGranteeNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Current Grantee Card Number"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAvailability"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/til_currentgranteenumber"
+                android:layout_below="@+id/til_placereleased"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/background">
 
@@ -221,11 +199,31 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_othercardholdername1"
+                        android:id="@+id/til_othercardnumberseries1"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_othercardnumber1"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumberSeries1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Series Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardholdername1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumberseries1"
                         android:layout_marginTop="10dp"
                         app:endIconMode="clear_text"
                         app:helperTextTextColor="@color/validation"
@@ -321,11 +319,31 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_othercardholdername2"
+                        android:id="@+id/til_othercardnumberseries2"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_othercardnumber2"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumberSeries2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Series Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardholdername2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumberseries2"
                         android:layout_marginTop="10dp"
                         app:endIconMode="clear_text"
                         app:helperTextTextColor="@color/validation"
@@ -424,11 +442,31 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_othercardholdername3"
+                        android:id="@+id/til_othercardnumberseries3"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_othercardnumber3"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumberSeries3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Series Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardholdername3"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumberseries3"
                         android:layout_marginTop="10dp"
                         app:endIconMode="clear_text"
                         app:helperTextTextColor="@color/validation"
