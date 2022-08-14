@@ -7,9 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.nfc.Tag;
 import android.util.Log;
-import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -255,13 +257,58 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return database.rawQuery(sql, null);
     }
 
-    public  void deleteAccess() {
+    public void deleteAccess() {
         SQLiteDatabase database = getWritableDatabase();
         String sql = "DELETE FROM Api";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
         statement.execute();
         database.close();
+    }
+
+    public void insertEmvData(JSONArray remoteData) {
+        for (int i=0; i < remoteData.length(); i++) {
+            try {
+                JSONObject extractedData = remoteData.getJSONObject(i);
+
+                try {
+                    SQLiteDatabase database = getWritableDatabase();
+                    String sql = "INSERT INTO emv_database_monitoring (id, full_name, hh_id, client_status, address, sex, hh_set_group, current_grantee_card_number, other_card_number_1, other_card_holder_name_1, other_card_number_2, other_card_holder_name_2, other_card_number_3, other_card_holder_name_3, upload_history_id, created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    SQLiteStatement statement = database.compileStatement(sql);
+                    statement.clearBindings();
+                    statement.bindLong(1, extractedData.getInt("id"));
+                    statement.bindString(2, extractedData.getString("full_name"));
+                    statement.bindString(3, extractedData.getString("hh_id"));
+                    statement.bindString(4, extractedData.getString("client_status"));
+                    statement.bindString(5, extractedData.getString("address"));
+                    statement.bindString(6, extractedData.getString("sex"));
+                    statement.bindString(7, extractedData.getString("hh_set_group"));
+                    statement.bindString(8, extractedData.getString("current_grantee_card_number"));
+                    statement.bindString(9, extractedData.getString("other_card_number_1"));
+                    statement.bindString(10, extractedData.getString("other_card_holder_name_1"));
+                    statement.bindString(11, extractedData.getString("other_card_number_2"));
+                    statement.bindString(12, extractedData.getString("other_card_holder_name_2"));
+                    statement.bindString(13, extractedData.getString("other_card_number_3"));
+                    statement.bindString(14, extractedData.getString("other_card_holder_name_3"));
+                    statement.bindLong(15, extractedData.getInt("upload_history_id"));
+                    statement.bindString(16, extractedData.getString("created_at"));
+                    statement.bindString(17, extractedData.getString("updated_at"));
+                    statement.bindString(18, extractedData.getString("validated_at"));
+
+                    statement.executeInsert();
+
+                    Log.v(TAG,"Successfully inserted data!");
+
+                }
+                catch(Exception e){
+                    Log.v(TAG,"Failed to insert Emv Data! = " + e );
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public  void deleteData(int id) {
