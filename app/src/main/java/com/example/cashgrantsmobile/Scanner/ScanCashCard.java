@@ -583,6 +583,7 @@ public class ScanCashCard extends AppCompatActivity {
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
                     myEdit.putString("signatureAccomplishment", "false");
                     myEdit.putString("identifier", "false");
+                    myEdit.putString("granteeBtn", "false");
                     myEdit.putInt("updateMoriah", 0);
                     myEdit.commit();
 
