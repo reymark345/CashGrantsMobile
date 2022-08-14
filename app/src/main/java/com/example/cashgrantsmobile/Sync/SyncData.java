@@ -38,10 +38,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
 public class SyncData extends AppCompatActivity {
-    private Button btnSync;
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
-    Button btnPull;
+    Button btnSync;
     String token = null;
     TextView progressCount, progressTarget, progressPercent;
     JSONArray remoteData;
@@ -49,10 +48,10 @@ public class SyncData extends AppCompatActivity {
 
     public void syncEmvData(Boolean init) {
         Activity_Splash_Login.NukeSSLCerts.nuke();
-        btnPull = findViewById(R.id.btnPull);
+        btnSync = findViewById(R.id.btnSync);
 
         if (!init) {
-            btnPull.setEnabled(false);
+            btnSync.setEnabled(false);
         }
 
         String url = "http://192.168.1.12/cgtracking/public/api/v1/staff/emvdatabasemonitoring/pulldata/";
@@ -79,7 +78,7 @@ public class SyncData extends AppCompatActivity {
                         progressTarget = findViewById(R.id.progressFigureLast);
                         progressPercent = findViewById(R.id.progressCount);
                         progressBar = findViewById(R.id.progressBar);
-                        Double localId = Double.valueOf(getLastID());
+                        Double localId = Double.valueOf(0);
                         Double remoteId = Double.valueOf(totalDataCount);
                         Double progressCalc = localId / remoteId * 100;
 
@@ -91,21 +90,20 @@ public class SyncData extends AppCompatActivity {
                             Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
                             MainActivity.sqLiteHelper.insertEmvData(dataSets);
                             if (progressPercent.getText().toString().matches("100")) {
-                                btnPull.setEnabled(true);
-                                Toasty.success(PullData.this, "Completed", Toast.LENGTH_SHORT, true).show();
+                                btnSync.setEnabled(true);
+                                Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
                             } else {
-                                pullEmvData(false);
                             }
                         }
 
                     }
                     else{
-                        btnPull.setEnabled(true);
+                        btnSync.setEnabled(true);
                         Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
                     }
 
                 } catch (JSONException e) {
-                    btnPull.setEnabled(true);
+                    btnSync.setEnabled(true);
                     e.printStackTrace();
                 }
             }
@@ -119,12 +117,12 @@ public class SyncData extends AppCompatActivity {
                     JSONArray errors = data.getJSONArray("errors");
                     JSONObject jsonMessage = errors.getJSONObject(0);
                     String message = jsonMessage.getString("message");
-                    Toasty.warning(PullData.this, message, Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
                 } catch (JSONException | UnsupportedEncodingException e) {
-                    Toasty.warning(PullData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(SyncData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
                 }
                 catch (Exception e) {
-                    Toasty.error(PullData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                 }
             }
 

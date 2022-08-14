@@ -27,7 +27,7 @@
         android:indeterminate="false"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="100dp"
         app:mpb_showProgressBackground="true"
         app:mpb_progressStyle="horizontal"
         style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
@@ -88,15 +88,51 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp" />
 
+    <TextView
+        android:id="@+id/gridLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sync logs"
+        android:layout_marginLeft="20px"
+        android:layout_alignTop="@id/gridView"
+        android:layout_below="@id/progressBar"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
     <GridView
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="160dp"
         android:layout_marginBottom="80dp"
         android:columnWidth="300dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:numColumns="auto_fit" />
+
+    <TextView
+        android:id="@+id/gridLbl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Error logs"
+        android:layout_marginLeft="20px"
+        android:layout_alignTop="@id/gridView1"
+        android:layout_below="@id/gridView"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <GridView
+        android:id="@+id/gridView1"
+        android:layout_width="wrap_content"
+        android:layout_height="230dp"
+        android:layout_marginTop="430dp"
+        android:layout_centerHorizontal="true"
+        android:columnWidth="300dp"
+        android:padding="10dp"
         android:gravity="center"
         android:numColumns="auto_fit" />
 
