@@ -33,13 +33,15 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.android.material.navigation.NavigationView;
 
+import es.dmoral.toasty.Toasty;
+
 public class MainActivity extends AppCompatActivity {
 
-    CardView CashCardScanner, InventoryList, SyncData, Logout;
+    CardView CashCardScanner, InventoryList, PullData, SyncData, Logout;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
     private SQLiteDatabase mDatabase;
-    TextView txtInventoryCount, txtPendingCount;
+    TextView txtInventoryCount, txtPendingCount, txtPullDataCount;
     public boolean EnableNightMode = false;
     private String night = "true";
     private String light = "false";
@@ -57,12 +59,14 @@ public class MainActivity extends AppCompatActivity {
         //CardView
         CashCardScanner = (CardView) findViewById(R.id.CardScan);
         InventoryList = (CardView) findViewById(R.id.inventoryList);
+        PullData = (CardView) findViewById(R.id.pullData);
         SyncData = (CardView) findViewById(R.id.syncData);
         Logout = (CardView) findViewById(R.id.logout);
 
         //TextView
         txtInventoryCount =(TextView)findViewById(R.id.txtInventoryAmount);
         txtPendingCount =(TextView)findViewById(R.id.txtPending);
+        txtPullDataCount = findViewById(R.id.textPullData);
         //Button
         DarkMode =(ImageButton) findViewById(R.id.textViews);
 
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setIndeterminateDrawable(doubleBounce);
 
         darkModeStatus();
+        dashboardDataCount();
         InventoryListCount();
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED){
@@ -119,6 +124,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        PullData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Pull.PullData.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         SyncData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 myEdit.putString("tokenStatus", "0");
                 myEdit.commit();
+                Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
                 Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
                 startActivity(intent);
                 finish();
@@ -184,5 +198,10 @@ public class MainActivity extends AppCompatActivity {
         int z = cursor.getCount();
         txtInventoryCount.setText(String.valueOf(z));
         txtPendingCount.setText(String.valueOf(z));
+    }
+
+    public void dashboardDataCount() {
+        Cursor emvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring");
+        txtPullDataCount.setText(String.valueOf(emvList.getCount()));
     }
 }
