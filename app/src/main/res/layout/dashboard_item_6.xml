@@ -6,10 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/syncData"
+        android:id="@+id/updateData"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"
-        app:cardBackgroundColor="@color/dashboard_item_3"
+        app:cardBackgroundColor="@color/validation"
         app:cardCornerRadius="@dimen/_14sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_8sdp"
-            android:src="@drawable/ic_sync"
+            android:src="@drawable/ic_baseline_update_24"
             app:tint="@color/white"/>
     </com.google.android.material.card.MaterialCardView>
 
@@ -45,7 +45,7 @@
             android:paddingBottom="@dimen/_16sdp">
 
             <TextView
-                android:id="@+id/txtSyncData"
+                android:id="@+id/textUpdateData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -56,17 +56,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
-
             <TextView
                 android:id="@+id/textTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginRight="@dimen/_8sdp"
-                android:text="Sync Data"
+                android:text="Update Data"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/_14ssp"
-                app:layout_constraintEnd_toStartOf="@id/textAmount"
+                app:layout_constraintEnd_toStartOf="@id/textUpdateData"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -84,7 +83,7 @@
                 android:id="@+id/textLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upload data "
+                android:text="Update data "
                 android:textColor="@color/secondary_text"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageLocation"
