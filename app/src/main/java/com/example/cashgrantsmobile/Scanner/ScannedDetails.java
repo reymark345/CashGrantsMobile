@@ -122,6 +122,12 @@ public class ScannedDetails extends AppCompatActivity {
         signatoriesValidation();
 
 
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String accomplish_shared = sh.getString("accomplish_by_name", "");
+
+        edtAccomplishBy.setText(accomplish_shared);
+
+
 
         btnRescanBeneId.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -405,7 +411,11 @@ public class ScannedDetails extends AppCompatActivity {
                             imageViewToByte(mPreviewGrantee),
                             edtAttested.getText().toString().trim()
                     );
-
+                    String hh_no_1 = sh.getString("hh_id", "");
+                    sqLiteHelper.update_emv_monitoring(
+                            hh_no_1
+                    );
+                    clearSharedPref();
                     String value="Added Successfully";
                     intent= new Intent(ScannedDetails.this, ScanCashCard.class);
                     intent.putExtra("toast",value);
@@ -810,5 +820,62 @@ public class ScannedDetails extends AppCompatActivity {
         }catch (Exception e){
             Log.v(TAG,"test Maxa"+e);
         }
+    }
+    public void clearSharedPref(){
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        //1
+        myEdit.putString("hh_id", "");
+        myEdit.putString("full_name", "");
+        myEdit.putString("client_status", "");
+        myEdit.putString("address", "");
+        myEdit.putString("sex", "");
+        myEdit.putString("hh_set_group", "");
+        myEdit.putString("contact_no", "");
+        myEdit.putString("assigned", "");
+        myEdit.putString("minor_grantee", "");
+
+        //2
+        myEdit.putString("card_released", "");
+        myEdit.putString("who_released", "");
+        myEdit.putString("place_released", "");
+        myEdit.putString("current_grantee_number", "");
+        myEdit.putString("is_available", "");
+        myEdit.putString("is_available_reason", "");
+        myEdit.putString("other_card_number_1", "");
+        myEdit.putString("other_card_holder_name_1", "");
+        myEdit.putString("other_is_available_1", "");
+        myEdit.putString("other_is_available_reason_1", "");
+        myEdit.putString("other_card_number_2", "");
+        myEdit.putString("other_card_holder_name_2", "");
+        myEdit.putString("other_is_available_2", "");
+        myEdit.putString("other_is_available_reason_2", "");
+        myEdit.putString("other_card_number_3", "");
+        myEdit.putString("other_card_holder_name_3", "");
+        myEdit.putString("other_is_available_3", "");
+        myEdit.putString("other_is_available_reason_3", "");
+
+        //3
+        myEdit.putString("nma_amount", "");
+        myEdit.putString("nma_reason", "");
+        myEdit.putString("date_withdrawn", "");
+        myEdit.putString("remarks", "");
+
+        //4
+        myEdit.putString("lender_name", "");
+        myEdit.putString("pawning_date", "");
+        myEdit.putString("loaned_amount", "");
+        myEdit.putString("lender_address", "");
+        myEdit.putString("date_retrieved", "");
+        myEdit.putString("interest", "");
+        myEdit.putString("spin_status", "");
+        myEdit.putString("pawning_reason", "");
+        myEdit.putString("offense_history", "");
+        myEdit.putString("offense_history_date", "");
+        myEdit.putString("pd_remarks", "");
+        myEdit.putString("intervention", "");
+        myEdit.putString("other_details", "");
+        myEdit.commit();
     }
 }

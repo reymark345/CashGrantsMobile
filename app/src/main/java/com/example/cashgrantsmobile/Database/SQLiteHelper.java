@@ -62,33 +62,39 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-//    public void insertScannedCashCard(String scannedCashCard,byte[] cc_image){
-//
+
+    public void insertEmvDatabase(String full_name,String household,String client_status,String address,String sex,String hh_set_group,String contact_no,String assigned,String minor_grantee, String card_released,String who_released,String place_released,String current_grantee_card,byte[] cc_image){
+
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String strDate = sdf.format(new Date());
-//
-//        try {
-//            SQLiteDatabase database = getWritableDatabase();
-//            String sql = "INSERT INTO CgList VALUES (NULL,?,?,?,?,?,?,0,?,?,?,?,?)";
-//            SQLiteStatement statement = database.compileStatement(sql);
-//            statement.clearBindings();
-//            statement.bindString(1, "");
-//            statement.bindString(2, "");
-//            statement.bindString(3, "");
-//            statement.bindBlob(4, cc_image);
-//            statement.bindString(5,"");
-//            statement.bindString(6, scannedCashCard);
-//            statement.bindString(7, strDate);
-//            statement.bindString(8, "");
-//            statement.bindString(9, "");
-//            statement.bindString(10, "");
-//            statement.bindString(11, "");
-//            statement.executeInsert();
-//        }
-//        catch(Exception e){
-//            Log.v(TAG,e.toString());
-//        }
-//    }
+
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "INSERT INTO emv_database_monitoring_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.clearBindings();
+            statement.bindString(1, full_name);
+            statement.bindString(2, household);
+            statement.bindString(3, client_status);
+            statement.bindString(4, address);
+            statement.bindString(5, sex);
+            statement.bindString(6, hh_set_group);
+            statement.bindString(8, assigned);
+            statement.bindString(8, minor_grantee);
+            statement.bindString(9, contact_no);
+            statement.bindString(10, card_released);
+            statement.bindString(11, place_released);
+            statement.bindString(12, who_released);
+
+            statement.bindBlob(43, cc_image);
+            statement.bindString(5,"");
+            statement.bindString(15, current_grantee_card);
+            statement.executeInsert();
+        }
+        catch(Exception e){
+            Log.v(TAG,e.toString());
+        }
+    }
 
     public void insertDefaultUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
@@ -166,6 +172,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
+
+    public void update_emv_monitoring(String household_id) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(new Date());
+
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "UPDATE emv_database_monitoring SET validated_at = ? WHERE hh_id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.bindString(1, strDate);
+        statement.bindString(2, household_id);
+        statement.execute();
+        database.close();
+    }
+
     public void updateAccomplishSignature(int current_idd,String cash_card ,String accomplish,String informant,String attested ,byte[] signature) {
         try {
 
