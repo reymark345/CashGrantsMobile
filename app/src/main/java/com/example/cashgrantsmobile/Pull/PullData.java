@@ -66,7 +66,7 @@ public class PullData extends AppCompatActivity {
             btnPull.setEnabled(false);
         }
 
-        String url = "http://192.168.1.12/cgtracking/public/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
+        String url = "http://192.168.254.112/cgtracking/public/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
 
         // creating a new variable for our request queue
         RequestQueue queue = Volley.newRequestQueue(PullData.this);

@@ -62,6 +62,34 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
+//    public void insertScannedCashCard(String scannedCashCard,byte[] cc_image){
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String strDate = sdf.format(new Date());
+//
+//        try {
+//            SQLiteDatabase database = getWritableDatabase();
+//            String sql = "INSERT INTO CgList VALUES (NULL,?,?,?,?,?,?,0,?,?,?,?,?)";
+//            SQLiteStatement statement = database.compileStatement(sql);
+//            statement.clearBindings();
+//            statement.bindString(1, "");
+//            statement.bindString(2, "");
+//            statement.bindString(3, "");
+//            statement.bindBlob(4, cc_image);
+//            statement.bindString(5,"");
+//            statement.bindString(6, scannedCashCard);
+//            statement.bindString(7, strDate);
+//            statement.bindString(8, "");
+//            statement.bindString(9, "");
+//            statement.bindString(10, "");
+//            statement.bindString(11, "");
+//            statement.executeInsert();
+//        }
+//        catch(Exception e){
+//            Log.v(TAG,e.toString());
+//        }
+//    }
+
     public void insertDefaultUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
             SQLiteDatabase database = getWritableDatabase();
