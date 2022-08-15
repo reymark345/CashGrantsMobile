@@ -146,7 +146,6 @@ public class InventoryList extends AppCompatActivity {
                 byte[] idImage = cursor.getBlob(5);
                 int status = cursor.getInt(7);
                 list.add(new Inventory(cashCardNumber, hhNumber,seriesNumber, CashCardImage, idImage,status, id));
-
             }
             adapter.notifyDataSetChanged();
         }
