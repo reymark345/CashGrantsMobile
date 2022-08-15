@@ -56,6 +56,10 @@
             android:parentActivityName=".Sync.SyncData"/>
 
         <activity
+            android:name=".Update.UpdateData"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
             android:name=".Scanner.ActivityHome"
             android:parentActivityName=".Scanner.ScanCashCard"/>
 
