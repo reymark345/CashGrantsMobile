@@ -31,7 +31,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.MainActivity;
-import com.example.cashgrantsmobile.Pull.PullData;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Internet.NetworkChangeListener;
 
@@ -183,8 +182,7 @@ public class SyncData extends AppCompatActivity {
         btnSync = findViewById(R.id.btnSync);
         btnSync.setEnabled(false);
 
-        Cursor emvDetailsList = sqLiteHelper.getData("SELECT id, full_name, hh_id, client_status, address, sex, hh_set_group, assigned_staff, minor_grantee, contact, current_grantee_card_release_date, current_grantee_card_release_place, current_grantee_card_release_by, current_grantee_is_available, current_grantee_reason, current_grantee_card_number, other_card_number_1, other_card_holder_name_1, other_card_number_2, other_card_holder_name_2, other_card_number_3, other_card_holder_name_3, other_card_is_available, other_card_reason, nma_amount, nma_date_claimed, nma_reason, nma_remarks, pawn_name_of_lender, pawn_date, pawn_retrieved_date, pawn_status, pawn_reason, pawn_offense_history, pawn_offense_date, pawn_remarks, pawn_intervention_staff, pawn_other_details, informant_full_name, accomplish_by_full_name, accomplish_e_signature, informant_e_signature, attested_by_e_signature, current_cash_card_picture, beneficiary_picture, attested_by_full_name, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, emv_database_monitoring_id, current_grantee_card_number_series, created_at FROM emv_database_monitoring_details");
-
+        Cursor emvDetailsList = sqLiteHelper.getData("SELECT id, full_name, hh_id, client_status, address, sex, hh_set_group, assigned_staff, minor_grantee, contact, current_grantee_card_release_date, current_grantee_card_release_place, current_grantee_card_release_by, current_grantee_is_available, current_grantee_reason, current_grantee_card_number, other_card_number_1, other_card_holder_name_1, other_card_number_2, other_card_holder_name_2, other_card_number_3, other_card_holder_name_3, other_card_is_available, other_card_reason, nma_amount, nma_date_claimed, nma_reason, nma_remarks, pawn_name_of_lender, pawn_date, pawn_retrieved_date, pawn_status, pawn_reason, pawn_offense_history, pawn_offense_date, pawn_remarks, pawn_intervention_staff, pawn_other_details, informant_full_name, accomplish_by_full_name, accomplish_e_signature, informant_e_signature, attested_by_e_signature, current_cash_card_picture, beneficiary_picture, attested_by_full_name, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, emv_database_monitoring_id, current_grantee_card_number_series, created_at, other_card_is_available_2, other_card_is_available_3, other_card_reason_2, other_card_reason_3, pawn_loaned_amount, pawn_lender_address, pawn_interest FROM emv_database_monitoring_details");
 
         while (emvDetailsList.moveToNext()) {
             Integer id = emvDetailsList.getInt(0);
@@ -240,6 +238,13 @@ public class SyncData extends AppCompatActivity {
             String current_grantee_card_number_series = emvDetailsList.getString(50);
             String user_id = getUserId().toString();
             String created_at = emvDetailsList.getString(51);
+            String other_card_is_available_2 = emvDetailsList.getString(52);
+            String other_card_is_available_3 = emvDetailsList.getString(53);
+            String other_card_reason_2 = emvDetailsList.getString(54);
+            String other_card_reason_3 = emvDetailsList.getString(55);
+            String pawn_loaned_amount = emvDetailsList.getString(56);
+            String pawn_lender_address = emvDetailsList.getString(57);
+            String pawn_interest = emvDetailsList.getString(58);
 
             String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoringdetails/sync";
 
@@ -298,6 +303,13 @@ public class SyncData extends AppCompatActivity {
             params.put("current_grantee_card_number_series", current_grantee_card_number_series);
             params.put("user_id", user_id);
             params.put("created_at", created_at);
+            params.put("other_card_is_available_2", other_card_is_available_2);
+            params.put("other_card_is_available_3", other_card_is_available_3);
+            params.put("other_card_reason_2", other_card_reason_2);
+            params.put("other_card_reason_3", other_card_reason_3);
+            params.put("pawn_loaned_amount", pawn_loaned_amount);
+            params.put("pawn_lender_address", pawn_lender_address);
+            params.put("pawn_interest", pawn_interest);
 
             JsonObjectRequest request = new JsonObjectRequest(url, new JSONObject(params), new Response.Listener<JSONObject>() {
                 @Override
