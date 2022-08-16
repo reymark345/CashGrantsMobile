@@ -63,14 +63,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertEmvDatabase(String full_name,String household,String client_status,String address,String sex,String hh_set_group,String contact_no,String assigned,String minor_grantee, String card_released,String who_released,String place_released,String current_grantee_card,byte[] cc_image){
 
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String strDate = sdf.format(new Date());
+    public void insertEmvDatabase(String full_name,String household,String client_status,String address,String sex,String hh_set_group,String contact_no,String assigned,String minor_grantee, String card_released,String who_released,String place_released,String is_available,String is_available_reason,String other_card_number_1,String other_card_holder_name_1,String other_is_available_1,String other_is_available_reason_1,String other_card_number_2,String other_card_holder_name_2,String other_is_available_2,String other_is_available_reason_2,String other_card_number_3,String other_card_holder_name_3,String other_is_available_3,String other_is_available_reason_3,String nma_amount,String nma_reason,String date_withdrawn,String remarks,String lender_name,String pawning_date,String date_retrieved,String spin_status,String pawning_reason,String offense_history,String offense_history_date,String pd_remarks,String intervention,String other_details,String current_grantee_card,byte[] cc_image){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(new Date());
 
         try {
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "INSERT INTO emv_database_monitoring_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO emv_database_monitoring_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.clearBindings();
             statement.bindString(1, full_name);
@@ -79,19 +80,46 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindString(4, address);
             statement.bindString(5, sex);
             statement.bindString(6, hh_set_group);
-            statement.bindString(8, assigned);
+            statement.bindString(7, assigned);
             statement.bindString(8, minor_grantee);
             statement.bindString(9, contact_no);
             statement.bindString(10, card_released);
             statement.bindString(11, place_released);
             statement.bindString(12, who_released);
-
+            statement.bindString(13, is_available);
+            statement.bindString(14, is_available_reason);
+            statement.bindString(15, current_grantee_card);
+            statement.bindString(16, other_card_number_1);
+            statement.bindString(17, other_card_holder_name_1);
+            statement.bindString(18, other_card_number_2);
+            statement.bindString(19, other_card_holder_name_2);
+            statement.bindString(20, other_card_number_3);
+            statement.bindString(21, other_card_holder_name_3);
+            statement.bindString(22, other_is_available_1);
+            statement.bindString(23, other_is_available_reason_1);
+            statement.bindString(24, nma_amount);
+            statement.bindString(25, date_withdrawn);
+            statement.bindString(26, nma_reason);
+            statement.bindString(27, remarks);
+            statement.bindString(28, lender_name);
+            statement.bindString(29, pawning_date);
+            statement.bindString(30, date_retrieved);
+            statement.bindString(31, spin_status);
+            statement.bindString(32, pawning_reason);
+            statement.bindString(33, offense_history);
+            statement.bindString(34, offense_history_date);
+            statement.bindString(35, pd_remarks);
+            statement.bindString(36, intervention);
+            statement.bindString(37, other_details);
             statement.bindBlob(43, cc_image);
             statement.bindString(5,"");
-            statement.bindString(15, current_grantee_card);
+            statement.bindString(54, strDate);
+            statement.bindLong(56, 0);
             statement.executeInsert();
+            Log.v(TAG,"Success na emv");
         }
         catch(Exception e){
+            Log.v(TAG,"wala ni success na emv " + e);
             Log.v(TAG,e.toString());
         }
     }

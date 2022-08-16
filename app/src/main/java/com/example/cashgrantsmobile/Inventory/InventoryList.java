@@ -67,6 +67,7 @@ public class InventoryList extends AppCompatActivity {
                 int stats = i+1;
 
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,id_image,card_scanning_status FROM CgList WHERE id ="+stats);
+//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,beneficiary_picture,card_scanning_status FROM emv_database_monitoring WHERE id ="+stats);
                 while (cursor.moveToNext()) {
                     id_image = cursor.getBlob(1);
                     status = cursor.getInt(2);
@@ -130,6 +131,7 @@ public class InventoryList extends AppCompatActivity {
             e.printStackTrace();
         }
         try {
+//            Cursor cursor = sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details");
             Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
             list.clear();
             while (cursor.moveToNext()) {

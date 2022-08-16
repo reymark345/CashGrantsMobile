@@ -437,7 +437,7 @@ public class ScannedDetails extends AppCompatActivity {
                 startActivity(intent);
             }
             catch (Exception e ){
-                Toasty.error(this,"Don't leave the required fields/image", Toasty.LENGTH_SHORT).show();
+                Toasty.warning(this,"Don't leave the required fields/image", Toasty.LENGTH_SHORT).show();
                 Log.v(TAG,"error submit" + e);
                 e.printStackTrace();
             }
@@ -470,15 +470,15 @@ public class ScannedDetails extends AppCompatActivity {
         }
 
         if (granteeBtnStatus.matches("false")){
-            Toasty.error(this,"Please Scan Grantee", Toasty.LENGTH_SHORT).show();
+            Toasty.warning(this,"Please Scan Grantee", Toasty.LENGTH_SHORT).show();
         }
 
         if(accomplish.length==1 || accomplish.length==0){
-            Toasty.error(this,"Signature is required for accomplished by", Toasty.LENGTH_SHORT).show();
+            Toasty.warning(this,"Signature is required for accomplished by", Toasty.LENGTH_SHORT).show();
         }
 
         if(informant.length==1 || informant.length==0){
-            Toasty.error(this,"Signature is required for Informant", Toasty.LENGTH_SHORT).show();
+            Toasty.warning(this,"Signature is required for Informant", Toasty.LENGTH_SHORT).show();
         }
 
         if (!CardResult.matches("[0-9 ]+")){
@@ -835,6 +835,9 @@ public class ScannedDetails extends AppCompatActivity {
         myEdit.putString("contact_no", "");
         myEdit.putString("assigned", "");
         myEdit.putString("minor_grantee", "");
+
+        myEdit.putString("accomplish_by_name", "");
+
 
         //2
         myEdit.putString("card_released", "");

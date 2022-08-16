@@ -589,7 +589,7 @@ public class ScanCashCard extends AppCompatActivity {
                     String sex = sh.getString("sex", "");
                     String hh_set_group = sh.getString("hh_set_group", "");
                     String contact_no = sh.getString("contact_no", "");
-                    String assigned = sh.getString("assigned", "");
+                    String assigned = sh.getString("accomplish_by_name", "");
                     String minor_grantee = sh.getString("minor_grantee", "");
 
                     String card_released = sh.getString("card_released", "");
@@ -598,18 +598,36 @@ public class ScanCashCard extends AppCompatActivity {
                     String current_grantee_number = sh.getString("current_grantee_number", "");
                     String is_available = sh.getString("is_available", "");
                     String is_available_reason = sh.getString("is_available_reason", "");
+
                     String other_card_number_1 = sh.getString("other_card_number_1", "");
                     String other_card_holder_name_1 = sh.getString("other_card_holder_name_1", "");
                     String other_is_available_1 = sh.getString("other_is_available_1", "");
                     String other_is_available_reason_1 = sh.getString("other_is_available_reason_1", "");
+
                     String other_card_number_2 = sh.getString("other_card_number_2", "");
                     String other_card_holder_name_2 = sh.getString("other_card_holder_name_2", "");
                     String other_is_available_2 = sh.getString("other_is_available_2", "");
+
                     String other_is_available_reason_2 = sh.getString("other_is_available_reason_2", "");
                     String other_card_number_3 = sh.getString("other_card_number_3", "");
                     String other_card_holder_name_3 = sh.getString("other_card_holder_name_3", "");
                     String other_is_available_3 = sh.getString("other_is_available_3", "");
                     String other_is_available_reason_3 = sh.getString("other_is_available_reason_3", "");
+
+                    Log.v(ContentValues.TAG,"testtttinggg");
+                    Log.v(ContentValues.TAG,other_card_number_1);
+                    Log.v(ContentValues.TAG,other_card_holder_name_1);
+                    Log.v(ContentValues.TAG,other_is_available_1);
+                    Log.v(ContentValues.TAG,other_is_available_reason_1);
+                    Log.v(ContentValues.TAG,other_card_number_2);
+                    Log.v(ContentValues.TAG,other_card_holder_name_2);
+                    Log.v(ContentValues.TAG,other_is_available_2);
+
+                    Log.v(ContentValues.TAG,other_is_available_reason_2);
+                    Log.v(ContentValues.TAG,other_card_number_3);
+                    Log.v(ContentValues.TAG,other_card_holder_name_3);
+                    Log.v(ContentValues.TAG,other_is_available_3);
+                    Log.v(ContentValues.TAG,other_is_available_reason_3);
 
                     String nma_amount = sh.getString("nma_amount", "");
                     String nma_reason = sh.getString("nma_reason", "");
@@ -618,12 +636,10 @@ public class ScanCashCard extends AppCompatActivity {
 
                     String lender_name = sh.getString("lender_name", "");
                     String pawning_date = sh.getString("pawning_date", "");
-                    String loaned_amount = sh.getString("loaned_amount", "");
-                    String lender_address = sh.getString("lender_address", "");
                     String date_retrieved = sh.getString("date_retrieved", "");
-                    String interest = sh.getString("interest", "");
                     String spin_status = sh.getString("spin_status", "");
                     String pawning_reason = sh.getString("pawning_reason", "");
+
                     String offense_history = sh.getString("offense_history", "");
                     String offense_history_date = sh.getString("offense_history_date", "");
                     String pd_remarks = sh.getString("pd_remarks", "");
@@ -631,6 +647,10 @@ public class ScanCashCard extends AppCompatActivity {
                     String other_details = sh.getString("other_details", "");
 
 
+                    String loaned_amount = sh.getString("loaned_amount", "");
+                    String lender_address = sh.getString("lender_address", "");
+
+                    String interest = sh.getString("interest", "");
 
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
                     try {
@@ -639,17 +659,18 @@ public class ScanCashCard extends AppCompatActivity {
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
                             i.putExtra("cashCardNumber",limitString);
+
+                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv));
+//                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks,limitString,imageViewToByte(mPreviewIv));
                             sqLiteHelper.insertScannedCashCard(limitString,imageViewToByte(mPreviewIv));
-
-                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,limitString,imageViewToByte(mPreviewIv));
-
-
                         }
                         else{
                             i.putExtra("cashCardNumber",sTextFromET);
+                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv));
+//                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks,sTextFromET,imageViewToByte(mPreviewIv));
+//                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,sTextFromET,imageViewToByte(mPreviewIv));
+//
                             sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
-
-
                         }
 
                     } catch (IOException e) {
