@@ -423,7 +423,7 @@ public class ScanCashCard extends AppCompatActivity {
                     nextValidation();
                 }
                 else{
-                    Toasty.error(getApplicationContext(),"Household is invalid", Toasty.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(),"Press first the search button", Toasty.LENGTH_SHORT).show();
                 }
 
             }
@@ -604,6 +604,7 @@ public class ScanCashCard extends AppCompatActivity {
                     String other_is_available_1 = sh.getString("other_is_available_1", "");
                     String other_is_available_reason_1 = sh.getString("other_is_available_reason_1", "");
 
+
                     String other_card_number_2 = sh.getString("other_card_number_2", "");
                     String other_card_holder_name_2 = sh.getString("other_card_holder_name_2", "");
                     String other_is_available_2 = sh.getString("other_is_available_2", "");
@@ -622,13 +623,11 @@ public class ScanCashCard extends AppCompatActivity {
                     Log.v(ContentValues.TAG,other_card_number_2);
                     Log.v(ContentValues.TAG,other_card_holder_name_2);
                     Log.v(ContentValues.TAG,other_is_available_2);
-
                     Log.v(ContentValues.TAG,other_is_available_reason_2);
                     Log.v(ContentValues.TAG,other_card_number_3);
                     Log.v(ContentValues.TAG,other_card_holder_name_3);
                     Log.v(ContentValues.TAG,other_is_available_3);
                     Log.v(ContentValues.TAG,other_is_available_reason_3);
-
                     String nma_amount = sh.getString("nma_amount", "");
                     String nma_reason = sh.getString("nma_reason", "");
                     String date_withdrawn = sh.getString("date_withdrawn", "");
@@ -646,11 +645,11 @@ public class ScanCashCard extends AppCompatActivity {
                     String intervention = sh.getString("intervention", "");
                     String other_details = sh.getString("other_details", "");
 
+                    String pawn_loaned_amount = sh.getString("loaned_amount", "");
+                    String pawn_lender_address = sh.getString("lender_address", "");
+                    String pawn_interest = sh.getString("interest", "");
 
-                    String loaned_amount = sh.getString("loaned_amount", "");
-                    String lender_address = sh.getString("lender_address", "");
-
-                    String interest = sh.getString("interest", "");
+                    String hh_no_1 = sh.getString("hh_id", "");
 
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
                     try {
@@ -659,19 +658,18 @@ public class ScanCashCard extends AppCompatActivity {
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
                             i.putExtra("cashCardNumber",limitString);
+                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv), other_is_available_2, other_is_available_3, other_is_available_reason_2, other_is_available_reason_3,pawn_loaned_amount,pawn_lender_address,pawn_interest);
 
-                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv));
-//                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks,limitString,imageViewToByte(mPreviewIv));
-                            sqLiteHelper.insertScannedCashCard(limitString,imageViewToByte(mPreviewIv));
+//                          sqLiteHelper.insertScannedCashCard(limitString,imageViewToByte(mPreviewIv));
                         }
                         else{
                             i.putExtra("cashCardNumber",sTextFromET);
-                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv));
-//                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks,sTextFromET,imageViewToByte(mPreviewIv));
-//                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,sTextFromET,imageViewToByte(mPreviewIv));
-//
-                            sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
+                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv), other_is_available_2, other_is_available_3, other_is_available_reason_2, other_is_available_reason_3,pawn_loaned_amount,pawn_lender_address,pawn_interest);
+                            //                          sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
                         }
+                        sqLiteHelper.update_emv_monitoring(
+                                hh_no_1
+                        );
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -949,8 +947,10 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_card_number_2.setText(other_card_number_2);
                 edt_other_card_holder_name_2.setText(other_card_holder_name_2);
 
-                edt_other_card_number_3.setText(other_card_number_3);
-                edt_other_card_holder_name_3.setText(other_card_holder_name_3);
+                String other_card_3 = edt_other_card_number_3.getText().toString();
+
+//                edt_other_card_number_3.setText(other_card_number_3);
+//                edt_other_card_holder_name_3.setText(other_card_holder_name_3);
 
 //                edt_card_released = findViewById(R.id.edtCardReleased);
                 edt_who_released = findViewById(R.id.edtWhoReleased);
@@ -1686,12 +1686,14 @@ public class ScanCashCard extends AppCompatActivity {
                         if (edt_other_card_holder_name_2!=null || edt_other_card_holder_name_2.length()!=4){
                             edt_other_card_holder_name_2.setText(other_card_holder_name_2);
                         }
-                        if (edt_other_card_number_3!=null || edt_other_card_number_3.length()!=4){
-                            edt_other_card_number_3.setText(other_card_number_3);
-                        }
-                        if (edt_other_card_holder_name_3!=null || other_cardholder_name_3.length()!=4){
-                            edt_other_card_holder_name_3.setText(other_cardholder_name_3);
-                        }
+//                        if (edt_other_card_number_3!=null || edt_other_card_number_3.length()!=4){
+//                            edt_other_card_number_3.setText(other_card_number_3);
+//                            Log.v(ContentValues.TAG,"Ayay1"+edt_other_card_number_3);
+//                        }
+//
+//                        if (edt_other_card_holder_name_3!=null || other_cardholder_name_3.length()!=4){
+//                            edt_other_card_holder_name_3.setText(other_cardholder_name_3);
+//                        }
                     }
                     else {
                         Log.v(ContentValues.TAG,"fullnamess " +validated_at);

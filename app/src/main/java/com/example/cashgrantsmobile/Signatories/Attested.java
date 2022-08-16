@@ -78,7 +78,8 @@ public class Attested extends AppCompatActivity {
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
 
-                        sqLiteHelper.updateAttestedSignature(
+
+                        sqLiteHelper.updateAttestedSignature_emv(
                                 currentId,
                                 edtCashCard,
                                 edtAccomplished,
@@ -86,11 +87,22 @@ public class Attested extends AppCompatActivity {
                                 edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
+
+
+//                        sqLiteHelper.updateAttestedSignature(
+//                                currentId,
+//                                edtCashCard,
+//                                edtAccomplished,
+//                                edtInformant,
+//                                edtAttested,
+//                                imageViewToByte(imageViewSignature)
+//                        );
+
                         intent.putExtra("detailScan", 0);
                         Log.v(TAG,"samplee zerro" + signatureCondition);
                     }
                     else {
-                        sqLiteHelper.updateAttestedSignature(
+                        sqLiteHelper.updateAttestedSignature_emv(
                                 (signatureCondition+1),
                                 edtCashCard,
                                 edtAccomplished,
@@ -98,12 +110,19 @@ public class Attested extends AppCompatActivity {
                                 edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
+
+//                        sqLiteHelper.updateAttestedSignature(
+//                                (signatureCondition+1),
+//                                edtCashCard,
+//                                edtAccomplished,
+//                                edtInformant,
+//                                edtAttested,
+//                                imageViewToByte(imageViewSignature)
+//                        );
                         intent.putExtra("detailScan", signatureCondition);
                         Log.v(TAG,"samplee 1" + signatureCondition);
 
                     }
-
-
 
                     startActivity(intent);
 

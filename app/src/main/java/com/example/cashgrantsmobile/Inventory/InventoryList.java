@@ -66,8 +66,8 @@ public class InventoryList extends AppCompatActivity {
                 int i=l.intValue();
                 int stats = i+1;
 
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,id_image,card_scanning_status FROM CgList WHERE id ="+stats);
-//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,beneficiary_picture,card_scanning_status FROM emv_database_monitoring WHERE id ="+stats);
+//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,id_image,card_scanning_status FROM CgList WHERE id ="+stats);
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,beneficiary_picture,card_scanning_status FROM emv_database_monitoring_details WHERE id ="+stats);
                 while (cursor.moveToNext()) {
                     id_image = cursor.getBlob(1);
                     status = cursor.getInt(2);
@@ -93,7 +93,7 @@ public class InventoryList extends AppCompatActivity {
                                 myEdit.putString("identifier", "true");
                                 myEdit.commit();
 
-                                if (id_image.length ==1){
+                                if (id_image ==null){
                                     in.putExtra("updateData", i);
                                     in.putExtra("EmptyImageView","triggerEvent");
                                 }
@@ -106,7 +106,7 @@ public class InventoryList extends AppCompatActivity {
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                if (id_image.length ==1){
+                                if (id_image==null){
                                     Toasty.error(getApplicationContext(),"Update data first ", Toasty.LENGTH_SHORT).show();
                                 }
                                 else{
@@ -131,23 +131,24 @@ public class InventoryList extends AppCompatActivity {
             e.printStackTrace();
         }
         try {
-//            Cursor cursor = sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details");
-            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details");
+//            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
-                if (cursor.getString(1).matches("")){
-                    cashCardNumber = cursor.getString(6);
+                String hhNumber = cursor.getString(1);
+                if (cursor.getString(2).matches("")){
+                    cashCardNumber = cursor.getString(7);
                 }
                 else{
-                    cashCardNumber = cursor.getString(1);
+                    cashCardNumber = cursor.getString(2);
                 }
-                String hhNumber = cursor.getString(2);
-                String seriesNumber = cursor.getString(3);
-                byte[] CashCardImage = cursor.getBlob(4);
-                byte[] idImage = cursor.getBlob(5);
-                int status = cursor.getInt(7);
-                list.add(new Inventory(cashCardNumber, hhNumber,seriesNumber, CashCardImage, idImage,status, id));
+                String grantee_number = cursor.getString(3);
+                String seriesNumber = cursor.getString(4);
+                byte[] CashCardImage = cursor.getBlob(5);
+                byte[] idImage = cursor.getBlob(6);
+                int status = cursor.getInt(8);
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
 
             }
             adapter.notifyDataSetChanged();
