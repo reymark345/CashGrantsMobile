@@ -1,10 +1,12 @@
 package com.example.cashgrantsmobile.Scanner;
 
+import static android.content.ContentValues.TAG;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import static com.example.cashgrantsmobile.Scanner.ScanCashCard.imageViewToByte;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,6 +30,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cashgrantsmobile.Inventory.InventoryList;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Signatories.Accomplish;
+import com.example.cashgrantsmobile.Signatories.Attested;
+import com.example.cashgrantsmobile.Signatories.Informant;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -34,6 +40,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -41,21 +48,27 @@ import es.dmoral.toasty.Toasty;
 
 public class ScannedDetails extends AppCompatActivity {
 
-    EditText edtCashCard, edtHhNumber, edtSeriesNo;
-    ImageView mPreview4PsId, mPreviewCashCard;
-    Button btnSubmit, btnRescanCashCard, btnRescanBeneId;
-    TextInputLayout tilCashCard, tilHousehold, tilSeriesNo;
+    EditText edtCashCard, edtAccomplishBy, edtInformant, edtAttested;
+    ImageView mPreviewGrantee, mPreviewCashCard,mAccomplished,mInformant,mAttested;
+    Button btnSubmit, btnRescanCashCard, btnRescanBeneId, btn_Accomplished, btn_informant, btn_attested;
+    TextInputLayout tilCashCard, tilHousehold, tilSeriesNo, tilAttested;
     public static boolean scanned;
+    public static boolean signature;
     private int prevCount = 0;
-    public int id = 0;
+    public static int id = 0, max_id=0;
     private String cashCardNumber;
     String blankMessage = "Please fill this blank";
     Intent intent;
     Uri image_uri;
     ImageView mPreviewIv;
+    byte[] accomplish = new byte[0];
+    byte[] informant = new byte[0];
     private boolean isAtSpaceDelimiter(int currCount) {
-        return currCount == 4 || currCount == 9 || currCount == 14 || currCount == 19;
+        return currCount == 4 ||currCount == 9 || currCount == 14 || currCount == 19;
     }
+    int dataUp =0;
+    int detailScan=0;
+    int grante_no = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +76,17 @@ public class ScannedDetails extends AppCompatActivity {
 
         //EdiText
         edtCashCard = findViewById(R.id.Idresult);
-        edtHhNumber = (EditText) findViewById(R.id.hhNo);
-        edtSeriesNo = (EditText) findViewById(R.id.seriesNo);
+        edtAccomplishBy = (EditText) findViewById(R.id.edtAccomplish);
+        edtInformant = (EditText) findViewById(R.id.edtInformant);
+        edtAttested = (EditText) findViewById(R.id.edt_attested);
 
         //ImageView
-        mPreview4PsId = findViewById(R.id.PsID);
+        mPreviewGrantee = findViewById(R.id.PsID);
         mPreviewCashCard = findViewById(R.id.ScannedImage);
+        mAccomplished = findViewById(R.id.imgAccomplished);
+        mInformant = findViewById(R.id.imgInformant);
+        mAttested = findViewById(R.id.imgAttested);
+
 
 
         mPreviewIv = findViewById(R.id.imgUri);
@@ -79,19 +97,31 @@ public class ScannedDetails extends AppCompatActivity {
         btnRescanCashCard = (Button) findViewById(R.id.rescanCashCard);
         btnRescanBeneId = (Button) findViewById(R.id.rescanBeneId);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btn_Accomplished = (Button) findViewById(R.id.btn_Accomplished);
+        btn_informant = (Button) findViewById(R.id.btn_informant);
+        btn_attested = (Button) findViewById(R.id.btn_attested);
+
+
 
         //round ImageView
-        mPreview4PsId.setClipToOutline(true);
+        mPreviewGrantee.setClipToOutline(true);
         mPreviewCashCard.setClipToOutline(true);
 
         //layoutMaterial
         tilCashCard = findViewById(R.id.til_cashCard);
         tilHousehold = findViewById(R.id.til_household);
         tilSeriesNo = findViewById(R.id.til_seriesno);
+        tilAttested = findViewById(R.id.til_attested);
+
+        signature =false;
         CashCardOnChange();
         HouseholdOnChanged();
         SeriesOnChanged();
+        getMaxID();
         getData();
+        signatoriesValidation();
+
+
 
         btnRescanBeneId.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -129,6 +159,82 @@ public class ScannedDetails extends AppCompatActivity {
                 }
             }
         });
+
+        //signatories
+        btn_Accomplished.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                int moriah = sh.getInt("updateMoriah", 0);
+                Intent in = getIntent();
+                dataUp = in.getIntExtra("updateData", 0);
+                Toast.makeText(getApplicationContext(), "Acc ni" + dataUp + " " + id, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), Accomplish.class);
+                intent.putExtra("conditionForSignature", moriah);
+                intent.putExtra("edtCashCard", edtCashCard.getText().toString());
+                intent.putExtra("edtAccomplish", edtAccomplishBy.getText().toString());
+                intent.putExtra("edtInformant", edtInformant.getText().toString());
+                intent.putExtra("edtAttest", edtAttested.getText().toString());
+                Log.v(TAG,"moriah " + dataUp + " " +moriah);
+                startActivity(intent);
+            }
+        });
+        btn_informant.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                int moriah = sh.getInt("updateMoriah", 0);
+                Intent in = getIntent();
+                dataUp = in.getIntExtra("updateData", 0);
+                Intent intent = new Intent(getApplicationContext(), Informant.class);
+                intent.putExtra("conditionForSignature", moriah);
+                intent.putExtra("edtCashCard", edtCashCard.getText().toString());
+                intent.putExtra("edtAccomplish", edtAccomplishBy.getText().toString());
+                intent.putExtra("edtInformant", edtInformant.getText().toString());
+                intent.putExtra("edtAttest", edtAttested.getText().toString());
+                startActivity(intent);
+            }
+        });
+        btn_attested.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                int moriah = sh.getInt("updateMoriah", 0);
+                Intent in = getIntent();
+                dataUp = in.getIntExtra("updateData", 0);
+                Intent intent = new Intent(getApplicationContext(), Attested.class);
+                intent.putExtra("conditionForSignature", moriah);
+                intent.putExtra("edtCashCard", edtCashCard.getText().toString());
+                intent.putExtra("edtAccomplish", edtAccomplishBy.getText().toString());
+                intent.putExtra("edtInformant", edtInformant.getText().toString());
+                intent.putExtra("edtAttest", edtAttested.getText().toString());
+                startActivity(intent);
+            }
+        });
+//        getSignatories();
+
+    }
+
+    public void getSignatories(){
+        try {
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                byte[] byteArray = extras.getByteArray("imageAccomplish");
+                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                mAccomplished.setImageBitmap(Bitmap.createScaledBitmap(bmp, 374, 500, false));
+//                image.setImageBitmap(bmp);
+
+//                Toast.makeText(this, "111111111 ", Toast.LENGTH_SHORT).show();
+            }
+            else {
+//                Toast.makeText(this, "22222222", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        catch (Exception e){
+//            Toast.makeText(this, "Error kayah ni" + e, Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     public void pickCamera() {
@@ -146,9 +252,45 @@ public class ScannedDetails extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 101){
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            mPreview4PsId.setImageBitmap(bitmap);
-            btnRescanBeneId.setText("RE-SCAN");
+            try {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+
+//            mPreviewGrantee.setImageBitmap(bitmap);
+
+                mPreviewGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+
+                if (grante_no !=0){
+                    sqLiteHelper.updateGrantee(
+                            grante_no,
+                            imageViewToByte(mPreviewGrantee)
+                    );
+                    Log.v(TAG,"1stdown" + grante_no + " " + id);
+                }
+                else{
+                    sqLiteHelper.updateGrantee(
+                            id,
+                            imageViewToByte(mPreviewGrantee)
+                    );
+
+
+                }
+                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putString("granteeBtn", "true");
+                myEdit.commit();
+
+
+                btnRescanBeneId.setText("RE-SCAN");
+                Log.v(TAG,"hala gantee save");
+
+            }catch (Exception e){
+                Log.v(TAG,"bye" + e);
+
+            }
+
         }
         else{
             if (resultCode == RESULT_OK){
@@ -168,7 +310,7 @@ public class ScannedDetails extends AppCompatActivity {
                     TextRecognizer recognizer = new TextRecognizer.Builder(getApplicationContext()).build();
 
                     if(!recognizer.isOperational()){
-                        Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,"Error this",Toast.LENGTH_SHORT).show();
                     }
                     else{
                         Frame frame = new Frame.Builder().setBitmap(bitmap).build();
@@ -205,7 +347,7 @@ public class ScannedDetails extends AppCompatActivity {
                         image_uri = Uri.parse(image_uri.toString());
                         try {
                             Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
-                            mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 187, 250, false));
+                            mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
                             sqLiteHelper.updateScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -223,7 +365,7 @@ public class ScannedDetails extends AppCompatActivity {
                         }
                         try {
                             Bitmap bitmaps = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
-                            mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmaps, 187, 250, false));
+                            mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmaps, 374, 500, false));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -237,38 +379,47 @@ public class ScannedDetails extends AppCompatActivity {
         }
     }
 
-
-
     public void submit(){
-
+        Log.v(TAG,"here");
         String CardResult = edtCashCard.getText().toString();
-        String household = edtHhNumber.getText().toString();
-        String seriesNo = edtSeriesNo.getText().toString();
+        String household = edtAccomplishBy.getText().toString();
+        String seriesNo = edtInformant.getText().toString();
+        String attested = edtAttested.getText().toString();
+
         String idCard = btnRescanBeneId.getText().toString();
         int length = CardResult.length();
 
-        if (CardResult.matches("[0-9 ]+") && !household.matches("") && !seriesNo.matches("") && idCard.equals("RE-SCAN") && length==23 ){
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String granteeBtnStatus = sh.getString("granteeBtn", "");
+
+
+        if (CardResult.matches("[0-9 ]+") && !household.matches("") && !seriesNo.matches("") && granteeBtnStatus.matches("true") && length==23 && accomplish.length !=1 && accomplish.length !=0 && informant.length !=1 && informant.length !=0){
             try{
+
                 if ( scanned ==true){
                     sqLiteHelper.updateSubmitData(
                             edtCashCard.getText().toString().trim(),
-                            edtHhNumber.getText().toString().trim(),
-                            edtSeriesNo.getText().toString().trim(),
+                            edtAccomplishBy.getText().toString().trim(),
+                            edtInformant.getText().toString().trim(),
                             imageViewToByte(mPreviewCashCard),
-                            imageViewToByte(mPreview4PsId)
+                            imageViewToByte(mPreviewGrantee),
+                            edtAttested.getText().toString().trim()
                     );
+
                     String value="Added Successfully";
                     intent= new Intent(ScannedDetails.this, ScanCashCard.class);
                     intent.putExtra("toast",value);
 
                 }
                 else{
+                    Log.v(TAG,"submitted successfully last");
                     sqLiteHelper.updateInventoryList(
                             edtCashCard.getText().toString().trim(),
-                            edtHhNumber.getText().toString().trim(),
-                            edtSeriesNo.getText().toString().trim(),
+                            edtAccomplishBy.getText().toString().trim(),
+                            edtInformant.getText().toString().trim(),
                             imageViewToByte(mPreviewCashCard),
-                            imageViewToByte(mPreview4PsId),id
+                            imageViewToByte(mPreviewGrantee),id,
+                            edtAttested.getText().toString().trim()
                     );
                     intent = new Intent(ScannedDetails.this, InventoryList.class);
                 }
@@ -276,14 +427,16 @@ public class ScannedDetails extends AppCompatActivity {
                 startActivity(intent);
             }
             catch (Exception e ){
-                Toast.makeText(getApplicationContext(), "error "+e, Toast.LENGTH_SHORT).show();
+                Toasty.error(this,"Don't leave the required fields/image", Toasty.LENGTH_SHORT).show();
+                Log.v(TAG,"error submit" + e);
                 e.printStackTrace();
             }
         }
 
-        else if (!household.matches("") && !seriesNo.matches("") ){
+        else if (!household.matches("") && !seriesNo.matches("") && !attested.matches("") ){
             tilHousehold.setError(null);
             tilSeriesNo.setError(null);
+            tilAttested.setError(null);
         }
 
         if (!seriesNo.matches("")){
@@ -296,8 +449,9 @@ public class ScannedDetails extends AppCompatActivity {
             tilHousehold.setError(blankMessage);
         }
         if (!household.matches("")){
-            tilHousehold.setError(null);
+            tilAttested.setError(null);
         }
+
         if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Invalid format");
         }
@@ -305,9 +459,18 @@ public class ScannedDetails extends AppCompatActivity {
             tilCashCard.setError("Not enough length");
         }
 
-        if (idCard.equals("Scan")){
-            Toasty.error(this,"Please Scan 4P's Id", Toasty.LENGTH_SHORT).show();
+        if (granteeBtnStatus.matches("false")){
+            Toasty.error(this,"Please Scan Grantee", Toasty.LENGTH_SHORT).show();
         }
+
+        if(accomplish.length==1 || accomplish.length==0){
+            Toasty.error(this,"Signature is required for accomplished by", Toasty.LENGTH_SHORT).show();
+        }
+
+        if(informant.length==1 || informant.length==0){
+            Toasty.error(this,"Signature is required for Informant", Toasty.LENGTH_SHORT).show();
+        }
+
         if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Cash Card contains a character");
         }
@@ -342,7 +505,7 @@ public class ScannedDetails extends AppCompatActivity {
         });
     }
     public void HouseholdOnChanged(){
-        edtHhNumber.addTextChangedListener(new TextWatcher() {
+        edtAccomplishBy.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -363,7 +526,7 @@ public class ScannedDetails extends AppCompatActivity {
         });
     }
     public void SeriesOnChanged(){
-        edtSeriesNo.addTextChangedListener(new TextWatcher() {
+        edtInformant.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -402,9 +565,34 @@ public class ScannedDetails extends AppCompatActivity {
         edtCashCard.setSelection(sb.length());
     }
 
+
     //update and get data
     public void getData(){
-        if (scanned ==true){
+
+
+        Intent in = getIntent();
+        detailScan = in.getIntExtra("detailScan", 0);
+        Log.v(TAG,"detailsScan" + detailScan);
+
+
+
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String signatories = sh.getString("signatureAccomplishment", "");
+        String identifier = sh.getString("identifier", "");
+
+//        if (identifier.matches("true")){
+//            intent.putExtra("detailScan", (signatureCondition+1));
+//            Log.v(TAG,"unta 1" + identifier + " " + (signatureCondition+1));
+//        }
+//        else {
+//            intent.putExtra("detailScan", signatureCondition);
+//            Log.v(TAG,"unta 2" + identifier);
+//        }
+
+        if (scanned ==true && !signatories.matches("true")){
+            grante_no = max_id;
+            Toast.makeText(ScannedDetails.this, "this is 1" + signatories, Toast.LENGTH_SHORT).show();
+            Log.v(TAG,"FIRSTSCANNED");
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 String resultUri = extras.getString("CashCardImage");
@@ -413,20 +601,76 @@ public class ScannedDetails extends AppCompatActivity {
                 Uri myUri = Uri.parse(resultUri);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),myUri);
-                    mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 187, 250, false));
+                    mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-        else{
-            Intent in = getIntent();
+        else if (signatories.matches("true") && detailScan==0 && identifier.matches("false")){
+
+            Log.v(TAG,"SECONDSCANNED" + dataUp);
             int updateId = in.getIntExtra("updateData", 0);
             id = updateId+1;
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, accomplish_img, informant_image, attested_img,attested FROM CgList WHERE id="+max_id);
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1).matches("")){
+                        cashCardNumber = cursor.getString(6);
+                    }
+                    else{
+                        cashCardNumber = cursor.getString(1);
+                    }
+                    String hhNumber = cursor.getString(2);
+                    String seriesNumber = cursor.getString(3);
+                    byte[] CashCardImage = cursor.getBlob(4);
+                    byte[] granteeImage = cursor.getBlob(5);
+                    accomplish = cursor.getBlob(7);
+                    informant = cursor.getBlob(8);
+                    byte[] attested = cursor.getBlob(9);
+                    String Attest = cursor.getString(10);
+                    Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
+                    mPreviewCashCard.setImageBitmap(bmpCashCard);
+
+
+                    //Grantee
+                    if(granteeImage.length > 1){Bitmap grantee = BitmapFactory.decodeByteArray(granteeImage, 0, granteeImage.length);mPreviewGrantee.setImageBitmap(grantee);}
+                    else{mPreviewGrantee.setImageResource(R.drawable.ic_image);}
+
+                    //accomplish
+                    if(accomplish.length > 1){Bitmap accomplishedBy = BitmapFactory.decodeByteArray(accomplish, 0, accomplish.length);mAccomplished.setImageBitmap(accomplishedBy);}
+                    else{mAccomplished.setImageResource(R.drawable.ic_image);}
+
+                    //informant
+                    if(informant.length > 1){Bitmap inform = BitmapFactory.decodeByteArray(informant, 0, informant.length);mInformant.setImageBitmap(inform);}
+                    else{mInformant.setImageResource(R.drawable.ic_image);}
+
+                    //Attested
+                    if(attested.length > 1){Bitmap attest = BitmapFactory.decodeByteArray(attested, 0, attested.length);mAttested.setImageBitmap(attest);}
+                    else{mAttested.setImageResource(R.drawable.ic_image);}
+                    edtCashCard.setText(cashCardNumber);
+                    edtAccomplishBy.setText(hhNumber);
+                    edtInformant.setText(seriesNumber);
+                    edtAttested.setText(Attest);
+
+//                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
+//                    else{mPreviewGrantee.setImageBitmap(bmpId); }
+                }
+            }catch (Exception e){
+                Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if (detailScan!=0){
+            int updateId = in.getIntExtra("updateData", 0);
+            id = updateId+1;
+            Log.v(TAG,"SIGNATORIES" + signatories + "identifier" + identifier + "details SCAN" + detailScan);
+            btnRescanBeneId.setText("RE-SCAN");
+            btnSubmit.setText("UPDATE");
+            try {
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, accomplish_img, informant_image, attested_img, attested FROM CgList WHERE id="+(detailScan+1));
+//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
                         cashCardNumber = cursor.getString(6);
@@ -438,14 +682,90 @@ public class ScannedDetails extends AppCompatActivity {
                     String seriesNumber = cursor.getString(3);
                     byte[] CashCardImage = cursor.getBlob(4);
                     byte[] idImage = cursor.getBlob(5);
+                    accomplish = cursor.getBlob(7);
+                    informant = cursor.getBlob(8);
+                    byte[] attested = cursor.getBlob(9);
+                    String Attest = cursor.getString(10);
                     Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
                     Bitmap bmpId = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
+
                     mPreviewCashCard.setImageBitmap(bmpCashCard);
+
+
+
+                    //accomplish
+                    if(accomplish.length > 1){Bitmap accomplishedBy = BitmapFactory.decodeByteArray(accomplish, 0, accomplish.length);mAccomplished.setImageBitmap(accomplishedBy);}
+                    else{mAccomplished.setImageResource(R.drawable.ic_image);}
+
+                    //informant
+                    if(informant.length > 1){Bitmap inform = BitmapFactory.decodeByteArray(informant, 0, informant.length);mInformant.setImageBitmap(inform);}
+                    else{mInformant.setImageResource(R.drawable.ic_image);}
+
+                    //Attested
+                    if(attested.length > 1){Bitmap attest = BitmapFactory.decodeByteArray(attested, 0, attested.length);mAttested.setImageBitmap(attest);}
+                    else{mAttested.setImageResource(R.drawable.ic_image);}
+
+
                     edtCashCard.setText(cashCardNumber);
-                    edtHhNumber.setText(hhNumber);
-                    edtSeriesNo.setText(seriesNumber);
-                    if (in.hasExtra("EmptyImageView")) {mPreview4PsId.setImageResource(R.drawable.ic_image); }
-                    else{mPreview4PsId.setImageBitmap(bmpId); }
+                    edtAccomplishBy.setText(hhNumber);
+                    edtInformant.setText(seriesNumber);
+                    edtAttested.setText(Attest);
+                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
+                    else{mPreviewGrantee.setImageBitmap(bmpId); }
+                }
+            }catch (Exception e){
+                Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            int updateId = in.getIntExtra("updateData", 0);
+            id = updateId+1;
+            Log.v(TAG,"3rdScanned" + max_id + "id " + id);
+            btnRescanBeneId.setText("RE-SCAN");
+            btnSubmit.setText("UPDATE");
+            try {
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, accomplish_img, informant_image, attested_img, attested FROM CgList WHERE id="+id);
+//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1).matches("")){
+                        cashCardNumber = cursor.getString(6);
+                    }
+                    else{
+                        cashCardNumber = cursor.getString(1);
+                    }
+                    String hhNumber = cursor.getString(2);
+                    String seriesNumber = cursor.getString(3);
+                    byte[] CashCardImage = cursor.getBlob(4);
+                    byte[] idImage = cursor.getBlob(5);
+                    accomplish = cursor.getBlob(7);
+                    informant = cursor.getBlob(8);
+                    byte[] attested = cursor.getBlob(9);
+                    String Attest = cursor.getString(10);
+
+                    Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
+                    Bitmap bmpId = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
+
+                    mPreviewCashCard.setImageBitmap(bmpCashCard);
+
+                    //accomplish
+                    if(accomplish.length > 1){Bitmap accomplishedBy = BitmapFactory.decodeByteArray(accomplish, 0, accomplish.length);mAccomplished.setImageBitmap(accomplishedBy);}
+                    else{mAccomplished.setImageResource(R.drawable.ic_image);}
+
+                    //informant
+                    if(informant.length > 1){Bitmap inform = BitmapFactory.decodeByteArray(informant, 0, informant.length);mInformant.setImageBitmap(inform);}
+                    else{mInformant.setImageResource(R.drawable.ic_image);}
+
+                    //Attested
+                    if(attested.length > 1){Bitmap attest = BitmapFactory.decodeByteArray(attested, 0, attested.length);mAttested.setImageBitmap(attest);}
+                    else{mAttested.setImageResource(R.drawable.ic_image);}
+
+
+                    edtCashCard.setText(cashCardNumber);
+                    edtAccomplishBy.setText(hhNumber);
+                    edtInformant.setText(seriesNumber);
+                    edtAttested.setText(Attest);
+                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
+                    else{mPreviewGrantee.setImageBitmap(bmpId); }
                 }
             }catch (Exception e){
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
@@ -461,5 +781,34 @@ public class ScannedDetails extends AppCompatActivity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+    public void signatoriesValidation (){
+
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String signatories = sh.getString("signatureAccomplishment", "");
+        if (!signatories.matches("true")){
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString("signatureAccomplishment", "false");
+            myEdit.commit();
+        }
+    }
+
+    public void getMaxID(){
+        try {
+            Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT max(id) FROM CGList");
+            while (cursor.moveToNext()) {
+                max_id = cursor.getInt(0);
+            }
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putInt("maxIdScanned", max_id);
+            myEdit.commit();
+
+//            Toast.makeText(ScannedDetails.this, "Max IDD" + max_id, Toast.LENGTH_SHORT).show();
+            Log.v(TAG,"test Maxs"+max_id);
+        }catch (Exception e){
+            Log.v(TAG,"test Maxa"+e);
+        }
     }
 }

@@ -4,8 +4,9 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundDisplay"
     >
-    
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,31 +16,20 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
-            android:backgroundTint="@color/background"
+            android:backgroundTint="@color/backgroundDisplay"
             app:liftOnScroll="true"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <GridView
-        android:layout_marginTop="50dp"
+        android:id="@+id/gridView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/gridView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@color/primary"
+        android:backgroundTint="@color/backgroundDisplay"
         android:columnWidth="300dp"
         android:gravity="center"
         android:numColumns="auto_fit" />
-
-    <Button
-        android:id="@+id/btnSync"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/mybutton"
-        android:textSize="30dp"
-        android:text="SYNC"
-        android:layout_marginBottom="5dp"
-        android:textColor="@color/white"/>
 </RelativeLayout>

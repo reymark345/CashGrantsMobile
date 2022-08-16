@@ -45,7 +45,7 @@
             android:paddingBottom="@dimen/_16sdp">
 
             <TextView
-                android:id="@+id/textAmount"
+                android:id="@+id/txtSyncData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -56,6 +56,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
+
             <TextView
                 android:id="@+id/textTitle"
                 android:layout_width="0dp"

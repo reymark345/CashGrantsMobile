@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorWindow;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +42,7 @@ public class InventoryList extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inventory_list);
+        setContentView(R.layout.inventory_list);
         gridView = (GridView) findViewById(R.id.gridView);
         mToolbars = findViewById(R.id.mainToolbar);
 
@@ -85,6 +85,13 @@ public class InventoryList extends AppCompatActivity {
                                 ScannedDetails.scanned = false;
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
 
+                                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                myEdit.putString("signatureAccomplishment", "false");
+                                myEdit.putInt("updateMoriah", i);
+                                myEdit.putString("identifier", "true");
+                                myEdit.commit();
+
                                 if (id_image.length ==1){
                                     in.putExtra("updateData", i);
                                     in.putExtra("EmptyImageView","triggerEvent");
@@ -123,7 +130,7 @@ public class InventoryList extends AppCompatActivity {
             e.printStackTrace();
         }
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
@@ -139,7 +146,6 @@ public class InventoryList extends AppCompatActivity {
                 byte[] idImage = cursor.getBlob(5);
                 int status = cursor.getInt(7);
                 list.add(new Inventory(cashCardNumber, hhNumber,seriesNumber, CashCardImage, idImage,status, id));
-
             }
             adapter.notifyDataSetChanged();
         }
