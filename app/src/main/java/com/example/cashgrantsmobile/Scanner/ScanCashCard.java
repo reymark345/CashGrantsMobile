@@ -423,7 +423,7 @@ public class ScanCashCard extends AppCompatActivity {
                     nextValidation();
                 }
                 else{
-                    Toasty.error(getApplicationContext(),"Search household first", Toasty.LENGTH_SHORT).show();
+                    Toasty.info(getApplicationContext(),"Search household first", Toasty.LENGTH_SHORT).show();
                 }
 
             }
@@ -1655,8 +1655,6 @@ public class ScanCashCard extends AppCompatActivity {
                     Log.v(ContentValues.TAG,"hahaha " +hh_id);
                 }
 
-
-
                 if (search ==null || search.getCount() == 0){
                     clearSharedPref();
                     edt_fullname.setText("");
@@ -1664,9 +1662,7 @@ public class ScanCashCard extends AppCompatActivity {
                     edt_address.setText("");
                     edt_set.setText("");
                     spinSex.setText("");
-
-
-                    Toasty.error(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
+                    Toasty.info(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
                 }
                 else{
                     if  (validated_at.length()==4){
@@ -1724,7 +1720,7 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                     else {
                         Log.v(ContentValues.TAG,"fullnamess " +validated_at);
-                        Toasty.error(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
+                        Toasty.info(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
                     }
                     search.close();
 
@@ -1734,7 +1730,7 @@ public class ScanCashCard extends AppCompatActivity {
 
             }
             else {
-                Toasty.error(getApplicationContext(),"Please select household number ", Toasty.LENGTH_SHORT).show();
+                Toasty.info(getApplicationContext(),"Please enter a household number ", Toasty.LENGTH_SHORT).show();
             }
 
         }

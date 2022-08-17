@@ -5,12 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-
-
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-
         <RelativeLayout
             android:id="@+id/firstGroup"
             android:layout_width="wrap_content"
@@ -73,11 +70,34 @@
                             android:maxLength="23" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_series_number"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperText="Good valid!"
+                        app:helperTextTextColor="@color/validation"
+                        android:layout_below="@+id/til_cashCard"
+                        app:startIconDrawable="@drawable/ic_series_no">
+
+                        <EditText
+                            android:id="@+id/edt_series_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Card series"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <TextView
                         android:id="@+id/tViewId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_cashCard"
+                        android:layout_below="@+id/til_series_number"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-condensed"
@@ -89,7 +109,7 @@
                         android:id="@+id/rescanCashCard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_cashCard"
+                        android:layout_below="@+id/til_series_number"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="60dp"
                         android:layout_marginRight="30dp"
@@ -143,21 +163,6 @@
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
                         app:srcCompat="@drawable/ic_image" />
-
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/textView2"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_centerHorizontal="true"-->
-                    <!--                        android:background="@color/background"-->
-                    <!--                        android:layout_marginRight="15dp"-->
-                    <!--                        android:layout_alignParentRight="true"-->
-                    <!--                        android:text="Image Details"-->
-                    <!--                        android:fontFamily="sans-serif-condensed"-->
-                    <!--                        android:textAppearance="?android:attr/textAppearanceLarge"-->
-                    <!--                        android:textSize="15dp" />-->
-
-
                     <ImageView
                         android:id="@+id/PsID"
                         android:layout_width="90dp"
