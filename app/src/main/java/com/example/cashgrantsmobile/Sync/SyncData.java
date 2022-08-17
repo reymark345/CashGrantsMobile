@@ -23,10 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
@@ -39,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -226,11 +225,12 @@ public class SyncData extends AppCompatActivity {
             String informant_full_name = emvDetailsList.getString(38);
             String accomplish_by_full_name = emvDetailsList.getString(39);
             byte[] accomplish_e_signature = emvDetailsList.getBlob(40);
-            byte[] informant_e_signature = emvDetailsList.getBlob(41);
-
-            byte[] attested_by_e_signature = emvDetailsList.getBlob(42);
+//            byte[] informant_e_signature = emvDetailsList.getBlob(41);
+//
+//            byte[] attested_by_e_signature = emvDetailsList.getBlob(42);
             byte[] current_cash_card_picture = emvDetailsList.getBlob(43);
-            byte[] beneficiary_picture = emvDetailsList.getBlob(44);
+//            String strCCpicture = new String(current_cash_card_picture, StandardCharsets.UTF_8);
+//            byte[] beneficiary_picture = emvDetailsList.getBlob(44);
             String attested_by_full_name = emvDetailsList.getString(45);
             String other_card_number_series_1 = emvDetailsList.getString(46);
             String other_card_number_series_2 = emvDetailsList.getString(47);
@@ -249,79 +249,16 @@ public class SyncData extends AppCompatActivity {
 
             String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoringdetails/sync";
 
-
-            Map<String, String> params = new HashMap<String, String>();
-
-            params.put("full_name", full_name);
-            params.put("hh_id", hh_id);
-            params.put("client_status", client_status);
-            params.put("address", address);
-            params.put("sex", sex);
-            params.put("hh_set_group", hh_set_group);
-            params.put("assigned_staff", assigned_staff);
-            params.put("minor_grantee", minor_grantee);
-            params.put("contact", contact);
-            params.put("current_grantee_card_release_date", current_grantee_card_release_date);
-            params.put("current_grantee_card_release_place", current_grantee_card_release_place);
-            params.put("current_grantee_card_release_by", current_grantee_card_release_by);
-            params.put("current_grantee_is_available", current_grantee_is_available);
-            params.put("current_grantee_reason", current_grantee_reason);
-            params.put("current_grantee_card_number", current_grantee_card_number);
-            params.put("other_card_number_1", other_card_number_1);
-            params.put("other_card_holder_name_1", other_card_holder_name_1);
-            params.put("other_card_number_2", other_card_number_2);
-            params.put("other_card_holder_name_2", other_card_holder_name_2);
-            params.put("other_card_number_3", other_card_number_3);
-            params.put("other_card_holder_name_3", other_card_holder_name_3);
-            params.put("other_card_is_available", other_card_is_available);
-            params.put("other_card_reason", other_card_reason);
-            params.put("nma_amount", nma_amount);
-            params.put("nma_date_claimed", nma_date_claimed);
-            params.put("nma_reason", nma_reason);
-            params.put("nma_remarks", nma_remarks);
-            params.put("pawn_name_of_lender", pawn_name_of_lender);
-            params.put("pawn_date", pawn_date);
-            params.put("pawn_retrieved_date", pawn_retrieved_date);
-            params.put("pawn_status", pawn_status);
-            params.put("pawn_reason", pawn_reason);
-            params.put("pawn_offense_history", pawn_offense_history);
-            params.put("pawn_offense_date", pawn_offense_date);
-            params.put("pawn_remarks", pawn_remarks);
-            params.put("pawn_intervention_staff", pawn_intervention_staff);
-            params.put("pawn_other_details", pawn_other_details);
-            params.put("informant_full_name", informant_full_name);
-            params.put("accomplish_by_full_name", accomplish_by_full_name);
-            params.put("accomplish_e_signature", String.valueOf(accomplish_e_signature));
-            params.put("informant_e_signature", String.valueOf(informant_e_signature));
-            params.put("attested_by_e_signature", String.valueOf(attested_by_e_signature));
-            params.put("current_cash_card_picture", String.valueOf(current_cash_card_picture));
-            params.put("beneficiary_picture", String.valueOf(beneficiary_picture));
-            params.put("attested_by_full_name", attested_by_full_name);
-            params.put("other_card_number_series_1", other_card_number_series_1);
-            params.put("other_card_number_series_2", other_card_number_series_2);
-            params.put("other_card_number_series_3", other_card_number_series_3);
-            params.put("emv_database_monitoring_id", emv_database_monitoring_id);
-            params.put("current_grantee_card_number_series", current_grantee_card_number_series);
-            params.put("user_id", user_id);
-            params.put("created_at", created_at);
-            params.put("other_card_is_available_2", other_card_is_available_2);
-            params.put("other_card_is_available_3", other_card_is_available_3);
-            params.put("other_card_reason_2", other_card_reason_2);
-            params.put("other_card_reason_3", other_card_reason_3);
-            params.put("pawn_loaned_amount", pawn_loaned_amount);
-            params.put("pawn_lender_address", pawn_lender_address);
-            params.put("pawn_interest", pawn_interest);
-
-            JsonObjectRequest request = new JsonObjectRequest(url, new JSONObject(params), new Response.Listener<JSONObject>() {
+            StringRequest request = new StringRequest(Request.Method.POST, url,  new com.android.volley.Response.Listener<String>() {
                 @Override
-                public void onResponse(JSONObject data) {
+                public void onResponse(String response) {
                     // on below line we are displaying a success toast message.
                     try {
+                        JSONObject data = new JSONObject(response);
                         String status = data.getString("status");
                         String description = data.getString("description");
                         JSONObject dataObject = data.getJSONObject("data");
                         String household = dataObject.getString("hh_id");
-
 
                         Log.d("response d", String.valueOf(data));
 
@@ -397,15 +334,78 @@ public class SyncData extends AppCompatActivity {
                 }
 
             }) {
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
+//                @Override
+//                public String getBodyContentType() {
+//                    return "multipart/form-data; charset=utf-8";
+//                }
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Authorization", "Bearer " + token);
                     return headers;
+                }
+                protected Map<String,String> getParams(){
+                    Map<String, String> params = new HashMap<>();
+                    params.put("full_name", full_name);
+                    params.put("hh_id", hh_id);
+                    params.put("client_status",client_status);
+                    params.put("address", address);
+                    params.put("sex", "asdasd");
+//                    params.put("hh_set_group", hh_set_group);
+//                    params.put("assigned_staff", assigned_staff);
+//                    params.put("minor_grantee", minor_grantee);
+//                    params.put("contact", contact);
+//                    params.put("current_grantee_card_release_date", current_grantee_card_release_date);
+//                    params.put("current_grantee_card_release_place", current_grantee_card_release_place);
+//                    params.put("current_grantee_card_release_by", current_grantee_card_release_by);
+//                    params.put("current_grantee_is_available", current_grantee_is_available);
+//                    params.put("current_grantee_reason", current_grantee_reason);
+//                    params.put("current_grantee_card_number", current_grantee_card_number);
+//                    params.put("other_card_number_1", other_card_number_1);
+//                    params.put("other_card_holder_name_1", other_card_holder_name_1);
+//                    params.put("other_card_number_2", other_card_number_2);
+//                    params.put("other_card_holder_name_2", other_card_holder_name_2);
+//                    params.put("other_card_number_3", other_card_number_3);
+//                    params.put("other_card_holder_name_3", other_card_holder_name_3);
+//                    params.put("other_card_is_available", other_card_is_available);
+//                    params.put("other_card_reason", other_card_reason);
+//                    params.put("nma_amount", nma_amount);
+//                    params.put("nma_date_claimed", nma_date_claimed);
+//                    params.put("nma_reason", nma_reason);
+//                    params.put("nma_remarks", nma_remarks);
+//                    params.put("pawn_name_of_lender", pawn_name_of_lender);
+//                    params.put("pawn_date", pawn_date);
+//                    params.put("pawn_retrieved_date", pawn_retrieved_date);
+//                    params.put("pawn_status", pawn_status);
+//                    params.put("pawn_reason", pawn_reason);
+//                    params.put("pawn_offense_history", pawn_offense_history);
+//                    params.put("pawn_offense_date", pawn_offense_date);
+//                    params.put("pawn_remarks", pawn_remarks);
+//                    params.put("pawn_intervention_staff", pawn_intervention_staff);
+//                    params.put("pawn_other_details", pawn_other_details);
+//                    params.put("informant_full_name", informant_full_name);
+//                    params.put("accomplish_by_full_name", accomplish_by_full_name);
+//                    params.put("accomplish_e_signature", String.valueOf(accomplish_e_signature));
+//                    params.put("informant_e_signature", informant_e_signature);
+//                    params.put("attested_by_e_signature", attested_by_e_signature);
+                    params.put("current_cash_card_picture", String.valueOf(current_cash_card_picture));
+//                    params.put("beneficiary_picture", beneficiary_picture);
+//                    params.put("attested_by_full_name", attested_by_full_name);
+//                    params.put("other_card_number_series_1", String.valueOf(other_card_number_series_1));
+//                    params.put("other_card_number_series_2", String.valueOf(other_card_number_series_2));
+//                    params.put("other_card_number_series_3", String.valueOf(other_card_number_series_3));
+//                    params.put("emv_database_monitoring_id", String.valueOf(emv_database_monitoring_id));
+//                    params.put("current_grantee_card_number_series", String.valueOf(current_grantee_card_number_series));
+                    params.put("user_id", user_id);
+//                    params.put("created_at", created_at);
+//                    params.put("other_card_is_available_2", other_card_is_available_2);
+//                    params.put("other_card_is_available_3", other_card_is_available_3);
+//                    params.put("other_card_reason_2", other_card_reason_2);
+//                    params.put("other_card_reason_3", other_card_reason_3);
+//                    params.put("pawn_loaned_amount", pawn_loaned_amount);
+//                    params.put("pawn_lender_address", pawn_lender_address);
+//                    params.put("pawn_interest", pawn_interest);
+                    return params;
                 }
 
             };

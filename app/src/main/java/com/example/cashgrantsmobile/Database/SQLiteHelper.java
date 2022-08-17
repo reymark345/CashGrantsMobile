@@ -536,15 +536,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     public  void deleteEmvMonitoringDetails(int id) {
-        SQLiteDatabase database = getWritableDatabase();
-
-        String sql = "DELETE FROM emv_database_monitoring_details WHERE id = ?";
-        SQLiteStatement statement = database.compileStatement(sql);
-        statement.clearBindings();
-        statement.bindDouble(1, (double)id);
-
-        statement.execute();
-        database.close();
+//        SQLiteDatabase database = getWritableDatabase();
+//
+//        String sql = "DELETE FROM emv_database_monitoring_details WHERE id = ?";
+//        SQLiteStatement statement = database.compileStatement(sql);
+//        statement.clearBindings();
+//        statement.bindDouble(1, (double)id);
+//
+//        statement.execute();
+//        database.close();
     }
 
     public void updateEmvMonitoring(String validated, String id) {
