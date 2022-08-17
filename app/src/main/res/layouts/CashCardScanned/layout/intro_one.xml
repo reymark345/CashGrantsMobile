@@ -36,6 +36,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout

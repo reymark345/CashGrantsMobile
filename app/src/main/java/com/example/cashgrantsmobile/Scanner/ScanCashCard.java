@@ -439,6 +439,7 @@ public class ScanCashCard extends AppCompatActivity {
                 }
                 if (current == 0){
                     tvPrev.setVisibility(View.INVISIBLE);
+
                 } else {
                     tvPrev.setVisibility(View.VISIBLE);
                 }
@@ -807,40 +808,19 @@ public class ScanCashCard extends AppCompatActivity {
             spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
 
             //1
-            SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-            String hh_no_1 = sh.getString("hh_id", "");
-            String full_name_1 = sh.getString("full_name", "");
-            String client_status_1 = sh.getString("client_status", "");
-            String address_1 = sh.getString("address", "");
-            String sex_1 = sh.getString("sex", "");
-            String hh_set_group_1 = sh.getString("hh_set_group", "");
-            String contact_no_1 = sh.getString("contact_no", "");
-            String assigned_1 = sh.getString("assigned", "");
-            String minor_grantee_1 = sh.getString("minor_grantee", "");
-
-            // 3
-            String nma_amount_1   = sh.getString("nma_amount", "");
-            String nma_reason_1  = sh.getString("nma_reason", "");
-            String date_withdrawn_1   = sh.getString("date_withdrawn", "");
-            String remarks_1   = sh.getString("remarks", "");
-
-            //4
-            String lender_name = sh.getString("lender_name", "");
-            String pawning_date = sh.getString("pawning_date", "");
-            String loaned_amount = sh.getString("loaned_amount", "");
-            String lender_address = sh.getString("lender_address", "");
-            String date_retrieved = sh.getString("date_retrieved", "");
-            String interest = sh.getString("interest", "");
-            String spin_status = sh.getString("spin_status", "");
-            String pawning_reason = sh.getString("pawning_reason", "");
-            String offense_history = sh.getString("offense_history", "");
-            String offense_history_date = sh.getString("offense_history_date", "");
-            String pd_remarks = sh.getString("pd_remarks", "");
-            String intervention = sh.getString("intervention", "");
-            String other_details = sh.getString("other_details", "");
-
 
             if (position == 0) {
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+
+                String hh_no_1 = sh.getString("hh_id", "");
+                String full_name_1 = sh.getString("full_name", "");
+                String client_status_1 = sh.getString("client_status", "");
+                String address_1 = sh.getString("address", "");
+                String sex_1 = sh.getString("sex", "");
+                String hh_set_group_1 = sh.getString("hh_set_group", "");
+                String contact_no_1 = sh.getString("contact_no", "");
+                String assigned_1 = sh.getString("assigned", "");
+                String minor_grantee_1 = sh.getString("minor_grantee", "");
 
                 edt_hh.setText(hh_no_1);
                 edt_fullname.setText(full_name_1);
@@ -883,8 +863,8 @@ public class ScanCashCard extends AppCompatActivity {
                 spinClientStatus.setAdapter(adapterClientStatus);
 
             } else if (position == 1) {
-
-//                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                pressBtn_search = false;
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                 String card_released = sh.getString("card_released", "");
                 String who_released = sh.getString("who_released", "");
                 String place_released = sh.getString("place_released", "");
@@ -1061,6 +1041,12 @@ public class ScanCashCard extends AppCompatActivity {
                 });
             } else if (position == 2) {
 
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                String nma_amount_1   = sh.getString("nma_amount", "");
+                String nma_reason_1  = sh.getString("nma_reason", "");
+                String date_withdrawn_1   = sh.getString("date_withdrawn", "");
+                String remarks_1   = sh.getString("remarks", "");
+
 
                 nma_amount_1   = sh.getString("nma_amount", "");
                 nma_reason_1  = sh.getString("nma_reason", "");
@@ -1093,6 +1079,23 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
             } else if (position == 3) {
+
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                String lender_name = sh.getString("lender_name", "");
+                String pawning_date = sh.getString("pawning_date", "");
+                String loaned_amount = sh.getString("loaned_amount", "");
+                String lender_address = sh.getString("lender_address", "");
+                String date_retrieved = sh.getString("date_retrieved", "");
+                String interest = sh.getString("interest", "");
+                String spin_status = sh.getString("spin_status", "");
+                String pawning_reason = sh.getString("pawning_reason", "");
+                String offense_history = sh.getString("offense_history", "");
+                String offense_history_date = sh.getString("offense_history_date", "");
+                String pd_remarks = sh.getString("pd_remarks", "");
+                String intervention = sh.getString("intervention", "");
+                String other_details = sh.getString("other_details", "");
+
+
 
                 Log.v(ContentValues.TAG,"tayussss1");
 
