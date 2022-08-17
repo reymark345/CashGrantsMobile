@@ -423,7 +423,7 @@ public class ScanCashCard extends AppCompatActivity {
                     nextValidation();
                 }
                 else{
-                    Toasty.error(getApplicationContext(),"Press first the search button", Toasty.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(),"Search household first", Toasty.LENGTH_SHORT).show();
                 }
 
             }
@@ -439,6 +439,30 @@ public class ScanCashCard extends AppCompatActivity {
                 }
                 if (current == 0){
                     tvPrev.setVisibility(View.INVISIBLE);
+                    pressBtn_search=true;
+                    SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                    String hh_no_1 = sh.getString("hh_id", "");
+                    String full_name_1 = sh.getString("full_name", "");
+                    String client_status_1 = sh.getString("client_status", "");
+                    String address_1 = sh.getString("address", "");
+                    String sex_1 = sh.getString("sex", "");
+                    String hh_set_group_1 = sh.getString("hh_set_group", "");
+                    String contact_no_1 = sh.getString("contact_no", "");
+                    String assigned_1 = sh.getString("assigned", "");
+                    String minor_grantee_1 = sh.getString("minor_grantee", "");
+
+                    edt_hh.setText(hh_no_1);
+                    edt_fullname.setText(full_name_1);
+                    spinClientStatus.setText(client_status_1);
+                    spinClientStatus.setSelection(client_status_1.length());
+                    edt_address.setText(address_1);
+                    spinSex.setText(sex_1);
+                    spinSex.setSelection(sex_1.length());
+                    edt_set.setText(hh_set_group_1);
+                    edt_contact_no.setText(contact_no_1);
+                    edt_assigned.setText(assigned_1);
+                    spinAnswer.setText(minor_grantee_1);
+                    spinAnswer.setSelection(minor_grantee_1.length());
 
                 } else {
                     tvPrev.setVisibility(View.VISIBLE);
@@ -812,28 +836,28 @@ public class ScanCashCard extends AppCompatActivity {
             if (position == 0) {
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
 
-                String hh_no_1 = sh.getString("hh_id", "");
-                String full_name_1 = sh.getString("full_name", "");
-                String client_status_1 = sh.getString("client_status", "");
-                String address_1 = sh.getString("address", "");
-                String sex_1 = sh.getString("sex", "");
-                String hh_set_group_1 = sh.getString("hh_set_group", "");
-                String contact_no_1 = sh.getString("contact_no", "");
-                String assigned_1 = sh.getString("assigned", "");
-                String minor_grantee_1 = sh.getString("minor_grantee", "");
-
-                edt_hh.setText(hh_no_1);
-                edt_fullname.setText(full_name_1);
-                spinClientStatus.setText(client_status_1);
-                spinClientStatus.setSelection(client_status_1.length());
-                edt_address.setText(address_1);
-                spinSex.setText(sex_1);
-                spinSex.setSelection(sex_1.length());
-                edt_set.setText(hh_set_group_1);
-                edt_contact_no.setText(contact_no_1);
-                edt_assigned.setText(assigned_1);
-                spinAnswer.setText(minor_grantee_1);
-                spinAnswer.setSelection(minor_grantee_1.length());
+//                String hh_no_1 = sh.getString("hh_id", "");
+//                String full_name_1 = sh.getString("full_name", "");
+//                String client_status_1 = sh.getString("client_status", "");
+//                String address_1 = sh.getString("address", "");
+//                String sex_1 = sh.getString("sex", "");
+//                String hh_set_group_1 = sh.getString("hh_set_group", "");
+//                String contact_no_1 = sh.getString("contact_no", "");
+//                String assigned_1 = sh.getString("assigned", "");
+//                String minor_grantee_1 = sh.getString("minor_grantee", "");
+//
+//                edt_hh.setText(hh_no_1);
+//                edt_fullname.setText(full_name_1);
+//                spinClientStatus.setText(client_status_1);
+//                spinClientStatus.setSelection(client_status_1.length());
+//                edt_address.setText(address_1);
+//                spinSex.setText(sex_1);
+//                spinSex.setSelection(sex_1.length());
+//                edt_set.setText(hh_set_group_1);
+//                edt_contact_no.setText(contact_no_1);
+//                edt_assigned.setText(assigned_1);
+//                spinAnswer.setText(minor_grantee_1);
+//                spinAnswer.setSelection(minor_grantee_1.length());
 
 
 
