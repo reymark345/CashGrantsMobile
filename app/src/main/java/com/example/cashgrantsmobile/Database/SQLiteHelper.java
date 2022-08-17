@@ -34,11 +34,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.executeInsert();
     }
 
-    public void insertEmvDatabase(String full_name,String household,String client_status,String address,String sex,String hh_set_group,String contact_no,String assigned,String minor_grantee, String card_released,String who_released,String place_released,String is_available,String is_available_reason,String other_card_number_1,String other_card_holder_name_1,String other_is_available_1,String other_is_available_reason_1,String other_card_number_2,String other_card_holder_name_2,String other_card_is_available_2,String other_card_reason_2,String other_card_number_3,String other_card_holder_name_3,String other_card_is_available_3,String other_card_reason_3,String nma_amount,String nma_reason,String date_withdrawn,String remarks,String lender_name,String pawning_date,String date_retrieved,String spin_status,String pawning_reason,String offense_history,String offense_history_date,String pd_remarks,String intervention,String other_details,String current_grantee_card,byte[] cc_image, String pawn_loaned_amount, String pawn_lender_address, String pawn_interest,String other_is_available_2, String other_is_available_3, String other_is_available_reason_2, String other_is_available_reason_3 ){
 
+    public void insertEmvDatabase(String full_name,String household,String client_status,String address,String sex,String hh_set_group,String contact_no,String assigned,String minor_grantee, String card_released,String who_released,String place_released,String is_available,String is_available_reason,String other_card_number_1,String other_card_holder_name_1,String other_is_available_1,String other_is_available_reason_1,String other_card_number_2,String other_card_holder_name_2,String other_card_is_available_2,String other_card_reason_2,String other_card_number_3,String other_card_holder_name_3,String other_card_is_available_3,String other_card_reason_3,String nma_amount,String nma_reason,String date_withdrawn,String remarks,String lender_name,String pawning_date,String date_retrieved,String spin_status,String pawning_reason,String offense_history,String offense_history_date,String pd_remarks,String intervention,String other_details,String current_grantee_card,byte[] cc_image, String pawn_loaned_amount, String pawn_lender_address, String pawn_interest,String other_is_available_2, String other_is_available_3, String other_is_available_reason_2, String other_is_available_reason_3, String other_card_number_series_1, String other_card_number_series_2, String other_card_number_series_3){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdf.format(new Date());
-
         try {
             SQLiteDatabase database = getWritableDatabase();
             String sql = "INSERT INTO emv_database_monitoring_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -91,6 +90,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindString(61, pawn_loaned_amount);
             statement.bindString(62, pawn_lender_address);
             statement.bindString(63, pawn_interest);
+            statement.bindString(47, other_card_number_series_1);
+            statement.bindString(48, other_card_number_series_2);
+            statement.bindString(49, other_card_number_series_3);
             statement.bindLong(56, 0);
             statement.executeInsert();
             Log.v(TAG,"Success na emv");
