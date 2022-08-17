@@ -751,7 +751,7 @@ public class ScannedDetails extends AppCompatActivity {
             Log.v(TAG,"3rdScanned" + max_id + "id " + id);
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
-            try {
+
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture, beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name FROM emv_database_monitoring_details WHERE id="+id);
 //                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
@@ -771,10 +771,15 @@ public class ScannedDetails extends AppCompatActivity {
                     String Attest = cursor.getString(10);
 
                     Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
-                    Bitmap bmpId = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
-
                     mPreviewCashCard.setImageBitmap(bmpCashCard);
 
+                    if (idImage!=null){
+                        Bitmap bmpId = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
+                        mPreviewGrantee.setImageBitmap(bmpId);
+                    }
+                    else{
+                        mPreviewGrantee.setImageResource(R.drawable.ic_image);
+                    }
                     //accomplish
                     if(accomplish!=null){Bitmap accomplishedBy = BitmapFactory.decodeByteArray(accomplish, 0, accomplish.length);mAccomplished.setImageBitmap(accomplishedBy);}
                     else{mAccomplished.setImageResource(R.drawable.ic_image);}
@@ -786,19 +791,12 @@ public class ScannedDetails extends AppCompatActivity {
                     //Attested
                     if(attested!=null){Bitmap attest = BitmapFactory.decodeByteArray(attested, 0, attested.length);mAttested.setImageBitmap(attest);}
                     else{mAttested.setImageResource(R.drawable.ic_image);}
-
-
                     edtCashCard.setText(cashCardNumber);
                     edtAccomplishBy.setText(hhNumber);
                     edtInformant.setText(seriesNumber);
                     edtAttested.setText(Attest);
-                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
-                    else{mPreviewGrantee.setImageBitmap(bmpId); }
                 }
-            }catch (Exception e){
-                Log.v(TAG,"3rdScannedss" + e);
-                Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
-            }
+
         }
     }
     @Override
