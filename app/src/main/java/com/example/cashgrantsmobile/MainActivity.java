@@ -37,11 +37,11 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView CashCardScanner, InventoryList, PullData, SyncData, Logout;
+    CardView CashCardScanner, InventoryList, PullData, SyncData, UpdateData, Logout;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
     private SQLiteDatabase mDatabase;
-    TextView txtInventoryCount, txtPendingCount, txtPullDataCount;
+    TextView txtInventoryCount, txtPendingCount, txtPullDataCount, txtUpdateDataCount, txtSyncDataCount;
     public boolean EnableNightMode = false;
     private String night = "true";
     private String light = "false";
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         //CardView
         CashCardScanner = (CardView) findViewById(R.id.CardScan);
         InventoryList = (CardView) findViewById(R.id.inventoryList);
+        UpdateData = (CardView) findViewById(R.id.updateData);
         PullData = (CardView) findViewById(R.id.pullData);
         SyncData = (CardView) findViewById(R.id.syncData);
         Logout = (CardView) findViewById(R.id.logout);
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         txtInventoryCount =(TextView)findViewById(R.id.txtInventoryAmount);
         txtPendingCount =(TextView)findViewById(R.id.txtPending);
         txtPullDataCount = findViewById(R.id.textPullData);
+        txtUpdateDataCount = findViewById(R.id.textUpdateData);
+        txtSyncDataCount = findViewById(R.id.txtSyncData);
         //Button
         DarkMode =(ImageButton) findViewById(R.id.textViews);
 
@@ -140,6 +143,14 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        UpdateData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Update.UpdateData.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS Api(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR, user_id VARCHAR, email VARCHAR, mobile VARCHAR, name VARCHAR, username VARCHAR )");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_database_monitoring(id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR, hh_id VARCHAR, client_status VARCHAR, address VARCHAR, sex VARCHAR, hh_set_group VARCHAR, current_grantee_card_number VARCHAR, other_card_number_1 VARCHAR, other_card_holder_name_1 VARCHAR, other_card_number_2 VARCHAR, other_card_holder_name_2 VARCHAR, other_card_number_3 VARCHAR, other_card_holder_name_3 VARCHAR, upload_history_id INTEGER, created_at TIMESTAMP, updated_at TIMESTAMP, validated_at TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_database_monitoring_details(id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR, hh_id VARCHAR, client_status VARCHAR, address VARCHAR, sex VARCHAR, hh_set_group VARCHAR, assigned_staff VARCHAR, minor_grantee VARCHAR, contact INTEGER, current_grantee_card_release_date DATE, current_grantee_card_release_place VARCHAR, current_grantee_card_release_by VARCHAR, current_grantee_is_available VARCHAR, current_grantee_reason VARCHAR, current_grantee_card_number VARCHAR, other_card_number_1 VARCHAR, other_card_holder_name_1 VARCHAR, other_card_number_2 VARCHAR, other_card_holder_name_2 VARCHAR, other_card_number_3 VARCHAR, other_card_holder_name_3 VARCHAR, other_card_is_available VARCHAR, other_card_reason VARCHAR, nma_amount DECIMAL, nma_date_claimed DATE, nma_reason VARCHAR, nma_remarks VARCHAR, pawn_name_of_lender VARCHAR, pawn_date DATE, pawn_retrieved_date DATE, pawn_status VARCHAR, pawn_reason VARCHAR, pawn_offense_history VARCHAR, pawn_offense_date DATE, pawn_remarks VARCHAR, pawn_intervention_staff VARCHAR, pawn_other_details VARCHAR, informant_full_name VARCHAR, accomplish_by_full_name VARCHAR, accomplish_e_signature BLOB, informant_e_signature BLOB, attested_by_e_signature BLOB, current_cash_card_picture BLOB,cash_card_scanned_no BLOB,beneficiary_picture BLOB, attested_by_full_name VARCHAR, other_card_number_series_1 VARCHAR, other_card_number_series_2 VARCHAR, other_card_number_series_3 VARCHAR, emv_database_monitoring_id INTEGER, current_grantee_card_number_series VARCHAR, user_id INTEGER, sync_at TIMESTAMP, created_at TIMESTAMP, updated_at TIMESTAMP, card_scanning_status INTEGER, other_card_is_available_2 VARCHAR, other_card_is_available_3 VARCHAR, other_card_reason_2 VARCHAR, other_card_reason_3 VARCHAR, pawn_loaned_amount VARCHAR, pawn_lender_address VARCHAR, pawn_interest VARCHAR)");
-        //sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_database_monitoring_details(id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR, hh_id VARCHAR, client_status VARCHAR, address VARCHAR, sex VARCHAR, hh_set_group VARCHAR, assigned_staff VARCHAR, minor_grantee VARCHAR, contact INTEGER, current_grantee_card_release_date DATE, current_grantee_card_release_place VARCHAR, current_grantee_card_release_by VARCHAR, current_grantee_is_available VARCHAR, current_grantee_reason VARCHAR, current_grantee_card_number VARCHAR, other_card_number_1 VARCHAR, other_card_holder_name_1 VARCHAR, other_card_number_2 VARCHAR, other_card_holder_name_2 VARCHAR, other_card_number_3 VARCHAR, other_card_holder_name_3 VARCHAR, other_card_is_available VARCHAR, other_card_reason VARCHAR, nma_amount DECIMAL, nma_date_claimed DATE, nma_reason VARCHAR, nma_remarks VARCHAR, pawn_name_of_lender VARCHAR, pawn_date DATE, pawn_retrieved_date DATE, pawn_status VARCHAR, pawn_reason VARCHAR, pawn_offense_history VARCHAR, pawn_offense_date DATE, pawn_remarks VARCHAR, pawn_intervention_staff VARCHAR, pawn_other_details VARCHAR, informant_full_name VARCHAR, accomplish_by_full_name VARCHAR, accomplish_e_signature BLOB, informant_e_signature BLOB, attested_by_e_signature BLOB, current_cash_card_picture BLOB,cash_card_scanned_no BLOB,beneficiary_picture BLOB, attested_by_full_name VARCHAR, other_card_number_series_1 VARCHAR, other_card_number_series_2 VARCHAR, other_card_number_series_3 VARCHAR, emv_database_monitoring_id INTEGER, current_grantee_card_number_series VARCHAR, user_id INTEGER, sync_at TIMESTAMP, created_at TIMESTAMP, updated_at TIMESTAMP, card_scanning_status INTEGER)");
 
     }
 
@@ -207,7 +217,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void dashboardDataCount() {
         Cursor emvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring");
+        Cursor emvListValidated = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring WHERE validated_at != 'null'");
+        Cursor unsyncEmvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details");
+
+
         txtPullDataCount.setText(String.valueOf(emvList.getCount()));
+        txtUpdateDataCount.setText(String.valueOf(emvListValidated.getCount()));
+        txtSyncDataCount.setText(String.valueOf(unsyncEmvList.getCount()));
     }
 
     public void clearSharedPref(){

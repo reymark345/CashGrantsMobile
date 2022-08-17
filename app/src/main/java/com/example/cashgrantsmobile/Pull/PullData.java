@@ -1,5 +1,7 @@
 package com.example.cashgrantsmobile.Pull;
 
+import static com.example.cashgrantsmobile.Login.Activity_Splash_Login.BASE_URL;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -44,6 +46,7 @@ public class PullData extends AppCompatActivity {
     JSONArray remoteData;
     ProgressBar progressBar;
 
+
     public Integer getLastID() {
         Integer lastID = 0;
         Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring ORDER BY id DESC LIMIT 1");
@@ -66,8 +69,8 @@ public class PullData extends AppCompatActivity {
             btnPull.setEnabled(false);
         }
 
-        String url = "https://crg-finance-svr.entdswd.local/cgtracking/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
-//        String url = "http://192.168.254.112/cgtracking/public/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
+        String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
+
 
         // creating a new variable for our request queue
         RequestQueue queue = Volley.newRequestQueue(PullData.this);

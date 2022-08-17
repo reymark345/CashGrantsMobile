@@ -533,6 +533,28 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.close();
     }
 
+    public  void deleteEmvMonitoringDetails(int id) {
+        SQLiteDatabase database = getWritableDatabase();
+
+        String sql = "DELETE FROM emv_database_monitoring_details WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindDouble(1, (double)id);
+
+        statement.execute();
+        database.close();
+    }
+
+    public void updateEmvMonitoring(String validated, String id) {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "UPDATE emv_database_monitoring SET validated_at = ? WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.bindString(1, validated);
+        statement.bindString(2, id);
+        statement.execute();
+        database.close();
+    }
+
     public void updateInventoryData(String cash_card, String accomplishBy,String series_number, byte[] cc_image, byte[] id_image, int id) {
         SQLiteDatabase database = getWritableDatabase();
 
