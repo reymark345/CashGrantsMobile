@@ -78,7 +78,7 @@ public class Informant extends AppCompatActivity {
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
 
-                        sqLiteHelper.updateInformantSignature(
+                        sqLiteHelper.updateInformantSignature_emv(
                                 currentId,
                                 edtCashCard,
                                 edtAccomplished,
@@ -86,11 +86,22 @@ public class Informant extends AppCompatActivity {
                                 edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
+
+//                        sqLiteHelper.updateInformantSignature(
+//                                currentId,
+//                                edtCashCard,
+//                                edtAccomplished,
+//                                edtInformant,
+//                                edtAttested,
+//                                imageViewToByte(imageViewSignature)
+//                        );
+
+
                         intent.putExtra("detailScan", 0);
                         Log.v(TAG,"samplee zerro" + signatureCondition);
                     }
                     else {
-                        sqLiteHelper.updateInformantSignature(
+                        sqLiteHelper.updateInformantSignature_emv(
                                 (signatureCondition+1),
                                 edtCashCard,
                                 edtAccomplished,
@@ -98,6 +109,17 @@ public class Informant extends AppCompatActivity {
                                 edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
+
+//                        sqLiteHelper.updateInformantSignature(
+//                                (signatureCondition+1),
+//                                edtCashCard,
+//                                edtAccomplished,
+//                                edtInformant,
+//                                edtAttested,
+//                                imageViewToByte(imageViewSignature)
+//                        );
+
+
                         intent.putExtra("detailScan", signatureCondition);
                         Log.v(TAG,"samplee 1" + signatureCondition);
 

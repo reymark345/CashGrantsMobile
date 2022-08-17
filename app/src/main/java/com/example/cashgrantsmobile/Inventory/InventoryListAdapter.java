@@ -1,10 +1,12 @@
 package com.example.cashgrantsmobile.Inventory;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,7 @@ public class InventoryListAdapter extends BaseAdapter {
 
     private class ViewHolder{
         ImageView imageView, mPreviewCashCard;
-        TextView txtName, txtPrice, txtSeriesNo;
+        TextView txtName, txtPrice;
     }
 
     @Override
@@ -68,7 +70,7 @@ public class InventoryListAdapter extends BaseAdapter {
             row = inflater.inflate(layout, null);
             holder.txtName = (TextView) row.findViewById(R.id.txtName);
             holder.txtPrice = (TextView) row.findViewById(R.id.txtPrice);
-            holder.txtSeriesNo = (TextView) row.findViewById(R.id.txtSeriesNumber);
+//            holder.txtSeriesNo = (TextView) row.findViewById(R.id.txtSeriesNumber);
             holder.imageView = (ImageView) row.findViewById(R.id.imgFood);
             holder.mPreviewCashCard = (ImageView) row.findViewById(R.id.imgId);
             row.setTag(holder);
@@ -78,8 +80,8 @@ public class InventoryListAdapter extends BaseAdapter {
         }
         Inventory inventory = inventoryList.get(position);
         holder.txtName.setText(inventory.getName());
-        holder.txtPrice.setText(inventory.getPrice());
-        holder.txtSeriesNo.setText(inventory.getSeriesNumber());
+        holder.txtPrice.setText(inventory.gethhNumber());
+//        holder.txtSeriesNo.setText(inventory.getSeriesNumber());
         int status = inventory.getStatus();
         if (status==0 && DarkModeStatus.matches("false")){
               //exclude and white
@@ -99,7 +101,13 @@ public class InventoryListAdapter extends BaseAdapter {
         }
 
         byte[] CashCardImage = inventory.getImage();
+
         byte[] idImage = inventory.getIdImage();
+
+
+
+
+        Log.v(ContentValues.TAG,"nakuuuuu" + idImage + " "+ inventory.getIdImage());
         if(CashCardImage.length > 1)
         {
             Bitmap bitmap = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
@@ -108,7 +116,7 @@ public class InventoryListAdapter extends BaseAdapter {
         else{
             holder.imageView.setImageResource(R.drawable.ic_image);
         }
-        if(idImage.length > 1)
+        if(idImage!=null)
         {
             Bitmap bitmap2 = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
             holder.mPreviewCashCard.setImageBitmap(bitmap2);

@@ -83,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
 
-        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
-        Sprite doubleBounce = new DoubleBounce();
-        progressBar.setIndeterminateDrawable(doubleBounce);
+//        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
+//        Sprite doubleBounce = new DoubleBounce();
+//        progressBar.setIndeterminateDrawable(doubleBounce);
 
         darkModeStatus();
         dashboardDataCount();
@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 myEdit.putString("tokenStatus", "0");
                 myEdit.commit();
+                clearSharedPref();
                 Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
                 Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
                 startActivity(intent);
@@ -170,12 +171,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void createDatabase(){
         sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, accomplish_by VARCHAR, informant VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP, accomplish_img BLOB , informant_image BLOB, attested_img BLOB, attested VARCHAR)");
+//        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, accomplish_by VARCHAR, informant VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP, accomplish_img BLOB , informant_image BLOB, attested_img BLOB, attested VARCHAR)");
 //        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS CgList(Id INTEGER PRIMARY KEY AUTOINCREMENT, cash_card_actual_no VARCHAR, accomplish_by VARCHAR, informant VARCHAR, cc_image BLOB , id_image BLOB, cash_card_scanned_no VARCHAR , card_scanning_status VARCHAR, date_insert DATETIME DEFAULT CURRENT_TIMESTAMP, accomplish_img BLOB , informant_image BLOB, attested_img BLOB, attested VARCHAR, household_no VARCHAR, full_name VARCHAR,client_status VARCHAR,address VARCHAR,sex VARCHAR,set VARCHAR,contact_no VARCHAR,assigned_c VARCHAR,minor_grantee VARCHAR, data_card_released VARCHAR, who_released_card VARCHAR, place_card_released VARCHAR, current_grantee VARCHAR, card_availability VARCHAR, availability_reason VARCHAR, card_availability VARCHAR )");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS DarkMode(Id INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS Api(Id INTEGER PRIMARY KEY AUTOINCREMENT, token VARCHAR, user_id VARCHAR, email VARCHAR, mobile VARCHAR, name VARCHAR, username VARCHAR )");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_database_monitoring(id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR, hh_id VARCHAR, client_status VARCHAR, address VARCHAR, sex VARCHAR, hh_set_group VARCHAR, current_grantee_card_number VARCHAR, other_card_number_1 VARCHAR, other_card_holder_name_1 VARCHAR, other_card_number_2 VARCHAR, other_card_holder_name_2 VARCHAR, other_card_number_3 VARCHAR, other_card_holder_name_3 VARCHAR, upload_history_id INTEGER, created_at TIMESTAMP, updated_at TIMESTAMP, validated_at TIMESTAMP)");
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_database_monitoring_details(id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR, hh_id VARCHAR, client_status VARCHAR, address VARCHAR, sex VARCHAR, hh_set_group VARCHAR, assigned_staff VARCHAR, minor_grantee VARCHAR, contact INTEGER, current_grantee_card_release_date DATE, current_grantee_card_release_place VARCHAR, current_grantee_card_release_by VARCHAR, current_grantee_is_available VARCHAR, current_grantee_reason VARCHAR, current_grantee_card_number VARCHAR, other_card_number_1 VARCHAR, other_card_holder_name_1 VARCHAR, other_card_number_2 VARCHAR, other_card_holder_name_2 VARCHAR, other_card_number_3 VARCHAR, other_card_holder_name_3 VARCHAR, other_card_is_available VARCHAR, other_card_reason VARCHAR, nma_amount DECIMAL, nma_date_claimed DATE, nma_reason VARCHAR, nma_remarks VARCHAR, pawn_name_of_lender VARCHAR, pawn_date DATE, pawn_retrieved_date DATE, pawn_status VARCHAR, pawn_reason VARCHAR, pawn_offense_history VARCHAR, pawn_offense_date DATE, pawn_remarks VARCHAR, pawn_intervention_staff VARCHAR, pawn_other_details VARCHAR, informant_full_name VARCHAR, accomplish_by_full_name VARCHAR, accomplish_e_signature BLOB, informant_e_signature BLOB, attested_by_e_signature BLOB, current_cash_card_picture BLOB,cash_card_scanned_no BLOB,beneficiary_picture BLOB, attested_by_full_name VARCHAR, other_card_number_series_1 VARCHAR, other_card_number_series_2 VARCHAR, other_card_number_series_3 VARCHAR, emv_database_monitoring_id INTEGER, current_grantee_card_number_series VARCHAR, user_id INTEGER, sync_at TIMESTAMP, created_at TIMESTAMP, updated_at TIMESTAMP)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_database_monitoring_details(id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR, hh_id VARCHAR, client_status VARCHAR, address VARCHAR, sex VARCHAR, hh_set_group VARCHAR, assigned_staff VARCHAR, minor_grantee VARCHAR, contact INTEGER, current_grantee_card_release_date DATE, current_grantee_card_release_place VARCHAR, current_grantee_card_release_by VARCHAR, current_grantee_is_available VARCHAR, current_grantee_reason VARCHAR, current_grantee_card_number VARCHAR, other_card_number_1 VARCHAR, other_card_holder_name_1 VARCHAR, other_card_number_2 VARCHAR, other_card_holder_name_2 VARCHAR, other_card_number_3 VARCHAR, other_card_holder_name_3 VARCHAR, other_card_is_available VARCHAR, other_card_reason VARCHAR, nma_amount DECIMAL, nma_date_claimed DATE, nma_reason VARCHAR, nma_remarks VARCHAR, pawn_name_of_lender VARCHAR, pawn_date DATE, pawn_retrieved_date DATE, pawn_status VARCHAR, pawn_reason VARCHAR, pawn_offense_history VARCHAR, pawn_offense_date DATE, pawn_remarks VARCHAR, pawn_intervention_staff VARCHAR, pawn_other_details VARCHAR, informant_full_name VARCHAR, accomplish_by_full_name VARCHAR, accomplish_e_signature BLOB, informant_e_signature BLOB, attested_by_e_signature BLOB, current_cash_card_picture BLOB,cash_card_scanned_no BLOB,beneficiary_picture BLOB, attested_by_full_name VARCHAR, other_card_number_series_1 VARCHAR, other_card_number_series_2 VARCHAR, other_card_number_series_3 VARCHAR, emv_database_monitoring_id INTEGER, current_grantee_card_number_series VARCHAR, user_id INTEGER, sync_at TIMESTAMP, created_at TIMESTAMP, updated_at TIMESTAMP, card_scanning_status INTEGER, other_card_is_available_2 VARCHAR, other_card_is_available_3 VARCHAR, other_card_reason_2 VARCHAR, other_card_reason_3 VARCHAR, pawn_loaned_amount VARCHAR, pawn_lender_address VARCHAR, pawn_interest VARCHAR)");
+
     }
 
     public void darkModeStatus(){
@@ -207,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void InventoryListCount(){
-        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,accomplish_by,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
+        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,accomplish_by_full_name,beneficiary_picture,cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details");
         int z = cursor.getCount();
         txtInventoryCount.setText(String.valueOf(z));
         txtPendingCount.setText(String.valueOf(z));
@@ -222,5 +224,65 @@ public class MainActivity extends AppCompatActivity {
         txtPullDataCount.setText(String.valueOf(emvList.getCount()));
         txtUpdateDataCount.setText(String.valueOf(emvListValidated.getCount()));
         txtSyncDataCount.setText(String.valueOf(unsyncEmvList.getCount()));
+    }
+
+    public void clearSharedPref(){
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        //1
+        myEdit.putString("hh_id", "");
+        myEdit.putString("full_name", "");
+        myEdit.putString("client_status", "");
+        myEdit.putString("address", "");
+        myEdit.putString("sex", "");
+        myEdit.putString("hh_set_group", "");
+        myEdit.putString("contact_no", "");
+        myEdit.putString("assigned", "");
+        myEdit.putString("minor_grantee", "");
+
+        //2
+        myEdit.putString("card_released", "");
+        myEdit.putString("who_released", "");
+        myEdit.putString("place_released", "");
+        myEdit.putString("current_grantee_number", "");
+        myEdit.putString("is_available", "");
+        myEdit.putString("is_available_reason", "");
+        myEdit.putString("other_card_number_1", "");
+        myEdit.putString("other_card_holder_name_1", "");
+        myEdit.putString("other_is_available_1", "");
+        myEdit.putString("other_is_available_reason_1", "");
+        myEdit.putString("other_card_number_2", "");
+        myEdit.putString("other_card_holder_name_2", "");
+        myEdit.putString("other_is_available_2", "");
+        myEdit.putString("other_is_available_reason_2", "");
+        myEdit.putString("other_card_number_3", "");
+        myEdit.putString("other_card_holder_name_3", "");
+        myEdit.putString("other_is_available_3", "");
+        myEdit.putString("other_is_available_reason_3", "");
+
+        myEdit.putString("accomplish_by_name", "");
+
+        //3
+        myEdit.putString("nma_amount", "");
+        myEdit.putString("nma_reason", "");
+        myEdit.putString("date_withdrawn", "");
+        myEdit.putString("remarks", "");
+
+        //4
+        myEdit.putString("lender_name", "");
+        myEdit.putString("pawning_date", "");
+        myEdit.putString("loaned_amount", "");
+        myEdit.putString("lender_address", "");
+        myEdit.putString("date_retrieved", "");
+        myEdit.putString("interest", "");
+        myEdit.putString("spin_status", "");
+        myEdit.putString("pawning_reason", "");
+        myEdit.putString("offense_history", "");
+        myEdit.putString("offense_history_date", "");
+        myEdit.putString("pd_remarks", "");
+        myEdit.putString("intervention", "");
+        myEdit.putString("other_details", "");
+        myEdit.commit();
     }
 }

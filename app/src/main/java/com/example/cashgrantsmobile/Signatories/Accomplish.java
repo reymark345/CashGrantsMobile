@@ -81,7 +81,16 @@ public class Accomplish extends AppCompatActivity {
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
 
-                        sqLiteHelper.updateAccomplishSignature(
+//                        sqLiteHelper.updateAccomplishSignature(
+//                                currentId,
+//                                edtCashCard,
+//                                edtAccomplished,
+//                                edtInformant,
+//                                edtAttested,
+//                                imageViewToByte(imageViewSignature)
+//                        );
+
+                        sqLiteHelper.updateAccomplishSignature_emv(
                                 currentId,
                                 edtCashCard,
                                 edtAccomplished,
@@ -89,11 +98,20 @@ public class Accomplish extends AppCompatActivity {
                                 edtAttested,
                                 imageViewToByte(imageViewSignature)
                         );
+
                         intent.putExtra("detailScan", 0);
                         Log.v(TAG,"samplee zerro" +  edtAttested);
                     }
                     else {
-                        sqLiteHelper.updateAccomplishSignature(
+//                        sqLiteHelper.updateAccomplishSignature(
+//                                (signatureCondition+1),
+//                                edtCashCard,
+//                                edtAccomplished,
+//                                edtInformant,
+//                                edtAttested,
+//                                imageViewToByte(imageViewSignature)
+//                        );
+                        sqLiteHelper.updateAccomplishSignature_emv(
                                 (signatureCondition+1),
                                 edtCashCard,
                                 edtAccomplished,

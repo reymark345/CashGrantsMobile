@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/primary"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <TextView
@@ -34,6 +36,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -46,7 +50,7 @@
                     android:layout_marginRight="10dp"
                     app:errorEnabled="true"
                     app:counterEnabled="true"
-                    app:counterMaxLength="12"
+                    app:counterMaxLength="30"
                     app:endIconMode="clear_text"
                     app:helperText="Search Household ID!"
                     app:helperTextTextColor="@color/validation"
@@ -57,8 +61,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Household no."
-                        android:inputType="number"
-                        android:maxLength="12" />
+                        android:inputType="text"
+                        android:maxLength="30" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
@@ -169,33 +173,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_set"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_sex"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    app:endIconMode="clear_text"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_assigned">
-
-                    <EditText
-                        android:id="@+id/edtSet"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Set"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_contact_no"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_set"
+                    android:layout_below="@+id/til_sex"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
@@ -209,8 +191,32 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Contact No."
-                        android:inputType="text" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_set"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_contact_no"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:endIconMode="clear_text"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_assigned">
+
+                    <EditText
+                        android:id="@+id/edtSet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Set"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_assigned"
