@@ -43,6 +43,7 @@ public class Attested extends AppCompatActivity {
         String edtAccomplished = in.getStringExtra("edtAccomplish");
         String edtInformant = in.getStringExtra("edtInformant");
         String edtAttested = in.getStringExtra("edtAttest");
+        String series_number = in.getStringExtra("edtSeries");
 
         Log.v(TAG,"walay value?" + id + " "+signatureCondition);
 
@@ -85,19 +86,9 @@ public class Attested extends AppCompatActivity {
                                 edtAccomplished,
                                 edtInformant,
                                 edtAttested,
-                                imageViewToByte(imageViewSignature)
+                                imageViewToByte(imageViewSignature),
+                                series_number
                         );
-
-
-//                        sqLiteHelper.updateAttestedSignature(
-//                                currentId,
-//                                edtCashCard,
-//                                edtAccomplished,
-//                                edtInformant,
-//                                edtAttested,
-//                                imageViewToByte(imageViewSignature)
-//                        );
-
                         intent.putExtra("detailScan", 0);
                         Log.v(TAG,"samplee zerro" + signatureCondition);
                     }
@@ -108,17 +99,9 @@ public class Attested extends AppCompatActivity {
                                 edtAccomplished,
                                 edtInformant,
                                 edtAttested,
-                                imageViewToByte(imageViewSignature)
+                                imageViewToByte(imageViewSignature),
+                                series_number
                         );
-
-//                        sqLiteHelper.updateAttestedSignature(
-//                                (signatureCondition+1),
-//                                edtCashCard,
-//                                edtAccomplished,
-//                                edtInformant,
-//                                edtAttested,
-//                                imageViewToByte(imageViewSignature)
-//                        );
                         intent.putExtra("detailScan", signatureCondition);
                         Log.v(TAG,"samplee 1" + signatureCondition);
 
