@@ -616,7 +616,7 @@ public class ScannedDetails extends AppCompatActivity {
             btnSubmit.setText("UPDATE");
             try {
 //                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, accomplish_img, informant_image, attested_img,attested FROM CgList WHERE id="+max_id);
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature,attested_by_full_name FROM emv_database_monitoring_details WHERE id="+max_id);
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature,attested_by_full_name,current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+max_id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
                         cashCardNumber = cursor.getString(6);
@@ -632,6 +632,7 @@ public class ScannedDetails extends AppCompatActivity {
                     informant = cursor.getBlob(8);
                     byte[] attested = cursor.getBlob(9);
                     String Attest = cursor.getString(10);
+                    String grantee_series = cursor.getString(11);
                     Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
                     mPreviewCashCard.setImageBitmap(bmpCashCard);
 
@@ -655,6 +656,7 @@ public class ScannedDetails extends AppCompatActivity {
                     edtAccomplishBy.setText(hhNumber);
                     edtInformant.setText(seriesNumber);
                     edtAttested.setText(Attest);
+                    edtSeriesNumber.setText(grantee_series);
 
 //                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
 //                    else{mPreviewGrantee.setImageBitmap(bmpId); }
@@ -670,7 +672,7 @@ public class ScannedDetails extends AppCompatActivity {
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name FROM emv_database_monitoring_details WHERE id="+(detailScan+1));
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+(detailScan+1));
 //                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
@@ -687,6 +689,7 @@ public class ScannedDetails extends AppCompatActivity {
                     informant = cursor.getBlob(8);
                     byte[] attested = cursor.getBlob(9);
                     String Attest = cursor.getString(10);
+                    String grantee_series = cursor.getString(11);
                     Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
                     mPreviewCashCard.setImageBitmap(bmpCashCard);
 
@@ -709,6 +712,7 @@ public class ScannedDetails extends AppCompatActivity {
                     edtAccomplishBy.setText(hhNumber);
                     edtInformant.setText(seriesNumber);
                     edtAttested.setText(Attest);
+                    edtSeriesNumber.setText(grantee_series);
 //                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
 //                    else{mPreviewGrantee.setImageBitmap(bmpId); }
                 }
@@ -723,7 +727,7 @@ public class ScannedDetails extends AppCompatActivity {
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture, beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name FROM emv_database_monitoring_details WHERE id="+id);
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture, beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+id);
 //                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
@@ -739,6 +743,7 @@ public class ScannedDetails extends AppCompatActivity {
                     accomplish = cursor.getBlob(7);
                     informant = cursor.getBlob(8);
                     byte[] attested = cursor.getBlob(9);
+                    String grantee_series = cursor.getString(11);
                     String Attest = cursor.getString(10);
 
                     Bitmap bmpCashCard = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
@@ -764,6 +769,7 @@ public class ScannedDetails extends AppCompatActivity {
                     edtAccomplishBy.setText(hhNumber);
                     edtInformant.setText(seriesNumber);
                     edtAttested.setText(Attest);
+                    edtSeriesNumber.setText(grantee_series);
                 }
             }catch (Exception e){
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
