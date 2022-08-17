@@ -414,11 +414,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         else {status =0;}
         int idd = i+1;
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE CgList SET card_scanning_status = ?,card_scanning_status = ? WHERE id = ? ";
+        String sql = "UPDATE emv_database_monitoring_details SET card_scanning_status = ? WHERE id = ? ";
         SQLiteStatement statement = database.compileStatement(sql);
-        statement.bindLong(1, 0);
-        statement.bindLong(2, status);
-        statement.bindLong(3, idd);
+        statement.bindLong(1, status);
+        statement.bindLong(2, idd);
         statement.execute();
         database.close();
     }

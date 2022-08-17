@@ -130,7 +130,6 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
                 if(!username.equals("") && !password.equals("")){
                     String url = BASE_URL + "/api/v1/staff/auth/login";
-                    String url = "https://crg-finance-svr.entdswd.local/cgtracking/api/v1/staff/auth/login";
                     // creating a new variable for our request queue
                     RequestQueue queue = Volley.newRequestQueue(Activity_Splash_Login.this);
 

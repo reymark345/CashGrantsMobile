@@ -96,11 +96,33 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_currentgranteenumber"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/til_placereleased"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:endIconMode="clear_text"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/validation"
+                app:startIconDrawable="@drawable/ic_creditcard">
+
+                <EditText
+                    android:id="@+id/edtCurrentGranteeNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Current Grantee Card Number"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAvailability"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/til_placereleased"
+                android:layout_below="@+id/til_currentgranteenumber"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/background">
 
@@ -123,7 +145,6 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_currentgranteenumber"
                         app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
