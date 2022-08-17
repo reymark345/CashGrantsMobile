@@ -225,11 +225,12 @@ public class SyncData extends AppCompatActivity {
             String pawn_other_details = emvDetailsList.getString(37);
             String informant_full_name = emvDetailsList.getString(38);
             String accomplish_by_full_name = emvDetailsList.getString(39);
-            String accomplish_e_signature = emvDetailsList.getString(40);
-            String informant_e_signature = emvDetailsList.getString(41);
-            String attested_by_e_signature = emvDetailsList.getString(42);
-            String current_cash_card_picture = emvDetailsList.getString(43);
-            String beneficiary_picture = emvDetailsList.getString(44);
+            byte[] accomplish_e_signature = emvDetailsList.getBlob(40);
+            byte[] informant_e_signature = emvDetailsList.getBlob(41);
+
+            byte[] attested_by_e_signature = emvDetailsList.getBlob(42);
+            byte[] current_cash_card_picture = emvDetailsList.getBlob(43);
+            byte[] beneficiary_picture = emvDetailsList.getBlob(44);
             String attested_by_full_name = emvDetailsList.getString(45);
             String other_card_number_series_1 = emvDetailsList.getString(46);
             String other_card_number_series_2 = emvDetailsList.getString(47);
@@ -290,11 +291,11 @@ public class SyncData extends AppCompatActivity {
             params.put("pawn_other_details", pawn_other_details);
             params.put("informant_full_name", informant_full_name);
             params.put("accomplish_by_full_name", accomplish_by_full_name);
-            params.put("accomplish_e_signature", accomplish_e_signature);
-            params.put("informant_e_signature", informant_e_signature);
-            params.put("attested_by_e_signature", attested_by_e_signature);
-            params.put("current_cash_card_picture", current_cash_card_picture);
-            params.put("beneficiary_picture", beneficiary_picture);
+            params.put("accomplish_e_signature", String.valueOf(accomplish_e_signature));
+            params.put("informant_e_signature", String.valueOf(informant_e_signature));
+            params.put("attested_by_e_signature", String.valueOf(attested_by_e_signature));
+            params.put("current_cash_card_picture", String.valueOf(current_cash_card_picture));
+            params.put("beneficiary_picture", String.valueOf(beneficiary_picture));
             params.put("attested_by_full_name", attested_by_full_name);
             params.put("other_card_number_series_1", other_card_number_series_1);
             params.put("other_card_number_series_2", other_card_number_series_2);
