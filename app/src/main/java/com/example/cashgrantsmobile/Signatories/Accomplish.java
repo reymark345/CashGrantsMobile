@@ -118,12 +118,7 @@ public class Accomplish extends AppCompatActivity {
                     intent.putExtra("detailScan", signatureCondition);
                     Log.v(TAG,"samplee 1" + edtAttested);
                     startActivity(intent);
-
-
-
-
-
-//
+                    finish();
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Error" + e, Toast.LENGTH_SHORT).show();
                     Log.v(TAG,"Error ni " + e);

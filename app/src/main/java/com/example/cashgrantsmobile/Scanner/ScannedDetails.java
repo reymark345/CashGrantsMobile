@@ -186,6 +186,7 @@ public class ScannedDetails extends AppCompatActivity {
                 intent.putExtra("edtAttest", edtAttested.getText().toString());
                 intent.putExtra("edtSeries", edtSeriesNumber.getText().toString());
                 startActivity(intent);
+                finish();
             }
         });
         btn_informant.setOnClickListener( new View.OnClickListener() {
@@ -203,6 +204,7 @@ public class ScannedDetails extends AppCompatActivity {
                 intent.putExtra("edtAttest", edtAttested.getText().toString());
                 intent.putExtra("edtSeries", edtSeriesNumber.getText().toString());
                 startActivity(intent);
+                finish();
             }
         });
         btn_attested.setOnClickListener( new View.OnClickListener() {
@@ -220,6 +222,7 @@ public class ScannedDetails extends AppCompatActivity {
                 intent.putExtra("edtAttest", edtAttested.getText().toString());
                 intent.putExtra("edtSeries", edtSeriesNumber.getText().toString());
                 startActivity(intent);
+                finish();
             }
         });
 
