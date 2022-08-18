@@ -60,6 +60,7 @@
                         android:id="@+id/edtHhId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="160310001-"
                         android:hint="Household no."
                         android:inputType="text"
                         android:maxLength="30" />
