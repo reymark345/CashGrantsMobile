@@ -91,7 +91,8 @@ public class ScanCashCard extends AppCompatActivity {
     public static boolean pressBtn_search = false;
     Uri image_uri;
     TextView ScannedCount;
-    String emv_id,full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3,upload_history_id,created_at,updated_at,validated_at;
+    String full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3,upload_history_id,created_at,updated_at,validated_at;
+    Integer emv_id;
 
 
     //onboard
@@ -155,8 +156,15 @@ public class ScanCashCard extends AppCompatActivity {
     String[] Status = new String[]{"Ongoing (card as collateral)", "Ongoing (card is on-hand)", "Retrieved"};
     String[] Offense = new String[]{"1st Offense", "2nd Offense", "3rd Offense"};
 
-    //end onboard
 
+    public Integer getUserId() {
+        Integer userID = 0;
+        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT user_id FROM Api LIMIT 1");
+        while (lastEmvDatabaseID.moveToNext()) {
+            userID = lastEmvDatabaseID.getInt(0);
+        }
+        return userID;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,7 +221,6 @@ public class ScanCashCard extends AppCompatActivity {
             R.layout.intro_four
         };
         tvNext.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (pressBtn_search==true){
@@ -234,33 +241,10 @@ public class ScanCashCard extends AppCompatActivity {
                     current = current - 1;
                     viewPager.setCurrentItem(current);
                 }
+
                 if (current == 0){
                     tvPrev.setVisibility(View.INVISIBLE);
                     pressBtn_search=true;
-                    SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                    String hh_no_1 = sh.getString("hh_id", "");
-                    String full_name_1 = sh.getString("full_name", "");
-                    String client_status_1 = sh.getString("client_status", "");
-                    String address_1 = sh.getString("address", "");
-                    String sex_1 = sh.getString("sex", "");
-                    String hh_set_group_1 = sh.getString("hh_set_group", "");
-                    String contact_no_1 = sh.getString("contact_no", "");
-                    String assigned_1 = sh.getString("assigned", "");
-                    String minor_grantee_1 = sh.getString("minor_grantee", "");
-
-                    edt_hh.setText(hh_no_1);
-                    edt_fullname.setText(full_name_1);
-                    spinClientStatus.setText(client_status_1);
-                    spinClientStatus.setSelection(client_status_1.length());
-                    edt_address.setText(address_1);
-                    spinSex.setText(sex_1);
-                    spinSex.setSelection(sex_1.length());
-                    edt_set.setText(hh_set_group_1);
-                    edt_contact_no.setText(contact_no_1);
-                    edt_assigned.setText(assigned_1);
-                    spinAnswer.setText(minor_grantee_1);
-                    spinAnswer.setSelection(minor_grantee_1.length());
-
                 } else {
                     tvPrev.setVisibility(View.VISIBLE);
                 }
@@ -404,6 +388,7 @@ public class ScanCashCard extends AppCompatActivity {
                     SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                     ScannedDetails.scanned = true;
 
+                    int emv_id = sh.getInt("emv_id", 0);
                     String full_name = sh.getString("full_name", "");
                     String household = sh.getString("hh_id", "");
                     String client_status = sh.getString("client_status", "");
@@ -417,7 +402,6 @@ public class ScanCashCard extends AppCompatActivity {
                     String card_released = sh.getString("card_released", "");
                     String who_released = sh.getString("who_released", "");
                     String place_released = sh.getString("place_released", "");
-                    String current_grantee_number = sh.getString("current_grantee_number", "");
                     String is_available = sh.getString("is_available", "");
                     String is_available_reason = sh.getString("is_available_reason", "");
 
@@ -464,24 +448,24 @@ public class ScanCashCard extends AppCompatActivity {
                     String hh_no_1 = sh.getString("hh_id", "");
 
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
+
                     try {
                         Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                         mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 187, 250, false));
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
                             i.putExtra("cashCardNumber",limitString);
-                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv), other_is_available_2, other_is_available_3, other_is_available_reason_2, other_is_available_reason_3,pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3);
-
-//                          sqLiteHelper.insertScannedCashCard(limitString,imageViewToByte(mPreviewIv));
+                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id);
                         }
                         else{
                             i.putExtra("cashCardNumber",sTextFromET);
-                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv), other_is_available_2, other_is_available_3, other_is_available_reason_2, other_is_available_reason_3,pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3);
-                            //                          sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
+                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id);
                         }
                         sqLiteHelper.update_emv_monitoring(
                                 hh_no_1
                         );
+
+                        clearSharedPref();
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -507,13 +491,11 @@ public class ScanCashCard extends AppCompatActivity {
         byte[] byteArray = stream.toByteArray();
         return byteArray;
     }
+
     public void TotalScanned(){
         Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
         int z = cursor.getCount();
-//        ScannedCount.setText("Total Scanned: " + String.valueOf(z));
     }
-
-    //onboard
 
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -524,12 +506,6 @@ public class ScanCashCard extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-//            edt_hh = findViewById(R.id.edt_hh_no);
-//            household = edt_hh.getText().toString();
-//
-//            if (household.matches("")){
-//                Toasty.error(getApplicationContext(),"Required", Toasty.LENGTH_SHORT).show();
-//            }
 
             if (position == layouts.length - 1) {
                 tvNext.setText("SCAN");
@@ -577,91 +553,29 @@ public class ScanCashCard extends AppCompatActivity {
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
 
-            edt_hh = findViewById(R.id.edtHhId);
-            edt_fullname = findViewById(R.id.edtFullname);
-            spinClientStatus = findViewById(R.id.spinnerClientStatus);
-            edt_address = findViewById(R.id.edtAddress);
-            spinSex = findViewById(R.id.spinnerSex);
-            edt_set = findViewById(R.id.edtSet);
-            edt_contact_no = findViewById(R.id.edtContactNo);
-            edt_assigned = findViewById(R.id.edtAssigned);
-            spinAnswer = findViewById(R.id.spinnerMinorGrantee);
+            SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
 
 
-//            String household = edt_hh.getText().toString();
-//            String full_name_1 = edt_fullname.getText().toString();
-//            String client_status_1 = spinClientStatus.getText().toString();
-//            String address_1 = edt_address.getText().toString();
-//            String sex_1 = spinSex.getText().toString();
-//            String set = edt_set.getText().toString();
-//            String contact = edt_contact_no.getText().toString();
-//            String assigned = edt_assigned.getText().toString();
-//            String spnAnswer = spinAnswer.getText().toString();
-
-
-            edt_card_released = findViewById(R.id.edtCardReleased);
-            edt_who_released = findViewById(R.id.edtWhoReleased);
-            edt_place_released = findViewById(R.id.edtPlaceReleased);
-            edt_current_grantee_number = findViewById(R.id.edtCurrentGranteeNumber);
-            spinIsAvail = findViewById(R.id.spinnerIsAvailable);
-            spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
-            edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
-            edt_other_card_holder_name_1 = findViewById(R.id.edtOtherCardHolderName1);
-            spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
-            spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
-            edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
-            edt_other_card_holder_name_2 = findViewById(R.id.edtOtherCardHolderName2);
-            spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
-            spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
-            edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
-            edt_other_card_holder_name_3 = findViewById(R.id.edtOtherCardHolderName3);
-            spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
-            spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
-
-
-
-            //1
-
+            //intro_one.xml
             if (position == 0) {
-                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-
-//                String hh_no_1 = sh.getString("hh_id", "");
-//                String full_name_1 = sh.getString("full_name", "");
-//                String client_status_1 = sh.getString("client_status", "");
-//                String address_1 = sh.getString("address", "");
-//                String sex_1 = sh.getString("sex", "");
-//                String hh_set_group_1 = sh.getString("hh_set_group", "");
-//                String contact_no_1 = sh.getString("contact_no", "");
-//                String assigned_1 = sh.getString("assigned", "");
-//                String minor_grantee_1 = sh.getString("minor_grantee", "");
-//
-//                edt_hh.setText(hh_no_1);
-//                edt_fullname.setText(full_name_1);
-//                spinClientStatus.setText(client_status_1);
-//                spinClientStatus.setSelection(client_status_1.length());
-//                edt_address.setText(address_1);
-//                spinSex.setText(sex_1);
-//                spinSex.setSelection(sex_1.length());
-//                edt_set.setText(hh_set_group_1);
-//                edt_contact_no.setText(contact_no_1);
-//                edt_assigned.setText(assigned_1);
-//                spinAnswer.setText(minor_grantee_1);
-//                spinAnswer.setSelection(minor_grantee_1.length());
-
-
+                edt_hh = findViewById(R.id.edtHhId);
+                edt_fullname = findViewById(R.id.edtFullname);
+                spinClientStatus = findViewById(R.id.spinnerClientStatus);
+                edt_address = findViewById(R.id.edtAddress);
+                spinSex = findViewById(R.id.spinnerSex);
+                edt_set = findViewById(R.id.edtSet);
+                edt_contact_no = findViewById(R.id.edtContactNo);
+                edt_assigned = findViewById(R.id.edtAssigned);
+                spinAnswer = findViewById(R.id.spinnerMinorGrantee);
 
                 btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
+
                 btn_search_hh.setOnClickListener( new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         btn_func();
                     }
                 });
-
-
-                spinSex = findViewById(R.id.spinnerSex);
-                spinAnswer = findViewById(R.id.spinnerMinorGrantee);
-                spinClientStatus = findViewById(R.id.spinnerClientStatus);
 
                 ArrayAdapter<String> adapterSex = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Sex);
                 ArrayAdapter<String> adapterAns = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
@@ -675,97 +589,51 @@ public class ScanCashCard extends AppCompatActivity {
                 spinAnswer.setAdapter(adapterAns);
                 spinClientStatus.setAdapter(adapterClientStatus);
 
+                String hh_id = sh.getString("hh_id", "160310001-");
+                String full_name = sh.getString("full_name", "");
+                String client_status = sh.getString("client_status", "");
+                String address = sh.getString("address", "");
+                String sex = sh.getString("sex", "");
+                String contact_no = sh.getString("contact_no", "");
+                String hh_set_group = sh.getString("hh_set_group", "");
+                String assigned = sh.getString("assigned", "");
+                String minor_grantee = sh.getString("minor_grantee", "");
+
+                edt_hh.setText(hh_id);
+                edt_fullname.setText(full_name);
+                spinClientStatus.setText(client_status);
+                edt_address.setText(address);
+                spinSex.setText(sex);
+                edt_set.setText(contact_no);
+                edt_contact_no.setText(hh_set_group);
+                edt_assigned.setText(assigned);
+                spinAnswer.setText(minor_grantee);
+
             } else if (position == 1) {
+                //intro_two.xml
                 pressBtn_search = false;
-                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                String card_released = sh.getString("card_released", "");
-                String who_released = sh.getString("who_released", "");
-                String place_released = sh.getString("place_released", "");
-                String current_grantee_number_1 = sh.getString("current_grantee_number", "");
 
-                String is_available = sh.getString("is_available", "");
-                String is_available_reason = sh.getString("is_available_reason", "");
-
-                String other_card_number_1 = sh.getString("other_card_number_1", "");
-                String other_card_holder_name_1 = sh.getString("other_card_holder_name_1", "");
-
-                String other_is_available_1 = sh.getString("other_is_available_1", "");
-                String other_is_available_reason_1 = sh.getString("other_is_available_reason_1", "");
-
-                String other_card_number_2 = sh.getString("other_card_number_2", "");
-                String other_card_holder_name_2 = sh.getString("other_card_holder_name_2", "");
-                String other_is_available_2 = sh.getString("other_is_available_2", "");
-                String other_is_available_reason_2 = sh.getString("other_is_available_reason_2", "");
-                String other_card_number_3 = sh.getString("other_card_number_3", "");
-                String other_card_holder_name_3 = sh.getString("other_card_holder_name_3", "");
-                String other_is_available_3 = sh.getString("other_is_available_3", "");
-                String other_is_available_reason_3 = sh.getString("other_is_available_reason_3", "");
-
-                spinIsAvail = findViewById(R.id.spinnerIsAvailable);
-                spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
-                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
-                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
-                spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
-                spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
-                spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
-                spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
                 edt_card_released = findViewById(R.id.edtCardReleased);
-
-//                AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory;
-//                edt_card_released.setText(card_released);
-//                edt_who_released.setText(who_released);
-//                edt_place_released.setText(place_released);
-                edt_current_grantee_number.setText(current_grantee_number_1);
-                edt_current_grantee_number.setEnabled(false);
-
-                spinIsAvail.setText(is_available);
-                spinIsAvail.setSelection(is_available.length());
-                spinIsAvailReason.setText(is_available_reason);
-                spinIsAvailReason.setSelection(is_available_reason.length());
-                spinIsAvail1.setText(other_is_available_1);
-                spinIsAvail1.setSelection(other_is_available_1.length());
-                spinIsAvailReason1.setText(other_is_available_reason_1);
-                spinIsAvailReason1.setSelection(other_is_available_reason_1.length());
-                spinIsAvail2.setText(other_is_available_2);
-                spinIsAvail2.setSelection(other_is_available_2.length());
-                spinIsAvailReason2.setText(other_is_available_reason_2);
-                spinIsAvailReason2.setSelection(other_is_available_reason_2.length());
-                spinIsAvail3.setText(other_is_available_3);
-                spinIsAvail3.setSelection(other_is_available_3.length());
-                spinIsAvailReason3.setText(other_is_available_reason_3);
-                spinIsAvailReason3.setSelection(other_is_available_reason_3.length());
-
-                edt_other_card_number_1.setText(other_card_number_1);
-                edt_other_card_holder_name_1.setText(other_card_holder_name_1);
-
-                edt_other_card_number_2.setText(other_card_number_2);
-                edt_other_card_holder_name_2.setText(other_card_holder_name_2);
-
-                String other_card_3 = edt_other_card_number_3.getText().toString();
-
-//                edt_other_card_number_3.setText(other_card_number_3);
-//                edt_other_card_holder_name_3.setText(other_card_holder_name_3);
-
-//                edt_card_released = findViewById(R.id.edtCardReleased);
                 edt_who_released = findViewById(R.id.edtWhoReleased);
                 edt_place_released = findViewById(R.id.edtPlaceReleased);
                 edt_current_grantee_number = findViewById(R.id.edtCurrentGranteeNumber);
                 spinIsAvail = findViewById(R.id.spinnerIsAvailable);
-//                spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
+                spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
                 edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
-//                edt_other_card_holder_name_1 = findViewById(R.id.edtOtherCardHolderName1);
-//                spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
-//                spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
-//                edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
-//                edt_other_card_holder_name_2 = findViewById(R.id.edtOtherCardHolderName2);
-//                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
-//                spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
-//                edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
-//                edt_other_card_holder_name_3 = findViewById(R.id.edtOtherCardHolderName3);
-//                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
-//                spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
-
-
+                edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
+                edt_other_card_holder_name_1 = findViewById(R.id.edtOtherCardHolderName1);
+                spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
+                spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
+                edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
+                edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
+                edt_other_card_holder_name_2 = findViewById(R.id.edtOtherCardHolderName2);
+                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
+                spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
+                edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
+                edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
+                edt_other_card_holder_name_3 = findViewById(R.id.edtOtherCardHolderName3);
+                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
+                spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
 
                 ArrayAdapter<String> adapterIsAvail = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterIsAvail1 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
@@ -799,6 +667,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                 edt_card_released.setFocusable(false);
                 edt_card_released.setClickable(true);
+                edt_current_grantee_number.setEnabled(false);
 
                 edt_card_released.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -857,32 +726,58 @@ public class ScanCashCard extends AppCompatActivity {
                         }
                     }
                 });
+
+                String card_released = sh.getString("card_released", "");
+                String who_released = sh.getString("who_released", "");
+                String place_released = sh.getString("place_released", "");
+                String temp_current_grantee_number = sh.getString("temp_current_grantee_number", "");
+                String is_available = sh.getString("is_available", "");
+                String is_available_reason = sh.getString("is_available_reason", "");
+                String other_card_number_1 = sh.getString("other_card_number_1", "");
+                String other_card_number_series_1 = sh.getString("other_card_number_series_1", "");
+                String other_card_holder_name_1 = sh.getString("other_card_holder_name_1", "");
+                String other_is_available_1 = sh.getString("other_is_available_1", "");
+                String other_is_available_reason_1 = sh.getString("other_is_available_reason_1", "");
+                String other_card_number_2 = sh.getString("other_card_number_2", "");
+                String other_card_number_series_2 = sh.getString("other_card_number_series_2", "");
+                String other_card_holder_name_2 = sh.getString("other_card_holder_name_2", "");
+                String other_is_available_2 = sh.getString("other_is_available_2", "");
+                String other_is_available_reason_2 = sh.getString("other_is_available_reason_2", "");
+                String other_card_number_3 = sh.getString("other_card_number_3", "");
+                String other_card_number_series_3 = sh.getString("other_card_number_series_3", "");
+                String other_card_holder_name_3 = sh.getString("other_card_holder_name_3", "");
+                String other_is_available_3 = sh.getString("other_is_available_3", "");
+                String other_is_available_reason_3 = sh.getString("other_is_available_reason_3", "");
+
+                edt_card_released.setText(card_released);
+                edt_who_released.setText(who_released);
+                edt_place_released.setText(place_released);
+                edt_current_grantee_number.setText(temp_current_grantee_number);
+                spinIsAvail.setText(is_available);
+                spinIsAvailReason.setText(is_available_reason);
+                edt_other_card_number_1.setText(other_card_number_1);
+                edt_other_card_number_series_1.setText(other_card_number_series_1);
+                edt_other_card_holder_name_1.setText(other_card_holder_name_1);
+                spinIsAvail1.setText(other_is_available_1);
+                spinIsAvailReason1.setText(other_is_available_reason_1);
+                edt_other_card_number_2.setText(other_card_number_2);
+                edt_other_card_number_series_2.setText(other_card_number_series_2);
+                edt_other_card_holder_name_2.setText(other_card_holder_name_2);
+                spinIsAvail2.setText(other_is_available_2);
+                spinIsAvailReason2.setText(other_is_available_reason_2);
+                edt_other_card_number_3.setText(other_card_number_3);
+                edt_other_card_number_series_3.setText(other_card_number_series_3);
+                edt_other_card_holder_name_3.setText(other_card_holder_name_3);
+                spinIsAvail3.setText(other_is_available_3);
+                spinIsAvailReason3.setText(other_is_available_reason_3);
+
             } else if (position == 2) {
-
-                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                String nma_amount_1   = sh.getString("nma_amount", "");
-                String nma_reason_1  = sh.getString("nma_reason", "");
-                String date_withdrawn_1   = sh.getString("date_withdrawn", "");
-                String remarks_1   = sh.getString("remarks", "");
-
-
-                nma_amount_1   = sh.getString("nma_amount", "");
-                nma_reason_1  = sh.getString("nma_reason", "");
-                date_withdrawn_1   = sh.getString("date_withdrawn", "");
-                remarks_1   = sh.getString("remarks", "");
-
+                //intro_three.xml
 
                 edt_nma_amount = findViewById(R.id.edtNmaAmount);
                 edt_nma_reason = findViewById(R.id.edtNmaReason);
                 edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
                 edt_remarks = findViewById(R.id.edtRemarks);
-
-                edt_nma_amount.setText(nma_amount_1);
-                edt_nma_reason.setText(nma_reason_1);
-                edt_date_withdrawn.setText(date_withdrawn_1);
-                edt_remarks.setText(remarks_1);
-
-                edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
 
                 edt_date_withdrawn.setFocusable(false);
                 edt_date_withdrawn.setClickable(true);
@@ -893,31 +788,33 @@ public class ScanCashCard extends AppCompatActivity {
                         showDateDialog(edt_date_withdrawn);
                     }
                 });
+
+                String nma_amount = sh.getString("nma_amount", "");
+                String nma_reason = sh.getString("nma_reason", "");
+                String date_withdrawn = sh.getString("date_withdrawn", "");
+                String remarks = sh.getString("remarks", "");
+
+                edt_nma_amount.setText(nma_amount);
+                edt_nma_reason.setText(nma_reason);
+                edt_date_withdrawn.setText(date_withdrawn);
+                edt_remarks.setText(remarks);
+
             } else if (position == 3) {
+                //intro_four.xml
 
-                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                String lender_name = sh.getString("lender_name", "");
-                String pawning_date = sh.getString("pawning_date", "");
-                String loaned_amount = sh.getString("loaned_amount", "");
-                String lender_address = sh.getString("lender_address", "");
-                String date_retrieved = sh.getString("date_retrieved", "");
-                String interest = sh.getString("interest", "");
-                String spin_status = sh.getString("spin_status", "");
-                String pawning_reason = sh.getString("pawning_reason", "");
-                String offense_history = sh.getString("offense_history", "");
-                String offense_history_date = sh.getString("offense_history_date", "");
-                String pd_remarks = sh.getString("pd_remarks", "");
-                String intervention = sh.getString("intervention", "");
-                String other_details = sh.getString("other_details", "");
-
-                Log.v(ContentValues.TAG,"tayussss1");
-
+                edt_lender_name = findViewById(R.id.edtLenderName);
                 edt_pawning_date = findViewById(R.id.edtPawningDate);
+                edt_loaned_amount = findViewById(R.id.edtLoanedAmount);
+                edt_lender_address = findViewById(R.id.edtLenderAddress);
                 edt_date_retrieved = findViewById(R.id.edtDateRetrieved);
-                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
+                edt_interest = findViewById(R.id.edtInterest);
                 spinStatus = findViewById(R.id.spinnerStatus);
-                spinOffenseHistory = findViewById(R.id.spinnerOffenseHistory);
-
+                edt_pawning_reason = findViewById(R.id.edtPawningReason);
+                spinOffenseHistory =findViewById(R.id.spinnerOffenseHistory);
+                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
+                edt_pd_remarks = findViewById(R.id.edtPdRemarks);
+                edt_intervention = findViewById(R.id.edtIntervention);
+                edt_other_details = findViewById(R.id.edtOtherDetails);
 
                 ArrayAdapter<String> adapterStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Status);
                 ArrayAdapter<String> adapterOffenseHistory = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Offense);
@@ -954,20 +851,19 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
 
-                //4RTH
-                edt_lender_name = findViewById(R.id.edtLenderName);
-                edt_pawning_date = findViewById(R.id.edtPawningDate);
-                edt_loaned_amount = findViewById(R.id.edtLoanedAmount);
-                edt_lender_address = findViewById(R.id.edtLenderAddress);
-                edt_date_retrieved = findViewById(R.id.edtDateRetrieved);
-                edt_interest = findViewById(R.id.edtInterest);
-                spinStatus = findViewById(R.id.spinnerStatus);
-                edt_pawning_reason = findViewById(R.id.edtPawningReason);
-                spinOffenseHistory =findViewById(R.id.spinnerOffenseHistory);
-                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
-                edt_pd_remarks = findViewById(R.id.edtPdRemarks);
-                edt_intervention = findViewById(R.id.edtIntervention);
-                edt_other_details = findViewById(R.id.edtOtherDetails);
+                String lender_name = sh.getString("lender_name","");
+                String pawning_date = sh.getString("pawning_date","");
+                String loaned_amount = sh.getString("loaned_amount","");
+                String lender_address = sh.getString("lender_address","");
+                String date_retrieved = sh.getString("date_retrieved","");
+                String interest = sh.getString("interest","");
+                String spin_status = sh.getString("spin_status","");
+                String pawning_reason = sh.getString("pawning_reason","");
+                String offense_history = sh.getString("offense_history","");
+                String offense_history_date = sh.getString("offense_history_date","");
+                String pd_remarks = sh.getString("pd_remarks","");
+                String intervention = sh.getString("intervention","");
+                String other_details = sh.getString("other_details","");
 
                 edt_lender_name.setText(lender_name);
                 edt_pawning_date.setText(pawning_date);
@@ -1041,22 +937,13 @@ public class ScanCashCard extends AppCompatActivity {
     public void nextValidation(){
         Integer isValidationError = 0;
         String required_field = "This field is required!";
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
 
         int current = getItem(1);
 
         edt_lender_name = findViewById(R.id.edtLenderName);
 
         if (current == 1) {
-            String household = "";
-            String fullname = "";
-            String client_status = "";
-            String address = "";
-            String sex = "";
-            String hh_set = "";
-            String contact_no = "";
-            String assigned = "";
-            String minor_grantee = "";
-
             edt_hh = findViewById(R.id.edtHhId);
             edt_fullname = findViewById(R.id.edtFullname);
             spinClientStatus = findViewById(R.id.spinnerClientStatus);
@@ -1070,16 +957,15 @@ public class ScanCashCard extends AppCompatActivity {
             edt_assigned = findViewById(R.id.edtAssigned);
             spinAnswer = findViewById(R.id.spinnerMinorGrantee);
 
-
-            household = edt_hh.getText().toString();
-            fullname = edt_fullname.getText().toString();
-            client_status = spinClientStatus.getText().toString();
-            address = edt_address.getText().toString();
-            sex = spinSex.getText().toString();
-            hh_set = edt_set.getText().toString();
-            contact_no = edt_contact_no.getText().toString();
-            assigned = edt_assigned.getText().toString();
-            minor_grantee = spinAnswer.getText().toString();
+            String household = edt_hh.getText().toString();
+            String full_name = edt_fullname.getText().toString();
+            String client_status = spinClientStatus.getText().toString();
+            String address = edt_address.getText().toString();
+            String sex = spinSex.getText().toString();
+            String hh_set = edt_set.getText().toString();
+            String contact_no = edt_contact_no.getText().toString();
+            String assigned = edt_assigned.getText().toString();
+            String minor_grantee = spinAnswer.getText().toString();
 
             tilHhId = findViewById(R.id.til_hhid);
             tilFullname = findViewById(R.id.til_fullname);
@@ -1088,19 +974,6 @@ public class ScanCashCard extends AppCompatActivity {
             tilSex = findViewById(R.id.til_sex);
             tilSet = findViewById(R.id.til_set);
             tilContactNo = findViewById(R.id.til_contact_no);
-                    //1st group for save -----------------
-            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-            myEdit.putString("hh_id", household);
-            myEdit.putString("full_name", fullname);
-            myEdit.putString("client_status", client_status);
-            myEdit.putString("address", address);
-            myEdit.putString("sex", sex);
-            myEdit.putString("hh_set_group", hh_set);
-            myEdit.putString("contact_no", contact_no);
-            myEdit.putString("assigned", assigned);
-            myEdit.putString("minor_grantee", minor_grantee);
-            myEdit.commit();
 
             if (household.matches("")){
                 tilHhId.setError(required_field);
@@ -1109,7 +982,7 @@ public class ScanCashCard extends AppCompatActivity {
                 tilHhId.setError(null);
             }
 
-            if (fullname.matches("")){
+            if (full_name.matches("")){
                 tilFullname.setError(required_field);
                 isValidationError++;
             } else {
@@ -1151,29 +1024,19 @@ public class ScanCashCard extends AppCompatActivity {
                 tilContactNo.setError(null);
             }
 
-        } else if (current == 2) {
-            String card_released = "";
-            String who_released = "";
-            String place_released = "";
-            String current_grantee_number = "";
-            String is_available = "";
-            String is_available_reason = "";
-            String other_card_number_1 = "";
-            String other_card_holder_name_1 = "";
-            String other_is_available_1 = "";
-            String other_is_available_reason_1 = "";
-            String other_card_number_2 = "";
-            String other_card_holder_name_2 = "";
-            String other_is_available_2 = "";
-            String other_is_available_reason_2 = "";
-            String other_card_number_3 = "";
-            String other_card_holder_name_3 = "";
-            String other_is_available_3 = "";
-            String other_is_available_reason_3 = "";
-            String other_card_number_series_1 = "";
-            String other_card_number_series_2 = "";
-            String other_card_number_series_3 = "";
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString("hh_id", household);
+            myEdit.putString("full_name", full_name);
+            myEdit.putString("client_status", client_status);
+            myEdit.putString("address", address);
+            myEdit.putString("sex", sex);
+            myEdit.putString("hh_set_group", hh_set);
+            myEdit.putString("contact_no", contact_no);
+            myEdit.putString("assigned", assigned);
+            myEdit.putString("minor_grantee", minor_grantee);
+            myEdit.commit();
 
+        } else if (current == 2) {
             edt_card_released = findViewById(R.id.edtCardReleased);
             edt_who_released = findViewById(R.id.edtWhoReleased);
             edt_place_released = findViewById(R.id.edtPlaceReleased);
@@ -1196,52 +1059,27 @@ public class ScanCashCard extends AppCompatActivity {
             edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
             edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
 
-            card_released = edt_card_released.getText().toString();
-            who_released = edt_who_released.getText().toString();
-            place_released = edt_place_released.getText().toString();
-            current_grantee_number = edt_current_grantee_number.getText().toString();
-            is_available = spinIsAvail.getText().toString();
-            is_available_reason = spinIsAvailReason.getText().toString();
-            other_card_number_1 = edt_other_card_number_1.getText().toString();
-            other_card_holder_name_1 = edt_other_card_holder_name_1.getText().toString();
-            other_is_available_1 = spinIsAvail1.getText().toString();
-            other_is_available_reason_1 = spinIsAvailReason1.getText().toString();
-            other_card_number_2 = edt_other_card_number_2.getText().toString();
-            other_card_holder_name_2 = edt_other_card_holder_name_2.getText().toString();
-            other_is_available_2 = spinIsAvail2.getText().toString();
-            other_is_available_reason_2 = spinIsAvailReason2.getText().toString();
-            other_card_number_3 = edt_other_card_number_3.getText().toString();
-            other_card_holder_name_3 = edt_other_card_holder_name_3.getText().toString();
-            other_is_available_3 = spinIsAvail3.getText().toString();
-            other_is_available_reason_3 = spinIsAvailReason3.getText().toString();
-            other_card_number_series_1 = edt_other_card_number_series_1.getText().toString();
-            other_card_number_series_2 = edt_other_card_number_series_2.getText().toString();
-            other_card_number_series_3 = edt_other_card_number_series_3.getText().toString();
-
-            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-            myEdit.putString("card_released", card_released);
-            myEdit.putString("who_released", who_released);
-            myEdit.putString("place_released", place_released);
-            myEdit.putString("current_grantee_number", current_grantee_number);
-            myEdit.putString("is_available", is_available);
-            myEdit.putString("is_available_reason", is_available_reason);
-            myEdit.putString("other_card_number_1", other_card_number_1);
-            myEdit.putString("other_card_holder_name_1", other_card_holder_name_1);
-            myEdit.putString("other_is_available_1", other_is_available_1);
-            myEdit.putString("other_is_available_reason_1", other_is_available_reason_1);
-            myEdit.putString("other_card_number_2", other_card_number_2);
-            myEdit.putString("other_card_holder_name_2", other_card_holder_name_2);
-            myEdit.putString("other_is_available_2", other_is_available_2);
-            myEdit.putString("other_is_available_reason_2", other_is_available_reason_2);
-            myEdit.putString("other_card_number_3", other_card_number_3);
-            myEdit.putString("other_card_holder_name_3", other_card_holder_name_3);
-            myEdit.putString("other_is_available_3", other_is_available_3);
-            myEdit.putString("other_is_available_reason_3", other_is_available_reason_3);
-            myEdit.putString("other_card_number_series_1", other_card_number_series_1);
-            myEdit.putString("other_card_number_series_2", other_card_number_series_2);
-            myEdit.putString("other_card_number_series_3", other_card_number_series_3);
-            myEdit.commit();
+            String card_released = edt_card_released.getText().toString();
+            String who_released = edt_who_released.getText().toString();
+            String place_released = edt_place_released.getText().toString();
+            String current_grantee_number = edt_current_grantee_number.getText().toString();
+            String is_available = spinIsAvail.getText().toString();
+            String is_available_reason = spinIsAvailReason.getText().toString();
+            String other_card_number_1 = edt_other_card_number_1.getText().toString();
+            String other_card_holder_name_1 = edt_other_card_holder_name_1.getText().toString();
+            String other_is_available_1 = spinIsAvail1.getText().toString();
+            String other_is_available_reason_1 = spinIsAvailReason1.getText().toString();
+            String other_card_number_2 = edt_other_card_number_2.getText().toString();
+            String other_card_holder_name_2 = edt_other_card_holder_name_2.getText().toString();
+            String other_is_available_2 = spinIsAvail2.getText().toString();
+            String other_is_available_reason_2 = spinIsAvailReason2.getText().toString();
+            String other_card_number_3 = edt_other_card_number_3.getText().toString();
+            String other_card_holder_name_3 = edt_other_card_holder_name_3.getText().toString();
+            String other_is_available_3 = spinIsAvail3.getText().toString();
+            String other_is_available_reason_3 = spinIsAvailReason3.getText().toString();
+            String other_card_number_series_1 = edt_other_card_number_series_1.getText().toString();
+            String other_card_number_series_2 = edt_other_card_number_series_2.getText().toString();
+            String other_card_number_series_3 = edt_other_card_number_series_3.getText().toString();
 
             tilCardReleased = findViewById(R.id.til_cardreleased);
             tilWhoReleased = findViewById(R.id.til_whoreleased);
@@ -1277,40 +1115,53 @@ public class ScanCashCard extends AppCompatActivity {
                 tilPlaceReleased.setError(null);
             }
 
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString("card_released", card_released);
+            myEdit.putString("who_released", who_released);
+            myEdit.putString("place_released", place_released);
+            myEdit.putString("temp_current_grantee_number", current_grantee_number);
+            myEdit.putString("is_available", is_available);
+            myEdit.putString("is_available_reason", is_available_reason);
+            myEdit.putString("other_card_number_1", other_card_number_1);
+            myEdit.putString("other_card_holder_name_1", other_card_holder_name_1);
+            myEdit.putString("other_is_available_1", other_is_available_1);
+            myEdit.putString("other_is_available_reason_1", other_is_available_reason_1);
+            myEdit.putString("other_card_number_2", other_card_number_2);
+            myEdit.putString("other_card_holder_name_2", other_card_holder_name_2);
+            myEdit.putString("other_is_available_2", other_is_available_2);
+            myEdit.putString("other_is_available_reason_2", other_is_available_reason_2);
+            myEdit.putString("other_card_number_3", other_card_number_3);
+            myEdit.putString("other_card_holder_name_3", other_card_holder_name_3);
+            myEdit.putString("other_is_available_3", other_is_available_3);
+            myEdit.putString("other_is_available_reason_3", other_is_available_reason_3);
+            myEdit.putString("other_card_number_series_1", other_card_number_series_1);
+            myEdit.putString("other_card_number_series_2", other_card_number_series_2);
+            myEdit.putString("other_card_number_series_3", other_card_number_series_3);
+            myEdit.commit();
+
         }
         else if (current == 3) {
-
-            String nma_amount = "";
-            String nma_reason = "";
-            String date_withdrawn = "";
-            String remarks = "";
 
             edt_nma_amount = findViewById(R.id.edtNmaAmount);
             edt_nma_reason = findViewById(R.id.edtNmaReason);
             edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
             edt_remarks = findViewById(R.id.edtRemarks);
 
-            nma_amount = edt_nma_amount.getText().toString();
-            nma_reason = edt_nma_reason.getText().toString();
-            date_withdrawn = edt_date_withdrawn.getText().toString();
-            remarks = edt_remarks.getText().toString();
+            String nma_amount = edt_nma_amount.getText().toString();
+            String nma_reason = edt_nma_reason.getText().toString();
+            String date_withdrawn = edt_date_withdrawn.getText().toString();
+            String remarks = edt_remarks.getText().toString();
 
             //3rd
-            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
             myEdit.putString("nma_amount", nma_amount);
             myEdit.putString("nma_reason", nma_reason);
             myEdit.putString("date_withdrawn", date_withdrawn);
             myEdit.putString("remarks", remarks);
             myEdit.commit();
-
-            Log.v(ContentValues.TAG,"t ");
-
+        } else {
+            Log.v(ContentValues.TAG,"Error Current Btn Next");
         }
-        else{
-            Log.v(ContentValues.TAG,"thisss ");
-        }
-
 
         if (isValidationError > 0) {
             Toasty.warning(getApplicationContext(), "Please fill-in all required fields!", Toast.LENGTH_SHORT).show();
@@ -1321,22 +1172,6 @@ public class ScanCashCard extends AppCompatActivity {
                 viewPager.setCurrentItem(current);
             }
             else {
-                Log.v(ContentValues.TAG,"tayussss122");
-                String lender_name = "";
-                String pawning_date = "";
-                String loaned_amount = "";
-                String lender_address = "";
-                String date_retrieved = "";
-                String interest = "";
-                String spin_status = "";
-                String pawning_reason = "";
-                String offense_history = "";
-                String offense_history_date = "";
-                String pd_remarks = "";
-                String intervention = "";
-                String other_details = "";
-
-
                 edt_pawning_date = findViewById(R.id.edtPawningDate);
                 edt_loaned_amount = findViewById(R.id.edtLoanedAmount);
                 edt_lender_address = findViewById(R.id.edtLenderAddress);
@@ -1351,25 +1186,20 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_details = findViewById(R.id.edtOtherDetails);
 
 
-                lender_name = edt_lender_name.getText().toString();
-                pawning_date = edt_pawning_date.getText().toString();
-                loaned_amount = edt_loaned_amount.getText().toString();
-                lender_address = edt_lender_address.getText().toString();
+                String lender_name = edt_lender_name.getText().toString();
+                String pawning_date = edt_pawning_date.getText().toString();
+                String loaned_amount = edt_loaned_amount.getText().toString();
+                String lender_address = edt_lender_address.getText().toString();
+                String date_retrieved = edt_date_retrieved.getText().toString();
+                String interest = edt_interest.getText().toString();
+                String spin_status = spinStatus.getText().toString();
+                String pawning_reason = edt_pawning_reason.getText().toString();
+                String offense_history = spinOffenseHistory.getText().toString();
+                String offense_history_date = edt_offense_history_date.getText().toString();
+                String pd_remarks = edt_pd_remarks.getText().toString();
+                String intervention = edt_intervention.getText().toString();
+                String other_details = edt_other_details.getText().toString();
 
-                date_retrieved = edt_date_retrieved.getText().toString();
-                interest = edt_interest.getText().toString();
-                spin_status = spinStatus.getText().toString();
-                pawning_reason = edt_pawning_reason.getText().toString();
-
-                offense_history = spinOffenseHistory.getText().toString();
-                offense_history_date = edt_offense_history_date.getText().toString();
-                pd_remarks = edt_pd_remarks.getText().toString();
-                intervention = edt_intervention.getText().toString();
-                other_details = edt_other_details.getText().toString();
-
-
-                //4rd
-                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 myEdit.putString("lender_name", lender_name);
                 myEdit.putString("pawning_date", pawning_date);
@@ -1385,7 +1215,7 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("intervention", intervention);
                 myEdit.putString("other_details", other_details);
                 myEdit.commit();
-//                Log.v(ContentValues.TAG,"interventionsssss " +intervention);
+
                 launchHomeScreen();
             }
         }
@@ -1397,9 +1227,8 @@ public class ScanCashCard extends AppCompatActivity {
         try {
             if (!household_no.matches("")){
                 search = MainActivity.sqLiteHelper.getData("SELECT id,full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_card_holder_name_3,upload_history_id,created_at,updated_at,validated_at FROM emv_database_monitoring WHERE hh_id='"+household_no+"'");
-                Log.v(ContentValues.TAG,"cursor length " +search.getColumnNames().length);
                 while (search.moveToNext()) {
-                    emv_id = search.getString(0);
+                    emv_id = search.getInt(0);
                     full_name = search.getString(1);
                     hh_id = search.getString(2);
                     client_status = search.getString(3);
@@ -1427,22 +1256,20 @@ public class ScanCashCard extends AppCompatActivity {
                     edt_set.setText("");
                     spinSex.setText("");
 
-                    Toasty.info(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
 
                 }
                 else{
-                    if  (validated_at.length()==4){
+                    if  (validated_at.matches("null")){
                         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                         SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                        myEdit.putInt("emv_id", emv_id);
                         myEdit.putString("hh_id", hh_id);
                         myEdit.putString("full_name", full_name);
                         myEdit.putString("client_status", client_status);
                         myEdit.putString("address", address);
                         myEdit.putString("sex", sex);
                         myEdit.putString("hh_set_group", hh_set_group);
-                        myEdit.putString("card_released", "");
-                        myEdit.putString("who_released", "");
-                        myEdit.putString("place_released", "");
                         myEdit.commit();
                         pressBtn_search = true;
                         new android.os.Handler(Looper.getMainLooper()).postDelayed(
@@ -1455,7 +1282,7 @@ public class ScanCashCard extends AppCompatActivity {
                                         edt_address.setText(address);
                                         edt_set.setText(hh_set_group);
                                         spinSex.setText(sex);
-                                        Toasty.success(getApplicationContext(),"Success", Toasty.LENGTH_SHORT).show();
+                                        Toasty.success(getApplicationContext(),"Household Found", Toasty.LENGTH_SHORT).show();
                                     }
                                 },
                                 300);
@@ -1475,17 +1302,15 @@ public class ScanCashCard extends AppCompatActivity {
                         if (edt_other_card_holder_name_2!=null || edt_other_card_holder_name_2.length()!=4){
                             edt_other_card_holder_name_2.setText(other_card_holder_name_2);
                         }
-//                        if (edt_other_card_number_3!=null || edt_other_card_number_3.length()!=4){
-//                            edt_other_card_number_3.setText(other_card_number_3);
-//                            Log.v(ContentValues.TAG,"Ayay1"+edt_other_card_number_3);
-//                        }
-//
-//                        if (edt_other_card_holder_name_3!=null || other_cardholder_name_3.length()!=4){
-//                            edt_other_card_holder_name_3.setText(other_cardholder_name_3);
-//                        }
+                        if (edt_other_card_number_3!=null || edt_other_card_number_3.length()!=4){
+                            edt_other_card_number_3.setText(other_card_number_3);
+                        }
+
+                        if (edt_other_card_holder_name_3!=null || other_cardholder_name_3.length()!=4){
+                            edt_other_card_holder_name_3.setText(other_cardholder_name_3);
+                        }
                     }
                     else {
-                        Log.v(ContentValues.TAG,"fullnamess " +validated_at);
                         Toasty.info(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
                     }
                     search.close();
@@ -1511,7 +1336,8 @@ public class ScanCashCard extends AppCompatActivity {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
         //1
-        myEdit.putString("hh_id", "");
+        myEdit.putString("hh_id", "160310001-");
+        myEdit.putInt("emv_id", 0);
         myEdit.putString("full_name", "");
         myEdit.putString("client_status", "");
         myEdit.putString("address", "");
@@ -1526,6 +1352,7 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("who_released", "");
         myEdit.putString("place_released", "");
         myEdit.putString("current_grantee_number", "");
+        myEdit.putString("temp_current_grantee_number", "");
         myEdit.putString("is_available", "");
         myEdit.putString("is_available_reason", "");
         myEdit.putString("other_card_number_1", "");

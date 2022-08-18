@@ -70,16 +70,6 @@ public class SyncData extends AppCompatActivity {
     ArrayAdapter<String> adapter2;
     RequestQueue queue;
 
-
-    public Integer getUserId() {
-        Integer userID = 0;
-        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT user_id FROM Api LIMIT 1");
-        while (lastEmvDatabaseID.moveToNext()) {
-            userID = lastEmvDatabaseID.getInt(0);
-        }
-        return userID;
-    }
-
     public void getCountEmvDetails() {
         Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details");
         Integer totalCount = lastEmvDatabaseID.getCount();
@@ -184,7 +174,7 @@ public class SyncData extends AppCompatActivity {
         btnSync = findViewById(R.id.btnSync);
         btnSync.setEnabled(false);
 
-        Cursor emvDetailsList = sqLiteHelper.getData("SELECT id, full_name, hh_id, client_status, address, sex, hh_set_group, assigned_staff, minor_grantee, contact, current_grantee_card_release_date, current_grantee_card_release_place, current_grantee_card_release_by, current_grantee_is_available, current_grantee_reason, current_grantee_card_number, other_card_number_1, other_card_holder_name_1, other_card_number_2, other_card_holder_name_2, other_card_number_3, other_card_holder_name_3, other_card_is_available, other_card_reason, nma_amount, nma_date_claimed, nma_reason, nma_remarks, pawn_name_of_lender, pawn_date, pawn_retrieved_date, pawn_status, pawn_reason, pawn_offense_history, pawn_offense_date, pawn_remarks, pawn_intervention_staff, pawn_other_details, informant_full_name, accomplish_by_full_name, accomplish_e_signature, informant_e_signature, attested_by_e_signature, current_cash_card_picture, beneficiary_picture, attested_by_full_name, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, emv_database_monitoring_id, current_grantee_card_number_series, created_at, other_card_is_available_2, other_card_is_available_3, other_card_reason_2, other_card_reason_3, pawn_loaned_amount, pawn_lender_address, pawn_interest FROM emv_database_monitoring_details");
+        Cursor emvDetailsList = sqLiteHelper.getData("SELECT id, full_name, hh_id, client_status, address, sex, hh_set_group, assigned_staff, minor_grantee, contact, current_grantee_card_release_date, current_grantee_card_release_place, current_grantee_card_release_by, current_grantee_is_available, current_grantee_reason, current_grantee_card_number, other_card_number_1, other_card_holder_name_1, other_card_number_2, other_card_holder_name_2, other_card_number_3, other_card_holder_name_3, other_card_is_available, other_card_reason, nma_amount, nma_date_claimed, nma_reason, nma_remarks, pawn_name_of_lender, pawn_date, pawn_retrieved_date, pawn_status, pawn_reason, pawn_offense_history, pawn_offense_date, pawn_remarks, pawn_intervention_staff, pawn_other_details, informant_full_name, accomplish_by_full_name, accomplish_e_signature, informant_e_signature, attested_by_e_signature, current_cash_card_picture, beneficiary_picture, attested_by_full_name, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, emv_database_monitoring_id, current_grantee_card_number_series, created_at, other_card_is_available_2, other_card_is_available_3, other_card_reason_2, other_card_reason_3, pawn_loaned_amount, pawn_lender_address, pawn_interest, user_id FROM emv_database_monitoring_details");
 
         while (emvDetailsList.moveToNext()) {
             Integer id = emvDetailsList.getInt(0);
@@ -261,7 +251,7 @@ public class SyncData extends AppCompatActivity {
             String other_card_number_series_3 = emvDetailsList.getString(48) != null ? emvDetailsList.getString(48) : "";
             String emv_database_monitoring_id = emvDetailsList.getString(49) != null ? emvDetailsList.getString(49) : "";
             String current_grantee_card_number_series = emvDetailsList.getString(50) != null ? emvDetailsList.getString(50) : "";
-            String user_id = getUserId().toString() != null ? getUserId().toString() : "";
+            String user_id = emvDetailsList.getString(59) != null ? emvDetailsList.getString(59) : "";
             String created_at = emvDetailsList.getString(51) != null ? emvDetailsList.getString(51) : "";
             String other_card_is_available_2 = emvDetailsList.getString(52) != null ? emvDetailsList.getString(52) : "";
             String other_card_is_available_3 = emvDetailsList.getString(53) != null ? emvDetailsList.getString(53) : "";
