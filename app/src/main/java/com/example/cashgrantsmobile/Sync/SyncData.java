@@ -6,8 +6,11 @@ import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
@@ -31,6 +35,7 @@ import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Internet.NetworkChangeListener;
+import com.google.common.io.BaseEncoding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,13 +82,11 @@ public class SyncData extends AppCompatActivity {
 
     public void getCountEmvDetails() {
         Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details");
-        lastEmvDatabaseID.getCount();
-        while (lastEmvDatabaseID.moveToNext()) {
-            countEmvDetails = lastEmvDatabaseID.getInt(0);
-        }
+        Integer totalCount = lastEmvDatabaseID.getCount();
+        countEmvDetails = totalCount;
 
         progressTarget = findViewById(R.id.progressFigureLast);
-        progressTarget.setText(countEmvDetails.toString());
+        progressTarget.setText(totalCount.toString());
     }
 
     public void updaterEmvMonitoring() {
@@ -185,71 +188,98 @@ public class SyncData extends AppCompatActivity {
 
         while (emvDetailsList.moveToNext()) {
             Integer id = emvDetailsList.getInt(0);
-            String full_name = emvDetailsList.getString(1);
-            String hh_id = emvDetailsList.getString(2);
-            String client_status = emvDetailsList.getString(3);
-            String address = emvDetailsList.getString(4);
-            String sex = emvDetailsList.getString(5);
-            String hh_set_group = emvDetailsList.getString(6);
-            String assigned_staff = emvDetailsList.getString(7);
-            String minor_grantee = emvDetailsList.getString(8);
-            String contact = emvDetailsList.getString(9);
-            String current_grantee_card_release_date = emvDetailsList.getString(10);
-            String current_grantee_card_release_place = emvDetailsList.getString(11);
-            String current_grantee_card_release_by = emvDetailsList.getString(12);
-            String current_grantee_is_available = emvDetailsList.getString(13);
-            String current_grantee_reason = emvDetailsList.getString(14);
-            String current_grantee_card_number = emvDetailsList.getString(15);
-            String other_card_number_1 = emvDetailsList.getString(16);
-            String other_card_holder_name_1 = emvDetailsList.getString(17);
-            String other_card_number_2 = emvDetailsList.getString(18);
-            String other_card_holder_name_2 = emvDetailsList.getString(19);
-            String other_card_number_3 = emvDetailsList.getString(20);
-            String other_card_holder_name_3 = emvDetailsList.getString(21);
-            String other_card_is_available = emvDetailsList.getString(22);
-            String other_card_reason = emvDetailsList.getString(23);
-            String nma_amount = emvDetailsList.getString(24);
-            String nma_date_claimed = emvDetailsList.getString(25);
-            String nma_reason = emvDetailsList.getString(26);
-            String nma_remarks = emvDetailsList.getString(27);
-            String pawn_name_of_lender = emvDetailsList.getString(28);
-            String pawn_date = emvDetailsList.getString(29);
-            String pawn_retrieved_date = emvDetailsList.getString(30);
-            String pawn_status = emvDetailsList.getString(31);
-            String pawn_reason = emvDetailsList.getString(32);
-            String pawn_offense_history = emvDetailsList.getString(33);
-            String pawn_offense_date = emvDetailsList.getString(34);
-            String pawn_remarks = emvDetailsList.getString(35);
-            String pawn_intervention_staff = emvDetailsList.getString(36);
-            String pawn_other_details = emvDetailsList.getString(37);
-            String informant_full_name = emvDetailsList.getString(38);
-            String accomplish_by_full_name = emvDetailsList.getString(39);
+            String full_name = emvDetailsList.getString(1) != null ? emvDetailsList.getString(1) : "";
+            String hh_id = emvDetailsList.getString(2) != null ? emvDetailsList.getString(2) : "";
+            String client_status = emvDetailsList.getString(3) != null ? emvDetailsList.getString(3) : "";
+            String address = emvDetailsList.getString(4) != null ? emvDetailsList.getString(4) : "";
+            String sex = emvDetailsList.getString(5) != null ? emvDetailsList.getString(5) : "";
+            String hh_set_group = emvDetailsList.getString(6) != null ? emvDetailsList.getString(6) : "";
+            String assigned_staff = emvDetailsList.getString(7) != null ? emvDetailsList.getString(7) : "";
+            String minor_grantee = emvDetailsList.getString(8) != null ? emvDetailsList.getString(8) : "";
+            String contact = emvDetailsList.getString(9) != null ? emvDetailsList.getString(9) : "";
+            String current_grantee_card_release_date = emvDetailsList.getString(10) != null ? emvDetailsList.getString(10) : "";
+            String current_grantee_card_release_place = emvDetailsList.getString(11) != null ? emvDetailsList.getString(11) : "";
+            String current_grantee_card_release_by = emvDetailsList.getString(12) != null ? emvDetailsList.getString(12) : "";
+            String current_grantee_is_available = emvDetailsList.getString(13) != null ? emvDetailsList.getString(13) : "";
+            String current_grantee_reason = emvDetailsList.getString(14) != null ? emvDetailsList.getString(14) : "";
+            String current_grantee_card_number = emvDetailsList.getString(15) != null ? emvDetailsList.getString(15) : "";
+            String other_card_number_1 = emvDetailsList.getString(16) != null ? emvDetailsList.getString(16) : "";
+            String other_card_holder_name_1 = emvDetailsList.getString(17) != null ? emvDetailsList.getString(17) : "";
+            String other_card_number_2 = emvDetailsList.getString(18) != null ? emvDetailsList.getString(18) : "";
+            String other_card_holder_name_2 = emvDetailsList.getString(19) != null ? emvDetailsList.getString(19) : "";
+            String other_card_number_3 = emvDetailsList.getString(20) != null ? emvDetailsList.getString(20) : "";
+            String other_card_holder_name_3 = emvDetailsList.getString(21) != null ? emvDetailsList.getString(21) : "";
+            String other_card_is_available = emvDetailsList.getString(22) != null ? emvDetailsList.getString(22) : "";
+            String other_card_reason = emvDetailsList.getString(23) != null ? emvDetailsList.getString(23) : "";
+            String nma_amount = emvDetailsList.getString(24) != null ? emvDetailsList.getString(24) : "";
+            String nma_date_claimed = emvDetailsList.getString(25) != null ? emvDetailsList.getString(25) : "";
+            String nma_reason = emvDetailsList.getString(26) != null ? emvDetailsList.getString(26) : "";
+            String nma_remarks = emvDetailsList.getString(27) != null ? emvDetailsList.getString(27) : "";
+            String pawn_name_of_lender = emvDetailsList.getString(28) != null ? emvDetailsList.getString(28) : "";
+            String pawn_date = emvDetailsList.getString(29) != null ? emvDetailsList.getString(29) : "";
+            String pawn_retrieved_date = emvDetailsList.getString(30) != null ? emvDetailsList.getString(30) : "";
+            String pawn_status = emvDetailsList.getString(31) != null ? emvDetailsList.getString(31) : "";
+            String pawn_reason = emvDetailsList.getString(32) != null ? emvDetailsList.getString(32) : "";
+            String pawn_offense_history = emvDetailsList.getString(33) != null ? emvDetailsList.getString(33) : "";
+            String pawn_offense_date = emvDetailsList.getString(34) != null ? emvDetailsList.getString(34) : "";
+            String pawn_remarks = emvDetailsList.getString(35) != null ? emvDetailsList.getString(35) : "";
+            String pawn_intervention_staff = emvDetailsList.getString(36) != null ? emvDetailsList.getString(36) : "";
+            String pawn_other_details = emvDetailsList.getString(37) != null ? emvDetailsList.getString(37) : "";
+            String informant_full_name = emvDetailsList.getString(38) != null ? emvDetailsList.getString(38) : "";
+            String accomplish_by_full_name = emvDetailsList.getString(39) != null ? emvDetailsList.getString(39) : "";
             byte[] accomplish_e_signature = emvDetailsList.getBlob(40);
-//            byte[] informant_e_signature = emvDetailsList.getBlob(41);
-//
-//            byte[] attested_by_e_signature = emvDetailsList.getBlob(42);
+            byte[] informant_e_signature = emvDetailsList.getBlob(41);
+            byte[] attested_by_e_signature = emvDetailsList.getBlob(42);
             byte[] current_cash_card_picture = emvDetailsList.getBlob(43);
-//            String strCCpicture = new String(current_cash_card_picture, StandardCharsets.UTF_8);
-//            byte[] beneficiary_picture = emvDetailsList.getBlob(44);
-            String attested_by_full_name = emvDetailsList.getString(45);
-            String other_card_number_series_1 = emvDetailsList.getString(46);
-            String other_card_number_series_2 = emvDetailsList.getString(47);
-            String other_card_number_series_3 = emvDetailsList.getString(48);
-            String emv_database_monitoring_id = emvDetailsList.getString(49);
-            String current_grantee_card_number_series = emvDetailsList.getString(50);
-            String user_id = getUserId().toString();
-            String created_at = emvDetailsList.getString(51);
-            String other_card_is_available_2 = emvDetailsList.getString(52);
-            String other_card_is_available_3 = emvDetailsList.getString(53);
-            String other_card_reason_2 = emvDetailsList.getString(54);
-            String other_card_reason_3 = emvDetailsList.getString(55);
-            String pawn_loaned_amount = emvDetailsList.getString(56);
-            String pawn_lender_address = emvDetailsList.getString(57);
-            String pawn_interest = emvDetailsList.getString(58);
+            byte[] beneficiary_picture = emvDetailsList.getBlob(44);
+
+            String accomplish_e_signature_base64 = "";
+            String informant_e_signature_base64 = "";
+            String attested_by_e_signature_base64 = "";
+            String current_cash_card_picture_base64 = "";
+            String beneficiary_picture_base64 = "";
+
+            if (accomplish_e_signature != null) {
+                accomplish_e_signature_base64 = Base64.encodeToString(accomplish_e_signature, Base64.DEFAULT);
+            }
+            if (informant_e_signature != null) {
+                informant_e_signature_base64 = Base64.encodeToString(informant_e_signature, Base64.DEFAULT);
+            }
+            if (attested_by_e_signature != null) {
+                attested_by_e_signature_base64 = Base64.encodeToString(attested_by_e_signature, Base64.DEFAULT);
+            }
+            if (current_cash_card_picture != null) {
+                current_cash_card_picture_base64 = Base64.encodeToString(current_cash_card_picture, Base64.DEFAULT);
+            }
+            if (beneficiary_picture != null) {
+                beneficiary_picture_base64 = Base64.encodeToString(beneficiary_picture, Base64.DEFAULT);
+            }
+
+            String attested_by_full_name = emvDetailsList.getString(45) != null ? emvDetailsList.getString(45) : "";
+            String other_card_number_series_1 = emvDetailsList.getString(46) != null ? emvDetailsList.getString(46) : "";
+            String other_card_number_series_2 = emvDetailsList.getString(47) != null ? emvDetailsList.getString(47) : "";
+            String other_card_number_series_3 = emvDetailsList.getString(48) != null ? emvDetailsList.getString(48) : "";
+            String emv_database_monitoring_id = emvDetailsList.getString(49) != null ? emvDetailsList.getString(49) : "";
+            String current_grantee_card_number_series = emvDetailsList.getString(50) != null ? emvDetailsList.getString(50) : "";
+            String user_id = getUserId().toString() != null ? getUserId().toString() : "";
+            String created_at = emvDetailsList.getString(51) != null ? emvDetailsList.getString(51) : "";
+            String other_card_is_available_2 = emvDetailsList.getString(52) != null ? emvDetailsList.getString(52) : "";
+            String other_card_is_available_3 = emvDetailsList.getString(53) != null ? emvDetailsList.getString(53) : "";
+            String other_card_reason_2 = emvDetailsList.getString(54) != null ? emvDetailsList.getString(54) : "";
+            String other_card_reason_3 = emvDetailsList.getString(55) != null ? emvDetailsList.getString(55) : "";
+            String pawn_loaned_amount = emvDetailsList.getString(56) != null ? emvDetailsList.getString(56) : "";
+            String pawn_lender_address = emvDetailsList.getString(57) != null ? emvDetailsList.getString(57) : "";
+            String pawn_interest = emvDetailsList.getString(58) != null ? emvDetailsList.getString(58) : "";
 
             String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoringdetails/sync";
 
-            StringRequest request = new StringRequest(Request.Method.POST, url,  new com.android.volley.Response.Listener<String>() {
+            String finalAccomplish_e_signature_base6 = accomplish_e_signature_base64;
+            String finalInformant_e_signature_base6 = informant_e_signature_base64;
+            String finalAttested_by_e_signature_base6 = attested_by_e_signature_base64;
+            String finalCurrent_cash_card_picture_base6 = current_cash_card_picture_base64;
+            String finalBeneficiary_picture_base6 = beneficiary_picture_base64;
+
+            StringRequest request = new StringRequest(Request.Method.POST, url,  new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     // on below line we are displaying a success toast message.
@@ -284,7 +314,7 @@ public class SyncData extends AppCompatActivity {
                                 updaterEmvMonitoring();
                             }
 
-                            MainActivity.sqLiteHelper.deleteEmvMonitoringDetails(id);
+                            sqLiteHelper.deleteEmvMonitoringDetails(id);
 
                         }
                         else{
@@ -299,7 +329,7 @@ public class SyncData extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }, new com.android.volley.Response.ErrorListener() {
+            }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     // method to handle errors.
@@ -334,10 +364,6 @@ public class SyncData extends AppCompatActivity {
                 }
 
             }) {
-//                @Override
-//                public String getBodyContentType() {
-//                    return "multipart/form-data; charset=utf-8";
-//                }
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
@@ -350,61 +376,61 @@ public class SyncData extends AppCompatActivity {
                     params.put("hh_id", hh_id);
                     params.put("client_status",client_status);
                     params.put("address", address);
-                    params.put("sex", "asdasd");
-//                    params.put("hh_set_group", hh_set_group);
-//                    params.put("assigned_staff", assigned_staff);
-//                    params.put("minor_grantee", minor_grantee);
-//                    params.put("contact", contact);
-//                    params.put("current_grantee_card_release_date", current_grantee_card_release_date);
-//                    params.put("current_grantee_card_release_place", current_grantee_card_release_place);
-//                    params.put("current_grantee_card_release_by", current_grantee_card_release_by);
-//                    params.put("current_grantee_is_available", current_grantee_is_available);
-//                    params.put("current_grantee_reason", current_grantee_reason);
-//                    params.put("current_grantee_card_number", current_grantee_card_number);
-//                    params.put("other_card_number_1", other_card_number_1);
-//                    params.put("other_card_holder_name_1", other_card_holder_name_1);
-//                    params.put("other_card_number_2", other_card_number_2);
-//                    params.put("other_card_holder_name_2", other_card_holder_name_2);
-//                    params.put("other_card_number_3", other_card_number_3);
-//                    params.put("other_card_holder_name_3", other_card_holder_name_3);
-//                    params.put("other_card_is_available", other_card_is_available);
-//                    params.put("other_card_reason", other_card_reason);
-//                    params.put("nma_amount", nma_amount);
-//                    params.put("nma_date_claimed", nma_date_claimed);
-//                    params.put("nma_reason", nma_reason);
-//                    params.put("nma_remarks", nma_remarks);
-//                    params.put("pawn_name_of_lender", pawn_name_of_lender);
-//                    params.put("pawn_date", pawn_date);
-//                    params.put("pawn_retrieved_date", pawn_retrieved_date);
-//                    params.put("pawn_status", pawn_status);
-//                    params.put("pawn_reason", pawn_reason);
-//                    params.put("pawn_offense_history", pawn_offense_history);
-//                    params.put("pawn_offense_date", pawn_offense_date);
-//                    params.put("pawn_remarks", pawn_remarks);
-//                    params.put("pawn_intervention_staff", pawn_intervention_staff);
-//                    params.put("pawn_other_details", pawn_other_details);
-//                    params.put("informant_full_name", informant_full_name);
-//                    params.put("accomplish_by_full_name", accomplish_by_full_name);
-//                    params.put("accomplish_e_signature", String.valueOf(accomplish_e_signature));
-//                    params.put("informant_e_signature", informant_e_signature);
-//                    params.put("attested_by_e_signature", attested_by_e_signature);
-                    params.put("current_cash_card_picture", String.valueOf(current_cash_card_picture));
-//                    params.put("beneficiary_picture", beneficiary_picture);
-//                    params.put("attested_by_full_name", attested_by_full_name);
-//                    params.put("other_card_number_series_1", String.valueOf(other_card_number_series_1));
-//                    params.put("other_card_number_series_2", String.valueOf(other_card_number_series_2));
-//                    params.put("other_card_number_series_3", String.valueOf(other_card_number_series_3));
-//                    params.put("emv_database_monitoring_id", String.valueOf(emv_database_monitoring_id));
-//                    params.put("current_grantee_card_number_series", String.valueOf(current_grantee_card_number_series));
+                    params.put("sex", sex);
+                    params.put("hh_set_group", hh_set_group);
+                    params.put("assigned_staff", assigned_staff);
+                    params.put("minor_grantee", minor_grantee);
+                    params.put("contact", contact);
+                    params.put("current_grantee_card_release_date", current_grantee_card_release_date);
+                    params.put("current_grantee_card_release_place", current_grantee_card_release_place);
+                    params.put("current_grantee_card_release_by", current_grantee_card_release_by);
+                    params.put("current_grantee_is_available", current_grantee_is_available);
+                    params.put("current_grantee_reason", current_grantee_reason);
+                    params.put("current_grantee_card_number", current_grantee_card_number);
+                    params.put("other_card_number_1", other_card_number_1);
+                    params.put("other_card_holder_name_1", other_card_holder_name_1);
+                    params.put("other_card_number_2", other_card_number_2);
+                    params.put("other_card_holder_name_2", other_card_holder_name_2);
+                    params.put("other_card_number_3", other_card_number_3);
+                    params.put("other_card_holder_name_3", other_card_holder_name_3);
+                    params.put("other_card_is_available", other_card_is_available);
+                    params.put("other_card_reason", other_card_reason);
+                    params.put("nma_amount", nma_amount);
+                    params.put("nma_date_claimed", nma_date_claimed);
+                    params.put("nma_reason", nma_reason);
+                    params.put("nma_remarks", nma_remarks);
+                    params.put("pawn_name_of_lender", pawn_name_of_lender);
+                    params.put("pawn_date", pawn_date);
+                    params.put("pawn_retrieved_date", pawn_retrieved_date);
+                    params.put("pawn_status", pawn_status);
+                    params.put("pawn_reason", pawn_reason);
+                    params.put("pawn_offense_history", pawn_offense_history);
+                    params.put("pawn_offense_date", pawn_offense_date);
+                    params.put("pawn_remarks", pawn_remarks);
+                    params.put("pawn_intervention_staff", pawn_intervention_staff);
+                    params.put("pawn_other_details", pawn_other_details);
+                    params.put("informant_full_name", informant_full_name);
+                    params.put("accomplish_by_full_name", accomplish_by_full_name);
+                    params.put("accomplish_e_signature", finalAccomplish_e_signature_base6);
+                    params.put("informant_e_signature", finalInformant_e_signature_base6);
+                    params.put("attested_by_e_signature", finalAttested_by_e_signature_base6);
+                    params.put("current_cash_card_picture", finalCurrent_cash_card_picture_base6);
+                    params.put("beneficiary_picture", finalBeneficiary_picture_base6);
+                    params.put("attested_by_full_name", attested_by_full_name);
+                    params.put("other_card_number_series_1", other_card_number_series_1);
+                    params.put("other_card_number_series_2", other_card_number_series_2);
+                    params.put("other_card_number_series_3", other_card_number_series_3);
+                    params.put("emv_database_monitoring_id", emv_database_monitoring_id);
+                    params.put("current_grantee_card_number_series", current_grantee_card_number_series);
                     params.put("user_id", user_id);
-//                    params.put("created_at", created_at);
-//                    params.put("other_card_is_available_2", other_card_is_available_2);
-//                    params.put("other_card_is_available_3", other_card_is_available_3);
-//                    params.put("other_card_reason_2", other_card_reason_2);
-//                    params.put("other_card_reason_3", other_card_reason_3);
-//                    params.put("pawn_loaned_amount", pawn_loaned_amount);
-//                    params.put("pawn_lender_address", pawn_lender_address);
-//                    params.put("pawn_interest", pawn_interest);
+                    params.put("created_at", created_at);
+                    params.put("other_card_is_available_2", other_card_is_available_2);
+                    params.put("other_card_is_available_3", other_card_is_available_3);
+                    params.put("other_card_reason_2", other_card_reason_2);
+                    params.put("other_card_reason_3", other_card_reason_3);
+                    params.put("pawn_loaned_amount", pawn_loaned_amount);
+                    params.put("pawn_lender_address", pawn_lender_address);
+                    params.put("pawn_interest", pawn_interest);
                     return params;
                 }
 
