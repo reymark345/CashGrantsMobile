@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView1_3"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
@@ -40,7 +40,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_nmaamount_1"
+                    android:id="@+id/til_nmaamount"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_currency_ruble_24">
 
                     <EditText
-                        android:id="@+id/edtNmaAmount_1"
+                        android:id="@+id/edtNmaAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="NMA Amount"
@@ -61,11 +61,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_nmareason_1"
+                    android:id="@+id/til_nmareason"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_nmaamount_1"
+                    android:layout_below="@+id/til_nmaamount"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
@@ -74,7 +74,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtNmaReason_1"
+                        android:id="@+id/edtNmaReason"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:hint="Reason for NMA"
@@ -86,11 +86,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_datewithdrawn_1"
+                    android:id="@+id/til_datewithdrawn"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_nmareason_1"
+                    android:layout_below="@+id/til_nmareason"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -99,7 +99,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                     <EditText
-                        android:id="@+id/edtDateWithdrawn_1"
+                        android:id="@+id/edtDateWithdrawn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Date Withdrawn/Claimed"
@@ -107,11 +107,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_remarks_1"
+                    android:id="@+id/til_remarks"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_datewithdrawn_1"
+                    android:layout_below="@+id/til_datewithdrawn"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
@@ -120,7 +120,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtRemarks_1"
+                        android:id="@+id/edtRemarks"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:hint="Remarks"

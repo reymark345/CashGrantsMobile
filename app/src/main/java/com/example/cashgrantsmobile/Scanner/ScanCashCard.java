@@ -411,7 +411,7 @@ public class ScanCashCard extends AppCompatActivity {
                     String sex = sh.getString("sex", "");
                     String hh_set_group = sh.getString("hh_set_group", "");
                     String contact_no = sh.getString("contact_no", "");
-                    String assigned = sh.getString("accomplish_by_name", "");
+                    String assigned = sh.getString("assigned", "");
                     String minor_grantee = sh.getString("minor_grantee", "");
 
                     String card_released = sh.getString("card_released", "");
@@ -471,11 +471,14 @@ public class ScanCashCard extends AppCompatActivity {
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
                             i.putExtra("cashCardNumber",limitString);
+                            clearSharedPref();
+
                             sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv), other_is_available_2, other_is_available_3, other_is_available_reason_2, other_is_available_reason_3,pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3);
 
 //                          sqLiteHelper.insertScannedCashCard(limitString,imageViewToByte(mPreviewIv));
                         }
                         else{
+                            Log.v(ContentValues.TAG,"Unsa diay ni2 "+assigned);
                             i.putExtra("cashCardNumber",sTextFromET);
                             sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv), other_is_available_2, other_is_available_3, other_is_available_reason_2, other_is_available_reason_3,pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3);
                             //                          sqLiteHelper.insertScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));

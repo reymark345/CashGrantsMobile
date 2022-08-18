@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView1_4"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
@@ -39,7 +39,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_lendername_1"
+                    android:id="@+id/til_lendername"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                     <EditText
-                        android:id="@+id/edtLenderName_1"
+                        android:id="@+id/edtLenderName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Name of Lender"
@@ -59,11 +59,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_pawningdate_1"
+                    android:id="@+id/til_pawningdate"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_lendername_1"
+                    android:layout_below="@+id/til_lendername"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -72,7 +72,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                     <EditText
-                        android:id="@+id/edtPawningDate_1"
+                        android:id="@+id/edtPawningDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Date of Pawning"
@@ -80,11 +80,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_loanedamount_1"
+                    android:id="@+id/til_loanedamount"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_pawningdate_1"
+                    android:layout_below="@+id/til_pawningdate"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -93,7 +93,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_currency_ruble_24">
 
                     <EditText
-                        android:id="@+id/edtLoanedAmount_1"
+                        android:id="@+id/edtLoanedAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Loaned Amount"
@@ -101,11 +101,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_lenderaddress_1"
+                    android:id="@+id/til_lenderaddress"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_loanedamount_1"
+                    android:layout_below="@+id/til_loanedamount"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -114,7 +114,7 @@
                     app:startIconDrawable="@drawable/ic_location">
 
                     <EditText
-                        android:id="@+id/edtLenderAddress_1"
+                        android:id="@+id/edtLenderAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Address of Lender"
@@ -122,11 +122,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_dateretrieved_1"
+                    android:id="@+id/til_dateretrieved"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_lenderaddress_1"
+                    android:layout_below="@+id/til_lenderaddress"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -135,7 +135,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                     <EditText
-                        android:id="@+id/edtDateRetrieved_1"
+                        android:id="@+id/edtDateRetrieved"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Date Retrieved"
@@ -143,11 +143,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_interest_1"
+                    android:id="@+id/til_interest"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_dateretrieved_1"
+                    android:layout_below="@+id/til_dateretrieved"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -156,7 +156,7 @@
                     app:startIconDrawable="@drawable/ic_creditcard">
 
                     <EditText
-                        android:id="@+id/edtInterest_1"
+                        android:id="@+id/edtInterest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Interest"
@@ -164,11 +164,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_status_1"
+                    android:id="@+id/til_status"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_interest_1"
+                    android:layout_below="@+id/til_interest"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -176,7 +176,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_book_24">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerStatus_1"
+                        android:id="@+id/spinnerStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Status"
@@ -184,11 +184,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_pawningreason_1"
+                    android:id="@+id/til_pawningreason"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_status_1"
+                    android:layout_below="@+id/til_status"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -197,7 +197,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtPawningReason_1"
+                        android:id="@+id/edtPawningReason"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:hint="Reason for Pawning"
@@ -209,11 +209,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_offensehistory_1"
+                    android:id="@+id/til_offensehistory"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_pawningreason_1"
+                    android:layout_below="@+id/til_pawningreason"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -221,7 +221,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_history_24">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerOffenseHistory_1"
+                        android:id="@+id/spinnerOffenseHistory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Offense History"
@@ -229,11 +229,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_offensehistorydate_1"
+                    android:id="@+id/til_offensehistorydate"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_offensehistory_1"
+                    android:layout_below="@+id/til_offensehistory"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -242,7 +242,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                     <EditText
-                        android:id="@+id/edtOffenseHistoryDate_1"
+                        android:id="@+id/edtOffenseHistoryDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Offense History Date"
@@ -250,11 +250,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_pdremarks_1"
+                    android:id="@+id/til_pdremarks"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_offensehistorydate_1"
+                    android:layout_below="@+id/til_offensehistorydate"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -263,7 +263,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtPdRemarks_1"
+                        android:id="@+id/edtPdRemarks"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:hint="Remarks"
@@ -275,11 +275,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_intervention_1"
+                    android:id="@+id/til_intervention"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_pdremarks_1"
+                    android:layout_below="@+id/til_pdremarks"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -288,7 +288,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                     <EditText
-                        android:id="@+id/edtIntervention_1"
+                        android:id="@+id/edtIntervention"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:hint="Intervention of C/ML"
@@ -300,11 +300,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_otherdetails_1"
+                    android:id="@+id/til_otherdetails"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_intervention_1"
+                    android:layout_below="@+id/til_intervention"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -314,7 +314,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_format_align_left_24">
 
                     <EditText
-                        android:id="@+id/edtOtherDetails_1"
+                        android:id="@+id/edtOtherDetails"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:hint="Other Details"

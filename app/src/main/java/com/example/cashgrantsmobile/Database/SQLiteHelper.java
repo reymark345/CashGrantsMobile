@@ -102,6 +102,83 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,e.toString());
         }
     }
+
+
+    public void updateDetailsEmvDatabase(String full_name, String client_status,String address, String sex,String hh_set_group, String contact_no, String assigned, String minor_grantee, String card_released, String who_released, String place_released, String is_available,String is_available_reason,String other_card_number_1,String other_card_holder_name_1,String other_is_available_1,String other_is_available_reason_1,String other_card_number_2,String other_card_holder_name_2,String other_is_available_2,String other_is_available_reason_2,String other_card_number_3,String other_card_holder_name_3,String other_is_available_3,String other_is_available_reason_3,String nma_amount,String nma_reason,String date_withdrawn,String remarks, String lender_name,String pawning_date,String date_retrieved,String spin_status,String pawning_reason,String offense_history,String offense_history_date,String pd_remarks,String intervention,String other_details, String pawn_loaned_amount,String pawn_lender_address,String pawn_interest, String other_card_number_series_1, String other_card_number_series_2, String other_card_number_series_3,int emv_id){
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(new Date());
+
+        try {
+
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE emv_database_monitoring_details SET full_name = ?,client_status=?, address=?,sex=?,hh_set_group=?,assigned_staff=? ," +
+                    "minor_grantee=? ,contact=?,current_grantee_card_release_date=?,current_grantee_card_release_place=?,current_grantee_card_release_by=?," +
+                    " current_grantee_is_available=?,current_grantee_reason=?,other_card_number_1=?,other_card_holder_name_1=?,other_card_number_2=?," +
+                    " other_card_holder_name_2=?,other_card_number_3=?,other_card_holder_name_3=?, other_card_is_available=?,other_card_reason=?,nma_amount=?," +
+                    "nma_date_claimed=?,nma_reason=?,nma_remarks=?, pawn_name_of_lender=?,pawn_date=?, pawn_retrieved_date=?,pawn_status=?,pawn_reason=?," +
+                    "pawn_offense_history=?,pawn_offense_date=?,pawn_remarks=?,pawn_intervention_staff=?,pawn_other_details=?, " +
+                    "other_card_number_series_1=?,other_card_number_series_2=?,other_card_number_series_3=?,updated_at=?,other_card_is_available_2=?," +
+                    "other_card_is_available_3=?,other_card_reason_2=?,other_card_reason_3=?,pawn_loaned_amount=?,pawn_lender_address=?,pawn_interest=?WHERE id = ?";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindString(1, full_name);
+            statement.bindString(2, client_status);
+            statement.bindString(3, address);
+            statement.bindString(4, sex);
+            statement.bindString(5, hh_set_group);
+            statement.bindString(6, assigned);
+            statement.bindString(7, minor_grantee);
+            statement.bindString(8, contact_no);
+            statement.bindString(9, card_released);
+            statement.bindString(10, place_released);
+            statement.bindString(11, who_released);
+            statement.bindString(12, is_available);
+            statement.bindString(13, is_available_reason);
+            statement.bindString(14, other_card_number_1);
+            statement.bindString(15, other_card_holder_name_1);
+            statement.bindString(16, other_card_number_2);
+            statement.bindString(17, other_card_holder_name_2);
+            statement.bindString(18, other_card_number_3);
+            statement.bindString(19, other_card_holder_name_3);
+            statement.bindString(20, other_is_available_1);
+            statement.bindString(21, other_is_available_reason_1);
+            statement.bindString(22, nma_amount);
+            statement.bindString(23, date_withdrawn);
+            statement.bindString(24, nma_reason);
+            statement.bindString(25, remarks);
+            statement.bindString(26, lender_name);
+            statement.bindString(27, pawning_date);
+            statement.bindString(28, date_retrieved);
+            statement.bindString(29, spin_status);
+            statement.bindString(30, pawning_reason);
+            statement.bindString(31, offense_history);
+            statement.bindString(32, offense_history_date);
+            statement.bindString(33, pd_remarks);
+            statement.bindString(34, intervention);
+            statement.bindString(35, other_details);
+            statement.bindString(36, other_card_number_series_1);
+            statement.bindString(37, other_card_number_series_2);
+            statement.bindString(38, other_card_number_series_3);
+            statement.bindString(39, strDate);
+            statement.bindString(40, other_is_available_2);
+            statement.bindString(41, other_is_available_3);
+            statement.bindString(42, other_is_available_reason_2);
+            statement.bindString(43, other_is_available_reason_3);
+            statement.bindString(44, pawn_loaned_amount);
+            statement.bindString(45, pawn_lender_address);
+            statement.bindString(46, pawn_interest);
+            statement.bindLong(47, emv_id);
+            statement.execute();
+            database.close();
+
+        }
+        catch(Exception e){
+            Log.v(TAG,"wala ni success na emv " + e);
+            Log.v(TAG,e.toString());
+        }
+    }
+
     public void insertDefaultUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
             SQLiteDatabase database = getWritableDatabase();
@@ -205,18 +282,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,"wala ni update "+e);
         }
     }
-    public void updateInformantSignature_emv(int current_idd,String cash_card,String accomplish,String informant,String attested ,byte[] signature) {
+    public void updateInformantSignature_emv(int current_idd,String cash_card,String accomplish,String informant,String attested ,byte[] signature,String series_number) {
         try {
 
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE emv_database_monitoring_details SET current_grantee_card_number  = ?,informant_e_signature =?,accomplish_by_full_name = ?,informant_full_name = ?,attested_by_full_name = ? WHERE id = ?";
+            String sql = "UPDATE emv_database_monitoring_details SET current_grantee_card_number  = ?,current_grantee_card_number_series =?,informant_e_signature =?,accomplish_by_full_name = ?,informant_full_name = ?,attested_by_full_name = ? WHERE id = ?";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.bindString(1, cash_card);
-            statement.bindBlob(2, signature);
-            statement.bindString(3, accomplish);
-            statement.bindString(4, informant);
-            statement.bindString(5, attested);
-            statement.bindLong(6, current_idd);
+            statement.bindString(2, series_number);
+            statement.bindBlob(3, signature);
+            statement.bindString(4, accomplish);
+            statement.bindString(5, informant);
+            statement.bindString(6, attested);
+            statement.bindLong(7, current_idd);
             statement.execute();
             database.close();
         }

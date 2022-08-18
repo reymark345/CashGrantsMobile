@@ -22,6 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Scanner.ScannedDetails;
+import com.example.cashgrantsmobile.Update.UpdateEntries;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -73,7 +75,7 @@ public class InventoryList extends AppCompatActivity {
                     status = cursor.getInt(2);
                 }
 
-                if (status==0){DialogStatus ="Include";}else{DialogStatus ="Exclude";}
+                if (status==0){DialogStatus ="Details";}else{DialogStatus ="Image";}
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Are you sure?")
                         .setContentText("Please choose corresponding action")
@@ -85,6 +87,8 @@ public class InventoryList extends AppCompatActivity {
                             public void onClick(SweetAlertDialog sDialog) {
                                 ScannedDetails.scanned = false;
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
+
+                                Log.v(TAG,"Test111 "+i);
 
                                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
@@ -106,17 +110,13 @@ public class InventoryList extends AppCompatActivity {
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                if (id_image==null){
-                                    Toasty.error(getApplicationContext(),"Update data first ", Toasty.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    sqLiteHelper.excludeData(i,status);
-                                    Intent in = new Intent(getApplicationContext(), InventoryList.class);
-                                    in.putExtra("ExcludeInclude", DialogStatus);
+
+                                    Intent in = new Intent(getApplicationContext(), UpdateEntries.class);
+                                    in.putExtra("UpdateId_entries", i);
                                     startActivity(in);
                                     finish();
+//                                sqLiteHelper.excludeData(i,status);
 
-                                }
                             }
                         }).show();
                     }

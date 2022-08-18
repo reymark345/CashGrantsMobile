@@ -5,8 +5,13 @@
       <map>
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/activity_splash_login.xml" value="0.1" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/dashboard_item_2.xml" value="0.3625" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/dashboard_item_3.xml" value="0.23425925925925925" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/dashboard_item_4.xml" value="0.24139492753623187" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/dashboard_item_5.xml" value="0.3625" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/dashboard_item_6.xml" value="0.23425925925925925" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/dashboard_main.xml" value="0.24139492753623187" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_cash_card.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_home.xml" value="0.24139492753623187" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scanned_details.xml" value="0.33" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/cash_card_scanner_entries.xml" value="0.33" />
@@ -14,9 +19,13 @@
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_one.xml" value="0.33" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_one_sex_list_items.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_three.xml" value="0.33" />
-        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_two.xml" value="0.1" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_two.xml" value="0.33" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/pull_data.xml" value="0.3625" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_data.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_items.xml" value="0.24139492753623187" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/inventory_list.xml" value="0.3625" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/sync_data.xml" value="0.23425925925925925" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/update_data.xml" value="0.33" />
         <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layout/dashboard_item_3.xml" value="0.25" />
         <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layout/dashboard_item_4.xml" value="0.25" />
         <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layout/dashboard_item_5.xml" value="0.264" />
@@ -28,6 +37,8 @@
         <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_three.xml" value="0.25" />
         <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_two.xml" value="0.25" />
         <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/pull_data.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_items.xml" value="0.25" />
+        <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/inventory_list.xml" value="0.25" />
         <entry key="..\:/Users/marwe/Documents/Android Projects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/sync_data.xml" value="0.25" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/drawable/ic_creditcard.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/reyma/AndroidStudioProjects/CashGrantsMobile/app/src/main/res/drawable/ic_launcher_background.xml" value="0.184375" />
@@ -100,24 +111,23 @@
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/activity_splash.xml" value="0.1743659420289855" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/activity_splash_login.xml" value="0.1" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/check_internet_dialog.xml" value="0.35688405797101447" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_1.xml" value="0.3171875" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/accomplished_signature.xml" value="0.1" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_cash_card.xml" value="0.25" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_home.xml" value="0.35688405797101447" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scan_cash_card.xml" value="0.1" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scanned_details.xml" value="0.22" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/attested_signature.xml" value="0.12864583333333332" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/cash_card_scanner_entries.xml" value="0.1015625" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/informant_signature.xml" value="0.12864583333333332" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scanned_details.xml" value="0.33" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/cash_card_scanner_entries.xml" value="0.2509057971014493" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_four.xml" value="0.35688405797101447" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_one.xml" value="0.1" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_one.xml" value="0.35688405797101447" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_three.xml" value="0.35688405797101447" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_two.xml" value="0.35688405797101447" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_four.xml" value="0.14130434782608695" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_main_scanner_entries.xml" value="0.14130434782608695" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_one.xml" value="0.10975609756097561" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_three.xml" value="0.11548913043478261" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_two.xml" value="0.16757246376811594" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_two.xml" value="0.26322418136020154" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update1_one.xml" value="0.2513586956521739" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update2_two.xml" value="0.2513586956521739" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update3_three.xml" value="0.2513586956521739" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update4_four.xml" value="0.2513586956521739" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_four.xml" value="0.2509057971014493" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_main_scanner_entries.xml" value="0.2509057971014493" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_one.xml" value="0.24947916666666667" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_three.xml" value="0.2509057971014493" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_two.xml" value="0.2509057971014493" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/menu/main_menu.xml" value="0.184375" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/menu/sidemenu.xml" value="0.184375" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_items.xml" value="0.35688405797101447" />

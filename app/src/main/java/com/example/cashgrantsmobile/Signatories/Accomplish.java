@@ -77,7 +77,7 @@ public class Accomplish extends AppCompatActivity {
                     SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                     String identifier = sh.getString("identifier", "");
 
-                    Intent intent = new Intent(getApplicationContext(), ScannedDetails.class);
+
 
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
@@ -91,9 +91,10 @@ public class Accomplish extends AppCompatActivity {
                                 imageViewToByte(imageViewSignature),
                                 series_number
                         );
-
+                        Intent intent = new Intent(getApplicationContext(), ScannedDetails.class);
                         intent.putExtra("detailScan", 0);
                         Log.v(TAG,"samplee zerro" +  edtAttested);
+                        startActivity(intent);
                     }
                     else {
                         sqLiteHelper.updateAccomplishSignature_emv(
@@ -105,14 +106,22 @@ public class Accomplish extends AppCompatActivity {
                                 imageViewToByte(imageViewSignature),
                                 series_number
                         );
+                        Log.v(TAG,"testtingdaww" +  signatureCondition);
+                        Intent intent = new Intent(getApplicationContext(), ScannedDetails.class);
                         intent.putExtra("detailScan", signatureCondition);
                         Log.v(TAG,"samplee 1" + edtAttested);
+                        startActivity(intent);
 
                     }
 
-
-
+                    Intent intent = new Intent(getApplicationContext(), ScannedDetails.class);
+                    intent.putExtra("detailScan", signatureCondition);
+                    Log.v(TAG,"samplee 1" + edtAttested);
                     startActivity(intent);
+
+
+
+
 
 //
                 }catch (Exception e){
