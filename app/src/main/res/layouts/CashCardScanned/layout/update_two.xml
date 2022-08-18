@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView1_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_margin="15dp"
+        android:textStyle="bold"
+        android:text="II. EMV Cash Card Information"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <ScrollView
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_cardreleased_1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                app:endIconMode="clear_text"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/validation"
+                app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                <EditText
+                    android:id="@+id/edtCardReleased_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Date of Card Released"
+                    android:editable="false"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_whoreleased_1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/til_cardreleased_1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:endIconMode="clear_text"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/validation"
+                app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                <EditText
+                    android:id="@+id/edtWhoReleased_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Who Released the Card"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_placereleased_1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/til_whoreleased_1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:endIconMode="clear_text"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/validation"
+                app:startIconDrawable="@drawable/ic_location">
+
+                <EditText
+                    android:id="@+id/edtPlaceReleased_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Place of Card Released"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_currentgranteenumber_1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/til_placereleased_1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:endIconMode="clear_text"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/validation"
+                app:startIconDrawable="@drawable/ic_creditcard">
+
+                <EditText
+                    android:id="@+id/edtCurrentGranteeNumber_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Current Grantee Card Number"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAvailability_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/til_currentgranteenumber_1"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Card Availablity"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textSize="10sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_isavailable_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:helperText="Required"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spinnerIsAvailable_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Is Card Available"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_isavailablereason_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_isavailable_1"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spinnerIsAvailableReason_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Reason"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/otherCardAvailability1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardAvailability_1"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="I - Other Card Availablity (Optional)"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textSize="10sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardnumber1_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumber1_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardnumberseries1_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumber1_1"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumberSeries1_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Series Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardholdername1_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumberseries1_1"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardHolderName1_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Cardholder Name"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_otherisavailable1_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardholdername1_1"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spinnerOtherIsAvailable1_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Is Card Available" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_otherisavailablereason1_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_otherisavailable1_1"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spinnerOtherIsAvailableReason1_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Reason" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/otherCardAvailability2_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/otherCardAvailability1_1"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="II - Other Card Availablity (Optional)"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textSize="10sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardnumber2_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumber2_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardnumberseries2_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumber2_1"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumberSeries2_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Series Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardholdername2_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumberseries2_1"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardHolderName2_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Cardholder Name"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_otherisavailable2_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardholdername2_1"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spinnerOtherIsAvailable2_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Is Card Available" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_otherisavailablereason2_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_otherisavailable2_1"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spinnerOtherIsAvailableReason2_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Reason"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/otherCardAvailability3_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/otherCardAvailability2_1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="100dp"
+                android:backgroundTint="@color/background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="III - Other Card Availablity (Optional)"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textSize="10sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardnumber3_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumber3_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardnumberseries3_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumber3_1"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardNumberSeries3_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Other Card Series Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_othercardholdername3_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardnumberseries3_1"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                        <EditText
+                            android:id="@+id/edtOtherCardHolderName3_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Cardholder Name"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_otherisavailable3_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_othercardholdername3_1"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spinnerOtherIsAvailable3_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Is Card Available" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_otherisavailablereason3_1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_otherisavailable3_1"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spinnerOtherIsAvailableReason3_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="Reason"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+
+</LinearLayout>
