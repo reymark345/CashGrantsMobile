@@ -44,6 +44,7 @@ public class Accomplish extends AppCompatActivity {
         String edtAccomplished = in.getStringExtra("edtAccomplish");
         String edtInformant = in.getStringExtra("edtInformant");
         String edtAttested = in.getStringExtra("edtAttest");
+        String series_number = in.getStringExtra("edtSeries");
 
 
 
@@ -81,43 +82,28 @@ public class Accomplish extends AppCompatActivity {
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
 
-//                        sqLiteHelper.updateAccomplishSignature(
-//                                currentId,
-//                                edtCashCard,
-//                                edtAccomplished,
-//                                edtInformant,
-//                                edtAttested,
-//                                imageViewToByte(imageViewSignature)
-//                        );
-
                         sqLiteHelper.updateAccomplishSignature_emv(
                                 currentId,
                                 edtCashCard,
                                 edtAccomplished,
                                 edtInformant,
                                 edtAttested,
-                                imageViewToByte(imageViewSignature)
+                                imageViewToByte(imageViewSignature),
+                                series_number
                         );
 
                         intent.putExtra("detailScan", 0);
                         Log.v(TAG,"samplee zerro" +  edtAttested);
                     }
                     else {
-//                        sqLiteHelper.updateAccomplishSignature(
-//                                (signatureCondition+1),
-//                                edtCashCard,
-//                                edtAccomplished,
-//                                edtInformant,
-//                                edtAttested,
-//                                imageViewToByte(imageViewSignature)
-//                        );
                         sqLiteHelper.updateAccomplishSignature_emv(
                                 (signatureCondition+1),
                                 edtCashCard,
                                 edtAccomplished,
                                 edtInformant,
                                 edtAttested,
-                                imageViewToByte(imageViewSignature)
+                                imageViewToByte(imageViewSignature),
+                                series_number
                         );
                         intent.putExtra("detailScan", signatureCondition);
                         Log.v(TAG,"samplee 1" + edtAttested);
@@ -134,10 +120,6 @@ public class Accomplish extends AppCompatActivity {
                     Log.v(TAG,"Error ni " + e);
 
                 }
-
-//                Bitmap bitmap = signaturePad.getSignatureBitmap();
-//                imageViewSignature.setImageBitmap(bitmap);
-//                signaturePad.clear();
             }
         });
 
