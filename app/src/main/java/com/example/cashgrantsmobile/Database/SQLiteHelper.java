@@ -81,7 +81,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindString(36, intervention);
             statement.bindString(37, other_details);
             statement.bindBlob(43, cc_image);
-            statement.bindString(5,"");
             statement.bindString(54, strDate);
             statement.bindString(57, other_card_is_available_2);
             statement.bindString(58, other_card_is_available_3);
@@ -390,15 +389,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     public  void deleteEmvMonitoringDetails(int id) {
-        SQLiteDatabase database = getWritableDatabase();
-
-        String sql = "DELETE FROM emv_database_monitoring_details WHERE id = ?";
-        SQLiteStatement statement = database.compileStatement(sql);
-        statement.clearBindings();
-        statement.bindDouble(1, (double)id);
-
-        statement.execute();
-        database.close();
+//        SQLiteDatabase database = getWritableDatabase();
+//
+//        String sql = "DELETE FROM emv_database_monitoring_details WHERE id = ?";
+//        SQLiteStatement statement = database.compileStatement(sql);
+//        statement.clearBindings();
+//        statement.bindDouble(1, (double)id);
+//
+//        statement.execute();
+//        database.close();
     }
 
     public void updateEmvMonitoring(String validated, String id) {

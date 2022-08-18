@@ -461,7 +461,6 @@ public class ScanCashCard extends AppCompatActivity {
                     String pawn_loaned_amount = sh.getString("loaned_amount", "");
                     String pawn_lender_address = sh.getString("lender_address", "");
                     String pawn_interest = sh.getString("interest", "");
-
                     String hh_no_1 = sh.getString("hh_id", "");
 
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
@@ -1418,7 +1417,6 @@ public class ScanCashCard extends AppCompatActivity {
                     created_at = search.getString(15);
                     updated_at = search.getString(16);
                     validated_at = search.getString(17);
-                    Log.v(ContentValues.TAG,"hahaha " +hh_id);
                 }
 
                 if (search ==null || search.getCount() == 0){
@@ -1428,7 +1426,9 @@ public class ScanCashCard extends AppCompatActivity {
                     edt_address.setText("");
                     edt_set.setText("");
                     spinSex.setText("");
+
                     Toasty.info(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
+
                 }
                 else{
                     if  (validated_at.length()==4){
@@ -1568,7 +1568,5 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
 
-
-    //end onboard
 
 }
