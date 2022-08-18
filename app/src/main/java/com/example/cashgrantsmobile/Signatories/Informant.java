@@ -43,6 +43,7 @@ public class Informant extends AppCompatActivity {
         String edtAccomplished = in.getStringExtra("edtAccomplish");
         String edtInformant = in.getStringExtra("edtInformant");
         String edtAttested = in.getStringExtra("edtAttest");
+        String series_number = in.getStringExtra("edtSeries");
 
         Log.v(TAG,"walay value?" + id + " "+signatureCondition);
 
@@ -84,18 +85,9 @@ public class Informant extends AppCompatActivity {
                                 edtAccomplished,
                                 edtInformant,
                                 edtAttested,
-                                imageViewToByte(imageViewSignature)
+                                imageViewToByte(imageViewSignature),
+                                series_number
                         );
-
-//                        sqLiteHelper.updateInformantSignature(
-//                                currentId,
-//                                edtCashCard,
-//                                edtAccomplished,
-//                                edtInformant,
-//                                edtAttested,
-//                                imageViewToByte(imageViewSignature)
-//                        );
-
 
                         intent.putExtra("detailScan", 0);
                         Log.v(TAG,"samplee zerro" + signatureCondition);
@@ -107,7 +99,8 @@ public class Informant extends AppCompatActivity {
                                 edtAccomplished,
                                 edtInformant,
                                 edtAttested,
-                                imageViewToByte(imageViewSignature)
+                                imageViewToByte(imageViewSignature),
+                                series_number
                         );
 
 //                        sqLiteHelper.updateInformantSignature(

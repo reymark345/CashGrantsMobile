@@ -79,6 +79,10 @@
             android:name=".Signatories.Attested"
             android:parentActivityName=".Scanner.ScannedDetails"/>
 
+        <activity
+            android:name=".Update.UpdateEntries"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 
 </manifest>
