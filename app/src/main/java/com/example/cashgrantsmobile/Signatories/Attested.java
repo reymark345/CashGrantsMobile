@@ -108,7 +108,7 @@ public class Attested extends AppCompatActivity {
                     }
 
                     startActivity(intent);
-
+                    finish();
 //
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Error" + e, Toast.LENGTH_SHORT).show();
