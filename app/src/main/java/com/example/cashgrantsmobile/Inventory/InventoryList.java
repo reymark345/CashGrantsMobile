@@ -61,15 +61,15 @@ public class InventoryList extends AppCompatActivity {
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Inventory data = list.get(position);
+                Integer emv_id = data.getEmvId();
 
                 Long l= new Long(id);
                 int i=l.intValue();
                 int stats = i+1;
 
-//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,id_image,card_scanning_status FROM CgList WHERE id ="+stats);
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,beneficiary_picture,card_scanning_status FROM emv_database_monitoring_details WHERE id ="+stats);
+                Cursor cursor = sqLiteHelper.getData("SELECT id,beneficiary_picture,card_scanning_status FROM emv_database_monitoring_details WHERE id ="+stats);
                 while (cursor.moveToNext()) {
                     id_image = cursor.getBlob(1);
                     status = cursor.getInt(2);
@@ -110,13 +110,10 @@ public class InventoryList extends AppCompatActivity {
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-
                                     Intent in = new Intent(getApplicationContext(), UpdateEntries.class);
-                                    in.putExtra("UpdateId_entries", i);
+                                    in.putExtra("list_emv_id", emv_id);
                                     startActivity(in);
                                     finish();
-//                                sqLiteHelper.excludeData(i,status);
-
                             }
                         }).show();
                     }

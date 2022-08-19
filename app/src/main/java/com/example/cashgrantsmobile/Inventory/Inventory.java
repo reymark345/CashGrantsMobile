@@ -25,6 +25,10 @@ public class Inventory {
         return id;
     }
 
+    public int getEmvId() {
+        return this.id;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
