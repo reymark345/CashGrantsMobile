@@ -124,12 +124,10 @@ public class ScannedDetails extends AppCompatActivity {
         getMaxID();
         getData();
         signatoriesValidation();
+        CardSeriesOnChanged();
 
+        edtAccomplishBy.setEnabled(false);
 
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-        String accomplish_shared = sh.getString("accomplish_by_name", "");
-
-        edtAccomplishBy.setText(accomplish_shared);
 
 
 
@@ -544,6 +542,28 @@ public class ScannedDetails extends AppCompatActivity {
             }
         });
     }
+
+    public void CardSeriesOnChanged(){
+        edtSeriesNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilSeriesNumber.setError(blankMessage);
+                }
+                else{
+                    tilSeriesNumber.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
     public void SeriesOnChanged(){
         edtInformant.addTextChangedListener(new TextWatcher() {
             @Override
@@ -593,9 +613,13 @@ public class ScannedDetails extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String signatories = sh.getString("signatureAccomplishment", "");
         String identifier = sh.getString("identifier", "");
+        String accomplish_shared = sh.getString("accomplish_by_name", "");
+        String informants = sh.getString("Informant_Identifier", "");
+
         if (scanned ==true && !signatories.matches("true")){
+            edtAccomplishBy.setText(accomplish_shared);
+            edtInformant.setText(informants);
             grante_no = max_id;
-            Log.v(TAG,"FIRSTSCANNED");
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 String resultUri = extras.getString("CashCardImage");
