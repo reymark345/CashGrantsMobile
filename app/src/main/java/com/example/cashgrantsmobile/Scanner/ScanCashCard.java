@@ -488,6 +488,7 @@ public class ScanCashCard extends AppCompatActivity {
                                 hh_no_1
                         );
 
+                        sqLiteHelper.storeLogs("scanned", household);
                         clearSharedPref();
 
                     } catch (IOException e) {

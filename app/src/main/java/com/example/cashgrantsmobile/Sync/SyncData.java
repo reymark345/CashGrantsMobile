@@ -304,6 +304,7 @@ public class SyncData extends AppCompatActivity {
                                 updaterEmvMonitoring();
                             }
 
+                            sqLiteHelper.storeLogs("sync", hh_id);
                             sqLiteHelper.deleteEmvMonitoringDetails(id);
 
                         }
@@ -324,6 +325,7 @@ public class SyncData extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     // method to handle errors.
                     btnSync.setEnabled(true);
+                    sqLiteHelper.storeLogs("error", hh_id);
                     try {
                         String responseBody = new String(error.networkResponse.data, "utf-8");
                         Integer responseCode = error.networkResponse.statusCode;
