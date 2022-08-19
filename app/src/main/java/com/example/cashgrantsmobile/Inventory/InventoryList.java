@@ -75,21 +75,17 @@ public class InventoryList extends AppCompatActivity {
                     status = cursor.getInt(2);
                 }
 
-                if (status==0){DialogStatus ="Details";}else{DialogStatus ="Image";}
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Are you sure?")
+                        .setTitleText("Edit information")
                         .setContentText("Please choose corresponding action")
-                        .setConfirmText("Update")
-                        .setCancelText(DialogStatus)
+                        .setConfirmText("Scanner")
+                        .setCancelText("Details")
                         .showCancelButton(true)
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
                                 ScannedDetails.scanned = false;
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
-
-                                Log.v(TAG,"Test111 "+i);
-
                                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                 myEdit.putString("signatureAccomplishment", "false");

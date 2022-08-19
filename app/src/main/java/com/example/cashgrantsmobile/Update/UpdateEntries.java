@@ -60,8 +60,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.cashgrantsmobile.Inventory.InventoryList;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Scanner.ScannedDetails;
 import com.example.cashgrantsmobile.Signatories.Informant;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
@@ -75,6 +78,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
 
@@ -754,10 +758,27 @@ public class UpdateEntries extends AppCompatActivity {
         String pawn_loaned_amount = sh.getString("loaned_amount_u", "");
         String pawn_lender_address = sh.getString("lender_address_u", "");
         String pawn_interest = sh.getString("interest_u", "");
-
-        Log.v(ContentValues.TAG,"fullls " + full_name);
-
-        sqLiteHelper.updateDetailsEmvDatabase(full_name,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details, pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3,emv_id);
+        new SweetAlertDialog(UpdateEntries.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText("Please choose corresponding action")
+                .setConfirmText("Update")
+                .setCancelText("Cancel")
+                .showCancelButton(true)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) { 
+                        sqLiteHelper.updateDetailsEmvDatabase(full_name,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details, pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3,emv_id);
+                        Toasty.info(getApplicationContext(),"Updated successfully!", Toasty.LENGTH_SHORT).show();
+                        Intent in = new Intent(getApplicationContext(), InventoryList.class);
+                        startActivity(in);
+                    }
+                })
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                    }
+                }).show();
     }
 
     private void changeStatusBarColor() {
@@ -998,8 +1019,6 @@ public class UpdateEntries extends AppCompatActivity {
                 myEdit.putString("assigned_u", assigned);
                 myEdit.putString("minor_grantee_u", minor_grantee);
                 myEdit.commit();
-
-                Toasty.info(getApplicationContext(),"Store case 1!", Toasty.LENGTH_SHORT).show();
                 break;
             case 2:
                 edt_card_released = findViewById(R.id.edtCardReleased);
@@ -1068,8 +1087,6 @@ public class UpdateEntries extends AppCompatActivity {
                 myEdit.putString("other_card_number_series_2_u", other_card_number_series_2);
                 myEdit.putString("other_card_number_series_3_u", other_card_number_series_3);
                 myEdit.commit();
-
-                Toasty.info(getApplicationContext(),"Store case 2!", Toasty.LENGTH_SHORT).show();
                 break;
             case 3:
                 edt_nma_amount = findViewById(R.id.edtNmaAmount);
@@ -1087,8 +1104,6 @@ public class UpdateEntries extends AppCompatActivity {
                 myEdit.putString("date_withdrawn_u", date_withdrawn);
                 myEdit.putString("remarks_u", remarks);
                 myEdit.commit();
-
-                Toasty.info(getApplicationContext(),"Store case 3!", Toasty.LENGTH_SHORT).show();
                 break;
             case 4:
                 edt_pawning_date = findViewById(R.id.edtPawningDate);
@@ -1132,12 +1147,8 @@ public class UpdateEntries extends AppCompatActivity {
                 myEdit.putString("intervention_u", intervention);
                 myEdit.putString("other_details_u", other_details);
                 myEdit.commit();
-
-                Toasty.info(getApplicationContext(),"Store case 4!", Toasty.LENGTH_SHORT).show();
-
                 break;
             default:
-                Toasty.warning(getApplicationContext(),"Store preferences out of bounds!", Toasty.LENGTH_SHORT).show();
                 break;
         }
 
@@ -1318,14 +1329,7 @@ public class UpdateEntries extends AppCompatActivity {
             myEdit.putString("intervention_u", pawn_intervention_staff_get);
             myEdit.putString("other_details_u", pawn_other_details_get);
             myEdit.commit();
-
-            Log.v(ContentValues.TAG,"Ngano man ka "+full_name_get);
-
-
         }
-
-
-
     }
 
 
