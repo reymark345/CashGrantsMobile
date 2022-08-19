@@ -472,9 +472,9 @@ public class UpdateEntries extends AppCompatActivity {
                             i.putExtra("cashCardNumber",sTextFromET);
 //                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id);
                         }
-                        sqLiteHelper.update_emv_monitoring(
-                                hh_no_1
-                        );
+//                        sqLiteHelper.update_emv_monitoring(
+//                                hh_no_1
+//                        );
 
                         clearSharedPref();
 
@@ -919,7 +919,6 @@ public class UpdateEntries extends AppCompatActivity {
         String contact_no = sh.getString("contact_no", "");
         String assigned = sh.getString("accomplish_by_name", "");
         String minor_grantee = sh.getString("minor_grantee", "");
-
         String card_released = sh.getString("card_released", "");
         String who_released = sh.getString("who_released", "");
         String place_released = sh.getString("place_released", "");
@@ -965,6 +964,8 @@ public class UpdateEntries extends AppCompatActivity {
         String pawn_loaned_amount = sh.getString("loaned_amount", "");
         String pawn_lender_address = sh.getString("lender_address", "");
         String pawn_interest = sh.getString("interest", "");
+
+        Log.v(ContentValues.TAG,"fullls " + full_name);
 
         sqLiteHelper.updateDetailsEmvDatabase(full_name,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details, pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3,emv_id);
     }
@@ -1013,9 +1014,7 @@ public class UpdateEntries extends AppCompatActivity {
             edt_contact_no = findViewById(R.id.edtContactNo);
             edt_assigned = findViewById(R.id.edtAssigned);
             spinAnswer = findViewById(R.id.spinnerMinorGrantee);
-            edt_contact_no = findViewById(R.id.edtContactNo);
             edt_assigned = findViewById(R.id.edtAssigned);
-            spinAnswer = findViewById(R.id.spinnerMinorGrantee);
 
             String household = edt_hh.getText().toString();
             String full_name = edt_fullname.getText().toString();
@@ -1024,6 +1023,8 @@ public class UpdateEntries extends AppCompatActivity {
             String sex = spinSex.getText().toString();
             String hh_set = edt_set.getText().toString();
             String contact_no = edt_contact_no.getText().toString();
+            String assigned = edt_assigned.getText().toString();
+            String minor_grantee = spinAnswer.getText().toString();
 
             tilHhId = findViewById(R.id.til_hhid);
             tilFullname = findViewById(R.id.til_fullname);
@@ -1524,8 +1525,11 @@ public class UpdateEntries extends AppCompatActivity {
     public void getData(){
         entries = entries+1;
 
+        Log.v(ContentValues.TAG,"entries ni oh "+entries);
+
         Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,full_name,hh_id,client_status,address,sex,contact,hh_set_group,assigned_staff,minor_grantee,current_grantee_card_release_date,current_grantee_card_release_place,current_grantee_card_release_by,current_grantee_is_available,current_grantee_reason,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_card_holder_name_3,other_card_is_available ,other_card_reason,nma_amount,nma_date_claimed,nma_reason,nma_remarks,pawn_name_of_lender,pawn_date,pawn_retrieved_date,pawn_status,pawn_reason,pawn_offense_history,pawn_offense_date,pawn_remarks,pawn_intervention_staff,pawn_other_details,informant_full_name, accomplish_by_full_name,cash_card_scanned_no, attested_by_full_name,other_card_number_series_1,other_card_number_series_2,other_card_number_series_3,emv_database_monitoring_id,current_grantee_card_number_series,other_card_is_available_2,other_card_is_available_3,other_card_reason_2,other_card_reason_3,pawn_loaned_amount,pawn_lender_address,pawn_interest FROM emv_database_monitoring_details WHERE id='"+entries+"'");
         while (cursor.moveToNext()) {
+
 
             full_name_get = cursor.getString(1);
             hh_id_get = cursor.getString(2);
@@ -1581,6 +1585,62 @@ public class UpdateEntries extends AppCompatActivity {
             pawn_lender_address_get = cursor.getString(52);
             pawn_interest_get = cursor.getString(53);
 
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString("hh_id", hh_id_get);
+            myEdit.putString("full_name", full_name_get);
+            myEdit.putString("client_status", client_status_get);
+            myEdit.putString("address", address_get);
+            myEdit.putString("sex", sex_get);
+            myEdit.putString("hh_set_group", hh_set_group_get);
+            myEdit.putString("contact_no", contact_get);
+            myEdit.putString("assigned", assigned_staff_get);
+            myEdit.putString("minor_grantee", minor_grantee_get);
+
+            myEdit.putString("card_released", current_grantee_release_date_get);
+            myEdit.putString("who_released", current_grantee_release_by_get);
+            myEdit.putString("place_released", current_grantee_release_place_get);
+            myEdit.putString("temp_current_grantee_number", current_grantee_card_number_get);
+            myEdit.putString("is_available", current_grantee_is_available_get);
+            myEdit.putString("is_available_reason", current_grantee_reason_get);
+            myEdit.putString("other_card_number_1", other_card_number_1_get);
+            myEdit.putString("other_card_holder_name_1", other_card_holder_name_1_get);
+            myEdit.putString("other_is_available_1", other_card_is_available1_get);
+            myEdit.putString("other_is_available_reason_1", other_card_reason1_get);
+            myEdit.putString("other_card_number_2", other_card_number_21_get);
+            myEdit.putString("other_card_holder_name_2", other_card_holder_name_21_get);
+            myEdit.putString("other_is_available_2", other_card_is_available_2_get);
+            myEdit.putString("other_is_available_reason_2", other_card_reason_2_get);
+            myEdit.putString("other_card_number_3", other_card_number_3);
+            myEdit.putString("other_card_holder_name_3", other_card_number_31_get);
+            myEdit.putString("other_is_available_3", other_card_is_available_3_get);
+            myEdit.putString("other_is_available_reason_3", other_card_reason_3_get);
+            myEdit.putString("other_card_number_series_1", other_card_number_series_1_get);
+            myEdit.putString("other_card_number_series_2", other_card_number_series_2_get);
+            myEdit.putString("other_card_number_series_3", other_card_number_series_3_get);
+            myEdit.putString("nma_amount", nma_amount1_get);
+            myEdit.putString("nma_reason", nma_reason_get);
+            myEdit.putString("date_withdrawn", nma_date_claimed1_get);
+            myEdit.putString("remarks", nma_remarks_get);
+            myEdit.putString("lender_name", pawn_name_of_lender_get);
+            myEdit.putString("pawning_date", pawn_date_get);
+            myEdit.putString("loaned_amount", pawn_loaned_amount_get);
+            myEdit.putString("lender_address", pawn_lender_address_get);
+            myEdit.putString("date_retrieved", pawn_retrieved_date_get);
+            myEdit.putString("interest", pawn_interest_get);
+            myEdit.putString("spin_status", pawn_status_get);
+            myEdit.putString("pawning_reason", pawn_reason_get);
+            myEdit.putString("offense_history", pawn_offense_history_get);
+            myEdit.putString("offense_history_date", pawn_offense_date_get);
+            myEdit.putString("pd_remarks", pawn_remarks_get);
+            myEdit.putString("intervention", pawn_intervention_staff_get);
+            myEdit.putString("other_details", pawn_other_details_get);
+            myEdit.commit();
+
+
+
+
+            Log.v(ContentValues.TAG,"Ngano man ka "+full_name_get);
 
 
         }
