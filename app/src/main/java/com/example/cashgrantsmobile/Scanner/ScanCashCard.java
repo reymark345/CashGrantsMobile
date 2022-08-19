@@ -235,7 +235,7 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                String hh_id = sh.getString("hh_id", "");
+                String hh_id = sh.getString("hh_id", "160310001-");
                 if (hh_id.length() > 0) {
                     pressBtn_search=true;
                 }
@@ -254,7 +254,7 @@ public class ScanCashCard extends AppCompatActivity {
                 int current = viewPager.getCurrentItem();
 
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                String hh_id = sh.getString("hh_id", "");
+                String hh_id = sh.getString("hh_id", "160310001-");
                 if (hh_id.length() > 0) {
                     pressBtn_search=true;
                 }
@@ -413,7 +413,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                     int emv_id = sh.getInt("emv_id", 0);
                     String full_name = sh.getString("full_name", "");
-                    String household = sh.getString("hh_id", "");
+                    String household = sh.getString("hh_id", "160310001-");
                     String client_status = sh.getString("client_status", "");
                     String address = sh.getString("address", "");
                     String sex = sh.getString("sex", "");
@@ -468,7 +468,7 @@ public class ScanCashCard extends AppCompatActivity {
                     String pawn_loaned_amount = sh.getString("loaned_amount", "");
                     String pawn_lender_address = sh.getString("lender_address", "");
                     String pawn_interest = sh.getString("interest", "");
-                    String hh_no_1 = sh.getString("hh_id", "");
+                    String hh_no_1 = sh.getString("hh_id", "160310001-");
 
                     Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
 

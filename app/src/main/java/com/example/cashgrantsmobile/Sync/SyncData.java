@@ -309,7 +309,7 @@ public class SyncData extends AppCompatActivity {
                         }
                         else{
                             btnSync.setEnabled(true);
-                            lst2.add("Error on Pulling the data!");
+                            lst2.add("Error on syncing the data!");
                             gvMain2.setAdapter(adapter2);
                             Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
                         }
@@ -324,9 +324,6 @@ public class SyncData extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     // method to handle errors.
                     btnSync.setEnabled(true);
-                    VolleyLog.e("Error: ", error.getMessage());
-                    lst2.add(error.getMessage());
-                    gvMain2.setAdapter(adapter2);
                     try {
                         String responseBody = new String(error.networkResponse.data, "utf-8");
                         Integer responseCode = error.networkResponse.statusCode;
