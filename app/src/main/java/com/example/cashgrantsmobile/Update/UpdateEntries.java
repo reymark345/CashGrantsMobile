@@ -93,11 +93,8 @@ public class UpdateEntries extends AppCompatActivity {
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     Uri image_uri;
-    TextView ScannedCount;
-    String full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3,upload_history_id,created_at,updated_at,validated_at;
-    Integer emv_id;
     String full_name_get,hh_id_get,client_status_get,address_get,sex_get,contact_get,hh_set_group_get,assigned_staff_get,minor_grantee_get,current_grantee_release_date_get,current_grantee_release_place_get,current_grantee_release_by_get,current_grantee_is_available_get,current_grantee_reason_get,current_grantee_card_number_get,other_card_number_1_get,other_card_holder_name_1_get,other_card_number_21_get,other_card_holder_name_21_get,other_card_number_31_get,other_card_holder_name_31_get,other_card_is_available1_get,other_card_reason1_get,nma_amount1_get,nma_date_claimed1_get,nma_reason_get,nma_remarks_get,pawn_name_of_lender_get,pawn_date_get,pawn_retrieved_date_get,pawn_status_get,pawn_reason_get,pawn_offense_history_get,pawn_offense_date_get,pawn_remarks_get,pawn_intervention_staff_get,pawn_other_details_get,informant_full_name_get,accomplish_by_full_name_get,cash_card_scanned_no_get,attested_by_full_name_get,other_card_number_series_1_get,other_card_number_series_2_get,other_card_number_series_3_get,emv_database_monitoring_id_get,current_grantee_card_number_series_get,other_card_is_available_2_get,other_card_is_available_3_get,other_card_reason_2_get,other_card_reason_3_get,pawn_loaned_amount_get,pawn_lender_address_get,pawn_interest_get;
-    int entries;
+    Integer emv_details_id;
 
     //onboard
 
@@ -169,8 +166,9 @@ public class UpdateEntries extends AppCompatActivity {
         mPreviewIv = findViewById(R.id.imageIv);
         mPreviewIv .setVisibility(View.INVISIBLE);
 
+        clearSharedPref();
         Intent in = getIntent();
-        Integer emv_details_id = in.getIntExtra("list_emv_id", 0);
+        emv_details_id = in.getIntExtra("list_emv_id", 0);
         getData(emv_details_id);
 
         cameraPermission = new String[]{Manifest.permission.CAMERA,
@@ -180,7 +178,6 @@ public class UpdateEntries extends AppCompatActivity {
         updatePref = new UpdatePref(this);
         if (!updatePref.isFirstTimeLaunch()) {
             launchHomeScreen();
-//            finish();
         }
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -704,7 +701,6 @@ public class UpdateEntries extends AppCompatActivity {
 
     private void launchHomeScreen() {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-        int emv_id = sh.getInt("emv_id_u", 0);
         String full_name = sh.getString("full_name_u", "");
         String client_status = sh.getString("client_status_u", "");
         String address = sh.getString("address_u", "");
@@ -767,10 +763,11 @@ public class UpdateEntries extends AppCompatActivity {
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) { 
-                        sqLiteHelper.updateDetailsEmvDatabase(full_name,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details, pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3,emv_id);
+                        sqLiteHelper.updateDetailsEmvDatabase(full_name,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details, pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3,emv_details_id);
                         Toasty.info(getApplicationContext(),"Updated successfully!", Toasty.LENGTH_SHORT).show();
                         Intent in = new Intent(getApplicationContext(), InventoryList.class);
                         startActivity(in);
+                        finish();
                     }
                 })
                 .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
