@@ -1301,8 +1301,8 @@ public class UpdateEntries extends AppCompatActivity {
             myEdit.putString("other_card_holder_name_2_u", other_card_holder_name_21_get);
             myEdit.putString("other_is_available_2_u", other_card_is_available_2_get);
             myEdit.putString("other_is_available_reason_2_u", other_card_reason_2_get);
-            myEdit.putString("other_card_number_3_u", other_card_number_3);
-            myEdit.putString("other_card_holder_name_3_u", other_card_number_31_get);
+            myEdit.putString("other_card_number_3_u", other_card_number_31_get);
+            myEdit.putString("other_card_holder_name_3_u", other_card_holder_name_31_get);
             myEdit.putString("other_is_available_3_u", other_card_is_available_3_get);
             myEdit.putString("other_is_available_reason_3_u", other_card_reason_3_get);
             myEdit.putString("other_card_number_series_1_u", other_card_number_series_1_get);
