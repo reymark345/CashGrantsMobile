@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.example.cashgrantsmobile.MainActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -212,6 +214,23 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,"error Token");
             Log.v(TAG,e.toString());
         }
+    }
+
+    public void storeLogs(String type, String household) {
+        Cursor user_data = MainActivity.sqLiteHelper.getData("SELECT username FROM Api");
+        String username = null;
+        while (user_data.moveToNext()) {
+            username = user_data.getString(0);
+        }
+
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "INSERT INTO logs VALUES (NULL, ?, ?, ?, NULL)";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, username);
+        statement.bindString(2, type);
+        statement.bindString(3, household);
+        statement.executeInsert();
     }
 
     public void updateScannedCashCard_emv(String scannedCashCard,byte[] cc_image){

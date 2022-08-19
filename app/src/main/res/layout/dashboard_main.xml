@@ -136,11 +136,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
-                        android:text="Sync"
+                        android:text="Scanned"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/_10ssp"/>
 
                     <TextView
+                        android:id="@+id/scannedTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
@@ -169,12 +170,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
-                        android:text="Pending"
+                        android:text="Error"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/_10ssp"/>
 
                     <TextView
-                        android:id="@+id/txtPending"
+                        android:id="@+id/errorTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
@@ -203,7 +204,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
-                        android:text="Spam"
+                        android:text="Sync"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/_10ssp"/>
 
@@ -212,6 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
                         android:text="0"
+                        android:id="@+id/syncTotal"
                         android:textColor="@color/primary_text"
                         android:textSize="@dimen/_16ssp"/>
                 </LinearLayout>
