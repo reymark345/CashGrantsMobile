@@ -20,8 +20,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.android.material.navigation.NavigationView;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
@@ -73,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         SyncData = (CardView) findViewById(R.id.syncData);
         Logout = (CardView) findViewById(R.id.logout);
 
+//        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+//        String accomplish_name = sh.getString("accomplish_by_name", "");
+
         //TextView
         txtInventoryCount =(TextView)findViewById(R.id.txtInventoryAmount);
         txtPullDataCount = findViewById(R.id.textPullData);
@@ -87,6 +93,26 @@ public class MainActivity extends AppCompatActivity {
 
         drawerlayout = findViewById(R.id.drawerlayout);
         navigationView = findViewById(R.id.navigationview);
+        navigationView.bringToFront();
+
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navfullName = (TextView) headerView.findViewById(R.id.txt_accomplish);
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String accomplish_name = sh.getString("accomplish_by_name", "");
+        navfullName.setText(accomplish_name);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                if (item.getItemId() == R.id.logout_menu)
+                {
+                    logout();
+                }
+                return false;
+            }
+        });
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -161,19 +187,32 @@ public class MainActivity extends AppCompatActivity {
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sqLiteHelper.deleteAccess();
-
-                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                myEdit.putString("tokenStatus", "0");
-                myEdit.commit();
-                clearSharedPref();
-                Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
-                Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
-                startActivity(intent);
-                finish();
+                logout();
             }
         });
+    }
+
+    public void logout(){
+    new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
+            .setTitleText("Logout?")
+            .setContentText("Are you sure?")
+            .setConfirmText("Confirm")
+            .showCancelButton(true)
+            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sDialog) {
+                    sqLiteHelper.deleteAccess();
+                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                    myEdit.putString("tokenStatus", "0");
+                    myEdit.commit();
+                    clearSharedPref();
+                    Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
+                    Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }).show();
     }
 
     public void darkModeStatus(){
