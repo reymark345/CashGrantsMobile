@@ -270,9 +270,11 @@ public class ScannedDetails extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
 
                 if (grante_no !=0){
+                    Log.v(TAG,"IFFFF" + grante_no + " " + id + " " +max_id);
                     sqLiteHelper.updateGranteeEmv(grante_no,imageViewToByte(mPreviewGrantee));
                 }
                 else{
+                    Log.v(TAG,"elseeeee" + grante_no + " " + id);
                     sqLiteHelper.updateGranteeEmv(id,imageViewToByte(mPreviewGrantee)
                     );
                 }
@@ -617,6 +619,7 @@ public class ScannedDetails extends AppCompatActivity {
         String informants = sh.getString("Informant_Identifier", "");
 
         if (scanned ==true && !signatories.matches("true")){
+            Log.v(TAG,"FirsttScanned" + dataUp);
             edtAccomplishBy.setText(accomplish_shared);
             edtInformant.setText(informants);
             grante_no = max_id;
@@ -636,9 +639,9 @@ public class ScannedDetails extends AppCompatActivity {
         }
         else if (signatories.matches("true") && detailScan==0 && identifier.matches("false")){
 
-            Log.v(TAG,"SECONDSCANNED" + dataUp);
+            Log.v(TAG,"SECONDSCANNED" + dataUp + " "+ max_id);
             int updateId = in.getIntExtra("updateData", 0);
-            id = updateId+1;
+            id = updateId;
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
@@ -692,14 +695,14 @@ public class ScannedDetails extends AppCompatActivity {
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
             }
         }
-        else if (detailScan!=0){
+        else if (detailScan==1){
             int updateId = in.getIntExtra("updateData", 0);
-            id = updateId+1;
+            id = updateId;
             Log.v(TAG,"SIGNATORIES" + signatories + "identifier" + identifier + "details SCAN" + detailScan);
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+(detailScan+1));
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+(detailScan));
 //                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
@@ -749,12 +752,15 @@ public class ScannedDetails extends AppCompatActivity {
         }
         else{
             int updateId = in.getIntExtra("updateData", 0);
-            id = updateId+1;
+            id = updateId;
+            int getEmvId = sh.getInt("updateMoriah", 0);
+
+
             Log.v(TAG,"3rdScanned" + max_id + "id " + id);
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture, beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+id);
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture, beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+getEmvId);
 //                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){

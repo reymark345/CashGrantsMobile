@@ -108,20 +108,24 @@ public class InventoryList extends AppCompatActivity {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
                                 ScannedDetails.scanned = false;
+
+                                Log.v(TAG,"this is it " + i + " " +emv_id);
+
+
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
                                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                 myEdit.putString("signatureAccomplishment", "false");
-                                myEdit.putInt("updateMoriah", i);
+                                myEdit.putInt("updateMoriah", emv_id);
                                 myEdit.putString("identifier", "true");
                                 myEdit.commit();
 
                                 if (id_image ==null){
-                                    in.putExtra("updateData", i);
+                                    in.putExtra("updateData", emv_id);
                                     in.putExtra("EmptyImageView","triggerEvent");
                                 }
                                 else{
-                                    in.putExtra("updateData", i);
+                                    in.putExtra("updateData", emv_id);
                                 }
                                 startActivity(in);
                             }

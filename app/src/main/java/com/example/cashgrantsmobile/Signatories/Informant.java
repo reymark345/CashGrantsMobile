@@ -64,8 +64,6 @@ public class Informant extends AppCompatActivity {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
                     byte[] byteArray = stream.toByteArray();
-
-
                     SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
                     myEdit.putString("signatureAccomplishment", "true");
@@ -94,7 +92,7 @@ public class Informant extends AppCompatActivity {
                     }
                     else {
                         sqLiteHelper.updateInformantSignature_emv(
-                                (signatureCondition+1),
+                                (signatureCondition),
                                 edtCashCard,
                                 edtAccomplished,
                                 edtInformant,
@@ -102,17 +100,6 @@ public class Informant extends AppCompatActivity {
                                 imageViewToByte(imageViewSignature),
                                 series_number
                         );
-
-//                        sqLiteHelper.updateInformantSignature(
-//                                (signatureCondition+1),
-//                                edtCashCard,
-//                                edtAccomplished,
-//                                edtInformant,
-//                                edtAttested,
-//                                imageViewToByte(imageViewSignature)
-//                        );
-
-
                         intent.putExtra("detailScan", signatureCondition);
                         Log.v(TAG,"samplee 1" + signatureCondition);
 
@@ -125,10 +112,6 @@ public class Informant extends AppCompatActivity {
                     Log.v(TAG,"Error ni " + e);
 
                 }
-
-//                Bitmap bitmap = signaturePad.getSignatureBitmap();
-//                imageViewSignature.setImageBitmap(bitmap);
-//                signaturePad.clear();
             }
         });
 

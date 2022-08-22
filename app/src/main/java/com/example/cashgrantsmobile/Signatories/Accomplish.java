@@ -98,7 +98,7 @@ public class Accomplish extends AppCompatActivity {
                     }
                     else {
                         sqLiteHelper.updateAccomplishSignature_emv(
-                                (signatureCondition+1),
+                                (signatureCondition),
                                 edtCashCard,
                                 edtAccomplished,
                                 edtInformant,
