@@ -622,7 +622,7 @@ public class ScanCashCard extends AppCompatActivity {
                 String assigned = sh.getString("assigned", "");
                 String minor_grantee = sh.getString("minor_grantee", "");
 
-                edt_hh.setText(hh_id);
+                if (hh_id.matches("")){edt_hh.setText("160310001-");}else {edt_hh.setText(hh_id); }
                 edt_fullname.setText(full_name);
                 spinClientStatus.setText(client_status);
                 edt_address.setText(address);

@@ -99,12 +99,11 @@
             android:background="@drawable/edittext_bg"
             android:drawableStart="@drawable/ic_baseline_lock_24"
             android:drawableLeft="@drawable/ic_baseline_lock_24"
-            android:drawableEnd="@drawable/ic_baseline_visibility_24"
-            android:drawableRight="@drawable/ic_baseline_visibility_24"
             android:drawablePadding="16dp"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="16dp"
+            android:maxLength="25"
             android:textSize="14sp" />
 
         <Button
