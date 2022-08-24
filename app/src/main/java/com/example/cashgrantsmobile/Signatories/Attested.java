@@ -94,7 +94,7 @@ public class Attested extends AppCompatActivity {
                     }
                     else {
                         sqLiteHelper.updateAttestedSignature_emv(
-                                (signatureCondition+1),
+                                (signatureCondition),
                                 edtCashCard,
                                 edtAccomplished,
                                 edtInformant,
@@ -116,9 +116,6 @@ public class Attested extends AppCompatActivity {
 
                 }
 
-//                Bitmap bitmap = signaturePad.getSignatureBitmap();
-//                imageViewSignature.setImageBitmap(bitmap);
-//                signaturePad.clear();
             }
         });
 
