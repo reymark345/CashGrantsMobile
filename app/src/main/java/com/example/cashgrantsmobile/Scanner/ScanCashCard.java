@@ -487,7 +487,6 @@ public class ScanCashCard extends AppCompatActivity {
                         sqLiteHelper.update_emv_monitoring(
                                 hh_no_1
                         );
-
                         sqLiteHelper.storeLogs("scanned", household);
                         clearSharedPref();
 

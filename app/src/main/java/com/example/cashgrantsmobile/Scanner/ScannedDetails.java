@@ -103,8 +103,6 @@ public class ScannedDetails extends AppCompatActivity {
         btn_informant = (Button) findViewById(R.id.btn_informant);
         btn_attested = (Button) findViewById(R.id.btn_attested);
 
-
-
         //round ImageView
         mPreviewGrantee.setClipToOutline(true);
         mPreviewCashCard.setClipToOutline(true);
@@ -269,14 +267,26 @@ public class ScannedDetails extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
 
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                int inventory_id = sh.getInt("updateMoriah", 0);
+
                 if (grante_no !=0){
                     Log.v(TAG,"IFFFF" + grante_no + " " + id + " " +max_id);
                     sqLiteHelper.updateGranteeEmv(grante_no,imageViewToByte(mPreviewGrantee));
                 }
-                else{
-                    Log.v(TAG,"elseeeee" + grante_no + " " + id);
-                    sqLiteHelper.updateGranteeEmv(id,imageViewToByte(mPreviewGrantee)
+                else if (grante_no ==0 && inventory_id==0){
+                    Log.v(TAG,"else if" + grante_no + " " + inventory_id + " " + " " + max_id);
+                    sqLiteHelper.updateGranteeEmv(max_id,imageViewToByte(mPreviewGrantee)
                     );
+                }
+                else if (inventory_id!=0){
+                    Log.v(TAG,"else ifff last" + grante_no + " " + id + " " +max_id);
+                    sqLiteHelper.updateGranteeEmv(inventory_id,imageViewToByte(mPreviewGrantee)
+                    );
+                }
+                else{
+                    Log.v(TAG,"elseee na gud " + grante_no + " " + id + " " +max_id);
+                    sqLiteHelper.updateGranteeEmv(id,imageViewToByte(mPreviewGrantee));
                 }
                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
@@ -286,9 +296,7 @@ public class ScannedDetails extends AppCompatActivity {
 
             }catch (Exception e){
                 Log.v(TAG,"bye" + e);
-
             }
-
         }
         else{
             if (resultCode == RESULT_OK){
@@ -346,16 +354,12 @@ public class ScannedDetails extends AppCompatActivity {
                         try {
                             Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                             mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
-//                            sqLiteHelper.updateScannedCashCard(sTextFromET,imageViewToByte(mPreviewIv));
                             sqLiteHelper.updateScannedCashCard_emv(sTextFromET,imageViewToByte(mPreviewIv));
-
                         } catch (IOException e) {
                             e.printStackTrace();
+                            Log.v(TAG,"Errorr ang max" + grante_no );
                         }
-                        //---
-
                         ScannedDetails.scanned = true;
-                        Intent i = new Intent(ScannedDetails.this, ScannedDetails.class);
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
                             edtCashCard.setText(limitString);
@@ -366,10 +370,21 @@ public class ScannedDetails extends AppCompatActivity {
                         try {
                             Bitmap bitmaps = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                             mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmaps, 374, 500, false));
+                            SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                            int inventory_id = sh.getInt("updateMoriah", 0);
 
-                            if (grante_no !=0){sqLiteHelper.updateCashCardEmv(grante_no,imageViewToByte(mPreviewCashCard));}
-                            else{sqLiteHelper.updateCashCardEmv(id,imageViewToByte(mPreviewCashCard)); }
-
+                            if (grante_no !=0){
+                                sqLiteHelper.updateCashCardEmv(grante_no,imageViewToByte(mPreviewCashCard));
+                            }
+                            else if (grante_no ==0 && inventory_id==0){
+                                sqLiteHelper.updateCashCardEmv(max_id,imageViewToByte(mPreviewCashCard));
+                            }
+                            else if(inventory_id!=0){
+                                sqLiteHelper.updateCashCardEmv(inventory_id,imageViewToByte(mPreviewCashCard));
+                            }
+                            else{
+                                sqLiteHelper.updateCashCardEmv(id,imageViewToByte(mPreviewCashCard));
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -384,18 +399,14 @@ public class ScannedDetails extends AppCompatActivity {
     }
 
     public void submit(){
-        Log.v(TAG,"here");
         String CardResult = edtCashCard.getText().toString();
         String household = edtAccomplishBy.getText().toString();
         String informant_ = edtInformant.getText().toString();
         String attested = edtAttested.getText().toString();
         String series_number = edtSeriesNumber.getText().toString();
         int length = CardResult.length();
-
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String granteeBtnStatus = sh.getString("granteeBtn", "");
-
-
         if (CardResult.matches("[0-9 ]+") && !household.matches("") && !informant_.matches("") && !series_number.matches("") && length==23 && accomplish!=null && accomplish!=null && informant!=null && informant!=null && (granteeImage!=null|| granteeBtnStatus.matches("true"))){
             try{
 
@@ -611,7 +622,6 @@ public class ScannedDetails extends AppCompatActivity {
     public void getData(){
         Intent in = getIntent();
         detailScan = in.getIntExtra("detailScan", 0);
-        Log.v(TAG,"detailsScan" + detailScan);
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String signatories = sh.getString("signatureAccomplishment", "");
         String identifier = sh.getString("identifier", "");
@@ -619,7 +629,7 @@ public class ScannedDetails extends AppCompatActivity {
         String informants = sh.getString("Informant_Identifier", "");
 
         if (scanned ==true && !signatories.matches("true")){
-            Log.v(TAG,"FirsttScanned" + dataUp);
+            Log.v(TAG,"FirstScanned" + dataUp);
             edtAccomplishBy.setText(accomplish_shared);
             edtInformant.setText(informants);
             grante_no = max_id;
@@ -638,14 +648,12 @@ public class ScannedDetails extends AppCompatActivity {
             }
         }
         else if (signatories.matches("true") && detailScan==0 && identifier.matches("false")){
-
-            Log.v(TAG,"SECONDSCANNED" + dataUp + " "+ max_id);
+            Log.v(TAG,"SECOND_SCANNED" + dataUp + " "+ max_id);
             int updateId = in.getIntExtra("updateData", 0);
             id = updateId;
             btnRescanBeneId.setText("RE-SCAN");
             btnSubmit.setText("UPDATE");
             try {
-//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,cc_image, id_image, cash_card_scanned_no, accomplish_img, informant_image, attested_img,attested FROM CgList WHERE id="+max_id);
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature,attested_by_full_name,current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+max_id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
@@ -703,7 +711,6 @@ public class ScannedDetails extends AppCompatActivity {
             btnSubmit.setText("UPDATE");
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+(detailScan));
-//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
                         cashCardNumber = cursor.getString(6);
@@ -761,7 +768,6 @@ public class ScannedDetails extends AppCompatActivity {
             btnSubmit.setText("UPDATE");
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture, beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+getEmvId);
-//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no FROM CgList WHERE id="+id);
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).matches("")){
                         cashCardNumber = cursor.getString(6);
@@ -821,7 +827,6 @@ public class ScannedDetails extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
     public void signatoriesValidation (){
-
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String signatories = sh.getString("signatureAccomplishment", "");
         if (!signatories.matches("true")){
@@ -834,7 +839,6 @@ public class ScannedDetails extends AppCompatActivity {
 
     public void getMaxID(){
         try {
-//            Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT max(id) FROM CGList");
             Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT max(id) FROM emv_database_monitoring_details");
             while (cursor.moveToNext()) {
                 max_id = cursor.getInt(0);
@@ -843,17 +847,13 @@ public class ScannedDetails extends AppCompatActivity {
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
             myEdit.putInt("maxIdScanned", max_id);
             myEdit.commit();
-
-//            Toast.makeText(ScannedDetails.this, "Max IDD" + max_id, Toast.LENGTH_SHORT).show();
-            Log.v(TAG,"test Maxs"+max_id);
         }catch (Exception e){
-            Log.v(TAG,"test Maxa"+e);
+            Log.v(TAG,"test max"+e);
         }
     }
     public void clearSharedPref(){
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
-
         //1
         myEdit.putString("hh_id", "");
         myEdit.putString("full_name", "");
@@ -864,7 +864,6 @@ public class ScannedDetails extends AppCompatActivity {
         myEdit.putString("contact_no", "");
         myEdit.putString("assigned", "");
         myEdit.putString("minor_grantee", "");
-
         //2
         myEdit.putString("card_released", "");
         myEdit.putString("who_released", "");
@@ -884,13 +883,11 @@ public class ScannedDetails extends AppCompatActivity {
         myEdit.putString("other_card_holder_name_3", "");
         myEdit.putString("other_is_available_3", "");
         myEdit.putString("other_is_available_reason_3", "");
-
         //3
         myEdit.putString("nma_amount", "");
         myEdit.putString("nma_reason", "");
         myEdit.putString("date_withdrawn", "");
         myEdit.putString("remarks", "");
-
         //4
         myEdit.putString("lender_name", "");
         myEdit.putString("pawning_date", "");

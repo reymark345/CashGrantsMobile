@@ -103,11 +103,6 @@ public class InventoryListAdapter extends BaseAdapter {
         byte[] CashCardImage = inventory.getImage();
 
         byte[] idImage = inventory.getIdImage();
-
-
-
-
-        Log.v(ContentValues.TAG,"nakuuuuu" + idImage + " "+ inventory.getIdImage());
         if(CashCardImage.length > 1)
         {
             Bitmap bitmap = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);

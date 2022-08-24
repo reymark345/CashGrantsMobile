@@ -109,9 +109,6 @@ public class InventoryList extends AppCompatActivity {
                             public void onClick(SweetAlertDialog sDialog) {
                                 ScannedDetails.scanned = false;
 
-                                Log.v(TAG,"this is it " + i + " " +emv_id);
-
-
                                 Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
                                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
