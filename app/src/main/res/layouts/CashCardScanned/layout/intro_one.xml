@@ -65,7 +65,9 @@
                         android:text="160310001-"
                         android:hint="Household no."
                         android:inputType="text"
-                        android:maxLength="30" />
+                        android:maxLength="30"
+
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout

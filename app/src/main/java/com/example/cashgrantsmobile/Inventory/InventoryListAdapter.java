@@ -1,26 +1,18 @@
 package com.example.cashgrantsmobile.Inventory;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatDelegate;
-
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
-import com.example.cashgrantsmobile.Scanner.ScannedDetails;
-
 import java.util.ArrayList;
 
 public class InventoryListAdapter extends BaseAdapter {
@@ -70,7 +62,6 @@ public class InventoryListAdapter extends BaseAdapter {
             row = inflater.inflate(layout, null);
             holder.txtName = (TextView) row.findViewById(R.id.txtName);
             holder.txtPrice = (TextView) row.findViewById(R.id.txtPrice);
-//            holder.txtSeriesNo = (TextView) row.findViewById(R.id.txtSeriesNumber);
             holder.imageView = (ImageView) row.findViewById(R.id.imgFood);
             holder.mPreviewCashCard = (ImageView) row.findViewById(R.id.imgId);
             row.setTag(holder);

@@ -90,7 +90,6 @@ public class ScanCashCard extends AppCompatActivity {
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     Uri image_uri;
-    TextView ScannedCount;
     String full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3,upload_history_id,created_at,updated_at,validated_at;
     Integer emv_id;
 
@@ -184,27 +183,15 @@ public class ScanCashCard extends AppCompatActivity {
         setContentView(R.layout.cash_card_scanner_entries);
         mPreviewIv = findViewById(R.id.imageIv);
         mPreviewIv .setVisibility(View.INVISIBLE);
-//        ScannedCount = (TextView) findViewById(R.id.ScannedCount);
-
-//        TotalScanned();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("toast");
             Toasty.success(this,""+value, Toasty.LENGTH_SHORT).show();
             extras.clear();
         }
-
-
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         StoragePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-//        btn_scan.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showImageImportDialog();
-//            }
-//        });
 
         //onboard
 
@@ -267,7 +254,6 @@ public class ScanCashCard extends AppCompatActivity {
                 }
                 if (current == 0){
                     tvPrev.setVisibility(View.INVISIBLE);
-//                    pressBtn_search=true;
                 } else {
                     tvPrev.setVisibility(View.VISIBLE);
                 }
@@ -280,9 +266,6 @@ public class ScanCashCard extends AppCompatActivity {
 
         addBottomDots(0);
         changeStatusBarColor();
-
-
-
         //end onboard
     }
     @Override
@@ -514,12 +497,6 @@ public class ScanCashCard extends AppCompatActivity {
         byte[] byteArray = stream.toByteArray();
         return byteArray;
     }
-
-    public void TotalScanned(){
-        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,cash_card_actual_no,accomplish_by,informant,id_image,cash_card_scanned_no, card_scanning_status FROM CgList");
-        int z = cursor.getCount();
-    }
-
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
