@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cashgrantsmobile.Database.SQLiteHelper;
+import com.example.cashgrantsmobile.Loading.LoadingBar;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 
@@ -86,6 +87,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
     EditText edtUsername, edtPassword;
     public static String BASE_URL = "https://crg-finance-svr.entdswd.local/cgtracking";
     public static SQLiteHelper sqLiteHelper;
+    private LoadingBar loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnAccess);
         edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
+
+        loadingBar = new LoadingBar(this);
         createDatabase();
         generateToken();
 
@@ -122,6 +126,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                load_loading_bar();
                 NukeSSLCerts.nuke();
 
                 String username, password, device;
@@ -139,6 +144,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             // on below line we are displaying a success toast message.
+                            hide_loading_bar();
                             try {
                                 JSONObject data = new JSONObject(response);
                                 JSONObject dataObject = data.getJSONObject("data");
@@ -194,6 +200,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             // method to handle errors.
                             try {
+                                hide_loading_bar();
                                 String responseBody = new String(error.networkResponse.data, "utf-8");
                                 JSONObject data = new JSONObject(responseBody);
                                 JSONArray errors = data.getJSONArray("errors");
@@ -204,6 +211,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                 Toasty.warning(Activity_Splash_Login.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
                             }
                             catch (Exception e) {
+                                hide_loading_bar();
 //                                Toasty.error(Activity_Splash_Login.this, e.toString(), Toast.LENGTH_SHORT, true).show();
                                 Toasty.error(Activity_Splash_Login.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                             }
@@ -232,10 +240,17 @@ public class Activity_Splash_Login extends AppCompatActivity {
                     queue.add(request);
                 }
                 else {
+                    hide_loading_bar();
                     Toasty.error(Activity_Splash_Login.this, "All fields required ", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });
+    }
+    public void load_loading_bar(){
+        loadingBar.Show_loading_bar();
+    }
+    public void hide_loading_bar(){
+        loadingBar.Hide_loading_bar();
     }
 
     public void createDatabase(){
