@@ -16,12 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CashGrantsMobile">
-
-<!--        android:name=".MainActivity"-->
-<!--        android:name=".Login.Activity_Splash_Login"-->
-<!--        android:name=".MainActivity"-->
-
-
         <activity
             android:name=".Login.Activity_Splash_Login"
             android:exported="true">

@@ -43,10 +43,8 @@ public class InventoryList extends AppCompatActivity {
     ArrayList<Inventory> list;
     InventoryListAdapter adapter = null;
     String cashCardNumber;
-    private Toolbar mToolbars;
     int status;
     byte[] id_image;
-    String DialogStatus;
     private TextView tvSearch, tvResultHh, tvIdentifier;
 
     @Override
@@ -54,21 +52,16 @@ public class InventoryList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inventory_list);
         gridView = (GridView) findViewById(R.id.gridView);
-//        mToolbars = findViewById(R.id.mainToolbar);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("ExcludeInclude");
             Toasty.success(this,value+"d", Toasty.LENGTH_SHORT).show();
         }
-
         tvSearch = findViewById(R.id.tvSearch);
         tvResultHh = findViewById(R.id.tvResultHousehold);
         tvIdentifier = findViewById(R.id.tvIdentifier);
         tvResultHh.setVisibility(View.INVISIBLE);
         tvIdentifier.setVisibility(View.INVISIBLE);
-
-
 
         tvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,9 +69,6 @@ public class InventoryList extends AppCompatActivity {
                 searchItem();
             }
         });
-
-//        setSupportActionBar(mToolbars);
-//        getSupportActionBar().setTitle("Inventory List");
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
         gridView.setAdapter(adapter);
@@ -87,17 +77,14 @@ public class InventoryList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Inventory data = list.get(position);
                 Integer emv_id = data.getEmvId();
-
                 Long l= new Long(id);
                 int i=l.intValue();
                 int stats = i+1;
-
                 Cursor cursor = sqLiteHelper.getData("SELECT id,beneficiary_picture,card_scanning_status FROM emv_database_monitoring_details WHERE id ="+stats);
                 while (cursor.moveToNext()) {
                     id_image = cursor.getBlob(1);
                     status = cursor.getInt(2);
                 }
-
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Edit information")
                         .setContentText("Please choose corresponding action")
@@ -138,8 +125,6 @@ public class InventoryList extends AppCompatActivity {
                         }).show();
                     }
                 });
-
-
         try {
             Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
             field.setAccessible(true);
@@ -151,14 +136,12 @@ public class InventoryList extends AppCompatActivity {
     }
 
     public void searchItem() {
-
         final Dialog dialog = new Dialog(InventoryList.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.search_inventory_list);
         EditText noteField = dialog.findViewById(R.id.edtSearch);
         TextInputLayout tilError = dialog.findViewById(R.id.til_Search);
-
         noteField.setText("160310001-");
         Button submitButton = dialog.findViewById(R.id.btn_search);
         Button btnRefresh = dialog.findViewById(R.id.btnRefresh);

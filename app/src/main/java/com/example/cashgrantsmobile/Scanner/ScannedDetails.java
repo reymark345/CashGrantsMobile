@@ -220,28 +220,6 @@ public class ScannedDetails extends AppCompatActivity {
 
     }
 
-    public void getSignatories(){
-        try {
-            Bundle extras = getIntent().getExtras();
-            if (extras != null) {
-                byte[] byteArray = extras.getByteArray("imageAccomplish");
-                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                mAccomplished.setImageBitmap(Bitmap.createScaledBitmap(bmp, 374, 500, false));
-//                image.setImageBitmap(bmp);
-
-//                Toast.makeText(this, "111111111 ", Toast.LENGTH_SHORT).show();
-            }
-            else {
-//                Toast.makeText(this, "22222222", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-        catch (Exception e){
-//            Toast.makeText(this, "Error kayah ni" + e, Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
     public void pickCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "CashCardRes-can");
@@ -262,42 +240,24 @@ public class ScannedDetails extends AppCompatActivity {
                 mPreviewGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
-
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                 int inventory_id = sh.getInt("updateValue", 0);
-
-                if (grante_no !=0){
-                    Log.v(TAG,"IFFFF" + grante_no + " " + id + " " +max_id);
-                    sqLiteHelper.updateGranteeEmv(grante_no,imageViewToByte(mPreviewGrantee));
-                }
-                else if (grante_no ==0 && inventory_id==0){
-                    Log.v(TAG,"else if" + grante_no + " " + inventory_id + " " + " " + max_id);
-                    sqLiteHelper.updateGranteeEmv(max_id,imageViewToByte(mPreviewGrantee)
-                    );
-                }
-                else if (inventory_id!=0){
-                    Log.v(TAG,"else ifff last" + grante_no + " " + id + " " +max_id);
-                    sqLiteHelper.updateGranteeEmv(inventory_id,imageViewToByte(mPreviewGrantee)
-                    );
-                }
-                else{
-                    Log.v(TAG,"elseee na gud " + grante_no + " " + id + " " +max_id);
-                    sqLiteHelper.updateGranteeEmv(id,imageViewToByte(mPreviewGrantee));
-                }
+                if (grante_no !=0){sqLiteHelper.updateGranteeEmv(grante_no,imageViewToByte(mPreviewGrantee));}
+                else if (grante_no ==0 && inventory_id==0){sqLiteHelper.updateGranteeEmv(max_id,imageViewToByte(mPreviewGrantee));}
+                else if (inventory_id!=0){sqLiteHelper.updateGranteeEmv(inventory_id,imageViewToByte(mPreviewGrantee));}
+                else{sqLiteHelper.updateGranteeEmv(id,imageViewToByte(mPreviewGrantee));}
                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 myEdit.putString("granteeBtn", "true");
                 myEdit.commit();
                 btnRescanBeneId.setText("RE-SCAN");
-
             }catch (Exception e){
-                Log.v(TAG,"bye" + e);
+                Log.v(TAG,"error" + e);
             }
         }
         else{
             if (resultCode == RESULT_OK){
                 if (requestCode == 102){
-
                     CropImage.activity(image_uri).setGuidelines(CropImageView.Guidelines.ON).start(this);
                 }
             }
@@ -310,7 +270,6 @@ public class ScannedDetails extends AppCompatActivity {
                     BitmapDrawable bitmapDrawable = (BitmapDrawable)mPreviewIv.getDrawable();
                     Bitmap bitmap = bitmapDrawable.getBitmap();
                     TextRecognizer recognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-
                     if(!recognizer.isOperational()){
                         Toast.makeText(this,"Error this",Toast.LENGTH_SHORT).show();
                     }
@@ -318,13 +277,11 @@ public class ScannedDetails extends AppCompatActivity {
                         Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                         SparseArray<TextBlock> items = recognizer.detect(frame);
                         StringBuilder sb = new StringBuilder();
-
                         for (int i = 0; i<items.size(); i++){
                             TextBlock myItem = items.valueAt(i);
                             sb.append(myItem.getValue());
                             sb.append("\n");
                         }
-
                         String sTextFromET=sb.toString().replaceAll("\\s+", "");
                         sTextFromET = sTextFromET.replace("a", "8");
                         sTextFromET = sTextFromET.replace("A", "8");
@@ -353,7 +310,6 @@ public class ScannedDetails extends AppCompatActivity {
                             sqLiteHelper.updateScannedCashCard_emv(sTextFromET,imageViewToByte(mPreviewIv));
                         } catch (IOException e) {
                             e.printStackTrace();
-                            Log.v(TAG,"Errorr ang max" + grante_no );
                         }
                         ScannedDetails.scanned = true;
                         if (sTextFromET.length() >23){
@@ -369,18 +325,10 @@ public class ScannedDetails extends AppCompatActivity {
                             SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                             int inventory_id = sh.getInt("updateValue", 0);
 
-                            if (grante_no !=0){
-                                sqLiteHelper.updateCashCardEmv(grante_no,imageViewToByte(mPreviewCashCard));
-                            }
-                            else if (grante_no ==0 && inventory_id==0){
-                                sqLiteHelper.updateCashCardEmv(max_id,imageViewToByte(mPreviewCashCard));
-                            }
-                            else if(inventory_id!=0){
-                                sqLiteHelper.updateCashCardEmv(inventory_id,imageViewToByte(mPreviewCashCard));
-                            }
-                            else{
-                                sqLiteHelper.updateCashCardEmv(id,imageViewToByte(mPreviewCashCard));
-                            }
+                            if (grante_no !=0){sqLiteHelper.updateCashCardEmv(grante_no,imageViewToByte(mPreviewCashCard));}
+                            else if(grante_no ==0 && inventory_id==0){sqLiteHelper.updateCashCardEmv(max_id,imageViewToByte(mPreviewCashCard));}
+                            else if(inventory_id!=0){sqLiteHelper.updateCashCardEmv(inventory_id,imageViewToByte(mPreviewCashCard));}
+                            else{sqLiteHelper.updateCashCardEmv(id,imageViewToByte(mPreviewCashCard));}
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -405,7 +353,6 @@ public class ScannedDetails extends AppCompatActivity {
         String granteeBtnStatus = sh.getString("granteeBtn", "");
         if (CardResult.matches("[0-9 ]+") && !household.matches("") && !informant_.matches("") && !series_number.matches("") && length==23 && accomplish!=null && accomplish!=null && informant!=null && informant!=null && (granteeImage!=null|| granteeBtnStatus.matches("true"))){
             try{
-
                 if ( scanned ==true){
                     sqLiteHelper.updateSubmitData_emv(
                             edtCashCard.getText().toString().trim(),
@@ -691,9 +638,6 @@ public class ScannedDetails extends AppCompatActivity {
                     edtInformant.setText(seriesNumber);
                     edtAttested.setText(Attest);
                     edtSeriesNumber.setText(grantee_series);
-
-//                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
-//                    else{mPreviewGrantee.setImageBitmap(bmpId); }
                 }
             }catch (Exception e){
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();
@@ -746,8 +690,6 @@ public class ScannedDetails extends AppCompatActivity {
                     edtInformant.setText(seriesNumber);
                     edtAttested.setText(Attest);
                     edtSeriesNumber.setText(grantee_series);
-//                    if (in.hasExtra("EmptyImageView")) {mPreviewGrantee.setImageResource(R.drawable.ic_image); }
-//                    else{mPreviewGrantee.setImageBitmap(bmpId); }
                 }
             }catch (Exception e){
                 Toast.makeText(ScannedDetails.this, "Please contact It administrator" + e, Toast.LENGTH_SHORT).show();

@@ -38,14 +38,11 @@ public class Attested extends AppCompatActivity {
 
         Intent in = getIntent();
         int signatureCondition = in.getIntExtra("conditionForSignature", 0);
-        int edtAccomplish = in.getIntExtra("edtAccomplish", 0);
         String edtCashCard = in.getStringExtra("edtCashCard");
         String edtAccomplished = in.getStringExtra("edtAccomplish");
         String edtInformant = in.getStringExtra("edtInformant");
         String edtAttested = in.getStringExtra("edtAttest");
         String series_number = in.getStringExtra("edtSeries");
-
-        Log.v(TAG,"walay value?" + id + " "+signatureCondition);
 
         buttonClear.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -65,7 +62,6 @@ public class Attested extends AppCompatActivity {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
                     byte[] byteArray = stream.toByteArray();
 
-
                     SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
                     myEdit.putString("signatureAccomplishment", "true");
@@ -73,13 +69,9 @@ public class Attested extends AppCompatActivity {
 
                     SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                     String identifier = sh.getString("identifier", "");
-
                     Intent intent = new Intent(getApplicationContext(), ScannedDetails.class);
-
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
-
-
                         sqLiteHelper.updateAttestedSignature_emv(
                                 currentId,
                                 edtCashCard,
@@ -90,7 +82,6 @@ public class Attested extends AppCompatActivity {
                                 series_number
                         );
                         intent.putExtra("detailScan", 0);
-                        Log.v(TAG,"samplee zerro" + signatureCondition);
                     }
                     else {
                         sqLiteHelper.updateAttestedSignature_emv(
@@ -103,10 +94,7 @@ public class Attested extends AppCompatActivity {
                                 series_number
                         );
                         intent.putExtra("detailScan", signatureCondition);
-                        Log.v(TAG,"samplee 1" + signatureCondition);
-
                     }
-
                     startActivity(intent);
                     finish();
 //
