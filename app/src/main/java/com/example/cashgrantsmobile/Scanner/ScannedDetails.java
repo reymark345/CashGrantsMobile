@@ -125,10 +125,6 @@ public class ScannedDetails extends AppCompatActivity {
         CardSeriesOnChanged();
 
         edtAccomplishBy.setEnabled(false);
-
-
-
-
         btnRescanBeneId.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +167,7 @@ public class ScannedDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                int signature = sh.getInt("updateMoriah", 0);
+                int signature = sh.getInt("updateValue", 0);
                 Intent in = getIntent();
                 dataUp = in.getIntExtra("updateData", 0);
                 Intent intent = new Intent(getApplicationContext(), Accomplish.class);
@@ -189,11 +185,11 @@ public class ScannedDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                int moriah = sh.getInt("updateMoriah", 0);
+                int signature_2 = sh.getInt("updateValue", 0);
                 Intent in = getIntent();
                 dataUp = in.getIntExtra("updateData", 0);
                 Intent intent = new Intent(getApplicationContext(), Informant.class);
-                intent.putExtra("conditionForSignature", moriah);
+                intent.putExtra("conditionForSignature", signature_2);
                 intent.putExtra("edtCashCard", edtCashCard.getText().toString());
                 intent.putExtra("edtAccomplish", edtAccomplishBy.getText().toString());
                 intent.putExtra("edtInformant", edtInformant.getText().toString());
@@ -207,11 +203,11 @@ public class ScannedDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                int moriah = sh.getInt("updateMoriah", 0);
+                int signature_3 = sh.getInt("updateValue", 0);
                 Intent in = getIntent();
                 dataUp = in.getIntExtra("updateData", 0);
                 Intent intent = new Intent(getApplicationContext(), Attested.class);
-                intent.putExtra("conditionForSignature", moriah);
+                intent.putExtra("conditionForSignature", signature_3);
                 intent.putExtra("edtCashCard", edtCashCard.getText().toString());
                 intent.putExtra("edtAccomplish", edtAccomplishBy.getText().toString());
                 intent.putExtra("edtInformant", edtInformant.getText().toString());
@@ -268,7 +264,7 @@ public class ScannedDetails extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
 
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                int inventory_id = sh.getInt("updateMoriah", 0);
+                int inventory_id = sh.getInt("updateValue", 0);
 
                 if (grante_no !=0){
                     Log.v(TAG,"IFFFF" + grante_no + " " + id + " " +max_id);
@@ -371,7 +367,7 @@ public class ScannedDetails extends AppCompatActivity {
                             Bitmap bitmaps = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                             mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bitmaps, 374, 500, false));
                             SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-                            int inventory_id = sh.getInt("updateMoriah", 0);
+                            int inventory_id = sh.getInt("updateValue", 0);
 
                             if (grante_no !=0){
                                 sqLiteHelper.updateCashCardEmv(grante_no,imageViewToByte(mPreviewCashCard));
@@ -760,7 +756,7 @@ public class ScannedDetails extends AppCompatActivity {
         else{
             int updateId = in.getIntExtra("updateData", 0);
             id = updateId;
-            int getEmvId = sh.getInt("updateMoriah", 0);
+            int getEmvId = sh.getInt("updateValue", 0);
 
 
             Log.v(TAG,"3rdScanned" + max_id + "id " + id);

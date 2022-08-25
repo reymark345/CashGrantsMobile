@@ -113,7 +113,7 @@ public class InventoryList extends AppCompatActivity {
                                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                 myEdit.putString("signatureAccomplishment", "false");
-                                myEdit.putInt("updateMoriah", emv_id);
+                                myEdit.putInt("updateValue", emv_id);
                                 myEdit.putString("identifier", "true");
                                 myEdit.commit();
 
