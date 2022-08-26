@@ -1381,16 +1381,11 @@ public class ScanCashCard extends AppCompatActivity {
                         Toasty.info(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
                     }
                     search.close();
-
-
                 }
-
-
             }
             else {
                 Toasty.info(getApplicationContext(),"Please enter a household number ", Toasty.LENGTH_SHORT).show();
             }
-
         }
         catch (Exception e){
             Log.v(ContentValues.TAG,"not found " +e);
@@ -1401,7 +1396,6 @@ public class ScanCashCard extends AppCompatActivity {
     public void clearSharedPref(){
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
-
         //1
         myEdit.putString("hh_id", "160310001-");
         myEdit.putInt("emv_id", 0);
@@ -1413,7 +1407,6 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("contact_no", "");
         myEdit.putString("assigned", "");
         myEdit.putString("minor_grantee", "");
-
         //2
         myEdit.putString("card_released", "");
         myEdit.putString("who_released", "");
@@ -1437,13 +1430,11 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("other_card_number_series_1", "");
         myEdit.putString("other_card_number_series_2", "");
         myEdit.putString("other_card_number_series_3", "");
-
         //3
         myEdit.putString("nma_amount", "");
         myEdit.putString("nma_reason", "");
         myEdit.putString("date_withdrawn", "");
         myEdit.putString("remarks", "");
-
         //4
         myEdit.putString("lender_name", "");
         myEdit.putString("pawning_date", "");
@@ -1458,7 +1449,6 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("pd_remarks", "");
         myEdit.putString("intervention", "");
         myEdit.putString("other_details", "");
-
         myEdit.putString("pressBtn_search", "false");
         myEdit.commit();
     }
