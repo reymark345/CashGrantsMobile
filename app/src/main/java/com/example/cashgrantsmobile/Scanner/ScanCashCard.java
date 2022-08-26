@@ -223,13 +223,12 @@ public class ScanCashCard extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                 String hh_id = sh.getString("hh_id", "160310001-");
-                if (hh_id.length() > 0) {
-                    pressBtn_search=true;
-                }
-                if (pressBtn_search==true){
+                String buttonNext = sh.getString("pressBtn_search", "");
+                if (hh_id.length() > 0 && buttonNext.matches("true")){
                     nextValidation();
                 }
                 else{
+                    Log.v(ContentValues.TAG,"Error" + " " +hh_id.length() + " " +buttonNext);
                     Toasty.info(getApplicationContext(),"Search household first", Toasty.LENGTH_SHORT).show();
                 }
 
@@ -609,7 +608,10 @@ public class ScanCashCard extends AppCompatActivity {
                 spinAnswer.setText(minor_grantee);
 
             } else if (position == 1) {
-                //intro_two.xml
+//                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+//                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+//                myEdit.putString("pressBtn_search", "false");
+//                myEdit.commit();
                 pressBtn_search = false;
 
                 edt_card_released = findViewById(R.id.edtCardReleased);
@@ -1148,6 +1150,7 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("assigned", assigned);
                 myEdit.putString("minor_grantee", minor_grantee);
                 myEdit.putString("Informant_Identifier", full_name); //do not delete this line
+                myEdit.putString("pressBtn_search", "true");
                 myEdit.commit();
                 break;
             case 2:
@@ -1334,8 +1337,8 @@ public class ScanCashCard extends AppCompatActivity {
                         myEdit.putString("address", address);
                         myEdit.putString("sex", sex);
                         myEdit.putString("hh_set_group", hh_set_group);
+                        myEdit.putString("pressBtn_search", "true");
                         myEdit.commit();
-                        pressBtn_search = true;
                         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                                 new Runnable() {
                                     public void run() {
@@ -1455,6 +1458,8 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("pd_remarks", "");
         myEdit.putString("intervention", "");
         myEdit.putString("other_details", "");
+
+        myEdit.putString("pressBtn_search", "false");
         myEdit.commit();
     }
 
