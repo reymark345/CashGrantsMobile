@@ -482,6 +482,7 @@ public class ScanCashCard extends AppCompatActivity {
                 }
             }
             else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+
                 Exception error = result.getError();
                 Toasty.error(this,""+error, Toasty.LENGTH_SHORT).show();
             }
@@ -682,8 +683,10 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (spinIsAvail.getText().toString().matches("Yes")) {
                             spinIsAvailReason.setText(null);
+                            spinIsAvailReason.setDropDownHeight(0);
                             spinIsAvailReason.setEnabled(false);
                         } else {
+                            spinIsAvailReason.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                             spinIsAvailReason.setEnabled(true);
                         }
                     }
@@ -695,8 +698,10 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (spinIsAvail1.getText().toString().matches("Yes")) {
                             spinIsAvailReason1.setText(null);
+                            spinIsAvailReason1.setDropDownHeight(0);
                             spinIsAvailReason1.setEnabled(false);
                         } else {
+                            spinIsAvailReason1.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                             spinIsAvailReason1.setEnabled(true);
                         }
                     }
@@ -708,8 +713,10 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (spinIsAvail2.getText().toString().matches("Yes")) {
                             spinIsAvailReason2.setText(null);
+                            spinIsAvailReason2.setDropDownHeight(0);
                             spinIsAvailReason2.setEnabled(false);
                         } else {
+                            spinIsAvailReason2.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                             spinIsAvailReason2.setEnabled(true);
                         }
                     }
@@ -721,8 +728,10 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (spinIsAvail3.getText().toString().matches("Yes")) {
                             spinIsAvailReason3.setText(null);
+                            spinIsAvailReason3.setDropDownHeight(0);
                             spinIsAvailReason3.setEnabled(false);
                         } else {
+                            spinIsAvailReason3.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                             spinIsAvailReason3.setEnabled(true);
                         }
                     }
