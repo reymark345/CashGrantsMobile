@@ -19,6 +19,13 @@
     <color name="backgroundDisplay">#252C4B</color>
     <color name="colorEdit">#DEC20B</color>
 
+    <!-- DE colors -->
+    <color name="colorOnPrimaryDemo">#fff</color>
+    <color name="colorPrimaryDemo">#554911</color>
+    <color name="colorPrimaryLightDemo">#FFFFFF</color>
+    <!--    <color name="colorPrimaryLightDemo">#EEE3AB</color>-->
+    <color name="colorAccentDemo">#665815</color>
+
 
 
 

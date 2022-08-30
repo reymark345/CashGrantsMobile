@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     app:layoutDescription="@xml/motion_scene_splash"
     android:layout_height="match_parent"
+    android:background="@color/colorOnPrimaryDemo"
     tools:context=".Login.Activity_Splash_Login">
 
     <ImageView
@@ -89,7 +90,8 @@
             android:hint="Username"
             android:inputType="textEmailAddress"
             android:padding="16dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/edtPassword"
@@ -104,7 +106,8 @@
             android:inputType="textPassword"
             android:padding="16dp"
             android:maxLength="25"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/btnAccess"
