@@ -312,8 +312,8 @@ public class ScannedDetails extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         ScannedDetails.scanned = true;
-                        if (sTextFromET.length() >23){
-                            String limitString = sTextFromET.substring(0,23);
+                        if (sTextFromET.length() >30){
+                            String limitString = sTextFromET.substring(0,30);
                             edtCashCard.setText(limitString);
                         }
                         else{
@@ -351,7 +351,7 @@ public class ScannedDetails extends AppCompatActivity {
         int length = CardResult.length();
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String granteeBtnStatus = sh.getString("granteeBtn", "");
-        if (CardResult.matches("[0-9 ]+") && !household.matches("") && !informant_.matches("") && !series_number.matches("") && length==23 && accomplish!=null && accomplish!=null && informant!=null && informant!=null && (granteeImage!=null|| granteeBtnStatus.matches("true"))){
+        if (CardResult.matches("[0-9 ]+") && !household.matches("") && !informant_.matches("") && !series_number.matches("") && length>0 && accomplish!=null && accomplish!=null && informant!=null && informant!=null && (granteeImage!=null|| granteeBtnStatus.matches("true"))){
             try{
                 if ( scanned ==true){
                     sqLiteHelper.updateSubmitData_emv(
@@ -435,17 +435,15 @@ public class ScannedDetails extends AppCompatActivity {
         if (granteeImage ==null && granteeBtnStatus.matches("false")){
             Toasty.warning(this,"Please Scan Grantee", Toasty.LENGTH_SHORT).show();
         }
-
         if(accomplish==null){
             Toasty.warning(this,"Signature is required for accomplished by", Toasty.LENGTH_SHORT).show();
         }
-
         if(informant==null){
             Toasty.warning(this,"Signature is required for Informant", Toasty.LENGTH_SHORT).show();
         }
-
         if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Cash Card contains a character");
+            Toasty.warning(this,"Please check the cash card no.", Toasty.LENGTH_SHORT).show();
         }
     }
 
@@ -456,7 +454,7 @@ public class ScannedDetails extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                if(s.toString().length() !=23){
+                if(s.toString().length() ==0){
                     tilCashCard.setError("Not enough length");
                 }
                 else{

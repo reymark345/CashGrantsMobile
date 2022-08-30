@@ -54,8 +54,6 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="23"
                         app:endIconMode="clear_text"
                         app:helperText="Good valid!"
                         app:helperTextTextColor="@color/validation"
@@ -67,7 +65,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Cash Card no."
                             android:inputType="number"
-                            android:maxLength="23" />
+                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -90,7 +88,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Card series"
-                            android:inputType="number" />
+                            android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
