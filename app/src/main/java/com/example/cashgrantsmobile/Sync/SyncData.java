@@ -6,8 +6,6 @@ import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Base64;
@@ -24,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -47,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
@@ -69,6 +69,8 @@ public class SyncData extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ArrayAdapter<String> adapter2;
     RequestQueue queue;
+    StringRequest request;
+    final Double[] progressCC = {0.00};
 
     public void getCountEmvDetails() {
         Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details");
@@ -163,7 +165,6 @@ public class SyncData extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,lst);
         adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,lst2);
 
-        final Double[] progressCC = {0.00};
 
         gvMain = (GridView) findViewById(R.id.gridView);
         gvMain2 = (GridView) findViewById(R.id.gridView1);
@@ -269,7 +270,7 @@ public class SyncData extends AppCompatActivity {
             String finalCurrent_cash_card_picture_base6 = current_cash_card_picture_base64;
             String finalBeneficiary_picture_base6 = beneficiary_picture_base64;
 
-            StringRequest request = new StringRequest(Request.Method.POST, url,  new Response.Listener<String>() {
+            request = new StringRequest(Request.Method.POST, url,  new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     // on below line we are displaying a success toast message.
@@ -279,8 +280,6 @@ public class SyncData extends AppCompatActivity {
                         String description = data.getString("description");
                         JSONObject dataObject = data.getJSONObject("data");
                         String household = dataObject.getString("hh_id");
-
-                        Log.d("response d", String.valueOf(data));
 
                         if (status.matches("success")){
 
@@ -346,7 +345,7 @@ public class SyncData extends AppCompatActivity {
                         }
                     } catch (Exception e) {
                         Log.d("Error co", String.valueOf(e));
-                        lst2.add(String.valueOf(e));
+                        lst2.add("Network not found");
                         gvMain2.setAdapter(adapter2);
                         Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                     }
@@ -424,7 +423,13 @@ public class SyncData extends AppCompatActivity {
                 }
 
             };
+
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    0,
+                    -1,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             queue.add(request);
+
         }
     }
 
@@ -434,7 +439,7 @@ public class SyncData extends AppCompatActivity {
         setContentView(R.layout.sync_data);
 
         queue = Volley.newRequestQueue(SyncData.this);
-
+        System.setProperty("http.keepAlive", "false");
 
         Cursor resultApi = MainActivity.sqLiteHelper.getData("SELECT token From Api");
         while (resultApi.moveToNext()) {
