@@ -41,6 +41,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -1324,6 +1325,7 @@ public class ScanCashCard extends AppCompatActivity {
                     validated_at = search.getString(17);
                 }
 
+                Log.v(ContentValues.TAG,"angvalue " + other_card_number_3);
                 if (search ==null || search.getCount() == 0){
                     clearSharedPref();
                     edt_fullname.setText("");
@@ -1378,13 +1380,13 @@ public class ScanCashCard extends AppCompatActivity {
                         if (edt_other_card_holder_name_2!=null || edt_other_card_holder_name_2.length()!=4){
                             edt_other_card_holder_name_2.setText(other_card_holder_name_2);
                         }
-                        if (edt_other_card_number_3!=null || edt_other_card_number_3.length()!=4){
-                            edt_other_card_number_3.setText(other_card_number_3);
-                        }
 
-                        if (edt_other_card_holder_name_3!=null || other_cardholder_name_3.length()!=4){
-                            edt_other_card_holder_name_3.setText(other_cardholder_name_3);
-                        }
+                        String card_holder3 =other_card_number_3;
+                        if (card_holder3.matches("null")){edt_other_card_number_3.setText("");}
+                        else{edt_other_card_number_3.setText(other_card_number_3);}
+                        String card_holder_3 =other_cardholder_name_3;
+                        if (card_holder_3.matches("null")){edt_other_card_holder_name_3.setText("");}
+                        else {edt_other_card_holder_name_3.setText(other_cardholder_name_3);}
                     }
                     else {
                         Toasty.info(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
@@ -1398,7 +1400,7 @@ public class ScanCashCard extends AppCompatActivity {
         }
         catch (Exception e){
             Log.v(ContentValues.TAG,"not found " +e);
-            Toasty.error(getApplicationContext(),"Household not found", Toasty.LENGTH_SHORT).show();
+            Toasty.error(getApplicationContext(),"Household not foundsa", Toasty.LENGTH_SHORT).show();
         }
     }
 
