@@ -103,7 +103,6 @@ public class PullData extends AppCompatActivity {
                         progressBar.setProgress(progressCalc.intValue());
 
                         if (!init) {
-                            Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
                             MainActivity.sqLiteHelper.insertEmvData(dataSets);
                             if (progressPercent.getText().toString().matches("100")) {
                                 btnPull.setEnabled(true);
@@ -127,7 +126,7 @@ public class PullData extends AppCompatActivity {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
+                btnPull.setEnabled(true);
                 try {
                     String responseBody = new String(error.networkResponse.data, "utf-8");
                     JSONObject data = new JSONObject(responseBody);
@@ -174,6 +173,8 @@ public class PullData extends AppCompatActivity {
         btnPull.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
                 pullEmvData(false);
             }
         });
