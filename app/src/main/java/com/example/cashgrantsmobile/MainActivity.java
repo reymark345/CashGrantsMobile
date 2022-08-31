@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         SyncData = (CardView) findViewById(R.id.syncData);
         Logout = (CardView) findViewById(R.id.logout);
 
+
+
+
 //        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
 //        String accomplish_name = sh.getString("accomplish_by_name", "");
 
