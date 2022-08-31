@@ -41,6 +41,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -482,6 +483,7 @@ public class ScanCashCard extends AppCompatActivity {
                 }
             }
             else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+
                 Exception error = result.getError();
                 Toasty.error(this,""+error, Toasty.LENGTH_SHORT).show();
             }
@@ -682,8 +684,10 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (spinIsAvail.getText().toString().matches("Yes")) {
                             spinIsAvailReason.setText(null);
+                            spinIsAvailReason.setDropDownHeight(0);
                             spinIsAvailReason.setEnabled(false);
                         } else {
+                            spinIsAvailReason.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                             spinIsAvailReason.setEnabled(true);
                         }
                     }
@@ -695,8 +699,10 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (spinIsAvail1.getText().toString().matches("Yes")) {
                             spinIsAvailReason1.setText(null);
+                            spinIsAvailReason1.setDropDownHeight(0);
                             spinIsAvailReason1.setEnabled(false);
                         } else {
+                            spinIsAvailReason1.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                             spinIsAvailReason1.setEnabled(true);
                         }
                     }
@@ -708,8 +714,10 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (spinIsAvail2.getText().toString().matches("Yes")) {
                             spinIsAvailReason2.setText(null);
+                            spinIsAvailReason2.setDropDownHeight(0);
                             spinIsAvailReason2.setEnabled(false);
                         } else {
+                            spinIsAvailReason2.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                             spinIsAvailReason2.setEnabled(true);
                         }
                     }
@@ -721,8 +729,10 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (spinIsAvail3.getText().toString().matches("Yes")) {
                             spinIsAvailReason3.setText(null);
+                            spinIsAvailReason3.setDropDownHeight(0);
                             spinIsAvailReason3.setEnabled(false);
                         } else {
+                            spinIsAvailReason3.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                             spinIsAvailReason3.setEnabled(true);
                         }
                     }
@@ -1315,6 +1325,7 @@ public class ScanCashCard extends AppCompatActivity {
                     validated_at = search.getString(17);
                 }
 
+                Log.v(ContentValues.TAG,"angvalue " + other_card_number_3);
                 if (search ==null || search.getCount() == 0){
                     clearSharedPref();
                     edt_fullname.setText("");
@@ -1369,13 +1380,13 @@ public class ScanCashCard extends AppCompatActivity {
                         if (edt_other_card_holder_name_2!=null || edt_other_card_holder_name_2.length()!=4){
                             edt_other_card_holder_name_2.setText(other_card_holder_name_2);
                         }
-                        if (edt_other_card_number_3!=null || edt_other_card_number_3.length()!=4){
-                            edt_other_card_number_3.setText(other_card_number_3);
-                        }
 
-                        if (edt_other_card_holder_name_3!=null || other_cardholder_name_3.length()!=4){
-                            edt_other_card_holder_name_3.setText(other_cardholder_name_3);
-                        }
+                        String card_holder3 =other_card_number_3;
+                        if (card_holder3.matches("null")){edt_other_card_number_3.setText("");}
+                        else{edt_other_card_number_3.setText(other_card_number_3);}
+                        String card_holder_3 =other_cardholder_name_3;
+                        if (card_holder_3.matches("null")){edt_other_card_holder_name_3.setText("");}
+                        else {edt_other_card_holder_name_3.setText(other_cardholder_name_3);}
                     }
                     else {
                         Toasty.info(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
@@ -1389,7 +1400,7 @@ public class ScanCashCard extends AppCompatActivity {
         }
         catch (Exception e){
             Log.v(ContentValues.TAG,"not found " +e);
-            Toasty.error(getApplicationContext(),"Household not found", Toasty.LENGTH_SHORT).show();
+            Toasty.error(getApplicationContext(),"Household not foundsa", Toasty.LENGTH_SHORT).show();
         }
     }
 
