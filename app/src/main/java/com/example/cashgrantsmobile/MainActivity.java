@@ -1,7 +1,5 @@
 package com.example.cashgrantsmobile;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -12,19 +10,15 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +26,6 @@ import android.widget.Toast;
 import com.example.cashgrantsmobile.Database.SQLiteHelper;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.Scanner.ScanCashCard;
-import com.github.ybq.android.spinkit.sprite.Sprite;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.android.material.navigation.NavigationView;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -41,10 +33,10 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView CashCardScanner, InventoryList, PullData, SyncData, UpdateData, Logout;
+    CardView CashCardScanner, InventoryList, PullUpdateData, SyncData, UpdateData, Logout;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
-    TextView txtInventoryCount, txtPullDataCount, txtUpdateDataCount, txtSyncDataCount, txtScannedTotal, txtErrorTotal, txtSyncTotal;
+    TextView txtInventoryCount, txtPullUpdateDataCount, txtUpdateDataCount, txtSyncDataCount, txtScannedTotal, txtErrorTotal, txtSyncTotal;
     public boolean EnableNightMode = false;
     private String night = "true";
     private String light = "false";
@@ -71,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
         //CardView
         CashCardScanner = (CardView) findViewById(R.id.CardScan);
         InventoryList = (CardView) findViewById(R.id.inventoryList);
-        UpdateData = (CardView) findViewById(R.id.updateData);
-        PullData = (CardView) findViewById(R.id.pullData);
+        PullUpdateData = (CardView) findViewById(R.id.pullUpdateData);
         SyncData = (CardView) findViewById(R.id.syncData);
         Logout = (CardView) findViewById(R.id.logout);
 
@@ -84,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TextView
         txtInventoryCount =(TextView)findViewById(R.id.txtInventoryAmount);
-        txtPullDataCount = findViewById(R.id.textPullData);
-        txtUpdateDataCount = findViewById(R.id.textUpdateData);
+        txtPullUpdateDataCount = findViewById(R.id.textPullUpdateData);
         txtSyncDataCount = findViewById(R.id.txtSyncData);
         txtScannedTotal = findViewById(R.id.scannedTotal);
         txtErrorTotal = findViewById(R.id.errorTotal);
@@ -163,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        PullData.setOnClickListener(new View.OnClickListener() {
+        PullUpdateData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Pull.PullData.class);
+                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.PullUpdate.PullUpdateData.class);
                 startActivity(intent);
                 finish();
             }
@@ -175,14 +165,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Sync.SyncData.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        UpdateData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Update.UpdateData.class);
                 startActivity(intent);
                 finish();
             }
@@ -262,8 +244,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor sync_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='sync'");
 
         txtInventoryCount.setText(String.valueOf(listCount.getCount()));
-        txtPullDataCount.setText(String.valueOf(emvList.getCount()));
-        txtUpdateDataCount.setText(String.valueOf(emvListValidated.getCount()));
+        txtPullUpdateDataCount.setText(String.valueOf(emvList.getCount()));
         txtSyncDataCount.setText(String.valueOf(unsyncEmvList.getCount()));
         txtScannedTotal.setText(String.valueOf(scanned_total.getCount()));
         txtErrorTotal.setText(String.valueOf(error_total.getCount()));
