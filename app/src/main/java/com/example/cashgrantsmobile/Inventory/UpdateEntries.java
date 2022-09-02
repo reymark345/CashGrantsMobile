@@ -353,6 +353,8 @@ public class UpdateEntries extends AppCompatActivity {
                 edt_contact_no = findViewById(R.id.edtContactNo);
                 edt_assigned = findViewById(R.id.edtAssigned);
                 spinAnswer = findViewById(R.id.spinnerMinorGrantee);
+                edt_hh.setEnabled(false);
+                edt_set.setEnabled(false);
 
                 ArrayAdapter<String> adapterSex = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Sex);
                 ArrayAdapter<String> adapterAns = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
@@ -381,8 +383,8 @@ public class UpdateEntries extends AppCompatActivity {
                 spinClientStatus.setText(client_status);
                 edt_address.setText(address);
                 spinSex.setText(sex);
-                edt_set.setText(contact_no);
-                edt_contact_no.setText(hh_set_group);
+                edt_contact_no.setText(contact_no);
+                edt_set.setText(hh_set_group);
                 edt_assigned.setText(assigned);
                 spinAnswer.setText(minor_grantee);
 
