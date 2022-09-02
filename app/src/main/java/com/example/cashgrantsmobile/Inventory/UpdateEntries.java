@@ -233,7 +233,7 @@ public class UpdateEntries extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            Intent intent = new Intent(UpdateEntries.this, MainActivity.class);
+            Intent intent = new Intent(UpdateEntries.this, InventoryList.class);
             startActivity(intent);
             finish();
         }
