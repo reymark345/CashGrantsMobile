@@ -5,28 +5,20 @@ package com.example.cashgrantsmobile.Inventory;
 
 import static android.R.layout.simple_spinner_dropdown_item;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
-import static com.google.android.gms.common.util.CollectionUtils.listOf;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -60,22 +52,15 @@ public class UpdateEntries extends AppCompatActivity {
 
     private static int MANDATORY_PAGE_LOCATION = 0 ;
     ImageView mPreviewIv;
-    private static final int CAMERA_REQUEST_CODE = 200;
-    public static final int IMAGE_PICK_CAMERA_CODE = 1001;
-
     String cameraPermission[];
     String StoragePermission[];
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     public static boolean pressNext = false;
-    Uri image_uri;
     String full_name_get,hh_id_get,client_status_get,address_get,sex_get,contact_get,hh_set_group_get,assigned_staff_get,minor_grantee_get,current_grantee_release_date_get,current_grantee_release_place_get,current_grantee_release_by_get,current_grantee_is_available_get,current_grantee_reason_get,current_grantee_card_number_get,other_card_number_1_get,other_card_holder_name_1_get,other_card_number_21_get,other_card_holder_name_21_get,other_card_number_31_get,other_card_holder_name_31_get,other_card_is_available1_get,other_card_reason1_get,nma_amount1_get,nma_date_claimed1_get,nma_reason_get,nma_remarks_get,pawn_name_of_lender_get,pawn_date_get,pawn_retrieved_date_get,pawn_status_get,pawn_reason_get,pawn_offense_history_get,pawn_offense_date_get,pawn_remarks_get,pawn_intervention_staff_get,pawn_other_details_get,informant_full_name_get,accomplish_by_full_name_get,cash_card_scanned_no_get,attested_by_full_name_get,other_card_number_series_1_get,other_card_number_series_2_get,other_card_number_series_3_get,emv_database_monitoring_id_get,current_grantee_card_number_series_get,other_card_is_available_2_get,other_card_is_available_3_get,other_card_reason_2_get,other_card_reason_3_get,pawn_loaned_amount_get,pawn_lender_address_get,pawn_interest_get;
     Integer emv_details_id;
 
     //onboard
-
-    Cursor search;
-
     private TextView tvNext, tvPrev;
     private ViewPager viewPager;
     private LinearLayout layoutDots;
@@ -212,7 +197,6 @@ public class UpdateEntries extends AppCompatActivity {
                 }
                 if (current == 0){
                     tvPrev.setVisibility(View.INVISIBLE);
-//                    pressBtn_search=true;
                 } else {
                     tvPrev.setVisibility(View.VISIBLE);
                 }
@@ -222,12 +206,8 @@ public class UpdateEntries extends AppCompatActivity {
         viewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(onPageChangeListener);
-
         addBottomDots(0);
         changeStatusBarColor();
-
-
-
         //end onboard
     }
     @Override
@@ -238,47 +218,6 @@ public class UpdateEntries extends AppCompatActivity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    public void pickCamera() {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "NewPic");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "Image to Text");
-        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
-        Intent cameraIntent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
-        startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA_CODE);
-    }
-
-    public void requestCameraPermission() {
-        ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
-    }
-
-    private boolean checkCameraPermission() {
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==(PackageManager.PERMISSION_GRANTED);
-        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-        return result && result1;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case CAMERA_REQUEST_CODE:
-                if (grantResults.length > 0) {
-                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean writeStorageAccepted = grantResults[0] ==
-                            PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted && writeStorageAccepted) {
-                        pickCamera();
-                    } else {
-                        pickCamera();
-//                        Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-        }
     }
 
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -292,7 +231,6 @@ public class UpdateEntries extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-
             if (position == layouts.length - 1) {
                 tvNext.setText("SAVE");
             } else {
@@ -324,17 +262,13 @@ public class UpdateEntries extends AppCompatActivity {
     }
 
     public class MyViewPagerAdapter extends PagerAdapter {
-
         LayoutInflater layoutInflater;
-
         public MyViewPagerAdapter() {
-
         }
 
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-//            clearSharedPref();
 
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
@@ -665,7 +599,6 @@ public class UpdateEntries extends AppCompatActivity {
                 edt_intervention.setText(intervention);
                 edt_other_details.setText(other_details);
             }
-
             return view;
         }
 
@@ -788,7 +721,6 @@ public class UpdateEntries extends AppCompatActivity {
                 calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
                 SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
                 date_in.setText(simpleDateFormat.format(calendar.getTime()));
-
             }
         };
 
@@ -799,9 +731,7 @@ public class UpdateEntries extends AppCompatActivity {
         pressNext =true;
         Integer isValidationError = 0;
         String required_field = "This field is required!";
-
         int current = getItem(1);
-
         edt_lender_name = findViewById(R.id.edtLenderName);
 
         if (current == 1) {
@@ -879,7 +809,6 @@ public class UpdateEntries extends AppCompatActivity {
             } else {
                 tilContactNo.setError(null);
             }
-
             if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
             store_preferences(1);
 
@@ -946,7 +875,6 @@ public class UpdateEntries extends AppCompatActivity {
             } else {
                 tilPlaceReleased.setError(null);
             }
-
             if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
             store_preferences(2);
 
@@ -1326,7 +1254,4 @@ public class UpdateEntries extends AppCompatActivity {
             myEdit.commit();
         }
     }
-
-
-
 }
