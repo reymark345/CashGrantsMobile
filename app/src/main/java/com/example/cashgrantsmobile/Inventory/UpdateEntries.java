@@ -58,6 +58,7 @@ import es.dmoral.toasty.Toasty;
 
 public class UpdateEntries extends AppCompatActivity {
 
+    private static int MANDATORY_PAGE_LOCATION = 0 ;
     ImageView mPreviewIv;
     private static final int CAMERA_REQUEST_CODE = 200;
     public static final int IMAGE_PICK_CAMERA_CODE = 1001;
@@ -66,6 +67,7 @@ public class UpdateEntries extends AppCompatActivity {
     String StoragePermission[];
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
+    public static boolean pressNext = false;
     Uri image_uri;
     String full_name_get,hh_id_get,client_status_get,address_get,sex_get,contact_get,hh_set_group_get,assigned_staff_get,minor_grantee_get,current_grantee_release_date_get,current_grantee_release_place_get,current_grantee_release_by_get,current_grantee_is_available_get,current_grantee_reason_get,current_grantee_card_number_get,other_card_number_1_get,other_card_holder_name_1_get,other_card_number_21_get,other_card_holder_name_21_get,other_card_number_31_get,other_card_holder_name_31_get,other_card_is_available1_get,other_card_reason1_get,nma_amount1_get,nma_date_claimed1_get,nma_reason_get,nma_remarks_get,pawn_name_of_lender_get,pawn_date_get,pawn_retrieved_date_get,pawn_status_get,pawn_reason_get,pawn_offense_history_get,pawn_offense_date_get,pawn_remarks_get,pawn_intervention_staff_get,pawn_other_details_get,informant_full_name_get,accomplish_by_full_name_get,cash_card_scanned_no_get,attested_by_full_name_get,other_card_number_series_1_get,other_card_number_series_2_get,other_card_number_series_3_get,emv_database_monitoring_id_get,current_grantee_card_number_series_get,other_card_is_available_2_get,other_card_is_available_3_get,other_card_reason_2_get,other_card_reason_3_get,pawn_loaned_amount_get,pawn_lender_address_get,pawn_interest_get;
     Integer emv_details_id;
@@ -148,7 +150,8 @@ public class UpdateEntries extends AppCompatActivity {
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         StoragePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
+        MANDATORY_PAGE_LOCATION = 0;
+        pressNext=false;
         updatePref = new UpdatePref(this);
         if (!updatePref.isFirstTimeLaunch()) {
             launchHomeScreen();
@@ -202,6 +205,8 @@ public class UpdateEntries extends AppCompatActivity {
                 store_preferences(current+1);
 
                 if (current > 0) {
+                    MANDATORY_PAGE_LOCATION--;
+                    pressNext =false;
                     current = current - 1;
                     viewPager.setCurrentItem(current);
                 }
@@ -279,7 +284,9 @@ public class UpdateEntries extends AppCompatActivity {
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            if (pressNext ==false) {
+                viewPager.setCurrentItem(MANDATORY_PAGE_LOCATION, true);
+            }
         }
 
         @Override
@@ -779,6 +786,7 @@ public class UpdateEntries extends AppCompatActivity {
     }
 
     public void nextValidation(){
+        pressNext =true;
         Integer isValidationError = 0;
         String required_field = "This field is required!";
 
@@ -787,6 +795,7 @@ public class UpdateEntries extends AppCompatActivity {
         edt_lender_name = findViewById(R.id.edtLenderName);
 
         if (current == 1) {
+            pressNext =false;
             edt_hh = findViewById(R.id.edtHhId);
             edt_fullname = findViewById(R.id.edtFullname);
             spinClientStatus = findViewById(R.id.spinnerClientStatus);
@@ -861,9 +870,11 @@ public class UpdateEntries extends AppCompatActivity {
                 tilContactNo.setError(null);
             }
 
+            if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
             store_preferences(1);
 
         } else if (current == 2) {
+            pressNext =false;
             edt_card_released = findViewById(R.id.edtCardReleased);
             edt_who_released = findViewById(R.id.edtWhoReleased);
             edt_place_released = findViewById(R.id.edtPlaceReleased);
@@ -926,10 +937,13 @@ public class UpdateEntries extends AppCompatActivity {
                 tilPlaceReleased.setError(null);
             }
 
+            if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
             store_preferences(2);
 
         }
         else if (current == 3) {
+            MANDATORY_PAGE_LOCATION++;
+            pressNext =false;
             store_preferences(3);
         } else {
             Log.v(ContentValues.TAG,"Error Current Btn Next");
