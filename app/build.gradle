@@ -73,4 +73,5 @@ dependencies {
     implementation 'com.gu.android:toolargetool:0.3.0'
     implementation 'com.google.guava:guava:31.1-android'
     implementation 'commons-codec:commons-codec:1.13'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha01'
 }

@@ -16,7 +16,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
+//import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -39,9 +41,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -73,6 +77,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -81,6 +86,7 @@ import es.dmoral.toasty.Toasty;
 
 public class ScanCashCard extends AppCompatActivity {
 
+    private static int MANDATORY_PAGE_LOCATION = 0 ;
     ImageView mPreviewIv;
     private static final int CAMERA_REQUEST_CODE = 200;
     public static final int IMAGE_PICK_CAMERA_CODE = 1001;
@@ -90,6 +96,7 @@ public class ScanCashCard extends AppCompatActivity {
     Button btn_search_hh;
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
+    public static boolean pressNext = false;
     Uri image_uri;
     String full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3,upload_history_id,created_at,updated_at,validated_at;
     Integer emv_id;
@@ -193,7 +200,8 @@ public class ScanCashCard extends AppCompatActivity {
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         StoragePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
+        MANDATORY_PAGE_LOCATION = 0;
+        pressNext=false;
         //onboard
 
         introPref = new IntroPref(this);
@@ -209,7 +217,8 @@ public class ScanCashCard extends AppCompatActivity {
 
         tvNext = findViewById(R.id.tvNext);
         tvPrev = findViewById(R.id.tvPrev);
-        viewPager = findViewById(R.id.viewPager);
+//        viewPager = findViewById(R.id.viewPager);
+        viewPager= findViewById(R.id.viewPager);
         layoutDots = findViewById(R.id.layoutDots);
         tvPrev.setVisibility(View.INVISIBLE);
 
@@ -222,9 +231,12 @@ public class ScanCashCard extends AppCompatActivity {
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_CheckNextValidation();
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                 String hh_id = sh.getString("hh_id", "160310001-");
                 String buttonNext = sh.getString("pressBtn_search", "");
+
+
                 if (hh_id.length() > 0 && buttonNext.matches("true")){
                     nextValidation();
                 }
@@ -249,20 +261,30 @@ public class ScanCashCard extends AppCompatActivity {
                 store_preferences(current+1);
 
                 if (current > 0) {
+                    MANDATORY_PAGE_LOCATION--;
+                    pressNext =false;
                     current = current - 1;
                     viewPager.setCurrentItem(current);
                 }
                 if (current == 0){
                     tvPrev.setVisibility(View.INVISIBLE);
+
+                    tilHhId = findViewById(R.id.til_hhid);
+                    edt_hh = findViewById(R.id.edtHhId);
+                    HouseholdOnChange(edt_hh);
+
                 } else {
                     tvPrev.setVisibility(View.VISIBLE);
                 }
             }
         });
 
+
         viewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(onPageChangeListener);
+
+
 
         addBottomDots(0);
         changeStatusBarColor();
@@ -498,16 +520,19 @@ public class ScanCashCard extends AppCompatActivity {
         byte[] byteArray = stream.toByteArray();
         return byteArray;
     }
+
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            if (pressNext ==false) {
+                viewPager.setCurrentItem(MANDATORY_PAGE_LOCATION, true);
+            }
         }
 
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-
             if (position == layouts.length - 1) {
                 tvNext.setText("SCAN");
             } else {
@@ -517,10 +542,12 @@ public class ScanCashCard extends AppCompatActivity {
 
         @Override
         public void onPageScrollStateChanged(int state) {
+
         }
     };
 
     private void addBottomDots(int currentPage) {
+
         dots = new TextView[layouts.length];
         int[] activeColors = getResources().getIntArray(R.array.active);
         int[] inActiveColors = getResources().getIntArray(R.array.inactive);
@@ -537,6 +564,7 @@ public class ScanCashCard extends AppCompatActivity {
             dots[currentPage].setTextColor(activeColors[currentPage]);
         }
     }
+
 
     public class MyViewPagerAdapter extends PagerAdapter {
 
@@ -558,6 +586,8 @@ public class ScanCashCard extends AppCompatActivity {
 
             //intro_one.xml
             if (position == 0) {
+
+                tilHhId = findViewById(R.id.til_hhid);
                 edt_hh = findViewById(R.id.edtHhId);
                 edt_fullname = findViewById(R.id.edtFullname);
                 spinClientStatus = findViewById(R.id.spinnerClientStatus);
@@ -569,6 +599,7 @@ public class ScanCashCard extends AppCompatActivity {
                 spinAnswer = findViewById(R.id.spinnerMinorGrantee);
 
                 btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
+
 
                 btn_search_hh.setOnClickListener( new View.OnClickListener() {
                     @Override
@@ -610,10 +641,7 @@ public class ScanCashCard extends AppCompatActivity {
                 spinAnswer.setText(minor_grantee);
 
             } else if (position == 1) {
-//                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-//                SharedPreferences.Editor myEdit = sharedPreferences.edit();
-//                myEdit.putString("pressBtn_search", "false");
-//                myEdit.commit();
+
                 pressBtn_search = false;
 
                 edt_card_released = findViewById(R.id.edtCardReleased);
@@ -945,6 +973,8 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public void nextValidation(){
+
+        pressNext =true;
         Integer isValidationError = 0;
         String required_field = "This field is required!";
 
@@ -953,6 +983,10 @@ public class ScanCashCard extends AppCompatActivity {
         edt_lender_name = findViewById(R.id.edtLenderName);
 
         if (current == 1) {
+
+            pressNext =false;
+            Log.v(ContentValues.TAG,"DAPAT DRIA");
+
             edt_hh = findViewById(R.id.edtHhId);
             edt_fullname = findViewById(R.id.edtFullname);
             spinClientStatus = findViewById(R.id.spinnerClientStatus);
@@ -981,6 +1015,8 @@ public class ScanCashCard extends AppCompatActivity {
             tilSex = findViewById(R.id.til_sex);
             tilSet = findViewById(R.id.til_set);
             tilContactNo = findViewById(R.id.til_contact_no);
+
+
 
             if (household.matches("")){
                 tilHhId.setError(required_field);
@@ -1031,9 +1067,12 @@ public class ScanCashCard extends AppCompatActivity {
                 tilContactNo.setError(null);
             }
 
+            if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
+
             store_preferences(1);
 
         } else if (current == 2) {
+            pressNext =false;
             edt_card_released = findViewById(R.id.edtCardReleased);
             edt_who_released = findViewById(R.id.edtWhoReleased);
             edt_place_released = findViewById(R.id.edtPlaceReleased);
@@ -1096,10 +1135,13 @@ public class ScanCashCard extends AppCompatActivity {
                 tilPlaceReleased.setError(null);
             }
 
+            if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
             store_preferences(2);
 
         }
         else if (current == 3) {
+            MANDATORY_PAGE_LOCATION++;
+            pressNext =false;
             store_preferences(3);
         } else {
             Log.v(ContentValues.TAG,"Error Current Btn Next");
@@ -1402,6 +1444,62 @@ public class ScanCashCard extends AppCompatActivity {
             Log.v(ContentValues.TAG,"not found " +e);
             Toasty.error(getApplicationContext(),"Household not foundsa", Toasty.LENGTH_SHORT).show();
         }
+    }
+
+    public void btn_CheckNextValidation(){
+        String household_no ="";
+        household_no = edt_hh.getText().toString();
+        try {
+            if (!household_no.matches("")){
+                search = MainActivity.sqLiteHelper.getData("SELECT id,full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_card_holder_name_3,upload_history_id,created_at,updated_at,validated_at FROM emv_database_monitoring WHERE hh_id='"+household_no+"'");
+                while (search.moveToNext()) {
+                    emv_id = search.getInt(0);
+                    full_name = search.getString(1);
+                    hh_id = search.getString(2);
+                }
+                if (search ==null || search.getCount() == 0){
+                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                    myEdit.putString("pressBtn_search", "false");
+                    myEdit.commit();
+                }
+                else{
+                    search.close();
+                }
+            }
+            else {
+                Toasty.info(getApplicationContext(),"Please enter a household number ", Toasty.LENGTH_SHORT).show();
+            }
+        }
+        catch (Exception e){
+            Log.v(ContentValues.TAG,"not found " +e);
+            Toasty.error(getApplicationContext(),"Household not found", Toasty.LENGTH_SHORT).show();
+        }
+    }
+
+    public void HouseholdOnChange(EditText household){
+        household.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putString("pressBtn_search", "false");
+                myEdit.commit();
+                if(s.toString().length() ==0){
+                    tilHhId.setError("Not enough length");
+                }
+                else{
+
+                    tilHhId.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     public void clearSharedPref(){
