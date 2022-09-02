@@ -1,4 +1,4 @@
-package com.example.cashgrantsmobile.Update;
+package com.example.cashgrantsmobile.Inventory;
 
 
 import android.content.Context;

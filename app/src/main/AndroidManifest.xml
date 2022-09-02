@@ -40,7 +40,7 @@
             android:name=".Inventory.InventoryList"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".Pull.PullData"
+            android:name=".PullUpdate.PullUpdateData"
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".Sync.SyncData"
@@ -48,10 +48,6 @@
         <activity
             android:name=".Sync.SpinnerLoading"
             android:parentActivityName=".Sync.SyncData"/>
-
-        <activity
-            android:name=".Update.UpdateData"
-            android:parentActivityName=".MainActivity"/>
 
         <activity
             android:name=".Scanner.ActivityHome"
@@ -77,7 +73,7 @@
             android:parentActivityName=".Scanner.ScannedDetails"/>
 
         <activity
-            android:name=".Update.UpdateEntries"
+            android:name=".Inventory.UpdateEntries"
             android:parentActivityName=".MainActivity"/>
 
     </application>

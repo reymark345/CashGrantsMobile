@@ -1,18 +1,14 @@
-package com.example.cashgrantsmobile.Update;
+package com.example.cashgrantsmobile.Inventory;
 
 
 
 
 import static android.R.layout.simple_spinner_dropdown_item;
-import static android.content.ContentValues.TAG;
-import static androidx.core.content.ContentProviderCompat.requireContext;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
@@ -20,29 +16,19 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.CharArrayBuffer;
-import android.database.ContentObserver;
 import android.database.Cursor;
-import android.database.DataSetObserver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Html;
-import android.text.InputType;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,31 +38,19 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cashgrantsmobile.Inventory.InventoryList;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
-import com.example.cashgrantsmobile.Scanner.ScannedDetails;
-import com.example.cashgrantsmobile.Signatories.Informant;
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.textfield.TextInputLayout;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;

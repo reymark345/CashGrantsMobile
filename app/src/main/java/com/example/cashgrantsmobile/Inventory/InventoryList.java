@@ -28,7 +28,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Scanner.ScannedDetails;
-import com.example.cashgrantsmobile.Update.UpdateEntries;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.lang.reflect.Field;

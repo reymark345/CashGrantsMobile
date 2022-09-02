@@ -345,6 +345,7 @@ public class SyncData extends AppCompatActivity {
                         }
                     } catch (Exception e) {
                         Log.d("Error co", String.valueOf(e));
+                        queue.cancelAll(this);
                         lst2.add("Network not found");
                         gvMain2.setAdapter(adapter2);
                         Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
