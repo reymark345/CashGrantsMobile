@@ -6,18 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Scanner.ScanCashCard">
 
-    <ScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true" >
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints" />
 
-    </ScrollView>
+
     <LinearLayout
         android:id="@+id/layoutDots"
         android:layout_width="match_parent"
