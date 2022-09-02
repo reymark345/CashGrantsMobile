@@ -51,7 +51,6 @@
                     app:errorEnabled="true"
                     app:counterEnabled="true"
                     app:counterMaxLength="30"
-                    app:endIconMode="clear_text"
                     app:helperText="Search Household ID!"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_hh">
@@ -86,7 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Full name:"
-                        android:inputType="text" />
+                        android:inputType="textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -129,7 +128,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Address"
-                        android:inputType="text" />
+                        android:inputType="textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -184,7 +183,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    app:endIconMode="clear_text"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_assigned">

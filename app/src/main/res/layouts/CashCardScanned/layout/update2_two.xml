@@ -113,8 +113,8 @@
                     android:id="@+id/edtCurrentGranteeNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Current Grantee Card Number"
-                    android:inputType="text" />
+                    android:hint="Scanned Grantee Card Number"
+                    android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.card.MaterialCardView
