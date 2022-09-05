@@ -351,6 +351,8 @@ public class ScannedDetails extends AppCompatActivity {
         int length = CardResult.length();
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String granteeBtnStatus = sh.getString("granteeBtn", "");
+
+        Log.v(TAG,"value of accomplish" + accomplish);
         if (CardResult.matches("[0-9 ]+") && !household.matches("") && !informant_.matches("") && !series_number.matches("") && length>0 && accomplish!=null && accomplish!=null && informant!=null && informant!=null && (granteeImage!=null|| granteeBtnStatus.matches("true"))){
             try{
                 if ( scanned ==true){
@@ -570,6 +572,7 @@ public class ScannedDetails extends AppCompatActivity {
         String informants = sh.getString("Informant_Identifier", "");
 
         if (scanned ==true && !signatories.matches("true")){
+            accomplish =null;
             Log.v(TAG,"FirstScanned" + dataUp);
             edtAccomplishBy.setText(accomplish_shared);
             edtInformant.setText(informants);
