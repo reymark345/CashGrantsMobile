@@ -632,13 +632,13 @@ public class ScanCashCard extends AppCompatActivity {
 
                 if (hh_id.matches("")){edt_hh.setText("160310001-");}else {edt_hh.setText(hh_id); }
                 edt_fullname.setText(full_name);
-                spinClientStatus.setText(client_status);
+                spinClientStatus.setText(client_status,false);
                 edt_address.setText(address);
-                spinSex.setText(sex);
+                spinSex.setText(sex,false);
                 edt_set.setText(contact_no);
                 edt_contact_no.setText(hh_set_group);
                 edt_assigned.setText(assigned);
-                spinAnswer.setText(minor_grantee);
+                spinAnswer.setText(minor_grantee,false);
 
             } else if (position == 1) {
 
@@ -792,23 +792,23 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_who_released.setText(who_released);
                 edt_place_released.setText(place_released);
                 edt_current_grantee_number.setText(temp_current_grantee_number);
-                spinIsAvail.setText(is_available);
-                spinIsAvailReason.setText(is_available_reason);
+                spinIsAvail.setText(is_available,false);
+                spinIsAvailReason.setText(is_available_reason,false);
                 edt_other_card_number_1.setText(other_card_number_1);
                 edt_other_card_number_series_1.setText(other_card_number_series_1);
                 edt_other_card_holder_name_1.setText(other_card_holder_name_1);
-                spinIsAvail1.setText(other_is_available_1);
-                spinIsAvailReason1.setText(other_is_available_reason_1);
+                spinIsAvail1.setText(other_is_available_1,false);
+                spinIsAvailReason1.setText(other_is_available_reason_1,false);
                 edt_other_card_number_2.setText(other_card_number_2);
                 edt_other_card_number_series_2.setText(other_card_number_series_2);
                 edt_other_card_holder_name_2.setText(other_card_holder_name_2);
-                spinIsAvail2.setText(other_is_available_2);
-                spinIsAvailReason2.setText(other_is_available_reason_2);
+                spinIsAvail2.setText(other_is_available_2,false);
+                spinIsAvailReason2.setText(other_is_available_reason_2,false);
                 edt_other_card_number_3.setText(other_card_number_3);
                 edt_other_card_number_series_3.setText(other_card_number_series_3);
                 edt_other_card_holder_name_3.setText(other_card_holder_name_3);
-                spinIsAvail3.setText(other_is_available_3);
-                spinIsAvailReason3.setText(other_is_available_reason_3);
+                spinIsAvail3.setText(other_is_available_3,false);
+                spinIsAvailReason3.setText(other_is_available_reason_3,false);
 
             } else if (position == 2) {
                 //intro_three.xml
@@ -909,9 +909,9 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_lender_address.setText(lender_address);
                 edt_date_retrieved.setText(date_retrieved);
                 edt_interest.setText(interest);
-                spinStatus.setText(spin_status);
+                spinStatus.setText(spin_status,false);
                 edt_pawning_reason.setText(pawning_reason);
-                spinOffenseHistory.setText(offense_history);
+                spinOffenseHistory.setText(offense_history,false);
                 edt_offense_history_date.setText(offense_history_date);
                 edt_pd_remarks.setText(pd_remarks);
                 edt_intervention.setText(intervention);
@@ -1392,20 +1392,14 @@ public class ScanCashCard extends AppCompatActivity {
                         myEdit.putString("hh_set_group", hh_set_group);
                         myEdit.putString("pressBtn_search", "true");
                         myEdit.commit();
-                        new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                                new Runnable() {
-                                    public void run() {
-//                                                    edt_hh.setText(hh_id);
-                                        edt_fullname.setText(full_name);
-                                        spinClientStatus.setText(client_status);
-                                        spinClientStatus.setSelection(client_status.length());
-                                        edt_address.setText(address);
-                                        edt_set.setText(hh_set_group);
-                                        spinSex.setText(sex);
-                                        Toasty.success(getApplicationContext(),"Household Found", Toasty.LENGTH_SHORT).show();
-                                    }
-                                },
-                                300);
+
+                        edt_fullname.setText(full_name);
+                        spinClientStatus.setText(client_status,false);
+                        edt_address.setText(address);
+                        edt_set.setText(hh_set_group);
+                        spinSex.setText(sex,false);
+                        Toasty.success(getApplicationContext(),"Household Found", Toasty.LENGTH_SHORT).show();
+
 
                         if (other_card_number_1!=null || other_card_number_1.length()!=4){
                             edt_other_card_number_1.setText(other_card_number_1);

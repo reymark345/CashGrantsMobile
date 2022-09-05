@@ -428,9 +428,9 @@ public class ScannedDetails extends AppCompatActivity {
         if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Invalid format");
         }
-        if (length!=23 ){
-            tilCashCard.setError("Not enough length");
-        }
+//        if (length!=23 ){
+//            tilCashCard.setError("Not enough length");
+//        }
 
         if (granteeImage ==null && granteeBtnStatus.matches("false")){
             Toasty.warning(this,"Please Scan Grantee", Toasty.LENGTH_SHORT).show();

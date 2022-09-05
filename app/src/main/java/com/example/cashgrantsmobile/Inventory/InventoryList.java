@@ -177,7 +177,7 @@ public class InventoryList extends AppCompatActivity {
 
     public void queries(String household_no){
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details WHERE hh_id LIKE'%"+household_no+"%'");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' order by id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
@@ -214,7 +214,7 @@ public class InventoryList extends AppCompatActivity {
 
     public void filterAllData(ArrayList<Inventory> list, String cashCardNumber,InventoryListAdapter adapter){
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details order by id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
