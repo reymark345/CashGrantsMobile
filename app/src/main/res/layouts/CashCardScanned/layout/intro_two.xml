@@ -278,9 +278,9 @@
                             android:id="@+id/spinnerOtherIsAvailable1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/white"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:background="@color/white"
                             android:hint="Is Card Available" />
                     </com.google.android.material.textfield.TextInputLayout>
 
