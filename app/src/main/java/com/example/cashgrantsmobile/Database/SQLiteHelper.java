@@ -205,22 +205,29 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void storeLogs(String type, String household) {
+    public void storeLogs(String type, String household, String description) {
         Cursor user_data = MainActivity.sqLiteHelper.getData("SELECT username FROM Api");
         String username = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(new Date());
+
         while (user_data.moveToNext()) {
             username = user_data.getString(0);
         }
 
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "INSERT INTO logs VALUES (NULL, ?, ?, ?, NULL)";
+        String sql = "INSERT INTO logs VALUES (NULL, ?, ?, ?, ?, ?)";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
         statement.bindString(1, username);
         statement.bindString(2, type);
         statement.bindString(3, household);
+        statement.bindString(4, description);
+        statement.bindString(5, strDate);
         statement.executeInsert();
     }
+
+
 
     public void updateScannedCashCard_emv(String scannedCashCard,byte[] cc_image){
 
@@ -447,6 +454,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
+
+    public void deleteLogs() {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "DELETE FROM logs";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.execute();
+        database.close();
+    }
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
