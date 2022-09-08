@@ -493,11 +493,12 @@ public class ScanCashCard extends AppCompatActivity {
                         sqLiteHelper.update_emv_monitoring(
                                 hh_no_1
                         );
-                        sqLiteHelper.storeLogs("scanned", household);
+                        sqLiteHelper.storeLogs("scanned", household, "Scanned household successfully");
                         clearSharedPref();
 
                     } catch (IOException e) {
                         e.printStackTrace();
+                        sqLiteHelper.storeLogs("error", household, "Scanned household failed");
                     }
                     //camera
                     i.putExtra("CashCardImage",image_uri.toString());
@@ -509,6 +510,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                 Exception error = result.getError();
                 Toasty.error(this,""+error, Toasty.LENGTH_SHORT).show();
+                sqLiteHelper.storeLogs("error", "", "Scanned: " + error);
             }
         }
     }

@@ -53,6 +53,7 @@ public class InventoryListAdapter extends BaseAdapter {
         while (cursor.moveToNext()) {
             DarkModeStatus = cursor.getString(1);
         }
+        cursor.close();
 
         View row = view;
         ViewHolder holder = new ViewHolder();

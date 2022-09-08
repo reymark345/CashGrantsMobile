@@ -27,26 +27,22 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Internet.NetworkChangeListener;
-import com.google.common.io.BaseEncoding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
@@ -303,7 +299,7 @@ public class SyncData extends AppCompatActivity {
                                 updaterEmvMonitoring();
                             }
 
-                            sqLiteHelper.storeLogs("sync", hh_id);
+                            sqLiteHelper.storeLogs("sync", hh_id, "Sync data successfully.");
                             sqLiteHelper.deleteEmvMonitoringDetails(id);
 
                         }
@@ -311,6 +307,7 @@ public class SyncData extends AppCompatActivity {
                             btnSync.setEnabled(true);
                             lst2.add("Error on syncing the data!");
                             gvMain2.setAdapter(adapter2);
+                            sqLiteHelper.storeLogs("error", hh_id, "Error on syncing data.");
                             Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
                         }
 
@@ -324,7 +321,7 @@ public class SyncData extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     // method to handle errors.
                     btnSync.setEnabled(true);
-                    sqLiteHelper.storeLogs("error", hh_id);
+
                     try {
                         String responseBody = new String(error.networkResponse.data, "utf-8");
                         Integer responseCode = error.networkResponse.statusCode;
@@ -336,18 +333,21 @@ public class SyncData extends AppCompatActivity {
                             Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
                             lst2.add(message);
                             gvMain2.setAdapter(adapter2);
+                            sqLiteHelper.storeLogs("error", hh_id, "Sync: " + message);
                         } else if (responseCode == 404) {
                             JSONObject data = new JSONObject(responseBody);
                             String desc = data.getString("description");
                             Toasty.error(SyncData.this, "Error 404:" + desc, Toast.LENGTH_SHORT, true).show();
                             lst2.add(desc);
                             gvMain2.setAdapter(adapter2);
+                            sqLiteHelper.storeLogs("error", hh_id, "Sync: Error 404");
                         }
                     } catch (Exception e) {
                         Log.d("Error co", String.valueOf(e));
                         queue.cancelAll(this);
                         lst2.add("Network not found");
                         gvMain2.setAdapter(adapter2);
+                        sqLiteHelper.storeLogs("error", hh_id, " Sync: Network Not Found");
                         Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                     }
                 }

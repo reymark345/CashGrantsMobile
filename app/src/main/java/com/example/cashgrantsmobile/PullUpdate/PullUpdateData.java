@@ -86,6 +86,7 @@ public class PullUpdateData extends AppCompatActivity {
                     Double counter = 0.00;
                     Double progressFormula = 0.00;
                     Double dLength = Double.valueOf(dataSets.length());
+                    String HHID = "";
                     progressTarget.setText(String.valueOf(dataSets.length()));
 
                     String status = data.getString("status");
@@ -95,6 +96,7 @@ public class PullUpdateData extends AppCompatActivity {
                         for (int i = 0; i < dataSets.length(); i++) {
                             counter++;
                             JSONObject jsonData = dataSets.getJSONObject(i);
+                            HHID = jsonData.getString("hh_id");
                             sqLiteHelper.updateEmvMonitoring(jsonData.getString("validated_at"), jsonData.getString("id"));
 
                             progressFormula = counter / dLength * 100;
@@ -108,9 +110,12 @@ public class PullUpdateData extends AppCompatActivity {
                             btnPullUpdate.setEnabled(true);
                         }
 
+                        sqLiteHelper.storeLogs("update", HHID, "Successfully update data");
+
                     }
                     else{
                         Toasty.error(getApplicationContext(), "Error on updating the  data.", Toast.LENGTH_SHORT, true).show();
+                        sqLiteHelper.storeLogs("error", "", "Error on updating the data");
                     }
 
                 } catch (JSONException e) {
@@ -130,13 +135,16 @@ public class PullUpdateData extends AppCompatActivity {
                     JSONObject jsonMessage = errors.getJSONObject(0);
                     String message = jsonMessage.getString("message");
                     Toasty.warning(PullUpdateData.this, message, Toast.LENGTH_SHORT, true).show();
+                    sqLiteHelper.storeLogs("error", "", "Update: " + message);
                 } catch (JSONException | UnsupportedEncodingException e) {
                     btnPullUpdate.setEnabled(true);
                     Toasty.warning(PullUpdateData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
+                    sqLiteHelper.storeLogs("error", "", "Update: Exception.");
                 }
                 catch (Exception e) {
                     btnPullUpdate.setEnabled(true);
                     Toasty.error(PullUpdateData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
+                    sqLiteHelper.storeLogs("error", "", "Update: Network not found.");
                 }
             }
 
@@ -212,7 +220,9 @@ public class PullUpdateData extends AppCompatActivity {
                             if (progressPercent.getText().toString().matches("100")) {
                                 btnPullUpdate.setEnabled(true);
                                 Toasty.success(PullUpdateData.this, "Completed", Toast.LENGTH_SHORT, true).show();
+                                sqLiteHelper.storeLogs("pull", "", "Pull Data Completed.");
                             } else {
+                                sqLiteHelper.storeLogs("pull", "", "Pull Data Successfully.");
                                 pullEmvData(false);
                             }
                         }
@@ -220,6 +230,7 @@ public class PullUpdateData extends AppCompatActivity {
                     }
                     else{
                         btnPullUpdate.setEnabled(true);
+                        sqLiteHelper.storeLogs("error", "", "Pull: Error on pulling data.");
                         Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
                     }
 
@@ -239,10 +250,14 @@ public class PullUpdateData extends AppCompatActivity {
                     JSONObject jsonMessage = errors.getJSONObject(0);
                     String message = jsonMessage.getString("message");
                     Toasty.warning(PullUpdateData.this, message, Toast.LENGTH_SHORT, true).show();
+                    sqLiteHelper.storeLogs("error", "", "Pull: " +  message);
                 } catch (JSONException | UnsupportedEncodingException e) {
+                    sqLiteHelper.storeLogs("error", "", "Pull: Error Exception Found.");
                     Toasty.warning(PullUpdateData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
                 }
                 catch (Exception e) {
+                    queue.cancelAll(this);
+                    sqLiteHelper.storeLogs("error", "", "Pull: Network not found.");
                     Toasty.error(PullUpdateData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                 }
             }
