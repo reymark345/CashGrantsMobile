@@ -1,9 +1,11 @@
 package com.example.cashgrantsmobile.Inventory;
 
 
+import static android.R.layout.simple_spinner_dropdown_item;
 import static android.content.ContentValues.TAG;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +18,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -25,13 +30,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.cashgrantsmobile.Logs.LogsData;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Scanner.ScannedDetails;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
@@ -45,6 +55,10 @@ public class InventoryList extends AppCompatActivity {
     int status;
     byte[] id_image;
     private TextView tvSearch, tvResultHh, tvIdentifier;
+    EditText  filterDate, filterHousehold;
+    AutoCompleteTextView spinFilterType;
+    String ftype, fhhid, fdate;
+    String[] typeOptions = new String[]{"", "complete", "incomplete"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,32 +153,51 @@ public class InventoryList extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.search_inventory_list);
-        EditText noteField = dialog.findViewById(R.id.edtSearch);
+        spinFilterType = dialog.findViewById(R.id.spinFilterType);
+        filterHousehold = dialog.findViewById(R.id.edtFilterHHID);
+        filterDate = dialog.findViewById(R.id.edtFilterDate);
+        tvIdentifier = findViewById(R.id.tvIdentifier);
         TextInputLayout tilError = dialog.findViewById(R.id.til_Search);
-        noteField.setText("160310001-");
+        filterHousehold.setText("160310001-");
+
         Button submitButton = dialog.findViewById(R.id.btn_search);
         Button btnRefresh = dialog.findViewById(R.id.btnRefresh);
+
+        ArrayAdapter<String> adapterType = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, typeOptions);
+        adapterType.setDropDownViewResource(simple_spinner_dropdown_item);
+        spinFilterType.setAdapter(adapterType);
+
+        filterDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateDialog(filterDate);
+            }
+        });
+
+        spinFilterType.setText(ftype, false);
+        filterHousehold.setText(fhhid);
+        filterDate.setText(fdate);
 
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (noteField.length()==0){
-                    tilError.setError("Please fill this blank");
-                }
-                else {
-                    String household = noteField.getText().toString();
+                ftype = spinFilterType.getText().toString();
+                fhhid = filterHousehold.getText().toString();
+                fdate = filterDate.getText().toString();
 
-                    queries(household);
+                queries(fhhid, ftype, fdate);
 
-                    dialog.dismiss();
-                }
+                dialog.dismiss();
             }
         });
 
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ftype = null;
+                fhhid = null;
+                fdate = null;
                 tvIdentifier.setVisibility(View.INVISIBLE);
                 tvResultHh.setVisibility(View.INVISIBLE);
                 filterAllData(list,cashCardNumber,adapter);
@@ -175,9 +208,30 @@ public class InventoryList extends AppCompatActivity {
         dialog.show();
     }
 
-    public void queries(String household_no){
+    private void showDateDialog(final EditText date_in) {
+        final Calendar calendar=Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener dateSetListener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+                date_in.setText(simpleDateFormat.format(calendar.getTime()));
+
+            }
+        };
+
+        new DatePickerDialog(InventoryList.this,dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public void queries(String household_no, String filter_type, String filter_date){
+        Integer scanning_status = 1;
+        if (filter_type.matches("incomplete")){
+            scanning_status = 0;
+        }
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' order by id DESC");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' OR card_scanning_status LIKE '%"+scanning_status+"%' OR DATE(created_at) LIKE '%"+filter_date+"%' order by id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
