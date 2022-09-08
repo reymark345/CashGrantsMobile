@@ -48,7 +48,7 @@ public class LogsData extends AppCompatActivity {
     EditText  filterDate, filterHousehold;
     AutoCompleteTextView spinFilterType;
     String ftype, fhhid, fdate;
-    String[] typeOptions = new String[]{"", "error", "pull", "update", "sync"};
+    String[] typeOptions = new String[]{"", "error", "pull", "update", "sync", "scan"};
 
 
     @Override

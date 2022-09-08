@@ -204,7 +204,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
-                        android:text="Sync"
+                        android:text="Incomplete"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/_10ssp"/>
 
@@ -213,7 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
                         android:text="0"
-                        android:id="@+id/syncTotal"
+                        android:id="@+id/incompleteTotal"
                         android:textColor="@color/primary_text"
                         android:textSize="@dimen/_16ssp"/>
                 </LinearLayout>

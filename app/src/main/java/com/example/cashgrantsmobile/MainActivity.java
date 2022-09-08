@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     CardView CashCardScanner, InventoryList, PullUpdateData, SyncData, LogsData, Logout;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
-    TextView txtInventoryCount, txtPullUpdateDataCount, txtLogsTotal, txtSyncDataCount, txtScannedTotal, txtErrorTotal, txtSyncTotal, txtSyncData;
+    TextView txtInventoryCount, txtPullUpdateDataCount, txtLogsTotal, txtSyncDataCount, txtScannedTotal, txtErrorTotal, txtIncompleteTotal, txtSyncData;
     public boolean EnableNightMode = false;
     private String night = "true";
     private String light = "false";
@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.dashboard_main);
         createDatabase();
         //CardView
-        CashCardScanner = (CardView) findViewById(R.id.CardScan);
-        InventoryList = (CardView) findViewById(R.id.inventoryList);
-        PullUpdateData = (CardView) findViewById(R.id.pullUpdateData);
+        CashCardScanner = (CardView) findViewById(R.id.cvCashCard);
+        InventoryList = (CardView) findViewById(R.id.cvCashCardList);
+        PullUpdateData = (CardView) findViewById(R.id.cvPullUpdateData);
         LogsData = (CardView) findViewById(R.id.logsItem);
-        SyncData = (CardView) findViewById(R.id.syncData);
-        Logout = (CardView) findViewById(R.id.logout);
+        SyncData = (CardView) findViewById(R.id.cvSyncData);
+        Logout = (CardView) findViewById(R.id.cvLogout);
 
 
 
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         txtSyncDataCount = findViewById(R.id.txtSyncData);
         txtScannedTotal = findViewById(R.id.scannedTotal);
         txtErrorTotal = findViewById(R.id.errorTotal);
-        txtSyncTotal = findViewById(R.id.syncTotal);
+        txtIncompleteTotal = findViewById(R.id.incompleteTotal);
         txtLogsTotal = findViewById(R.id.textLogsCount);
         txtSyncData = findViewById(R.id.txtSyncData);
 
@@ -253,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor unsyncEmvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details");
         Cursor scanned_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"' AND type='scanned'");
         Cursor error_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='error'");
+        Cursor incomplete_total = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details WHERE card_scanning_status=0");
         Cursor sync_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='sync'");
         Cursor logs_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'");
 
@@ -262,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         txtScannedTotal.setText(String.valueOf(scanned_total.getCount()));
         txtErrorTotal.setText(String.valueOf(error_total.getCount()));
         txtLogsTotal.setText(String.valueOf(logs_total.getCount()));
-        txtSyncTotal.setText(String.valueOf(sync_total.getCount()));
+        txtIncompleteTotal.setText(String.valueOf(incomplete_total.getCount()));
         txtSyncData.setText(String.valueOf(sync_total.getCount()));
     }
 
