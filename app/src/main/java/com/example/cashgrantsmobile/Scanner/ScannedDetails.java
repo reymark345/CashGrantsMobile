@@ -351,8 +351,7 @@ public class ScannedDetails extends AppCompatActivity {
         int length = CardResult.length();
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String granteeBtnStatus = sh.getString("granteeBtn", "");
-
-        Log.v(TAG,"value of accomplish" + accomplish);
+        int inventory_id = sh.getInt("updateValue", 0);
         if (CardResult.matches("[0-9 ]+") && !household.matches("") && !informant_.matches("") && !series_number.matches("") && length>0 && accomplish!=null && accomplish!=null && informant!=null && informant!=null && (granteeImage!=null|| granteeBtnStatus.matches("true"))){
             try{
                 if ( scanned ==true){
@@ -365,7 +364,6 @@ public class ScannedDetails extends AppCompatActivity {
                             edtAttested.getText().toString().trim(),
                             edtSeriesNumber.getText().toString().trim()
                     );
-
                     String hh_no_1 = sh.getString("hh_id", "");
                     sqLiteHelper.update_emv_monitoring(hh_no_1);
                     clearSharedPref();
@@ -374,7 +372,8 @@ public class ScannedDetails extends AppCompatActivity {
                     intent.putExtra("toast",value);
                 }
                 else{
-                    Log.v(TAG,"submitted successfully last");
+                    int completed = 1;
+                    if (id==0){id =inventory_id;}
                     sqLiteHelper.updateInventoryList_emv(
                             edtCashCard.getText().toString().trim(),
                             edtAccomplishBy.getText().toString().trim(),
@@ -382,7 +381,8 @@ public class ScannedDetails extends AppCompatActivity {
                             imageViewToByte(mPreviewCashCard),
                             imageViewToByte(mPreviewGrantee),id,
                             edtAttested.getText().toString().trim(),
-                            edtSeriesNumber.getText().toString().trim()
+                            edtSeriesNumber.getText().toString().trim(),completed
+
                     );
                     intent = new Intent(ScannedDetails.this, InventoryList.class);
                 }
@@ -430,9 +430,6 @@ public class ScannedDetails extends AppCompatActivity {
         if (!CardResult.matches("[0-9 ]+")){
             tilCashCard.setError("Invalid format");
         }
-//        if (length!=23 ){
-//            tilCashCard.setError("Not enough length");
-//        }
 
         if (granteeImage ==null && granteeBtnStatus.matches("false")){
             Toasty.warning(this,"Please Scan Grantee", Toasty.LENGTH_SHORT).show();

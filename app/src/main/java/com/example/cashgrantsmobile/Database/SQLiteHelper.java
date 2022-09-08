@@ -359,9 +359,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,"Error");
         }
     }
-    public void updateInventoryList_emv(String cash_card_actual_no, String accomplishBy,String informant, byte[] cc_image, byte[] id_image, int id, String attested, String series_number) {
+    public void updateInventoryList_emv(String cash_card_actual_no, String accomplishBy,String informant, byte[] cc_image, byte[] id_image, int id, String attested, String series_number, int completed) {
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE emv_database_monitoring_details SET current_grantee_card_number  = ?, current_grantee_card_number_series = ?, accomplish_by_full_name = ?, informant_full_name = ?, current_cash_card_picture =?, beneficiary_picture =?, attested_by_full_name=? , card_scanning_status = 1  WHERE id = ?";
+        String sql = "UPDATE emv_database_monitoring_details SET current_grantee_card_number  = ?, current_grantee_card_number_series = ?, accomplish_by_full_name = ?, informant_full_name = ?, current_cash_card_picture =?, beneficiary_picture =?, attested_by_full_name=? , card_scanning_status = ?  WHERE id = ?";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.bindString(1, cash_card_actual_no);
         statement.bindString(2, series_number);
@@ -370,7 +370,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.bindBlob(5, cc_image);
         statement.bindBlob(6, id_image);
         statement.bindString(7, attested);
-        statement.bindDouble(8, id);
+        statement.bindDouble(8, completed);
+        statement.bindDouble(9, id);
         statement.execute();
         database.close();
     }
