@@ -19,7 +19,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -53,7 +55,7 @@ public class UpdateEntries extends AppCompatActivity {
     private static int MANDATORY_PAGE_LOCATION = 0 ;
     ImageView mPreviewIv;
     String cameraPermission[];
-    String StoragePermission[];
+    String StoragePermission[],required_field = "This field is required!";
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     public static boolean pressNext = false;
@@ -78,7 +80,8 @@ public class UpdateEntries extends AppCompatActivity {
     EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
     AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory;
 
-    String[] Ans = new String[]{"Yes", "No"};
+    String[] Ans = new String[]{"","Yes", "No"};
+    String[] CardRequired = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
     String[] ClientStatus = new String[]{
@@ -115,8 +118,8 @@ public class UpdateEntries extends AppCompatActivity {
             "59 - Eligible Child/ren not Selected for CVS Monitoring",
             "61 - Graduated (Not included in the PPIS)"
     };
-    String[] Status = new String[]{"Ongoing (card as collateral)", "Ongoing (card is on-hand)", "Retrieved"};
-    String[] Offense = new String[]{"1st Offense", "2nd Offense", "3rd Offense"};
+    String[] Status = new String[]{"","Ongoing (card as collateral)", "Ongoing (card is on-hand)", "Retrieved"};
+    String[] Offense = new String[]{"","1st Offense", "2nd Offense", "3rd Offense"};
 
 
     @Override
@@ -325,7 +328,10 @@ public class UpdateEntries extends AppCompatActivity {
             } else if (position == 1) {
                 //intro_two.xml
                 pressBtn_search = false;
-
+                tilIsAvailable = findViewById(R.id.til_isavailable);
+                tilWhoReleased = findViewById(R.id.til_whoreleased);
+                tilPlaceReleased = findViewById(R.id.til_placereleased);
+                tilCardReleased = findViewById(R.id.til_cardreleased);
                 edt_card_released = findViewById(R.id.edtCardReleased);
                 edt_who_released = findViewById(R.id.edtWhoReleased);
                 edt_place_released = findViewById(R.id.edtPlaceReleased);
@@ -348,7 +354,25 @@ public class UpdateEntries extends AppCompatActivity {
                 spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
                 spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
 
-                ArrayAdapter<String> adapterIsAvail = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
+                spinIsAvailReason.setText(null);
+                spinIsAvailReason.setDropDownHeight(0);
+                spinIsAvailReason.setEnabled(false);
+                spinIsAvailReason1.setText(null);
+                spinIsAvailReason1.setDropDownHeight(0);
+                spinIsAvailReason1.setEnabled(false);
+                spinIsAvailReason2.setText(null);
+                spinIsAvailReason2.setDropDownHeight(0);
+                spinIsAvailReason2.setEnabled(false);
+                spinIsAvailReason3.setText(null);
+                spinIsAvailReason3.setDropDownHeight(0);
+                spinIsAvailReason3.setEnabled(false);
+
+                dateReleased(edt_card_released);
+                whoReleased(edt_who_released);
+                placeReleased(edt_place_released);
+                cardAvailable(spinIsAvail);
+
+                ArrayAdapter<String> adapterIsAvail = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, CardRequired);
                 ArrayAdapter<String> adapterIsAvail1 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterIsAvail2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterIsAvail3 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
@@ -392,7 +416,7 @@ public class UpdateEntries extends AppCompatActivity {
                 spinIsAvail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail.getText().toString().matches("Yes")) {
+                        if (spinIsAvail.getText().toString().matches("Yes")||spinIsAvail.getText().toString().matches("")) {
                             spinIsAvailReason.setText(null);
                             spinIsAvailReason.setDropDownHeight(0);
                             spinIsAvailReason.setEnabled(false);
@@ -407,7 +431,7 @@ public class UpdateEntries extends AppCompatActivity {
                 spinIsAvail1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail1.getText().toString().matches("Yes")) {
+                        if (spinIsAvail1.getText().toString().matches("Yes")||spinIsAvail1.getText().toString().matches("")) {
                             spinIsAvailReason1.setText(null);
                             spinIsAvailReason1.setDropDownHeight(0);
                             spinIsAvailReason1.setEnabled(false);
@@ -422,7 +446,7 @@ public class UpdateEntries extends AppCompatActivity {
                 spinIsAvail2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail2.getText().toString().matches("Yes")) {
+                        if (spinIsAvail2.getText().toString().matches("Yes")||spinIsAvail2.getText().toString().matches("")) {
                             spinIsAvailReason2.setText(null);
                             spinIsAvailReason2.setDropDownHeight(0);
                             spinIsAvailReason2.setEnabled(false);
@@ -437,7 +461,7 @@ public class UpdateEntries extends AppCompatActivity {
                 spinIsAvail3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail3.getText().toString().matches("Yes")) {
+                        if (spinIsAvail3.getText().toString().matches("Yes")||spinIsAvail3.getText().toString().matches("")) {
                             spinIsAvailReason3.setText(null);
                             spinIsAvailReason3.setDropDownHeight(0);
                             spinIsAvailReason3.setEnabled(false);
@@ -1076,6 +1100,98 @@ public class UpdateEntries extends AppCompatActivity {
         }
 
     }
+
+
+    public void dateReleased(EditText date_r){
+        date_r.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilCardReleased.setError(required_field);
+                }
+                else{
+                    tilCardReleased.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    public void whoReleased(EditText who_released){
+        who_released.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilWhoReleased.setError(required_field);
+                }
+                else{
+                    tilWhoReleased.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    public void placeReleased(EditText place_released){
+        place_released.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilPlaceReleased.setError(required_field);
+                }
+                else{
+                    tilPlaceReleased.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+    public void cardAvailable(AutoCompleteTextView spnAvail){
+        spnAvail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilIsAvailable.setError(required_field);
+                }
+                else{
+                    tilIsAvailable.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+
+
+
 
     public void clearSharedPref(){
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);

@@ -124,6 +124,7 @@ public class ScanCashCard extends AppCompatActivity {
     AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory;
 
     String[] Ans = new String[]{"","Yes", "No"};
+    String[] CardRequired = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
     String[] ClientStatus = new String[]{
@@ -688,7 +689,7 @@ public class ScanCashCard extends AppCompatActivity {
                 placeReleased(edt_place_released);
                 cardAvailable(spinIsAvail);
 
-                ArrayAdapter<String> adapterIsAvail = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
+                ArrayAdapter<String> adapterIsAvail = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, CardRequired);
                 ArrayAdapter<String> adapterIsAvail1 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterIsAvail2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterIsAvail3 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
