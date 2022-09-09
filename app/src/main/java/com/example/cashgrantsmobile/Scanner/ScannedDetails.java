@@ -593,7 +593,7 @@ public class ScannedDetails extends AppCompatActivity {
             int updateId = in.getIntExtra("updateData", 0);
             id = updateId;
             btnRescanBeneId.setText("RE-SCAN");
-            btnSubmit.setText("UPDATE");
+            btnSubmit.setText("SAVE");
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature,attested_by_full_name,current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+max_id);
                 while (cursor.moveToNext()) {
@@ -646,7 +646,7 @@ public class ScannedDetails extends AppCompatActivity {
             id = updateId;
             Log.v(TAG,"SIGNATORIES" + signatories + "identifier" + identifier + "details SCAN" + detailScan);
             btnRescanBeneId.setText("RE-SCAN");
-            btnSubmit.setText("UPDATE");
+            btnSubmit.setText("SAVE");
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+(detailScan));
                 while (cursor.moveToNext()) {
@@ -701,7 +701,7 @@ public class ScannedDetails extends AppCompatActivity {
 
             Log.v(TAG,"3rdScanned" + max_id + "id " + id);
             btnRescanBeneId.setText("RE-SCAN");
-            btnSubmit.setText("UPDATE");
+            btnSubmit.setText("SAVE");
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture, beneficiary_picture, cash_card_scanned_no, accomplish_e_signature, informant_e_signature, attested_by_e_signature, attested_by_full_name, current_grantee_card_number_series FROM emv_database_monitoring_details WHERE id="+getEmvId);
                 while (cursor.moveToNext()) {
