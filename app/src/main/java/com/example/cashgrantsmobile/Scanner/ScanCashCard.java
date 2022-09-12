@@ -521,7 +521,7 @@ public class ScanCashCard extends AppCompatActivity {
 
     public static byte[] imageViewToByte(ImageView image) {
         Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-        image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 120, 120, false));
+        image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
         byte[] byteArray = stream.toByteArray();
