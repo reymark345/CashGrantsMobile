@@ -65,6 +65,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.cashgrantsmobile.Inventory.InventoryList;
+import com.example.cashgrantsmobile.Inventory.UpdateEntries;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Signatories.Informant;
@@ -81,6 +84,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
 
@@ -224,10 +228,10 @@ public class ScanCashCard extends AppCompatActivity {
         tvPrev.setVisibility(View.INVISIBLE);
 
         layouts = new int[]{
-            R.layout.intro_one,
-            R.layout.intro_two,
-            R.layout.intro_three,
-            R.layout.intro_four
+                R.layout.intro_one,
+                R.layout.intro_two,
+                R.layout.intro_three,
+                R.layout.intro_four
         };
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -549,6 +553,35 @@ public class ScanCashCard extends AppCompatActivity {
         }
     };
 
+    public void countIncomplete(){
+        Cursor incomplete_total = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details WHERE card_scanning_status=0");
+
+        int incomplete = incomplete_total.getCount();
+        if (incomplete>0){
+            new SweetAlertDialog(ScanCashCard.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("You have "+incomplete+" incomplete household entries")
+                    .setContentText("Please update the previous household to complete")
+                    .setConfirmText("Proceed")
+                    .setCancelText("Update")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismiss();
+                        }
+                    })
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            Intent in = new Intent(getApplicationContext(), InventoryList.class);
+                            startActivity(in);
+                            finish();
+                        }
+                    }).show();
+        }
+
+    }
+
     private void addBottomDots(int currentPage) {
 
         dots = new TextView[layouts.length];
@@ -589,6 +622,7 @@ public class ScanCashCard extends AppCompatActivity {
 
             //intro_one.xml
             if (position == 0) {
+                countIncomplete();
 
                 tilHhId = findViewById(R.id.til_hhid);
                 edt_hh = findViewById(R.id.edtHhId);
