@@ -254,12 +254,12 @@ public class InventoryList extends AppCompatActivity {
                 tvIdentifier.setVisibility(View.VISIBLE);
             }
             else {
+                tvIdentifier.setVisibility(View.INVISIBLE);
                 Toasty.success(this,"Search successfully", Toasty.LENGTH_SHORT).show();
             }
             tvResultHh.setVisibility(View.VISIBLE);
             tvResultHh.setText(household_no);
             adapter.notifyDataSetChanged();
-
         }
         catch (Exception e){
             Log.d(TAG, "Error: "+ e);
