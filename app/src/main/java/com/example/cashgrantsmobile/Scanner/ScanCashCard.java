@@ -1434,7 +1434,7 @@ public class ScanCashCard extends AppCompatActivity {
                     edt_address.setText("");
                     edt_set.setText("");
                     spinSex.setText("");
-
+                    edt_contact_no.setText("");
                     Toasty.error(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
 
                 }
@@ -1457,6 +1457,7 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_address.setText(address);
                         edt_set.setText(hh_set_group);
                         spinSex.setText(sex,false);
+                        edt_contact_no.setText("");
                         Toasty.success(getApplicationContext(),"Household Found", Toasty.LENGTH_SHORT).show();
 
 
