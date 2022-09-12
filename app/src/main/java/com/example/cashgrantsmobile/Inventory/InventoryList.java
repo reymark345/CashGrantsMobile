@@ -231,7 +231,7 @@ public class InventoryList extends AppCompatActivity {
             scanning_status = 0;
         }
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' OR card_scanning_status LIKE '%"+scanning_status+"%' OR DATE(created_at) LIKE '%"+filter_date+"%' order by id DESC");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' AND card_scanning_status LIKE '%"+scanning_status+"%' AND DATE(created_at) LIKE '%"+filter_date+"%' order by id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
