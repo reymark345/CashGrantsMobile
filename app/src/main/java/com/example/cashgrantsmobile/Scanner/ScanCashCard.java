@@ -624,6 +624,9 @@ public class ScanCashCard extends AppCompatActivity {
             if (position == 0) {
                 countIncomplete();
 
+
+                tilContactNo = findViewById(R.id.til_contact_no);
+                tilSet = findViewById(R.id.til_set);
                 tilHhId = findViewById(R.id.til_hhid);
                 edt_hh = findViewById(R.id.edtHhId);
                 edt_fullname = findViewById(R.id.edtFullname);
@@ -667,6 +670,9 @@ public class ScanCashCard extends AppCompatActivity {
                 String hh_set_group = sh.getString("hh_set_group", "");
                 String assigned = sh.getString("assigned", "");
                 String minor_grantee = sh.getString("minor_grantee", "");
+
+                contactNumber(edt_contact_no);
+                setEntry(edt_set);
 
                 if (hh_id.matches("")){edt_hh.setText("160310001-");}else {edt_hh.setText(hh_id); }
                 edt_fullname.setText(full_name);
@@ -1530,6 +1536,51 @@ public class ScanCashCard extends AppCompatActivity {
             Toasty.error(getApplicationContext(),"Household not found", Toasty.LENGTH_SHORT).show();
         }
     }
+
+    public void contactNumber(EditText contact){
+        contact.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilContactNo.setError(required_field);
+                }
+                else{
+                    tilContactNo.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    public void setEntry(EditText setEntries){
+        setEntries.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilSet.setError(required_field);
+                }
+                else{
+                    tilSet.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
 
     public void HouseholdOnChange(EditText household){
         household.addTextChangedListener(new TextWatcher() {
