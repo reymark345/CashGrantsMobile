@@ -240,6 +240,8 @@ public class ScannedDetails extends AppCompatActivity {
                 mPreviewGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+
+
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                 int inventory_id = sh.getInt("updateValue", 0);
                 if (grante_no !=0){sqLiteHelper.updateGranteeEmv(grante_no,imageViewToByte(mPreviewGrantee));}
@@ -569,6 +571,17 @@ public class ScannedDetails extends AppCompatActivity {
         String informants = sh.getString("Informant_Identifier", "");
 
         if (scanned ==true && !signatories.matches("true")){
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT accomplish_e_signature FROM Api WHERE id=1");
+                while (cursor.moveToNext()) {
+                    byte[] accomplish_sign = cursor.getBlob(0);
+                    if (accomplish_sign != null) {
+                        Bitmap accomplishedBy = BitmapFactory.decodeByteArray(accomplish_sign, 0, accomplish_sign.length);
+                        mAccomplished.setImageBitmap(accomplishedBy);
+                        Log.v(TAG,"haladd if" + accomplishedBy);
+                        sqLiteHelper.updateAccomplishSign(imageViewToByte(mAccomplished));
+                    }
+                }
+
             accomplish =null;
             Log.v(TAG,"FirstScanned" + dataUp);
             edtAccomplishBy.setText(accomplish_shared);

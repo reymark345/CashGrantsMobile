@@ -170,7 +170,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void insertDefaultUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "INSERT INTO Api VALUES (1,?,?,?,?,?,?)";
+            String sql = "INSERT INTO Api VALUES (1,?,?,?,?,?,?,null)";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.clearBindings();
             statement.bindString(1, token);
@@ -188,7 +188,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void updateUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE Api SET token = ?,user_id=?, email=?,mobile=?,name=?,username=? WHERE id = 1";
+            String sql = "UPDATE Api SET token = ?,user_id=?, email=?,mobile=?,name=?,username=?, accomplish_e_signature=null WHERE id = 1";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.bindString(1, token);
             statement.bindString(2, user_id);
@@ -289,6 +289,24 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,e.toString());
         }
     }
+
+    public void updateAccomplishSignature(byte[] signature){
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE Api SET accomplish_e_signature = ? WHERE id = 1";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindBlob(1, signature);
+            statement.execute();
+            database.close();
+            Log.v(TAG,"Success update na accomplishne");
+        }
+        catch(Exception e){
+            Log.v(TAG,"error Tokenss");
+            Log.v(TAG,e.toString());
+        }
+    }
+
+
     public void updateInformantSignature_emv(int current_idd,String cash_card,String accomplish,String informant,String attested ,byte[] signature,String series_number) {
         try {
 
@@ -352,6 +370,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             SQLiteStatement statement = database.compileStatement(sql);
             statement.bindBlob(1, grantee);
             statement.bindLong(2, current_idd);
+            statement.execute();
+            database.close();
+        }
+        catch (Exception e){
+            Log.v(TAG,"Error");
+        }
+    }
+    public void updateAccomplishSign(byte[] accomplish_sign) {
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE emv_database_monitoring_details SET accomplish_e_signature =? WHERE id = (SELECT max(id) FROM emv_database_monitoring_details)";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindBlob(1, accomplish_sign);
             statement.execute();
             database.close();
         }

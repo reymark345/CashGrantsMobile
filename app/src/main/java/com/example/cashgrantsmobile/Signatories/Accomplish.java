@@ -71,6 +71,12 @@ public class Accomplish extends AppCompatActivity {
                     SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                     String identifier = sh.getString("identifier", "");
 
+                    sqLiteHelper.updateAccomplishSignature(
+                            imageViewToByte(imageViewSignature)
+                    );
+
+
+
                     if (signatureCondition ==0 && identifier.matches("false")){
                         int currentId = sh.getInt("maxIdScanned", 0);
 
