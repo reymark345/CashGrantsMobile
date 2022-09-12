@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="CCITM"
+            android:text="Cash Grants Tracker"
             android:textColor="@color/textHeadline"
             android:textSize="20sp" />
 
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="Sign in to continue"
+            android:text="Sign in to continue "
             android:textColor="@color/textDescription"
             android:textSize="14sp" />
 
