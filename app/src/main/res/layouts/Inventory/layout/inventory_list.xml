@@ -99,6 +99,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textStyle="italic"
-        android:text="Household Not Found"
+        android:text="Household not found"
         android:textColor="@color/black" />
 </RelativeLayout>
