@@ -119,6 +119,7 @@ public class PullUpdateData extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
+
                     queue.cancelAll(this);
                     btnPullUpdate.setEnabled(true);
                     e.printStackTrace();
@@ -235,6 +236,7 @@ public class PullUpdateData extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
+                    Toasty.error(getApplicationContext(), "Request to PULL Data Error!", Toast.LENGTH_SHORT, true).show();
                     btnPullUpdate.setEnabled(true);
                     e.printStackTrace();
                 }
