@@ -182,7 +182,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.executeInsert();
         }
         catch(Exception e){
-            Log.v(TAG,"insertDefault na error ");
+            Log.v(TAG,"error ");
         }
     }
     public void updateUser(String token, String user_id, String email, String mobile, String name, String username){
@@ -298,10 +298,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindBlob(1, signature);
             statement.execute();
             database.close();
-            Log.v(TAG,"Success update na accomplishne");
         }
         catch(Exception e){
-            Log.v(TAG,"error Tokenss");
             Log.v(TAG,e.toString());
         }
     }
