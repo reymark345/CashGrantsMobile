@@ -21,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -28,6 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.CharArrayBuffer;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -62,6 +64,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,13 +100,15 @@ public class ScanCashCard extends AppCompatActivity {
 
     String cameraPermission[];
     String StoragePermission[],required_field;
-    Button btn_search_hh;
+    Button btn_search_hh, rescanCashCard,btn_scanID;
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     public static boolean pressNext = false;
     Uri image_uri;
     String full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3,upload_history_id,created_at,updated_at,validated_at;
     Integer emv_id;
+    ImageView imgAdditionalId;
+    TextView tvAdditional,tViewCashCard1;
 
 
     //onboard
@@ -125,7 +130,7 @@ public class ScanCashCard extends AppCompatActivity {
     EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3;
     EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks;
     EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
-    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory;
+    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID;
 
     String[] Ans = new String[]{"","Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
@@ -713,6 +718,20 @@ public class ScanCashCard extends AppCompatActivity {
                 spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
                 spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
 
+                spinIsID = findViewById(R.id.spinnerIsID);
+
+
+                btn_scanID = findViewById(R.id.btn_scanID);
+                tvAdditional = findViewById(R.id.tViewAdditionalId);
+                imgAdditionalId= findViewById(R.id.imgAdditionalId);
+
+                tViewCashCard1= findViewById(R.id.tViewCashCard1);
+
+
+
+
+
+
                 spinIsAvailReason.setText(null);
                 spinIsAvailReason.setDropDownHeight(0);
                 spinIsAvailReason.setEnabled(false);
@@ -736,6 +755,8 @@ public class ScanCashCard extends AppCompatActivity {
                 ArrayAdapter<String> adapterIsAvail2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterIsAvail3 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
 
+                ArrayAdapter<String> adapterIsID = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, CardRequired);
+
                 ArrayAdapter<String> adapterIsAvailReason = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
                 ArrayAdapter<String> adapterIsAvailReason1 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
                 ArrayAdapter<String> adapterIsAvailReason2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
@@ -745,6 +766,7 @@ public class ScanCashCard extends AppCompatActivity {
                 adapterIsAvail1.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterIsAvail2.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterIsAvail3.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterIsID.setDropDownViewResource(simple_spinner_dropdown_item);
 
                 adapterIsAvailReason.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterIsAvailReason1.setDropDownViewResource(simple_spinner_dropdown_item);
@@ -755,6 +777,9 @@ public class ScanCashCard extends AppCompatActivity {
                 spinIsAvail1.setAdapter(adapterIsAvail1);
                 spinIsAvail2.setAdapter(adapterIsAvail2);
                 spinIsAvail3.setAdapter(adapterIsAvail3);
+
+
+                spinIsID.setAdapter(adapterIsID);
 
                 spinIsAvailReason.setAdapter(adapterIsAvailReason);
                 spinIsAvailReason1.setAdapter(adapterIsAvailReason1);
@@ -771,6 +796,37 @@ public class ScanCashCard extends AppCompatActivity {
                         showDateDialog(edt_card_released);
                     }
                 });
+
+
+                spinIsID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinIsID.getText().toString().matches("Yes")) {
+                            btn_scanID.setVisibility(View.VISIBLE);
+                            tvAdditional.setVisibility(View.VISIBLE);
+                            imgAdditionalId.setVisibility(View.VISIBLE);
+
+                        } else {
+
+                            if(getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) tViewCashCard1.getLayoutParams();
+                                lp.addRule(RelativeLayout.BELOW, 1);
+                                tViewCashCard1.setLayoutParams(lp);
+                            }
+
+
+
+                            btn_scanID.setVisibility(View.INVISIBLE);
+                            tvAdditional.setVisibility(View.INVISIBLE);
+                            imgAdditionalId.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+
+
+
+
+
                 spinIsAvailReason.setEnabled(false);
                 spinIsAvail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
