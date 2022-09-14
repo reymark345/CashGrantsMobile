@@ -679,8 +679,8 @@ public class ScanCashCard extends AppCompatActivity {
                 spinClientStatus.setText(client_status,false);
                 edt_address.setText(address);
                 spinSex.setText(sex,false);
-                edt_set.setText(contact_no);
-                edt_contact_no.setText(hh_set_group);
+                edt_set.setText(hh_set_group);
+                edt_contact_no.setText(contact_no);
                 edt_assigned.setText(assigned);
                 spinAnswer.setText(minor_grantee,false);
 
@@ -1058,7 +1058,6 @@ public class ScanCashCard extends AppCompatActivity {
             edt_address = findViewById(R.id.edtAddress);
             spinSex = findViewById(R.id.spinnerSex);
             edt_set = findViewById(R.id.edtSet);
-            edt_contact_no = findViewById(R.id.edtContactNo);
             edt_assigned = findViewById(R.id.edtAssigned);
             spinAnswer = findViewById(R.id.spinnerMinorGrantee);
             edt_contact_no = findViewById(R.id.edtContactNo);
@@ -1131,6 +1130,14 @@ public class ScanCashCard extends AppCompatActivity {
             } else {
                 tilContactNo.setError(null);
             }
+
+            if (contact_no.length()!=10){
+                tilContactNo.setError(required_field);
+                isValidationError++;
+            } else {
+                tilContactNo.setError(null);
+            }
+
 
             if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
 
@@ -1545,7 +1552,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                if(s.toString().length() == 0){
+                if(s.toString().length() != 10){
                     tilContactNo.setError(required_field);
                 }
                 else{
