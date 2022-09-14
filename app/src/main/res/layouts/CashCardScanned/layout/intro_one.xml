@@ -195,13 +195,19 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     app:endIconMode="clear_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_baseline_phone_android_24">
+                    >
 
                     <EditText
+                        android:drawableLeft="@drawable/icon_contacts"
+                        android:drawableStart="@drawable/icon_contacts"
+                        android:drawablePadding="6dp"
                         android:id="@+id/edtContactNo"
                         android:layout_width="match_parent"
+                        android:maxLength="10"
                         android:layout_height="wrap_content"
                         android:hint="Contact No."
                         android:inputType="number" />
@@ -219,6 +225,7 @@
                     app:endIconMode="clear_text"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
+
                     app:startIconDrawable="@drawable/ic_assigned">
 
                     <EditText
