@@ -47,8 +47,8 @@
                     android:id="@+id/edtCardReleased"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Date of Card Released"
                     android:editable="false"
+                    android:hint="Date of Card Released"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,6 +167,7 @@
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/ic_image" />
 
+
                 <ImageView
                     android:id="@+id/imgUri"
                     android:layout_width="90dp"
@@ -179,16 +180,29 @@
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/ic_image" />
 
-                <Button
-                    android:id="@+id/rescanCashCard"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tViewId"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="30dp"
-                    android:text="SCAN"
-                    android:textColor="@color/white" />
+                    android:layout_alignRight="@id/tViewId"
+                    android:layout_marginTop="-20dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation">
+
+                    <Button
+                        android:id="@+id/rescanCashCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tViewId"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="30dp"
+                        android:text="SCAN"
+                        android:textColor="@color/white" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_cashCard"
@@ -199,16 +213,19 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
+                    app:counterMaxLength="23"
                     app:endIconMode="clear_text"
+                    app:counterEnabled="true"
                     app:helperText="Good valid!"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_creditcard">
 
                     <EditText
-                        android:id="@+id/Idresult"
+                        android:id="@+id/edt_cashCardNumber"
                         android:layout_width="match_parent"
+                        android:maxLength="23"
                         android:layout_height="wrap_content"
-                        android:hint="Cash Card no."
+                        android:hint="Cash card number"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -221,6 +238,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
+                    app:counterMaxLength="1"
                     app:endIconMode="clear_text"
                     app:helperText="Good valid!"
                     app:helperTextTextColor="@color/validation"
@@ -230,8 +248,9 @@
                         android:id="@+id/edt_series_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLength="1"
                         android:hint="Card series"
-                        android:inputType="text" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -240,6 +259,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/til_series_number"
+                    android:layout_marginTop="10dp"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
@@ -285,17 +305,29 @@
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/ic_image" />
 
-                <Button
-                    android:id="@+id/btn_scanID"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_additionalID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/til_isID"
+                    android:layout_below="@+id/til_isID"
                     android:layout_alignRight="@id/tViewAdditionalId"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginRight="30dp"
-                    android:text="SCAN"
-                    android:textColor="@color/white" />
+                    android:layout_marginTop="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation">
+
+                    <Button
+                        android:id="@+id/btn_scanID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/til_isID"
+                        android:layout_alignRight="@id/tViewAdditionalId"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="30dp"
+                        android:text="SCAN"
+                        android:textColor="@color/white" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/tViewCashCard1"
@@ -321,17 +353,30 @@
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/ic_image" />
 
-                <Button
-                    android:id="@+id/rescanBeneId"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGrantee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/btn_scanID"
-                    android:layout_alignRight="@id/tViewAdditionalId"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="70dp"
-                    android:layout_marginRight="30dp"
-                    android:text="SCAN"
-                    android:textColor="@color/white" />
+                    android:layout_below="@+id/imgAdditionalId"
+                    android:layout_alignRight="@id/til_isID"
+                    android:layout_marginTop="5dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation">
+
+                    <Button
+                        android:id="@+id/rescanBeneId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imgAdditionalId"
+                        android:layout_alignRight="@id/til_isID"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="40dp"
+                        android:text="SCAN"
+                        android:textColor="@color/white" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </RelativeLayout>
