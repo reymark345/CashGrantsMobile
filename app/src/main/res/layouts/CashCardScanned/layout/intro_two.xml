@@ -191,7 +191,7 @@
                     app:helperTextTextColor="@color/validation">
 
                     <Button
-                        android:id="@+id/rescanCashCard"
+                        android:id="@+id/btn_scanCashCard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tViewId"
@@ -342,12 +342,12 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/PsID1"
+                    android:id="@+id/mGrantee"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:layout_below="@id/imgAdditionalId"
+                    android:layout_below="@id/tViewCashCard1"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/round_outline"
                     android:scaleType="fitXY"
@@ -365,7 +365,7 @@
                     app:helperTextTextColor="@color/validation">
 
                     <Button
-                        android:id="@+id/rescanBeneId"
+                        android:id="@+id/btn_grantee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/imgAdditionalId"

@@ -100,7 +100,7 @@ public class ScanCashCard extends AppCompatActivity {
 
     String cameraPermission[];
     String StoragePermission[],required_field;
-    Button btn_search_hh, rescanCashCard,btn_scanID;
+    Button btn_search_hh, rescanCashCard,btn_scanID, btn_cash_card,btn_grantee;
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     public static boolean pressNext = false;
@@ -109,6 +109,7 @@ public class ScanCashCard extends AppCompatActivity {
     Integer emv_id;
     ImageView imgAdditionalId;
     TextView tvAdditional,tViewCashCard1;
+    ImageView mPreviewCashCard,mAdditionalID,mPreviewGrantee;
 
 
     //onboard
@@ -363,7 +364,27 @@ public class ScanCashCard extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
+        if (requestCode == 102){
+            try {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                mAdditionalID.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+            }catch (Exception e){
+                Log.v(TAG,"error" + e);
+            }
+        }
+        else if (requestCode == 103){
+            try {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                mPreviewGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+            }catch (Exception e){
+                Log.v(TAG,"error" + e);
+            }
+        }
+        else if (resultCode == RESULT_OK){
             if (requestCode == IMAGE_PICK_CAMERA_CODE){
 
                 CropImage.activity(image_uri).setGuidelines(CropImageView.Guidelines.ON).start(this);
@@ -722,8 +743,10 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
                 edt_series_no = findViewById(R.id.edt_series_no);
 
-
+                btn_cash_card = findViewById(R.id.btn_scanCashCard);
                 btn_scanID = findViewById(R.id.btn_scanID);
+                btn_grantee = findViewById(R.id.btn_grantee);
+
                 tvAdditional = findViewById(R.id.tViewAdditionalId);
                 imgAdditionalId= findViewById(R.id.imgAdditionalId);
 
@@ -732,6 +755,14 @@ public class ScanCashCard extends AppCompatActivity {
                 tilCard= findViewById(R.id.til_cashCard);
                 tilSeriesNumber= findViewById(R.id.til_series_number);
                 tilIsID = findViewById(R.id.til_isID);
+
+                mPreviewCashCard = findViewById(R.id.ScannedImage);
+                mPreviewGrantee = findViewById(R.id.mGrantee);
+                mAdditionalID = findViewById(R.id.imgAdditionalId);
+
+                mPreviewGrantee.setClipToOutline(true);
+                mPreviewCashCard.setClipToOutline(true);
+                mAdditionalID.setClipToOutline(true);
 
 
                 spinIsAvailReason.setText(null);
@@ -807,6 +838,23 @@ public class ScanCashCard extends AppCompatActivity {
                         showDateDialog(edt_card_released);
                     }
                 });
+
+                btn_scanID.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, 102);
+                    }
+                });
+
+                btn_grantee.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, 103);
+                    }
+                });
+
 
 
                 spinIsID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -1331,6 +1379,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
         }
     }
+
 
     public void store_preferences(int pos) {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
