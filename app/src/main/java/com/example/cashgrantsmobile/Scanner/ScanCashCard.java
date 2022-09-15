@@ -731,6 +731,7 @@ public class ScanCashCard extends AppCompatActivity {
                 tiladditionalID = findViewById(R.id.til_additionalID);
                 tilCard= findViewById(R.id.til_cashCard);
                 tilSeriesNumber= findViewById(R.id.til_series_number);
+                tilIsID = findViewById(R.id.til_isID);
 
 
                 spinIsAvailReason.setText(null);

@@ -213,9 +213,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
+                    app:counterEnabled="true"
                     app:counterMaxLength="23"
                     app:endIconMode="clear_text"
-                    app:counterEnabled="true"
                     app:helperText="Good valid!"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_creditcard">
@@ -223,10 +223,10 @@
                     <EditText
                         android:id="@+id/edt_cashCardNumber"
                         android:layout_width="match_parent"
-                        android:maxLength="23"
                         android:layout_height="wrap_content"
                         android:hint="Cash card number"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:maxLength="23" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -248,9 +248,9 @@
                         android:id="@+id/edt_series_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="1"
                         android:hint="Card series"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:maxLength="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
