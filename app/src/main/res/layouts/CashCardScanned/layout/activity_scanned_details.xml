@@ -64,8 +64,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Cash Card no."
-                            android:inputType="number"
-                             />
+                            android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -161,6 +160,7 @@
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
                         app:srcCompat="@drawable/ic_image" />
+
                     <ImageView
                         android:id="@+id/PsID"
                         android:layout_width="90dp"

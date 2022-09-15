@@ -47,8 +47,8 @@
                     android:id="@+id/edtCardReleased"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Date of Card Released"
                     android:editable="false"
+                    android:hint="Date of Card Released"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,11 +117,277 @@
                     android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+
+            <TextView
+                android:id="@+id/textViewScanned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/til_currentgranteenumber"
+                android:layout_marginLeft="20dp"
+                android:text="Scanned details"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="15dp" />
+
+            <RelativeLayout
+                android:id="@+id/linearl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/textViewScanned"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/selector_fieldset_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Cash card"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ScannedImage"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_below="@id/tViewId"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_outline"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_image" />
+
+
+                <ImageView
+                    android:id="@+id/imgUri"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_below="@id/tViewId"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_outline"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_image" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tViewId"
+                    android:layout_alignRight="@id/tViewId"
+                    android:layout_marginTop="-20dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation">
+
+                    <Button
+                        android:id="@+id/rescanCashCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tViewId"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="30dp"
+                        android:text="SCAN"
+                        android:textColor="@color/white" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_cashCard"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgUri"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    app:counterMaxLength="23"
+                    app:endIconMode="clear_text"
+                    app:counterEnabled="true"
+                    app:helperText="Good valid!"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_creditcard">
+
+                    <EditText
+                        android:id="@+id/edt_cashCardNumber"
+                        android:layout_width="match_parent"
+                        android:maxLength="23"
+                        android:layout_height="wrap_content"
+                        android:hint="Cash card number"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_series_number"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_cashCard"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    app:counterMaxLength="1"
+                    app:endIconMode="clear_text"
+                    app:helperText="Good valid!"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_series_no">
+
+                    <EditText
+                        android:id="@+id/edt_series_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="1"
+                        android:hint="Card series"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_isID"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_series_number"
+                    android:layout_marginTop="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/spinnerIsID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="ID exists"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tViewAdditionalId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/til_isID"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Additional ID"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imgAdditionalId"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_below="@id/tViewAdditionalId"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/round_outline"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_image" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_additionalID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_isID"
+                    android:layout_alignRight="@id/tViewAdditionalId"
+                    android:layout_marginTop="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation">
+
+                    <Button
+                        android:id="@+id/btn_scanID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/til_isID"
+                        android:layout_alignRight="@id/tViewAdditionalId"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="30dp"
+                        android:text="SCAN"
+                        android:textColor="@color/white" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tViewCashCard1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imgAdditionalId"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Grantee"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/PsID1"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_below="@id/imgAdditionalId"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/round_outline"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_image" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGrantee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgAdditionalId"
+                    android:layout_alignRight="@id/til_isID"
+                    android:layout_marginTop="5dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation">
+
+                    <Button
+                        android:id="@+id/rescanBeneId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imgAdditionalId"
+                        android:layout_alignRight="@id/til_isID"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="40dp"
+                        android:text="SCAN"
+                        android:textColor="@color/white" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </RelativeLayout>
+
+
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAvailability"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/til_currentgranteenumber"
+                android:layout_below="@+id/linearl"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/background">
 
