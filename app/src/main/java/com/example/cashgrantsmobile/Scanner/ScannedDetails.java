@@ -64,6 +64,7 @@ public class ScannedDetails extends AppCompatActivity {
     byte[] accomplish = new byte[0];
     byte[] informant = new byte[0];
     byte[] granteeImage = null;
+
     private boolean isAtSpaceDelimiter(int currCount) {
         return currCount == 4 ||currCount == 9 || currCount == 14 || currCount == 19;
     }
