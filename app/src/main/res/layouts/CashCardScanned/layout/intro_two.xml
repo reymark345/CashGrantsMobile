@@ -216,7 +216,7 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="23"
                     app:endIconMode="clear_text"
-                    app:helperText="Good valid!"
+                    app:helperText="Required!"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_creditcard">
 
