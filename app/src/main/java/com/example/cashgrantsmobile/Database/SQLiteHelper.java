@@ -185,6 +185,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,"error ");
         }
     }
+
+    public void insertDefaultTmpBlob(byte[] cc_image){
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "INSERT INTO tmp_blob VALUES (1,?,null,null,null,null,null,null,null)";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.clearBindings();
+            statement.bindBlob(1, cc_image);
+            statement.executeInsert();
+            Log.v(TAG,"ni insert" + cc_image);
+        }
+        catch(Exception e){
+            Log.v(TAG,"nag error do " + e);
+        }
+    }
     public void updateUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
             SQLiteDatabase database = getWritableDatabase();
@@ -202,6 +217,22 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         catch(Exception e){
             Log.v(TAG,"error Token");
             Log.v(TAG,e.toString());
+        }
+    }
+
+
+    public void updateTmpBlob(byte[] cc_image){
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE tmp_blob SET scanned_e_image = ? WHERE id = 1";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindBlob(1, cc_image);
+            statement.execute();
+            database.close();
+            Log.v(TAG, "update ni insert ");
+        }
+        catch(Exception e){
+            Log.v(TAG, "update ni error "+e);
         }
     }
 
