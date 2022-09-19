@@ -132,7 +132,7 @@ public class ScanCashCard extends AppCompatActivity {
     private TextView[] dots;
     private MyViewPagerAdapter viewPagerAdapter;
     TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee;
-    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber, tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3,tiladditionalID,tilCard,tilSeriesNumber, tilIsID;
+    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber, tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn;
     TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
     TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
     EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned, edt_cash_card_number;
@@ -703,35 +703,54 @@ public class ScanCashCard extends AppCompatActivity {
 //        }
     }
 
-    public void getImage(){
+
+
+    public void getImage(int validation){
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image FROM tmp_blob WHERE id=1");
-                while (cursor.moveToNext()) {
-                    byte[] scanned_image = cursor.getBlob(0);
-                    byte[] additional_image = cursor.getBlob(1);
-                    byte[] grantee_image = cursor.getBlob(2);
-                    if (scanned_image != null) {
-                        Bitmap scanned = BitmapFactory.decodeByteArray(scanned_image, 0, scanned_image.length);
-                        mPreviewCashCard.setImageBitmap(scanned);
+                Log.v(TAG,"cursorrr" + cursor.getCount());
+                if(cursor.getCount()!=0){
+                    while (cursor.moveToNext()) {
+                        byte[] scanned_image = cursor.getBlob(0);
+                        byte[] additional_image = cursor.getBlob(1);
+                        byte[] grantee_image = cursor.getBlob(2);
+                        if (scanned_image != null) {
+                            Bitmap scanned = BitmapFactory.decodeByteArray(scanned_image, 0, scanned_image.length);
+                            mPreviewCashCard.setImageBitmap(scanned);
+                            Log.v(TAG,"ifhalo" + scanned_image);
+                        }
+                        else{
+                            Log.v(TAG,"elsehala1 "+ scanned_image);
+//                        tilCard.setError(required_field);
+//                        validation++;
+                        }
+                        if (additional_image != null) {
+                            Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
+                            mAdditionalID.setImageBitmap(additional);
+                        }
+                        else{
+                            Log.v(TAG,"elsehala2 "+ scanned_image);
+//                        tiladditionalID.setError(required_field);
+//                        validation++;
+                        }
+                        if (grantee_image != null) {
+                            Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
+                            mPreviewGrantee.setImageBitmap(grantee);
+                        }
+                        else{
+                            Log.v(TAG,"elsehala3 "+ scanned_image);
+//                        tilGrantee.setError(required_field);
+//                        validation++;
+                        }
                     }
-                    else{
 
-                    }
-                    if (additional_image != null) {
-                        Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
-                        mAdditionalID.setImageBitmap(additional);
-                    }
-                    else{
-
-                    }
-                    if (grantee_image != null) {
-                        Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
-                        mPreviewGrantee.setImageBitmap(grantee);
-                    }
-                    else{
-
-                    }
                 }
+                else{
+                    tilCardBtn.setError(required_field);
+                    tiladditionalID.setError(required_field);
+                    tilGrantee.setError(required_field);
+                }
+
 
             }
             catch (Exception e){
@@ -974,6 +993,10 @@ public class ScanCashCard extends AppCompatActivity {
                 tilCard= findViewById(R.id.til_cashCard);
                 tilSeriesNumber= findViewById(R.id.til_series_number);
                 tilIsID = findViewById(R.id.til_isID);
+                tilGrantee = findViewById(R.id.tilGrantee);
+                tilCardBtn = findViewById(R.id.til_card);
+
+
 
                 mPreviewCashCard = findViewById(R.id.ScannedImage);
                 mPreviewGrantee = findViewById(R.id.mGrantee);
@@ -1054,7 +1077,7 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_card_released.setClickable(true);
                 edt_current_grantee_number.setEnabled(false);
 
-                getImage();
+                getImage(0);
 
                 edt_card_released.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1524,8 +1547,13 @@ public class ScanCashCard extends AppCompatActivity {
             tiladditionalID = findViewById(R.id.til_additionalID);
 
             tilCard = findViewById(R.id.til_cashCard);
+            tilCardBtn = findViewById(R.id.til_card);
             tilSeriesNumber = findViewById(R.id.til_series_number);
             tilIsID = findViewById(R.id.til_isID);
+            tilGrantee = findViewById(R.id.tilGrantee);
+
+
+            getImage(isValidationError);
 
             if (is_available.matches("")) {
                 tilIsAvailable.setError(required_field);
