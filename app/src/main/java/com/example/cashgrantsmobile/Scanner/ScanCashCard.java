@@ -34,6 +34,7 @@ import android.database.CharArrayBuffer;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -48,6 +49,7 @@ import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -213,6 +215,7 @@ public class ScanCashCard extends AppCompatActivity {
             Toasty.success(this,""+value, Toasty.LENGTH_SHORT).show();
             extras.clear();
         }
+        temp_BLOB_status();
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         StoragePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -395,8 +398,19 @@ public class ScanCashCard extends AppCompatActivity {
                 mAdditionalID.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+
+
+                SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+                String count = "SELECT count(*) FROM tmp_blob";
+                Cursor mCursor = db.rawQuery(count, null);
+                mCursor.moveToFirst();
+                int iCount = mCursor.getInt(0);
+                if(iCount==0){sqLiteHelper.insertDefaultAdditionalTmp(imageViewToByte(mAdditionalID));}
+                else {sqLiteHelper.updateTmpAdditional(imageViewToByte(mAdditionalID));}
+
+
             }catch (Exception e){
-                Log.v(TAG,"error" + e);
+                Log.v(TAG,"errordaw" + e);
             }
         }
         else if (requestCode == 103){
@@ -405,6 +419,20 @@ public class ScanCashCard extends AppCompatActivity {
                 mPreviewGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+
+                SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+                String count = "SELECT count(*) FROM tmp_blob";
+                Cursor mCursor = db.rawQuery(count, null);
+                mCursor.moveToFirst();
+                int iCount = mCursor.getInt(0);
+                if(iCount==0){sqLiteHelper.insertDefaultGranteeTmp(imageViewToByte(mPreviewGrantee));
+                    Log.v(TAG,"error1111" + iCount);
+
+                }
+                else {
+                    Log.v(TAG,"error2222");
+                    sqLiteHelper.updateTmpGrantee(imageViewToByte(mPreviewGrantee));}
+
             }catch (Exception e){
                 Log.v(TAG,"error" + e);
             }
@@ -471,8 +499,37 @@ public class ScanCashCard extends AppCompatActivity {
                     try {
                         Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                         mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
-//                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                        bm.compress(Bitmap.CompressFormat.PNG, 95, stream);
+
+                        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                        String temp_status = sh.getString("temp_blob", "");
+
+                        SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+                        String count = "SELECT count(*) FROM tmp_blob";
+                        Cursor mCursor = db.rawQuery(count, null);
+                        mCursor.moveToFirst();
+                        int iCount = mCursor.getInt(0);
+                        if(iCount==0){sqLiteHelper.insertDefaultScannedTmp(imageViewToByte(mPreviewCashCard));}
+                        else {sqLiteHelper.updateTmpScannedCC(imageViewToByte(mPreviewCashCard));}
+
+//                        if (temp_status.matches("1")){
+////                            sqLiteHelper.updateTmpBlob(imageViewToByte(mPreviewCashCard));
+//
+//                            Log.v(TAG, "naay sulod ");
+//
+//                        }
+//                        else{
+//
+//                            Log.v(TAG, "walay sulod ");
+//                            sqLiteHelper.insertDefaultTmpBlob(imageViewToByte(mPreviewCashCard));
+//
+//                            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+//                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+//                            myEdit.putString("temp_blob", "1");
+//                            myEdit.commit();
+//                        }
+
+
+
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
                             edt_cashCardNumber.setText(limitString);
@@ -662,6 +719,32 @@ public class ScanCashCard extends AppCompatActivity {
 //                sqLiteHelper.storeLogs("error", "", "Scanned: " + error);
 //            }
 //        }
+    }
+
+
+    public void temp_BLOB_status(){
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        if (!sharedPreferences.contains("temp_blob")) {
+            myEdit.putString("temp_blob", "0");
+            myEdit.commit();
+        }
+    }
+
+    public static String encodeToBase64(Bitmap image) {
+        Bitmap immage = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        Log.d("Image Log:", imageEncoded);
+        return imageEncoded;
+    }
+
+    public static Bitmap decodeToBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     public static byte[] imageViewToByte(ImageView image) {

@@ -328,9 +328,15 @@ public class ScannedDetails extends AppCompatActivity {
                             SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                             int inventory_id = sh.getInt("updateValue", 0);
 
-                            if (grante_no !=0){sqLiteHelper.updateCashCardEmv(grante_no,imageViewToByte(mPreviewCashCard));}
-                            else if(grante_no ==0 && inventory_id==0){sqLiteHelper.updateCashCardEmv(max_id,imageViewToByte(mPreviewCashCard));}
-                            else if(inventory_id!=0){sqLiteHelper.updateCashCardEmv(inventory_id,imageViewToByte(mPreviewCashCard));}
+                            if (grante_no !=0){
+                                sqLiteHelper.updateCashCardEmv(grante_no,imageViewToByte(mPreviewCashCard));
+                            }
+                            else if(grante_no ==0 && inventory_id==0){
+                                sqLiteHelper.updateCashCardEmv(max_id,imageViewToByte(mPreviewCashCard));
+                            }
+                            else if(inventory_id!=0){
+                                sqLiteHelper.updateCashCardEmv(inventory_id,imageViewToByte(mPreviewCashCard));
+                            }
                             else{sqLiteHelper.updateCashCardEmv(id,imageViewToByte(mPreviewCashCard));}
                         } catch (IOException e) {
                             e.printStackTrace();
