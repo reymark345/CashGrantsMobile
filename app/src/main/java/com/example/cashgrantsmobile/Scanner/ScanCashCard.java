@@ -7,6 +7,7 @@ import static android.R.layout.simple_spinner_dropdown_item;
 import static android.content.ContentValues.TAG;
 import static androidx.core.content.ContentProviderCompat.requireContext;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
+import static com.example.cashgrantsmobile.Scanner.ScanCashCard.imageViewToByte;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 import androidx.annotation.NonNull;
@@ -511,25 +512,6 @@ public class ScanCashCard extends AppCompatActivity {
                         if(iCount==0){sqLiteHelper.insertDefaultScannedTmp(imageViewToByte(mPreviewCashCard));}
                         else {sqLiteHelper.updateTmpScannedCC(imageViewToByte(mPreviewCashCard));}
 
-//                        if (temp_status.matches("1")){
-////                            sqLiteHelper.updateTmpBlob(imageViewToByte(mPreviewCashCard));
-//
-//                            Log.v(TAG, "naay sulod ");
-//
-//                        }
-//                        else{
-//
-//                            Log.v(TAG, "walay sulod ");
-//                            sqLiteHelper.insertDefaultTmpBlob(imageViewToByte(mPreviewCashCard));
-//
-//                            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-//                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-//                            myEdit.putString("temp_blob", "1");
-//                            myEdit.commit();
-//                        }
-
-
-
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
                             edt_cashCardNumber.setText(limitString);
@@ -719,6 +701,44 @@ public class ScanCashCard extends AppCompatActivity {
 //                sqLiteHelper.storeLogs("error", "", "Scanned: " + error);
 //            }
 //        }
+    }
+
+    public void getImage(){
+            try {
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image FROM tmp_blob WHERE id=1");
+                while (cursor.moveToNext()) {
+                    byte[] scanned_image = cursor.getBlob(0);
+                    byte[] additional_image = cursor.getBlob(1);
+                    byte[] grantee_image = cursor.getBlob(2);
+                    if (scanned_image != null) {
+                        Bitmap scanned = BitmapFactory.decodeByteArray(scanned_image, 0, scanned_image.length);
+                        mPreviewCashCard.setImageBitmap(scanned);
+                    }
+                    else{
+
+                    }
+                    if (additional_image != null) {
+                        Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
+                        mAdditionalID.setImageBitmap(additional);
+                    }
+                    else{
+
+                    }
+                    if (grantee_image != null) {
+                        Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
+                        mPreviewGrantee.setImageBitmap(grantee);
+                    }
+                    else{
+
+                    }
+                }
+
+            }
+            catch (Exception e){
+                Log.v(TAG,"Errors " + e);
+            }
+
+
     }
 
 
@@ -1033,6 +1053,8 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_card_released.setFocusable(false);
                 edt_card_released.setClickable(true);
                 edt_current_grantee_number.setEnabled(false);
+
+                getImage();
 
                 edt_card_released.setOnClickListener(new View.OnClickListener() {
                     @Override
