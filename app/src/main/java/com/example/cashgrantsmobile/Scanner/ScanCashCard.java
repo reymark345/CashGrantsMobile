@@ -34,6 +34,7 @@ import android.database.CharArrayBuffer;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -398,14 +399,18 @@ public class ScanCashCard extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
 
-                SharedPreferences myPrefrence = getPreferences(MODE_PRIVATE);
-                SharedPreferences.Editor editor = myPrefrence.edit();
-                editor.putString("imgAdditionalID", encodeToBase64(bitmap));
-                editor.commit();
+
+                SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+                String count = "SELECT count(*) FROM tmp_blob";
+                Cursor mCursor = db.rawQuery(count, null);
+                mCursor.moveToFirst();
+                int iCount = mCursor.getInt(0);
+                if(iCount==0){sqLiteHelper.insertDefaultAdditionalTmp(imageViewToByte(mAdditionalID));}
+                else {sqLiteHelper.updateTmpAdditional(imageViewToByte(mAdditionalID));}
 
 
             }catch (Exception e){
-                Log.v(TAG,"error" + e);
+                Log.v(TAG,"errordaw" + e);
             }
         }
         else if (requestCode == 103){
@@ -415,12 +420,18 @@ public class ScanCashCard extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
 
+                SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+                String count = "SELECT count(*) FROM tmp_blob";
+                Cursor mCursor = db.rawQuery(count, null);
+                mCursor.moveToFirst();
+                int iCount = mCursor.getInt(0);
+                if(iCount==0){sqLiteHelper.insertDefaultGranteeTmp(imageViewToByte(mPreviewGrantee));
+                    Log.v(TAG,"error1111" + iCount);
 
-                SharedPreferences myPrefrence = getPreferences(MODE_PRIVATE);
-                SharedPreferences.Editor editor = myPrefrence.edit();
-                editor.putString("imgGrantee", encodeToBase64(bitmap));
-                editor.commit();
-
+                }
+                else {
+                    Log.v(TAG,"error2222");
+                    sqLiteHelper.updateTmpGrantee(imageViewToByte(mPreviewGrantee));}
 
             }catch (Exception e){
                 Log.v(TAG,"error" + e);
@@ -489,26 +500,33 @@ public class ScanCashCard extends AppCompatActivity {
                         Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                         mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
 
-
                         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
                         String temp_status = sh.getString("temp_blob", "");
 
-                        if (temp_status.matches("1")){
-                            sqLiteHelper.updateTmpBlob(imageViewToByte(mPreviewCashCard));
+                        SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+                        String count = "SELECT count(*) FROM tmp_blob";
+                        Cursor mCursor = db.rawQuery(count, null);
+                        mCursor.moveToFirst();
+                        int iCount = mCursor.getInt(0);
+                        if(iCount==0){sqLiteHelper.insertDefaultScannedTmp(imageViewToByte(mPreviewCashCard));}
+                        else {sqLiteHelper.updateTmpScannedCC(imageViewToByte(mPreviewCashCard));}
 
-                            Log.v(TAG, "naay sulod ");
-
-                        }
-                        else{
-
-                            Log.v(TAG, "walay sulod ");
-                            sqLiteHelper.insertDefaultTmpBlob(imageViewToByte(mPreviewCashCard));
-
-                            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                            myEdit.putString("temp_blob", "1");
-                            myEdit.commit();
-                        }
+//                        if (temp_status.matches("1")){
+////                            sqLiteHelper.updateTmpBlob(imageViewToByte(mPreviewCashCard));
+//
+//                            Log.v(TAG, "naay sulod ");
+//
+//                        }
+//                        else{
+//
+//                            Log.v(TAG, "walay sulod ");
+//                            sqLiteHelper.insertDefaultTmpBlob(imageViewToByte(mPreviewCashCard));
+//
+//                            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+//                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+//                            myEdit.putString("temp_blob", "1");
+//                            myEdit.commit();
+//                        }
 
 
 

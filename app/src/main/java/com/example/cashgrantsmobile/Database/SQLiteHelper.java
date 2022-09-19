@@ -186,7 +186,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertDefaultTmpBlob(byte[] cc_image){
+    public void insertDefaultScannedTmp(byte[] cc_image){
         try {
             SQLiteDatabase database = getWritableDatabase();
             String sql = "INSERT INTO tmp_blob VALUES (1,?,null,null,null,null,null,null,null)";
@@ -200,6 +200,38 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             Log.v(TAG,"nag error do " + e);
         }
     }
+
+    public void insertDefaultAdditionalTmp(byte[] cc_image){
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "INSERT INTO tmp_blob VALUES (1,null,?,null,null,null,null,null,null)";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.clearBindings();
+            statement.bindBlob(1, cc_image);
+            statement.executeInsert();
+            Log.v(TAG,"ni insert" + cc_image);
+        }
+        catch(Exception e){
+            Log.v(TAG,"nag error do " + e);
+        }
+    }
+
+    public void insertDefaultGranteeTmp(byte[] cc_image){
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "INSERT INTO tmp_blob VALUES (1,null,null,?,null,null,null,null,null)";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.clearBindings();
+            statement.bindBlob(1, cc_image);
+            statement.executeInsert();
+            Log.v(TAG,"wala ni insert" + cc_image);
+        }
+        catch(Exception e){
+            Log.v(TAG,"nag error do " + e);
+        }
+    }
+
+
     public void updateUser(String token, String user_id, String email, String mobile, String name, String username){
         try {
             SQLiteDatabase database = getWritableDatabase();
@@ -221,7 +253,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
 
-    public void updateTmpBlob(byte[] cc_image){
+    public void updateTmpScannedCC(byte[] cc_image){
         try {
             SQLiteDatabase database = getWritableDatabase();
             String sql = "UPDATE tmp_blob SET scanned_e_image = ? WHERE id = 1";
@@ -233,6 +265,35 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
         catch(Exception e){
             Log.v(TAG, "update ni error "+e);
+        }
+    }
+
+
+    public void updateTmpAdditional(byte[] cc_image){
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE tmp_blob SET additional_id_image = ? WHERE id = 1";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindBlob(1, cc_image);
+            statement.execute();
+            database.close();
+        }
+        catch(Exception e){
+            Log.v(TAG, "error "+e);
+        }
+    }
+
+    public void updateTmpGrantee(byte[] cc_image){
+        try {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE tmp_blob SET grantee_e_image = ? WHERE id = 1";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindBlob(1, cc_image);
+            statement.execute();
+            database.close();
+        }
+        catch(Exception e){
+            Log.v(TAG, "error "+e);
         }
     }
 
