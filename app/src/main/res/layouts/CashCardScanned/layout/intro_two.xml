@@ -421,7 +421,7 @@
                             android:background="@color/white"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Is Card Available"
+                            android:hint="Is Card Presented"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -547,7 +547,7 @@
                             android:background="@color/white"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Is Card Available" />
+                            android:hint="Is Card Presented" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -671,7 +671,7 @@
                             android:background="@color/white"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Is Card Available" />
+                            android:hint="Is Card Presented" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -798,7 +798,7 @@
                             android:background="@color/white"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Is Card Available" />
+                            android:hint="Is Card Presented" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
