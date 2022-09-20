@@ -322,7 +322,7 @@
                         android:layout_below="@id/til_isID"
                         android:layout_alignRight="@id/tViewAdditionalId"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginRight="20dp"
                         android:text="SCAN"
                         android:textColor="@color/white" />
 
@@ -371,7 +371,7 @@
                         android:layout_below="@id/imgAdditionalId"
                         android:layout_alignRight="@id/til_isID"
                         android:layout_marginTop="5dp"
-                        android:layout_marginRight="40dp"
+                        android:layout_marginRight="30dp"
                         android:text="SCAN"
                         android:textColor="@color/white" />
 
