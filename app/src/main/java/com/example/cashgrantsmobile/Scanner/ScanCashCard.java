@@ -406,10 +406,8 @@ public class ScanCashCard extends AppCompatActivity {
                 Cursor mCursor = db.rawQuery(count, null);
                 mCursor.moveToFirst();
                 int iCount = mCursor.getInt(0);
-                if(iCount==0){sqLiteHelper.insertDefaultAdditionalTmp(imageViewToByte(mAdditionalID));}
-                else {sqLiteHelper.updateTmpAdditional(imageViewToByte(mAdditionalID));}
-
-
+                if(iCount==0){sqLiteHelper.insertDefaultAdditionalTmp(imageViewToByte(mAdditionalID));tiladditionalID.setError(null);}
+                else {sqLiteHelper.updateTmpAdditional(imageViewToByte(mAdditionalID));tiladditionalID.setError(null);}
             }catch (Exception e){
                 Log.v(TAG,"errordaw" + e);
             }
@@ -426,13 +424,8 @@ public class ScanCashCard extends AppCompatActivity {
                 Cursor mCursor = db.rawQuery(count, null);
                 mCursor.moveToFirst();
                 int iCount = mCursor.getInt(0);
-                if(iCount==0){sqLiteHelper.insertDefaultGranteeTmp(imageViewToByte(mPreviewGrantee));
-                    Log.v(TAG,"error1111" + iCount);
-
-                }
-                else {
-                    Log.v(TAG,"error2222");
-                    sqLiteHelper.updateTmpGrantee(imageViewToByte(mPreviewGrantee));}
+                if(iCount==0){sqLiteHelper.insertDefaultGranteeTmp(imageViewToByte(mPreviewGrantee));tilGrantee.setError(null);}
+                else {tilGrantee.setError(null);sqLiteHelper.updateTmpGrantee(imageViewToByte(mPreviewGrantee));}
 
             }catch (Exception e){
                 Log.v(TAG,"error" + e);
@@ -488,15 +481,7 @@ public class ScanCashCard extends AppCompatActivity {
                     sTextFromET = sTextFromET.replace("}", "7");
                     sTextFromET = sTextFromET.replace("O", "0");
                     sTextFromET = sTextFromET.replaceAll("....", "$0 ");
-                    //save temp database
                     image_uri = Uri.parse(image_uri.toString());
-
-//                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-//                    mAdditionalID.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
-//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
-//
-
                     try {
                         Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                         mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
@@ -509,18 +494,16 @@ public class ScanCashCard extends AppCompatActivity {
                         Cursor mCursor = db.rawQuery(count, null);
                         mCursor.moveToFirst();
                         int iCount = mCursor.getInt(0);
-                        if(iCount==0){sqLiteHelper.insertDefaultScannedTmp(imageViewToByte(mPreviewCashCard));}
-                        else {sqLiteHelper.updateTmpScannedCC(imageViewToByte(mPreviewCashCard));}
+                        if(iCount==0){sqLiteHelper.insertDefaultScannedTmp(imageViewToByte(mPreviewCashCard));tilCardBtn.setError(null);}
+                        else {sqLiteHelper.updateTmpScannedCC(imageViewToByte(mPreviewCashCard));tilCardBtn.setError(null);}
 
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
                             edt_cashCardNumber.setText(limitString);
-
                             String CardResult = edt_cashCardNumber.getText().toString();
                             if (!CardResult.matches("[0-9 ]+")){
                                 tilCard.setError("Invalid format");
                             }
-
                         }
                         else{
                             edt_cashCardNumber.setText(sTextFromET);
@@ -1064,10 +1047,7 @@ public class ScanCashCard extends AppCompatActivity {
                 spinIsAvail1.setAdapter(adapterIsAvail1);
                 spinIsAvail2.setAdapter(adapterIsAvail2);
                 spinIsAvail3.setAdapter(adapterIsAvail3);
-
-
                 spinIsID.setAdapter(adapterIsID);
-
                 spinIsAvailReason.setAdapter(adapterIsAvailReason);
                 spinIsAvailReason1.setAdapter(adapterIsAvailReason1);
                 spinIsAvailReason2.setAdapter(adapterIsAvailReason2);
@@ -1209,6 +1189,9 @@ public class ScanCashCard extends AppCompatActivity {
                 String other_card_holder_name_3 = sh.getString("other_card_holder_name_3", "");
                 String other_is_available_3 = sh.getString("other_is_available_3", "");
                 String other_is_available_reason_3 = sh.getString("other_is_available_reason_3", "");
+                String additional = sh.getString("is_additional", "");
+                String scanned_cash_card = sh.getString("scanned_cash_card", "");
+                String series_number = sh.getString("series_number", "");
 
                 edt_card_released.setText(card_released);
                 edt_who_released.setText(who_released);
@@ -1231,30 +1214,34 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_card_holder_name_3.setText(other_card_holder_name_3);
                 spinIsAvail3.setText(other_is_available_3,false);
                 spinIsAvailReason3.setText(other_is_available_reason_3,false);
+                spinIsID.setText(additional,false);
+                edt_cashCardNumber.setText(scanned_cash_card);
+                edt_series_no.setText(series_number);
+                if (spinIsID.getText().toString().matches("Yes")) {
+                    tiladditionalID.setVisibility(View.VISIBLE);
+                    btn_scanID.setVisibility(View.VISIBLE);
+                    tvAdditional.setVisibility(View.VISIBLE);
+                    mAdditionalID.setVisibility(View.VISIBLE);
+                }
 
             } else if (position == 2) {
                 //intro_three.xml
-
                 edt_nma_amount = findViewById(R.id.edtNmaAmount);
                 edt_nma_reason = findViewById(R.id.edtNmaReason);
                 edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
                 edt_remarks = findViewById(R.id.edtRemarks);
-
                 edt_date_withdrawn.setFocusable(false);
                 edt_date_withdrawn.setClickable(true);
-
                 edt_date_withdrawn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showDateDialog(edt_date_withdrawn);
                     }
                 });
-
                 String nma_amount = sh.getString("nma_amount", "");
                 String nma_reason = sh.getString("nma_reason", "");
                 String date_withdrawn = sh.getString("date_withdrawn", "");
                 String remarks = sh.getString("remarks", "");
-
                 edt_nma_amount.setText(nma_amount);
                 edt_nma_reason.setText(nma_reason);
                 edt_date_withdrawn.setText(date_withdrawn);
@@ -1527,7 +1514,6 @@ public class ScanCashCard extends AppCompatActivity {
             edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
             edt_series_no = findViewById(R.id.edt_series_no);
 
-
             String card_released = edt_card_released.getText().toString();
             String who_released = edt_who_released.getText().toString();
             String place_released = edt_place_released.getText().toString();
@@ -1537,23 +1523,63 @@ public class ScanCashCard extends AppCompatActivity {
             String series_number = edt_series_no.getText().toString();
             String spinnerIsID = spinIsID.getText().toString();
 
-
             tilCardReleased = findViewById(R.id.til_cardreleased);
             tilWhoReleased = findViewById(R.id.til_whoreleased);
             tilPlaceReleased = findViewById(R.id.til_placereleased);
             tilCurrentGranteeNumber = findViewById(R.id.til_currentgranteenumber);
             tilIsAvailable = findViewById(R.id.til_isavailable);
-
             tiladditionalID = findViewById(R.id.til_additionalID);
-
             tilCard = findViewById(R.id.til_cashCard);
             tilCardBtn = findViewById(R.id.til_card);
             tilSeriesNumber = findViewById(R.id.til_series_number);
             tilIsID = findViewById(R.id.til_isID);
             tilGrantee = findViewById(R.id.tilGrantee);
 
-
-            getImage(isValidationError);
+            try {
+                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image FROM tmp_blob WHERE id=1");
+                if(cursor.getCount()!=0){
+                    while (cursor.moveToNext()) {
+                        byte[] scanned_image = cursor.getBlob(0);
+                        byte[] additional_image = cursor.getBlob(1);
+                        byte[] grantee_image = cursor.getBlob(2);
+                        if (scanned_image != null) {
+                            Bitmap scanned = BitmapFactory.decodeByteArray(scanned_image, 0, scanned_image.length);
+                            mPreviewCashCard.setImageBitmap(scanned);
+                            tilCard.setError(null);
+                        }
+                        else{
+                            isValidationError++;
+                            tilCard.setError(required_field);
+                        }
+                        if (additional_image != null) {
+                            Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
+                            mAdditionalID.setImageBitmap(additional);
+                            tiladditionalID.setError(null);
+                        }
+                        else{
+                        tiladditionalID.setError(required_field);
+                        isValidationError++;
+                        }
+                        if (grantee_image != null) {
+                            Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
+                            mPreviewGrantee.setImageBitmap(grantee);
+                            tilGrantee.setError(null);
+                        }
+                        else{
+                            tilGrantee.setError(required_field);
+                            isValidationError++;
+                        }
+                    }
+                }
+                else{
+                    tilCardBtn.setError(required_field);
+                    tiladditionalID.setError(required_field);
+                    tilGrantee.setError(required_field);
+                }
+            }
+            catch (Exception e){
+                Log.v(TAG,"Errors " + e);
+            }
 
             if (is_available.matches("")) {
                 tilIsAvailable.setError(required_field);
@@ -1607,15 +1633,7 @@ public class ScanCashCard extends AppCompatActivity {
                 tilIsID.setError(null);
             }
 
-            if (spinIsID.getText().toString().matches("Yes")){
-                tiladditionalID.setError(required_field);
-                isValidationError++;
 
-                Log.v(ContentValues.TAG,"Test value 1 "+mAdditionalID);
-            }
-            else{
-                Log.v(ContentValues.TAG,"Test value 2 "+mAdditionalID);
-            }
 
             if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
             store_preferences(2);
@@ -1711,6 +1729,10 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
                 edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
 
+                spinIsID = findViewById(R.id.spinnerIsID);
+                edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
+                edt_series_no = findViewById(R.id.edt_series_no);
+
                 String card_released = edt_card_released.getText().toString();
                 String who_released = edt_who_released.getText().toString();
                 String place_released = edt_place_released.getText().toString();
@@ -1733,6 +1755,10 @@ public class ScanCashCard extends AppCompatActivity {
                 String other_card_number_series_2 = edt_other_card_number_series_2.getText().toString();
                 String other_card_number_series_3 = edt_other_card_number_series_3.getText().toString();
 
+                String spinAdditionalID = spinIsID.getText().toString();
+                String cash_card = edt_cashCardNumber.getText().toString();
+                String series_number = edt_series_no.getText().toString();
+
                 myEdit.putString("card_released", card_released);
                 myEdit.putString("who_released", who_released);
                 myEdit.putString("place_released", place_released);
@@ -1754,6 +1780,10 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("other_card_number_series_1", other_card_number_series_1);
                 myEdit.putString("other_card_number_series_2", other_card_number_series_2);
                 myEdit.putString("other_card_number_series_3", other_card_number_series_3);
+                myEdit.putString("is_additional", spinAdditionalID);
+                myEdit.putString("scanned_cash_card", cash_card);
+                myEdit.putString("series_number", series_number);
+
                 myEdit.commit();
                 break;
             case 3:
