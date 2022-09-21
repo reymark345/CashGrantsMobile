@@ -27,367 +27,600 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_cardreleased"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                app:endIconMode="clear_text"
-                app:helperText="Required"
-                app:helperTextTextColor="@color/validation"
-                app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/distributionStatus"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:backgroundTint="@color/background">-->
 
-                <EditText
-                    android:id="@+id/edtCardReleased"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:hint="Date of Card Released"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    android:orientation="vertical">-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_whoreleased"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/til_cardreleased"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                app:endIconMode="clear_text"
-                app:helperText="Required"
-                app:helperTextTextColor="@color/validation"
-                app:startIconDrawable="@drawable/ic_baseline_person_24">
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:text="Cash Card Status"-->
+<!--                        android:textAppearance="?attr/textAppearanceHeadline6"-->
+<!--                        android:textSize="10sp" />-->
 
-                <EditText
-                    android:id="@+id/edtWhoReleased"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Who Released the Card"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_currentgranteenumber"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:helperText="Required"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_creditcard">-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_placereleased"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/til_whoreleased"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                app:endIconMode="clear_text"
-                app:helperText="Required"
-                app:helperTextTextColor="@color/validation"
-                app:startIconDrawable="@drawable/ic_location">
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtCurrentGranteeNumber"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:hint="Current Grantee Card Number"-->
+<!--                            android:inputType="textMultiLine" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
-                <EditText
-                    android:id="@+id/edtPlaceReleased"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Place of Card Released"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_distribution"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_currentgranteenumber"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_currentgranteenumber"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/til_placereleased"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                app:helperText="Required"
-                app:helperTextTextColor="@color/validation"
-                app:startIconDrawable="@drawable/ic_creditcard">
+<!--                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                            android:id="@+id/spinnerDistributionStatus"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:focusable="false"-->
+<!--                            android:focusableInTouchMode="false"-->
+<!--                            android:hint="Distribution Status" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
-                <EditText
-                    android:id="@+id/edtCurrentGranteeNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Current Grantee Card Number"
-                    android:inputType="textMultiLine" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_cardreleased"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperText="Required"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">-->
 
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtCardReleased"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:editable="false"-->
+<!--                            android:hint="Date of Card Released"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_whoreleased"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_cardreleased"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperText="Required"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_person_24">-->
 
-            <TextView
-                android:id="@+id/textViewScanned"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/background"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/til_currentgranteenumber"
-                android:layout_marginLeft="20dp"
-                android:text="Scanned details"
-                android:fontFamily="sans-serif-condensed"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="15dp" />
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtWhoReleased"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:hint="Who Released the Card"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
-            <RelativeLayout
-                android:id="@+id/linearl"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/textViewScanned"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/selector_fieldset_background"
-                android:orientation="vertical">
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_placereleased"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_whoreleased"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperText="Required"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_location">-->
 
-                <TextView
-                    android:id="@+id/tViewId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Cash card"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtPlaceReleased"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="Place of Card Released"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
-                <ImageView
-                    android:id="@+id/ScannedImage"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_below="@id/tViewId"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_outline"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_image" />
+<!--                </LinearLayout>-->
+
+<!--            </com.google.android.material.card.MaterialCardView>-->
 
 
-                <ImageView
-                    android:id="@+id/imgUri"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_below="@id/tViewId"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_outline"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_image" />
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/scannedDetails"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/distributionStatus"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:backgroundTint="@color/background">-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tViewId"
-                    android:layout_alignRight="@id/tViewId"
-                    android:layout_marginTop="-20dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    android:orientation="vertical">-->
 
-                    <Button
-                        android:id="@+id/btn_scanCashCard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tViewId"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="30dp"
-                        android:text="SCAN"
-                        android:textColor="@color/white" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:text="Card Availability"-->
+<!--                        android:textAppearance="?attr/textAppearanceHeadline6"-->
+<!--                        android:textSize="10sp" />-->
 
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_isavailable11"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:helperText="Required"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">-->
 
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                            android:id="@+id/spinnerIsAvailable11"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:focusable="false"-->
+<!--                            android:focusableInTouchMode="false"-->
+<!--                            android:hint="Is Card Presented"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_cashCard"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgUri"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="23"
-                    app:endIconMode="clear_text"
-                    app:helperText="Required!"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_creditcard">
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_isavailablereason11"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_isavailable"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">-->
 
-                    <EditText
-                        android:id="@+id/edt_cashCardNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Cash card number"
-                        android:inputType="number"
-                        android:maxLength="23" />
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                            android:id="@+id/spinnerIsAvailableReason11"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:focusable="false"-->
+<!--                            android:focusableInTouchMode="false"-->
+<!--                            android:hint="Reason"/>-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_series_number"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_cashCard"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    app:counterMaxLength="1"
-                    app:endIconMode="clear_text"
-                    app:helperText="Good valid!"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_series_no">
+<!--                </LinearLayout>-->
 
-                    <EditText
-                        android:id="@+id/edt_series_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Card series"
-                        android:inputType="number"
-                        android:maxLength="1" />
-                </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.card.MaterialCardView>-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_isID"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_series_number"
-                    android:layout_marginTop="10dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/cardAvailability"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/scannedDetails"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:backgroundTint="@color/background">-->
 
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerIsID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:hint="ID exists"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    android:orientation="vertical">-->
 
-                <TextView
-                    android:id="@+id/tViewAdditionalId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/til_isID"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Additional ID"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:text="Card Availablity"-->
+<!--                        android:textAppearance="?attr/textAppearanceHeadline6"-->
+<!--                        android:textSize="10sp" />-->
 
-                <ImageView
-                    android:id="@+id/imgAdditionalId"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_below="@id/tViewAdditionalId"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/round_outline"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_image" />
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_isavailable"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:helperText="Required"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_additionalID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_isID"
-                    android:layout_alignRight="@id/tViewAdditionalId"
-                    android:layout_marginTop="10dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation">
+<!--                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                            android:id="@+id/spinnerIsAvailable"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:focusable="false"-->
+<!--                            android:focusableInTouchMode="false"-->
+<!--                            android:hint="Is Physical Cash Card Presented?"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
-                    <Button
-                        android:id="@+id/btn_scanID"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/til_isID"
-                        android:layout_alignRight="@id/tViewAdditionalId"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="20dp"
-                        android:text="SCAN"
-                        android:textColor="@color/white" />
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_Pin_attached"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:helperText="Required"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                            android:id="@+id/spinnerIsAvailable1"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:focusable="false"-->
+<!--                            android:focusableInTouchMode="false"-->
+<!--                            android:hint="Is PIN attached in the Cash Card?"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_isavailablereason"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_Pin_attached"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                            android:id="@+id/spinnerIsAvailableReason"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:focusable="false"-->
+<!--                            android:focusableInTouchMode="false"-->
+<!--                            android:hint="Reason"/>-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                </LinearLayout>-->
+
+<!--            </com.google.android.material.card.MaterialCardView>-->
 
 
-                </com.google.android.material.textfield.TextInputLayout>
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/pawning"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/cardAvailability"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:backgroundTint="@color/background">-->
 
-                <TextView
-                    android:id="@+id/tViewCashCard1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/imgAdditionalId"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Grantee"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    android:orientation="vertical">-->
 
-                <ImageView
-                    android:id="@+id/mGrantee"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_below="@id/tViewCashCard1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/round_outline"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_image" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:text="Pawning Details "-->
+<!--                        android:textAppearance="?attr/textAppearanceHeadline6"-->
+<!--                        android:textSize="10sp" />-->
 
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_lendername"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_person_24">-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilGrantee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgAdditionalId"
-                    android:layout_alignRight="@id/til_isID"
-                    android:layout_marginTop="5dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation">
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtLenderName"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:hint="Name of Lender"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
-                    <Button
-                        android:id="@+id/btn_grantee"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/imgAdditionalId"
-                        android:layout_alignRight="@id/til_isID"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="30dp"
-                        android:text="SCAN"
-                        android:textColor="@color/white" />
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_pawningdate"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_lendername"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">-->
 
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-            </RelativeLayout>
-
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtPawningDate"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="Date of Pawning"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:inputType="text" />-->
 
 
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_loanedamount"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_othercardnumberseries1"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_currency_ruble_24">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtLoanedAmount"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:hint="Loaned Amount"-->
+<!--                            android:inputType="number" />-->
+
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_lenderaddress"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_loanedamount"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_location">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtLenderAddress"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="Address of Lender"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_dateretrieved"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_lenderaddress"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtDateRetrieved"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:hint="Date Retrieved"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_interest"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_dateretrieved"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_creditcard">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtInterest"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:hint="Interest"-->
+<!--                            android:inputType="numberDecimal" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_status"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_interest"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_book_24">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                            android:id="@+id/spinnerStatus"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:focusable="false"-->
+<!--                            android:focusableInTouchMode="false"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:hint="Status"-->
+<!--                            android:inputType="none" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_pawningreason"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_status"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtPawningReason"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="100dp"-->
+<!--                            android:hint="Reason for Pawning"-->
+<!--                            android:inputType="textMultiLine"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:overScrollMode="always"-->
+<!--                            android:padding="15dp"-->
+<!--                            android:scrollbarStyle="insideInset"-->
+<!--                            android:scrollbars="vertical" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_offensehistory"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_pawningreason"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_history_24">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                            android:id="@+id/spinnerOffenseHistory"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="Offense History"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:focusable="false"-->
+<!--                            android:focusableInTouchMode="false"-->
+<!--                            android:inputType="none" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_offensehistorydate"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_offensehistory"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtOffenseHistoryDate"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="Offense History Date"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:inputType="text" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_pdremarks"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_offensehistorydate"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtPdRemarks"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="100dp"-->
+<!--                            android:hint="Remarks"-->
+<!--                            android:inputType="textMultiLine"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:overScrollMode="always"-->
+<!--                            android:padding="15dp"-->
+<!--                            android:scrollbarStyle="insideInset"-->
+<!--                            android:scrollbars="vertical" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_intervention"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_pdremarks"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_person_24">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtIntervention"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="100dp"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:hint="Intervention of C/ML"-->
+<!--                            android:inputType="textMultiLine"-->
+<!--                            android:overScrollMode="always"-->
+<!--                            android:padding="15dp"-->
+<!--                            android:scrollbarStyle="insideInset"-->
+<!--                            android:scrollbars="vertical" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/til_otherdetails"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/til_intervention"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        app:endIconMode="clear_text"-->
+<!--                        app:helperTextTextColor="@color/validation"-->
+<!--                        app:startIconDrawable="@drawable/ic_baseline_format_align_left_24">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/edtOtherDetails"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="100dp"-->
+<!--                            android:hint="Other Details"-->
+<!--                            android:inputType="textMultiLine"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:overScrollMode="always"-->
+<!--                            android:padding="15dp"-->
+<!--                            android:scrollbarStyle="insideInset"-->
+<!--                            android:scrollbars="vertical" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                </LinearLayout>-->
+
+<!--            </com.google.android.material.card.MaterialCardView>-->
+
+<!--            android:layout_below="@+id/pawning"-->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardAvailability"
+                android:id="@+id/scannedDetailsCashCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linearl"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/background">
 
@@ -401,356 +634,252 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="Card Availablity"
+                        android:text="Scanned Details"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textSize="10sp" />
 
+                    <ImageView
+                        android:id="@+id/ScannedImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewId"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+
+
+
+
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_isavailable"
+                        android:id="@+id/til_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tViewId"
+                        android:layout_alignLeft="@id/imgUri"
+                        android:layout_marginTop="-20dp"
+                        app:helperText="Required"
+                        app:helperTextTextColor="@color/validation">
+
+                        <ImageView
+                            android:id="@+id/imgUri"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_below="@id/tViewId"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/round_outline"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_image" />
+
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tViewId"
+                        android:layout_alignLeft="@id/imgUri"
+                        android:layout_marginTop="20dp"
+                        app:helperText="Required"
+                        app:helperTextTextColor="@color/validation">
+
+                        <Button
+                            android:id="@+id/btn_scanCashCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tViewId"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="30dp"
+                            android:text="SCAN"
+                            android:textColor="@color/white" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_cashCard"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgUri"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="23"
+                        app:endIconMode="clear_text"
+                        app:helperText="Required!"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_creditcard">
+
+                        <EditText
+                            android:id="@+id/edt_cashCardNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Cash card number"
+                            android:inputType="number"
+                            android:maxLength="23" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_series_number"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_cashCard"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        app:counterMaxLength="1"
+                        app:endIconMode="clear_text"
+                        app:helperText="Good valid!"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_series_no">
+
+                        <EditText
+                            android:id="@+id/edt_series_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Card series"
+                            android:inputType="number"
+                            android:maxLength="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_isID"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_series_number"
+                        android:layout_marginTop="10dp"
                         app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
 
                         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:id="@+id/spinnerIsAvailable"
+                            android:id="@+id/spinnerIsID"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/white"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Is Card Presented"
+                            android:hint="ID exists"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_isavailablereason"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_isavailable"
-                        android:layout_marginTop="10dp"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
-
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:id="@+id/spinnerIsAvailableReason"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:hint="Reason"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/pawning"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cardAvailability"
-                android:layout_margin="8dp"
-                android:backgroundTint="@color/background">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tViewAdditionalId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/til_isID"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Additional ID"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/imgAdditionalId"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewAdditionalId"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_additionalID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Pawning Details "
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textSize="10sp" />
+                        android:layout_below="@+id/til_isID"
+                        android:layout_alignRight="@id/tViewAdditionalId"
+                        android:layout_marginTop="10dp"
+                        app:helperText="Required"
+                        app:helperTextTextColor="@color/validation">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_lendername"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-                        <EditText
-                            android:id="@+id/edtLenderName"
-                            android:layout_width="match_parent"
+                        <Button
+                            android:id="@+id/btn_scanID"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:hint="Name of Lender"
-                            android:inputType="text" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_pawningdate"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_lendername"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
-
-                        <EditText
-                            android:id="@+id/edtPawningDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Date of Pawning"
-                            android:background="@color/white"
-                            android:inputType="text" />
+                            android:layout_below="@id/til_isID"
+                            android:layout_alignRight="@id/tViewAdditionalId"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="20dp"
+                            android:text="SCAN"
+                            android:textColor="@color/white" />
 
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_loanedamount"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    <TextView
+                        android:id="@+id/tViewCashCard1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_othercardnumberseries1"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_currency_ruble_24">
+                        android:layout_below="@id/imgAdditionalId"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Grantee"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/edtLoanedAmount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:hint="Loaned Amount"
-                            android:inputType="number" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_lenderaddress"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_loanedamount"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_location">
-
-                        <EditText
-                            android:id="@+id/edtLenderAddress"
-                            android:layout_width="match_parent"
-                            android:background="@color/white"
-                            android:layout_height="wrap_content"
-                            android:hint="Address of Lender"
-                            android:inputType="text" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_dateretrieved"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_lenderaddress"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
-
-                        <EditText
-                            android:id="@+id/edtDateRetrieved"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:hint="Date Retrieved"
-                            android:inputType="text" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_interest"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_dateretrieved"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_creditcard">
-
-                        <EditText
-                            android:id="@+id/edtInterest"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:hint="Interest"
-                            android:inputType="numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_status"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_interest"
-                        android:layout_marginTop="10dp"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_book_24">
-
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:id="@+id/spinnerStatus"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:background="@color/white"
-                            android:hint="Status"
-                            android:inputType="none" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_pawningreason"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_status"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
-
-                        <EditText
-                            android:id="@+id/edtPawningReason"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:hint="Reason for Pawning"
-                            android:inputType="textMultiLine"
-                            android:background="@color/white"
-                            android:overScrollMode="always"
-                            android:padding="15dp"
-                            android:scrollbarStyle="insideInset"
-                            android:scrollbars="vertical" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_offensehistory"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_pawningreason"
-                        android:layout_marginTop="10dp"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_history_24">
-
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:id="@+id/spinnerOffenseHistory"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Offense History"
-                            android:background="@color/white"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:inputType="none" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_offensehistorydate"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_offensehistory"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
-
-                        <EditText
-                            android:id="@+id/edtOffenseHistoryDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Offense History Date"
-                            android:background="@color/white"
-                            android:inputType="text" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_pdremarks"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_offensehistorydate"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
-
-                        <EditText
-                            android:id="@+id/edtPdRemarks"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:hint="Remarks"
-                            android:inputType="textMultiLine"
-                            android:background="@color/white"
-                            android:overScrollMode="always"
-                            android:padding="15dp"
-                            android:scrollbarStyle="insideInset"
-                            android:scrollbars="vertical" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_intervention"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_pdremarks"
-                        android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-                        <EditText
-                            android:id="@+id/edtIntervention"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:background="@color/white"
-                            android:hint="Intervention of C/ML"
-                            android:inputType="textMultiLine"
-                            android:overScrollMode="always"
-                            android:padding="15dp"
-                            android:scrollbarStyle="insideInset"
-                            android:scrollbars="vertical" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_otherdetails"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_intervention"
-                        android:layout_marginTop="15dp"
+                    <ImageView
+                        android:id="@+id/mGrantee"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@id/tViewCashCard1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        app:endIconMode="clear_text"
-                        app:helperTextTextColor="@color/validation"
-                        app:startIconDrawable="@drawable/ic_baseline_format_align_left_24">
+                        android:background="@drawable/round_outline"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_image" />
 
-                        <EditText
-                            android:id="@+id/edtOtherDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:hint="Other Details"
-                            android:inputType="textMultiLine"
-                            android:background="@color/white"
-                            android:overScrollMode="always"
-                            android:padding="15dp"
-                            android:scrollbarStyle="insideInset"
-                            android:scrollbars="vertical" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilGrantee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgAdditionalId"
+                        android:layout_alignRight="@id/til_isID"
+                        android:layout_marginTop="5dp"
+                        app:helperText="Required"
+                        app:helperTextTextColor="@color/validation">
+
+                        <Button
+                            android:id="@+id/btn_grantee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/imgAdditionalId"
+                            android:layout_alignRight="@id/til_isID"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="30dp"
+                            android:text="SCAN"
+                            android:textColor="@color/white" />
+
+
                     </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
 
                 </LinearLayout>
 
@@ -761,7 +890,7 @@
                 android:id="@+id/otherCardAvailability1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pawning"
+                android:layout_below="@+id/scannedDetailsCashCard"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/background">
 
