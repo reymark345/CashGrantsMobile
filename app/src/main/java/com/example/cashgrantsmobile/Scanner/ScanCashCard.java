@@ -875,10 +875,11 @@ public class ScanCashCard extends AppCompatActivity {
 
             //intro_one.xml
             if (position == 0) {
-//                countIncomplete();
                 tilContactNo = findViewById(R.id.til_contact_no);
                 tilSet = findViewById(R.id.til_set);
                 tilHhId = findViewById(R.id.til_hhid);
+                tilAssigned = findViewById(R.id.til_assigned);
+                tilMinorGrantee = findViewById(R.id.til_minor_grantee);
                 edt_hh = findViewById(R.id.edtHhId);
                 edt_fullname = findViewById(R.id.edtFullname);
                 spinClientStatus = findViewById(R.id.spinnerClientStatus);
@@ -888,9 +889,9 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_contact_no = findViewById(R.id.edtContactNo);
                 edt_assigned = findViewById(R.id.edtAssigned);
                 spinAnswer = findViewById(R.id.spinnerMinorGrantee);
-
                 btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
-
+                tilAssigned.setVisibility(View.GONE);
+                tilMinorGrantee.setVisibility(View.GONE);
 
                 btn_search_hh.setOnClickListener( new View.OnClickListener() {
                     @Override
@@ -1410,12 +1411,14 @@ public class ScanCashCard extends AppCompatActivity {
 
             } else if (position == 2) {
                 //intro_three.xml
+                tilDateWithdrawn = findViewById(R.id.til_datewithdrawn);
                 edt_nma_amount = findViewById(R.id.edtNmaAmount);
                 edt_nma_reason = findViewById(R.id.edtNmaReason);
                 edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
                 edt_remarks = findViewById(R.id.edtRemarks);
                 edt_date_withdrawn.setFocusable(false);
                 edt_date_withdrawn.setClickable(true);
+                tilDateWithdrawn.setVisibility(View.GONE);
                 edt_date_withdrawn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
