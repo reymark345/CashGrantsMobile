@@ -222,6 +222,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginBottom="80dp"
                     app:endIconMode="clear_text"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
