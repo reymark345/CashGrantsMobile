@@ -1866,9 +1866,6 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_contact_no = findViewById(R.id.edtContactNo);
                 edt_assigned = findViewById(R.id.edtAssigned);
                 spinAnswer = findViewById(R.id.spinnerMinorGrantee);
-                edt_contact_no = findViewById(R.id.edtContactNo);
-                edt_assigned = findViewById(R.id.edtAssigned);
-                spinAnswer = findViewById(R.id.spinnerMinorGrantee);
 
                 String household = edt_hh.getText().toString();
                 String full_name = edt_fullname.getText().toString();
@@ -2084,7 +2081,6 @@ public class ScanCashCard extends AppCompatActivity {
                     edt_address.setText("");
                     edt_set.setText("");
                     spinSex.setText("");
-                    edt_contact_no.setText("");
                     Toasty.error(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
 
                 }
