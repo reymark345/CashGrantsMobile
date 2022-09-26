@@ -827,7 +827,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                     <EditText
-                        android:id="@+id/edtRepresentative"
+                        android:id="@+id/edtRepresentativeTwo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Name of Representative"

@@ -114,6 +114,7 @@ public class ScanCashCard extends AppCompatActivity {
     TextView tvAdditional,tViewCashCard1;
     ImageView mPreviewCashCard,mAdditionalID,mPreviewGrantee, mImgUri;
     private int prevCount = 0;
+    Integer isValidationError = 0;
 
 
     private boolean isAtSpaceDelimiter(int currCount) {
@@ -133,14 +134,14 @@ public class ScanCashCard extends AppCompatActivity {
     private TextView[] dots;
     private MyViewPagerAdapter viewPagerAdapter;
     TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee;
-    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber, tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3,tilPinAttached,tilAvailablereason,tilUnclaimedReason,tilRequestReplacement;
+    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber, tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3,tilPinAttached,tilAvailablereason,tilUnclaimedReason,tilRequestReplacement,tilContactNoOf,tilRepresentativeIntroOne,tilRepresentativeIntroTwo;
     TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
     TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
-    EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned, edt_cash_card_number;
+    EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned,edtRepresentativeOne,edtRepresentativeTwo;
     EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3,edt_cashCardNumber,edt_series_no, edt_other_remarks_1,edt_other_remarks_2,edt_other_remarks_3;
     EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks;
     EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
-    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID, spinIsDistribution,spinnerIsUnclaimedReason;
+    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID, spinIsDistribution,spinnerIsUnclaimedReason,spinnerContactNoOf,spinnerGrantee;
 
     MaterialCardView mcvPawning;
 
@@ -148,6 +149,7 @@ public class ScanCashCard extends AppCompatActivity {
     String[] CardRequired = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
+    String[] Contact_no_of = new String[]{"Grantee", "Others"};
     String[] ClientStatus = new String[]{
             "1 - Active",
             "14 - No Eligible (0-18 y/o) for CVS Monitoring (Certified by RPMO)",
@@ -232,6 +234,7 @@ public class ScanCashCard extends AppCompatActivity {
         mPreviewIv = findViewById(R.id.imageIv);
         mPreviewIv .setVisibility(View.INVISIBLE);
         Bundle extras = getIntent().getExtras();
+        isValidationError = 0;
         if (extras != null) {
             String value = extras.getString("toast");
             Toasty.success(this,""+value, Toasty.LENGTH_SHORT).show();
@@ -898,6 +901,8 @@ public class ScanCashCard extends AppCompatActivity {
                 tilHhId = findViewById(R.id.til_hhid);
                 tilAssigned = findViewById(R.id.til_assigned);
                 tilMinorGrantee = findViewById(R.id.til_minor_grantee);
+                tilContactNoOf = findViewById(R.id.til_contact_no_of);
+                tilRepresentativeIntroOne = findViewById(R.id.til_representative_one);
                 edt_hh = findViewById(R.id.edtHhId);
                 edt_fullname = findViewById(R.id.edtFullname);
                 spinClientStatus = findViewById(R.id.spinnerClientStatus);
@@ -905,11 +910,15 @@ public class ScanCashCard extends AppCompatActivity {
                 spinSex = findViewById(R.id.spinnerSex);
                 edt_set = findViewById(R.id.edtSet);
                 edt_contact_no = findViewById(R.id.edtContactNo);
+                spinnerContactNoOf = findViewById(R.id.spinnerContactNoOf);
                 edt_assigned = findViewById(R.id.edtAssigned);
+                edtRepresentativeOne = findViewById(R.id.edtRepresentativeOne);
                 spinAnswer = findViewById(R.id.spinnerMinorGrantee);
                 btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
+                spinnerGrantee = findViewById(R.id.spinnerGrantee);
                 tilAssigned.setVisibility(View.GONE);
                 tilMinorGrantee.setVisibility(View.GONE);
+                tilRepresentativeIntroOne.setVisibility(View.GONE);
 
                 btn_search_hh.setOnClickListener( new View.OnClickListener() {
                     @Override
@@ -921,15 +930,20 @@ public class ScanCashCard extends AppCompatActivity {
                 ArrayAdapter<String> adapterSex = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Sex);
                 ArrayAdapter<String> adapterAns = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterClientStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ClientStatus);
-
+                ArrayAdapter<String> adapterContact_no_of = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Contact_no_of);
+                ArrayAdapter<String> adapterGrantee = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, CardRequired);
 
                 adapterSex.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterAns.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterClientStatus.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterContact_no_of.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterGrantee.setDropDownViewResource(simple_spinner_dropdown_item);
 
                 spinSex.setAdapter(adapterSex);
                 spinAnswer.setAdapter(adapterAns);
                 spinClientStatus.setAdapter(adapterClientStatus);
+                spinnerContactNoOf.setAdapter(adapterContact_no_of);
+                spinnerGrantee.setAdapter(adapterGrantee);
 
                 String hh_id = sh.getString("hh_id", "160310001-");
                 String full_name = sh.getString("full_name", "");
@@ -937,9 +951,12 @@ public class ScanCashCard extends AppCompatActivity {
                 String address = sh.getString("address", "");
                 String sex = sh.getString("sex", "");
                 String contact_no = sh.getString("contact_no", "");
+                String contact_no_of = sh.getString("contact_no_of", "");
                 String hh_set_group = sh.getString("hh_set_group", "");
                 String assigned = sh.getString("assigned", "");
                 String minor_grantee = sh.getString("minor_grantee", "");
+                String grantee = sh.getString("grantee_in", "");
+                String representativeOne = sh.getString("rpt_intro_one", "");
 
                 contactNumber(edt_contact_no);
                 setEntry(edt_set);
@@ -953,6 +970,28 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_contact_no.setText(contact_no);
                 edt_assigned.setText(assigned);
                 spinAnswer.setText(minor_grantee,false);
+                spinnerContactNoOf.setText(contact_no_of,false);
+                spinnerGrantee.setText(grantee,false);
+                edtRepresentativeOne.setText(representativeOne);
+
+
+                spinnerContactNoOf.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinnerContactNoOf.getText().toString().matches("Others")) {
+                            tilRepresentativeIntroOne.setVisibility(View.VISIBLE);
+                        } else {
+                            edtRepresentativeOne.setText("");
+                            tilRepresentativeIntroOne.setError(null);
+                            tilRepresentativeIntroOne.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+                if (spinnerContactNoOf.getText().toString().matches("Others")){
+                    tilRepresentativeIntroOne.setVisibility(View.VISIBLE);
+                }else{tilRepresentativeIntroOne.setVisibility(View.GONE);}
+
 
             } else if (position == 1) {
 
@@ -1006,7 +1045,8 @@ public class ScanCashCard extends AppCompatActivity {
                 tilAvailablereason = findViewById(R.id.til_isavailablereason);
                 tilUnclaimedReason = findViewById(R.id.til_isUnclaimedReason);
                 tilRequestReplacement = findViewById(R.id.til_isRequestReplacement);
-
+                tilRepresentativeIntroTwo = findViewById(R.id.til_representative);
+                edtRepresentativeTwo = findViewById(R.id.edtRepresentativeTwo);
 
 
 
@@ -1052,7 +1092,6 @@ public class ScanCashCard extends AppCompatActivity {
                 tilAvailablereason.setVisibility(View.GONE);
                 tilUnclaimedReason.setVisibility(View.GONE);
                 tilRequestReplacement.setVisibility(View.GONE);
-
 
 
                 dateReleased(edt_card_released);
@@ -1373,6 +1412,28 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
 
+
+
+                spinnerGrantee.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+
+                        if (spinnerGrantee.getText().toString().matches("No")){
+                            spinnerGrantee.setFocusableInTouchMode(true);
+                            spinnerGrantee.setFocusable(true);
+                            Log.v(ContentValues.TAG,"Trueeegrantee");
+
+                        }
+                        else{
+                            spinnerGrantee.setFocusableInTouchMode(false);
+                            spinnerGrantee.setFocusable(false);
+
+                            Log.v(ContentValues.TAG,"falseGrantee");}
+                    }
+                });
+
+
+
                 String card_released = sh.getString("card_released", "");
                 String who_released = sh.getString("who_released", "");
                 String place_released = sh.getString("place_released", "");
@@ -1397,6 +1458,10 @@ public class ScanCashCard extends AppCompatActivity {
                 String additional = sh.getString("is_additional", "");
                 String scanned_cash_card = sh.getString("scanned_cash_card", "");
                 String series_number = sh.getString("series_number", "");
+                String representative = sh.getString("rpt_intro_two", "");
+
+
+
 
                 edt_card_released.setText(card_released);
                 edt_who_released.setText(who_released);
@@ -1422,6 +1487,9 @@ public class ScanCashCard extends AppCompatActivity {
                 spinIsID.setText(additional,false);
                 edt_cashCardNumber.setText(scanned_cash_card);
                 edt_series_no.setText(series_number);
+                edtRepresentativeTwo.setText(representative);
+
+
 
 
                 String lender_name = sh.getString("lender_name","");
@@ -1650,10 +1718,11 @@ public class ScanCashCard extends AppCompatActivity {
     public void nextValidation(){
 
         pressNext =true;
-        Integer isValidationError = 0;
+        isValidationError = 0;
         required_field = "This field is required!";
 
         int current = getItem(1);
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
 
         edt_lender_name = findViewById(R.id.edtLenderName);
 
@@ -1671,8 +1740,9 @@ public class ScanCashCard extends AppCompatActivity {
             edt_assigned = findViewById(R.id.edtAssigned);
             spinAnswer = findViewById(R.id.spinnerMinorGrantee);
             edt_contact_no = findViewById(R.id.edtContactNo);
+            edtRepresentativeOne = findViewById(R.id.edtRepresentativeOne);
             edt_assigned = findViewById(R.id.edtAssigned);
-            spinAnswer = findViewById(R.id.spinnerMinorGrantee);
+            spinnerContactNoOf = findViewById(R.id.spinnerContactNoOf);
 
             String household = edt_hh.getText().toString();
             String full_name = edt_fullname.getText().toString();
@@ -1681,6 +1751,9 @@ public class ScanCashCard extends AppCompatActivity {
             String sex = spinSex.getText().toString();
             String hh_set = edt_set.getText().toString();
             String contact_no = edt_contact_no.getText().toString();
+            String contact_no_of = spinnerContactNoOf.getText().toString();
+            String representative = edtRepresentativeOne.getText().toString();
+
 
             tilHhId = findViewById(R.id.til_hhid);
             tilFullname = findViewById(R.id.til_fullname);
@@ -1689,6 +1762,9 @@ public class ScanCashCard extends AppCompatActivity {
             tilSex = findViewById(R.id.til_sex);
             tilSet = findViewById(R.id.til_set);
             tilContactNo = findViewById(R.id.til_contact_no);
+            tilContactNoOf = findViewById(R.id.til_contact_no_of);
+            tilRepresentativeIntroOne = findViewById(R.id.til_representative_one);
+            tilRepresentativeIntroTwo = findViewById(R.id.til_representative);
 
 
 
@@ -1697,6 +1773,23 @@ public class ScanCashCard extends AppCompatActivity {
                 isValidationError++;
             } else {
                 tilHhId.setError(null);
+            }
+
+            if (contact_no_of.matches("")){
+                tilContactNoOf.setError(required_field);
+                isValidationError++;
+            } else {
+                tilContactNoOf.setError(null);
+            }
+
+            if (contact_no_of.matches("Grantee")){tilRepresentativeIntroOne.setError(null);}
+            else{
+                if (representative.matches("")){
+                    tilRepresentativeIntroOne.setError(required_field);
+                    isValidationError++;
+                } else {
+                    tilRepresentativeIntroOne.setError(null);
+                }
             }
 
             if (full_name.matches("")){
@@ -1752,6 +1845,9 @@ public class ScanCashCard extends AppCompatActivity {
             if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
 
             store_preferences(1);
+            String grantee_in = sh.getString("grantee_in", "");
+            if (grantee_in.matches("No")){tilRepresentativeIntroTwo.setVisibility(View.VISIBLE);}
+            else {tilRepresentativeIntroTwo.setVisibility(View.GONE); }
 
         } else if (current == 2) {
             pressNext =false;
@@ -1800,6 +1896,7 @@ public class ScanCashCard extends AppCompatActivity {
             tilSeriesNumber = findViewById(R.id.til_series_number);
             tilIsID = findViewById(R.id.til_isID);
             tilGrantee = findViewById(R.id.tilGrantee);
+
 
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image FROM tmp_blob WHERE id=1");
@@ -1875,7 +1972,6 @@ public class ScanCashCard extends AppCompatActivity {
                 tilPlaceReleased.setError(null);
             }
 
-
             if (scanned_cash_card.matches("")) {
                 tilCard.setError(required_field);
                 isValidationError++;
@@ -1890,16 +1986,12 @@ public class ScanCashCard extends AppCompatActivity {
                 tilSeriesNumber.setError(null);
             }
 
-
-
             if (spinnerIsID.matches("")) {
                 tilIsID.setError(required_field);
                 isValidationError++;
             } else {
                 tilIsID.setError(null);
             }
-
-
 
             if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
             store_preferences(2);
@@ -1923,7 +2015,6 @@ public class ScanCashCard extends AppCompatActivity {
             }
             else {
                 store_preferences(4);
-
                 launchHomeScreen();
             }
         }
@@ -1945,6 +2036,9 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_contact_no = findViewById(R.id.edtContactNo);
                 edt_assigned = findViewById(R.id.edtAssigned);
                 spinAnswer = findViewById(R.id.spinnerMinorGrantee);
+                spinnerContactNoOf = findViewById(R.id.spinnerContactNoOf);
+                spinnerGrantee = findViewById(R.id.spinnerGrantee);
+
 
                 String household = edt_hh.getText().toString();
                 String full_name = edt_fullname.getText().toString();
@@ -1955,6 +2049,9 @@ public class ScanCashCard extends AppCompatActivity {
                 String contact_no = edt_contact_no.getText().toString();
                 String assigned = edt_assigned.getText().toString();
                 String minor_grantee = spinAnswer.getText().toString();
+                String contact_no_of = spinnerContactNoOf.getText().toString();
+                String grantee = spinnerGrantee.getText().toString();
+                String representativeOne = edtRepresentativeOne.getText().toString();
 
                 myEdit.putString("hh_id", household);
                 myEdit.putString("full_name", full_name);
@@ -1963,10 +2060,13 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("sex", sex);
                 myEdit.putString("hh_set_group", hh_set);
                 myEdit.putString("contact_no", contact_no);
+                myEdit.putString("contact_no_of", contact_no_of);
                 myEdit.putString("assigned", assigned);
                 myEdit.putString("minor_grantee", minor_grantee);
                 myEdit.putString("Informant_Identifier", full_name); //do not delete this line
                 myEdit.putString("pressBtn_search", "true");
+                myEdit.putString("grantee_in", grantee);
+                myEdit.putString("rpt_intro_one", representativeOne);
                 myEdit.commit();
                 break;
             case 2:
@@ -1991,7 +2091,7 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
                 edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
                 edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
-
+                edtRepresentativeOne = findViewById(R.id.edtRepresentativeOne);
                 edt_other_remarks_1 = findViewById(R.id.edtotherRemarks1);
                 edt_other_remarks_2 = findViewById(R.id.edtotherRemarks2);
                 edt_other_remarks_3 = findViewById(R.id.edtotherRemarks3);
@@ -2021,6 +2121,9 @@ public class ScanCashCard extends AppCompatActivity {
                 String other_card_number_series_1 = edt_other_card_number_series_1.getText().toString();
                 String other_card_number_series_2 = edt_other_card_number_series_2.getText().toString();
                 String other_card_number_series_3 = edt_other_card_number_series_3.getText().toString();
+                String representative = edtRepresentativeTwo.getText().toString();
+
+
 
                 String spinAdditionalID = spinIsID.getText().toString();
                 String cash_card = edt_cashCardNumber.getText().toString();
@@ -2056,6 +2159,8 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("other_remarks1", other_remarks_1);
                 myEdit.putString("other_remarks2", other_remarks_2);
                 myEdit.putString("other_remarks3", other_remarks_3);
+                myEdit.putString("rpt_intro_two", representative);
+
                 myEdit.commit();
                 break;
             case 3:
@@ -2264,12 +2369,14 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+
                 if(s.toString().length() != 10){
                     tilContactNo.setError(required_field);
                 }
                 else{
                     tilContactNo.setError(null);
                 }
+
             }
             @Override
             public void afterTextChanged(Editable editable) {
