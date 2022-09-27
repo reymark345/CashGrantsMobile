@@ -170,8 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/til_isavailable"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 app:helperTextTextColor="@color/validation"
                 app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:hint="Is Pin attached in the cash card?"/>
+                    android:hint="Is Pin attached in the cash card?" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -232,8 +232,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/til_isUnclaimedReason"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 app:helperTextTextColor="@color/validation"
                 app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
@@ -243,11 +243,8 @@
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:hint="Already filed request for replacement?"/>
+                    android:hint="Already filed request for replacement?" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/pawning"
