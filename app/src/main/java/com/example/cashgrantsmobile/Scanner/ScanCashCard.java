@@ -1942,6 +1942,7 @@ public class ScanCashCard extends AppCompatActivity {
 
 
 
+
             tilDistribution = findViewById(R.id.til_distribution);
             tilCardReleased = findViewById(R.id.til_cardreleased);
             tilWhoReleased = findViewById(R.id.til_whoreleased);
@@ -2090,7 +2091,12 @@ public class ScanCashCard extends AppCompatActivity {
             if (scanned_cash_card.matches("")) {
                 tilCard.setError(required_field);
                 isValidationError++;
-            } else {
+            }
+            else if (!scanned_cash_card.matches("[0-9 ]+")){
+                tilCard.setError("Invalid format");
+                isValidationError++;
+            }
+            else {
                 tilCard.setError(null);
             }
 
@@ -2806,14 +2812,19 @@ public class ScanCashCard extends AppCompatActivity {
 
     public void scannedCardNumber(EditText card_number){
         card_number.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                String cardNumber = card_number.getText().toString();
                 if(s.toString().length() != 23){
                     tilCard.setError(required_field);
+                }
+                else if(!cardNumber.matches("[0-9 ]+")) {
+                    tilCard.setError("Invalid Format");
                 }
                 else{
                     tilCard.setError(null);
