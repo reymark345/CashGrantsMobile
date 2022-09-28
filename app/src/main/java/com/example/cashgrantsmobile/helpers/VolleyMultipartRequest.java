@@ -25,7 +25,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
     private final String lineEnd = "\r\n";
     private final String boundary = "apiclient-" + System.currentTimeMillis();
 
-    private Response.Listener<NetworkResponse> mListener;
+    private Response.Listener<String> mListener;
     private Response.ErrorListener mErrorListener;
     private Map<String, String> mHeaders;
 
@@ -99,7 +99,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     @Override
     protected void deliverResponse(NetworkResponse response) {
-        mListener.onResponse(response);
+        mListener.onResponse(String.valueOf(response));
     }
 
     @Override
