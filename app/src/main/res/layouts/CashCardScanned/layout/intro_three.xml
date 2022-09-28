@@ -131,6 +131,31 @@
                         android:scrollbars="vertical" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_overallremarks"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_remarks"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:endIconMode="clear_text"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
+
+                    <EditText
+                        android:id="@+id/edtOverAllRemarks"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:hint="Overall Remarks"
+                        android:inputType="textMultiLine"
+                        android:overScrollMode="always"
+                        android:padding="15dp"
+                        android:scrollbarStyle="insideInset"
+                        android:scrollbars="vertical" />
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
         </RelativeLayout>
