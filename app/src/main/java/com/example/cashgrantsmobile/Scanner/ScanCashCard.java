@@ -424,7 +424,6 @@ public class ScanCashCard extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
 
-
                 SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
                 String count = "SELECT count(*) FROM tmp_blob";
                 Cursor mCursor = db.rawQuery(count, null);
@@ -724,30 +723,15 @@ public class ScanCashCard extends AppCompatActivity {
                         if (scanned_image != null) {
                             Bitmap scanned = BitmapFactory.decodeByteArray(scanned_image, 0, scanned_image.length);
                             mPreviewCashCard.setImageBitmap(scanned);
-                            Log.v(TAG,"ifhalo" + scanned_image);
-                        }
-                        else{
-                            Log.v(TAG,"elsehala1 "+ scanned_image);
-//                        tilCard.setError(required_field);
-//                        validation++;
                         }
                         if (additional_image != null) {
                             Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
                             mAdditionalID.setImageBitmap(additional);
                         }
-                        else{
-                            Log.v(TAG,"elsehala2 "+ scanned_image);
-//                        tiladditionalID.setError(required_field);
-//                        validation++;
-                        }
+
                         if (grantee_image != null) {
                             Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
                             mPreviewGrantee.setImageBitmap(grantee);
-                        }
-                        else{
-                            Log.v(TAG,"elsehala3 "+ scanned_image);
-//                        tilGrantee.setError(required_field);
-//                        validation++;
                         }
                     }
 
@@ -1990,15 +1974,22 @@ public class ScanCashCard extends AppCompatActivity {
                             isValidationError++;
                             tilCard.setError(required_field);
                         }
-                        if (additional_image != null) {
-                            Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
-                            mAdditionalID.setImageBitmap(additional);
+
+                        if (spinnerIsID.matches("Yes")){
+                            if (additional_image != null) {
+                                Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
+                                mAdditionalID.setImageBitmap(additional);
+                                tiladditionalID.setError(null);
+                            }
+                            else{
+                            tiladditionalID.setError(required_field);
+                            isValidationError++;
+                            }
+                        }
+                        else {
                             tiladditionalID.setError(null);
                         }
-                        else{
-                        tiladditionalID.setError(required_field);
-                        isValidationError++;
-                        }
+
                         if (grantee_image != null) {
                             Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
                             mPreviewGrantee.setImageBitmap(grantee);
