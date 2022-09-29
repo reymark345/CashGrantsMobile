@@ -1017,6 +1017,7 @@ public class ScanCashCard extends AppCompatActivity {
                 edtRepresentativeTwo = findViewById(R.id.edtRepresentativeTwo);
                 edtOthersUnclaimedReason= findViewById(R.id.edtOthersUnclaimedReason);
                 edtReasonNotPresented= findViewById(R.id.edtReasonNotPresented);
+                edt_lender_name= findViewById(R.id.edtLenderName);
 
                 spinIsID = findViewById(R.id.spinnerIsID);
                 edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
@@ -1046,7 +1047,7 @@ public class ScanCashCard extends AppCompatActivity {
                 tilOthersUnclaimedReason  = findViewById(R.id.til_OthersUnclaimedReason );
                 tilRepresentativeIntroTwo = findViewById(R.id.til_representative);
                 tilReasonNotPresented = findViewById(R.id.til_reason_not_presented);
-
+                tilLenderName = findViewById(R.id.til_lendername);
                 mcvPawning = findViewById(R.id.pawning);
                 til_other_remarks_1 = findViewById(R.id.til_other_remarks_1);
                 til_other_remarks_2 = findViewById(R.id.til_other_remarks_2);
@@ -1101,6 +1102,7 @@ public class ScanCashCard extends AppCompatActivity {
                 representativeTwo();
                 otherReasonForUnclaimed();
                 reasonNotPresented();
+                lenderName();
 
                 //PAWNING
 
@@ -1120,6 +1122,9 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_remarks_1 = findViewById(R.id.edtotherRemarks1);
                 edt_other_remarks_2 = findViewById(R.id.edtotherRemarks2);
                 edt_other_remarks_3 = findViewById(R.id.edtotherRemarks3);
+
+                tilLenderName = findViewById(R.id.til_lendername);
+
 
                 ArrayAdapter<String> adapterStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Status);
                 ArrayAdapter<String> adapterOffenseHistory = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Offense);
@@ -1968,6 +1973,7 @@ public class ScanCashCard extends AppCompatActivity {
             spinnerIsReasonReplacement= findViewById(R.id.spinnerIsReasonReplacement);
             spinnerIsUnclaimedReason = findViewById(R.id.spinnerIsUnclaimedReason);
             edtReasonNotPresented  = findViewById(R.id.edtReasonNotPresented);
+            edt_lender_name  = findViewById(R.id.edtLenderName);
 
             String distribution = spinIsDistribution_1.getText().toString();
             String card_released = edt_card_released.getText().toString();
@@ -1984,6 +1990,7 @@ public class ScanCashCard extends AppCompatActivity {
             String spnUnclaimedReason = spinnerIsUnclaimedReason.getText().toString();
             String reasonNotPresented = edtReasonNotPresented.getText().toString();
             String reasonNotUnclaimed = edtOthersUnclaimedReason.getText().toString();
+            String lenderName = edt_lender_name.getText().toString();
 
             tilDistribution = findViewById(R.id.til_distribution);
             tilCardReleased = findViewById(R.id.til_cardreleased);
@@ -2004,6 +2011,7 @@ public class ScanCashCard extends AppCompatActivity {
             tilUnclaimedReason = findViewById(R.id.til_isUnclaimedReason);
             tilReasonNotPresented = findViewById(R.id.til_reason_not_presented);
             tilOthersUnclaimedReason = findViewById(R.id.til_OthersUnclaimedReason );
+            tilLenderName = findViewById(R.id.til_lendername );
 
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image FROM tmp_blob WHERE id=1");
@@ -2147,9 +2155,16 @@ public class ScanCashCard extends AppCompatActivity {
                 tilIsAvailable.setError(null);
             }
 
+            if (reason_not_presented.matches("Pawned")){
+                if (lenderName.matches("")){
+                    tilLenderName.setError(required_field);
+                    isValidationError++;
+                }
+                else {
+                    tilLenderName.setError(null);
+                }
 
-
-
+            }
             String grantee = sh.getString("grantee_in", "");
             if (grantee.matches("No")){
                 if (representative.matches("")) {
@@ -3071,6 +3086,27 @@ public class ScanCashCard extends AppCompatActivity {
                 }
                 else{
                     tilIsID.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    public void lenderName(){
+        edt_lender_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() ==0){
+                    tilLenderName.setError(required_field);
+                }
+                else{
+                    tilLenderName.setError(null);
                 }
             }
             @Override
