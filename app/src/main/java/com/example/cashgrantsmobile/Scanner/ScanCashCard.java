@@ -269,8 +269,7 @@ public class ScanCashCard extends AppCompatActivity {
         layouts = new int[]{
                 R.layout.intro_one,
                 R.layout.intro_two,
-                R.layout.intro_three,
-                R.layout.intro_four
+                R.layout.intro_three
         };
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,13 +343,13 @@ public class ScanCashCard extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void showImageImportDialog() {
-        if(!checkCameraPermission()){
-            requestCameraPermission();}
-        else{
-            pickCamera();
-        }
-    }
+//    public void showImageImportDialog() {
+//        if(!checkCameraPermission()){
+//            requestCameraPermission();}
+//        else{
+//            pickCamera();
+//        }
+//    }
 
 
     public void pickCamera() {
@@ -799,7 +798,7 @@ public class ScanCashCard extends AppCompatActivity {
         public void onPageSelected(int position) {
             addBottomDots(position);
             if (position == layouts.length - 1) {
-                tvNext.setText("SCAN");
+                tvNext.setText("SAVE");
             } else {
                 tvNext.setText("NEXT");
             }
@@ -1766,8 +1765,27 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        showImageImportDialog();
-    }
+//        showImageImportDialog();
+
+            new SweetAlertDialog(ScanCashCard.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Save data?")
+                    .setContentText("Please confirm to save data")
+                    .setConfirmText("Confirm")
+                    .setCancelText("Cancel")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismiss();
+                        }
+                    })
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismiss();
+                        }
+                    }).show();
+        }
 
     private void changeStatusBarColor() {
 
