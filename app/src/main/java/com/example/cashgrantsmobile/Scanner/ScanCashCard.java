@@ -2595,8 +2595,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
         }
         catch (Exception e){
-            Log.v(ContentValues.TAG,"not found " +e);
-            Toasty.error(getApplicationContext(),"Household not foundsa", Toasty.LENGTH_SHORT).show();
+            Toasty.error(getApplicationContext(),"Household not found" + e, Toasty.LENGTH_SHORT).show();
         }
     }
 
