@@ -134,11 +134,11 @@ public class ScanCashCard extends AppCompatActivity {
     private TextView[] dots;
     private MyViewPagerAdapter viewPagerAdapter;
     TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee,tilGranteeOne;
-    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3,tilPinAttached,tilAvailablereason,tilUnclaimedReason,tilRequestReplacement,tilContactNoOf,tilRepresentativeIntroOne,tilRepresentativeIntroTwo,tilDistribution,tilisPinAttached,tilOthersUnclaimedReason,tilReasonNotPresented,tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3;
+    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3,tilPinAttached,tilAvailablereason,tilUnclaimedReason,tilRequestReplacement,tilContactNoOf,tilRepresentativeIntroOne,tilRepresentativeIntroTwo,tilDistribution,tilisPinAttached,tilOthersUnclaimedReason,tilReasonNotPresented,tilCardReplacement,tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3;
     TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
     TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
     EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned,edtRepresentativeOne,edtRepresentativeTwo;
-    EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3,edt_cashCardNumber,edt_series_no, edt_other_remarks_1,edt_other_remarks_2,edt_other_remarks_3,edtOthersUnclaimedReason,edtReasonNotPresented;
+    EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3,edt_cashCardNumber,edt_series_no, edt_other_remarks_1,edt_other_remarks_2,edt_other_remarks_3,edtOthersUnclaimedReason,edtReasonNotPresented,edtCardReplacement;
     EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks;
     EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
     AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID, spinIsDistribution_1,spinnerIsUnclaimedReason,spinnerContactNoOf,spinnerGrantee,spinnerIsReasonReplacement,spinnerIsPinAttached;
@@ -1017,6 +1017,7 @@ public class ScanCashCard extends AppCompatActivity {
                 edtOthersUnclaimedReason= findViewById(R.id.edtOthersUnclaimedReason);
                 edtReasonNotPresented= findViewById(R.id.edtReasonNotPresented);
                 edt_lender_name= findViewById(R.id.edtLenderName);
+                edtCardReplacement= findViewById(R.id.edtCardReplacement);
 
                 spinIsID = findViewById(R.id.spinnerIsID);
                 edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
@@ -1040,6 +1041,7 @@ public class ScanCashCard extends AppCompatActivity {
                 tilGrantee = findViewById(R.id.tilGrantee);
                 tilCardBtn = findViewById(R.id.til_card);
                 tilPinAttached = findViewById(R.id.til_isPinAttached);
+                tilCardReplacement = findViewById(R.id.til_cardReplacement);
                 tilAvailablereason = findViewById(R.id.til_isavailablereason);
                 tilUnclaimedReason = findViewById(R.id.til_isUnclaimedReason);
                 tilRequestReplacement = findViewById(R.id.til_isRequestReplacement);
@@ -1084,6 +1086,7 @@ public class ScanCashCard extends AppCompatActivity {
                 tilRequestReplacement.setVisibility(View.GONE);
                 tilOthersUnclaimedReason.setVisibility(View.GONE);
                 tilReasonNotPresented.setVisibility(View.GONE);
+                tilCardReplacement.setVisibility(View.GONE);
 
 
                 dateReleased(edt_card_released);
@@ -1102,6 +1105,7 @@ public class ScanCashCard extends AppCompatActivity {
                 otherReasonForUnclaimed();
                 reasonNotPresented();
                 lenderName();
+                replacementSubmitted();
 
                 //PAWNING
 
@@ -1273,12 +1277,16 @@ public class ScanCashCard extends AppCompatActivity {
                             tilPinAttached.setVisibility(View.VISIBLE);
                             tilUnclaimedReason.setVisibility(View.GONE);
                             tilRequestReplacement.setVisibility(View.GONE);
+                            tilCardReplacement.setVisibility(View.GONE);
+                            edtCardReplacement.setText("");
 
                         } else {
+                            edtCardReplacement.setText("");
                             spinnerIsPinAttached.setText("");
                             spinIsAvailReason.setText("");
                             tilPinAttached.setVisibility(View.GONE);
                             tilAvailablereason.setVisibility(View.VISIBLE);
+                            tilCardReplacement.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -1307,6 +1315,7 @@ public class ScanCashCard extends AppCompatActivity {
                             tilRequestReplacement.setVisibility(View.GONE);
                             tilOthersUnclaimedReason.setVisibility(View.GONE);
                             tilReasonNotPresented.setVisibility(View.GONE);
+                            tilCardReplacement.setVisibility(View.GONE);
                         }
                         else if (spinIsAvailReason.getText().toString().matches("Unclaimed")){
                             tilUnclaimedReason.setVisibility(View.VISIBLE);
@@ -1314,6 +1323,7 @@ public class ScanCashCard extends AppCompatActivity {
                             tilRequestReplacement.setVisibility(View.GONE);
                             tilOthersUnclaimedReason.setVisibility(View.GONE);
                             tilReasonNotPresented.setVisibility(View.GONE);
+                            tilCardReplacement.setVisibility(View.GONE);
 
                         }
                         else if (spinIsAvailReason.getText().toString().matches("Lost/Stolen")){
@@ -1322,6 +1332,7 @@ public class ScanCashCard extends AppCompatActivity {
                             mcvPawning.setVisibility(View.GONE);
                             tilOthersUnclaimedReason.setVisibility(View.GONE);
                             tilReasonNotPresented.setVisibility(View.GONE);
+                            tilCardReplacement.setVisibility(View.GONE);
                         }
                         else if (spinIsAvailReason.getText().toString().matches("Others")){
                             tilReasonNotPresented.setVisibility(View.VISIBLE);
@@ -1329,6 +1340,7 @@ public class ScanCashCard extends AppCompatActivity {
                             tilUnclaimedReason.setVisibility(View.GONE);
                             mcvPawning.setVisibility(View.GONE);
                             tilOthersUnclaimedReason.setVisibility(View.GONE);
+                            tilCardReplacement.setVisibility(View.GONE);
                         }
                         else {
                             tilReasonNotPresented.setVisibility(View.GONE);
@@ -1336,6 +1348,7 @@ public class ScanCashCard extends AppCompatActivity {
                             mcvPawning.setVisibility(View.GONE);
                             tilUnclaimedReason.setVisibility(View.GONE);
                             tilRequestReplacement.setVisibility(View.GONE);
+                            tilCardReplacement.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -1432,6 +1445,17 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
 
+                spinnerIsReasonReplacement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        edtCardReplacement.setText("");
+                        if (spinnerIsReasonReplacement.getText().toString().matches("Yes")){
+                            tilCardReplacement.setVisibility(View.VISIBLE);
+                        }
+                        else{tilCardReplacement.setVisibility(View.GONE);}
+                    }
+                });
+
 
 //                spinnerGrantee.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                    @Override
@@ -1480,6 +1504,7 @@ public class ScanCashCard extends AppCompatActivity {
                 String unclaimed_reason = sh.getString("unclaimed_reason", "");
                 String reason_not_presented = sh.getString("reason_not_presented", "");
                 String other_unclaimed_reason = sh.getString("other_unclaimed_reason", "");
+                String card_replacement = sh.getString("card_replacement", "");
 
 
                 spinIsDistribution_1.setText(distribution,false);
@@ -1513,7 +1538,7 @@ public class ScanCashCard extends AppCompatActivity {
                 spinnerIsUnclaimedReason.setText(unclaimed_reason,false);
                 edtReasonNotPresented.setText(reason_not_presented);
                 edtOthersUnclaimedReason.setText(other_unclaimed_reason);
-
+                edtCardReplacement.setText(card_replacement);
 
                 String lender_name = sh.getString("lender_name","");
                 String pawning_date = sh.getString("pawning_date","");
@@ -1627,13 +1652,12 @@ public class ScanCashCard extends AppCompatActivity {
                 }
                 else{til_other_remarks_3.setVisibility(View.GONE);}
 
-
-
-
-
-
-
-
+                if (spinnerIsReasonReplacement.getText().toString().matches("Yes")){
+                    tilCardReplacement.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tilCardReplacement.setVisibility(View.GONE);
+                }
 
             } else if (position == 2) {
                 //intro_three.xml
@@ -1992,6 +2016,7 @@ public class ScanCashCard extends AppCompatActivity {
             spinnerIsUnclaimedReason = findViewById(R.id.spinnerIsUnclaimedReason);
             edtReasonNotPresented  = findViewById(R.id.edtReasonNotPresented);
             edt_lender_name  = findViewById(R.id.edtLenderName);
+            edtCardReplacement = findViewById(R.id.edtCardReplacement);
 
             String distribution = spinIsDistribution_1.getText().toString();
             String card_released = edt_card_released.getText().toString();
@@ -2009,6 +2034,11 @@ public class ScanCashCard extends AppCompatActivity {
             String reasonNotPresented = edtReasonNotPresented.getText().toString();
             String reasonNotUnclaimed = edtOthersUnclaimedReason.getText().toString();
             String lenderName = edt_lender_name.getText().toString();
+            String cardReplacement = edtCardReplacement.getText().toString();
+
+
+
+
 
             tilDistribution = findViewById(R.id.til_distribution);
             tilCardReleased = findViewById(R.id.til_cardreleased);
@@ -2028,8 +2058,9 @@ public class ScanCashCard extends AppCompatActivity {
             tilRequestReplacement = findViewById(R.id.til_isRequestReplacement);
             tilUnclaimedReason = findViewById(R.id.til_isUnclaimedReason);
             tilReasonNotPresented = findViewById(R.id.til_reason_not_presented);
-            tilOthersUnclaimedReason = findViewById(R.id.til_OthersUnclaimedReason );
-            tilLenderName = findViewById(R.id.til_lendername );
+            tilOthersUnclaimedReason = findViewById(R.id.til_OthersUnclaimedReason);
+            tilLenderName = findViewById(R.id.til_lendername);
+            tilCardReplacement = findViewById(R.id.til_cardReplacement);
 
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image FROM tmp_blob WHERE id=1");
@@ -2173,6 +2204,16 @@ public class ScanCashCard extends AppCompatActivity {
                 tilIsAvailable.setError(null);
             }
 
+            if (spnReasonReplacement.matches("Yes")){
+                if (cardReplacement.matches("")){
+                    tilCardReplacement.setError(required_field);
+                    isValidationError++;
+                }
+                else {
+                    tilCardReplacement.setError(null);
+                }
+            }
+
             if (reason_not_presented.matches("Pawned")){
                 if (lenderName.matches("")){
                     tilLenderName.setError(required_field);
@@ -2296,6 +2337,7 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.commit();
                 break;
             case 2:
+
                 spinIsDistribution_1 = findViewById(R.id.spinnerDistribution);
                 edt_card_released = findViewById(R.id.edtCardReleased);
                 edt_who_released = findViewById(R.id.edtWhoReleased);
@@ -2330,6 +2372,7 @@ public class ScanCashCard extends AppCompatActivity {
                 spinnerIsUnclaimedReason = findViewById(R.id.spinnerIsUnclaimedReason);
                 edtReasonNotPresented = findViewById(R.id.edtReasonNotPresented);
                 edtOthersUnclaimedReason = findViewById(R.id.edtOthersUnclaimedReason);
+                edtCardReplacement = findViewById(R.id.edtCardReplacement);
 
                 String distribution = spinIsDistribution_1.getText().toString();
                 String card_released = edt_card_released.getText().toString();
@@ -2359,6 +2402,7 @@ public class ScanCashCard extends AppCompatActivity {
                 String unclaimed_reason = spinnerIsUnclaimedReason.getText().toString();
                 String reason_not_presented = edtReasonNotPresented.getText().toString();
                 String other_unclaimed_reason = edtOthersUnclaimedReason.getText().toString();
+                String card_replacement = edtCardReplacement.getText().toString();
 
 
 
@@ -2434,7 +2478,7 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("unclaimed_reason", unclaimed_reason);
                 myEdit.putString("reason_not_presented", reason_not_presented);
                 myEdit.putString("other_unclaimed_reason", other_unclaimed_reason);
-
+                myEdit.putString("card_replacement", card_replacement);
 
                 //PAWNING
                 myEdit.putString("lender_name", lender_name);
@@ -2979,6 +3023,28 @@ public class ScanCashCard extends AppCompatActivity {
                 }
                 else{
                     tilRequestReplacement.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    public void replacementSubmitted(){
+        edtCardReplacement.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilCardReplacement.setError(required_field);
+                }
+                else{
+                    tilCardReplacement.setError(null);
                 }
             }
             @Override
