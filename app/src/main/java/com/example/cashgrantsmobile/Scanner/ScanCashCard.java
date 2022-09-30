@@ -135,13 +135,13 @@ public class ScanCashCard extends AppCompatActivity {
     private MyViewPagerAdapter viewPagerAdapter;
     TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee,tilGranteeOne;
     TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3,tilPinAttached,tilAvailablereason,tilUnclaimedReason,tilRequestReplacement,tilContactNoOf,tilRepresentativeIntroOne,tilRepresentativeIntroTwo,tilDistribution,tilisPinAttached,tilOthersUnclaimedReason,tilReasonNotPresented,tilCardReplacement,tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3;
-    TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
+    TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks,tilOtherReasonNma;
     TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
     EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned,edtRepresentativeOne,edtRepresentativeTwo;
     EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3,edt_cashCardNumber,edt_series_no, edt_other_remarks_1,edt_other_remarks_2,edt_other_remarks_3,edtOthersUnclaimedReason,edtReasonNotPresented,edtCardReplacement;
-    EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks;
+    EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks,edtOtherReasonNma;
     EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
-    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID, spinIsDistribution_1,spinnerIsUnclaimedReason,spinnerContactNoOf,spinnerGrantee,spinnerIsReasonReplacement,spinnerIsPinAttached;
+    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID, spinIsDistribution_1,spinnerIsUnclaimedReason,spinnerContactNoOf,spinnerGrantee,spinnerIsReasonReplacement,spinnerIsPinAttached, spnWhyMma;
 
     MaterialCardView mcvPawning;
 
@@ -188,6 +188,26 @@ public class ScanCashCard extends AppCompatActivity {
     String[] Offense = new String[]{"","1st Offense", "2nd Offense", "3rd Offense"};
     String[] distribution = new String[]{"Claimed", "Unclaimed"};
     String[] ReasonCashCardUnclaimed = new String[]{
+            "Bedridden",
+            "Deceased",
+            "Imprisoned",
+            "Mentally challenged",
+            "Family conflict",
+            "Working abroad",
+            "Working outside the region",
+            "Name discrepancy",
+            "Transferred household",
+            "Household moved out without notice",
+            "Inactive and zero balance",
+            "Waived",
+            "For delisting of client status",
+            "Temporarily on hold (code 19)",
+            "With cash card of other family member",
+            "Force Majeure",
+            "For distribution",
+            "Others"
+    };
+    String[] ReasonNMA = new String[]{
             "Bedridden",
             "Deceased",
             "Imprisoned",
@@ -343,13 +363,13 @@ public class ScanCashCard extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-//    public void showImageImportDialog() {
-//        if(!checkCameraPermission()){
-//            requestCameraPermission();}
-//        else{
-//            pickCamera();
-//        }
-//    }
+    public void showImageImportDialog() {
+        if(!checkCameraPermission()){
+            requestCameraPermission();}
+        else{
+            pickCamera();
+        }
+    }
 
 
     public void pickCamera() {
@@ -1172,13 +1192,14 @@ public class ScanCashCard extends AppCompatActivity {
                 ArrayAdapter<String> adapterIsCashCardUnclaimed = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ReasonCashCardUnclaimed);
                 ArrayAdapter<String> adapterYesNo = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
 
+
                 adapterIsAvail.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterYesNoBlank.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterIsID.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterIsDistribution.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterIsCashCardUnclaimed.setDropDownViewResource(simple_spinner_dropdown_item);
-
                 adapterYesNo.setDropDownViewResource(simple_spinner_dropdown_item);
+
 
                 spinIsAvail.setAdapter(adapterIsAvail);
                 spinIsAvail1.setAdapter(adapterYesNoBlank);
@@ -1209,7 +1230,7 @@ public class ScanCashCard extends AppCompatActivity {
                 btn_cash_card.setOnClickListener( new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        launchHomeScreen();
+                        showImageImportDialog();
                     }
                 });
                 btn_scanID.setOnClickListener( new View.OnClickListener() {
@@ -1663,12 +1684,40 @@ public class ScanCashCard extends AppCompatActivity {
                 //intro_three.xml
                 tilDateWithdrawn = findViewById(R.id.til_datewithdrawn);
                 edt_nma_amount = findViewById(R.id.edtNmaAmount);
-                edt_nma_reason = findViewById(R.id.edtNmaReason);
+                spnWhyMma = findViewById(R.id.spnWhyMma);
                 edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
                 edt_remarks = findViewById(R.id.edtRemarks);
+                edtOtherReasonNma = findViewById(R.id.edtOtherReasonNma);
+                tilNmaReason = findViewById(R.id.til_nmareason);
+                tilNmaAmount = findViewById(R.id.til_nmaamount);
+                tilOtherReasonNma = findViewById(R.id.til_otherReasonNma);
+
+
+
                 edt_date_withdrawn.setFocusable(false);
                 edt_date_withdrawn.setClickable(true);
                 tilDateWithdrawn.setVisibility(View.GONE);
+                tilNmaReason.setVisibility(View.GONE);
+                tilOtherReasonNma.setVisibility(View.GONE);
+
+
+                ArrayAdapter<String> adapterReasonNMA = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ReasonNMA);
+                adapterReasonNMA.setDropDownViewResource(simple_spinner_dropdown_item);
+                spnWhyMma.setAdapter(adapterReasonNMA);
+
+                nmaAmount();
+
+                spnWhyMma.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spnWhyMma.getText().toString().matches("Others")) {
+                            tilOtherReasonNma.setVisibility(View.VISIBLE);
+                        } else {
+                            tilOtherReasonNma.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
                 edt_date_withdrawn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1679,10 +1728,23 @@ public class ScanCashCard extends AppCompatActivity {
                 String nma_reason = sh.getString("nma_reason", "");
                 String date_withdrawn = sh.getString("date_withdrawn", "");
                 String remarks = sh.getString("remarks", "");
+                String other_reason = sh.getString("other_reason_nma", "");
+                edtOtherReasonNma.setText(other_reason);
                 edt_nma_amount.setText(nma_amount);
-                edt_nma_reason.setText(nma_reason);
+                spnWhyMma.setText(nma_reason,false);
                 edt_date_withdrawn.setText(date_withdrawn);
                 edt_remarks.setText(remarks);
+
+
+                if (spnWhyMma.getText().toString().matches("Others")){
+                    tilOtherReasonNma.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tilOtherReasonNma.setVisibility(View.GONE);
+                }
+
+
+
 
             } else if (position == 3) {
                 //intro_four.xml
@@ -2265,9 +2327,62 @@ public class ScanCashCard extends AppCompatActivity {
 
         }
         else if (current == 3) {
-            MANDATORY_PAGE_LOCATION++;
-            pressNext =false;
-            store_preferences(3);
+            try {
+                edt_nma_amount = findViewById(R.id.edtNmaAmount);
+                spnWhyMma = findViewById(R.id.spnWhyMma);
+                tilNmaReason = findViewById(R.id.til_nmareason);
+                tilNmaAmount = findViewById(R.id.til_nmaamount);
+                tilOtherReasonNma = findViewById(R.id.til_otherReasonNma);
+                edtOtherReasonNma = findViewById(R.id.edtOtherReasonNma);
+
+
+                String nma_amount = edt_nma_amount.getText().toString();
+                String reason_nma = spnWhyMma.getText().toString();
+                String other_reason_nma = edtOtherReasonNma.getText().toString();
+
+                int number=Integer.parseInt(nma_amount);
+
+                if (nma_amount.matches("")){
+                    tilNmaAmount.setError(required_field);
+                    isValidationError++;
+                }
+                else if (number >=100){
+                    if (reason_nma.matches("")){
+                        tilNmaReason.setError(required_field);
+                        isValidationError++;
+                    }
+                    else if (reason_nma.matches("Others")){
+                        if (other_reason_nma.matches("")){
+                            tilOtherReasonNma.setError(required_field);
+                            isValidationError++;
+                        }
+                        else {
+                            tilOtherReasonNma.setError(null);
+                        }
+
+                    }
+                    else {
+                        tilNmaReason.setError(null);
+                    }
+
+                }
+                else {
+                    tilNmaAmount.setError(null);
+                }
+
+
+
+
+
+//I comment this
+//                MANDATORY_PAGE_LOCATION++;
+//                pressNext =false;
+//                store_preferences(3);
+
+            }catch (Exception e){
+
+            }
+
         } else {
             Log.v(ContentValues.TAG,"Error Current Btn Next");
         }
@@ -2498,19 +2613,21 @@ public class ScanCashCard extends AppCompatActivity {
                 break;
             case 3:
                 edt_nma_amount = findViewById(R.id.edtNmaAmount);
-                edt_nma_reason = findViewById(R.id.edtNmaReason);
+                spnWhyMma = findViewById(R.id.spnWhyMma);
                 edt_date_withdrawn = findViewById(R.id.edtDateWithdrawn);
                 edt_remarks = findViewById(R.id.edtRemarks);
 
                 String nma_amount = edt_nma_amount.getText().toString();
-                String nma_reason = edt_nma_reason.getText().toString();
+                String nma_reason = spnWhyMma.getText().toString();
                 String date_withdrawn = edt_date_withdrawn.getText().toString();
                 String remarks = edt_remarks.getText().toString();
+                String other_reason_nma = edtOtherReasonNma.getText().toString();
 
                 myEdit.putString("nma_amount", nma_amount);
                 myEdit.putString("nma_reason", nma_reason);
                 myEdit.putString("date_withdrawn", date_withdrawn);
                 myEdit.putString("remarks", remarks);
+                myEdit.putString("other_reason_nma", other_reason_nma);
                 myEdit.commit();
                 break;
 //            case 4:
@@ -3195,6 +3312,35 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+    }
+
+    public void nmaAmount(){
+        edt_nma_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                try {
+                    String j = s.toString();
+                    int number=Integer.parseInt(j);
+                    if (number >=100){
+                        tilNmaReason.setVisibility(View.VISIBLE);
+                    }
+                    else if (number<100){
+                        tilNmaReason.setVisibility(View.GONE);
+                    }
+                    else{
+                        tilNmaAmount.setError(null);
+                    }
+
+                    }catch (Exception e){}
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
     }

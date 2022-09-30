@@ -62,10 +62,33 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_nmareason"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/til_nmaamount"
+                    android:layout_marginTop="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/spnWhyMma"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Reason for NMA"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_otherReasonNma"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_reason_why_mma"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
@@ -74,10 +97,10 @@
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtNmaReason"
+                        android:id="@+id/edtOtherReasonNma"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:hint="Reason for NMA"
+                        android:hint="Other reason for NMA"
                         android:inputType="textMultiLine"
                         android:overScrollMode="always"
                         android:padding="15dp"
@@ -140,6 +163,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginBottom="80dp"
                     app:endIconMode="clear_text"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
