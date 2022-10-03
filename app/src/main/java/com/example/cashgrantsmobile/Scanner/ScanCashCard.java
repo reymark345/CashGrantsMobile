@@ -1680,6 +1680,10 @@ public class ScanCashCard extends AppCompatActivity {
                     tilCardReplacement.setVisibility(View.GONE);
                 }
 
+
+
+
+
             } else if (position == 2) {
                 //intro_three.xml
                 tilDateWithdrawn = findViewById(R.id.til_datewithdrawn);
@@ -1691,8 +1695,6 @@ public class ScanCashCard extends AppCompatActivity {
                 tilNmaReason = findViewById(R.id.til_nmareason);
                 tilNmaAmount = findViewById(R.id.til_nmaamount);
                 tilOtherReasonNma = findViewById(R.id.til_otherReasonNma);
-
-
 
                 edt_date_withdrawn.setFocusable(false);
                 edt_date_withdrawn.setClickable(true);
@@ -1706,6 +1708,7 @@ public class ScanCashCard extends AppCompatActivity {
                 spnWhyMma.setAdapter(adapterReasonNMA);
 
                 nmaAmount();
+                otherReasonNMA();
 
                 spnWhyMma.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -1735,13 +1738,33 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_date_withdrawn.setText(date_withdrawn);
                 edt_remarks.setText(remarks);
 
+                String amt = edt_nma_amount.getText().toString();
 
-                if (spnWhyMma.getText().toString().matches("Others")){
-                    tilOtherReasonNma.setVisibility(View.VISIBLE);
+                if (!TextUtils.isEmpty(amt)) {
+                    Long number = Long.parseLong(amt);
+                    if (number >= 100) {
+                        tilNmaReason.setVisibility(View.VISIBLE);
+                    } else {
+                        tilNmaReason.setVisibility(View.GONE);
+                        spnWhyMma.setText("");
+                    }
+
+                    if (spnWhyMma.getText().toString().matches("Others")){
+                        tilOtherReasonNma.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        tilOtherReasonNma.setVisibility(View.GONE);
+                    }
+
+                }else{
+                    Log.v(ContentValues.TAG,"emptyd");
                 }
-                else {
-                    tilOtherReasonNma.setVisibility(View.GONE);
-                }
+
+
+
+
+
+
 
 
 
@@ -3324,13 +3347,16 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 try {
-                    String j = s.toString();
-                    int number=Integer.parseInt(j);
+                    String amt = s.toString();
+                    Long number = Long.parseLong(amt);
+
                     if (number >=100){
                         tilNmaReason.setVisibility(View.VISIBLE);
                     }
                     else if (number<100){
+                        spnWhyMma.setText("");
                         tilNmaReason.setVisibility(View.GONE);
+                        tilOtherReasonNma.setVisibility(View.GONE);
                     }
                     else{
                         tilNmaAmount.setError(null);
@@ -3341,6 +3367,29 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable editable) {
+            }
+        });
+    }
+
+
+    public void otherReasonNMA(){
+        edtOtherReasonNma.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if(s.toString().length() == 0){
+                    tilOtherReasonNma.setError(required_field);
+                }
+                else{
+                    tilOtherReasonNma.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
