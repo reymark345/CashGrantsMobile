@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
@@ -65,6 +66,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -115,6 +117,7 @@ public class ScanCashCard extends AppCompatActivity {
     ImageView mPreviewCashCard,mAdditionalID,mPreviewGrantee, mImgUri;
     private int prevCount = 0;
     Integer isValidationError = 0;
+    Integer card_count = 0;
 
 
     private boolean isAtSpaceDelimiter(int currCount) {
@@ -134,16 +137,26 @@ public class ScanCashCard extends AppCompatActivity {
     private TextView[] dots;
     private MyViewPagerAdapter viewPagerAdapter;
     TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee,tilGranteeOne;
-    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3,tilPinAttached,tilAvailablereason,tilUnclaimedReason,tilRequestReplacement,tilContactNoOf,tilRepresentativeIntroOne,tilRepresentativeIntroTwo,tilDistribution,tilisPinAttached,tilOthersUnclaimedReason,tilReasonNotPresented,tilCardReplacement,tilIsAvailableReason, tilOtherCardNumber1, tilOtherCardHolderName1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherCardHolderName2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherCardHolderName3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3;
-    TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks,tilOtherReasonNma;
+
+    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3,tilPinAttached,tilAvailablereason,tilUnclaimedReason,tilRequestReplacement,tilContactNoOf,tilRepresentativeIntroOne,tilRepresentativeIntroTwo,tilDistribution,tilisPinAttached,tilOthersUnclaimedReason,tilReasonNotPresented,tilIsAvailableReason, tilOtherCardNumber1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3;
+    TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
+
     TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
+    TextInputLayout tilDistribution1, tilDistribution2, tilDistribution3, tilDistribution4, tilDistribution5, tilCardReleased1, tilCardReleased2, tilCardReleased3, tilCardReleased4, tilCardReleased5, tilWhoReleased1, tilWhoReleased2, tilWhoReleased3, tilWhoReleased4, tilWhoReleased5, tilPlaceReleased1, tilPlaceReleased2, tilPlaceReleased3, tilPlaceReleased4, tilPlaceReleased5, tilIsPresented1, tilIsPresented2, tilIsPresented3, tilIsPresented4, tilIsPresented5, tilIsPinAttached1, tilIsPinAttached2, tilIsPinAttached3, tilIsPinAttached4, tilIsPinAttached5, tilIsPresentedReason1, tilIsPresentedReason2, tilIsPresentedReason3, tilIsPresentedReason4, tilIsPresentedReason5, tilReasonNotPresented1, tilReasonNotPresented2, tilReasonNotPresented3, tilReasonNotPresented4, tilReasonNotPresented5, tilIsUnclaimedReason1, tilIsUnclaimedReason2, tilIsUnclaimedReason3, tilIsUnclaimedReason4, tilIsUnclaimedReason5, tilOtherUnclaimedReason1, tilOtherUnclaimedReason2, tilOtherUnclaimedReason3, tilOtherUnclaimedReason4, tilOtherUnclaimedReason5, tilIsRequestReplacement1, tilIsRequestReplacement2, tilIsRequestReplacement3, tilIsRequestReplacement4, tilIsRequestReplacement5, tilPawnRemarks1, tilPawnRemarks2, tilPawnRemarks3, tilPawnRemarks4, tilPawnRemarks5;
+    EditText edtCardReleased1, edtCardReleased2, edtCardReleased3, edtCardReleased4, edtCardReleased5, edtWhoReleased1, edtWhoReleased2, edtWhoReleased3, edtWhoReleased4, edtWhoReleased5, edtPlaceReleased1, edtPlaceReleased2, edtPlaceReleased3, edtPlaceReleased4, edtPlaceReleased5, edtReasonNotPresented1, edtReasonNotPresented2, edtReasonNotPresented3, edtReasonNotPresented4, edtReasonNotPresented5, edtOtherUnclaimedReason1, edtOtherUnclaimedReason2, edtOtherUnclaimedReason3, edtOtherUnclaimedReason4, edtOtherUnclaimedReason5, edtPawnRemarks1, edtPawnRemarks2, edtPawnRemarks3, edtPawnRemarks4, edtPawnRemarks5;
+    AutoCompleteTextView spinDistribution1, spinDistribution2, spinDistribution3, spinDistribution4, spinDistribution5, spinIsPresented1, spinIsPresented2, spinIsPresented3, spinIsPresented4, spinIsPresented5, spinIsPinAttached1, spinIsPinAttached2, spinIsPinAttached3, spinIsPinAttached4, spinIsPinAttached5, spinIsPresentedReason1, spinIsPresentedReason2, spinIsPresentedReason3, spinIsPresentedReason4, spinIsPresentedReason5, spinIsUnclaimedReason1, spinIsUnclaimedReason2, spinIsUnclaimedReason3, spinIsUnclaimedReason4, spinIsUnclaimedReason5, spinIsRequestReplacement1, spinIsRequestReplacement2, spinIsRequestReplacement3, spinIsRequestReplacement4, spinIsRequestReplacement5;
     EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned,edtRepresentativeOne,edtRepresentativeTwo;
     EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3,edt_cashCardNumber,edt_series_no, edt_other_remarks_1,edt_other_remarks_2,edt_other_remarks_3,edtOthersUnclaimedReason,edtReasonNotPresented,edtCardReplacement;
     EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks,edtOtherReasonNma;
     EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
-    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID, spinIsDistribution_1,spinnerIsUnclaimedReason,spinnerContactNoOf,spinnerGrantee,spinnerIsReasonReplacement,spinnerIsPinAttached, spnWhyMma;
 
-    MaterialCardView mcvPawning;
+    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvail4, spinIsAvail5, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinIsAvailReason4, spinIsAvailReason5, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID, spinIsDistribution_1,spinnerIsUnclaimedReason,spinnerContactNoOf,spinnerGrantee,spinnerIsReasonReplacement,spinnerIsPinAttached, spnWhyMma;
+
+    MaterialCardView mcvPawning, otherCard1, otherCard2, otherCard3, otherCard4, otherCard5;
+
+    ImageButton btnCancelOtherCard1, btnCancelOtherCard2, btnCancelOtherCard3, btnCancelOtherCard4, btnCancelOtherCard5;
+
+    AppCompatButton btnAddCard;
 
     String[] Ans = new String[]{"","Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
@@ -295,7 +308,7 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btn_CheckNextValidation();
-                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                 String hh_id = sh.getString("hh_id", "160310001-");
                 String buttonNext = sh.getString("pressBtn_search", "");
 
@@ -315,7 +328,7 @@ public class ScanCashCard extends AppCompatActivity {
             public void onClick(View v) {
                 int current = viewPager.getCurrentItem();
 
-                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                 String hh_id = sh.getString("hh_id", "160310001-");
                 if (hh_id.length() > 0) {
                     pressBtn_search=true;
@@ -528,7 +541,7 @@ public class ScanCashCard extends AppCompatActivity {
                         Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
                         mPreviewCashCard.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
 
-                        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+                        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                         String temp_status = sh.getString("temp_blob", "");
 
                         SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
@@ -895,7 +908,7 @@ public class ScanCashCard extends AppCompatActivity {
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
 
-            SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+            SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
 
             //intro_one.xml
             if (position == 0) {
@@ -1009,28 +1022,56 @@ public class ScanCashCard extends AppCompatActivity {
                 pressBtn_search = false;
 
                 edt_card_released = findViewById(R.id.edtCardReleased);
+                edtCardReleased1 = findViewById(R.id.edtCardReleased1);
+                edtCardReleased2 = findViewById(R.id.edtCardReleased2);
+                edtCardReleased3 = findViewById(R.id.edtCardReleased3);
+                edtCardReleased4 = findViewById(R.id.edtCardReleased4);
+                edtCardReleased5 = findViewById(R.id.edtCardReleased5);
                 edt_who_released = findViewById(R.id.edtWhoReleased);
+                edtWhoReleased1 = findViewById(R.id.edtWhoReleased1);
+                edtWhoReleased2 = findViewById(R.id.edtWhoReleased2);
+                edtWhoReleased3 = findViewById(R.id.edtWhoReleased3);
+                edtWhoReleased4 = findViewById(R.id.edtWhoReleased4);
+                edtWhoReleased5 = findViewById(R.id.edtWhoReleased5);
                 edt_place_released = findViewById(R.id.edtPlaceReleased);
+                edtPlaceReleased1 = findViewById(R.id.edtPlaceReleased1);
+                edtPlaceReleased2 = findViewById(R.id.edtPlaceReleased2);
+                edtPlaceReleased3 = findViewById(R.id.edtPlaceReleased3);
+                edtPlaceReleased4 = findViewById(R.id.edtPlaceReleased4);
+                edtPlaceReleased5 = findViewById(R.id.edtPlaceReleased5);
                 edt_current_grantee_number = findViewById(R.id.edtCurrentGranteeNumber);
                 spinIsAvail = findViewById(R.id.spinnerIsAvailable);
                 spinIsDistribution_1 = findViewById(R.id.spinnerDistribution);
+                spinDistribution1 = findViewById(R.id.spinnerDistribution1);
+                spinDistribution2 = findViewById(R.id.spinnerDistribution2);
+                spinDistribution3 = findViewById(R.id.spinnerDistribution3);
+                spinDistribution4 = findViewById(R.id.spinnerDistribution4);
+                spinDistribution5 = findViewById(R.id.spinnerDistribution5);
                 spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
                 spinnerIsPinAttached  = findViewById(R.id.spinnerIsPinAttached);
+                spinIsPinAttached1  = findViewById(R.id.spinnerIsPinAttached1);
+                spinIsPinAttached2  = findViewById(R.id.spinnerIsPinAttached2);
+                spinIsPinAttached3  = findViewById(R.id.spinnerIsPinAttached3);
+                spinIsPinAttached4  = findViewById(R.id.spinnerIsPinAttached4);
+                spinIsPinAttached5  = findViewById(R.id.spinnerIsPinAttached5);
                 edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
                 edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
-                edt_other_card_holder_name_1 = findViewById(R.id.edtOtherCardHolderName1);
                 spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
+                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
+                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
+                spinIsAvail4 = findViewById(R.id.spinnerOtherIsAvailable4);
+                spinIsAvail5 = findViewById(R.id.spinnerOtherIsAvailable5);
+
                 spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
+                spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
+                spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
+                spinIsAvailReason4 = findViewById(R.id.spinnerOtherIsAvailableReason4);
+                spinIsAvailReason5 = findViewById(R.id.spinnerOtherIsAvailableReason5);
+
                 edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
                 edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
-                edt_other_card_holder_name_2 = findViewById(R.id.edtOtherCardHolderName2);
-                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
-                spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
                 edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
                 edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
-                edt_other_card_holder_name_3 = findViewById(R.id.edtOtherCardHolderName3);
-                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
-                spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
                 spinnerIsUnclaimedReason= findViewById(R.id.spinnerIsUnclaimedReason);
                 spinnerIsReasonReplacement= findViewById(R.id.spinnerIsReasonReplacement);
                 edtRepresentativeTwo = findViewById(R.id.edtRepresentativeTwo);
@@ -1050,9 +1091,30 @@ public class ScanCashCard extends AppCompatActivity {
                 tViewCashCard1= findViewById(R.id.tViewCashCard1);
 
                 tilIsAvailable = findViewById(R.id.til_isavailable);
+                tilIsPresented1 = findViewById(R.id.til_otherisavailable1);
+                tilIsPresented2 = findViewById(R.id.til_otherisavailable2);
+                tilIsPresented3 = findViewById(R.id.til_otherisavailable3);
+                tilIsPresented4 = findViewById(R.id.til_otherisavailable4);
+                tilIsPresented5 = findViewById(R.id.til_otherisavailable5);
+
                 tilWhoReleased = findViewById(R.id.til_whoreleased);
+                tilWhoReleased1 = findViewById(R.id.til_whoreleased1);
+                tilWhoReleased2 = findViewById(R.id.til_whoreleased2);
+                tilWhoReleased3 = findViewById(R.id.til_whoreleased3);
+                tilWhoReleased4 = findViewById(R.id.til_whoreleased4);
+                tilWhoReleased5 = findViewById(R.id.til_whoreleased5);
                 tilPlaceReleased = findViewById(R.id.til_placereleased);
+                tilPlaceReleased1 = findViewById(R.id.til_placereleased1);
+                tilPlaceReleased2 = findViewById(R.id.til_placereleased2);
+                tilPlaceReleased3 = findViewById(R.id.til_placereleased3);
+                tilPlaceReleased4 = findViewById(R.id.til_placereleased4);
+                tilPlaceReleased5 = findViewById(R.id.til_placereleased5);
                 tilCardReleased = findViewById(R.id.til_cardreleased);
+                tilCardReleased1 = findViewById(R.id.til_cardreleased1);
+                tilCardReleased2 = findViewById(R.id.til_cardreleased2);
+                tilCardReleased3 = findViewById(R.id.til_cardreleased3);
+                tilCardReleased4 = findViewById(R.id.til_cardreleased4);
+                tilCardReleased5 = findViewById(R.id.til_cardreleased5);
                 tilDistribution = findViewById(R.id.til_distribution);
                 tiladditionalID = findViewById(R.id.til_additionalID);
                 tilCard= findViewById(R.id.til_cashCard);
@@ -1061,18 +1123,56 @@ public class ScanCashCard extends AppCompatActivity {
                 tilGrantee = findViewById(R.id.tilGrantee);
                 tilCardBtn = findViewById(R.id.til_card);
                 tilPinAttached = findViewById(R.id.til_isPinAttached);
+
+                tilIsPinAttached1 = findViewById(R.id.til_isPinAttached1);
+                tilIsPinAttached2 = findViewById(R.id.til_isPinAttached2);
+                tilIsPinAttached3 = findViewById(R.id.til_isPinAttached3);
+                tilIsPinAttached4 = findViewById(R.id.til_isPinAttached4);
+                tilIsPinAttached5 = findViewById(R.id.til_isPinAttached5);
+
                 tilCardReplacement = findViewById(R.id.til_cardReplacement);
+
                 tilAvailablereason = findViewById(R.id.til_isavailablereason);
+                tilIsPresentedReason1 = findViewById(R.id.til_otherisavailablereason1);
+                tilIsPresentedReason2 = findViewById(R.id.til_otherisavailablereason2);
+                tilIsPresentedReason3 = findViewById(R.id.til_otherisavailablereason3);
+                tilIsPresentedReason4 = findViewById(R.id.til_otherisavailablereason4);
+                tilIsPresentedReason5 = findViewById(R.id.til_otherisavailablereason5);
                 tilUnclaimedReason = findViewById(R.id.til_isUnclaimedReason);
+                tilIsUnclaimedReason1 = findViewById(R.id.til_isUnclaimedReason1);
+                tilIsUnclaimedReason2 = findViewById(R.id.til_isUnclaimedReason2);
+                tilIsUnclaimedReason3 = findViewById(R.id.til_isUnclaimedReason3);
+                tilIsUnclaimedReason4 = findViewById(R.id.til_isUnclaimedReason4);
+                tilIsUnclaimedReason5 = findViewById(R.id.til_isUnclaimedReason5);
                 tilRequestReplacement = findViewById(R.id.til_isRequestReplacement);
-                tilOthersUnclaimedReason  = findViewById(R.id.til_OthersUnclaimedReason );
+                tilIsRequestReplacement1 = findViewById(R.id.til_isRequestReplacement1);
+                tilIsRequestReplacement2 = findViewById(R.id.til_isRequestReplacement2);
+                tilIsRequestReplacement3 = findViewById(R.id.til_isRequestReplacement3);
+                tilIsRequestReplacement4 = findViewById(R.id.til_isRequestReplacement4);
+                tilIsRequestReplacement5 = findViewById(R.id.til_isRequestReplacement5);
+                tilOthersUnclaimedReason  = findViewById(R.id.til_OthersUnclaimedReason);
+                tilOtherUnclaimedReason1  = findViewById(R.id.til_OthersUnclaimedReason1);
+                tilOtherUnclaimedReason2  = findViewById(R.id.til_OthersUnclaimedReason2);
+                tilOtherUnclaimedReason3  = findViewById(R.id.til_OthersUnclaimedReason3);
+                tilOtherUnclaimedReason4  = findViewById(R.id.til_OthersUnclaimedReason4);
+                tilOtherUnclaimedReason5  = findViewById(R.id.til_OthersUnclaimedReason5);
                 tilRepresentativeIntroTwo = findViewById(R.id.til_representative);
                 tilReasonNotPresented = findViewById(R.id.til_reason_not_presented);
+                tilReasonNotPresented1 = findViewById(R.id.til_reason_not_presented1);
+                tilReasonNotPresented2 = findViewById(R.id.til_reason_not_presented2);
+                tilReasonNotPresented3 = findViewById(R.id.til_reason_not_presented3);
+                tilReasonNotPresented4 = findViewById(R.id.til_reason_not_presented4);
+                tilReasonNotPresented5 = findViewById(R.id.til_reason_not_presented5);
                 tilLenderName = findViewById(R.id.til_lendername);
                 mcvPawning = findViewById(R.id.pawning);
-                til_other_remarks_1 = findViewById(R.id.til_other_remarks_1);
-                til_other_remarks_2 = findViewById(R.id.til_other_remarks_2);
-                til_other_remarks_3 = findViewById(R.id.til_other_remarks_3);
+                tilPawnRemarks1 = findViewById(R.id.til_pawnRemarks1);
+                tilPawnRemarks2 = findViewById(R.id.til_pawnRemarks2);
+                tilPawnRemarks3 = findViewById(R.id.til_pawnRemarks3);
+                tilPawnRemarks4 = findViewById(R.id.til_pawnRemarks4);
+                tilPawnRemarks5 = findViewById(R.id.til_pawnRemarks5);
+//                til_other_remarks_1 = findViewById(R.id.til_other_remarks_1);
+//                til_other_remarks_2 = findViewById(R.id.til_other_remarks_2);
+//                til_other_remarks_3 = findViewById(R.id.til_other_remarks_3);
                 mPreviewCashCard = findViewById(R.id.ScannedImage);
                 mPreviewGrantee = findViewById(R.id.mGrantee);
                 mAdditionalID = findViewById(R.id.imgAdditionalId);
@@ -1082,36 +1182,109 @@ public class ScanCashCard extends AppCompatActivity {
                 mPreviewCashCard.setClipToOutline(true);
                 mAdditionalID.setClipToOutline(true);
 
-                spinIsAvailReason1.setText(null);
-                spinIsAvailReason1.setDropDownHeight(0);
-                spinIsAvailReason1.setEnabled(false);
-                spinIsAvailReason2.setText(null);
-                spinIsAvailReason2.setDropDownHeight(0);
-                spinIsAvailReason2.setEnabled(false);
-                spinIsAvailReason3.setText(null);
-                spinIsAvailReason3.setDropDownHeight(0);
-                spinIsAvailReason3.setEnabled(false);
+//                spinIsAvailReason1.setText(null);
+//                spinIsAvailReason1.setDropDownHeight(0);
+//                spinIsAvailReason1.setEnabled(false);
+//                spinIsAvailReason2.setText(null);
+//                spinIsAvailReason2.setDropDownHeight(0);
+//                spinIsAvailReason2.setEnabled(false);
+//                spinIsAvailReason3.setText(null);
+//                spinIsAvailReason3.setDropDownHeight(0);
+//                spinIsAvailReason3.setEnabled(false);
+//                spinIsAvailReason4.setText(null);
+//                spinIsAvailReason4.setDropDownHeight(0);
+//                spinIsAvailReason4.setEnabled(false);
+//                spinIsAvailReason5.setText(null);
+//                spinIsAvailReason5.setDropDownHeight(0);
+//                spinIsAvailReason5.setEnabled(false);
 
+                tilPinAttached.setVisibility(View.GONE);
+                tilIsPinAttached1.setVisibility(View.GONE);
+                tilIsPinAttached2.setVisibility(View.GONE);
+                tilIsPinAttached3.setVisibility(View.GONE);
+                tilIsPinAttached4.setVisibility(View.GONE);
+                tilIsPinAttached5.setVisibility(View.GONE);
                 tiladditionalID.setVisibility(View.GONE);
                 btn_scanID.setVisibility(View.GONE);
                 tvAdditional.setVisibility(View.GONE);
                 mAdditionalID.setVisibility(View.GONE);
                 mImgUri.setVisibility(View.INVISIBLE);
                 tilCardReleased.setVisibility(View.GONE);
+                tilCardReleased1.setVisibility(View.GONE);
+                tilCardReleased2.setVisibility(View.GONE);
+                tilCardReleased3.setVisibility(View.GONE);
+                tilCardReleased4.setVisibility(View.GONE);
+                tilCardReleased5.setVisibility(View.GONE);
                 tilWhoReleased.setVisibility(View.GONE);
+                tilWhoReleased1.setVisibility(View.GONE);
+                tilWhoReleased2.setVisibility(View.GONE);
+                tilWhoReleased3.setVisibility(View.GONE);
+                tilWhoReleased4.setVisibility(View.GONE);
+                tilWhoReleased5.setVisibility(View.GONE);
                 tilPlaceReleased.setVisibility(View.GONE);
-                tilPinAttached.setVisibility(View.GONE);
+                tilPlaceReleased1.setVisibility(View.GONE);
+                tilPlaceReleased2.setVisibility(View.GONE);
+                tilPlaceReleased3.setVisibility(View.GONE);
+                tilPlaceReleased4.setVisibility(View.GONE);
+                tilPlaceReleased5.setVisibility(View.GONE);
                 tilAvailablereason.setVisibility(View.GONE);
+                tilIsPresentedReason1.setVisibility(View.GONE);
+                tilIsPresentedReason2.setVisibility(View.GONE);
+                tilIsPresentedReason3.setVisibility(View.GONE);
+                tilIsPresentedReason4.setVisibility(View.GONE);
+                tilIsPresentedReason5.setVisibility(View.GONE);
                 tilUnclaimedReason.setVisibility(View.GONE);
+                tilIsUnclaimedReason1.setVisibility(View.GONE);
+                tilIsUnclaimedReason2.setVisibility(View.GONE);
+                tilIsUnclaimedReason3.setVisibility(View.GONE);
+                tilIsUnclaimedReason4.setVisibility(View.GONE);
+                tilIsUnclaimedReason5.setVisibility(View.GONE);
                 tilRequestReplacement.setVisibility(View.GONE);
+                tilIsRequestReplacement1.setVisibility(View.GONE);
+                tilIsRequestReplacement2.setVisibility(View.GONE);
+                tilIsRequestReplacement3.setVisibility(View.GONE);
+                tilIsRequestReplacement4.setVisibility(View.GONE);
+                tilIsRequestReplacement5.setVisibility(View.GONE);
                 tilOthersUnclaimedReason.setVisibility(View.GONE);
+                tilOtherUnclaimedReason1.setVisibility(View.GONE);
+                tilOtherUnclaimedReason2.setVisibility(View.GONE);
+                tilOtherUnclaimedReason3.setVisibility(View.GONE);
+                tilOtherUnclaimedReason4.setVisibility(View.GONE);
+                tilOtherUnclaimedReason5.setVisibility(View.GONE);
                 tilReasonNotPresented.setVisibility(View.GONE);
+
+                tilReasonNotPresented1.setVisibility(View.GONE);
+                tilReasonNotPresented2.setVisibility(View.GONE);
+                tilReasonNotPresented3.setVisibility(View.GONE);
+                tilReasonNotPresented4.setVisibility(View.GONE);
+                tilReasonNotPresented5.setVisibility(View.GONE);
+                tilPawnRemarks1.setVisibility(View.GONE);
+                tilPawnRemarks2.setVisibility(View.GONE);
+                tilPawnRemarks3.setVisibility(View.GONE);
+                tilPawnRemarks4.setVisibility(View.GONE);
+                tilPawnRemarks5.setVisibility(View.GONE);
+
                 tilCardReplacement.setVisibility(View.GONE);
 
 
                 dateReleased(edt_card_released);
+                dateReleased(edtCardReleased1);
+                dateReleased(edtCardReleased2);
+                dateReleased(edtCardReleased3);
+                dateReleased(edtCardReleased4);
+                dateReleased(edtCardReleased5);
                 whoReleased(edt_who_released);
+                whoReleased(edtWhoReleased1);
+                whoReleased(edtWhoReleased2);
+                whoReleased(edtWhoReleased3);
+                whoReleased(edtWhoReleased4);
+                whoReleased(edtWhoReleased5);
                 placeReleased(edt_place_released);
+                placeReleased(edtPlaceReleased1);
+                placeReleased(edtPlaceReleased2);
+                placeReleased(edtPlaceReleased3);
+                placeReleased(edtPlaceReleased4);
+                placeReleased(edtPlaceReleased5);
                 cardAvailable(spinIsAvail);
                 scannedCardNumber(edt_cashCardNumber);
                 cardSeries(edt_series_no);
@@ -1142,9 +1315,9 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_pd_remarks = findViewById(R.id.edtPdRemarks);
                 edt_intervention = findViewById(R.id.edtIntervention);
                 edt_other_details = findViewById(R.id.edtOtherDetails);
-                edt_other_remarks_1 = findViewById(R.id.edtotherRemarks1);
-                edt_other_remarks_2 = findViewById(R.id.edtotherRemarks2);
-                edt_other_remarks_3 = findViewById(R.id.edtotherRemarks3);
+//                edt_other_remarks_1 = findViewById(R.id.edtotherRemarks1);
+//                edt_other_remarks_2 = findViewById(R.id.edtotherRemarks2);
+//                edt_other_remarks_3 = findViewById(R.id.edtotherRemarks3);
 
                 tilLenderName = findViewById(R.id.til_lendername);
 
@@ -1205,18 +1378,42 @@ public class ScanCashCard extends AppCompatActivity {
                 spinIsAvail1.setAdapter(adapterYesNoBlank);
                 spinIsAvail2.setAdapter(adapterYesNoBlank);
                 spinIsAvail3.setAdapter(adapterYesNoBlank);
+                spinIsAvail4.setAdapter(adapterYesNoBlank);
+                spinIsAvail5.setAdapter(adapterYesNoBlank);
                 spinIsID.setAdapter(adapterIsID);
                 spinIsAvailReason.setAdapter(adapterYesNo);
                 spinIsAvailReason1.setAdapter(adapterYesNo);
                 spinIsAvailReason2.setAdapter(adapterYesNo);
                 spinIsAvailReason3.setAdapter(adapterYesNo);
+                spinIsAvailReason4.setAdapter(adapterYesNo);
+                spinIsAvailReason5.setAdapter(adapterYesNo);
                 spinIsDistribution_1.setAdapter(adapterIsDistribution);
+                spinDistribution1.setAdapter(adapterIsDistribution);
+                spinDistribution2.setAdapter(adapterIsDistribution);
+                spinDistribution3.setAdapter(adapterIsDistribution);
+                spinDistribution4.setAdapter(adapterIsDistribution);
+                spinDistribution5.setAdapter(adapterIsDistribution);
                 spinnerIsUnclaimedReason.setAdapter(adapterIsCashCardUnclaimed);
                 spinnerIsReasonReplacement.setAdapter(adapterIsAvail);
                 spinnerIsPinAttached.setAdapter(adapterIsAvail);
+                spinIsPinAttached1.setAdapter(adapterIsAvail);
+                spinIsPinAttached2.setAdapter(adapterIsAvail);
+                spinIsPinAttached3.setAdapter(adapterIsAvail);
+                spinIsPinAttached4.setAdapter(adapterIsAvail);
+                spinIsPinAttached5.setAdapter(adapterIsAvail);
 
                 edt_card_released.setFocusable(false);
                 edt_card_released.setClickable(true);
+                edtCardReleased1.setFocusable(false);
+                edtCardReleased1.setClickable(true);
+                edtCardReleased2.setFocusable(false);
+                edtCardReleased2.setClickable(true);
+                edtCardReleased3.setFocusable(false);
+                edtCardReleased3.setClickable(true);
+                edtCardReleased4.setFocusable(false);
+                edtCardReleased4.setClickable(true);
+                edtCardReleased5.setFocusable(false);
+                edtCardReleased5.setClickable(true);
                 edt_current_grantee_number.setEnabled(false);
 
                 getImage(0);
@@ -1225,6 +1422,36 @@ public class ScanCashCard extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         showDateDialog(edt_card_released);
+                    }
+                });
+                edtCardReleased1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edtCardReleased1);
+                    }
+                });
+                edtCardReleased2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edtCardReleased2);
+                    }
+                });
+                edtCardReleased3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edtCardReleased3);
+                    }
+                });
+                edtCardReleased4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edtCardReleased4);
+                    }
+                });
+                edtCardReleased5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edtCardReleased5);
                     }
                 });
                 btn_cash_card.setOnClickListener( new View.OnClickListener() {
@@ -1268,6 +1495,96 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
 
+                spinDistribution1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinDistribution1.getText().toString().matches("Unclaimed")||spinDistribution1.getText().toString().matches("")) {
+                            edtCardReleased1.setText("");
+                            edtWhoReleased1.setText("");
+                            edtPlaceReleased1.setText("");
+                            tilCardReleased1.setVisibility(View.GONE);
+                            tilWhoReleased1.setVisibility(View.GONE);
+                            tilPlaceReleased1.setVisibility(View.GONE);
+                        } else {
+                            tilCardReleased1.setVisibility(View.VISIBLE);
+                            tilWhoReleased1.setVisibility(View.VISIBLE);
+                            tilPlaceReleased1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                spinDistribution2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinDistribution2.getText().toString().matches("Unclaimed")||spinDistribution2.getText().toString().matches("")) {
+                            edtCardReleased2.setText("");
+                            edtWhoReleased2.setText("");
+                            edtPlaceReleased2.setText("");
+                            tilCardReleased2.setVisibility(View.GONE);
+                            tilWhoReleased2.setVisibility(View.GONE);
+                            tilPlaceReleased2.setVisibility(View.GONE);
+                        } else {
+                            tilCardReleased2.setVisibility(View.VISIBLE);
+                            tilWhoReleased2.setVisibility(View.VISIBLE);
+                            tilPlaceReleased2.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                spinDistribution3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinDistribution3.getText().toString().matches("Unclaimed")||spinDistribution3.getText().toString().matches("")) {
+                            edtCardReleased3.setText("");
+                            edtWhoReleased3.setText("");
+                            edtPlaceReleased3.setText("");
+                            tilCardReleased3.setVisibility(View.GONE);
+                            tilWhoReleased3.setVisibility(View.GONE);
+                            tilPlaceReleased3.setVisibility(View.GONE);
+                        } else {
+                            tilCardReleased3.setVisibility(View.VISIBLE);
+                            tilWhoReleased3.setVisibility(View.VISIBLE);
+                            tilPlaceReleased3.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                spinDistribution4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinDistribution4.getText().toString().matches("Unclaimed")||spinDistribution4.getText().toString().matches("")) {
+                            edtCardReleased4.setText("");
+                            edtWhoReleased4.setText("");
+                            edtPlaceReleased4.setText("");
+                            tilCardReleased4.setVisibility(View.GONE);
+                            tilWhoReleased4.setVisibility(View.GONE);
+                            tilPlaceReleased4.setVisibility(View.GONE);
+                        } else {
+                            tilCardReleased4.setVisibility(View.VISIBLE);
+                            tilWhoReleased4.setVisibility(View.VISIBLE);
+                            tilPlaceReleased4.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                spinDistribution5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinDistribution5.getText().toString().matches("Unclaimed")||spinDistribution5.getText().toString().matches("")) {
+                            edtCardReleased5.setText("");
+                            edtWhoReleased5.setText("");
+                            edtPlaceReleased5.setText("");
+                            tilCardReleased5.setVisibility(View.GONE);
+                            tilWhoReleased5.setVisibility(View.GONE);
+                            tilPlaceReleased5.setVisibility(View.GONE);
+                        } else {
+                            tilCardReleased5.setVisibility(View.VISIBLE);
+                            tilWhoReleased5.setVisibility(View.VISIBLE);
+                            tilPlaceReleased5.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
                 spinIsID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
@@ -1290,8 +1607,7 @@ public class ScanCashCard extends AppCompatActivity {
                 spinIsAvail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail.getText().toString().matches("Yes")||spinIsAvail.getText().toString().matches("")) {
-
+                        if (spinIsAvail.getText().toString().matches("Yes")) {
                             spinIsAvailReason.setText("");
                             tilAvailablereason.setVisibility(View.GONE);
                             mcvPawning.setVisibility(View.GONE);
@@ -1312,6 +1628,26 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
 
+                spinIsAvail1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (spinIsAvail1.getText().toString().matches("Yes")) {
+                            spinIsAvailReason1.setText("");
+                            tilIsPresentedReason1.setVisibility(View.GONE);
+                            tilPawnRemarks1.setVisibility(View.GONE);
+                            tilIsPinAttached1.setVisibility(View.VISIBLE);
+                            tilIsUnclaimedReason1.setVisibility(View.GONE);
+                            tilIsRequestReplacement1.setVisibility(View.GONE);
+
+                        } else {
+                            spinIsPinAttached1.setText("");
+                            spinIsAvailReason1.setText("");
+                            tilIsPinAttached1.setVisibility(View.GONE);
+                            tilIsPresentedReason1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
                 spinnerIsUnclaimedReason.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
@@ -1324,7 +1660,6 @@ public class ScanCashCard extends AppCompatActivity {
                         }
                     }
                 });
-
 
                 spinIsAvailReason.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -1347,7 +1682,7 @@ public class ScanCashCard extends AppCompatActivity {
                             tilCardReplacement.setVisibility(View.GONE);
 
                         }
-                        else if (spinIsAvailReason.getText().toString().matches("Lost/Stolen")){
+                        else if (spinIsAvailReason.getText().toString().matches("Lost/Stolen") || spinIsAvailReason.getText().toString().matches("Damaged/Defective")){
                             tilRequestReplacement.setVisibility(View.VISIBLE);
                             tilUnclaimedReason.setVisibility(View.GONE);
                             mcvPawning.setVisibility(View.GONE);
@@ -1374,97 +1709,139 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
 
-                spinIsAvailReason1.setEnabled(false);
-                spinIsAvail1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail1.getText().toString().matches("Yes")||spinIsAvail1.getText().toString().matches("")) {
-                            spinIsAvailReason1.setText(null);
-                            spinIsAvailReason1.setDropDownHeight(0);
-                            spinIsAvailReason1.setEnabled(false);
-                            edt_other_remarks_1.setText("");
-                            til_other_remarks_1.setVisibility(View.GONE);
-                        } else {
-                            spinIsAvailReason1.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                            spinIsAvailReason1.setEnabled(true);
-                        }
-                    }
-                });
-
-                spinIsAvailReason2.setEnabled(false);
-                spinIsAvail2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail2.getText().toString().matches("Yes")||spinIsAvail2.getText().toString().matches("")) {
-                            spinIsAvailReason2.setText(null);
-                            spinIsAvailReason2.setDropDownHeight(0);
-                            spinIsAvailReason2.setEnabled(false);
-                            edt_other_remarks_2.setText("");
-                            til_other_remarks_2.setVisibility(View.GONE);
-                        } else {
-                            spinIsAvailReason2.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                            spinIsAvailReason2.setEnabled(true);
-                        }
-                    }
-                });
-
-                spinIsAvailReason3.setEnabled(false);
-                spinIsAvail3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail3.getText().toString().matches("Yes") ||spinIsAvail3.getText().toString().matches("") ) {
-                            spinIsAvailReason3.setText(null);
-                            spinIsAvailReason3.setDropDownHeight(0);
-                            spinIsAvailReason3.setEnabled(false);
-                            edt_other_remarks_3.setText("");
-                            til_other_remarks_3.setVisibility(View.GONE);
-                        } else {
-                            spinIsAvailReason3.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                            spinIsAvailReason3.setEnabled(true);
-                        }
-                    }
-                });
-
                 spinIsAvailReason1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-
-                        if (spinIsAvailReason1.getText().toString().matches("Pawned")){
-                            til_other_remarks_1.setVisibility(View.VISIBLE);
+                        clearFields();
+                        if (spinIsAvailReason1.getText().toString().matches("Pawned")) {
+                            tilPawnRemarks1.setVisibility(View.VISIBLE);
+                            tilIsUnclaimedReason1.setVisibility(View.GONE);
+                            tilIsRequestReplacement1.setVisibility(View.GONE);
+                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
+                            tilReasonNotPresented1.setVisibility(View.GONE);
                         }
-                        else{til_other_remarks_1.setVisibility(View.GONE);}
-
-                        if (spinIsAvail3.getText().toString().matches("Yes") ||spinIsAvail3.getText().toString().matches("") ) {
-                            spinIsAvailReason3.setText(null);
-                            spinIsAvailReason3.setDropDownHeight(0);
-                            spinIsAvailReason3.setEnabled(false);
-                        } else {
-                            spinIsAvailReason3.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                            spinIsAvailReason3.setEnabled(true);
+                        else if (spinIsAvailReason1.getText().toString().matches("Unclaimed")){
+                            tilIsUnclaimedReason1.setVisibility(View.VISIBLE);
+                            tilPawnRemarks1.setVisibility(View.GONE);
+                            tilIsRequestReplacement1.setVisibility(View.GONE);
+                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
+                            tilReasonNotPresented1.setVisibility(View.GONE);
+                        }
+                        else if (spinIsAvailReason1.getText().toString().matches("Lost/Stolen") || spinIsAvailReason1.getText().toString().matches("Damaged/Defective") ){
+                            tilIsRequestReplacement1.setVisibility(View.VISIBLE);
+                            tilIsUnclaimedReason1.setVisibility(View.GONE);
+                            tilPawnRemarks1.setVisibility(View.GONE);
+                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
+                            tilReasonNotPresented1.setVisibility(View.GONE);
+                        }
+                        else if (spinIsAvailReason1.getText().toString().matches("Others")){
+                            tilReasonNotPresented1.setVisibility(View.VISIBLE);
+                            tilIsRequestReplacement1.setVisibility(View.GONE);
+                            tilIsUnclaimedReason1.setVisibility(View.GONE);
+                            tilPawnRemarks1.setVisibility(View.GONE);
+                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
+                        }
+                        else {
+                            tilReasonNotPresented1.setVisibility(View.GONE);
+                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
+                            tilPawnRemarks1.setVisibility(View.GONE);
+                            tilIsUnclaimedReason1.setVisibility(View.GONE);
+                            tilIsRequestReplacement1.setVisibility(View.GONE);
                         }
                     }
                 });
 
-                spinIsAvailReason2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-
-                        if (spinIsAvailReason2.getText().toString().matches("Pawned")){
-                            til_other_remarks_2.setVisibility(View.VISIBLE);
-                        }
-                        else{til_other_remarks_2.setVisibility(View.GONE);}
-                    }
-                });
-
-                spinIsAvailReason3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvailReason3.getText().toString().matches("Pawned")){
-                            til_other_remarks_3.setVisibility(View.VISIBLE);
-                        }
-                        else{til_other_remarks_3.setVisibility(View.GONE);}
-                    }
-                });
+//                spinIsAvailReason1.setEnabled(false);
+//                spinIsAvail1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+//                        if (spinIsAvail1.getText().toString().matches("Yes")||spinIsAvail1.getText().toString().matches("")) {
+//                            spinIsAvailReason1.setText(null);
+//                            spinIsAvailReason1.setDropDownHeight(0);
+//                            spinIsAvailReason1.setEnabled(false);
+////                            edt_other_remarks_1.setText("");
+////                            til_other_remarks_1.setVisibility(View.GONE);
+//                        } else {
+//                            spinIsAvailReason1.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+//                            spinIsAvailReason1.setEnabled(true);
+//                        }
+//                    }
+//                });
+//
+//                spinIsAvailReason2.setEnabled(false);
+//                spinIsAvail2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+//                        if (spinIsAvail2.getText().toString().matches("Yes")||spinIsAvail2.getText().toString().matches("")) {
+//                            spinIsAvailReason2.setText(null);
+//                            spinIsAvailReason2.setDropDownHeight(0);
+//                            spinIsAvailReason2.setEnabled(false);
+////                            edt_other_remarks_2.setText("");
+////                            til_other_remarks_2.setVisibility(View.GONE);
+//                        } else {
+//                            spinIsAvailReason2.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+//                            spinIsAvailReason2.setEnabled(true);
+//                        }
+//                    }
+//                });
+//
+//                spinIsAvailReason3.setEnabled(false);
+//                spinIsAvail3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+//                        if (spinIsAvail3.getText().toString().matches("Yes") ||spinIsAvail3.getText().toString().matches("") ) {
+//                            spinIsAvailReason3.setText(null);
+//                            spinIsAvailReason3.setDropDownHeight(0);
+//                            spinIsAvailReason3.setEnabled(false);
+////                            edt_other_remarks_3.setText("");
+////                            til_other_remarks_3.setVisibility(View.GONE);
+//                        } else {
+//                            spinIsAvailReason3.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+//                            spinIsAvailReason3.setEnabled(true);
+//                        }
+//                    }
+//                });
+//
+//                spinIsAvailReason1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+//
+//                        if (spinIsAvailReason1.getText().toString().matches("Pawned")){
+////                            til_other_remarks_1.setVisibility(View.VISIBLE);
+//                        }
+////                        else{til_other_remarks_1.setVisibility(View.GONE);}
+//
+//                        if (spinIsAvail3.getText().toString().matches("Yes") ||spinIsAvail3.getText().toString().matches("") ) {
+//                            spinIsAvailReason3.setText(null);
+//                            spinIsAvailReason3.setDropDownHeight(0);
+//                            spinIsAvailReason3.setEnabled(false);
+//                        } else {
+//                            spinIsAvailReason3.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+//                            spinIsAvailReason3.setEnabled(true);
+//                        }
+//                    }
+//                });
+//
+//                spinIsAvailReason2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+//
+//                        if (spinIsAvailReason2.getText().toString().matches("Pawned")){
+////                            til_other_remarks_2.setVisibility(View.VISIBLE);
+//                        }
+////                        else{til_other_remarks_2.setVisibility(View.GONE);}
+//                    }
+//                });
+//
+//                spinIsAvailReason3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+//                        if (spinIsAvailReason3.getText().toString().matches("Pawned")){
+////                            til_other_remarks_3.setVisibility(View.VISIBLE);
+//                        }
+////                        else{til_other_remarks_3.setVisibility(View.GONE);}
+//                    }
+//                });
 
                 spinnerIsReasonReplacement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -1503,17 +1880,14 @@ public class ScanCashCard extends AppCompatActivity {
                 String is_available_reason = sh.getString("is_available_reason", "");
                 String other_card_number_1 = sh.getString("other_card_number_1", "");
                 String other_card_number_series_1 = sh.getString("other_card_number_series_1", "");
-                String other_card_holder_name_1 = sh.getString("other_card_holder_name_1", "");
                 String other_is_available_1 = sh.getString("other_is_available_1", "");
                 String other_is_available_reason_1 = sh.getString("other_is_available_reason_1", "");
                 String other_card_number_2 = sh.getString("other_card_number_2", "");
                 String other_card_number_series_2 = sh.getString("other_card_number_series_2", "");
-                String other_card_holder_name_2 = sh.getString("other_card_holder_name_2", "");
                 String other_is_available_2 = sh.getString("other_is_available_2", "");
                 String other_is_available_reason_2 = sh.getString("other_is_available_reason_2", "");
                 String other_card_number_3 = sh.getString("other_card_number_3", "");
                 String other_card_number_series_3 = sh.getString("other_card_number_series_3", "");
-                String other_card_holder_name_3 = sh.getString("other_card_holder_name_3", "");
                 String other_is_available_3 = sh.getString("other_is_available_3", "");
                 String other_is_available_reason_3 = sh.getString("other_is_available_reason_3", "");
                 String additional = sh.getString("is_additional", "");
@@ -1527,7 +1901,6 @@ public class ScanCashCard extends AppCompatActivity {
                 String other_unclaimed_reason = sh.getString("other_unclaimed_reason", "");
                 String card_replacement = sh.getString("card_replacement", "");
 
-
                 spinIsDistribution_1.setText(distribution,false);
                 edt_card_released.setText(card_released);
                 edt_who_released.setText(who_released);
@@ -1537,17 +1910,14 @@ public class ScanCashCard extends AppCompatActivity {
                 spinIsAvailReason.setText(is_available_reason,false);
                 edt_other_card_number_1.setText(other_card_number_1);
                 edt_other_card_number_series_1.setText(other_card_number_series_1);
-                edt_other_card_holder_name_1.setText(other_card_holder_name_1);
                 spinIsAvail1.setText(other_is_available_1,false);
                 spinIsAvailReason1.setText(other_is_available_reason_1,false);
                 edt_other_card_number_2.setText(other_card_number_2);
                 edt_other_card_number_series_2.setText(other_card_number_series_2);
-                edt_other_card_holder_name_2.setText(other_card_holder_name_2);
                 spinIsAvail2.setText(other_is_available_2,false);
                 spinIsAvailReason2.setText(other_is_available_reason_2,false);
                 edt_other_card_number_3.setText(other_card_number_3);
                 edt_other_card_number_series_3.setText(other_card_number_series_3);
-                edt_other_card_holder_name_3.setText(other_card_holder_name_3);
                 spinIsAvail3.setText(other_is_available_3,false);
                 spinIsAvailReason3.setText(other_is_available_reason_3,false);
                 spinIsID.setText(additional,false);
@@ -1593,9 +1963,9 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_intervention.setText(intervention);
                 edt_other_details.setText(other_details);
 
-                edt_other_remarks_1.setText(other_remarks1);
-                edt_other_remarks_2.setText(other_remarks2);
-                edt_other_remarks_3.setText(other_remarks3);
+//                edt_other_remarks_1.setText(other_remarks1);
+//                edt_other_remarks_2.setText(other_remarks2);
+//                edt_other_remarks_3.setText(other_remarks3);
 
 
                 if (spinnerIsUnclaimedReason.getText().toString().matches("Others")) {
@@ -1620,8 +1990,11 @@ public class ScanCashCard extends AppCompatActivity {
                     tilPinAttached.setVisibility(View.GONE);
                     tilAvailablereason.setVisibility(View.VISIBLE);
                 }
-                else {
+                else if (spinIsAvail.getText().toString().matches("Yes")){
                     tilPinAttached.setVisibility(View.VISIBLE);
+                    tilAvailablereason.setVisibility(View.GONE);
+                } else {
+                    tilPinAttached.setVisibility(View.GONE);
                     tilAvailablereason.setVisibility(View.GONE);
                 }
 
@@ -1637,7 +2010,7 @@ public class ScanCashCard extends AppCompatActivity {
 
 
                 }
-                else if (spinIsAvailReason.getText().toString().matches("Lost/Stolen")){
+                else if (spinIsAvailReason.getText().toString().matches("Lost/Stolen") || spinIsAvailReason.getText().toString().matches("Damaged/Defective")){
                     tilRequestReplacement.setVisibility(View.VISIBLE);
                     tilUnclaimedReason.setVisibility(View.GONE);
                     mcvPawning.setVisibility(View.GONE);
@@ -1659,19 +2032,25 @@ public class ScanCashCard extends AppCompatActivity {
                 else{mcvPawning.setVisibility(View.GONE);}
 
                 if (spinIsAvailReason1.getText().toString().matches("Pawned")){
-                    til_other_remarks_1.setVisibility(View.VISIBLE);
+//                    til_other_remarks_1.setVisibility(View.VISIBLE);
                 }
-                else{til_other_remarks_1.setVisibility(View.GONE);}
+//                else{til_other_remarks_1.setVisibility(View.GONE);}
 
                 if (spinIsAvailReason2.getText().toString().matches("Pawned")){
-                    til_other_remarks_2.setVisibility(View.VISIBLE);
+//                    til_other_remarks_2.setVisibility(View.VISIBLE);
                 }
-                else{til_other_remarks_2.setVisibility(View.GONE);}
+//                else{til_other_remarks_2.setVisibility(View.GONE);}
 
                 if (spinIsAvailReason3.getText().toString().matches("Pawned")){
-                    til_other_remarks_3.setVisibility(View.VISIBLE);
+//                    til_other_remarks_3.setVisibility(View.VISIBLE);
                 }
-                else{til_other_remarks_3.setVisibility(View.GONE);}
+//                else{til_other_remarks_3.setVisibility(View.GONE);}
+
+
+                //Other Card Availability 1-5
+
+                btnAddCard = findViewById(R.id.btnAddCard);
+                otherCardVisibility();
 
                 if (spinnerIsReasonReplacement.getText().toString().matches("Yes")){
                     tilCardReplacement.setVisibility(View.VISIBLE);
@@ -1680,6 +2059,14 @@ public class ScanCashCard extends AppCompatActivity {
                     tilCardReplacement.setVisibility(View.GONE);
                 }
 
+
+                btnAddCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        card_count++;
+                        otherCardVisibility();
+                    }
+                });
 
 
 
@@ -1869,6 +2256,85 @@ public class ScanCashCard extends AppCompatActivity {
         }
     }
 
+    private void otherCardVisibility() {
+        otherCard1 = findViewById(R.id.otherCardAvailability1);
+        otherCard2 = findViewById(R.id.otherCardAvailability2);
+        otherCard3 = findViewById(R.id.otherCardAvailability3);
+        otherCard4 = findViewById(R.id.otherCardAvailability4);
+        otherCard5 = findViewById(R.id.otherCardAvailability5);
+
+        otherCard1.setVisibility(View.GONE);
+        otherCard2.setVisibility(View.GONE);
+        otherCard3.setVisibility(View.GONE);
+        otherCard4.setVisibility(View.GONE);
+        otherCard5.setVisibility(View.GONE);
+
+        btnCancelOtherCard1 = findViewById(R.id.btnCancelOtherCard1);
+        btnCancelOtherCard2 = findViewById(R.id.btnCancelOtherCard2);
+        btnCancelOtherCard3 = findViewById(R.id.btnCancelOtherCard3);
+        btnCancelOtherCard4 = findViewById(R.id.btnCancelOtherCard4);
+        btnCancelOtherCard5 = findViewById(R.id.btnCancelOtherCard5);
+
+        btnAddCard.setVisibility(View.VISIBLE);
+
+        for (int i = 1; i <= card_count; i++) {
+            switch (i){
+                case 1:
+                    otherCard1.setVisibility(View.VISIBLE);
+                    btnCancelOtherCard1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            card_count--;
+                            otherCardVisibility();
+                        }
+                    });
+                    break;
+                case 2:
+                    otherCard2.setVisibility(View.VISIBLE);
+                    btnCancelOtherCard2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            card_count--;
+                            otherCardVisibility();
+                        }
+                    });
+                    break;
+                case 3:
+                    otherCard3.setVisibility(View.VISIBLE);
+                    btnCancelOtherCard3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            card_count--;
+                            otherCardVisibility();
+                        }
+                    });
+                    break;
+                case 4:
+                    otherCard4.setVisibility(View.VISIBLE);
+                    btnCancelOtherCard4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            card_count--;
+                            otherCardVisibility();
+                        }
+                    });
+                    break;
+                case 5:
+                    otherCard5.setVisibility(View.VISIBLE);
+                    btnAddCard.setVisibility(View.GONE);
+                    btnCancelOtherCard5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            card_count--;
+                            otherCardVisibility();
+                        }
+                    });
+                    break;
+            }
+
+        }
+    }
+
     private int getItem(int i) {
         return viewPager.getCurrentItem() + i;
     }
@@ -1929,7 +2395,7 @@ public class ScanCashCard extends AppCompatActivity {
         required_field = "This field is required!";
 
         int current = getItem(1);
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
 
         edt_lender_name = findViewById(R.id.edtLenderName);
 
@@ -2080,17 +2546,20 @@ public class ScanCashCard extends AppCompatActivity {
             spinIsAvail = findViewById(R.id.spinnerIsAvailable);
             spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
             edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
-            edt_other_card_holder_name_1 = findViewById(R.id.edtOtherCardHolderName1);
             spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
-            spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
-            edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
-            edt_other_card_holder_name_2 = findViewById(R.id.edtOtherCardHolderName2);
             spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
-            spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
-            edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
-            edt_other_card_holder_name_3 = findViewById(R.id.edtOtherCardHolderName3);
             spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
+            spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable4);
+            spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable5);
+
+            spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
+            spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
             spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
+            spinIsAvailReason4 = findViewById(R.id.spinnerOtherIsAvailableReason4);
+            spinIsAvailReason5 = findViewById(R.id.spinnerOtherIsAvailableReason5);
+
+            edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
+            edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
             edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
             edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
             edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
@@ -2131,6 +2600,11 @@ public class ScanCashCard extends AppCompatActivity {
             tilPlaceReleased = findViewById(R.id.til_placereleased);
             tilCurrentGranteeNumber = findViewById(R.id.til_currentgranteenumber);
             tilIsAvailable = findViewById(R.id.til_isavailable);
+            tilIsPresented1 = findViewById(R.id.til_otherisavailable1);
+            tilIsPresented2 = findViewById(R.id.til_otherisavailable2);
+            tilIsPresented3 = findViewById(R.id.til_otherisavailable3);
+            tilIsPresented4 = findViewById(R.id.til_otherisavailable4);
+            tilIsPresented5 = findViewById(R.id.til_otherisavailable5);
             tiladditionalID = findViewById(R.id.til_additionalID);
             tilCard = findViewById(R.id.til_cashCard);
             tilCardBtn = findViewById(R.id.til_card);
@@ -2143,6 +2617,7 @@ public class ScanCashCard extends AppCompatActivity {
             tilRequestReplacement = findViewById(R.id.til_isRequestReplacement);
             tilUnclaimedReason = findViewById(R.id.til_isUnclaimedReason);
             tilReasonNotPresented = findViewById(R.id.til_reason_not_presented);
+
             tilOthersUnclaimedReason = findViewById(R.id.til_OthersUnclaimedReason);
             tilLenderName = findViewById(R.id.til_lendername);
             tilCardReplacement = findViewById(R.id.til_cardReplacement);
@@ -2248,7 +2723,7 @@ public class ScanCashCard extends AppCompatActivity {
                     tilAvailablereason.setError(required_field);
                     isValidationError++;
                 }
-                else if (reason_not_presented.matches("Lost/Stolen")) {
+                else if (reason_not_presented.matches("Lost/Stolen") || reason_not_presented.matches("Damaged/Defective")) {
                     if (spnReasonReplacement.matches("")) {
                         tilRequestReplacement.setError(required_field);
                         isValidationError++;
@@ -2484,24 +2959,25 @@ public class ScanCashCard extends AppCompatActivity {
                 spinIsAvail = findViewById(R.id.spinnerIsAvailable);
                 spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
                 edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
-                edt_other_card_holder_name_1 = findViewById(R.id.edtOtherCardHolderName1);
                 spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
                 spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
-                edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
-                edt_other_card_holder_name_2 = findViewById(R.id.edtOtherCardHolderName2);
-                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
                 spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
-                edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
-                edt_other_card_holder_name_3 = findViewById(R.id.edtOtherCardHolderName3);
-                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
                 spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
+                spinIsAvailReason4 = findViewById(R.id.spinnerOtherIsAvailableReason4);
+                spinIsAvailReason5 = findViewById(R.id.spinnerOtherIsAvailableReason5);
+
+
+                edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
+                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
+                edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
+                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
                 edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
                 edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
                 edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
                 edtRepresentativeOne = findViewById(R.id.edtRepresentativeOne);
-                edt_other_remarks_1 = findViewById(R.id.edtotherRemarks1);
-                edt_other_remarks_2 = findViewById(R.id.edtotherRemarks2);
-                edt_other_remarks_3 = findViewById(R.id.edtotherRemarks3);
+//                edt_other_remarks_1 = findViewById(R.id.edtotherRemarks1);
+//                edt_other_remarks_2 = findViewById(R.id.edtotherRemarks2);
+//                edt_other_remarks_3 = findViewById(R.id.edtotherRemarks3);
                 spinIsID = findViewById(R.id.spinnerIsID);
                 edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
                 edt_series_no = findViewById(R.id.edt_series_no);
@@ -2520,17 +2996,20 @@ public class ScanCashCard extends AppCompatActivity {
                 String is_available = spinIsAvail.getText().toString();
                 String is_available_reason = spinIsAvailReason.getText().toString();
                 String other_card_number_1 = edt_other_card_number_1.getText().toString();
-                String other_card_holder_name_1 = edt_other_card_holder_name_1.getText().toString();
+//                String other_card_holder_name_1 = edt_other_card_holder_name_1.getText().toString();
                 String other_is_available_1 = spinIsAvail1.getText().toString();
                 String other_is_available_reason_1 = spinIsAvailReason1.getText().toString();
-                String other_card_number_2 = edt_other_card_number_2.getText().toString();
-                String other_card_holder_name_2 = edt_other_card_holder_name_2.getText().toString();
-                String other_is_available_2 = spinIsAvail2.getText().toString();
                 String other_is_available_reason_2 = spinIsAvailReason2.getText().toString();
-                String other_card_number_3 = edt_other_card_number_3.getText().toString();
-                String other_card_holder_name_3 = edt_other_card_holder_name_3.getText().toString();
-                String other_is_available_3 = spinIsAvail3.getText().toString();
                 String other_is_available_reason_3 = spinIsAvailReason3.getText().toString();
+                String other_is_available_reason_4 = spinIsAvailReason4.getText().toString();
+                String other_is_available_reason_5 = spinIsAvailReason5.getText().toString();
+
+                String other_card_number_2 = edt_other_card_number_2.getText().toString();
+//                String other_card_holder_name_2 = edt_other_card_holder_name_2.getText().toString();
+                String other_is_available_2 = spinIsAvail2.getText().toString();
+                String other_card_number_3 = edt_other_card_number_3.getText().toString();
+//                String other_card_holder_name_3 = edt_other_card_holder_name_3.getText().toString();
+                String other_is_available_3 = spinIsAvail3.getText().toString();
                 String other_card_number_series_1 = edt_other_card_number_series_1.getText().toString();
                 String other_card_number_series_2 = edt_other_card_number_series_2.getText().toString();
                 String other_card_number_series_3 = edt_other_card_number_series_3.getText().toString();
@@ -2547,9 +3026,9 @@ public class ScanCashCard extends AppCompatActivity {
                 String spinAdditionalID = spinIsID.getText().toString();
                 String cash_card = edt_cashCardNumber.getText().toString();
                 String series_number = edt_series_no.getText().toString();
-                String other_remarks_1 = edt_other_remarks_1.getText().toString();
-                String other_remarks_2 = edt_other_remarks_2.getText().toString();
-                String other_remarks_3 = edt_other_remarks_3.getText().toString();
+//                String other_remarks_1 = edt_other_remarks_1.getText().toString();
+//                String other_remarks_2 = edt_other_remarks_2.getText().toString();
+//                String other_remarks_3 = edt_other_remarks_3.getText().toString();
 
                 //PAWNING
 
@@ -2590,15 +3069,15 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("is_available", is_available);
                 myEdit.putString("is_available_reason", is_available_reason);
                 myEdit.putString("other_card_number_1", other_card_number_1);
-                myEdit.putString("other_card_holder_name_1", other_card_holder_name_1);
+//                myEdit.putString("other_card_holder_name_1", other_card_holder_name_1);
                 myEdit.putString("other_is_available_1", other_is_available_1);
                 myEdit.putString("other_is_available_reason_1", other_is_available_reason_1);
                 myEdit.putString("other_card_number_2", other_card_number_2);
-                myEdit.putString("other_card_holder_name_2", other_card_holder_name_2);
+//                myEdit.putString("other_card_holder_name_2", other_card_holder_name_2);
                 myEdit.putString("other_is_available_2", other_is_available_2);
                 myEdit.putString("other_is_available_reason_2", other_is_available_reason_2);
                 myEdit.putString("other_card_number_3", other_card_number_3);
-                myEdit.putString("other_card_holder_name_3", other_card_holder_name_3);
+//                myEdit.putString("other_card_holder_name_3", other_card_holder_name_3);
                 myEdit.putString("other_is_available_3", other_is_available_3);
                 myEdit.putString("other_is_available_reason_3", other_is_available_reason_3);
                 myEdit.putString("other_card_number_series_1", other_card_number_series_1);
@@ -2607,9 +3086,9 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("is_additional", spinAdditionalID);
                 myEdit.putString("scanned_cash_card", cash_card);
                 myEdit.putString("series_number", series_number);
-                myEdit.putString("other_remarks1", other_remarks_1);
-                myEdit.putString("other_remarks2", other_remarks_2);
-                myEdit.putString("other_remarks3", other_remarks_3);
+//                myEdit.putString("other_remarks1", other_remarks_1);
+//                myEdit.putString("other_remarks2", other_remarks_2);
+//                myEdit.putString("other_remarks3", other_remarks_3);
                 myEdit.putString("rpt_intro_two", representative);
                 myEdit.putString("pin_attached", pin_attached);
                 myEdit.putString("reason_replacement", reason_replacement);
@@ -2718,11 +3197,11 @@ public class ScanCashCard extends AppCompatActivity {
                     hh_set_group = search.getString(6);
                     current_grantee_card_number = search.getString(7);
                     other_card_number_1 = search.getString(8);
-                    other_card_holder_name_1 = search.getString(9);
+//                    other_card_holder_name_1 = search.getString(9);
                     other_card_number_2 = search.getString(10);
-                    other_card_holder_name_2 = search.getString(11);
+//                    other_card_holder_name_2 = search.getString(11);
                     other_card_number_3 = search.getString(12);
-                    other_cardholder_name_3 = search.getString(13);
+//                    other_cardholder_name_3 = search.getString(13);
                     upload_history_id = search.getString(14);
                     created_at = search.getString(15);
                     updated_at = search.getString(16);
@@ -2769,22 +3248,22 @@ public class ScanCashCard extends AppCompatActivity {
                         if (edt_current_grantee_number!=null || edt_current_grantee_number.length()!=4){
                             edt_current_grantee_number.setText(current_grantee_card_number);
                         }
-                        if (edt_other_card_holder_name_1!=null || edt_other_card_holder_name_1.length()!=4){
-                            edt_other_card_holder_name_1.setText(other_card_holder_name_1);
-                        }
+//                        if (edt_other_card_holder_name_1!=null || edt_other_card_holder_name_1.length()!=4){
+//                            edt_other_card_holder_name_1.setText(other_card_holder_name_1);
+//                        }
                         if (edt_other_card_number_2!=null || edt_other_card_number_2.length()!=4){
                             edt_other_card_number_2.setText(other_card_number_2);
                         }
-                        if (edt_other_card_holder_name_2!=null || edt_other_card_holder_name_2.length()!=4){
-                            edt_other_card_holder_name_2.setText(other_card_holder_name_2);
-                        }
+//                        if (edt_other_card_holder_name_2!=null || edt_other_card_holder_name_2.length()!=4){
+//                            edt_other_card_holder_name_2.setText(other_card_holder_name_2);
+//                        }
 
                         String card_holder3 =other_card_number_3;
                         if (card_holder3.matches("null")){edt_other_card_number_3.setText("");}
                         else{edt_other_card_number_3.setText(other_card_number_3);}
-                        String card_holder_3 =other_cardholder_name_3;
-                        if (card_holder_3.matches("null")){edt_other_card_holder_name_3.setText("");}
-                        else {edt_other_card_holder_name_3.setText(other_cardholder_name_3);}
+//                        String card_holder_3 =other_cardholder_name_3;
+//                        if (card_holder_3.matches("null")){edt_other_card_holder_name_3.setText("");}
+//                        else {edt_other_card_holder_name_3.setText(other_cardholder_name_3);}
                     }
                     else {
                         Toasty.info(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
@@ -3437,15 +3916,15 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("is_available", "");
         myEdit.putString("is_available_reason", "");
         myEdit.putString("other_card_number_1", "");
-        myEdit.putString("other_card_holder_name_1", "");
+//        myEdit.putString("other_card_holder_name_1", "");
         myEdit.putString("other_is_available_1", "");
         myEdit.putString("other_is_available_reason_1", "");
         myEdit.putString("other_card_number_2", "");
-        myEdit.putString("other_card_holder_name_2", "");
+//        myEdit.putString("other_card_holder_name_2", "");
         myEdit.putString("other_is_available_2", "");
         myEdit.putString("other_is_available_reason_2", "");
         myEdit.putString("other_card_number_3", "");
-        myEdit.putString("other_card_holder_name_3", "");
+//        myEdit.putString("other_card_holder_name_3", "");
         myEdit.putString("other_is_available_3", "");
         myEdit.putString("other_is_available_reason_3", "");
         myEdit.putString("other_card_number_series_1", "");
