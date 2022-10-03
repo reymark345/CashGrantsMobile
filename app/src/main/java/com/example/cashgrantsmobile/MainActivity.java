@@ -28,6 +28,8 @@ import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.IOException;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
@@ -191,26 +193,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(){
-    new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
-            .setTitleText("Logout?")
-            .setContentText("Are you sure?")
-            .setConfirmText("Confirm")
-            .showCancelButton(true)
-            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sDialog) {
-                    sqLiteHelper.deleteAccess();
-                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                    myEdit.putString("tokenStatus", "0");
-                    myEdit.commit();
-                    clearSharedPref();
-                    Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
-                    Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }).show();
+        try {
+            UploadGDriveTest.uploadBasic();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//    new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
+//            .setTitleText("Logout?")
+//            .setContentText("Are you sure?")
+//            .setConfirmText("Confirm")
+//            .showCancelButton(true)
+//            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                @Override
+//                public void onClick(SweetAlertDialog sDialog) {
+//                    sqLiteHelper.deleteAccess();
+//                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+//                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+//                    myEdit.putString("tokenStatus", "0");
+//                    myEdit.commit();
+//                    clearSharedPref();
+//                    Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
+//                    Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }).show();
     }
 
     public void darkModeStatus(){

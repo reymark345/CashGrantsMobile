@@ -33,6 +33,7 @@ import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Internet.NetworkChangeListener;
+import com.example.cashgrantsmobile.helpers.VolleyMultipartRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,7 +66,7 @@ public class SyncData extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ArrayAdapter<String> adapter2;
     RequestQueue queue;
-    StringRequest request;
+    VolleyMultipartRequest request;
     final Double[] progressCC = {0.00};
 
     public void getCountEmvDetails() {
@@ -266,7 +267,7 @@ public class SyncData extends AppCompatActivity {
             String finalCurrent_cash_card_picture_base6 = current_cash_card_picture_base64;
             String finalBeneficiary_picture_base6 = beneficiary_picture_base64;
 
-            request = new StringRequest(Request.Method.POST, url,  new Response.Listener<String>() {
+            request = new VolleyMultipartRequest(Request.Method.POST, url,  new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     // on below line we are displaying a success toast message.
@@ -359,6 +360,8 @@ public class SyncData extends AppCompatActivity {
                     headers.put("Authorization", "Bearer " + token);
                     return headers;
                 }
+
+                @Override
                 protected Map<String,String> getParams(){
                     Map<String, String> params = new HashMap<>();
                     params.put("full_name", full_name);
@@ -420,6 +423,16 @@ public class SyncData extends AppCompatActivity {
                     params.put("pawn_loaned_amount", pawn_loaned_amount);
                     params.put("pawn_lender_address", pawn_lender_address);
                     params.put("pawn_interest", pawn_interest);
+                    return params;
+                }
+                /*
+                 * Here we are passing image by renaming it with a unique name
+                 * */
+                @Override
+                protected Map<String, DataPart> getByteData() {
+                    Map<String, DataPart> params = new HashMap<>();
+                    long imagename = System.currentTimeMillis();
+//                    params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
                     return params;
                 }
 

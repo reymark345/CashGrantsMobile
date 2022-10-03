@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
+ext {
+    GOOGLE_APPLICATION_CREDENTIALS = 'D:\\FINDS\\CashGrantsMobile\\client_secret_437305504226-raanu1uuaq6q2hjtnjjsk2ar446jttbs.apps.googleusercontent.com (1).json'
+}
+
 android {
     compileSdk 31
 
@@ -24,6 +28,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
     sourceSets {
         main {
             res {
@@ -74,4 +87,10 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-android'
     implementation 'commons-codec:commons-codec:1.13'
     implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha01'
+    implementation 'com.google.apis:google-api-services-drive:v3-rev20220815-2.0.0'
+    implementation 'com.google.api-client:google-api-client:2.0.0'
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.10.0'
+    implementation 'com.google.code.gson:gson:2.9.1'
+    testImplementation 'junit:junit:4.13.2'
 }
+
