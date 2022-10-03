@@ -8,8 +8,9 @@ public class Inventory {
     private byte[] image;
     private byte[] idImage;
     private int status;
+    private String hhNumber;
 
-    public Inventory(String name, String price, String seriesNumber, byte[] image, byte[] idImage, int status, int id) {
+    public Inventory(String name,  String price, String seriesNumber, byte[] image, byte[] idImage, int status, int id,String hhNumber) {
         this.name = name;
         this.price = price;
         this.seriesNumber = seriesNumber;
@@ -17,10 +18,15 @@ public class Inventory {
         this.idImage = idImage;
         this.status = status;
         this.id = id;
+        this.hhNumber = hhNumber;
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getEmvId() {
+        return this.id;
     }
 
     public void setId(int id) {
@@ -74,4 +80,8 @@ public class Inventory {
     public void setIdImage(byte[] idImage) {
         this.idImage = idImage;
     }
+
+    public String gethhNumber() { return hhNumber;}
+
+    public void sethhNumber(String hhNumber) {this.hhNumber = hhNumber;}
 }

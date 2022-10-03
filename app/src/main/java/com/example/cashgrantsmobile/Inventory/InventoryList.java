@@ -1,10 +1,14 @@
 package com.example.cashgrantsmobile.Inventory;
 
 
+import static android.R.layout.simple_spinner_dropdown_item;
 import static android.content.ContentValues.TAG;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorWindow;
 import android.os.Bundle;
@@ -12,18 +16,32 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.cashgrantsmobile.Logs.LogsData;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Scanner.ScannedDetails;
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
@@ -34,63 +52,77 @@ public class InventoryList extends AppCompatActivity {
     ArrayList<Inventory> list;
     InventoryListAdapter adapter = null;
     String cashCardNumber;
-    private Toolbar mToolbars;
     int status;
     byte[] id_image;
-    String DialogStatus;
+    private TextView tvSearch, tvResultHh, tvIdentifier;
+    EditText  filterDate, filterHousehold;
+    AutoCompleteTextView spinFilterType;
+    String ftype, fhhid, fdate;
+    String[] typeOptions = new String[]{"", "complete", "incomplete"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inventory_list);
+        setContentView(R.layout.inventory_list);
         gridView = (GridView) findViewById(R.id.gridView);
-        mToolbars = findViewById(R.id.mainToolbar);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("ExcludeInclude");
             Toasty.success(this,value+"d", Toasty.LENGTH_SHORT).show();
         }
+        tvSearch = findViewById(R.id.tvSearch);
+        tvResultHh = findViewById(R.id.tvResultHousehold);
+        tvIdentifier = findViewById(R.id.tvIdentifier);
+        tvResultHh.setVisibility(View.INVISIBLE);
+        tvIdentifier.setVisibility(View.INVISIBLE);
 
-        setSupportActionBar(mToolbars);
-        getSupportActionBar().setTitle("Inventory List");
+        tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchItem();
+            }
+        });
         list = new ArrayList<>();
         adapter = new InventoryListAdapter(this, R.layout.activity_inventory_items, list);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Inventory data = list.get(position);
+                Integer emv_id = data.getEmvId();
                 Long l= new Long(id);
                 int i=l.intValue();
                 int stats = i+1;
-
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT id,id_image,card_scanning_status FROM CgList WHERE id ="+stats);
+                Cursor cursor = sqLiteHelper.getData("SELECT id,beneficiary_picture,card_scanning_status FROM emv_database_monitoring_details WHERE id ="+stats);
                 while (cursor.moveToNext()) {
                     id_image = cursor.getBlob(1);
                     status = cursor.getInt(2);
                 }
-
-                if (status==0){DialogStatus ="Include";}else{DialogStatus ="Exclude";}
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Are you sure?")
+                        .setTitleText("Edit information")
                         .setContentText("Please choose corresponding action")
-                        .setConfirmText("Update")
-                        .setCancelText(DialogStatus)
+                        .setConfirmText("Scanner")
+                        .setCancelText("Details")
                         .showCancelButton(true)
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
                                 ScannedDetails.scanned = false;
-                                Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
 
-                                if (id_image.length ==1){
-                                    in.putExtra("updateData", i);
+                                Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
+                                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                myEdit.putString("signatureAccomplishment", "false");
+                                myEdit.putInt("updateValue", emv_id);
+                                myEdit.putString("identifier", "true");
+                                myEdit.commit();
+
+                                if (id_image ==null){
+                                    in.putExtra("updateData", emv_id);
                                     in.putExtra("EmptyImageView","triggerEvent");
                                 }
                                 else{
-                                    in.putExtra("updateData", i);
+                                    in.putExtra("updateData", emv_id);
                                 }
                                 startActivity(in);
                             }
@@ -98,23 +130,14 @@ public class InventoryList extends AppCompatActivity {
                         .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                if (id_image.length ==1){
-                                    Toasty.error(getApplicationContext(),"Update data first ", Toasty.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    sqLiteHelper.excludeData(i,status);
-                                    Intent in = new Intent(getApplicationContext(), InventoryList.class);
-                                    in.putExtra("ExcludeInclude", DialogStatus);
+                                    Intent in = new Intent(getApplicationContext(), UpdateEntries.class);
+                                    in.putExtra("list_emv_id", emv_id);
                                     startActivity(in);
                                     finish();
-
-                                }
                             }
                         }).show();
                     }
                 });
-
-
         try {
             Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
             field.setAccessible(true);
@@ -122,24 +145,150 @@ public class InventoryList extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        filterAllData(list,cashCardNumber,adapter);
+    }
+
+    public void searchItem() {
+        final Dialog dialog = new Dialog(InventoryList.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.search_inventory_list);
+        spinFilterType = dialog.findViewById(R.id.spinFilterType);
+        filterHousehold = dialog.findViewById(R.id.edtFilterHHID);
+        filterDate = dialog.findViewById(R.id.edtFilterDate);
+        tvIdentifier = findViewById(R.id.tvIdentifier);
+        TextInputLayout tilError = dialog.findViewById(R.id.til_Search);
+        filterHousehold.setText("160310001-");
+
+        Button submitButton = dialog.findViewById(R.id.btn_search);
+        Button btnRefresh = dialog.findViewById(R.id.btnRefresh);
+
+        ArrayAdapter<String> adapterType = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, typeOptions);
+        adapterType.setDropDownViewResource(simple_spinner_dropdown_item);
+        spinFilterType.setAdapter(adapterType);
+
+        filterDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateDialog(filterDate);
+            }
+        });
+
+        spinFilterType.setText(ftype, false);
+        filterHousehold.setText(fhhid);
+        filterDate.setText(fdate);
+
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ftype = spinFilterType.getText().toString();
+                fhhid = filterHousehold.getText().toString();
+                fdate = filterDate.getText().toString();
+
+                queries(fhhid, ftype, fdate);
+
+                dialog.dismiss();
+            }
+        });
+
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ftype = null;
+                fhhid = null;
+                fdate = null;
+                tvIdentifier.setVisibility(View.INVISIBLE);
+                tvResultHh.setVisibility(View.INVISIBLE);
+                filterAllData(list,cashCardNumber,adapter);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void showDateDialog(final EditText date_in) {
+        final Calendar calendar=Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener dateSetListener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+                date_in.setText(simpleDateFormat.format(calendar.getTime()));
+
+            }
+        };
+
+        new DatePickerDialog(InventoryList.this,dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public void queries(String household_no, String filter_type, String filter_date){
+        Integer scanning_status = 1;
+        if (filter_type.matches("incomplete")){
+            scanning_status = 0;
+        }
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,cash_card_actual_no,hh_number,series_number,cc_image, id_image, cash_card_scanned_no, card_scanning_status FROM CgList");
+            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' AND card_scanning_status LIKE '%"+scanning_status+"%' AND DATE(created_at) LIKE '%"+filter_date+"%' order by id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
-                if (cursor.getString(1).matches("")){
-                    cashCardNumber = cursor.getString(6);
+                String hhNumber = cursor.getString(1);
+                if (cursor.getString(2).matches("")){
+                    cashCardNumber = cursor.getString(7);
                 }
                 else{
-                    cashCardNumber = cursor.getString(1);
+                    cashCardNumber = cursor.getString(2);
                 }
-                String hhNumber = cursor.getString(2);
-                String seriesNumber = cursor.getString(3);
-                byte[] CashCardImage = cursor.getBlob(4);
-                byte[] idImage = cursor.getBlob(5);
-                int status = cursor.getInt(7);
-                list.add(new Inventory(cashCardNumber, hhNumber,seriesNumber, CashCardImage, idImage,status, id));
+                String grantee_number = cursor.getString(3);
+                String seriesNumber = cursor.getString(4);
+                byte[] CashCardImage = cursor.getBlob(5);
+                byte[] idImage = cursor.getBlob(6);
+                int status = cursor.getInt(8);
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
+            }
+            if (cursor.getCount()==0){
+                tvIdentifier.setText("Household not found");
+                tvIdentifier.setVisibility(View.VISIBLE);
+            }
+            else {
+                tvIdentifier.setVisibility(View.INVISIBLE);
+                Toasty.success(this,"Search successfully", Toasty.LENGTH_SHORT).show();
+            }
+            tvResultHh.setVisibility(View.VISIBLE);
+            tvResultHh.setText(household_no);
+            adapter.notifyDataSetChanged();
+        }
+        catch (Exception e){
+            Log.d(TAG, "Error: "+ e);
+        }
+    }
 
+    public void filterAllData(ArrayList<Inventory> list, String cashCardNumber,InventoryListAdapter adapter){
+        try {
+            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details order by id DESC");
+            list.clear();
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+                String hhNumber = cursor.getString(1);
+                if (cursor.getString(2).matches("")){
+                    cashCardNumber = cursor.getString(7);
+                }
+                else{
+                    cashCardNumber = cursor.getString(2);
+                }
+                String grantee_number = cursor.getString(3);
+                String seriesNumber = cursor.getString(4);
+                byte[] CashCardImage = cursor.getBlob(5);
+                byte[] idImage = cursor.getBlob(6);
+                int status = cursor.getInt(8);
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
+            }
+            if (cursor.getCount()==0){
+                tvIdentifier.setText("No Scanned available");
+                tvIdentifier.setVisibility(View.VISIBLE);
             }
             adapter.notifyDataSetChanged();
         }

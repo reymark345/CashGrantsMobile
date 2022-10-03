@@ -42,16 +42,15 @@
             android:background="@color/primary"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <com.github.ybq.android.spinkit.SpinKitView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/spin_kit"
-            style="@style/SpinKitView.Large.Circle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:SpinKit_Color="@color/validation"
-            tools:ignore="MissingConstraints" />
-
+<!--        <com.github.ybq.android.spinkit.SpinKitView-->
+<!--            xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--            android:id="@+id/spin_kit"-->
+<!--            style="@style/SpinKitView.Large.Circle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:SpinKit_Color="@color/validation"-->
+<!--            tools:ignore="MissingConstraints" />-->
 
 
         <TextView
@@ -137,11 +136,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
-                        android:text="Sync"
+                        android:text="Scanned"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/_10ssp"/>
 
                     <TextView
+                        android:id="@+id/scannedTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
@@ -170,12 +170,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
-                        android:text="Pending"
+                        android:text="Error"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/_10ssp"/>
 
                     <TextView
-                        android:id="@+id/txtPending"
+                        android:id="@+id/errorTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
@@ -204,7 +204,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
-                        android:text="Spam"
+                        android:text="Incomplete"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/_10ssp"/>
 
@@ -213,6 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
                         android:text="0"
+                        android:id="@+id/incompleteTotal"
                         android:textColor="@color/primary_text"
                         android:textSize="@dimen/_16ssp"/>
                 </LinearLayout>
@@ -233,10 +234,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <include layout="@layout/dashboard_item_1"/>
                 <include layout="@layout/dashboard_item_2"/>
+                <include layout="@layout/dashboard_item_5"/>
                 <include layout="@layout/dashboard_item_3"/>
+                <include layout="@layout/dashboard_item_logs"/>
                 <include layout="@layout/dashboard_item_4"/>
             </LinearLayout>
 

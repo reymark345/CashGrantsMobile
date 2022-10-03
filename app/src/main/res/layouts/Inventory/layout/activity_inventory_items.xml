@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/itemID"
     android:layout_marginTop="2dp"
     android:orientation="horizontal">
 
@@ -30,6 +31,7 @@
         android:orientation="vertical">
 
         <TextView
+
             android:id="@+id/txtCcText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +40,8 @@
             android:textColor="@color/primary_text"
             android:textSize="13sp"
             android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/txtName"
@@ -54,6 +57,7 @@
 
         <TextView
             android:id="@+id/txtHHno"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Household number:"
@@ -74,26 +78,26 @@
             android:textSize="10sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtSeries"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Series number:"
-            android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/primary_text"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/txtSeries"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Series number:"-->
+        <!--            android:fontFamily="sans-serif-condensed"-->
+        <!--            android:textColor="@color/primary_text"-->
+        <!--            android:textSize="13sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:id="@+id/txtSeriesNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="0000000001"
-            android:textAlignment="center"
-            android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/primary_text"
-            android:textSize="10sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/txtSeriesNumber"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="0000000001"-->
+        <!--            android:textAlignment="center"-->
+        <!--            android:fontFamily="sans-serif-condensed"-->
+        <!--            android:textColor="@color/primary_text"-->
+        <!--            android:textSize="10sp"-->
+        <!--            android:textStyle="bold" />-->
     </LinearLayout>
 </LinearLayout>
