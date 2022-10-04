@@ -3822,8 +3822,6 @@ public class ScanCashCard extends AppCompatActivity {
                 try {
                     String amt = s.toString();
                     Long number = Long.parseLong(amt);
-                    Log.v(ContentValues.TAG,"Errorssssssssssssss" +s.toString().length());
-
                     if (number >=100){
                         tilNmaReason.setVisibility(View.VISIBLE);
                     }
