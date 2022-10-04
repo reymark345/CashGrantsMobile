@@ -2590,10 +2590,6 @@ public class ScanCashCard extends AppCompatActivity {
             String lenderName = edt_lender_name.getText().toString();
             String cardReplacement = edtCardReplacement.getText().toString();
 
-
-
-
-
             tilDistribution = findViewById(R.id.til_distribution);
             tilCardReleased = findViewById(R.id.til_cardreleased);
             tilWhoReleased = findViewById(R.id.til_whoreleased);
@@ -2825,7 +2821,6 @@ public class ScanCashCard extends AppCompatActivity {
 
         }
         else if (current == 3) {
-            try {
                 edt_nma_amount = findViewById(R.id.edtNmaAmount);
                 spnWhyMma = findViewById(R.id.spnWhyMma);
                 tilNmaReason = findViewById(R.id.til_nmareason);
@@ -2833,18 +2828,16 @@ public class ScanCashCard extends AppCompatActivity {
                 tilOtherReasonNma = findViewById(R.id.til_otherReasonNma);
                 edtOtherReasonNma = findViewById(R.id.edtOtherReasonNma);
 
-
                 String nma_amount = edt_nma_amount.getText().toString();
                 String reason_nma = spnWhyMma.getText().toString();
                 String other_reason_nma = edtOtherReasonNma.getText().toString();
 
-                int number=Integer.parseInt(nma_amount);
+                Log.v(ContentValues.TAG,"halaaaaa" + nma_amount );
 
-                if (nma_amount.matches("")){
-                    tilNmaAmount.setError(required_field);
-                    isValidationError++;
-                }
-                else if (number >=100){
+
+            if (!TextUtils.isEmpty(nma_amount)) {
+                Long number = Long.parseLong(nma_amount);
+                if (number >=100){
                     if (reason_nma.matches("")){
                         tilNmaReason.setError(required_field);
                         isValidationError++;
@@ -2868,18 +2861,19 @@ public class ScanCashCard extends AppCompatActivity {
                     tilNmaAmount.setError(null);
                 }
 
-
-
-
+            }
+            else {
+                if (nma_amount.matches("")){
+                    tilNmaAmount.setError(required_field);
+                    isValidationError++;
+                    Log.v(ContentValues.TAG,"empty" + nma_amount );
+                }
+            }
 
 //I comment this
 //                MANDATORY_PAGE_LOCATION++;
 //                pressNext =false;
 //                store_preferences(3);
-
-            }catch (Exception e){
-
-            }
 
         } else {
             Log.v(ContentValues.TAG,"Error Current Btn Next");
@@ -3828,6 +3822,7 @@ public class ScanCashCard extends AppCompatActivity {
                 try {
                     String amt = s.toString();
                     Long number = Long.parseLong(amt);
+                    Log.v(ContentValues.TAG,"Errorssssssssssssss" +s.toString().length());
 
                     if (number >=100){
                         tilNmaReason.setVisibility(View.VISIBLE);
