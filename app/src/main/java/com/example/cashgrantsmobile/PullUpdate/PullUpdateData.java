@@ -47,7 +47,7 @@ public class PullUpdateData extends AppCompatActivity {
 
     public Integer getLastID() {
         Integer lastID = 0;
-        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring ORDER BY id DESC LIMIT 1");
+        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations ORDER BY id DESC LIMIT 1");
         while (lastEmvDatabaseID.moveToNext()) {
             lastID = lastEmvDatabaseID.getInt(0);
         }
@@ -168,7 +168,7 @@ public class PullUpdateData extends AppCompatActivity {
 
         btnPullUpdate.setEnabled(false);
 
-        String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
+        String url = BASE_URL + "/api/v1/staff/emvvalidations/pulldata/" + getLastID();
 
 
         // creating a new variable for our request queue
@@ -255,7 +255,7 @@ public class PullUpdateData extends AppCompatActivity {
                     sqLiteHelper.storeLogs("error", "", "Pull: " +  message);
                 } catch (JSONException | UnsupportedEncodingException e) {
                     sqLiteHelper.storeLogs("error", "", "Pull: Error Exception Found.");
-                    Toasty.warning(PullUpdateData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
+//                    Toasty.warning(PullUpdateData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
                 }
                 catch (Exception e) {
                     queue.cancelAll(this);
