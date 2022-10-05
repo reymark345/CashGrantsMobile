@@ -732,35 +732,84 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void insertEmvData(JSONArray remoteData) {
         for (int i=0; i < remoteData.length(); i++) {
             try {
+
                 JSONObject extractedData = remoteData.getJSONObject(i);
                 try {
+
+                    Log.v(TAG,"blavblal");
+
                     SQLiteDatabase database = getWritableDatabase();
-                    String sql = "INSERT INTO emv_database_monitoring (id, full_name, hh_id, client_status, address, sex, hh_set_group, current_grantee_card_number, other_card_number_1, other_card_holder_name_1, other_card_number_2, other_card_holder_name_2, other_card_number_3, other_card_holder_name_3, upload_history_id, created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql = "INSERT INTO emv_validations (id,first_name, last_name, middle_name, ext_name, hh_id, hh_status, province, municipality, barangay, " +
+                            "sex, hh_set_group, nma_amount, grantee_card_number, grantee_distribution_status,grantee_card_release_date, " +
+                            "other_card_number_1,other_card_distribution_status_1,other_card_release_date_1," +
+                            "other_card_number_2,other_card_distribution_status_2,other_card_release_date_2,upload_history_id,record_counter,created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
                     SQLiteStatement statement = database.compileStatement(sql);
                     statement.clearBindings();
                     statement.bindLong(1, extractedData.getInt("id"));
-                    statement.bindString(2, extractedData.getString("full_name"));
-                    statement.bindString(3, extractedData.getString("hh_id"));
-                    statement.bindString(4, extractedData.getString("client_status"));
-                    statement.bindString(5, extractedData.getString("address"));
-                    statement.bindString(6, extractedData.getString("sex"));
-                    statement.bindString(7, extractedData.getString("hh_set_group"));
-                    statement.bindString(8, extractedData.getString("current_grantee_card_number"));
-                    statement.bindString(9, extractedData.getString("other_card_number_1"));
-                    statement.bindString(10, extractedData.getString("other_card_holder_name_1"));
-                    statement.bindString(11, extractedData.getString("other_card_number_2"));
-                    statement.bindString(12, extractedData.getString("other_card_holder_name_2"));
-                    statement.bindString(13, extractedData.getString("other_card_number_3"));
-                    statement.bindString(14, extractedData.getString("other_card_holder_name_3"));
-                    statement.bindLong(15, extractedData.getInt("upload_history_id"));
-                    statement.bindString(16, extractedData.getString("created_at"));
-                    statement.bindString(17, extractedData.getString("updated_at"));
-                    statement.bindString(18, extractedData.getString("validated_at"));
+                    statement.bindString(2, extractedData.getString("first_name"));
+                    statement.bindString(3, extractedData.getString("last_name"));
+                    statement.bindString(4, extractedData.getString("middle_name"));
+                    statement.bindString(5, extractedData.getString("ext_name"));
+                    statement.bindString(6, extractedData.getString("hh_id"));
+                    statement.bindString(7, extractedData.getString("hh_status"));
+                    statement.bindString(8, extractedData.getString("province"));
+                    statement.bindString(9, extractedData.getString("municipality"));
+                    statement.bindString(10, extractedData.getString("barangay"));
+                    statement.bindString(11, extractedData.getString("sex"));
+                    statement.bindString(12, extractedData.getString("hh_set_group"));
+                    statement.bindString(13, extractedData.getString("nma_amount"));
+                    statement.bindString(14, extractedData.getString("grantee_card_number"));
+                    statement.bindString(15, extractedData.getString("grantee_distribution_status"));
+                    statement.bindString(16, extractedData.getString("grantee_card_release_date"));
+                    statement.bindString(17, extractedData.getString("other_card_number_1"));
+                    statement.bindString(18, extractedData.getString("other_card_distribution_status_1"));
+                    statement.bindString(19, extractedData.getString("other_card_release_date_1"));
+                    statement.bindString(20, extractedData.getString("other_card_number_2"));
+                    statement.bindString(21, extractedData.getString("other_card_distribution_status_2"));
+                    statement.bindString(22, extractedData.getString("other_card_release_date_2"));
+                    statement.bindString(23, extractedData.getString("upload_history_id"));
+                    statement.bindString(24, extractedData.getString("record_counter"));
+                    statement.bindString(25, extractedData.getString("created_at"));
+                    statement.bindString(26, extractedData.getString("updated_at"));
+                    statement.bindString(27, extractedData.getString("validated_at"));
                     statement.executeInsert();
                 }
                 catch(Exception e){
                     Log.v(TAG,"Error "+e );
                 }
+
+
+
+
+//                try {
+//                    SQLiteDatabase database = getWritableDatabase();
+//                    String sql = "INSERT INTO emv_database_monitoring (id, full_name, hh_id, client_status, address, sex, hh_set_group, current_grantee_card_number, other_card_number_1, other_card_holder_name_1, other_card_number_2, other_card_holder_name_2, other_card_number_3, other_card_holder_name_3, upload_history_id, created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+//                    SQLiteStatement statement = database.compileStatement(sql);
+//                    statement.clearBindings();
+//                    statement.bindLong(1, extractedData.getInt("id"));
+//                    statement.bindString(2, extractedData.getString("full_name"));
+//                    statement.bindString(3, extractedData.getString("hh_id"));
+//                    statement.bindString(4, extractedData.getString("client_status"));
+//                    statement.bindString(5, extractedData.getString("address"));
+//                    statement.bindString(6, extractedData.getString("sex"));
+//                    statement.bindString(7, extractedData.getString("hh_set_group"));
+//                    statement.bindString(8, extractedData.getString("current_grantee_card_number"));
+//                    statement.bindString(9, extractedData.getString("other_card_number_1"));
+//                    statement.bindString(10, extractedData.getString("other_card_holder_name_1"));
+//                    statement.bindString(11, extractedData.getString("other_card_number_2"));
+//                    statement.bindString(12, extractedData.getString("other_card_holder_name_2"));
+//                    statement.bindString(13, extractedData.getString("other_card_number_3"));
+//                    statement.bindString(14, extractedData.getString("other_card_holder_name_3"));
+//                    statement.bindLong(15, extractedData.getInt("upload_history_id"));
+//                    statement.bindString(16, extractedData.getString("created_at"));
+//                    statement.bindString(17, extractedData.getString("updated_at"));
+//                    statement.bindString(18, extractedData.getString("validated_at"));
+//                    statement.executeInsert();
+//                }
+//                catch(Exception e){
+//                    Log.v(TAG,"Error "+e );
+//                }
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -47,7 +47,7 @@ public class PullUpdateData extends AppCompatActivity {
 
     public Integer getLastID() {
         Integer lastID = 0;
-        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring ORDER BY id DESC LIMIT 1");
+        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations ORDER BY id DESC LIMIT 1");
         while (lastEmvDatabaseID.moveToNext()) {
             lastID = lastEmvDatabaseID.getInt(0);
         }
@@ -168,7 +168,7 @@ public class PullUpdateData extends AppCompatActivity {
 
         btnPullUpdate.setEnabled(false);
 
-        String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoring/pulldata/" + getLastID();
+        String url = BASE_URL + "/api/v1/staff/emvvalidations/pulldata/" + getLastID();
 
 
         // creating a new variable for our request queue
