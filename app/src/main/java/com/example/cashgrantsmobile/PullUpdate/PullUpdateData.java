@@ -255,7 +255,7 @@ public class PullUpdateData extends AppCompatActivity {
                     sqLiteHelper.storeLogs("error", "", "Pull: " +  message);
                 } catch (JSONException | UnsupportedEncodingException e) {
                     sqLiteHelper.storeLogs("error", "", "Pull: Error Exception Found.");
-                    Toasty.warning(PullUpdateData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
+//                    Toasty.warning(PullUpdateData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
                 }
                 catch (Exception e) {
                     queue.cancelAll(this);

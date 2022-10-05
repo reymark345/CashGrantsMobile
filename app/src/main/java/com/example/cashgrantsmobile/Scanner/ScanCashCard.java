@@ -2340,26 +2340,173 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-//        showImageImportDialog();
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+//        int emv_id = sh.getInt("emv_id", 0);
+        String household_id = sh.getString("hh_id", "");
+        String first_name = sh.getString("first_name","");
+        String last_name = sh.getString("last_name","");
+        String middle_name = sh.getString("middle_name","");
+        String ext_name = sh.getString("ext_name","");
+        String sex = sh.getString("sex","");
+        String province = sh.getString("province","");
+        String municipality = sh.getString("municipality","");
 
-            new SweetAlertDialog(ScanCashCard.this, SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Save data?")
-                    .setContentText("Please confirm to save data")
-                    .setConfirmText("Confirm")
-                    .setCancelText("Cancel")
-                    .showCancelButton(true)
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            sDialog.dismiss();
-                        }
-                    })
-                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            sDialog.dismiss();
-                        }
-                    }).show();
+        String barangay = sh.getString("barangay","");
+        String set = sh.getString("set","");
+        String lender_name = sh.getString("lender_name","");
+        String lender_address = sh.getString("lender_address","");
+        String date_pawned = sh.getString("date_pawned","");
+        String date_retrieved = sh.getString("date_retrieved","");
+        String loaned_amount = sh.getString("loaned_amount","");
+        String status = sh.getString("status","");
+        String reason = sh.getString("reason","");
+        String interest = sh.getString("interest","");
+        String offense_history = sh.getString("offense_history","");
+        String offense_date = sh.getString("offense_date","");
+        String remarks = sh.getString("remarks","");
+        String staff_intervention = sh.getString("staff_intervention","");
+        String other_details = sh.getString("other_details","");
+        String amount = sh.getString("amount","");
+        String date_claimed = sh.getString("date_claimed","");
+        String nma_reason = sh.getString("nma_reason","");
+        String nma_remarks = sh.getString("nma_remarks","");
+        String hh_status = sh.getString("hh_status","");
+        String contact_no = sh.getString("contact_no","");
+        String contact_no_of = sh.getString("contact_no_of","");
+        String is_grantee = sh.getString("is_grantee","");
+        String is_minor = sh.getString("is_minor","");
+        String relationship_to_grantee = sh.getString("relationship_to_grantee","");
+        String assigned_staff = sh.getString("assigned_staff","");
+        String representative_name = sh.getString("representative_name","");
+        String grantee_id = sh.getString("grantee_id","");
+        String pawning_details = sh.getString("pawning_details","");
+        String non_moving_account = sh.getString("non_moving_account","");
+        String sync_at = sh.getString("sync_at","");
+        int user_id = sh.getInt("user_id",0);
+        String card_number_prefilled = sh.getString("card_number_prefilled","");
+        String card_number_system_generated = sh.getString("card_number_system_generated","");
+        String card_number_unputted = sh.getString("card_number_unputted","");
+        String card_number_series = sh.getString("card_number_series","");
+        String distribution_status = sh.getString("distribution_status","");
+        String release_date = sh.getString("release_date","");
+        String release_by = sh.getString("release_by","");
+        String release_place = sh.getString("release_place","");
+        String card_physically_presented = sh.getString("card_physically_presented","");
+        String card_pin_is_attached = sh.getString("card_pin_is_attached","");
+        String reason_not_presented = sh.getString("reason_not_presented","");
+        String reason_unclaimed = sh.getString("reason_unclaimed","");
+        String card_replacement_request = sh.getString("card_replacement_request","");
+        String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details","");
+        String emv_monitoring_id = sh.getString("emv_monitoring_id","");
+
+        String card_holder_name1 = sh.getString("card_holder_name1","");
+        String card_number_system_generated1 = sh.getString("card_number_system_generated1","");
+        String card_number_inputted1 = sh.getString("card_number_inputted1","");
+        String card_number_series1 = sh.getString("card_number_series1","");
+        String distribution_status1 = sh.getString("distribution_status1","");
+        String release_date1 = sh.getString("release_date1","");
+        String release_by1 = sh.getString("release_by1","");
+        String release_place1 = sh.getString("release_place1","");
+        String card_physically_presented1 = sh.getString("card_physically_presented1","");
+        String card_pin_is_attached1 = sh.getString("card_pin_is_attached1","");
+        String reason_not_presented1 = sh.getString("reason_not_presented1","");
+        String reason_unclaimed1 = sh.getString("reason_unclaimed1","");
+        String card_replacement_request1 = sh.getString("card_replacement_request1","");
+        String card_replacement_request_submitted_details1 = sh.getString("card_replacement_request_submitted_details1","");
+        String pawning_remarks1 = sh.getString("pawning_remarks1","");
+
+        String card_holder_name2 = sh.getString("card_holder_name2","");
+        String card_number_system_generated2 = sh.getString("card_number_system_generated2","");
+        String card_number_inputted2 = sh.getString("card_number_inputted2","");
+        String card_number_series2 = sh.getString("card_number_series2","");
+        String distribution_status2 = sh.getString("distribution_status2","");
+        String release_date2 = sh.getString("release_date2","");
+        String release_by2 = sh.getString("release_by2","");
+        String release_place2 = sh.getString("release_place2","");
+        String card_physically_presented2 = sh.getString("card_physically_presented2","");
+        String card_pin_is_attached2 = sh.getString("card_pin_is_attached2","");
+        String reason_not_presented2 = sh.getString("reason_not_presented2","");
+        String reason_unclaimed2 = sh.getString("reason_unclaimed2","");
+        String card_replacement_request2 = sh.getString("card_replacement_request2","");
+        String card_replacement_request_submitted_details2 = sh.getString("card_replacement_request_submitted_details2","");
+        String pawning_remarks2 = sh.getString("pawning_remarks2","");
+
+        String card_holder_name3 = sh.getString("card_holder_name3","");
+        String card_number_system_generated3 = sh.getString("card_number_system_generated3","");
+        String card_number_inputted3 = sh.getString("card_number_inputted3","");
+        String card_number_series3 = sh.getString("card_number_series3","");
+        String distribution_status3 = sh.getString("distribution_status3","");
+        String release_date3 = sh.getString("release_date3","");
+        String release_by3 = sh.getString("release_by3","");
+        String release_place3 = sh.getString("release_place3","");
+        String card_physically_presented3 = sh.getString("card_physically_presented3","");
+        String card_pin_is_attached3 = sh.getString("card_pin_is_attached3","");
+        String reason_not_presented3 = sh.getString("reason_not_presented3","");
+        String reason_unclaimed3 = sh.getString("reason_unclaimed3","");
+        String card_replacement_request3 = sh.getString("card_replacement_request3","");
+        String card_replacement_request_submitted_details3 = sh.getString("card_replacement_request_submitted_details3","");
+        String pawning_remarks3 = sh.getString("pawning_remarks3","");
+
+        String card_holder_name4 = sh.getString("card_holder_name4","");
+        String card_number_system_generated4 = sh.getString("card_number_system_generated4","");
+        String card_number_inputted4 = sh.getString("card_number_inputted4","");
+        String card_number_series4 = sh.getString("card_number_series4","");
+        String distribution_status4 = sh.getString("distribution_status4","");
+        String release_date4 = sh.getString("release_date4","");
+        String release_by4 = sh.getString("release_by4","");
+        String release_place4 = sh.getString("release_place4","");
+        String card_physically_presented4 = sh.getString("card_physically_presented4","");
+        String card_pin_is_attached4 = sh.getString("card_pin_is_attached4","");
+        String reason_not_presented4 = sh.getString("reason_not_presented4","");
+        String reason_unclaimed4 = sh.getString("reason_unclaimed4","");
+        String card_replacement_request4 = sh.getString("card_replacement_request4","");
+        String card_replacement_request_submitted_details4 = sh.getString("card_replacement_request_submitted_details4","");
+        String pawning_remarks4 = sh.getString("pawning_remarks4","");
+
+        String card_holder_name5= sh.getString("card_holder_name5","");
+        String card_number_system_generated5 = sh.getString("card_number_system_generated5","");
+        String card_number_inputted5 = sh.getString("card_number_inputted5","");
+        String card_number_series5 = sh.getString("card_number_series5","");
+        String distribution_status5 = sh.getString("distribution_status5","");
+        String release_date5 = sh.getString("release_date5","");
+        String release_by5 = sh.getString("release_by5","");
+        String release_place5 = sh.getString("release_place5","");
+        String card_physically_presented5 = sh.getString("card_physically_presented5","");
+        String card_pin_is_attached5 = sh.getString("card_pin_is_attached5","");
+        String reason_not_presented5 = sh.getString("reason_not_presented5","");
+        String reason_unclaimed5 = sh.getString("reason_unclaimed5","");
+        String card_replacement_request5 = sh.getString("card_replacement_request5","");
+        String card_replacement_request_submitted_details5 = sh.getString("card_replacement_request_submitted_details5","");
+        String pawning_remarks5 = sh.getString("pawning_remarks5","");
+
+        new SweetAlertDialog(ScanCashCard.this, SweetAlertDialog.WARNING_TYPE)
+            .setTitleText("Save data?")
+            .setContentText("Please confirm to save data")
+            .setConfirmText("Confirm")
+            .setCancelText("Cancel")
+            .showCancelButton(true)
+            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sDialog) {
+                    sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province, municipality,  barangay,  set,
+                            lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
+                            amount, date_claimed, nma_reason, nma_remarks,
+                            hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name,  grantee_id, pawning_details,  non_moving_account,  sync_at, user_id,
+                            card_number_prefilled, card_number_system_generated,  card_number_unputted,  card_number_series,  distribution_status,  release_date,  release_by,  release_place,  card_physically_presented,  card_pin_is_attached,  reason_not_presented, reason_unclaimed,  card_replacement_request,  card_replacement_submitted_details,  emv_monitoring_id,
+                            card_holder_name1,card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
+                            card_holder_name2,card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2,  release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
+                            card_holder_name3,card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3,  release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
+                            card_holder_name4,card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
+                            card_holder_name5,card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5);
+//                    sDialog.dismiss();
+                }
+            })
+            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sDialog) {
+                    sDialog.dismiss();
+                }
+            }).show();
         }
 
     private void changeStatusBarColor() {
