@@ -108,13 +108,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void insertDatabase(String hh_id,String first_name,String last_name,String middle_name,String ext_name,String sex,String province,String municipality, String barangay, String set,
                                String lender_name,String lender_address,String date_pawned,String date_retrieved,String loaned_amount,String status,String reason,String interest,String offense_history,String offense_date,String remarks,String staff_intervention,String other_details,
                                String amount,String date_claimed,String nma_reason,String nma_remarks,
-                               String hh_status,String contact_no,String contact_no_of,String is_grantee,String is_minor,String relationship_to_grantee,String assigned_staff,String representative_name, String grantee_id,String pawning_details, String non_moving_account, String sync_at, int user_id,
+                               String hh_status,String contact_no,String contact_no_of,String is_grantee,String is_minor,String relationship_to_grantee,String assigned_staff,String representative_name, String sync_at, int user_id,
                                String card_number_prefilled, String card_number_system_generated, String card_number_unputted, String card_number_series, String distribution_status, String release_date, String release_by, String release_place, String card_physically_presented, String card_pin_is_attached, String reason_not_presented,String reason_unclaimed, String card_replacement_request, String card_replacement_submitted_details, String emv_monitoring_id,
-                               String card_number_system_generated1,String card_number_inputted1,String card_number_series1,String distribution_status1,String release_date1,String release_by1,String release_place1,String card_physically_presented1,String card_pin_is_attached1,String reason_not_presented1,String reason_unclaimed1,String card_replacement_request1,String card_replacement_request_submitted_details1,String pawning_remarks1,
-                               String card_number_system_generated2,String card_number_inputted2,String card_number_series2,String distribution_status2, String release_date2,String release_by2,String release_place2,String card_physically_presented2,String card_pin_is_attached2,String reason_not_presented2,String reason_unclaimed2,String card_replacement_request2,String card_replacement_request_submitted_details2,String pawning_remarks2,
-                               String card_number_system_generated3,String card_number_inputted3,String card_number_series3,String distribution_status3,String release_date3, String release_by3,String release_place3,String card_physically_presented3,String card_pin_is_attached3,String reason_not_presented3,String reason_unclaimed3,String card_replacement_request3,String card_replacement_request_submitted_details3,String pawning_remarks3,
-                               String card_number_system_generated4,String card_number_inputted4,String card_number_series4,String distribution_status4,String release_date4,String release_by4,String release_place4,String card_physically_presented4,String card_pin_is_attached4,String reason_not_presented4,String reason_unclaimed4,String card_replacement_request4,String card_replacement_request_submitted_details4,String pawning_remarks4,
-                               String card_number_system_generated5,String card_number_inputted5,String card_number_series5,String distribution_status5,String release_date5,String release_by5,String release_place5,String card_physically_presented5,String card_pin_is_attached5,String reason_not_presented5,String reason_unclaimed5,String card_replacement_request5,String card_replacement_request_submitted_details5,String pawning_remarks5){
+                               String card_holder_name1,String card_number_system_generated1,String card_number_inputted1,String card_number_series1,String distribution_status1,String release_date1,String release_by1,String release_place1,String card_physically_presented1,String card_pin_is_attached1,String reason_not_presented1,String reason_unclaimed1,String card_replacement_request1,String card_replacement_request_submitted_details1,String pawning_remarks1,
+                               String card_holder_name2,String card_number_system_generated2,String card_number_inputted2,String card_number_series2,String distribution_status2, String release_date2,String release_by2,String release_place2,String card_physically_presented2,String card_pin_is_attached2,String reason_not_presented2,String reason_unclaimed2,String card_replacement_request2,String card_replacement_request_submitted_details2,String pawning_remarks2,
+                               String card_holder_name3,String card_number_system_generated3,String card_number_inputted3,String card_number_series3,String distribution_status3,String release_date3, String release_by3,String release_place3,String card_physically_presented3,String card_pin_is_attached3,String reason_not_presented3,String reason_unclaimed3,String card_replacement_request3,String card_replacement_request_submitted_details3,String pawning_remarks3,
+                               String card_holder_name4,String card_number_system_generated4,String card_number_inputted4,String card_number_series4,String distribution_status4,String release_date4,String release_by4,String release_place4,String card_physically_presented4,String card_pin_is_attached4,String reason_not_presented4,String reason_unclaimed4,String card_replacement_request4,String card_replacement_request_submitted_details4,String pawning_remarks4,
+                               String card_holder_name5,String card_number_system_generated5,String card_number_inputted5,String card_number_series5,String distribution_status5,String release_date5,String release_by5,String release_place5,String card_physically_presented5,String card_pin_is_attached5,String reason_not_presented5,String reason_unclaimed5,String card_replacement_request5,String card_replacement_request_submitted_details5,String pawning_remarks5){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdf.format(new Date());
@@ -209,101 +209,106 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
             SQLiteStatement other_card_validations1 = database.compileStatement(sql6);
             other_card_validations1.clearBindings();
-            other_card_validations1.bindString(1, card_number_system_generated1);
-            other_card_validations1.bindString(2, card_number_inputted1);
-            other_card_validations1.bindString(3, card_number_series1);
-            other_card_validations1.bindString(4, distribution_status1);
-            other_card_validations1.bindString(5, release_date1);
-            other_card_validations1.bindString(6, release_by1);
-            other_card_validations1.bindString(7, release_place1);
-            other_card_validations1.bindString(8, card_physically_presented1);
-            other_card_validations1.bindString(9, card_pin_is_attached1);
-            other_card_validations1.bindString(10, reason_not_presented1);
-            other_card_validations1.bindString(11, reason_unclaimed1);
-            other_card_validations1.bindString(12, card_replacement_request1);
-            other_card_validations1.bindString(13, card_replacement_request_submitted_details1);
-            other_card_validations1.bindString(14, pawning_remarks1);
-            other_card_validations1.bindString(15, strDate);
+            other_card_validations1.bindString(1, card_holder_name1);
+            other_card_validations1.bindString(2, card_number_system_generated1);
+            other_card_validations1.bindString(3, card_number_inputted1);
+            other_card_validations1.bindString(4, card_number_series1);
+            other_card_validations1.bindString(5, distribution_status1);
+            other_card_validations1.bindString(6, release_date1);
+            other_card_validations1.bindString(7, release_by1);
+            other_card_validations1.bindString(8, release_place1);
+            other_card_validations1.bindString(9, card_physically_presented1);
+            other_card_validations1.bindString(10, card_pin_is_attached1);
+            other_card_validations1.bindString(11, reason_not_presented1);
+            other_card_validations1.bindString(12, reason_unclaimed1);
+            other_card_validations1.bindString(13, card_replacement_request1);
+            other_card_validations1.bindString(14, card_replacement_request_submitted_details1);
+            other_card_validations1.bindString(15, pawning_remarks1);
+            other_card_validations1.bindString(16, strDate);
 //            other_card_validations_1.bindString(15, emv_monitoring_id_1);
             other_card_validations1.executeInsert();
 
             SQLiteStatement other_card_validations2 = database.compileStatement(sql6);
             other_card_validations2.clearBindings();
-            other_card_validations2.bindString(1, card_number_system_generated2);
-            other_card_validations2.bindString(2, card_number_inputted2);
-            other_card_validations2.bindString(3, card_number_series2);
-            other_card_validations2.bindString(4, distribution_status2);
-            other_card_validations2.bindString(5, release_date2);
-            other_card_validations2.bindString(6, release_by2);
-            other_card_validations2.bindString(7, release_place2);
-            other_card_validations2.bindString(8, card_physically_presented2);
-            other_card_validations2.bindString(9, card_pin_is_attached2);
-            other_card_validations2.bindString(10, reason_not_presented2);
-            other_card_validations2.bindString(11, reason_unclaimed2);
-            other_card_validations2.bindString(12, card_replacement_request2);
-            other_card_validations2.bindString(13, card_replacement_request_submitted_details2);
-            other_card_validations2.bindString(14, pawning_remarks2);
-            other_card_validations2.bindString(15, strDate);
+            other_card_validations2.bindString(1, card_holder_name2);
+            other_card_validations2.bindString(2, card_number_system_generated2);
+            other_card_validations2.bindString(3, card_number_inputted2);
+            other_card_validations2.bindString(4, card_number_series2);
+            other_card_validations2.bindString(5, distribution_status2);
+            other_card_validations2.bindString(6, release_date2);
+            other_card_validations2.bindString(7, release_by2);
+            other_card_validations2.bindString(8, release_place2);
+            other_card_validations2.bindString(9, card_physically_presented2);
+            other_card_validations2.bindString(10, card_pin_is_attached2);
+            other_card_validations2.bindString(11, reason_not_presented2);
+            other_card_validations2.bindString(12, reason_unclaimed2);
+            other_card_validations2.bindString(13, card_replacement_request2);
+            other_card_validations2.bindString(14, card_replacement_request_submitted_details2);
+            other_card_validations2.bindString(15, pawning_remarks2);
+            other_card_validations2.bindString(16, strDate);
 //            other_card_validatios_2.bindString(15, emv_monitoring_id_2);
             other_card_validations2.executeInsert();
 
             SQLiteStatement other_card_validations3 = database.compileStatement(sql6);
             other_card_validations3.clearBindings();
-            other_card_validations3.bindString(1, card_number_system_generated3);
-            other_card_validations3.bindString(2, card_number_inputted3);
-            other_card_validations3.bindString(3, card_number_series3);
-            other_card_validations3.bindString(4, distribution_status3);
-            other_card_validations3.bindString(5, release_date3);
-            other_card_validations3.bindString(6, release_by3);
-            other_card_validations3.bindString(7, release_place3);
-            other_card_validations3.bindString(8, card_physically_presented3);
-            other_card_validations3.bindString(9, card_pin_is_attached3);
-            other_card_validations3.bindString(10, reason_not_presented3);
-            other_card_validations3.bindString(11, reason_unclaimed3);
-            other_card_validations3.bindString(12, card_replacement_request3);
-            other_card_validations3.bindString(13, card_replacement_request_submitted_details3);
-            other_card_validations3.bindString(14, pawning_remarks3);
-            other_card_validations3.bindString(15, strDate);
+            other_card_validations3.bindString(1, card_holder_name3);
+            other_card_validations3.bindString(2, card_number_system_generated3);
+            other_card_validations3.bindString(3, card_number_inputted3);
+            other_card_validations3.bindString(4, card_number_series3);
+            other_card_validations3.bindString(5, distribution_status3);
+            other_card_validations3.bindString(6, release_date3);
+            other_card_validations3.bindString(7, release_by3);
+            other_card_validations3.bindString(8, release_place3);
+            other_card_validations3.bindString(9, card_physically_presented3);
+            other_card_validations3.bindString(10, card_pin_is_attached3);
+            other_card_validations3.bindString(11, reason_not_presented3);
+            other_card_validations3.bindString(12, reason_unclaimed3);
+            other_card_validations3.bindString(13, card_replacement_request3);
+            other_card_validations3.bindString(14, card_replacement_request_submitted_details3);
+            other_card_validations3.bindString(15, pawning_remarks3);
+            other_card_validations3.bindString(16, strDate);
 //            other_card_validations_3.bindString(15, emv_monitoring_id_3);
             other_card_validations3.executeInsert();
 
             SQLiteStatement other_card_validations4 = database.compileStatement(sql6);
             other_card_validations4.clearBindings();
-            other_card_validations4.bindString(1, card_number_system_generated4);
-            other_card_validations4.bindString(2, card_number_inputted4);
-            other_card_validations4.bindString(3, card_number_series4);
-            other_card_validations4.bindString(4, distribution_status4);
-            other_card_validations4.bindString(5, release_date4);
-            other_card_validations4.bindString(6, release_by4);
-            other_card_validations4.bindString(7, release_place4);
-            other_card_validations4.bindString(8, card_physically_presented4);
-            other_card_validations4.bindString(9, card_pin_is_attached4);
-            other_card_validations4.bindString(10, reason_not_presented4);
-            other_card_validations4.bindString(11, reason_unclaimed4);
-            other_card_validations4.bindString(12, card_replacement_request4);
-            other_card_validations4.bindString(13, card_replacement_request_submitted_details4);
-            other_card_validations4.bindString(14, pawning_remarks4);
-            other_card_validations4.bindString(15, strDate);
+            other_card_validations4.bindString(1, card_holder_name4);
+            other_card_validations4.bindString(2, card_number_system_generated4);
+            other_card_validations4.bindString(3, card_number_inputted4);
+            other_card_validations4.bindString(4, card_number_series4);
+            other_card_validations4.bindString(5, distribution_status4);
+            other_card_validations4.bindString(6, release_date4);
+            other_card_validations4.bindString(7, release_by4);
+            other_card_validations4.bindString(8, release_place4);
+            other_card_validations4.bindString(9, card_physically_presented4);
+            other_card_validations4.bindString(10, card_pin_is_attached4);
+            other_card_validations4.bindString(11, reason_not_presented4);
+            other_card_validations4.bindString(12, reason_unclaimed4);
+            other_card_validations4.bindString(13, card_replacement_request4);
+            other_card_validations4.bindString(14, card_replacement_request_submitted_details4);
+            other_card_validations4.bindString(15, pawning_remarks4);
+            other_card_validations4.bindString(16, strDate);
 //            other_card_validations_4.bindString(15, emv_monitoring_id_4);
             other_card_validations4.executeInsert();
 
             SQLiteStatement other_card_validations5 = database.compileStatement(sql6);
             other_card_validations5.clearBindings();
-            other_card_validations5.bindString(1, card_number_system_generated5);
-            other_card_validations5.bindString(2, card_number_inputted5);
-            other_card_validations5.bindString(3, card_number_series5);
-            other_card_validations5.bindString(4, distribution_status5);
-            other_card_validations5.bindString(5, release_date5);
-            other_card_validations5.bindString(6, release_by5);
-            other_card_validations5.bindString(7, release_place5);
-            other_card_validations5.bindString(8, card_physically_presented5);
-            other_card_validations5.bindString(9, card_pin_is_attached5);
-            other_card_validations5.bindString(10, reason_not_presented5);
-            other_card_validations5.bindString(11, reason_unclaimed5);
-            other_card_validations5.bindString(12, card_replacement_request5);
-            other_card_validations5.bindString(13, card_replacement_request_submitted_details5);
-            other_card_validations5.bindString(14, pawning_remarks5);
-            other_card_validations5.bindString(15, strDate);
+            other_card_validations5.bindString(1, card_holder_name5);
+            other_card_validations5.bindString(2, card_number_system_generated5);
+            other_card_validations5.bindString(3, card_number_inputted5);
+            other_card_validations5.bindString(4, card_number_series5);
+            other_card_validations5.bindString(5, distribution_status5);
+            other_card_validations5.bindString(6, release_date5);
+            other_card_validations5.bindString(7, release_by5);
+            other_card_validations5.bindString(8, release_place5);
+            other_card_validations5.bindString(9, card_physically_presented5);
+            other_card_validations5.bindString(10, card_pin_is_attached5);
+            other_card_validations5.bindString(11, reason_not_presented5);
+            other_card_validations5.bindString(12, reason_unclaimed5);
+            other_card_validations5.bindString(13, card_replacement_request5);
+            other_card_validations5.bindString(14, card_replacement_request_submitted_details5);
+            other_card_validations5.bindString(15, pawning_remarks5);
+            other_card_validations5.bindString(16, strDate);
 //            other_card_validations_5.bindString(15, emv_monitoring_id_5);
             other_card_validations5.executeInsert();
         }

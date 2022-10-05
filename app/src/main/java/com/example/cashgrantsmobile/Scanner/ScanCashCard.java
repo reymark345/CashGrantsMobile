@@ -2350,9 +2350,9 @@ public class ScanCashCard extends AppCompatActivity {
         String sex = sh.getString("sex","");
         String province = sh.getString("province","");
         String municipality = sh.getString("municipality","");
-
         String barangay = sh.getString("barangay","");
         String set = sh.getString("set","");
+
         String lender_name = sh.getString("lender_name","");
         String lender_address = sh.getString("lender_address","");
         String date_pawned = sh.getString("date_pawned","");
@@ -2366,10 +2366,12 @@ public class ScanCashCard extends AppCompatActivity {
         String remarks = sh.getString("remarks","");
         String staff_intervention = sh.getString("staff_intervention","");
         String other_details = sh.getString("other_details","");
+
         String amount = sh.getString("amount","");
         String date_claimed = sh.getString("date_claimed","");
         String nma_reason = sh.getString("nma_reason","");
         String nma_remarks = sh.getString("nma_remarks","");
+
         String hh_status = sh.getString("hh_status","");
         String contact_no = sh.getString("contact_no","");
         String contact_no_of = sh.getString("contact_no_of","");
@@ -2378,11 +2380,9 @@ public class ScanCashCard extends AppCompatActivity {
         String relationship_to_grantee = sh.getString("relationship_to_grantee","");
         String assigned_staff = sh.getString("assigned_staff","");
         String representative_name = sh.getString("representative_name","");
-        String grantee_id = sh.getString("grantee_id","");
-        String pawning_details = sh.getString("pawning_details","");
-        String non_moving_account = sh.getString("non_moving_account","");
         String sync_at = sh.getString("sync_at","");
         int user_id = sh.getInt("user_id",0);
+
         String card_number_prefilled = sh.getString("card_number_prefilled","");
         String card_number_system_generated = sh.getString("card_number_system_generated","");
         String card_number_unputted = sh.getString("card_number_unputted","");
@@ -2491,7 +2491,7 @@ public class ScanCashCard extends AppCompatActivity {
                     sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province, municipality,  barangay,  set,
                             lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
                             amount, date_claimed, nma_reason, nma_remarks,
-                            hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name,  grantee_id, pawning_details,  non_moving_account,  sync_at, user_id,
+                            hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name,sync_at, user_id,
                             card_number_prefilled, card_number_system_generated,  card_number_unputted,  card_number_series,  distribution_status,  release_date,  release_by,  release_place,  card_physically_presented,  card_pin_is_attached,  reason_not_presented, reason_unclaimed,  card_replacement_request,  card_replacement_submitted_details,  emv_monitoring_id,
                             card_holder_name1,card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
                             card_holder_name2,card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2,  release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
