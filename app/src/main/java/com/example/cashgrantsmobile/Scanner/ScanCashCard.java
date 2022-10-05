@@ -105,28 +105,25 @@ public class ScanCashCard extends AppCompatActivity {
     public static final int IMAGE_PICK_CAMERA_CODE = 1001;
 
     String cameraPermission[];
-    String StoragePermission[],required_field;
-    Button btn_search_hh, rescanCashCard,btn_scanID, btn_cash_card,btn_grantee;
+    String StoragePermission[], required_field, required_length;
+    Button btn_search_hh, rescanCashCard, btn_cash_card;
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     public static boolean pressNext = false;
     Uri image_uri;
+
     String full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3, first_name,last_name,middle_name,ext_name,hh_status,province,municipality,barangay,nma_amount,grantee_card_number,grantee_card_release_date,other_card_release_date_1,other_card_release_date_2,grantee_distribution_status,other_card_distribution_status_1,other_card_distribution_status_2,upload_history_id,other_card_holder_1,other_card_holder_2,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4, other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5,created_at,updated_at,validated_at;
-
-
-
     Integer emv_id,record_counter;
+
     TextView tvAdditional,tViewCashCard1;
     ImageView mPreviewCashCard,mAdditionalID,mPreviewGrantee, mImgUri;
     private int prevCount = 0;
     Integer isValidationError = 0;
     Integer card_count = 0;
 
-
     private boolean isAtSpaceDelimiter(int currCount) {
         return currCount == 4 ||currCount == 9 || currCount == 14 || currCount == 19;
     }
-
 
     //onboard
 
@@ -139,29 +136,36 @@ public class ScanCashCard extends AppCompatActivity {
     private int[] layouts;
     private TextView[] dots;
     private MyViewPagerAdapter viewPagerAdapter;
-    TextInputLayout tilHhId, tilFullname, tilClientStatus, tilAddress, tilSex, tilSet, tilContactNo, tilAssigned, tilMinorGrantee,tilGranteeOne;
 
-    TextInputLayout tilCardReleased, tilWhoReleased, tilPlaceReleased, tilIsAvailable, tilCurrentGranteeNumber,tiladditionalID,tilCard,tilSeriesNumber, tilIsID,tilGrantee,tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3,tilPinAttached,tilAvailablereason,tilUnclaimedReason,tilRequestReplacement,tilContactNoOf,tilRepresentativeIntroOne,tilRepresentativeIntroTwo,tilDistribution,tilisPinAttached,tilOthersUnclaimedReason,tilReasonNotPresented,tilCardReplacement,tilOtherReasonNma,tilIsAvailableReason, tilOtherCardNumber1, tilOtherIsAvailable1, tilOtherIsAvailableReason1, tilOtherCardNumber2, tilOtherIsAvailable2, tilOtherIsAvailableReason2, tilOtherCardNumber3, tilOtherIsAvailable3, tilOtherIsAvailableReason3, tilOtherCardNumberSeries1, tilOtherCardNumberSeries2, tilOtherCardNumberSeries3;
-    TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn, tilRemarks;
 
-    TextInputLayout tilLenderName, tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
-    TextInputLayout tilDistribution1, tilDistribution2, tilDistribution3, tilDistribution4, tilDistribution5, tilCardReleased1, tilCardReleased2, tilCardReleased3, tilCardReleased4, tilCardReleased5, tilWhoReleased1, tilWhoReleased2, tilWhoReleased3, tilWhoReleased4, tilWhoReleased5, tilPlaceReleased1, tilPlaceReleased2, tilPlaceReleased3, tilPlaceReleased4, tilPlaceReleased5, tilIsPresented1, tilIsPresented2, tilIsPresented3, tilIsPresented4, tilIsPresented5, tilIsPinAttached1, tilIsPinAttached2, tilIsPinAttached3, tilIsPinAttached4, tilIsPinAttached5, tilIsPresentedReason1, tilIsPresentedReason2, tilIsPresentedReason3, tilIsPresentedReason4, tilIsPresentedReason5, tilReasonNotPresented1, tilReasonNotPresented2, tilReasonNotPresented3, tilReasonNotPresented4, tilReasonNotPresented5, tilIsUnclaimedReason1, tilIsUnclaimedReason2, tilIsUnclaimedReason3, tilIsUnclaimedReason4, tilIsUnclaimedReason5, tilOtherUnclaimedReason1, tilOtherUnclaimedReason2, tilOtherUnclaimedReason3, tilOtherUnclaimedReason4, tilOtherUnclaimedReason5, tilIsRequestReplacement1, tilIsRequestReplacement2, tilIsRequestReplacement3, tilIsRequestReplacement4, tilIsRequestReplacement5, tilPawnRemarks1, tilPawnRemarks2, tilPawnRemarks3, tilPawnRemarks4, tilPawnRemarks5;
-    EditText edtCardReleased1, edtCardReleased2, edtCardReleased3, edtCardReleased4, edtCardReleased5, edtWhoReleased1, edtWhoReleased2, edtWhoReleased3, edtWhoReleased4, edtWhoReleased5, edtPlaceReleased1, edtPlaceReleased2, edtPlaceReleased3, edtPlaceReleased4, edtPlaceReleased5, edtReasonNotPresented1, edtReasonNotPresented2, edtReasonNotPresented3, edtReasonNotPresented4, edtReasonNotPresented5, edtOtherUnclaimedReason1, edtOtherUnclaimedReason2, edtOtherUnclaimedReason3, edtOtherUnclaimedReason4, edtOtherUnclaimedReason5, edtPawnRemarks1, edtPawnRemarks2, edtPawnRemarks3, edtPawnRemarks4, edtPawnRemarks5;
-    AutoCompleteTextView spinDistribution1, spinDistribution2, spinDistribution3, spinDistribution4, spinDistribution5, spinIsPresented1, spinIsPresented2, spinIsPresented3, spinIsPresented4, spinIsPresented5, spinIsPinAttached1, spinIsPinAttached2, spinIsPinAttached3, spinIsPinAttached4, spinIsPinAttached5, spinIsPresentedReason1, spinIsPresentedReason2, spinIsPresentedReason3, spinIsPresentedReason4, spinIsPresentedReason5, spinIsUnclaimedReason1, spinIsUnclaimedReason2, spinIsUnclaimedReason3, spinIsUnclaimedReason4, spinIsUnclaimedReason5, spinIsRequestReplacement1, spinIsRequestReplacement2, spinIsRequestReplacement3, spinIsRequestReplacement4, spinIsRequestReplacement5;
-    EditText edt_hh, edt_fullname, edt_address, edt_set, edt_contact_no, edt_assigned,edtRepresentativeOne,edtRepresentativeTwo;
-    EditText edt_card_released, edt_who_released, edt_place_released, edt_current_grantee_number, edt_other_card_number_1, edt_other_card_holder_name_1, edt_other_card_number_2, edt_other_card_holder_name_2, edt_other_card_number_3, edt_other_card_holder_name_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3,edt_cashCardNumber,edt_series_no, edt_other_remarks_1,edt_other_remarks_2,edt_other_remarks_3,edtOthersUnclaimedReason,edtReasonNotPresented,edtCardReplacement;
-    EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn, edt_remarks,edtOtherReasonNma;
-    EditText edt_lender_name, edt_pawning_date, edt_loaned_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_pawning_reason, edt_offense_history_date, edt_pd_remarks, edt_intervention, edt_other_details;
+//    Intro 1 XML Fields
+    TextInputLayout til_hh_id, til_set, til_last_name, til_first_name, til_middle_name, til_ext_name, til_other_ext_name, til_hh_status, til_province_code, til_municipality_code, til_barangay_code, til_sex, til_is_grantee, til_relationship_to_grantee, til_contact_no, til_contact_no_of, til_contact_no_of_others, til_assigned_staff, til_is_minor;
+    EditText edt_hh_id, edt_last_name, edt_first_name, edt_middle_name, edt_other_ext_name, edt_contact_no, edt_contact_no_of_others, edt_assigned_staff;
+    AutoCompleteTextView aat_set, aat_ext_name, aat_hh_status, aat_province_code, aat_municipality_code, aat_barangay_code, aat_sex, aat_is_grantee, aat_relationship_to_grantee, aat_contact_no_of, aat_is_minor;
 
-    AutoCompleteTextView spinSex, spinAnswer, spinIsAvail, spinIsAvail1, spinIsAvail2, spinIsAvail3, spinIsAvail4, spinIsAvail5, spinIsAvailReason, spinIsAvailReason1, spinIsAvailReason2, spinIsAvailReason3, spinIsAvailReason4, spinIsAvailReason5, spinClientStatus, spinStatus, spinOffenseHistory, spinIsID, spinIsDistribution_1,spinnerIsUnclaimedReason,spinnerContactNoOf,spinnerGrantee,spinnerIsReasonReplacement,spinnerIsPinAttached, spnWhyMma;
+//    Intro 2 XML Fields
+    TextInputLayout til_card_number_prefilled, til_distribution_status, til_release_date, til_release_by, til_release_place, til_card_physically_presented, til_card_pin_is_attached, til_reason_not_presented, til_reason_unclaimed, til_card_replacement_request, til_others_reason_not_presented, til_others_reason_unclaimed, til_card_replacement_request_submitted_details, til_lender_name, til_date_pawned, til_loan_amount, til_lender_address, til_date_retrieved, til_interest, til_status, til_reason, til_offense_history, til_offense_date, til_remarks, til_staff_intervention, til_other_details, til_card, til_card_number_inputted, til_card_number_series, til_id_exists, til_additionalID, tilGrantee, til_representative_name, til_distribution_status1, til_release_date1, til_release_by1, til_release_place1, til_card_physically_presented1, til_card_pin_is_attached1, til_reason_not_presented1, til_others_reason_not_presented1, til_reason_unclaimed1, til_others_reason_unclaimed1, til_card_replacement_request1, til_card_replacement_request_submitted_details1, til_pawning_remarks1, tilOtherScanned1, til_card_number_inputted1, til_card_number_series1, til_distribution_status2, til_release_date2, til_release_by2, til_release_place2, til_card_physically_presented2, til_card_pin_is_attached2, til_reason_not_presented2, til_others_reason_not_presented2, til_reason_unclaimed2, til_others_reason_unclaimed2, til_card_replacement_request2, til_card_replacement_request_submitted_details2, til_pawning_remarks2, tilOtherScanned2, til_card_number_inputted2, til_card_number_series2, til_distribution_status3, til_release_date3, til_release_by3, til_release_place3, til_card_physically_presented3, til_card_pin_is_attached3, til_reason_not_presented3, til_others_reason_not_presented3, til_reason_unclaimed3, til_others_reason_unclaimed3, til_card_replacement_request3, til_card_replacement_request_submitted_details3, til_pawning_remarks3, tilOtherScanned3, til_card_number_inputted3, til_card_number_series3, til_distribution_status4, til_release_date4, til_release_by4, til_release_place4, til_card_physically_presented4, til_card_pin_is_attached4, til_reason_not_presented4, til_others_reason_not_presented4, til_reason_unclaimed4, til_others_reason_unclaimed4, til_card_replacement_request4, til_card_replacement_request_submitted_details4, til_pawning_remarks4, tilOtherScanned4, til_card_number_inputted4, til_card_number_series4, til_distribution_status5, til_release_date5, til_release_by5, til_release_place5, til_card_physically_presented5, til_card_pin_is_attached5, til_reason_not_presented5, til_others_reason_not_presented5, til_reason_unclaimed5, til_others_reason_unclaimed5, til_card_replacement_request5, til_card_replacement_request_submitted_details5, til_pawning_remarks5, tilOtherScanned5, til_card_number_inputted5, til_card_number_series5;
+    EditText edt_card_number_prefilled, edt_release_date, edt_release_by, edt_release_place, edt_others_reason_not_presented, edt_others_reason_unclaimed, edt_card_replacement_request_submitted_details, edt_lender_name, edt_date_pawned, edt_loan_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_reason, edt_offense_date, edt_remarks, edt_staff_intervention, edt_other_details, edt_card_number_inputted, edt_card_number_series, edt_representative_name, edt_release_date1, edt_release_by1, edt_release_place1, edt_others_reason_not_presented1, edt_others_reason_unclaimed1, edt_card_replacement_request_submitted_details1, edt_pawning_remarks1, edt_card_number_inputted1, edt_card_number_series1, edt_release_date2, edt_release_by2, edt_release_place2, edt_others_reason_not_presented2, edt_others_reason_unclaimed2, edt_card_replacement_request_submitted_details2, edt_pawning_remarks2, edt_card_number_inputted2, edt_card_number_series2, edt_release_date3, edt_release_by3, edt_release_place3, edt_others_reason_not_presented3, edt_others_reason_unclaimed3, edt_card_replacement_request_submitted_details3, edt_pawning_remarks3, edt_card_number_inputted3, edt_card_number_series3, edt_release_date4, edt_release_by4, edt_release_place4, edt_others_reason_not_presented4, edt_others_reason_unclaimed4, edt_card_replacement_request_submitted_details4, edt_pawning_remarks4, edt_card_number_inputted4, edt_card_number_series4, edt_release_date5, edt_release_by5, edt_release_place5, edt_others_reason_not_presented5, edt_others_reason_unclaimed5, edt_card_replacement_request_submitted_details5, edt_pawning_remarks5, edt_card_number_inputted5, edt_card_number_series5;
+    AutoCompleteTextView aat_distribution_status, aat_card_physically_presented, aat_card_pin_is_attached, aat_reason_not_presented, aat_reason_unclaimed, aat_card_replacement_request, aat_status, aat_offense_history, aat_id_exists, aat_distribution_status1, aat_card_physically_presented1, aat_card_pin_is_attached1, aat_reason_not_presented1, aat_reason_unclaimed1, aat_card_replacement_request1, aat_distribution_status2, aat_card_physically_presented2, aat_card_pin_is_attached2, aat_reason_not_presented2, aat_reason_unclaimed2, aat_card_replacement_request2, aat_distribution_status3, aat_card_physically_presented3, aat_card_pin_is_attached3, aat_reason_not_presented3, aat_reason_unclaimed3, aat_card_replacement_request3, aat_distribution_status4, aat_card_physically_presented4, aat_card_pin_is_attached4, aat_reason_not_presented4, aat_reason_unclaimed4, aat_card_replacement_request4, aat_distribution_status5, aat_card_physically_presented5, aat_card_pin_is_attached5, aat_reason_not_presented5, aat_reason_unclaimed5, aat_card_replacement_request5;
+    ImageView ScannedImage, imgUri, imgAdditionalId, mGrantee, ivOtherScannedImage1, ivOtherScannedImageUrl1, ivOtherScannedImage2, ivOtherScannedImageUrl2, ivOtherScannedImage3, ivOtherScannedImageUrl3, ivOtherScannedImage4, ivOtherScannedImageUrl4, ivOtherScannedImage5, ivOtherScannedImageUrl5;
+    Button btn_scanCashCard, btn_scanID, btn_grantee, btnOtherScanned1, btnOtherScanned2, btnOtherScanned3, btnOtherScanned4, btnOtherScanned5;
+    MaterialCardView otherCardAvailability1, otherCardAvailability2, otherCardAvailability3, otherCardAvailability4, otherCardAvailability5;
+    ImageButton btnCancelOtherCard1, btnCancelOtherCard2, btnCancelOtherCard3, btnCancelOtherCard4, btnCancelOtherCard5;
+    AppCompatButton btnAddCard;
+    LinearLayout ll_additional_id_layout;
+
+    TextInputLayout tiladditionalID,tilCard,tilSeriesNumber, tilIsID, tilCardBtn,til_other_remarks_1,til_other_remarks_2,til_other_remarks_3;
+    TextInputLayout tilNmaAmount, tilNmaReason, tilDateWithdrawn;
+    TextInputLayout tilPawningDate, tilLoanedAmount, tilLenderAddress, tilDateRetrieved, tilInterest, tilStatus, tilPawningReason, tilOffenseHistory, tilOffenseHistoryDate, tilPdRemarks, tilIntervention, tilOtherDetails;
+    TextInputLayout tilOtherReasonNma;
+
+    EditText edt_place_released, edt_other_card_number_1, edt_other_card_number_2, edt_other_card_number_3, edt_other_card_number_series_1, edt_other_card_number_series_2, edt_other_card_number_series_3,edt_other_remarks_1,edt_other_remarks_2,edt_other_remarks_3;
+    EditText edt_nma_amount, edt_nma_reason,  edt_date_withdrawn,edtOtherReasonNma;
+    AutoCompleteTextView spinIsID,spnWhyMma;
 
     MaterialCardView mcvPawning, otherCard1, otherCard2, otherCard3, otherCard4, otherCard5;
 
-    ImageButton btnCancelOtherCard1, btnCancelOtherCard2, btnCancelOtherCard3, btnCancelOtherCard4, btnCancelOtherCard5;
-
-    AppCompatButton btnAddCard;
-
-    String[] Ans = new String[]{"","Yes", "No"};
+    String[] Ans = new String[]{"Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
@@ -240,7 +244,72 @@ public class ScanCashCard extends AppCompatActivity {
             "Force Majeure",
             "Others"
     };
-
+    String[] RelationshipToGrantee = new String[]{
+            "2 - Wife / Spouse",
+            "3 - Son / Daughter",
+            "4 - Brother / Sister",
+            "5 - Son-in-law / Daughter-in-law",
+            "6 - Grandson / Granddaughter",
+            "7 - Father / Mother",
+            "8 - Other Relatives",
+            "9 - Boarders",
+            "10 - Domestic Helper",
+            "11 - Non-relative",
+            "12 - Guardian"
+    };
+    String[] HouseholdSet = new String[]{
+            "1A",
+            "1B",
+            "1C",
+            "1D",
+            "2A",
+            "3A",
+            "3B",
+            "3C",
+            "3D",
+            "4A",
+            "4B",
+            "4C",
+            "4D",
+            "5A",
+            "5B",
+            "6A",
+            "6B",
+            "6C",
+            "6D",
+            "6E",
+            "7A",
+            "7B",
+            "7C",
+            "7E",
+            "7M",
+            "8A",
+            "8B",
+            "8C",
+            "8D",
+            "8E",
+            "9A",
+            "10A",
+            "11A",
+            "11B",
+            "11C",
+            "NOV15",
+            "MAY16",
+            "AUG18",
+            "OCT18",
+            "DEC19"
+    };
+    String[] ExtensionName = new String[]{
+            "Jr.",
+            "Sr.",
+            "I",
+            "II",
+            "III",
+            "IV",
+            "V",
+            "Jra.",
+            "Others"
+    };
 
     public Integer getUserId() {
 
@@ -282,7 +351,6 @@ public class ScanCashCard extends AppCompatActivity {
         StoragePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         MANDATORY_PAGE_LOCATION = 0;
         pressNext=false;
-        //onboard
 
         introPref = new IntroPref(this);
         if (!introPref.isFirstTimeLaunch()) {
@@ -297,7 +365,6 @@ public class ScanCashCard extends AppCompatActivity {
 
         tvNext = findViewById(R.id.tvNext);
         tvPrev = findViewById(R.id.tvPrev);
-//        viewPager = findViewById(R.id.viewPager);
         viewPager= findViewById(R.id.viewPager);
         layoutDots = findViewById(R.id.layoutDots);
         tvPrev.setVisibility(View.INVISIBLE);
@@ -307,17 +374,25 @@ public class ScanCashCard extends AppCompatActivity {
                 R.layout.intro_two,
                 R.layout.intro_three
         };
+
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn_CheckNextValidation();
+//                btn_CheckNextValidation();
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-                String hh_id = sh.getString("hh_id", "160310001-");
+                String hh_id = sh.getString("hh_id", "");
                 String buttonNext = sh.getString("pressBtn_search", "");
-
 
                 if (hh_id.length() > 0 && buttonNext.matches("true")){
                     nextValidation();
+
+                    aat_is_grantee = findViewById(R.id.aat_is_grantee);
+                    til_representative_name = findViewById(R.id.til_representative_name);
+                    if (aat_is_grantee.getText().toString().matches("No")) {
+                        til_representative_name.setVisibility(View.VISIBLE);
+                    } else {
+                        til_representative_name.setVisibility(View.GONE);
+                    }
                 }
                 else{
                     Log.v(ContentValues.TAG,"Error" + " " +hh_id.length() + " " +buttonNext);
@@ -326,6 +401,7 @@ public class ScanCashCard extends AppCompatActivity {
 
             }
         });
+
         tvPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -348,9 +424,9 @@ public class ScanCashCard extends AppCompatActivity {
                 if (current == 0){
                     tvPrev.setVisibility(View.INVISIBLE);
 
-                    tilHhId = findViewById(R.id.til_hhid);
-                    edt_hh = findViewById(R.id.edtHhId);
-                    HouseholdOnChange(edt_hh);
+                    til_hh_id = findViewById(R.id.til_hh_id);
+                    edt_hh_id = findViewById(R.id.edt_hh_id);
+                    HouseholdOnChange(edt_hh_id);
 
                 } else {
                     tvPrev.setVisibility(View.VISIBLE);
@@ -362,8 +438,6 @@ public class ScanCashCard extends AppCompatActivity {
         viewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(onPageChangeListener);
-
-
 
         addBottomDots(0);
         changeStatusBarColor();
@@ -386,7 +460,6 @@ public class ScanCashCard extends AppCompatActivity {
             pickCamera();
         }
     }
-
 
     public void pickCamera() {
         ContentValues values = new ContentValues();
@@ -445,8 +518,8 @@ public class ScanCashCard extends AppCompatActivity {
         } else {
             sb.setLength(sb.length() - 1);
         }
-        edt_cashCardNumber.setText(sb.toString());
-        edt_cashCardNumber.setSelection(sb.length());
+        edt_card_number_inputted.setText(sb.toString());
+        edt_card_number_inputted.setSelection(sb.length());
     }
 
     @Override
@@ -557,14 +630,14 @@ public class ScanCashCard extends AppCompatActivity {
 
                         if (sTextFromET.length() >23){
                             String limitString = sTextFromET.substring(0,23);
-                            edt_cashCardNumber.setText(limitString);
-                            String CardResult = edt_cashCardNumber.getText().toString();
+                            edt_card_number_inputted.setText(limitString);
+                            String CardResult = edt_card_number_inputted.getText().toString();
                             if (!CardResult.matches("[0-9 ]+")){
                                 tilCard.setError("Invalid format");
                             }
                         }
                         else{
-                            edt_cashCardNumber.setText(sTextFromET);
+                            edt_card_number_inputted.setText(sTextFromET);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -579,14 +652,6 @@ public class ScanCashCard extends AppCompatActivity {
                 sqLiteHelper.storeLogs("error", "", "Scanned: " + error);
             }
         }
-
-
-
-
-
-
-
-
   // -------------------- THIS LINE is OLD feature , Image Digitalization Signature ---------------------------------------------
 
 //        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
@@ -649,7 +714,7 @@ public class ScanCashCard extends AppCompatActivity {
 //                    int emv_id = sh.getInt("emv_id", 0);
 //                    String full_name = sh.getString("full_name", "");
 //                    String household = sh.getString("hh_id", "160310001-");
-//                    String client_status = sh.getString("client_status", "");
+//                    String hh_status = sh.getString("hh_status", "");
 //                    String address = sh.getString("address", "");
 //                    String sex = sh.getString("sex", "");
 //                    String hh_set_group = sh.getString("hh_set_group", "");
@@ -658,7 +723,7 @@ public class ScanCashCard extends AppCompatActivity {
 //                    String minor_grantee = sh.getString("minor_grantee", "");
 //
 //                    String card_released = sh.getString("card_released", "");
-//                    String who_released = sh.getString("who_released", "");
+//                    String edt_release_by = sh.getString("edt_release_by", "");
 //                    String place_released = sh.getString("place_released", "");
 //                    String is_available = sh.getString("is_available", "");
 //                    String is_available_reason = sh.getString("is_available_reason", "");
@@ -713,11 +778,11 @@ public class ScanCashCard extends AppCompatActivity {
 //                        if (sTextFromET.length() >23){
 //                            String limitString = sTextFromET.substring(0,23);
 //                            i.putExtra("cashCardNumber",limitString);
-//                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id, getUserName());
+//                            sqLiteHelper.insertEmvDatabase(full_name,household,hh_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,edt_release_by,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id, getUserName());
 //                        }
 //                        else{
 //                            i.putExtra("cashCardNumber",sTextFromET);
-//                            sqLiteHelper.insertEmvDatabase(full_name,household,client_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,who_released,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id, getUserName());
+//                            sqLiteHelper.insertEmvDatabase(full_name,household,hh_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,edt_release_by,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id, getUserName());
 //                        }
 //                        sqLiteHelper.update_emv_monitoring(
 //                                hh_no_1
@@ -743,8 +808,6 @@ public class ScanCashCard extends AppCompatActivity {
 //            }
 //        }
     }
-
-
 
     public void getImage(int validation){
             try {
@@ -785,7 +848,6 @@ public class ScanCashCard extends AppCompatActivity {
 
 
     }
-
 
     public void temp_BLOB_status(){
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
@@ -846,35 +908,6 @@ public class ScanCashCard extends AppCompatActivity {
         }
     };
 
-//    public void countIncomplete(){
-//        Cursor incomplete_total = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details WHERE card_scanning_status=0");
-//
-//        int incomplete = incomplete_total.getCount();
-//        if (incomplete>0){
-//            new SweetAlertDialog(ScanCashCard.this, SweetAlertDialog.WARNING_TYPE)
-//                    .setTitleText("You have "+incomplete+" incomplete household entries")
-//                    .setContentText("Please update the previous household to complete")
-//                    .setConfirmText("Proceed")
-//                    .setCancelText("Update")
-//                    .showCancelButton(true)
-//                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                        @Override
-//                        public void onClick(SweetAlertDialog sDialog) {
-//                            sDialog.dismiss();
-//                        }
-//                    })
-//                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                        @Override
-//                        public void onClick(SweetAlertDialog sDialog) {
-//                            Intent in = new Intent(getApplicationContext(), InventoryList.class);
-//                            startActivity(in);
-//                            finish();
-//                        }
-//                    }).show();
-//        }
-//
-//    }
-
     private void addBottomDots(int currentPage) {
 
         dots = new TextView[layouts.length];
@@ -894,14 +927,8 @@ public class ScanCashCard extends AppCompatActivity {
         }
     }
 
-
     public class MyViewPagerAdapter extends PagerAdapter {
-
         LayoutInflater layoutInflater;
-
-        public MyViewPagerAdapter() {
-
-        }
 
         @NonNull
         @Override
@@ -915,452 +942,566 @@ public class ScanCashCard extends AppCompatActivity {
 
             //intro_one.xml
             if (position == 0) {
-                tilContactNo = findViewById(R.id.til_contact_no);
-                tilSet = findViewById(R.id.til_set);
-                tilHhId = findViewById(R.id.til_hhid);
-                tilAssigned = findViewById(R.id.til_assigned);
-                tilMinorGrantee = findViewById(R.id.til_minor_grantee);
-                tilContactNoOf = findViewById(R.id.til_contact_no_of);
-                tilRepresentativeIntroOne = findViewById(R.id.til_representative_one);
-                tilGranteeOne = findViewById(R.id.til_grantee);
-                edt_hh = findViewById(R.id.edtHhId);
-                edt_fullname = findViewById(R.id.edtFullname);
-                spinClientStatus = findViewById(R.id.spinnerClientStatus);
-                edt_address = findViewById(R.id.edtAddress);
-                spinSex = findViewById(R.id.spinnerSex);
-                edt_set = findViewById(R.id.edtSet);
-                edt_contact_no = findViewById(R.id.edtContactNo);
-                spinnerContactNoOf = findViewById(R.id.spinnerContactNoOf);
-                edt_assigned = findViewById(R.id.edtAssigned);
-                edtRepresentativeOne = findViewById(R.id.edtRepresentativeOne);
-                spinAnswer = findViewById(R.id.spinnerMinorGrantee);
                 btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
-                spinnerGrantee = findViewById(R.id.spinnerGrantee);
-                tilAssigned.setVisibility(View.GONE);
-                tilMinorGrantee.setVisibility(View.GONE);
-                tilRepresentativeIntroOne.setVisibility(View.GONE);
 
-                btn_search_hh.setOnClickListener( new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        btn_func();
-                    }
-                });
+                til_hh_id = findViewById(R.id.til_hh_id);
+                til_set = findViewById(R.id.til_set);
+                til_last_name = findViewById(R.id.til_last_name);
+                til_first_name = findViewById(R.id.til_first_name);
+                til_middle_name = findViewById(R.id.til_middle_name);
+                til_ext_name = findViewById(R.id.til_ext_name);
+                til_other_ext_name = findViewById(R.id.til_other_ext_name);
+                til_hh_status = findViewById(R.id.til_hh_status);
+                til_province_code = findViewById(R.id.til_province_code);
+                til_municipality_code = findViewById(R.id.til_municipality_code);
+                til_barangay_code = findViewById(R.id.til_barangay_code);
+                til_sex = findViewById(R.id.til_sex);
+                til_is_grantee = findViewById(R.id.til_is_grantee);
+                til_relationship_to_grantee = findViewById(R.id.til_relationship_to_grantee);
+                til_contact_no = findViewById(R.id.til_contact_no);
+                til_contact_no_of = findViewById(R.id.til_contact_no_of);
+                til_contact_no_of_others = findViewById(R.id.til_contact_no_of_others);
+                til_is_minor = findViewById(R.id.til_is_minor);
+                til_assigned_staff = findViewById(R.id.til_assigned_staff);
 
+                edt_hh_id = findViewById(R.id.edt_hh_id);
+                aat_set = findViewById(R.id.aat_set);
+                edt_last_name = findViewById(R.id.edt_last_name);
+                edt_first_name = findViewById(R.id.edt_first_name);
+                edt_middle_name = findViewById(R.id.edt_middle_name);
+                aat_ext_name = findViewById(R.id.aat_ext_name);
+                edt_other_ext_name = findViewById(R.id.edt_other_ext_name);
+                aat_hh_status = findViewById(R.id.aat_hh_status);
+                aat_province_code = findViewById(R.id.aat_province_code);
+                aat_municipality_code = findViewById(R.id.aat_municipality_code);
+                aat_barangay_code = findViewById(R.id.aat_barangay_code);
+                aat_sex = findViewById(R.id.aat_sex);
+                aat_is_grantee = findViewById(R.id.aat_is_grantee);
+                aat_relationship_to_grantee = findViewById(R.id.aat_relationship_to_grantee);
+                edt_contact_no = findViewById(R.id.edt_contact_no);
+                aat_contact_no_of = findViewById(R.id.aat_contact_no_of);
+                edt_contact_no_of_others = findViewById(R.id.edt_contact_no_of_others);
+                aat_is_minor = findViewById(R.id.aat_is_minor);
+                edt_assigned_staff = findViewById(R.id.edt_assigned_staff);
 
                 ArrayAdapter<String> adapterSex = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Sex);
                 ArrayAdapter<String> adapterAns = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterClientStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ClientStatus);
                 ArrayAdapter<String> adapterContact_no_of = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Contact_no_of);
                 ArrayAdapter<String> adapterGrantee = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, CardRequired);
+                ArrayAdapter<String> adapterRelationshipToGrantee = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, RelationshipToGrantee);
+                ArrayAdapter<String> adapterHouseholdSet = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, HouseholdSet);
+                ArrayAdapter<String> adapterExtensionName = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ExtensionName);
 
                 adapterSex.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterAns.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterClientStatus.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterContact_no_of.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterGrantee.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterRelationshipToGrantee.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterHouseholdSet.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterExtensionName.setDropDownViewResource(simple_spinner_dropdown_item);
 
-                spinSex.setAdapter(adapterSex);
-                spinAnswer.setAdapter(adapterAns);
-                spinClientStatus.setAdapter(adapterClientStatus);
-                spinnerContactNoOf.setAdapter(adapterContact_no_of);
-                spinnerGrantee.setAdapter(adapterGrantee);
+                aat_sex.setAdapter(adapterSex);
+                aat_is_minor.setAdapter(adapterAns);
+                aat_hh_status.setAdapter(adapterClientStatus);
+                aat_contact_no_of.setAdapter(adapterContact_no_of);
+                aat_is_grantee.setAdapter(adapterGrantee);
+                aat_relationship_to_grantee.setAdapter(adapterRelationshipToGrantee);
+                aat_set.setAdapter(adapterHouseholdSet);
+                aat_ext_name.setAdapter(adapterExtensionName);
 
-                String hh_id = sh.getString("hh_id", "160310001-");
-                String full_name = sh.getString("full_name", "");
-                String client_status = sh.getString("client_status", "");
-                String address = sh.getString("address", "");
-                String sex = sh.getString("sex", "");
-                String contact_no = sh.getString("contact_no", "");
-                String contact_no_of = sh.getString("contact_no_of", "");
-                String hh_set_group = sh.getString("hh_set_group", "");
-                String assigned = sh.getString("assigned", "");
-                String minor_grantee = sh.getString("minor_grantee", "");
-                String grantee = sh.getString("grantee_in", "");
-                String representativeOne = sh.getString("rpt_intro_one", "");
+                String hh_id = sh.getString("hh_id","");
+                String hh_set = sh.getString("hh_set","");
+                String last_name = sh.getString("last_name","");
+                String first_name = sh.getString("first_name","");
+                String middle_name = sh.getString("middle_name","");
+                String ext_name = sh.getString("ext_name","");
+                String other_ext_name = sh.getString("other_ext_name","");
+                String hh_status = sh.getString("hh_status","");
+                String province = sh.getString("province","");
+                String municipality = sh.getString("municipality","");
+                String barangay = sh.getString("barangay","");
+                String sex = sh.getString("sex","");
+                String is_grantee = sh.getString("is_grantee","");
+                String relationship_to_grantee = sh.getString("relationship_to_grantee","");
+                String contact_no = sh.getString("contact_no","");
+                String contact_no_of = sh.getString("contact_no_of","");
+                String contact_no_of_others = sh.getString("contact_no_of_others","");
+                String assigned_staff = sh.getString("assigned_staff","");
+                String is_minor = sh.getString("is_minor","");
 
-                representativeOne();
-                contactNumber();
-                contactNumberOf();
-                granteeOne();
-                setEntry();
-
-
-                if (hh_id.matches("")){edt_hh.setText("160310001-");}else {edt_hh.setText(hh_id); }
-                edt_fullname.setText(full_name);
-                spinClientStatus.setText(client_status,false);
-                edt_address.setText(address);
-                spinSex.setText(sex,false);
-                edt_set.setText(hh_set_group);
+                edt_hh_id.setText(hh_id);
+                aat_set.setText(hh_set, false);
+                edt_last_name.setText(last_name);
+                edt_first_name.setText(first_name);
+                edt_middle_name.setText(middle_name);
+                aat_ext_name.setText(ext_name, false);
+                edt_other_ext_name.setText(other_ext_name);
+                aat_hh_status.setText(hh_status, false);
+                aat_province_code.setText(province, false);
+                aat_municipality_code.setText(municipality, false);
+                aat_barangay_code.setText(barangay, false);
+                aat_sex.setText(sex, false);
+                aat_is_grantee.setText(is_grantee, false);
+                aat_relationship_to_grantee.setText(relationship_to_grantee, false);
                 edt_contact_no.setText(contact_no);
-                edt_assigned.setText(assigned);
-                spinAnswer.setText(minor_grantee,false);
-                spinnerContactNoOf.setText(contact_no_of,false);
-                spinnerGrantee.setText(grantee,false);
-                edtRepresentativeOne.setText(representativeOne);
+                aat_contact_no_of.setText(contact_no_of, false);
+                edt_contact_no_of_others.setText(contact_no_of_others);
+                aat_is_minor.setText(assigned_staff, false);
+                edt_assigned_staff.setText(is_minor);
 
+                if (other_ext_name.matches("")) {
+                    til_other_ext_name.setVisibility(View.GONE);
+                }
 
-                spinnerContactNoOf.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                if (relationship_to_grantee.matches("")) {
+                    til_relationship_to_grantee.setVisibility(View.GONE);
+                }
+
+                if (contact_no.length() != 10) {
+                    til_contact_no_of.setVisibility(View.GONE);
+                    aat_contact_no_of.setText(null, false);
+                    til_contact_no_of_others.setVisibility(View.GONE);
+                    edt_contact_no_of_others.setText(null);
+                } else if (contact_no.length() == 10) {
+                    if (contact_no_of.matches("Others")) {
+                        til_contact_no_of_others.setVisibility(View.VISIBLE);
+                    } else {
+                        til_contact_no_of_others.setVisibility(View.GONE);
+                    }
+                }
+
+                til_assigned_staff.setVisibility(View.GONE);
+                til_is_minor.setVisibility(View.GONE);
+
+                btn_search_hh.setOnClickListener( new View.OnClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinnerContactNoOf.getText().toString().matches("Others")) {
-                            tilRepresentativeIntroOne.setVisibility(View.VISIBLE);
+                    public void onClick(View v) {
+                        search_household();
+                    }
+                });
+
+                aat_ext_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (aat_ext_name.getText().toString().matches("Others")) {
+                            til_other_ext_name.setVisibility(View.VISIBLE);
                         } else {
-                            edtRepresentativeOne.setText("");
-                            tilRepresentativeIntroOne.setError(null);
-                            tilRepresentativeIntroOne.setVisibility(View.GONE);
+                            til_other_ext_name.setVisibility(View.GONE);
                         }
                     }
                 });
 
-                if (spinnerContactNoOf.getText().toString().matches("Others")){
-                    tilRepresentativeIntroOne.setVisibility(View.VISIBLE);
-                }else{tilRepresentativeIntroOne.setVisibility(View.GONE);}
+                aat_contact_no_of.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (aat_contact_no_of.getText().toString().matches("Others") && !edt_contact_no.getText().toString().matches("")) {
+                            til_contact_no_of_others.setVisibility(View.VISIBLE);
+                        } else {
+                            til_contact_no_of_others.setVisibility(View.GONE);
+                        }
+                    }
+                });
 
+                edt_contact_no.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+                    @Override
+                    public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                        if(s.toString().length() != 10){
+                            til_contact_no.setError(required_length);
+                            til_contact_no_of.setVisibility(View.GONE);
+                            til_contact_no_of_others.setVisibility(View.GONE);
+                            aat_contact_no_of.setText(null,null);
+                            edt_contact_no_of_others.setText(null);
+                        }
+                        else{
+                            til_contact_no.setError(null);
+                            til_contact_no_of.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    @Override
+                    public void afterTextChanged(Editable editable) {}
+                });
+
+                aat_contact_no_of.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (aat_contact_no_of.getText().toString().matches("Others")) {
+                            til_contact_no_of_others.setVisibility(View.VISIBLE);
+                        } else {
+                            edt_contact_no_of_others.setText("");
+                            til_contact_no_of_others.setError(null);
+                            til_contact_no_of_others.setVisibility(View.GONE);
+                            edt_contact_no_of_others.setText(null);
+                        }
+                    }
+                });
+
+                aat_is_grantee.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (aat_is_grantee.getText().toString().matches("Yes")) {
+                            til_relationship_to_grantee.setVisibility(View.VISIBLE);
+                        } else {
+                            til_relationship_to_grantee.setVisibility(View.GONE);
+                            aat_relationship_to_grantee.setText(null, false);
+                        }
+                    }
+                });
 
             } else if (position == 1) {
-                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+//                Grantee Details
+                til_card_number_prefilled = findViewById(R.id.til_card_number_prefilled);
+                til_distribution_status = findViewById(R.id.til_distribution_status);
+                til_release_date = findViewById(R.id.til_release_date);
+                til_release_by = findViewById(R.id.til_release_by);
+                til_release_place = findViewById(R.id.til_release_place);
+                til_card_physically_presented = findViewById(R.id.til_card_physically_presented);
+                til_card_pin_is_attached = findViewById(R.id.til_card_pin_is_attached);
+                til_reason_not_presented = findViewById(R.id.til_reason_not_presented);
+                til_others_reason_not_presented = findViewById(R.id.til_others_reason_not_presented);
+                til_reason_unclaimed = findViewById(R.id.til_reason_unclaimed);
+                til_others_reason_unclaimed = findViewById(R.id.til_others_reason_unclaimed);
+                til_card_replacement_request = findViewById(R.id.til_card_replacement_request);
+                til_card_replacement_request_submitted_details = findViewById(R.id.til_card_replacement_request_submitted_details);
 
-                pressBtn_search = false;
+                edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
+                aat_distribution_status = findViewById(R.id.aat_distribution_status);
+                edt_release_date = findViewById(R.id.edt_release_date);
+                edt_release_by = findViewById(R.id.edt_release_by);
+                edt_release_place = findViewById(R.id.edt_release_place);
+                aat_card_physically_presented = findViewById(R.id.aat_card_physically_presented);
+                aat_card_pin_is_attached = findViewById(R.id.aat_card_pin_is_attached);
+                aat_reason_not_presented = findViewById(R.id.aat_reason_not_presented);
+                edt_others_reason_not_presented = findViewById(R.id.edt_others_reason_not_presented);
+                aat_reason_unclaimed = findViewById(R.id.aat_reason_unclaimed);
+                edt_others_reason_unclaimed = findViewById(R.id.edt_others_reason_unclaimed);
+                aat_card_replacement_request = findViewById(R.id.aat_card_replacement_request);
+                edt_card_replacement_request_submitted_details = findViewById(R.id.edt_card_replacement_request_submitted_details);
 
-                edt_card_released = findViewById(R.id.edtCardReleased);
-                edtCardReleased1 = findViewById(R.id.edtCardReleased1);
-                edtCardReleased2 = findViewById(R.id.edtCardReleased2);
-                edtCardReleased3 = findViewById(R.id.edtCardReleased3);
-                edtCardReleased4 = findViewById(R.id.edtCardReleased4);
-                edtCardReleased5 = findViewById(R.id.edtCardReleased5);
-                edt_who_released = findViewById(R.id.edtWhoReleased);
-                edtWhoReleased1 = findViewById(R.id.edtWhoReleased1);
-                edtWhoReleased2 = findViewById(R.id.edtWhoReleased2);
-                edtWhoReleased3 = findViewById(R.id.edtWhoReleased3);
-                edtWhoReleased4 = findViewById(R.id.edtWhoReleased4);
-                edtWhoReleased5 = findViewById(R.id.edtWhoReleased5);
-                edt_place_released = findViewById(R.id.edtPlaceReleased);
-                edtPlaceReleased1 = findViewById(R.id.edtPlaceReleased1);
-                edtPlaceReleased2 = findViewById(R.id.edtPlaceReleased2);
-                edtPlaceReleased3 = findViewById(R.id.edtPlaceReleased3);
-                edtPlaceReleased4 = findViewById(R.id.edtPlaceReleased4);
-                edtPlaceReleased5 = findViewById(R.id.edtPlaceReleased5);
-                edt_current_grantee_number = findViewById(R.id.edtCurrentGranteeNumber);
-                spinIsAvail = findViewById(R.id.spinnerIsAvailable);
-                spinIsDistribution_1 = findViewById(R.id.spinnerDistribution);
-                spinDistribution1 = findViewById(R.id.spinnerDistribution1);
-                spinDistribution2 = findViewById(R.id.spinnerDistribution2);
-                spinDistribution3 = findViewById(R.id.spinnerDistribution3);
-                spinDistribution4 = findViewById(R.id.spinnerDistribution4);
-                spinDistribution5 = findViewById(R.id.spinnerDistribution5);
-                spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
-                spinnerIsPinAttached  = findViewById(R.id.spinnerIsPinAttached);
-                spinIsPinAttached1  = findViewById(R.id.spinnerIsPinAttached1);
-                spinIsPinAttached2  = findViewById(R.id.spinnerIsPinAttached2);
-                spinIsPinAttached3  = findViewById(R.id.spinnerIsPinAttached3);
-                spinIsPinAttached4  = findViewById(R.id.spinnerIsPinAttached4);
-                spinIsPinAttached5  = findViewById(R.id.spinnerIsPinAttached5);
-                edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
-                edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
-                spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
-                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
-                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
-                spinIsAvail4 = findViewById(R.id.spinnerOtherIsAvailable4);
-                spinIsAvail5 = findViewById(R.id.spinnerOtherIsAvailable5);
+                ScannedImage = findViewById(R.id.ScannedImage);
+                imgUri = findViewById(R.id.imgUri);
+                btn_scanCashCard = findViewById(R.id.btn_scanCashCard);
 
-                spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
-                spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
-                spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
-                spinIsAvailReason4 = findViewById(R.id.spinnerOtherIsAvailableReason4);
-                spinIsAvailReason5 = findViewById(R.id.spinnerOtherIsAvailableReason5);
-
-                edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
-                edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
-                edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
-                edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
-                spinnerIsUnclaimedReason= findViewById(R.id.spinnerIsUnclaimedReason);
-                spinnerIsReasonReplacement= findViewById(R.id.spinnerIsReasonReplacement);
-                edtRepresentativeTwo = findViewById(R.id.edtRepresentativeTwo);
-                edtOthersUnclaimedReason= findViewById(R.id.edtOthersUnclaimedReason);
-                edtReasonNotPresented= findViewById(R.id.edtReasonNotPresented);
-                edt_lender_name= findViewById(R.id.edtLenderName);
-                edtCardReplacement= findViewById(R.id.edtCardReplacement);
-
-                spinIsID = findViewById(R.id.spinnerIsID);
-                edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
-                edt_series_no = findViewById(R.id.edt_series_no);
-
-                btn_cash_card = findViewById(R.id.btn_scanCashCard);
+                til_card_number_inputted = findViewById(R.id.til_card_number_inputted);
+                til_card_number_series = findViewById(R.id.til_card_number_series);
+                til_id_exists = findViewById(R.id.til_id_exists);
+                edt_card_number_inputted = findViewById(R.id.edt_card_number_inputted);
+                edt_card_number_series = findViewById(R.id.edt_card_number_series);
+                aat_id_exists = findViewById(R.id.aat_id_exists);
+                imgAdditionalId = findViewById(R.id.imgAdditionalId);
+                til_additionalID = findViewById(R.id.til_additionalID);
                 btn_scanID = findViewById(R.id.btn_scanID);
-                btn_grantee = findViewById(R.id.btn_grantee);
-                tvAdditional = findViewById(R.id.tViewAdditionalId);
-                tViewCashCard1= findViewById(R.id.tViewCashCard1);
-
-                tilIsAvailable = findViewById(R.id.til_isavailable);
-                tilIsPresented1 = findViewById(R.id.til_otherisavailable1);
-                tilIsPresented2 = findViewById(R.id.til_otherisavailable2);
-                tilIsPresented3 = findViewById(R.id.til_otherisavailable3);
-                tilIsPresented4 = findViewById(R.id.til_otherisavailable4);
-                tilIsPresented5 = findViewById(R.id.til_otherisavailable5);
-
-                tilWhoReleased = findViewById(R.id.til_whoreleased);
-                tilWhoReleased1 = findViewById(R.id.til_whoreleased1);
-                tilWhoReleased2 = findViewById(R.id.til_whoreleased2);
-                tilWhoReleased3 = findViewById(R.id.til_whoreleased3);
-                tilWhoReleased4 = findViewById(R.id.til_whoreleased4);
-                tilWhoReleased5 = findViewById(R.id.til_whoreleased5);
-                tilPlaceReleased = findViewById(R.id.til_placereleased);
-                tilPlaceReleased1 = findViewById(R.id.til_placereleased1);
-                tilPlaceReleased2 = findViewById(R.id.til_placereleased2);
-                tilPlaceReleased3 = findViewById(R.id.til_placereleased3);
-                tilPlaceReleased4 = findViewById(R.id.til_placereleased4);
-                tilPlaceReleased5 = findViewById(R.id.til_placereleased5);
-                tilCardReleased = findViewById(R.id.til_cardreleased);
-                tilCardReleased1 = findViewById(R.id.til_cardreleased1);
-                tilCardReleased2 = findViewById(R.id.til_cardreleased2);
-                tilCardReleased3 = findViewById(R.id.til_cardreleased3);
-                tilCardReleased4 = findViewById(R.id.til_cardreleased4);
-                tilCardReleased5 = findViewById(R.id.til_cardreleased5);
-                tilDistribution = findViewById(R.id.til_distribution);
-                tiladditionalID = findViewById(R.id.til_additionalID);
-                tilCard= findViewById(R.id.til_cashCard);
-                tilSeriesNumber= findViewById(R.id.til_series_number);
-                tilIsID = findViewById(R.id.til_isID);
+                mGrantee = findViewById(R.id.mGrantee);
                 tilGrantee = findViewById(R.id.tilGrantee);
-                tilCardBtn = findViewById(R.id.til_card);
-                tilPinAttached = findViewById(R.id.til_isPinAttached);
+                btn_grantee = findViewById(R.id.btn_grantee);
+                til_representative_name = findViewById(R.id.til_representative_name);
+                edt_representative_name = findViewById(R.id.edt_representative_name);
 
-                tilIsPinAttached1 = findViewById(R.id.til_isPinAttached1);
-                tilIsPinAttached2 = findViewById(R.id.til_isPinAttached2);
-                tilIsPinAttached3 = findViewById(R.id.til_isPinAttached3);
-                tilIsPinAttached4 = findViewById(R.id.til_isPinAttached4);
-                tilIsPinAttached5 = findViewById(R.id.til_isPinAttached5);
-
-                tilCardReplacement = findViewById(R.id.til_cardReplacement);
-
-                tilAvailablereason = findViewById(R.id.til_isavailablereason);
-                tilIsPresentedReason1 = findViewById(R.id.til_otherisavailablereason1);
-                tilIsPresentedReason2 = findViewById(R.id.til_otherisavailablereason2);
-                tilIsPresentedReason3 = findViewById(R.id.til_otherisavailablereason3);
-                tilIsPresentedReason4 = findViewById(R.id.til_otherisavailablereason4);
-                tilIsPresentedReason5 = findViewById(R.id.til_otherisavailablereason5);
-                tilUnclaimedReason = findViewById(R.id.til_isUnclaimedReason);
-                tilIsUnclaimedReason1 = findViewById(R.id.til_isUnclaimedReason1);
-                tilIsUnclaimedReason2 = findViewById(R.id.til_isUnclaimedReason2);
-                tilIsUnclaimedReason3 = findViewById(R.id.til_isUnclaimedReason3);
-                tilIsUnclaimedReason4 = findViewById(R.id.til_isUnclaimedReason4);
-                tilIsUnclaimedReason5 = findViewById(R.id.til_isUnclaimedReason5);
-                tilRequestReplacement = findViewById(R.id.til_isRequestReplacement);
-                tilIsRequestReplacement1 = findViewById(R.id.til_isRequestReplacement1);
-                tilIsRequestReplacement2 = findViewById(R.id.til_isRequestReplacement2);
-                tilIsRequestReplacement3 = findViewById(R.id.til_isRequestReplacement3);
-                tilIsRequestReplacement4 = findViewById(R.id.til_isRequestReplacement4);
-                tilIsRequestReplacement5 = findViewById(R.id.til_isRequestReplacement5);
-                tilOthersUnclaimedReason  = findViewById(R.id.til_OthersUnclaimedReason);
-                tilOtherUnclaimedReason1  = findViewById(R.id.til_OthersUnclaimedReason1);
-                tilOtherUnclaimedReason2  = findViewById(R.id.til_OthersUnclaimedReason2);
-                tilOtherUnclaimedReason3  = findViewById(R.id.til_OthersUnclaimedReason3);
-                tilOtherUnclaimedReason4  = findViewById(R.id.til_OthersUnclaimedReason4);
-                tilOtherUnclaimedReason5  = findViewById(R.id.til_OthersUnclaimedReason5);
-                tilRepresentativeIntroTwo = findViewById(R.id.til_representative);
-                tilReasonNotPresented = findViewById(R.id.til_reason_not_presented);
-                tilReasonNotPresented1 = findViewById(R.id.til_reason_not_presented1);
-                tilReasonNotPresented2 = findViewById(R.id.til_reason_not_presented2);
-                tilReasonNotPresented3 = findViewById(R.id.til_reason_not_presented3);
-                tilReasonNotPresented4 = findViewById(R.id.til_reason_not_presented4);
-                tilReasonNotPresented5 = findViewById(R.id.til_reason_not_presented5);
-                tilLenderName = findViewById(R.id.til_lendername);
                 mcvPawning = findViewById(R.id.pawning);
-                tilPawnRemarks1 = findViewById(R.id.til_pawnRemarks1);
-                tilPawnRemarks2 = findViewById(R.id.til_pawnRemarks2);
-                tilPawnRemarks3 = findViewById(R.id.til_pawnRemarks3);
-                tilPawnRemarks4 = findViewById(R.id.til_pawnRemarks4);
-                tilPawnRemarks5 = findViewById(R.id.til_pawnRemarks5);
-//                til_other_remarks_1 = findViewById(R.id.til_other_remarks_1);
-//                til_other_remarks_2 = findViewById(R.id.til_other_remarks_2);
-//                til_other_remarks_3 = findViewById(R.id.til_other_remarks_3);
-                mPreviewCashCard = findViewById(R.id.ScannedImage);
-                mPreviewGrantee = findViewById(R.id.mGrantee);
-                mAdditionalID = findViewById(R.id.imgAdditionalId);
-                mImgUri  = findViewById(R.id.imgUri);
-
-                mPreviewGrantee.setClipToOutline(true);
-                mPreviewCashCard.setClipToOutline(true);
-                mAdditionalID.setClipToOutline(true);
-
-//                spinIsAvailReason1.setText(null);
-//                spinIsAvailReason1.setDropDownHeight(0);
-//                spinIsAvailReason1.setEnabled(false);
-//                spinIsAvailReason2.setText(null);
-//                spinIsAvailReason2.setDropDownHeight(0);
-//                spinIsAvailReason2.setEnabled(false);
-//                spinIsAvailReason3.setText(null);
-//                spinIsAvailReason3.setDropDownHeight(0);
-//                spinIsAvailReason3.setEnabled(false);
-//                spinIsAvailReason4.setText(null);
-//                spinIsAvailReason4.setDropDownHeight(0);
-//                spinIsAvailReason4.setEnabled(false);
-//                spinIsAvailReason5.setText(null);
-//                spinIsAvailReason5.setDropDownHeight(0);
-//                spinIsAvailReason5.setEnabled(false);
-
-                tilPinAttached.setVisibility(View.GONE);
-                tilIsPinAttached1.setVisibility(View.GONE);
-                tilIsPinAttached2.setVisibility(View.GONE);
-                tilIsPinAttached3.setVisibility(View.GONE);
-                tilIsPinAttached4.setVisibility(View.GONE);
-                tilIsPinAttached5.setVisibility(View.GONE);
-                tiladditionalID.setVisibility(View.GONE);
-                btn_scanID.setVisibility(View.GONE);
-                tvAdditional.setVisibility(View.GONE);
-                mAdditionalID.setVisibility(View.GONE);
-                mImgUri.setVisibility(View.INVISIBLE);
-                tilCardReleased.setVisibility(View.GONE);
-                tilCardReleased1.setVisibility(View.GONE);
-                tilCardReleased2.setVisibility(View.GONE);
-                tilCardReleased3.setVisibility(View.GONE);
-                tilCardReleased4.setVisibility(View.GONE);
-                tilCardReleased5.setVisibility(View.GONE);
-                tilWhoReleased.setVisibility(View.GONE);
-                tilWhoReleased1.setVisibility(View.GONE);
-                tilWhoReleased2.setVisibility(View.GONE);
-                tilWhoReleased3.setVisibility(View.GONE);
-                tilWhoReleased4.setVisibility(View.GONE);
-                tilWhoReleased5.setVisibility(View.GONE);
-                tilPlaceReleased.setVisibility(View.GONE);
-                tilPlaceReleased1.setVisibility(View.GONE);
-                tilPlaceReleased2.setVisibility(View.GONE);
-                tilPlaceReleased3.setVisibility(View.GONE);
-                tilPlaceReleased4.setVisibility(View.GONE);
-                tilPlaceReleased5.setVisibility(View.GONE);
-                tilAvailablereason.setVisibility(View.GONE);
-                tilIsPresentedReason1.setVisibility(View.GONE);
-                tilIsPresentedReason2.setVisibility(View.GONE);
-                tilIsPresentedReason3.setVisibility(View.GONE);
-                tilIsPresentedReason4.setVisibility(View.GONE);
-                tilIsPresentedReason5.setVisibility(View.GONE);
-                tilUnclaimedReason.setVisibility(View.GONE);
-                tilIsUnclaimedReason1.setVisibility(View.GONE);
-                tilIsUnclaimedReason2.setVisibility(View.GONE);
-                tilIsUnclaimedReason3.setVisibility(View.GONE);
-                tilIsUnclaimedReason4.setVisibility(View.GONE);
-                tilIsUnclaimedReason5.setVisibility(View.GONE);
-                tilRequestReplacement.setVisibility(View.GONE);
-                tilIsRequestReplacement1.setVisibility(View.GONE);
-                tilIsRequestReplacement2.setVisibility(View.GONE);
-                tilIsRequestReplacement3.setVisibility(View.GONE);
-                tilIsRequestReplacement4.setVisibility(View.GONE);
-                tilIsRequestReplacement5.setVisibility(View.GONE);
-                tilOthersUnclaimedReason.setVisibility(View.GONE);
-                tilOtherUnclaimedReason1.setVisibility(View.GONE);
-                tilOtherUnclaimedReason2.setVisibility(View.GONE);
-                tilOtherUnclaimedReason3.setVisibility(View.GONE);
-                tilOtherUnclaimedReason4.setVisibility(View.GONE);
-                tilOtherUnclaimedReason5.setVisibility(View.GONE);
-                tilReasonNotPresented.setVisibility(View.GONE);
-
-                tilReasonNotPresented1.setVisibility(View.GONE);
-                tilReasonNotPresented2.setVisibility(View.GONE);
-                tilReasonNotPresented3.setVisibility(View.GONE);
-                tilReasonNotPresented4.setVisibility(View.GONE);
-                tilReasonNotPresented5.setVisibility(View.GONE);
-                tilPawnRemarks1.setVisibility(View.GONE);
-                tilPawnRemarks2.setVisibility(View.GONE);
-                tilPawnRemarks3.setVisibility(View.GONE);
-                tilPawnRemarks4.setVisibility(View.GONE);
-                tilPawnRemarks5.setVisibility(View.GONE);
-
-                tilCardReplacement.setVisibility(View.GONE);
-
-
-                dateReleased(edt_card_released);
-                dateReleased(edtCardReleased1);
-                dateReleased(edtCardReleased2);
-                dateReleased(edtCardReleased3);
-                dateReleased(edtCardReleased4);
-                dateReleased(edtCardReleased5);
-                whoReleased(edt_who_released);
-                whoReleased(edtWhoReleased1);
-                whoReleased(edtWhoReleased2);
-                whoReleased(edtWhoReleased3);
-                whoReleased(edtWhoReleased4);
-                whoReleased(edtWhoReleased5);
-                placeReleased(edt_place_released);
-                placeReleased(edtPlaceReleased1);
-                placeReleased(edtPlaceReleased2);
-                placeReleased(edtPlaceReleased3);
-                placeReleased(edtPlaceReleased4);
-                placeReleased(edtPlaceReleased5);
-                cardAvailable(spinIsAvail);
-                scannedCardNumber(edt_cashCardNumber);
-                cardSeries(edt_series_no);
-                idExists(spinIsID);
-
-                requestReplacement();
-                unclaimedReason();
-                pinAttatched();
-                availableReason();
-                representativeTwo();
-                otherReasonForUnclaimed();
-                reasonNotPresented();
-                lenderName();
-                replacementSubmitted();
+                ll_additional_id_layout = findViewById(R.id.ll_additional_id_layout);
 
                 //PAWNING
+                edt_lender_name = findViewById(R.id.edt_lender_name);
+                edt_date_pawned = findViewById(R.id.edt_date_pawned);
+                edt_loan_amount = findViewById(R.id.edt_loan_amount);
+                edt_lender_address = findViewById(R.id.edt_lender_address);
+                edt_date_retrieved = findViewById(R.id.edt_date_retrieved);
+                edt_interest = findViewById(R.id.edt_interest);
+                aat_status = findViewById(R.id.aat_status);
+                edt_reason = findViewById(R.id.edt_reason);
+                aat_offense_history =findViewById(R.id.aat_offense_history);
+                edt_offense_date = findViewById(R.id.edt_offense_date);
+                edt_remarks = findViewById(R.id.edt_remarks);
+                edt_staff_intervention = findViewById(R.id.edt_staff_intervention);
+                edt_other_details = findViewById(R.id.edt_other_details);
+                til_lender_name = findViewById(R.id.til_lender_name);
 
-                edt_lender_name = findViewById(R.id.edtLenderName);
-                edt_pawning_date = findViewById(R.id.edtPawningDate);
-                edt_loaned_amount = findViewById(R.id.edtLoanedAmount);
-                edt_lender_address = findViewById(R.id.edtLenderAddress);
-                edt_date_retrieved = findViewById(R.id.edtDateRetrieved);
-                edt_interest = findViewById(R.id.edtInterest);
-                spinStatus = findViewById(R.id.spinnerStatus);
-                edt_pawning_reason = findViewById(R.id.edtPawningReason);
-                spinOffenseHistory =findViewById(R.id.spinnerOffenseHistory);
-                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
-                edt_pd_remarks = findViewById(R.id.edtPdRemarks);
-                edt_intervention = findViewById(R.id.edtIntervention);
-                edt_other_details = findViewById(R.id.edtOtherDetails);
-//                edt_other_remarks_1 = findViewById(R.id.edtotherRemarks1);
-//                edt_other_remarks_2 = findViewById(R.id.edtotherRemarks2);
-//                edt_other_remarks_3 = findViewById(R.id.edtotherRemarks3);
+//                Other Details 1 - 5
+                otherCardAvailability1 = findViewById(R.id.otherCardAvailability1);
+                otherCardAvailability2 = findViewById(R.id.otherCardAvailability2);
+                otherCardAvailability3 = findViewById(R.id.otherCardAvailability3);
+                otherCardAvailability4 = findViewById(R.id.otherCardAvailability4);
+                otherCardAvailability5 = findViewById(R.id.otherCardAvailability5);
 
-                tilLenderName = findViewById(R.id.til_lendername);
+                btnCancelOtherCard1 = findViewById(R.id.btnCancelOtherCard1);
+                btnCancelOtherCard2 = findViewById(R.id.btnCancelOtherCard2);
+                btnCancelOtherCard3 = findViewById(R.id.btnCancelOtherCard3);
+                btnCancelOtherCard4 = findViewById(R.id.btnCancelOtherCard4);
+                btnCancelOtherCard5 = findViewById(R.id.btnCancelOtherCard5);
 
+                til_distribution_status1 = findViewById(R.id.til_distribution_status1);
+                til_distribution_status2 = findViewById(R.id.til_distribution_status2);
+                til_distribution_status3 = findViewById(R.id.til_distribution_status3);
+                til_distribution_status4 = findViewById(R.id.til_distribution_status4);
+                til_distribution_status5 = findViewById(R.id.til_distribution_status5);
+
+                aat_distribution_status1 = findViewById(R.id.aat_distribution_status1);
+                aat_distribution_status2 = findViewById(R.id.aat_distribution_status2);
+                aat_distribution_status3 = findViewById(R.id.aat_distribution_status3);
+                aat_distribution_status4 = findViewById(R.id.aat_distribution_status4);
+                aat_distribution_status5 = findViewById(R.id.aat_distribution_status5);
+
+                til_release_date1 = findViewById(R.id.til_release_date1);
+                til_release_date2 = findViewById(R.id.til_release_date2);
+                til_release_date3 = findViewById(R.id.til_release_date3);
+                til_release_date4 = findViewById(R.id.til_release_date4);
+                til_release_date5 = findViewById(R.id.til_release_date5);
+
+                edt_release_date1 = findViewById(R.id.edt_release_date1);
+                edt_release_date2 = findViewById(R.id.edt_release_date2);
+                edt_release_date3 = findViewById(R.id.edt_release_date3);
+                edt_release_date4 = findViewById(R.id.edt_release_date4);
+                edt_release_date5 = findViewById(R.id.edt_release_date5);
+
+                til_release_by1 = findViewById(R.id.til_release_by1);
+                til_release_by2 = findViewById(R.id.til_release_by2);
+                til_release_by3 = findViewById(R.id.til_release_by3);
+                til_release_by4 = findViewById(R.id.til_release_by4);
+                til_release_by5 = findViewById(R.id.til_release_by5);
+
+                edt_release_by1 = findViewById(R.id.edt_release_by1);
+                edt_release_by2 = findViewById(R.id.edt_release_by2);
+                edt_release_by3 = findViewById(R.id.edt_release_by3);
+                edt_release_by4 = findViewById(R.id.edt_release_by4);
+                edt_release_by5 = findViewById(R.id.edt_release_by5);
+
+                til_release_place1 = findViewById(R.id.til_release_place1);
+                til_release_place2 = findViewById(R.id.til_release_place2);
+                til_release_place3 = findViewById(R.id.til_release_place3);
+                til_release_place4 = findViewById(R.id.til_release_place4);
+                til_release_place5 = findViewById(R.id.til_release_place5);
+
+                edt_release_place1 = findViewById(R.id.edt_release_place1);
+                edt_release_place2 = findViewById(R.id.edt_release_place2);
+                edt_release_place3 = findViewById(R.id.edt_release_place3);
+                edt_release_place4 = findViewById(R.id.edt_release_place4);
+                edt_release_place5 = findViewById(R.id.edt_release_place5);
+
+                til_card_physically_presented1 = findViewById(R.id.til_card_physically_presented1);
+                til_card_physically_presented2 = findViewById(R.id.til_card_physically_presented2);
+                til_card_physically_presented3 = findViewById(R.id.til_card_physically_presented3);
+                til_card_physically_presented4 = findViewById(R.id.til_card_physically_presented4);
+                til_card_physically_presented5 = findViewById(R.id.til_card_physically_presented5);
+
+                aat_card_physically_presented1 = findViewById(R.id.aat_card_physically_presented1);
+                aat_card_physically_presented2 = findViewById(R.id.aat_card_physically_presented2);
+                aat_card_physically_presented3 = findViewById(R.id.aat_card_physically_presented3);
+                aat_card_physically_presented4 = findViewById(R.id.aat_card_physically_presented4);
+                aat_card_physically_presented5 = findViewById(R.id.aat_card_physically_presented5);
+
+                til_card_pin_is_attached1 = findViewById(R.id.til_card_pin_is_attached1);
+                til_card_pin_is_attached2 = findViewById(R.id.til_card_pin_is_attached2);
+                til_card_pin_is_attached3 = findViewById(R.id.til_card_pin_is_attached3);
+                til_card_pin_is_attached4 = findViewById(R.id.til_card_pin_is_attached4);
+                til_card_pin_is_attached5 = findViewById(R.id.til_card_pin_is_attached5);
+
+                aat_card_pin_is_attached1 = findViewById(R.id.aat_card_pin_is_attached1);
+                aat_card_pin_is_attached2 = findViewById(R.id.aat_card_pin_is_attached2);
+                aat_card_pin_is_attached3 = findViewById(R.id.aat_card_pin_is_attached3);
+                aat_card_pin_is_attached4 = findViewById(R.id.aat_card_pin_is_attached4);
+                aat_card_pin_is_attached5 = findViewById(R.id.aat_card_pin_is_attached5);
+
+                til_reason_not_presented1 = findViewById(R.id.til_reason_not_presented1);
+                til_reason_not_presented2 = findViewById(R.id.til_reason_not_presented2);
+                til_reason_not_presented3 = findViewById(R.id.til_reason_not_presented3);
+                til_reason_not_presented4 = findViewById(R.id.til_reason_not_presented4);
+                til_reason_not_presented5 = findViewById(R.id.til_reason_not_presented5);
+
+                aat_reason_not_presented1 = findViewById(R.id.aat_reason_not_presented1);
+                aat_reason_not_presented2 = findViewById(R.id.aat_reason_not_presented2);
+                aat_reason_not_presented3 = findViewById(R.id.aat_reason_not_presented3);
+                aat_reason_not_presented4 = findViewById(R.id.aat_reason_not_presented4);
+                aat_reason_not_presented5 = findViewById(R.id.aat_reason_not_presented5);
+
+                til_others_reason_not_presented1 = findViewById(R.id.til_others_reason_not_presented1);
+                til_others_reason_not_presented2 = findViewById(R.id.til_others_reason_not_presented2);
+                til_others_reason_not_presented3 = findViewById(R.id.til_others_reason_not_presented3);
+                til_others_reason_not_presented4 = findViewById(R.id.til_others_reason_not_presented4);
+                til_others_reason_not_presented5 = findViewById(R.id.til_others_reason_not_presented5);
+
+                edt_others_reason_not_presented1 = findViewById(R.id.edt_others_reason_not_presented1);
+                edt_others_reason_not_presented2 = findViewById(R.id.edt_others_reason_not_presented2);
+                edt_others_reason_not_presented3 = findViewById(R.id.edt_others_reason_not_presented3);
+                edt_others_reason_not_presented4 = findViewById(R.id.edt_others_reason_not_presented4);
+                edt_others_reason_not_presented5 = findViewById(R.id.edt_others_reason_not_presented5);
+
+                til_reason_unclaimed1 = findViewById(R.id.til_reason_unclaimed1);
+                til_reason_unclaimed2 = findViewById(R.id.til_reason_unclaimed2);
+                til_reason_unclaimed3 = findViewById(R.id.til_reason_unclaimed3);
+                til_reason_unclaimed4 = findViewById(R.id.til_reason_unclaimed4);
+                til_reason_unclaimed5 = findViewById(R.id.til_reason_unclaimed5);
+
+                aat_reason_unclaimed1 = findViewById(R.id.aat_reason_unclaimed1);
+                aat_reason_unclaimed2 = findViewById(R.id.aat_reason_unclaimed2);
+                aat_reason_unclaimed3 = findViewById(R.id.aat_reason_unclaimed3);
+                aat_reason_unclaimed4 = findViewById(R.id.aat_reason_unclaimed4);
+                aat_reason_unclaimed5 = findViewById(R.id.aat_reason_unclaimed5);
+
+                til_others_reason_unclaimed1 = findViewById(R.id.til_others_reason_unclaimed1);
+                til_others_reason_unclaimed2 = findViewById(R.id.til_others_reason_unclaimed2);
+                til_others_reason_unclaimed3 = findViewById(R.id.til_others_reason_unclaimed3);
+                til_others_reason_unclaimed4 = findViewById(R.id.til_others_reason_unclaimed4);
+                til_others_reason_unclaimed5 = findViewById(R.id.til_others_reason_unclaimed5);
+
+                edt_others_reason_unclaimed1 = findViewById(R.id.edt_others_reason_unclaimed1);
+                edt_others_reason_unclaimed2 = findViewById(R.id.edt_others_reason_unclaimed2);
+                edt_others_reason_unclaimed3 = findViewById(R.id.edt_others_reason_unclaimed3);
+                edt_others_reason_unclaimed4 = findViewById(R.id.edt_others_reason_unclaimed4);
+                edt_others_reason_unclaimed5 = findViewById(R.id.edt_others_reason_unclaimed5);
+
+                til_card_replacement_request1 = findViewById(R.id.til_card_replacement_request1);
+                til_card_replacement_request2 = findViewById(R.id.til_card_replacement_request2);
+                til_card_replacement_request3 = findViewById(R.id.til_card_replacement_request3);
+                til_card_replacement_request4 = findViewById(R.id.til_card_replacement_request4);
+                til_card_replacement_request5 = findViewById(R.id.til_card_replacement_request5);
+
+                aat_card_replacement_request1 = findViewById(R.id.aat_card_replacement_request1);
+                aat_card_replacement_request2 = findViewById(R.id.aat_card_replacement_request2);
+                aat_card_replacement_request3 = findViewById(R.id.aat_card_replacement_request3);
+                aat_card_replacement_request4 = findViewById(R.id.aat_card_replacement_request4);
+                aat_card_replacement_request5 = findViewById(R.id.aat_card_replacement_request5);
+
+                til_card_replacement_request_submitted_details1 = findViewById(R.id.til_card_replacement_request_submitted_details1);
+                til_card_replacement_request_submitted_details2 = findViewById(R.id.til_card_replacement_request_submitted_details2);
+                til_card_replacement_request_submitted_details3 = findViewById(R.id.til_card_replacement_request_submitted_details3);
+                til_card_replacement_request_submitted_details4 = findViewById(R.id.til_card_replacement_request_submitted_details4);
+                til_card_replacement_request_submitted_details5 = findViewById(R.id.til_card_replacement_request_submitted_details5);
+
+                edt_card_replacement_request_submitted_details1 = findViewById(R.id.edt_card_replacement_request_submitted_details1);
+                edt_card_replacement_request_submitted_details2 = findViewById(R.id.edt_card_replacement_request_submitted_details2);
+                edt_card_replacement_request_submitted_details3 = findViewById(R.id.edt_card_replacement_request_submitted_details3);
+                edt_card_replacement_request_submitted_details4 = findViewById(R.id.edt_card_replacement_request_submitted_details4);
+                edt_card_replacement_request_submitted_details5 = findViewById(R.id.edt_card_replacement_request_submitted_details5);
+
+                til_pawning_remarks1 = findViewById(R.id.til_pawning_remarks1);
+                til_pawning_remarks2 = findViewById(R.id.til_pawning_remarks2);
+                til_pawning_remarks3 = findViewById(R.id.til_pawning_remarks3);
+                til_pawning_remarks4 = findViewById(R.id.til_pawning_remarks4);
+                til_pawning_remarks5 = findViewById(R.id.til_pawning_remarks5);
+
+                edt_pawning_remarks1 = findViewById(R.id.edt_pawning_remarks1);
+                edt_pawning_remarks2 = findViewById(R.id.edt_pawning_remarks2);
+                edt_pawning_remarks3 = findViewById(R.id.edt_pawning_remarks3);
+                edt_pawning_remarks4 = findViewById(R.id.edt_pawning_remarks4);
+                edt_pawning_remarks5 = findViewById(R.id.edt_pawning_remarks5);
+
+                ivOtherScannedImage1 = findViewById(R.id.ivOtherScannedImage1);
+                ivOtherScannedImage2 = findViewById(R.id.ivOtherScannedImage2);
+                ivOtherScannedImage3 = findViewById(R.id.ivOtherScannedImage3);
+                ivOtherScannedImage4 = findViewById(R.id.ivOtherScannedImage4);
+                ivOtherScannedImage5 = findViewById(R.id.ivOtherScannedImage5);
+
+                ivOtherScannedImageUrl1 = findViewById(R.id.ivOtherScannedImageUrl1);
+                ivOtherScannedImageUrl2 = findViewById(R.id.ivOtherScannedImageUrl2);
+                ivOtherScannedImageUrl3 = findViewById(R.id.ivOtherScannedImageUrl3);
+                ivOtherScannedImageUrl4 = findViewById(R.id.ivOtherScannedImageUrl4);
+                ivOtherScannedImageUrl5 = findViewById(R.id.ivOtherScannedImageUrl5);
+
+                btnOtherScanned1 = findViewById(R.id.btnOtherScanned1);
+                btnOtherScanned2 = findViewById(R.id.btnOtherScanned2);
+                btnOtherScanned3 = findViewById(R.id.btnOtherScanned3);
+                btnOtherScanned4 = findViewById(R.id.btnOtherScanned4);
+                btnOtherScanned5 = findViewById(R.id.btnOtherScanned5);
+
+                til_card_number_inputted1 = findViewById(R.id.til_card_number_inputted1);
+                til_card_number_inputted2 = findViewById(R.id.til_card_number_inputted2);
+                til_card_number_inputted3 = findViewById(R.id.til_card_number_inputted3);
+                til_card_number_inputted4 = findViewById(R.id.til_card_number_inputted4);
+                til_card_number_inputted5 = findViewById(R.id.til_card_number_inputted5);
+
+                edt_card_number_inputted1 = findViewById(R.id.edt_card_number_inputted1);
+                edt_card_number_inputted2 = findViewById(R.id.edt_card_number_inputted2);
+                edt_card_number_inputted3 = findViewById(R.id.edt_card_number_inputted3);
+                edt_card_number_inputted4 = findViewById(R.id.edt_card_number_inputted4);
+                edt_card_number_inputted5 = findViewById(R.id.edt_card_number_inputted5);
+
+                til_card_number_series1 = findViewById(R.id.til_card_number_series1);
+                til_card_number_series2 = findViewById(R.id.til_card_number_series2);
+                til_card_number_series3 = findViewById(R.id.til_card_number_series3);
+                til_card_number_series4 = findViewById(R.id.til_card_number_series4);
+                til_card_number_series5 = findViewById(R.id.til_card_number_series5);
+
+                edt_card_number_series1 = findViewById(R.id.edt_card_number_series1);
+                edt_card_number_series2 = findViewById(R.id.edt_card_number_series2);
+                edt_card_number_series3 = findViewById(R.id.edt_card_number_series3);
+                edt_card_number_series4 = findViewById(R.id.edt_card_number_series4);
+                edt_card_number_series5 = findViewById(R.id.edt_card_number_series5);
+
+                til_release_date.setVisibility(View.GONE);
+                til_release_by.setVisibility(View.GONE);
+                til_release_place.setVisibility(View.GONE);
+                til_card_pin_is_attached.setVisibility(View.GONE);
+                til_reason_not_presented.setVisibility(View.GONE);
+                til_others_reason_not_presented.setVisibility(View.GONE);
+                til_reason_unclaimed.setVisibility(View.GONE);
+                til_others_reason_unclaimed.setVisibility(View.GONE);
+                til_card_replacement_request.setVisibility(View.GONE);
+                til_card_replacement_request_submitted_details.setVisibility(View.GONE);
+                mcvPawning.setVisibility(View.GONE);
+                til_representative_name.setVisibility(View.GONE);
+                ll_additional_id_layout.setVisibility(View.GONE);
+
+                til_release_date1.setVisibility(View.GONE);
+                til_release_date2.setVisibility(View.GONE);
+                til_release_date3.setVisibility(View.GONE);
+                til_release_date4.setVisibility(View.GONE);
+                til_release_date5.setVisibility(View.GONE);
+                til_release_by1.setVisibility(View.GONE);
+                til_release_by2.setVisibility(View.GONE);
+                til_release_by3.setVisibility(View.GONE);
+                til_release_by4.setVisibility(View.GONE);
+                til_release_by5.setVisibility(View.GONE);
+                til_release_place1.setVisibility(View.GONE);
+                til_release_place2.setVisibility(View.GONE);
+                til_release_place3.setVisibility(View.GONE);
+                til_release_place4.setVisibility(View.GONE);
+                til_release_place5.setVisibility(View.GONE);
+                til_card_pin_is_attached1.setVisibility(View.GONE);
+                til_card_pin_is_attached2.setVisibility(View.GONE);
+                til_card_pin_is_attached3.setVisibility(View.GONE);
+                til_card_pin_is_attached4.setVisibility(View.GONE);
+                til_card_pin_is_attached5.setVisibility(View.GONE);
+                til_reason_not_presented1.setVisibility(View.GONE);
+                til_reason_not_presented2.setVisibility(View.GONE);
+                til_reason_not_presented3.setVisibility(View.GONE);
+                til_reason_not_presented4.setVisibility(View.GONE);
+                til_reason_not_presented5.setVisibility(View.GONE);
+                til_others_reason_not_presented1.setVisibility(View.GONE);
+                til_others_reason_not_presented2.setVisibility(View.GONE);
+                til_others_reason_not_presented3.setVisibility(View.GONE);
+                til_others_reason_not_presented4.setVisibility(View.GONE);
+                til_others_reason_not_presented5.setVisibility(View.GONE);
+                til_reason_unclaimed1.setVisibility(View.GONE);
+                til_reason_unclaimed2.setVisibility(View.GONE);
+                til_reason_unclaimed3.setVisibility(View.GONE);
+                til_reason_unclaimed4.setVisibility(View.GONE);
+                til_reason_unclaimed5.setVisibility(View.GONE);
+                til_others_reason_unclaimed1.setVisibility(View.GONE);
+                til_others_reason_unclaimed2.setVisibility(View.GONE);
+                til_others_reason_unclaimed3.setVisibility(View.GONE);
+                til_others_reason_unclaimed4.setVisibility(View.GONE);
+                til_others_reason_unclaimed5.setVisibility(View.GONE);
+                til_card_replacement_request1.setVisibility(View.GONE);
+                til_card_replacement_request2.setVisibility(View.GONE);
+                til_card_replacement_request3.setVisibility(View.GONE);
+                til_card_replacement_request4.setVisibility(View.GONE);
+                til_card_replacement_request5.setVisibility(View.GONE);
+                til_card_replacement_request_submitted_details1.setVisibility(View.GONE);
+                til_card_replacement_request_submitted_details2.setVisibility(View.GONE);
+                til_card_replacement_request_submitted_details3.setVisibility(View.GONE);
+                til_card_replacement_request_submitted_details4.setVisibility(View.GONE);
+                til_card_replacement_request_submitted_details5.setVisibility(View.GONE);
+                til_pawning_remarks1.setVisibility(View.GONE);
+                til_pawning_remarks2.setVisibility(View.GONE);
+                til_pawning_remarks3.setVisibility(View.GONE);
+                til_pawning_remarks4.setVisibility(View.GONE);
+                til_pawning_remarks5.setVisibility(View.GONE);
 
                 ArrayAdapter<String> adapterStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Status);
                 ArrayAdapter<String> adapterOffenseHistory = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Offense);
-
-                adapterStatus.setDropDownViewResource(simple_spinner_dropdown_item);
-                adapterOffenseHistory.setDropDownViewResource(simple_spinner_dropdown_item);
-
-                spinStatus.setAdapter(adapterStatus);
-                spinOffenseHistory.setAdapter(adapterOffenseHistory);
-
-                edt_pawning_date.setFocusable(false);
-                edt_pawning_date.setClickable(true);
-                edt_date_retrieved.setFocusable(false);
-                edt_date_retrieved.setClickable(true);
-                edt_offense_history_date.setFocusable(false);
-                edt_offense_history_date.setClickable(true);
-
-                edt_pawning_date.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edt_pawning_date);
-                    }
-                });
-                edt_date_retrieved.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edt_date_retrieved);
-                    }
-                });
-                edt_offense_history_date.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edt_offense_history_date);
-                    }
-                });
-                // END OF PAWNING
-
                 ArrayAdapter<String> adapterIsAvail = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, CardRequired);
                 ArrayAdapter<String> adapterYesNoBlank = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Ans);
                 ArrayAdapter<String> adapterIsID = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, CardRequired);
@@ -1368,7 +1509,8 @@ public class ScanCashCard extends AppCompatActivity {
                 ArrayAdapter<String> adapterIsCashCardUnclaimed = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ReasonCashCardUnclaimed);
                 ArrayAdapter<String> adapterYesNo = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
 
-
+                adapterStatus.setDropDownViewResource(simple_spinner_dropdown_item);
+                adapterOffenseHistory.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterIsAvail.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterYesNoBlank.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterIsID.setDropDownViewResource(simple_spinner_dropdown_item);
@@ -1376,692 +1518,68 @@ public class ScanCashCard extends AppCompatActivity {
                 adapterIsCashCardUnclaimed.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterYesNo.setDropDownViewResource(simple_spinner_dropdown_item);
 
+                aat_card_physically_presented.setAdapter(adapterIsAvail);
+                aat_card_physically_presented1.setAdapter(adapterYesNoBlank);
+                aat_card_physically_presented2.setAdapter(adapterYesNoBlank);
+                aat_card_physically_presented3.setAdapter(adapterYesNoBlank);
+                aat_card_physically_presented4.setAdapter(adapterYesNoBlank);
+                aat_card_physically_presented5.setAdapter(adapterYesNoBlank);
+                aat_id_exists.setAdapter(adapterIsID);
+                aat_reason_not_presented.setAdapter(adapterYesNo);
+                aat_reason_not_presented1.setAdapter(adapterYesNo);
+                aat_reason_not_presented2.setAdapter(adapterYesNo);
+                aat_reason_not_presented3.setAdapter(adapterYesNo);
+                aat_reason_not_presented4.setAdapter(adapterYesNo);
+                aat_reason_not_presented5.setAdapter(adapterYesNo);
+                aat_distribution_status.setAdapter(adapterIsDistribution);
+                aat_distribution_status1.setAdapter(adapterIsDistribution);
+                aat_distribution_status2.setAdapter(adapterIsDistribution);
+                aat_distribution_status3.setAdapter(adapterIsDistribution);
+                aat_distribution_status4.setAdapter(adapterIsDistribution);
+                aat_distribution_status5.setAdapter(adapterIsDistribution);
+                aat_reason_unclaimed.setAdapter(adapterIsCashCardUnclaimed);
+                aat_reason_unclaimed1.setAdapter(adapterIsCashCardUnclaimed);
+                aat_reason_unclaimed2.setAdapter(adapterIsCashCardUnclaimed);
+                aat_reason_unclaimed3.setAdapter(adapterIsCashCardUnclaimed);
+                aat_reason_unclaimed4.setAdapter(adapterIsCashCardUnclaimed);
+                aat_reason_unclaimed5.setAdapter(adapterIsCashCardUnclaimed);
+                aat_card_replacement_request.setAdapter(adapterIsAvail);
+                aat_card_replacement_request1.setAdapter(adapterIsAvail);
+                aat_card_replacement_request2.setAdapter(adapterIsAvail);
+                aat_card_replacement_request3.setAdapter(adapterIsAvail);
+                aat_card_replacement_request4.setAdapter(adapterIsAvail);
+                aat_card_replacement_request5.setAdapter(adapterIsAvail);
+                aat_card_pin_is_attached.setAdapter(adapterIsAvail);
+                aat_card_pin_is_attached1.setAdapter(adapterIsAvail);
+                aat_card_pin_is_attached2.setAdapter(adapterIsAvail);
+                aat_card_pin_is_attached3.setAdapter(adapterIsAvail);
+                aat_card_pin_is_attached4.setAdapter(adapterIsAvail);
+                aat_card_pin_is_attached5.setAdapter(adapterIsAvail);
+                aat_status.setAdapter(adapterStatus);
+                aat_offense_history.setAdapter(adapterOffenseHistory);
 
-                spinIsAvail.setAdapter(adapterIsAvail);
-                spinIsAvail1.setAdapter(adapterYesNoBlank);
-                spinIsAvail2.setAdapter(adapterYesNoBlank);
-                spinIsAvail3.setAdapter(adapterYesNoBlank);
-                spinIsAvail4.setAdapter(adapterYesNoBlank);
-                spinIsAvail5.setAdapter(adapterYesNoBlank);
-                spinIsID.setAdapter(adapterIsID);
-                spinIsAvailReason.setAdapter(adapterYesNo);
-                spinIsAvailReason1.setAdapter(adapterYesNo);
-                spinIsAvailReason2.setAdapter(adapterYesNo);
-                spinIsAvailReason3.setAdapter(adapterYesNo);
-                spinIsAvailReason4.setAdapter(adapterYesNo);
-                spinIsAvailReason5.setAdapter(adapterYesNo);
-                spinIsDistribution_1.setAdapter(adapterIsDistribution);
-                spinDistribution1.setAdapter(adapterIsDistribution);
-                spinDistribution2.setAdapter(adapterIsDistribution);
-                spinDistribution3.setAdapter(adapterIsDistribution);
-                spinDistribution4.setAdapter(adapterIsDistribution);
-                spinDistribution5.setAdapter(adapterIsDistribution);
-                spinnerIsUnclaimedReason.setAdapter(adapterIsCashCardUnclaimed);
-                spinnerIsReasonReplacement.setAdapter(adapterIsAvail);
-                spinnerIsPinAttached.setAdapter(adapterIsAvail);
-                spinIsPinAttached1.setAdapter(adapterIsAvail);
-                spinIsPinAttached2.setAdapter(adapterIsAvail);
-                spinIsPinAttached3.setAdapter(adapterIsAvail);
-                spinIsPinAttached4.setAdapter(adapterIsAvail);
-                spinIsPinAttached5.setAdapter(adapterIsAvail);
-
-                edt_card_released.setFocusable(false);
-                edt_card_released.setClickable(true);
-                edtCardReleased1.setFocusable(false);
-                edtCardReleased1.setClickable(true);
-                edtCardReleased2.setFocusable(false);
-                edtCardReleased2.setClickable(true);
-                edtCardReleased3.setFocusable(false);
-                edtCardReleased3.setClickable(true);
-                edtCardReleased4.setFocusable(false);
-                edtCardReleased4.setClickable(true);
-                edtCardReleased5.setFocusable(false);
-                edtCardReleased5.setClickable(true);
-                edt_current_grantee_number.setEnabled(false);
-
-                getImage(0);
-
-                edt_card_released.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edt_card_released);
-                    }
-                });
-                edtCardReleased1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edtCardReleased1);
-                    }
-                });
-                edtCardReleased2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edtCardReleased2);
-                    }
-                });
-                edtCardReleased3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edtCardReleased3);
-                    }
-                });
-                edtCardReleased4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edtCardReleased4);
-                    }
-                });
-                edtCardReleased5.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDateDialog(edtCardReleased5);
-                    }
-                });
-                btn_cash_card.setOnClickListener( new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showImageImportDialog();
-                    }
-                });
-                btn_scanID.setOnClickListener( new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, 102);
-                    }
-                });
-
-                btn_grantee.setOnClickListener( new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, 103);
-                    }
-                });
-
-                spinIsDistribution_1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsDistribution_1.getText().toString().matches("Unclaimed")||spinIsDistribution_1.getText().toString().matches("")) {
-                            edt_card_released.setText("");
-                            edt_who_released.setText("");
-                            edt_place_released.setText("");
-                            tilCardReleased.setVisibility(View.GONE);
-                            tilWhoReleased.setVisibility(View.GONE);
-                            tilPlaceReleased.setVisibility(View.GONE);
-
-                        } else {
-                            tilCardReleased.setVisibility(View.VISIBLE);
-                            tilWhoReleased.setVisibility(View.VISIBLE);
-                            tilPlaceReleased.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                spinDistribution1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinDistribution1.getText().toString().matches("Unclaimed")||spinDistribution1.getText().toString().matches("")) {
-                            edtCardReleased1.setText("");
-                            edtWhoReleased1.setText("");
-                            edtPlaceReleased1.setText("");
-                            tilCardReleased1.setVisibility(View.GONE);
-                            tilWhoReleased1.setVisibility(View.GONE);
-                            tilPlaceReleased1.setVisibility(View.GONE);
-                        } else {
-                            tilCardReleased1.setVisibility(View.VISIBLE);
-                            tilWhoReleased1.setVisibility(View.VISIBLE);
-                            tilPlaceReleased1.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                spinDistribution2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinDistribution2.getText().toString().matches("Unclaimed")||spinDistribution2.getText().toString().matches("")) {
-                            edtCardReleased2.setText("");
-                            edtWhoReleased2.setText("");
-                            edtPlaceReleased2.setText("");
-                            tilCardReleased2.setVisibility(View.GONE);
-                            tilWhoReleased2.setVisibility(View.GONE);
-                            tilPlaceReleased2.setVisibility(View.GONE);
-                        } else {
-                            tilCardReleased2.setVisibility(View.VISIBLE);
-                            tilWhoReleased2.setVisibility(View.VISIBLE);
-                            tilPlaceReleased2.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                spinDistribution3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinDistribution3.getText().toString().matches("Unclaimed")||spinDistribution3.getText().toString().matches("")) {
-                            edtCardReleased3.setText("");
-                            edtWhoReleased3.setText("");
-                            edtPlaceReleased3.setText("");
-                            tilCardReleased3.setVisibility(View.GONE);
-                            tilWhoReleased3.setVisibility(View.GONE);
-                            tilPlaceReleased3.setVisibility(View.GONE);
-                        } else {
-                            tilCardReleased3.setVisibility(View.VISIBLE);
-                            tilWhoReleased3.setVisibility(View.VISIBLE);
-                            tilPlaceReleased3.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                spinDistribution4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinDistribution4.getText().toString().matches("Unclaimed")||spinDistribution4.getText().toString().matches("")) {
-                            edtCardReleased4.setText("");
-                            edtWhoReleased4.setText("");
-                            edtPlaceReleased4.setText("");
-                            tilCardReleased4.setVisibility(View.GONE);
-                            tilWhoReleased4.setVisibility(View.GONE);
-                            tilPlaceReleased4.setVisibility(View.GONE);
-                        } else {
-                            tilCardReleased4.setVisibility(View.VISIBLE);
-                            tilWhoReleased4.setVisibility(View.VISIBLE);
-                            tilPlaceReleased4.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                spinDistribution5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinDistribution5.getText().toString().matches("Unclaimed")||spinDistribution5.getText().toString().matches("")) {
-                            edtCardReleased5.setText("");
-                            edtWhoReleased5.setText("");
-                            edtPlaceReleased5.setText("");
-                            tilCardReleased5.setVisibility(View.GONE);
-                            tilWhoReleased5.setVisibility(View.GONE);
-                            tilPlaceReleased5.setVisibility(View.GONE);
-                        } else {
-                            tilCardReleased5.setVisibility(View.VISIBLE);
-                            tilWhoReleased5.setVisibility(View.VISIBLE);
-                            tilPlaceReleased5.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                spinIsID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsID.getText().toString().matches("No")||spinIsID.getText().toString().matches("")) {
-                            tiladditionalID.setVisibility(View.GONE);
-                            btn_scanID.setVisibility(View.GONE);
-                            tvAdditional.setVisibility(View.GONE);
-                            mAdditionalID.setVisibility(View.GONE);
-                        } else {
-
-                            tiladditionalID.setVisibility(View.VISIBLE);
-                            btn_scanID.setVisibility(View.VISIBLE);
-                            tvAdditional.setVisibility(View.VISIBLE);
-                            mAdditionalID.setVisibility(View.VISIBLE);
-
-                        }
-                    }
-                });
-
-                spinIsAvail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail.getText().toString().matches("Yes")) {
-                            spinIsAvailReason.setText("");
-                            tilAvailablereason.setVisibility(View.GONE);
-                            mcvPawning.setVisibility(View.GONE);
-                            tilPinAttached.setVisibility(View.VISIBLE);
-                            tilUnclaimedReason.setVisibility(View.GONE);
-                            tilRequestReplacement.setVisibility(View.GONE);
-                            tilCardReplacement.setVisibility(View.GONE);
-                            edtCardReplacement.setText("");
-
-                        } else {
-                            edtCardReplacement.setText("");
-                            spinnerIsPinAttached.setText("");
-                            spinIsAvailReason.setText("");
-                            tilPinAttached.setVisibility(View.GONE);
-                            tilAvailablereason.setVisibility(View.VISIBLE);
-                            tilCardReplacement.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
-                spinIsAvail1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinIsAvail1.getText().toString().matches("Yes")) {
-                            spinIsAvailReason1.setText("");
-                            tilIsPresentedReason1.setVisibility(View.GONE);
-                            tilPawnRemarks1.setVisibility(View.GONE);
-                            tilIsPinAttached1.setVisibility(View.VISIBLE);
-                            tilIsUnclaimedReason1.setVisibility(View.GONE);
-                            tilIsRequestReplacement1.setVisibility(View.GONE);
-
-                        } else {
-                            spinIsPinAttached1.setText("");
-                            spinIsAvailReason1.setText("");
-                            tilIsPinAttached1.setVisibility(View.GONE);
-                            tilIsPresentedReason1.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                spinnerIsUnclaimedReason.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        if (spinnerIsUnclaimedReason.getText().toString().matches("Others")){
-                            edtOthersUnclaimedReason.setText("");
-                            tilOthersUnclaimedReason.setVisibility(View.VISIBLE);
-                        }
-                        else {
-                            tilOthersUnclaimedReason.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
-                spinIsAvailReason.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        clearFields();
-                        if (spinIsAvailReason.getText().toString().matches("Pawned")) {
-                            mcvPawning.setVisibility(View.VISIBLE);
-                            tilUnclaimedReason.setVisibility(View.GONE);
-                            tilRequestReplacement.setVisibility(View.GONE);
-                            tilOthersUnclaimedReason.setVisibility(View.GONE);
-                            tilReasonNotPresented.setVisibility(View.GONE);
-                            tilCardReplacement.setVisibility(View.GONE);
-                        }
-                        else if (spinIsAvailReason.getText().toString().matches("Unclaimed")){
-                            tilUnclaimedReason.setVisibility(View.VISIBLE);
-                            mcvPawning.setVisibility(View.GONE);
-                            tilRequestReplacement.setVisibility(View.GONE);
-                            tilOthersUnclaimedReason.setVisibility(View.GONE);
-                            tilReasonNotPresented.setVisibility(View.GONE);
-                            tilCardReplacement.setVisibility(View.GONE);
-
-                        }
-                        else if (spinIsAvailReason.getText().toString().matches("Lost/Stolen") || spinIsAvailReason.getText().toString().matches("Damaged/Defective")){
-                            tilRequestReplacement.setVisibility(View.VISIBLE);
-                            tilUnclaimedReason.setVisibility(View.GONE);
-                            mcvPawning.setVisibility(View.GONE);
-                            tilOthersUnclaimedReason.setVisibility(View.GONE);
-                            tilReasonNotPresented.setVisibility(View.GONE);
-                            tilCardReplacement.setVisibility(View.GONE);
-                        }
-                        else if (spinIsAvailReason.getText().toString().matches("Others")){
-                            tilReasonNotPresented.setVisibility(View.VISIBLE);
-                            tilRequestReplacement.setVisibility(View.GONE);
-                            tilUnclaimedReason.setVisibility(View.GONE);
-                            mcvPawning.setVisibility(View.GONE);
-                            tilOthersUnclaimedReason.setVisibility(View.GONE);
-                            tilCardReplacement.setVisibility(View.GONE);
-                        }
-                        else {
-                            tilReasonNotPresented.setVisibility(View.GONE);
-                            tilOthersUnclaimedReason.setVisibility(View.GONE);
-                            mcvPawning.setVisibility(View.GONE);
-                            tilUnclaimedReason.setVisibility(View.GONE);
-                            tilRequestReplacement.setVisibility(View.GONE);
-                            tilCardReplacement.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
-                spinIsAvailReason1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        clearFields();
-                        if (spinIsAvailReason1.getText().toString().matches("Pawned")) {
-                            tilPawnRemarks1.setVisibility(View.VISIBLE);
-                            tilIsUnclaimedReason1.setVisibility(View.GONE);
-                            tilIsRequestReplacement1.setVisibility(View.GONE);
-                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
-                            tilReasonNotPresented1.setVisibility(View.GONE);
-                        }
-                        else if (spinIsAvailReason1.getText().toString().matches("Unclaimed")){
-                            tilIsUnclaimedReason1.setVisibility(View.VISIBLE);
-                            tilPawnRemarks1.setVisibility(View.GONE);
-                            tilIsRequestReplacement1.setVisibility(View.GONE);
-                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
-                            tilReasonNotPresented1.setVisibility(View.GONE);
-                        }
-                        else if (spinIsAvailReason1.getText().toString().matches("Lost/Stolen") || spinIsAvailReason1.getText().toString().matches("Damaged/Defective") ){
-                            tilIsRequestReplacement1.setVisibility(View.VISIBLE);
-                            tilIsUnclaimedReason1.setVisibility(View.GONE);
-                            tilPawnRemarks1.setVisibility(View.GONE);
-                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
-                            tilReasonNotPresented1.setVisibility(View.GONE);
-                        }
-                        else if (spinIsAvailReason1.getText().toString().matches("Others")){
-                            tilReasonNotPresented1.setVisibility(View.VISIBLE);
-                            tilIsRequestReplacement1.setVisibility(View.GONE);
-                            tilIsUnclaimedReason1.setVisibility(View.GONE);
-                            tilPawnRemarks1.setVisibility(View.GONE);
-                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
-                        }
-                        else {
-                            tilReasonNotPresented1.setVisibility(View.GONE);
-                            tilOtherUnclaimedReason1.setVisibility(View.GONE);
-                            tilPawnRemarks1.setVisibility(View.GONE);
-                            tilIsUnclaimedReason1.setVisibility(View.GONE);
-                            tilIsRequestReplacement1.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
-//                spinIsAvailReason1.setEnabled(false);
-//                spinIsAvail1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//                        if (spinIsAvail1.getText().toString().matches("Yes")||spinIsAvail1.getText().toString().matches("")) {
-//                            spinIsAvailReason1.setText(null);
-//                            spinIsAvailReason1.setDropDownHeight(0);
-//                            spinIsAvailReason1.setEnabled(false);
-////                            edt_other_remarks_1.setText("");
-////                            til_other_remarks_1.setVisibility(View.GONE);
-//                        } else {
-//                            spinIsAvailReason1.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-//                            spinIsAvailReason1.setEnabled(true);
-//                        }
-//                    }
-//                });
-//
-//                spinIsAvailReason2.setEnabled(false);
-//                spinIsAvail2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//                        if (spinIsAvail2.getText().toString().matches("Yes")||spinIsAvail2.getText().toString().matches("")) {
-//                            spinIsAvailReason2.setText(null);
-//                            spinIsAvailReason2.setDropDownHeight(0);
-//                            spinIsAvailReason2.setEnabled(false);
-////                            edt_other_remarks_2.setText("");
-////                            til_other_remarks_2.setVisibility(View.GONE);
-//                        } else {
-//                            spinIsAvailReason2.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-//                            spinIsAvailReason2.setEnabled(true);
-//                        }
-//                    }
-//                });
-//
-//                spinIsAvailReason3.setEnabled(false);
-//                spinIsAvail3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//                        if (spinIsAvail3.getText().toString().matches("Yes") ||spinIsAvail3.getText().toString().matches("") ) {
-//                            spinIsAvailReason3.setText(null);
-//                            spinIsAvailReason3.setDropDownHeight(0);
-//                            spinIsAvailReason3.setEnabled(false);
-////                            edt_other_remarks_3.setText("");
-////                            til_other_remarks_3.setVisibility(View.GONE);
-//                        } else {
-//                            spinIsAvailReason3.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-//                            spinIsAvailReason3.setEnabled(true);
-//                        }
-//                    }
-//                });
-//
-//                spinIsAvailReason1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//
-//                        if (spinIsAvailReason1.getText().toString().matches("Pawned")){
-////                            til_other_remarks_1.setVisibility(View.VISIBLE);
-//                        }
-////                        else{til_other_remarks_1.setVisibility(View.GONE);}
-//
-//                        if (spinIsAvail3.getText().toString().matches("Yes") ||spinIsAvail3.getText().toString().matches("") ) {
-//                            spinIsAvailReason3.setText(null);
-//                            spinIsAvailReason3.setDropDownHeight(0);
-//                            spinIsAvailReason3.setEnabled(false);
-//                        } else {
-//                            spinIsAvailReason3.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-//                            spinIsAvailReason3.setEnabled(true);
-//                        }
-//                    }
-//                });
-//
-//                spinIsAvailReason2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//
-//                        if (spinIsAvailReason2.getText().toString().matches("Pawned")){
-////                            til_other_remarks_2.setVisibility(View.VISIBLE);
-//                        }
-////                        else{til_other_remarks_2.setVisibility(View.GONE);}
-//                    }
-//                });
-//
-//                spinIsAvailReason3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//                        if (spinIsAvailReason3.getText().toString().matches("Pawned")){
-////                            til_other_remarks_3.setVisibility(View.VISIBLE);
-//                        }
-////                        else{til_other_remarks_3.setVisibility(View.GONE);}
-//                    }
-//                });
-
-                spinnerIsReasonReplacement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                        edtCardReplacement.setText("");
-                        if (spinnerIsReasonReplacement.getText().toString().matches("Yes")){
-                            tilCardReplacement.setVisibility(View.VISIBLE);
-                        }
-                        else{tilCardReplacement.setVisibility(View.GONE);}
-                    }
-                });
-
-
-//                spinnerGrantee.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//
-//                        if (spinnerGrantee.getText().toString().matches("No")){
-//                            spinnerGrantee.setFocusableInTouchMode(true);
-//                            spinnerGrantee.setFocusable(true);
-//                        }
-//                        else{
-//                            myEdit.putString("grantee_in", "");
-//                            spinnerGrantee.setFocusableInTouchMode(false);
-//                            spinnerGrantee.setFocusable(false);
-//                        }
-//                    }
-//                });
-
-                String distribution = sh.getString("distribution_status", "");
-                String card_released = sh.getString("card_released", "");
-                String who_released = sh.getString("who_released", "");
-                String place_released = sh.getString("place_released", "");
-                String temp_current_grantee_number = sh.getString("temp_current_grantee_number", "");
-                String is_available = sh.getString("is_available", "");
-                String is_available_reason = sh.getString("is_available_reason", "");
-                String other_card_number_1 = sh.getString("other_card_number_1", "");
-                String other_card_number_series_1 = sh.getString("other_card_number_series_1", "");
-                String other_is_available_1 = sh.getString("other_is_available_1", "");
-                String other_is_available_reason_1 = sh.getString("other_is_available_reason_1", "");
-                String other_card_number_2 = sh.getString("other_card_number_2", "");
-                String other_card_number_series_2 = sh.getString("other_card_number_series_2", "");
-                String other_is_available_2 = sh.getString("other_is_available_2", "");
-                String other_is_available_reason_2 = sh.getString("other_is_available_reason_2", "");
-                String other_card_number_3 = sh.getString("other_card_number_3", "");
-                String other_card_number_series_3 = sh.getString("other_card_number_series_3", "");
-                String other_is_available_3 = sh.getString("other_is_available_3", "");
-                String other_is_available_reason_3 = sh.getString("other_is_available_reason_3", "");
-                String additional = sh.getString("is_additional", "");
-                String scanned_cash_card = sh.getString("scanned_cash_card", "");
-                String series_number = sh.getString("series_number", "");
-                String representative = sh.getString("rpt_intro_two", "");
-                String pin_attached = sh.getString("pin_attached", "");
-                String reason_replacement = sh.getString("reason_replacement", "");
-                String unclaimed_reason = sh.getString("unclaimed_reason", "");
-                String reason_not_presented = sh.getString("reason_not_presented", "");
-                String other_unclaimed_reason = sh.getString("other_unclaimed_reason", "");
-                String card_replacement = sh.getString("card_replacement", "");
-
-                spinIsDistribution_1.setText(distribution,false);
-                edt_card_released.setText(card_released);
-                edt_who_released.setText(who_released);
-                edt_place_released.setText(place_released);
-                edt_current_grantee_number.setText(temp_current_grantee_number);
-                spinIsAvail.setText(is_available,false);
-                spinIsAvailReason.setText(is_available_reason,false);
-                edt_other_card_number_1.setText(other_card_number_1);
-                edt_other_card_number_series_1.setText(other_card_number_series_1);
-                spinIsAvail1.setText(other_is_available_1,false);
-                spinIsAvailReason1.setText(other_is_available_reason_1,false);
-                edt_other_card_number_2.setText(other_card_number_2);
-                edt_other_card_number_series_2.setText(other_card_number_series_2);
-                spinIsAvail2.setText(other_is_available_2,false);
-                spinIsAvailReason2.setText(other_is_available_reason_2,false);
-                edt_other_card_number_3.setText(other_card_number_3);
-                edt_other_card_number_series_3.setText(other_card_number_series_3);
-                spinIsAvail3.setText(other_is_available_3,false);
-                spinIsAvailReason3.setText(other_is_available_reason_3,false);
-                spinIsID.setText(additional,false);
-                edt_cashCardNumber.setText(scanned_cash_card);
-                edt_series_no.setText(series_number);
-                edtRepresentativeTwo.setText(representative);
-                spinnerIsPinAttached.setText(pin_attached,false);
-                spinnerIsReasonReplacement.setText(reason_replacement,false);
-                spinnerIsUnclaimedReason.setText(unclaimed_reason,false);
-                edtReasonNotPresented.setText(reason_not_presented);
-                edtOthersUnclaimedReason.setText(other_unclaimed_reason);
-                edtCardReplacement.setText(card_replacement);
-
-                String lender_name = sh.getString("lender_name","");
-                String pawning_date = sh.getString("pawning_date","");
-                String loaned_amount = sh.getString("loaned_amount","");
-                String lender_address = sh.getString("lender_address","");
-                String date_retrieved = sh.getString("date_retrieved","");
-                String interest = sh.getString("interest","");
-                String spin_status = sh.getString("spin_status","");
-                String pawning_reason = sh.getString("pawning_reason","");
-                String offense_history = sh.getString("offense_history","");
-                String offense_history_date = sh.getString("offense_history_date","");
-                String pd_remarks = sh.getString("pd_remarks","");
-                String intervention = sh.getString("intervention","");
-                String other_details = sh.getString("other_details","");
-
-                String other_remarks1 = sh.getString("other_remarks1","");
-                String other_remarks2 = sh.getString("other_remarks2","");
-                String other_remarks3 = sh.getString("other_remarks3","");
-
-                edt_lender_name.setText(lender_name);
-                edt_pawning_date.setText(pawning_date);
-                edt_loaned_amount.setText(loaned_amount);
-                edt_lender_address.setText(lender_address);
-                edt_date_retrieved.setText(date_retrieved);
-                edt_interest.setText(interest);
-                spinStatus.setText(spin_status,false);
-                edt_pawning_reason.setText(pawning_reason);
-                spinOffenseHistory.setText(offense_history,false);
-                edt_offense_history_date.setText(offense_history_date);
-                edt_pd_remarks.setText(pd_remarks);
-                edt_intervention.setText(intervention);
-                edt_other_details.setText(other_details);
-
-//                edt_other_remarks_1.setText(other_remarks1);
-//                edt_other_remarks_2.setText(other_remarks2);
-//                edt_other_remarks_3.setText(other_remarks3);
-
-
-                if (spinnerIsUnclaimedReason.getText().toString().matches("Others")) {
-                    tilOthersUnclaimedReason.setVisibility(View.VISIBLE);
-                }
-                else {
-                    tilOthersUnclaimedReason.setVisibility(View.GONE);
-                }
-
-                if (spinIsDistribution_1.getText().toString().matches("Claimed")) {
-                    tilCardReleased.setVisibility(View.VISIBLE);
-                    tilWhoReleased.setVisibility(View.VISIBLE);
-                    tilPlaceReleased.setVisibility(View.VISIBLE);
-                }
-                else {
-                    tilCardReleased.setVisibility(View.GONE);
-                    tilWhoReleased.setVisibility(View.GONE);
-                    tilPlaceReleased.setVisibility(View.GONE);
-                }
-
-                if (spinIsAvail.getText().toString().matches("No")) {
-                    tilPinAttached.setVisibility(View.GONE);
-                    tilAvailablereason.setVisibility(View.VISIBLE);
-                }
-                else if (spinIsAvail.getText().toString().matches("Yes")){
-                    tilPinAttached.setVisibility(View.VISIBLE);
-                    tilAvailablereason.setVisibility(View.GONE);
-                } else {
-                    tilPinAttached.setVisibility(View.GONE);
-                    tilAvailablereason.setVisibility(View.GONE);
-                }
-
-                if (spinIsID.getText().toString().matches("Yes")) {
-                    tiladditionalID.setVisibility(View.VISIBLE);
-                    btn_scanID.setVisibility(View.VISIBLE);
-                    tvAdditional.setVisibility(View.VISIBLE);
-                    mAdditionalID.setVisibility(View.VISIBLE);
-                }
-                if (spinIsAvailReason.getText().toString().matches("Pawned")){
-                    spinnerIsReasonReplacement.setText("");
-                    mcvPawning.setVisibility(View.VISIBLE);
-
-
-                }
-                else if (spinIsAvailReason.getText().toString().matches("Lost/Stolen") || spinIsAvailReason.getText().toString().matches("Damaged/Defective")){
-                    tilRequestReplacement.setVisibility(View.VISIBLE);
-                    tilUnclaimedReason.setVisibility(View.GONE);
-                    mcvPawning.setVisibility(View.GONE);
-                    tilReasonNotPresented.setVisibility(View.GONE);
-                }
-                else if (spinIsAvailReason.getText().toString().matches("Unclaimed")){
-                    tilReasonNotPresented.setVisibility(View.GONE);
-                    tilUnclaimedReason.setVisibility(View.VISIBLE);
-                    mcvPawning.setVisibility(View.GONE);
-                    tilRequestReplacement.setVisibility(View.GONE);
-                    spinnerIsReasonReplacement.setText("");
-                }
-                else if (spinIsAvailReason.getText().toString().matches("Others")){
-                    tilReasonNotPresented.setVisibility(View.VISIBLE);
-                    mcvPawning.setVisibility(View.GONE);
-                    tilRequestReplacement.setVisibility(View.GONE);
-                    tilUnclaimedReason.setVisibility(View.GONE);
-                }
-                else{mcvPawning.setVisibility(View.GONE);}
-
-                if (spinIsAvailReason1.getText().toString().matches("Pawned")){
-//                    til_other_remarks_1.setVisibility(View.VISIBLE);
-                }
-//                else{til_other_remarks_1.setVisibility(View.GONE);}
-
-                if (spinIsAvailReason2.getText().toString().matches("Pawned")){
-//                    til_other_remarks_2.setVisibility(View.VISIBLE);
-                }
-//                else{til_other_remarks_2.setVisibility(View.GONE);}
-
-                if (spinIsAvailReason3.getText().toString().matches("Pawned")){
-//                    til_other_remarks_3.setVisibility(View.VISIBLE);
-                }
-//                else{til_other_remarks_3.setVisibility(View.GONE);}
-
-
-                //Other Card Availability 1-5
+                edt_date_pawned.setFocusable(false);
+                edt_date_pawned.setClickable(true);
+                edt_date_retrieved.setFocusable(false);
+                edt_date_retrieved.setClickable(true);
+                edt_offense_date.setFocusable(false);
+                edt_offense_date.setClickable(true);
+                edt_release_date.setFocusable(false);
+                edt_release_date.setClickable(true);
+                edt_release_date1.setFocusable(false);
+                edt_release_date1.setClickable(true);
+                edt_release_date2.setFocusable(false);
+                edt_release_date2.setClickable(true);
+                edt_release_date3.setFocusable(false);
+                edt_release_date3.setClickable(true);
+                edt_release_date4.setFocusable(false);
+                edt_release_date4.setClickable(true);
+                edt_release_date5.setFocusable(false);
+                edt_release_date5.setClickable(true);
+//                edt_card_number_prefilled.setEnabled(false);
 
                 btnAddCard = findViewById(R.id.btnAddCard);
                 otherCardVisibility();
-
-                if (spinnerIsReasonReplacement.getText().toString().matches("Yes")){
-                    tilCardReplacement.setVisibility(View.VISIBLE);
-                }
-                else {
-                    tilCardReplacement.setVisibility(View.GONE);
-                }
-
 
                 btnAddCard.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2071,9 +1589,963 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
 
+                edt_release_date.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_release_date);
+                    }
+                });
+
+                edt_release_date1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_release_date1);
+                    }
+                });
+
+                edt_release_date2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_release_date2);
+                    }
+                });
+
+                edt_release_date3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_release_date3);
+                    }
+                });
+
+                edt_release_date4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_release_date4);
+                    }
+                });
+
+                edt_release_date5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_release_date5);
+                    }
+                });
+
+                edt_date_pawned.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDateDialog(edt_date_pawned);
+                    }
+                });
+
+                edt_date_retrieved.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showDateDialog(edt_date_retrieved);
+                    }
+                });
+
+                edt_offense_date.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showDateDialog(edt_offense_date);
+                    }
+                });
+
+                aat_id_exists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        ll_additional_id_layout.setVisibility(View.GONE);
+                        imgAdditionalId.setImageResource(R.drawable.ic_image);
+                        if (aat_id_exists.getText().toString().matches("Yes")) {
+                            ll_additional_id_layout.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_distribution_status.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (aat_distribution_status.getText().toString().matches("Unclaimed")||aat_distribution_status.getText().toString().matches("")) {
+                            edt_release_date.setText("");
+                            edt_release_by.setText("");
+                            edt_release_place.setText("");
+                            til_release_date.setVisibility(View.GONE);
+                            til_release_place.setVisibility(View.GONE);
+                            til_release_by.setVisibility(View.GONE);
+                        } else {
+                            til_release_date.setVisibility(View.VISIBLE);
+                            til_release_place.setVisibility(View.VISIBLE);
+                            til_release_by.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_distribution_status1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (aat_distribution_status1.getText().toString().matches("Unclaimed")||aat_distribution_status1.getText().toString().matches("")) {
+                            edt_release_date1.setText("");
+                            edt_release_by1.setText("");
+                            edt_release_place1.setText("");
+                            til_release_date1.setVisibility(View.GONE);
+                            til_release_place1.setVisibility(View.GONE);
+                            til_release_by1.setVisibility(View.GONE);
+                        } else {
+                            til_release_date1.setVisibility(View.VISIBLE);
+                            til_release_place1.setVisibility(View.VISIBLE);
+                            til_release_by1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_distribution_status2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (aat_distribution_status2.getText().toString().matches("Unclaimed")||aat_distribution_status2.getText().toString().matches("")) {
+                            edt_release_date2.setText("");
+                            edt_release_by2.setText("");
+                            edt_release_place2.setText("");
+                            til_release_date2.setVisibility(View.GONE);
+                            til_release_place2.setVisibility(View.GONE);
+                            til_release_by2.setVisibility(View.GONE);
+                        } else {
+                            til_release_date2.setVisibility(View.VISIBLE);
+                            til_release_place2.setVisibility(View.VISIBLE);
+                            til_release_by2.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_distribution_status3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (aat_distribution_status3.getText().toString().matches("Unclaimed")||aat_distribution_status3.getText().toString().matches("")) {
+                            edt_release_date3.setText("");
+                            edt_release_by3.setText("");
+                            edt_release_place3.setText("");
+                            til_release_date3.setVisibility(View.GONE);
+                            til_release_place3.setVisibility(View.GONE);
+                            til_release_by3.setVisibility(View.GONE);
+                        } else {
+                            til_release_date3.setVisibility(View.VISIBLE);
+                            til_release_place3.setVisibility(View.VISIBLE);
+                            til_release_by3.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_distribution_status4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (aat_distribution_status4.getText().toString().matches("Unclaimed")||aat_distribution_status4.getText().toString().matches("")) {
+                            edt_release_date4.setText("");
+                            edt_release_by4.setText("");
+                            edt_release_place4.setText("");
+                            til_release_date4.setVisibility(View.GONE);
+                            til_release_place4.setVisibility(View.GONE);
+                            til_release_by4.setVisibility(View.GONE);
+                        } else {
+                            til_release_date4.setVisibility(View.VISIBLE);
+                            til_release_place4.setVisibility(View.VISIBLE);
+                            til_release_by4.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_distribution_status5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        if (aat_distribution_status5.getText().toString().matches("Unclaimed")||aat_distribution_status5.getText().toString().matches("")) {
+                            edt_release_date5.setText("");
+                            edt_release_by5.setText("");
+                            edt_release_place5.setText("");
+                            til_release_date5.setVisibility(View.GONE);
+                            til_release_place5.setVisibility(View.GONE);
+                            til_release_by5.setVisibility(View.GONE);
+                        } else {
+                            til_release_date5.setVisibility(View.VISIBLE);
+                            til_release_place5.setVisibility(View.VISIBLE);
+                            til_release_by5.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_physically_presented.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_reason_not_presented.setVisibility(View.GONE);
+                        mcvPawning.setVisibility(View.GONE);
+                        til_reason_unclaimed.setVisibility(View.GONE);
+                        til_card_replacement_request.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details.setVisibility(View.GONE);
+                        til_card_pin_is_attached.setVisibility(View.GONE);
+
+                        aat_card_pin_is_attached.setText(null, false);
+                        aat_reason_not_presented.setText(null, false);
+                        edt_others_reason_not_presented.setText(null);
+                        aat_reason_unclaimed.setText(null, false);
+                        edt_others_reason_unclaimed.setText(null);
+                        edt_card_replacement_request_submitted_details.setText(null);
+
+                        edt_lender_name.setText(null);
+                        edt_date_pawned.setText(null);
+                        edt_loan_amount.setText(null);
+                        edt_lender_address.setText(null);
+                        edt_date_retrieved.setText(null);
+                        edt_interest.setText(null);
+                        aat_status.setText(null, false);
+                        edt_reason.setText(null);
+                        aat_offense_history.setText(null, false);
+                        edt_offense_date.setText(null);
+                        edt_remarks.setText(null);
+                        edt_staff_intervention.setText(null);
+                        edt_other_details.setText(null);
+
+                        if (aat_card_physically_presented.getText().toString().matches("Yes")) {
+                            til_card_pin_is_attached.setVisibility(View.VISIBLE);
+                        } else {
+                            til_reason_not_presented.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_physically_presented1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_pawning_remarks1.setVisibility(View.GONE);
+                        til_reason_unclaimed1.setVisibility(View.GONE);
+                        til_card_replacement_request1.setVisibility(View.GONE);
+                        til_reason_not_presented1.setVisibility(View.GONE);
+                        til_card_pin_is_attached1.setVisibility(View.GONE);
+
+                        aat_card_pin_is_attached1.setText(null, false);
+                        aat_reason_not_presented1.setText(null, false);
+                        edt_others_reason_not_presented1.setText(null);
+                        aat_reason_unclaimed1.setText(null, false);
+                        edt_others_reason_unclaimed1.setText(null);
+                        edt_card_replacement_request_submitted_details1.setText(null);
+                        edt_pawning_remarks1.setText(null);
+
+                        if (aat_card_physically_presented1.getText().toString().matches("Yes")) {
+                            til_card_pin_is_attached1.setVisibility(View.VISIBLE);
+                        } else {
+                            til_reason_not_presented1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_physically_presented2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_pawning_remarks2.setVisibility(View.GONE);
+                        til_reason_unclaimed2.setVisibility(View.GONE);
+                        til_card_replacement_request2.setVisibility(View.GONE);
+                        til_reason_not_presented2.setVisibility(View.GONE);
+                        til_card_pin_is_attached2.setVisibility(View.GONE);
+
+                        aat_card_pin_is_attached2.setText(null, false);
+                        aat_reason_not_presented2.setText(null, false);
+                        edt_others_reason_not_presented2.setText(null);
+                        aat_reason_unclaimed2.setText(null, false);
+                        edt_others_reason_unclaimed2.setText(null);
+                        edt_card_replacement_request_submitted_details2.setText(null);
+                        edt_pawning_remarks2.setText(null);
+                        if (aat_card_physically_presented2.getText().toString().matches("Yes")) {
+                            til_card_pin_is_attached2.setVisibility(View.VISIBLE);
+                        } else {
+                            til_reason_not_presented2.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_physically_presented3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_pawning_remarks3.setVisibility(View.GONE);
+                        til_reason_unclaimed3.setVisibility(View.GONE);
+                        til_card_replacement_request3.setVisibility(View.GONE);
+                        til_reason_not_presented3.setVisibility(View.GONE);
+                        til_card_pin_is_attached3.setVisibility(View.GONE);
+
+                        aat_card_pin_is_attached3.setText(null, false);
+                        aat_reason_not_presented3.setText(null, false);
+                        edt_others_reason_not_presented3.setText(null);
+                        aat_reason_unclaimed3.setText(null, false);
+                        edt_others_reason_unclaimed3.setText(null);
+                        edt_card_replacement_request_submitted_details3.setText(null);
+                        edt_pawning_remarks3.setText(null);
+                        if (aat_card_physically_presented3.getText().toString().matches("Yes")) {
+                            til_card_pin_is_attached3.setVisibility(View.VISIBLE);
+                        } else {
+                            til_reason_not_presented3.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_physically_presented4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_pawning_remarks4.setVisibility(View.GONE);
+                        til_reason_unclaimed4.setVisibility(View.GONE);
+                        til_card_replacement_request4.setVisibility(View.GONE);
+                        til_reason_not_presented4.setVisibility(View.GONE);
+                        til_card_pin_is_attached4.setVisibility(View.GONE);
+
+                        aat_card_pin_is_attached4.setText(null, false);
+                        aat_reason_not_presented4.setText(null, false);
+                        edt_others_reason_not_presented4.setText(null);
+                        aat_reason_unclaimed4.setText(null, false);
+                        edt_others_reason_unclaimed4.setText(null);
+                        edt_card_replacement_request_submitted_details4.setText(null);
+                        edt_pawning_remarks4.setText(null);
+                        if (aat_card_physically_presented4.getText().toString().matches("Yes")) {
+                            til_card_pin_is_attached4.setVisibility(View.VISIBLE);
+                        } else {
+                            til_reason_not_presented4.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_physically_presented5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_pawning_remarks5.setVisibility(View.GONE);
+                        til_reason_unclaimed5.setVisibility(View.GONE);
+                        til_card_replacement_request5.setVisibility(View.GONE);
+                        til_reason_not_presented5.setVisibility(View.GONE);
+                        til_card_pin_is_attached5.setVisibility(View.GONE);
+
+                        aat_card_pin_is_attached5.setText(null, false);
+                        aat_reason_not_presented5.setText(null, false);
+                        edt_others_reason_not_presented5.setText(null);
+                        aat_reason_unclaimed5.setText(null, false);
+                        edt_others_reason_unclaimed5.setText(null);
+                        edt_card_replacement_request_submitted_details5.setText(null);
+                        edt_pawning_remarks5.setText(null);
+                        if (aat_card_physically_presented5.getText().toString().matches("Yes")) {
+                            til_card_pin_is_attached5.setVisibility(View.VISIBLE);
+                        } else {
+                            til_reason_not_presented5.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_not_presented.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_reason_unclaimed.setVisibility(View.GONE);
+                        til_card_replacement_request.setVisibility(View.GONE);
+                        mcvPawning.setVisibility(View.GONE);
+                        til_others_reason_not_presented.setVisibility(View.GONE);
+                        til_others_reason_unclaimed.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details.setVisibility(View.GONE);
+
+                        edt_others_reason_not_presented.setText(null);
+                        aat_reason_unclaimed.setText(null, false);
+                        edt_others_reason_unclaimed.setText(null);
+                        edt_card_replacement_request_submitted_details.setText(null);
+
+                        edt_lender_name.setText(null);
+                        edt_date_pawned.setText(null);
+                        edt_loan_amount.setText(null);
+                        edt_lender_address.setText(null);
+                        edt_date_retrieved.setText(null);
+                        edt_interest.setText(null);
+                        aat_status.setText(null, false);
+                        edt_reason.setText(null);
+                        aat_offense_history.setText(null, false);
+                        edt_offense_date.setText(null);
+                        edt_remarks.setText(null);
+                        edt_staff_intervention.setText(null);
+                        edt_other_details.setText(null);
+                        if (aat_reason_not_presented.getText().toString().matches("Unclaimed")) {
+                            til_reason_unclaimed.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented.getText().toString().matches("Damaged/Defective")) {
+                            til_card_replacement_request.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented.getText().toString().matches("Pawned")) {
+                            mcvPawning.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented.getText().toString().matches("Others")) {
+                            til_others_reason_not_presented.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_not_presented1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_reason_unclaimed1.setVisibility(View.GONE);
+                        til_card_replacement_request1.setVisibility(View.GONE);
+                        til_pawning_remarks1.setVisibility(View.GONE);
+                        til_others_reason_not_presented1.setVisibility(View.GONE);
+                        til_others_reason_unclaimed1.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details1.setVisibility(View.GONE);
+
+                        edt_others_reason_not_presented1.setText(null);
+                        aat_reason_unclaimed1.setText(null, false);
+                        edt_others_reason_unclaimed1.setText(null);
+                        edt_card_replacement_request_submitted_details1.setText(null);
+                        edt_pawning_remarks1.setText(null);
+                        if (aat_reason_not_presented1.getText().toString().matches("Unclaimed")) {
+                            til_reason_unclaimed1.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented1.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented1.getText().toString().matches("Damaged/Defective")) {
+                            til_card_replacement_request1.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented1.getText().toString().matches("Pawned")) {
+                            til_pawning_remarks1.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented1.getText().toString().matches("Others")) {
+                            til_others_reason_not_presented1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_not_presented2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_reason_unclaimed2.setVisibility(View.GONE);
+                        til_card_replacement_request2.setVisibility(View.GONE);
+                        til_pawning_remarks2.setVisibility(View.GONE);
+                        til_others_reason_not_presented2.setVisibility(View.GONE);
+                        til_others_reason_unclaimed2.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details2.setVisibility(View.GONE);
+
+                        edt_others_reason_not_presented2.setText(null);
+                        aat_reason_unclaimed2.setText(null, false);
+                        edt_others_reason_unclaimed2.setText(null);
+                        edt_card_replacement_request_submitted_details2.setText(null);
+                        edt_pawning_remarks2.setText(null);
+                        if (aat_reason_not_presented2.getText().toString().matches("Unclaimed")) {
+                            til_reason_unclaimed2.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented2.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented2.getText().toString().matches("Damaged/Defective")) {
+                            til_card_replacement_request2.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented2.getText().toString().matches("Pawned")) {
+                            til_pawning_remarks2.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented2.getText().toString().matches("Others")) {
+                            til_others_reason_not_presented2.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_not_presented3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_reason_unclaimed3.setVisibility(View.GONE);
+                        til_card_replacement_request3.setVisibility(View.GONE);
+                        til_pawning_remarks3.setVisibility(View.GONE);
+                        til_others_reason_not_presented3.setVisibility(View.GONE);
+                        til_others_reason_unclaimed3.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details3.setVisibility(View.GONE);
+
+                        edt_others_reason_not_presented3.setText(null);
+                        aat_reason_unclaimed3.setText(null, false);
+                        edt_others_reason_unclaimed3.setText(null);
+                        edt_card_replacement_request_submitted_details3.setText(null);
+                        edt_pawning_remarks3.setText(null);
+                        if (aat_reason_not_presented3.getText().toString().matches("Unclaimed")) {
+                            til_reason_unclaimed3.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented3.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented3.getText().toString().matches("Damaged/Defective")) {
+                            til_card_replacement_request3.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented3.getText().toString().matches("Pawned")) {
+                            til_pawning_remarks3.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented3.getText().toString().matches("Others")) {
+                            til_others_reason_not_presented3.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_not_presented4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_reason_unclaimed4.setVisibility(View.GONE);
+                        til_card_replacement_request4.setVisibility(View.GONE);
+                        til_pawning_remarks4.setVisibility(View.GONE);
+                        til_others_reason_not_presented4.setVisibility(View.GONE);
+                        til_others_reason_unclaimed4.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details4.setVisibility(View.GONE);
+
+                        edt_others_reason_not_presented4.setText(null);
+                        aat_reason_unclaimed4.setText(null, false);
+                        edt_others_reason_unclaimed4.setText(null);
+                        edt_card_replacement_request_submitted_details4.setText(null);
+                        edt_pawning_remarks4.setText(null);
+                        if (aat_reason_not_presented4.getText().toString().matches("Unclaimed")) {
+                            til_reason_unclaimed4.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented4.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented4.getText().toString().matches("Damaged/Defective")) {
+                            til_card_replacement_request4.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented4.getText().toString().matches("Pawned")) {
+                            til_pawning_remarks4.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented4.getText().toString().matches("Others")) {
+                            til_others_reason_not_presented4.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_not_presented5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_reason_unclaimed5.setVisibility(View.GONE);
+                        til_card_replacement_request5.setVisibility(View.GONE);
+                        til_pawning_remarks5.setVisibility(View.GONE);
+                        til_others_reason_not_presented5.setVisibility(View.GONE);
+                        til_others_reason_unclaimed5.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details5.setVisibility(View.GONE);
+
+                        edt_others_reason_not_presented5.setText(null);
+                        aat_reason_unclaimed5.setText(null, false);
+                        edt_others_reason_unclaimed5.setText(null);
+                        edt_card_replacement_request_submitted_details5.setText(null);
+                        edt_pawning_remarks5.setText(null);
+                        if (aat_reason_not_presented5.getText().toString().matches("Unclaimed")) {
+                            til_reason_unclaimed5.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented5.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented5.getText().toString().matches("Damaged/Defective")) {
+                            til_card_replacement_request5.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented5.getText().toString().matches("Pawned")) {
+                            til_pawning_remarks5.setVisibility(View.VISIBLE);
+                        } else if (aat_reason_not_presented5.getText().toString().matches("Others")) {
+                            til_others_reason_not_presented5.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_unclaimed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_others_reason_unclaimed.setVisibility(View.GONE);
+                        edt_others_reason_unclaimed.setText(null);
+                        if (aat_reason_unclaimed.getText().toString().matches("Others")) {
+                            til_others_reason_unclaimed.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_unclaimed1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_others_reason_unclaimed1.setVisibility(View.GONE);
+                        edt_others_reason_unclaimed1.setText(null);
+                        if (aat_reason_unclaimed1.getText().toString().matches("Others")) {
+                            til_others_reason_unclaimed1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_unclaimed2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_others_reason_unclaimed2.setVisibility(View.GONE);
+                        edt_others_reason_unclaimed2.setText(null);
+                        if (aat_reason_unclaimed2.getText().toString().matches("Others")) {
+                            til_others_reason_unclaimed2.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_unclaimed3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_others_reason_unclaimed3.setVisibility(View.GONE);
+                        edt_others_reason_unclaimed3.setText(null);
+                        if (aat_reason_unclaimed3.getText().toString().matches("Others")) {
+                            til_others_reason_unclaimed3.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_unclaimed4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_others_reason_unclaimed4.setVisibility(View.GONE);
+                        edt_others_reason_unclaimed4.setText(null);
+                        if (aat_reason_unclaimed4.getText().toString().matches("Others")) {
+                            til_others_reason_unclaimed4.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_reason_unclaimed5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_others_reason_unclaimed5.setVisibility(View.GONE);
+                        edt_others_reason_unclaimed5.setText(null);
+                        if (aat_reason_unclaimed5.getText().toString().matches("Others")) {
+                            til_others_reason_unclaimed5.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_replacement_request.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_card_replacement_request_submitted_details.setVisibility(View.GONE);
+                        edt_card_replacement_request_submitted_details.setText(null);
+                        if (aat_card_replacement_request.getText().toString().matches("Yes")) {
+                            til_card_replacement_request_submitted_details.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_replacement_request1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_card_replacement_request_submitted_details1.setVisibility(View.GONE);
+                        edt_card_replacement_request_submitted_details1.setText(null);
+                        if (aat_card_replacement_request1.getText().toString().matches("Yes")) {
+                            til_card_replacement_request_submitted_details1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_replacement_request2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_card_replacement_request_submitted_details2.setVisibility(View.GONE);
+                        edt_card_replacement_request_submitted_details2.setText(null);
+                        if (aat_card_replacement_request2.getText().toString().matches("Yes")) {
+                            til_card_replacement_request_submitted_details2.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_replacement_request3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_card_replacement_request_submitted_details3.setVisibility(View.GONE);
+                        edt_card_replacement_request_submitted_details3.setText(null);
+                        if (aat_card_replacement_request3.getText().toString().matches("Yes")) {
+                            til_card_replacement_request_submitted_details3.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_replacement_request4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_card_replacement_request_submitted_details4.setVisibility(View.GONE);
+                        edt_card_replacement_request_submitted_details4.setText(null);
+                        if (aat_card_replacement_request4.getText().toString().matches("Yes")) {
+                            til_card_replacement_request_submitted_details4.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                aat_card_replacement_request5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        til_card_replacement_request_submitted_details5.setVisibility(View.GONE);
+                        edt_card_replacement_request_submitted_details5.setText(null);
+                        if (aat_card_replacement_request5.getText().toString().matches("Yes")) {
+                            til_card_replacement_request_submitted_details5.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                ScannedImage.setClipToOutline(true);
+                imgUri.setClipToOutline(true);
+                imgAdditionalId.setClipToOutline(true);
+                mGrantee.setClipToOutline(true);
+                ivOtherScannedImage1.setClipToOutline(true);
+                ivOtherScannedImageUrl1.setClipToOutline(true);
+                ivOtherScannedImage2.setClipToOutline(true);
+                ivOtherScannedImageUrl2.setClipToOutline(true);
+                ivOtherScannedImage3.setClipToOutline(true);
+                ivOtherScannedImageUrl3.setClipToOutline(true);
+                ivOtherScannedImage4.setClipToOutline(true);
+                ivOtherScannedImageUrl4.setClipToOutline(true);
+                ivOtherScannedImage5.setClipToOutline(true);
+                ivOtherScannedImageUrl5.setClipToOutline(true);
 
 
 
+//                dateReleased(edt_release_date);
+//                dateReleased(edt_release_date1);
+//                dateReleased(edt_release_date2);
+//                dateReleased(edt_release_date3);
+//                dateReleased(edt_release_date4);
+//                dateReleased(edt_release_date5);
+//
+//                whoReleased(edt_release_by);
+//                whoReleased(edt_release_by1);
+//                whoReleased(edt_release_by2);
+//                whoReleased(edt_release_by3);
+//                whoReleased(edt_release_by4);
+//                whoReleased(edt_release_by5);
+//
+//                placeReleased(edt_place_released);
+//                placeReleased(edt_release_place1);
+//                placeReleased(edt_release_place2);
+//                placeReleased(edt_release_place3);
+//                placeReleased(edt_release_place4);
+//                placeReleased(edt_release_place5);
+//
+//                cardAvailable(aat_card_physically_presented);
+//
+//                scannedCardNumber(edt_card_number_inputted);
+//
+//                cardSeries(edt_card_number_series);
+//
+//                idExists(spinIsID);
+//
+//                requestReplacement();
+//
+//                unclaimedReason();
+//
+//                pinAttatched();
+//
+//                availableReason();
+//
+//                representativeTwo();
+//
+//                otherReasonForUnclaimed();
+//
+//                reasonNotPresented();
+//
+//                lenderName();
+//
+//                replacementSubmitted();
+//
+
+//
+//
+//
+//
+
+//
+//                getImage(0);
+//
+
+//                btn_cash_card.setOnClickListener( new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        showImageImportDialog();
+//                    }
+//                });
+//                btn_scanID.setOnClickListener( new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        startActivityForResult(intent, 102);
+//                    }
+//                });
+//
+//                btn_grantee.setOnClickListener( new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        startActivityForResult(intent, 103);
+//                    }
+//                });
+//
+//
+//
+//                spinIsID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+//                        if (spinIsID.getText().toString().matches("No")||spinIsID.getText().toString().matches("")) {
+//                            tiladditionalID.setVisibility(View.GONE);
+//                            btn_scanID.setVisibility(View.GONE);
+//                            tvAdditional.setVisibility(View.GONE);
+//                            mAdditionalID.setVisibility(View.GONE);
+//                        } else {
+//
+//                            tiladditionalID.setVisibility(View.VISIBLE);
+//                            btn_scanID.setVisibility(View.VISIBLE);
+//                            tvAdditional.setVisibility(View.VISIBLE);
+//                            mAdditionalID.setVisibility(View.VISIBLE);
+//
+//                        }
+//                    }
+//                });
+//
+//
+//
+//
+//                String distribution = sh.getString("distribution_status", "");
+//                String card_released = sh.getString("card_released", "");
+//                String release_by = sh.getString("release_by", "");
+//                String place_released = sh.getString("place_released", "");
+//                String temp_current_grantee_number = sh.getString("temp_current_grantee_number", "");
+//                String is_available = sh.getString("is_available", "");
+//                String is_available_reason = sh.getString("is_available_reason", "");
+//                String other_card_number_1 = sh.getString("other_card_number_1", "");
+//                String other_card_number_series_1 = sh.getString("other_card_number_series_1", "");
+//                String other_is_available_1 = sh.getString("other_is_available_1", "");
+//                String other_is_available_reason_1 = sh.getString("other_is_available_reason_1", "");
+//                String other_card_number_2 = sh.getString("other_card_number_2", "");
+//                String other_card_number_series_2 = sh.getString("other_card_number_series_2", "");
+//                String other_is_available_2 = sh.getString("other_is_available_2", "");
+//                String other_is_available_reason_2 = sh.getString("other_is_available_reason_2", "");
+//                String other_card_number_3 = sh.getString("other_card_number_3", "");
+//                String other_card_number_series_3 = sh.getString("other_card_number_series_3", "");
+//                String other_is_available_3 = sh.getString("other_is_available_3", "");
+//                String other_is_available_reason_3 = sh.getString("other_is_available_reason_3", "");
+//                String additional = sh.getString("is_additional", "");
+//                String scanned_cash_card = sh.getString("scanned_cash_card", "");
+//                String series_number = sh.getString("series_number", "");
+//                String representative = sh.getString("rpt_intro_two", "");
+//                String pin_attached = sh.getString("pin_attached", "");
+//                String reason_replacement = sh.getString("reason_replacement", "");
+//                String unclaimed_reason = sh.getString("unclaimed_reason", "");
+//                String reason_not_presented = sh.getString("reason_not_presented", "");
+//                String other_unclaimed_reason = sh.getString("other_unclaimed_reason", "");
+//                String card_replacement = sh.getString("card_replacement", "");
+//
+//                aat_distribution_status.setText(distribution,false);
+//                edt_release_date.setText(card_released);
+//                edt_release_by.setText(release_by);
+//                edt_place_released.setText(place_released);
+//                edt_card_number_prefilled.setText(temp_current_grantee_number);
+//                aat_card_physically_presented.setText(is_available,false);
+//                aat_reason_not_presented.setText(is_available_reason,false);
+//                edt_other_card_number_1.setText(other_card_number_1);
+//                edt_other_card_number_series_1.setText(other_card_number_series_1);
+//                aat_card_physically_presented1.setText(other_is_available_1,false);
+//                aat_reason_not_presented1.setText(other_is_available_reason_1,false);
+//                edt_other_card_number_2.setText(other_card_number_2);
+//                edt_other_card_number_series_2.setText(other_card_number_series_2);
+//                aat_card_physically_presented2.setText(other_is_available_2,false);
+//                aat_reason_not_presented2.setText(other_is_available_reason_2,false);
+//                edt_other_card_number_3.setText(other_card_number_3);
+//                edt_other_card_number_series_3.setText(other_card_number_series_3);
+//                aat_card_physically_presented3.setText(other_is_available_3,false);
+//                aat_reason_not_presented3.setText(other_is_available_reason_3,false);
+//                spinIsID.setText(additional,false);
+//                edt_card_number_inputted.setText(scanned_cash_card);
+//                edt_card_number_series.setText(series_number);
+//                edt_representative_name.setText(representative);
+//                aat_card_pin_is_attached.setText(pin_attached,false);
+//                aat_card_replacement_request.setText(reason_replacement,false);
+//                aat_reason_unclaimed.setText(unclaimed_reason,false);
+//                edt_others_reason_not_presented.setText(reason_not_presented);
+//                edt_others_reason_unclaimed.setText(other_unclaimed_reason);
+//                edt_card_replacement_request_submitted_details.setText(card_replacement);
+//
+//                String lender_name = sh.getString("lender_name","");
+//                String pawning_date = sh.getString("pawning_date","");
+//                String loaned_amount = sh.getString("loaned_amount","");
+//                String lender_address = sh.getString("lender_address","");
+//                String date_retrieved = sh.getString("date_retrieved","");
+//                String interest = sh.getString("interest","");
+//                String spin_status = sh.getString("spin_status","");
+//                String pawning_reason = sh.getString("pawning_reason","");
+//                String offense_history = sh.getString("offense_history","");
+//                String offense_history_date = sh.getString("offense_history_date","");
+//                String pd_remarks = sh.getString("pd_remarks","");
+//                String intervention = sh.getString("intervention","");
+//                String other_details = sh.getString("other_details","");
+//
+//                String other_remarks1 = sh.getString("other_remarks1","");
+//                String other_remarks2 = sh.getString("other_remarks2","");
+//                String other_remarks3 = sh.getString("other_remarks3","");
+//
+//                edt_lender_name.setText(lender_name);
+//                edt_date_pawned.setText(pawning_date);
+//                edt_loan_amount.setText(loaned_amount);
+//                edt_lender_address.setText(lender_address);
+//                edt_date_retrieved.setText(date_retrieved);
+//                edt_interest.setText(interest);
+//                aat_status.setText(spin_status,false);
+//                edt_reason.setText(pawning_reason);
+//                aat_offense_history.setText(offense_history,false);
+//                edt_offense_date.setText(offense_history_date);
+//                edt_remarks.setText(pd_remarks);
+//                edt_staff_intervention.setText(intervention);
+//                edt_other_details.setText(other_details);
+//
+//                if (aat_reason_unclaimed.getText().toString().matches("Others")) {
+//                    til_others_reason_unclaimed.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    til_others_reason_unclaimed.setVisibility(View.GONE);
+//                }
+//
+//                if (aat_distribution_status.getText().toString().matches("Claimed")) {
+//                    til_release_date.setVisibility(View.VISIBLE);
+//                    til_release_place.setVisibility(View.VISIBLE);
+//                    til_release_place.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    til_release_date.setVisibility(View.GONE);
+//                    til_release_place.setVisibility(View.GONE);
+//                    til_release_place.setVisibility(View.GONE);
+//                }
+//
+//                if (aat_card_physically_presented.getText().toString().matches("No")) {
+//                    til_card_pin_is_attached.setVisibility(View.GONE);
+//                    til_reason_not_presented.setVisibility(View.VISIBLE);
+//                }
+//                else if (aat_card_physically_presented.getText().toString().matches("Yes")){
+//                    til_card_pin_is_attached.setVisibility(View.VISIBLE);
+//                    til_reason_not_presented.setVisibility(View.GONE);
+//                } else {
+//                    til_card_pin_is_attached.setVisibility(View.GONE);
+//                    til_reason_not_presented.setVisibility(View.GONE);
+//                }
+//
+//                if (spinIsID.getText().toString().matches("Yes")) {
+//                    tiladditionalID.setVisibility(View.VISIBLE);
+//                    btn_scanID.setVisibility(View.VISIBLE);
+//                    tvAdditional.setVisibility(View.VISIBLE);
+//                    mAdditionalID.setVisibility(View.VISIBLE);
+//                }
+//                if (aat_reason_not_presented.getText().toString().matches("Pawned")){
+//                    aat_card_replacement_request.setText("");
+//                    mcvPawning.setVisibility(View.VISIBLE);
+//
+//
+//                }
+//                else if (aat_reason_not_presented.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented.getText().toString().matches("Damaged/Defective")){
+//                    til_card_replacement_request.setVisibility(View.VISIBLE);
+//                    til_reason_unclaimed.setVisibility(View.GONE);
+//                    mcvPawning.setVisibility(View.GONE);
+//                    til_reason_not_presented.setVisibility(View.GONE);
+//                }
+//                else if (aat_reason_not_presented.getText().toString().matches("Unclaimed")){
+//                    til_reason_not_presented.setVisibility(View.GONE);
+//                    til_reason_unclaimed.setVisibility(View.VISIBLE);
+//                    mcvPawning.setVisibility(View.GONE);
+//                    til_card_replacement_request.setVisibility(View.GONE);
+//                    aat_card_replacement_request.setText("");
+//                }
+//                else if (aat_reason_not_presented.getText().toString().matches("Others")){
+//                    til_reason_not_presented.setVisibility(View.VISIBLE);
+//                    mcvPawning.setVisibility(View.GONE);
+//                    til_card_replacement_request.setVisibility(View.GONE);
+//                    til_reason_unclaimed.setVisibility(View.GONE);
+//                }
+//                else{mcvPawning.setVisibility(View.GONE);}
+//
+//                if (aat_reason_not_presented1.getText().toString().matches("Pawned")){
+////                    til_other_remarks_1.setVisibility(View.VISIBLE);
+//                }
+////                else{til_other_remarks_1.setVisibility(View.GONE);}
+//
+//                if (aat_reason_not_presented2.getText().toString().matches("Pawned")){
+////                    til_other_remarks_2.setVisibility(View.VISIBLE);
+//                }
+////                else{til_other_remarks_2.setVisibility(View.GONE);}
+//
+//                if (aat_reason_not_presented3.getText().toString().matches("Pawned")){
+////                    til_other_remarks_3.setVisibility(View.VISIBLE);
+//                }
+////                else{til_other_remarks_3.setVisibility(View.GONE);}
+//
+//
+//                //Other Card Availability 1-5
+//
+//                btnAddCard = findViewById(R.id.btnAddCard);
+//                otherCardVisibility();
+//
+//                if (aat_card_replacement_request.getText().toString().matches("Yes")){
+//                    til_card_replacement_request_submitted_details.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    til_card_replacement_request_submitted_details.setVisibility(View.GONE);
+//                }
+//
+//
+
+//
+//
+//
             } else if (position == 2) {
                 //intro_three.xml
                 tilDateWithdrawn = findViewById(R.id.til_datewithdrawn);
@@ -2151,29 +2623,21 @@ public class ScanCashCard extends AppCompatActivity {
                 }
 
 
-
-
-
-
-
-
-
-
             } else if (position == 3) {
                 //intro_four.xml
-//                edt_lender_name = findViewById(R.id.edtLenderName);
-//                edt_pawning_date = findViewById(R.id.edtPawningDate);
-//                edt_loaned_amount = findViewById(R.id.edtLoanedAmount);
-//                edt_lender_address = findViewById(R.id.edtLenderAddress);
-//                edt_date_retrieved = findViewById(R.id.edtDateRetrieved);
-//                edt_interest = findViewById(R.id.edtInterest);
-//                spinStatus = findViewById(R.id.spinnerStatus);
-//                edt_pawning_reason = findViewById(R.id.edtPawningReason);
-//                spinOffenseHistory =findViewById(R.id.spinnerOffenseHistory);
-//                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
-//                edt_pd_remarks = findViewById(R.id.edtPdRemarks);
-//                edt_intervention = findViewById(R.id.edtIntervention);
-//                edt_other_details = findViewById(R.id.edtOtherDetails);
+//                edt_lender_name = findViewById(R.id.edt_lender_name);
+//                edt_date_pawned = findViewById(R.id.edt_date_pawned);
+//                edt_loan_amount = findViewById(R.id.edt_loan_amount);
+//                edt_lender_address = findViewById(R.id.edt_lender_address);
+//                edt_date_retrieved = findViewById(R.id.edt_date_retrieved);
+//                edt_interest = findViewById(R.id.edt_interest);
+//                aat_status = findViewById(R.id.aat_status));
+//                edt_reason = findViewById(R.id.edt_reason);
+//                aat_offense_history =findViewById(R.id.aat_offense_history);
+//                edt_offense_date = findViewById(R.id.edt_offense_date);
+//                edt_remarks = findViewById(R.id.edt_remarks);
+//                edt_staff_intervention = findViewById(R.id.edt_staff_intervention);
+//                edt_other_details = findViewById(R.id.edt_other_details);
 //
 //                ArrayAdapter<String> adapterStatus = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Status);
 //                ArrayAdapter<String> adapterOffenseHistory = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Offense);
@@ -2181,20 +2645,20 @@ public class ScanCashCard extends AppCompatActivity {
 //                adapterStatus.setDropDownViewResource(simple_spinner_dropdown_item);
 //                adapterOffenseHistory.setDropDownViewResource(simple_spinner_dropdown_item);
 //
-//                spinStatus.setAdapter(adapterStatus);
-//                spinOffenseHistory.setAdapter(adapterOffenseHistory);
+//                aat_status.setAdapter(adapterStatus);
+//                aat_offense_history.setAdapter(adapterOffenseHistory);
 //
-//                edt_pawning_date.setFocusable(false);
-//                edt_pawning_date.setClickable(true);
+//                edt_date_pawned.setFocusable(false);
+//                edt_date_pawned.setClickable(true);
 //                edt_date_retrieved.setFocusable(false);
 //                edt_date_retrieved.setClickable(true);
-//                edt_offense_history_date.setFocusable(false);
-//                edt_offense_history_date.setClickable(true);
+//                edt_offense_date.setFocusable(false);
+//                edt_offense_date.setClickable(true);
 //
-//                edt_pawning_date.setOnClickListener(new View.OnClickListener() {
+//                edt_date_pawned.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        showDateDialog(edt_pawning_date);
+//                        showDateDialog(edt_date_pawned);
 //                    }
 //                });
 //                edt_date_retrieved.setOnClickListener(new View.OnClickListener() {
@@ -2203,10 +2667,10 @@ public class ScanCashCard extends AppCompatActivity {
 //                        showDateDialog(edt_date_retrieved);
 //                    }
 //                });
-//                edt_offense_history_date.setOnClickListener(new View.OnClickListener() {
+//                edt_offense_date.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        showDateDialog(edt_offense_history_date);
+//                        showDateDialog(edt_offense_date);
 //                    }
 //                });
 //
@@ -2225,17 +2689,17 @@ public class ScanCashCard extends AppCompatActivity {
 //                String other_details = sh.getString("other_details","");
 //
 //                edt_lender_name.setText(lender_name);
-//                edt_pawning_date.setText(pawning_date);
-//                edt_loaned_amount.setText(loaned_amount);
+//                edt_date_pawned.setText(pawning_date);
+//                edt_loan_amount.setText(loaned_amount);
 //                edt_lender_address.setText(lender_address);
 //                edt_date_retrieved.setText(date_retrieved);
 //                edt_interest.setText(interest);
-//                spinStatus.setText(spin_status,false);
-//                edt_pawning_reason.setText(pawning_reason);
-//                spinOffenseHistory.setText(offense_history,false);
-//                edt_offense_history_date.setText(offense_history_date);
-//                edt_pd_remarks.setText(pd_remarks);
-//                edt_intervention.setText(intervention);
+//                aat_status.setText(spin_status,false);
+//                edt_reason.setText(pawning_reason);
+//                aat_offense_history.setText(offense_history,false);
+//                edt_offense_date.setText(offense_history_date);
+//                edt_remarks.setText(pd_remarks);
+//                edt_staff_intervention.setText(intervention);
 //                edt_other_details.setText(other_details);
             }
 
@@ -2260,17 +2724,17 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     private void otherCardVisibility() {
-        otherCard1 = findViewById(R.id.otherCardAvailability1);
-        otherCard2 = findViewById(R.id.otherCardAvailability2);
-        otherCard3 = findViewById(R.id.otherCardAvailability3);
-        otherCard4 = findViewById(R.id.otherCardAvailability4);
-        otherCard5 = findViewById(R.id.otherCardAvailability5);
+        otherCardAvailability1 = findViewById(R.id.otherCardAvailability1);
+        otherCardAvailability2 = findViewById(R.id.otherCardAvailability2);
+        otherCardAvailability3 = findViewById(R.id.otherCardAvailability3);
+        otherCardAvailability4 = findViewById(R.id.otherCardAvailability4);
+        otherCardAvailability5 = findViewById(R.id.otherCardAvailability5);
 
-        otherCard1.setVisibility(View.GONE);
-        otherCard2.setVisibility(View.GONE);
-        otherCard3.setVisibility(View.GONE);
-        otherCard4.setVisibility(View.GONE);
-        otherCard5.setVisibility(View.GONE);
+        otherCardAvailability1.setVisibility(View.GONE);
+        otherCardAvailability2.setVisibility(View.GONE);
+        otherCardAvailability3.setVisibility(View.GONE);
+        otherCardAvailability4.setVisibility(View.GONE);
+        otherCardAvailability5.setVisibility(View.GONE);
 
         btnCancelOtherCard1 = findViewById(R.id.btnCancelOtherCard1);
         btnCancelOtherCard2 = findViewById(R.id.btnCancelOtherCard2);
@@ -2283,7 +2747,7 @@ public class ScanCashCard extends AppCompatActivity {
         for (int i = 1; i <= card_count; i++) {
             switch (i){
                 case 1:
-                    otherCard1.setVisibility(View.VISIBLE);
+                    otherCardAvailability1.setVisibility(View.VISIBLE);
                     btnCancelOtherCard1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -2293,7 +2757,7 @@ public class ScanCashCard extends AppCompatActivity {
                     });
                     break;
                 case 2:
-                    otherCard2.setVisibility(View.VISIBLE);
+                    otherCardAvailability2.setVisibility(View.VISIBLE);
                     btnCancelOtherCard2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -2303,7 +2767,7 @@ public class ScanCashCard extends AppCompatActivity {
                     });
                     break;
                 case 3:
-                    otherCard3.setVisibility(View.VISIBLE);
+                    otherCardAvailability3.setVisibility(View.VISIBLE);
                     btnCancelOtherCard3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -2313,7 +2777,7 @@ public class ScanCashCard extends AppCompatActivity {
                     });
                     break;
                 case 4:
-                    otherCard4.setVisibility(View.VISIBLE);
+                    otherCardAvailability4.setVisibility(View.VISIBLE);
                     btnCancelOtherCard4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -2323,7 +2787,7 @@ public class ScanCashCard extends AppCompatActivity {
                     });
                     break;
                 case 5:
-                    otherCard5.setVisibility(View.VISIBLE);
+                    otherCardAvailability5.setVisibility(View.VISIBLE);
                     btnAddCard.setVisibility(View.GONE);
                     btnCancelOtherCard5.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -2543,431 +3007,1588 @@ public class ScanCashCard extends AppCompatActivity {
         pressNext =true;
         isValidationError = 0;
         required_field = "This field is required!";
+        required_length = "This field value must have 10 digits!";
 
         int current = getItem(1);
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
 
-        edt_lender_name = findViewById(R.id.edtLenderName);
+//        edt_lender_name = findViewById(R.id.edt_lender_name);
 
         if (current == 1) {
 
             pressNext =false;
-            Log.v(ContentValues.TAG,"DAPAT DRIA");
 
-            edt_hh = findViewById(R.id.edtHhId);
-            edt_fullname = findViewById(R.id.edtFullname);
-            spinClientStatus = findViewById(R.id.spinnerClientStatus);
-            edt_address = findViewById(R.id.edtAddress);
-            spinSex = findViewById(R.id.spinnerSex);
-            edt_set = findViewById(R.id.edtSet);
-            edt_assigned = findViewById(R.id.edtAssigned);
-            spinAnswer = findViewById(R.id.spinnerMinorGrantee);
-            edt_contact_no = findViewById(R.id.edtContactNo);
-            edtRepresentativeOne = findViewById(R.id.edtRepresentativeOne);
-            edt_assigned = findViewById(R.id.edtAssigned);
-            spinnerContactNoOf = findViewById(R.id.spinnerContactNoOf);
-            edtRepresentativeTwo= findViewById(R.id.edtRepresentativeTwo);
+            til_hh_id = findViewById(R.id.til_hh_id);
+            til_set = findViewById(R.id.til_set);
+            til_last_name = findViewById(R.id.til_last_name);
+            til_first_name = findViewById(R.id.til_first_name);
+            til_middle_name = findViewById(R.id.til_middle_name);
+            til_ext_name = findViewById(R.id.til_ext_name);
+            til_other_ext_name = findViewById(R.id.til_other_ext_name);
+            til_hh_status = findViewById(R.id.til_hh_status);
+            til_province_code = findViewById(R.id.til_province_code);
+            til_municipality_code = findViewById(R.id.til_municipality_code);
+            til_barangay_code = findViewById(R.id.til_barangay_code);
+            til_sex = findViewById(R.id.til_sex);
+            til_is_grantee = findViewById(R.id.til_is_grantee);
+            til_relationship_to_grantee = findViewById(R.id.til_relationship_to_grantee);
+            til_contact_no = findViewById(R.id.til_contact_no);
+            til_contact_no_of = findViewById(R.id.til_contact_no_of);
+            til_contact_no_of_others = findViewById(R.id.til_contact_no_of_others);
+            til_is_minor = findViewById(R.id.til_is_minor);
+            til_assigned_staff = findViewById(R.id.til_assigned_staff);
 
+            edt_hh_id = findViewById(R.id.edt_hh_id);
+            aat_set = findViewById(R.id.aat_set);
+            edt_last_name = findViewById(R.id.edt_last_name);
+            edt_first_name = findViewById(R.id.edt_first_name);
+            edt_middle_name = findViewById(R.id.edt_middle_name);
+            aat_ext_name = findViewById(R.id.aat_ext_name);
+            edt_other_ext_name = findViewById(R.id.edt_other_ext_name);
+            aat_hh_status = findViewById(R.id.aat_hh_status);
+            aat_province_code = findViewById(R.id.aat_province_code);
+            aat_municipality_code = findViewById(R.id.aat_municipality_code);
+            aat_barangay_code = findViewById(R.id.aat_barangay_code);
+            aat_sex = findViewById(R.id.aat_sex);
+            aat_is_grantee = findViewById(R.id.aat_is_grantee);
+            aat_relationship_to_grantee = findViewById(R.id.aat_relationship_to_grantee);
+            edt_contact_no = findViewById(R.id.edt_contact_no);
+            aat_contact_no_of = findViewById(R.id.aat_contact_no_of);
+            edt_contact_no_of_others = findViewById(R.id.edt_contact_no_of_others);
+            aat_is_minor = findViewById(R.id.aat_is_minor);
+            edt_assigned_staff = findViewById(R.id.edt_assigned_staff);
 
-            String household = edt_hh.getText().toString();
-            String full_name = edt_fullname.getText().toString();
-            String client_status = spinClientStatus.getText().toString();
-            String address = edt_address.getText().toString();
-            String sex = spinSex.getText().toString();
-            String hh_set = edt_set.getText().toString();
+            String hh_id = edt_hh_id.getText().toString();
+            String hh_set = aat_set.getText().toString();
+            String last_name = edt_last_name.getText().toString();
+            String first_name = edt_first_name.getText().toString();
+            String middle_name = edt_middle_name.getText().toString();
+            String ext_name = aat_ext_name.getText().toString();
+            String other_ext_name = edt_other_ext_name.getText().toString();
+            String hh_status = aat_hh_status.getText().toString();
+            String province = aat_province_code.getText().toString();
+            String municipality = aat_municipality_code.getText().toString();
+            String barangay = aat_barangay_code.getText().toString();
+            String sex = aat_sex.getText().toString();
+            String is_grantee = aat_is_grantee.getText().toString();
+            String relationship_to_grantee = aat_relationship_to_grantee.getText().toString();
             String contact_no = edt_contact_no.getText().toString();
-            String contact_no_of = spinnerContactNoOf.getText().toString();
-            String representative = edtRepresentativeOne.getText().toString();
-            String grantee = spinnerGrantee.getText().toString();
+            String contact_no_of = aat_contact_no_of.getText().toString();
+            String contact_no_of_others = edt_contact_no_of_others.getText().toString();
+            String assigned_staff = edt_assigned_staff.getText().toString();
+            String is_minor = aat_is_minor.getText().toString();
 
-
-            tilHhId = findViewById(R.id.til_hhid);
-            tilFullname = findViewById(R.id.til_fullname);
-            tilClientStatus = findViewById(R.id.til_clientstatus);
-            tilAddress = findViewById(R.id.til_address);
-            tilSex = findViewById(R.id.til_sex);
-            tilSet = findViewById(R.id.til_set);
-            tilContactNo = findViewById(R.id.til_contact_no);
-            tilContactNoOf = findViewById(R.id.til_contact_no_of);
-            tilRepresentativeIntroOne = findViewById(R.id.til_representative_one);
-            tilRepresentativeIntroTwo = findViewById(R.id.til_representative);
-            tilGranteeOne = findViewById(R.id.til_grantee);
-
-
-            if (household.matches("")){
-                tilHhId.setError(required_field);
+            if (hh_id.matches("")){
+                til_hh_id.setError(required_field);
                 isValidationError++;
             } else {
-                tilHhId.setError(null);
-            }
-
-
-            if (contact_no_of.matches("")){
-                tilContactNoOf.setError(required_field);
-                isValidationError++;
-            } else {
-                tilContactNoOf.setError(null);
-            }
-
-            if (contact_no_of.matches("Grantee")){tilRepresentativeIntroOne.setError(null);}
-            else{
-                if (representative.matches("")){
-                    tilRepresentativeIntroOne.setError(required_field);
-                    isValidationError++;
-                } else {
-                    tilRepresentativeIntroOne.setError(null);
-                }
-            }
-
-            if (full_name.matches("")){
-                tilFullname.setError(required_field);
-                isValidationError++;
-            } else {
-                tilFullname.setError(null);
-            }
-
-            if (client_status.matches("")){
-                tilClientStatus.setError(required_field);
-                isValidationError++;
-            } else {
-                tilClientStatus.setError(null);
-            }
-
-            if (address.matches("")){
-                tilAddress.setError(required_field);
-                isValidationError++;
-            } else {
-                tilAddress.setError(null);
-            }
-
-            if (sex.matches("")){
-                tilSex.setError(required_field);
-                isValidationError++;
-            } else {
-                tilSex.setError(null);
+                til_hh_id.setError(null);
             }
 
             if (hh_set.matches("")){
-                tilSet.setError(required_field);
+                til_set.setError(required_field);
                 isValidationError++;
             } else {
-                tilSet.setError(null);
+                til_set.setError(null);
             }
 
-            if (contact_no.matches("")){
-                tilContactNo.setError(required_field);
-                isValidationError++;
-            }
-            else if (contact_no.length()!=10){
-                tilContactNo.setError(required_field);
-                isValidationError++;
-            }
-            else {
-                tilContactNo.setError(null);
-            }
-
-            if (grantee.length()==0){
-                tilGranteeOne.setError(required_field);
+            if (last_name.matches("")){
+                til_last_name.setError(required_field);
                 isValidationError++;
             } else {
-                tilGranteeOne.setError(null);
+                til_last_name.setError(null);
             }
 
+            if (first_name.matches("")){
+                til_first_name.setError(required_field);
+                isValidationError++;
+            } else {
+                til_first_name.setError(null);
+            }
 
-            if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
+            if (ext_name.matches("Others")) {
+                if (other_ext_name.matches("")) {
+                    til_other_ext_name.setError(required_field);
+                    isValidationError++;
+                } else {
+                    til_other_ext_name.setError(null);
+                }
+            }
+
+            if (hh_status.matches("")){
+                til_hh_status.setError(required_field);
+                isValidationError++;
+            } else {
+                til_hh_status.setError(null);
+            }
+
+//            if (province.matches("")){
+//                til_province_code.setError(required_field);
+//                isValidationError++;
+//            } else {
+//                til_province_code.setError(null);
+//            }
+//
+//            if (municipality.matches("")){
+//                til_municipality_code.setError(required_field);
+//                isValidationError++;
+//            } else {
+//                til_municipality_code.setError(null);
+//            }
+//
+//            if (barangay.matches("")){
+//                til_barangay_code.setError(required_field);
+//                isValidationError++;
+//            } else {
+//                til_barangay_code.setError(null);
+//            }
+
+            if (sex.matches("")){
+                til_sex.setError(required_field);
+                isValidationError++;
+            } else {
+                til_sex.setError(null);
+            }
+
+            if (is_grantee.matches("")){
+                til_is_grantee.setError(required_field);
+                isValidationError++;
+            } else {
+                til_is_grantee.setError(null);
+
+                if (is_grantee.matches("Yes")) {
+                    if (relationship_to_grantee.matches("")){
+                        til_relationship_to_grantee.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_relationship_to_grantee.setError(null);
+                    }
+                }
+            }
+
+            if (contact_no.matches("") || contact_no.length() != 10){
+                String new_required_field = contact_no.matches("") ? required_field : required_length;
+                til_contact_no.setError(new_required_field);
+                isValidationError++;
+            } else {
+                til_contact_no.setError(null);
+
+                if (contact_no.length() == 10) {
+                    if (contact_no_of.matches("")) {
+                        til_contact_no_of.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_contact_no_of.setError(null);
+
+                        if (contact_no_of.matches("Others")) {
+                            if (contact_no_of_others.matches("")) {
+                                til_contact_no_of_others.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_contact_no_of_others.setError(null);
+                            }
+                        }
+                    }
+                }
+            }
 
             store_preferences(1);
-            String grantee_in = sh.getString("grantee_in", "");
-            if (grantee_in.matches("No")){tilRepresentativeIntroTwo.setVisibility(View.VISIBLE);}
-            else {
-                edtRepresentativeTwo.setText("");
-                tilRepresentativeIntroTwo.setVisibility(View.GONE); }
 
         } else if (current == 2) {
             pressNext =false;
-            spinIsDistribution_1 = findViewById(R.id.spinnerDistribution);
-            edt_card_released = findViewById(R.id.edtCardReleased);
-            edt_who_released = findViewById(R.id.edtWhoReleased);
-            edt_place_released = findViewById(R.id.edtPlaceReleased);
-            edt_current_grantee_number = findViewById(R.id.edtCurrentGranteeNumber);
-            spinnerIsPinAttached = findViewById(R.id.spinnerIsPinAttached);
-            edtOthersUnclaimedReason= findViewById(R.id.edtOthersUnclaimedReason);
+//            aat_distribution_status = findViewById(R.id.aat_distribution_status);
+//            edt_release_date = findViewById(R.id.edt_release_date);
+//            edt_release_by = findViewById(R.id.edt_release_by);
+//            edt_place_released = findViewById(R.id.edt_release_place);
+//            edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
+//            aat_card_pin_is_attached = findViewById(R.id.aat_card_pin_is_attached);
+//            edt_others_reason_unclaimed= findViewById(R.id.edt_others_reason_unclaimed);
+//
+//            aat_card_physically_presented = findViewById(R.id.aat_card_physically_presented);
+//            aat_reason_not_presented = findViewById(R.id.aat_reason_not_presented);
+//            edt_other_card_number_1 = findViewById(R.id.edt_card_number_inputted1);
+//            aat_card_physically_presented1 = findViewById(R.id.aat_card_physically_presented1);
+//            aat_card_physically_presented2 = findViewById(R.id.aat_card_physically_presented2);
+//            aat_card_physically_presented3 = findViewById(R.id.aat_card_physically_presented3);
+//            aat_card_physically_presented3 = findViewById(R.id.aat_card_physically_presented4);
+//            aat_card_physically_presented3 = findViewById(R.id.aat_card_physically_presented5);
+//
+//            aat_reason_not_presented1 = findViewById(R.id.aat_reason_not_presented1);
+//            aat_reason_not_presented2 = findViewById(R.id.aat_reason_not_presented2);
+//            aat_reason_not_presented3 = findViewById(R.id.aat_reason_not_presented3);
+//            aat_reason_not_presented4 = findViewById(R.id.aat_reason_not_presented4);
+//            aat_reason_not_presented5 = findViewById(R.id.aat_reason_not_presented5);
+//
+//            edt_other_card_number_2 = findViewById(R.id.edt_card_number_inputted2);
+//            edt_other_card_number_3 = findViewById(R.id.edt_card_number_inputted3);
+//            edt_other_card_number_series_1 = findViewById(R.id.edt_card_number_series1);
+//            edt_other_card_number_series_2 = findViewById(R.id.edt_card_number_series2);
+//            edt_other_card_number_series_3 = findViewById(R.id.edt_card_number_series3);
+//            edt_card_number_inputted = findViewById(R.id.edt_card_number_inputted);
+//            edt_card_number_series = findViewById(R.id.edt_card_number_series);
+//            edt_representative_name= findViewById(R.id.edt_representative_name);
+//            aat_card_replacement_request= findViewById(R.id.aat_card_replacement_request);
+//            aat_reason_unclaimed = findViewById(R.id.aat_reason_unclaimed);
+//            edt_others_reason_not_presented  = findViewById(R.id.edt_others_reason_not_presented);
+//            edt_lender_name  = findViewById(R.id.edt_lender_name);
+//            edt_card_replacement_request_submitted_details = findViewById(R.id.edt_card_replacement_request_submitted_details);
+//
+//            String distribution = aat_distribution_status.getText().toString();
+//            String card_released = edt_release_date.getText().toString();
+//            String release_by = edt_release_by.getText().toString();
+//            String place_released = edt_place_released.getText().toString();
+//            String is_available = aat_card_physically_presented.getText().toString();
+//            String representative = edt_representative_name.getText().toString();
+//            String reason_not_presented = aat_reason_not_presented.getText().toString();
+//            String scanned_cash_card = edt_card_number_inputted.getText().toString();
+//            String series_number = edt_card_number_series.getText().toString();
+//            String aat_id_exists = spinIsID.getText().toString();
+//            String spnPinAttached =aat_card_pin_is_attached.getText().toString();
+//            String spnReasonReplacement = aat_card_replacement_request.getText().toString();
+//            String spnUnclaimedReason = aat_reason_unclaimed.getText().toString();
+//            String reasonNotPresented = edt_others_reason_not_presented.getText().toString();
+//            String reasonNotUnclaimed = edt_others_reason_unclaimed.getText().toString();
+//            String lenderName = edt_lender_name.getText().toString();
+//            String cardReplacement = edt_card_replacement_request_submitted_details.getText().toString();
+//
+//            til_distribution_status = findViewById(R.id.til_distribution_status);
+//            til_release_date = findViewById(R.id.til_release_date);
+//            til_release_place = findViewById(R.id.til_release_by);
+//            til_release_place = findViewById(R.id.til_release_place);
+//            til_card_physically_presented = findViewById(R.id.til_card_physically_presented);
+//            til_card_physically_presented1 = findViewById(R.id.til_card_physically_presented1);
+//            til_card_physically_presented2 = findViewById(R.id.til_card_physically_presented2);
+//            til_card_physically_presented3 = findViewById(R.id.til_card_physically_presented3);
+//            til_card_physically_presented4 = findViewById(R.id.til_card_physically_presented4);
+//            til_card_physically_presented5 = findViewById(R.id.til_card_physically_presented5);
+//            tiladditionalID = findViewById(R.id.til_additionalID);
+//            tilCard = findViewById(R.id.til_card_number_inputted);
+//            tilCardBtn = findViewById(R.id.til_card);
+//            tilSeriesNumber = findViewById(R.id.til_card_number_series);
+//            tilIsID = findViewById(R.id.til_id_exists);
+//            tilGrantee = findViewById(R.id.tilGrantee);
+//            til_representative_name = findViewById(R.id.til_representative_name);
+//            til_reason_not_presented = findViewById(R.id.til_reason_not_presented);
+//            til_card_pin_is_attached = findViewById(R.id.til_card_pin_is_attached);
+//            til_card_replacement_request = findViewById(R.id.til_card_replacement_request);
+//            til_reason_unclaimed = findViewById(R.id.til_reason_unclaimed);
+//            til_reason_not_presented = findViewById(R.id.til_others_reason_not_presented);
+//
+//            til_others_reason_unclaimed = findViewById(R.id.til_others_reason_unclaimed);
+//            til_lender_name = findViewById(R.id.til_lender_name);
+//            til_card_replacement_request_submitted_details = findViewById(R.id.til_card_replacement_request_submitted_details);
+//
+//            try {
+//                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image FROM tmp_blob WHERE id=1");
+//                if(cursor.getCount()!=0){
+//                    while (cursor.moveToNext()) {
+//                        byte[] scanned_image = cursor.getBlob(0);
+//                        byte[] additional_image = cursor.getBlob(1);
+//                        byte[] grantee_image = cursor.getBlob(2);
+//                        if (scanned_image != null) {
+//                            Bitmap scanned = BitmapFactory.decodeByteArray(scanned_image, 0, scanned_image.length);
+//                            mPreviewCashCard.setImageBitmap(scanned);
+//                            tilCard.setError(null);
+//                        }
+//                        else{
+//                            isValidationError++;
+//                            tilCard.setError(required_field);
+//                        }
+//
+//                        if (aat_id_exists.matches("Yes")){
+//                            if (additional_image != null) {
+//                                Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
+//                                mAdditionalID.setImageBitmap(additional);
+//                                tiladditionalID.setError(null);
+//                            }
+//                            else{
+//                            tiladditionalID.setError(required_field);
+//                            isValidationError++;
+//                            }
+//                        }
+//                        else {
+//                            tiladditionalID.setError(null);
+//                        }
+//
+//                        if (grantee_image != null) {
+//                            Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
+//                            mPreviewGrantee.setImageBitmap(grantee);
+//                            tilGrantee.setError(null);
+//                        }
+//                        else{
+//                            tilGrantee.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                    }
+//                }
+//                else{
+//                    tilCardBtn.setError(required_field);
+//                    tiladditionalID.setError(required_field);
+//                    tilGrantee.setError(required_field);
+//                }
+//            }
+//            catch (Exception e){
+//                Log.v(TAG,"Errors " + e);
+//            }
+//
+//
+//            if (distribution.matches("Unclaimed")){
+//                til_distribution_status.setError(null);
+//                edt_release_date.setText("");
+//                edt_release_by.setText("");
+//                edt_place_released.setText("");
+//            }
+//            else{
+//                if (distribution.matches("")){
+//                    til_distribution_status.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    til_distribution_status.setError(null);
+//                    if (card_released.matches("")) {
+//                        til_release_date.setError(required_field);
+//                        isValidationError++;
+//                    } else {
+//                        til_release_date.setError(null);
+//                    }
+//
+//                    if (release_by.matches("")) {
+//                        til_release_place.setError(required_field);
+//                        isValidationError++;
+//                    } else {
+//                        til_release_place.setError(null);
+//                    }
+//
+//                    if (place_released.matches("")) {
+//                        til_release_place.setError(required_field);
+//                        isValidationError++;
+//                    } else {
+//                        til_release_place.setError(null);
+//                    }
+//                }
+//            }
+//
+//            if (is_available.matches("")) {
+//                til_card_physically_presented.setError(required_field);
+//                isValidationError++;
+//            }
+//            else if (is_available.matches("Yes")){
+//                if (spnPinAttached.matches("")) {
+//                    til_card_pin_is_attached.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    til_card_pin_is_attached.setError(null);
+//                }
+//            }
+//            else if (is_available.matches("No")){
+//                if (reason_not_presented.matches("")){
+//                    til_reason_not_presented.setError(required_field);
+//                    isValidationError++;
+//                }
+//                else if (reason_not_presented.matches("Lost/Stolen") || reason_not_presented.matches("Damaged/Defective")) {
+//                    if (spnReasonReplacement.matches("")) {
+//                        til_card_replacement_request.setError(required_field);
+//                        isValidationError++;
+//                    } else {
+//                        til_card_replacement_request.setError(null);
+//                    }
+//                }
+//                else if (reason_not_presented.matches("Unclaimed")){
+//                    if (spnUnclaimedReason.matches("")) {
+//                        til_reason_unclaimed.setError(required_field);
+//                        isValidationError++;
+//                    }
+//                    else if (spnUnclaimedReason.matches("Others")){
+//                        if (reasonNotUnclaimed.matches("")){
+//                            til_others_reason_unclaimed.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        else {
+//                            til_others_reason_unclaimed.setError(null);
+//                        }
+//                    }
+//                    else {
+//                        til_reason_unclaimed.setError(null);
+//                    }
+//                }
+//                else if (reason_not_presented.matches("Others")){
+//                    if (reasonNotPresented.matches("")){
+//                        til_reason_not_presented.setError(required_field);
+//                        isValidationError++;
+//                    }
+//                    else {
+//                        til_reason_not_presented.setError(null);
+//                    }
+//
+//                }
+//            }
+//            else {
+//                til_card_physically_presented.setError(null);
+//            }
+//
+//            if (spnReasonReplacement.matches("Yes")){
+//                if (cardReplacement.matches("")){
+//                    til_card_replacement_request_submitted_details.setError(required_field);
+//                    isValidationError++;
+//                }
+//                else {
+//                    til_card_replacement_request_submitted_details.setError(null);
+//                }
+//            }
+//
+//            if (reason_not_presented.matches("Pawned")){
+//                if (lenderName.matches("")){
+//                    til_lender_name.setError(required_field);
+//                    isValidationError++;
+//                }
+//                else {
+//                    til_lender_name.setError(null);
+//                }
+//
+//            }
+//            String grantee = sh.getString("grantee_in", "");
+//            if (grantee.matches("No")){
+//                if (representative.matches("")) {
+//                    til_representative_name.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    til_representative_name.setError(null);
+//                }
+//            }
+//
+//            if (scanned_cash_card.matches("")) {
+//                tilCard.setError(required_field);
+//                isValidationError++;
+//            }
+//            else if (!scanned_cash_card.matches("[0-9 ]+")){
+//                tilCard.setError("Invalid format");
+//                isValidationError++;
+//            }
+//            else {
+//                tilCard.setError(null);
+//            }
+//
+//            if (series_number.matches("")) {
+//                tilSeriesNumber.setError(required_field);
+//                isValidationError++;
+//            } else {
+//                tilSeriesNumber.setError(null);
+//            }
+//
+//            if (aat_id_exists.matches("")) {
+//                tilIsID.setError(required_field);
+//                isValidationError++;
+//            } else {
+//                tilIsID.setError(null);
+//            }
+//
+//            if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
+//            store_preferences(2);
 
-            spinIsAvail = findViewById(R.id.spinnerIsAvailable);
-            spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
-            edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
-            spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
-            spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
-            spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
-            spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable4);
-            spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable5);
+//                Grantee Details
+            til_card_number_prefilled = findViewById(R.id.til_card_number_prefilled);
+            til_distribution_status = findViewById(R.id.til_distribution_status);
+            til_release_date = findViewById(R.id.til_release_date);
+            til_release_by = findViewById(R.id.til_release_by);
+            til_release_place = findViewById(R.id.til_release_place);
+            til_card_physically_presented = findViewById(R.id.til_card_physically_presented);
+            til_card_pin_is_attached = findViewById(R.id.til_card_pin_is_attached);
+            til_reason_not_presented = findViewById(R.id.til_reason_not_presented);
+            til_others_reason_not_presented = findViewById(R.id.til_others_reason_not_presented);
+            til_reason_unclaimed = findViewById(R.id.til_reason_unclaimed);
+            til_others_reason_unclaimed = findViewById(R.id.til_others_reason_unclaimed);
+            til_card_replacement_request = findViewById(R.id.til_card_replacement_request);
+            til_card_replacement_request_submitted_details = findViewById(R.id.til_card_replacement_request_submitted_details);
 
-            spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
-            spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
-            spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
-            spinIsAvailReason4 = findViewById(R.id.spinnerOtherIsAvailableReason4);
-            spinIsAvailReason5 = findViewById(R.id.spinnerOtherIsAvailableReason5);
+            edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
+            aat_distribution_status = findViewById(R.id.aat_distribution_status);
+            edt_release_date = findViewById(R.id.edt_release_date);
+            edt_release_by = findViewById(R.id.edt_release_by);
+            edt_release_place = findViewById(R.id.edt_release_place);
+            aat_card_physically_presented = findViewById(R.id.aat_card_physically_presented);
+            aat_card_pin_is_attached = findViewById(R.id.aat_card_pin_is_attached);
+            aat_reason_not_presented = findViewById(R.id.aat_reason_not_presented);
+            edt_others_reason_not_presented = findViewById(R.id.edt_others_reason_not_presented);
+            aat_reason_unclaimed = findViewById(R.id.aat_reason_unclaimed);
+            edt_others_reason_unclaimed = findViewById(R.id.edt_others_reason_unclaimed);
+            aat_card_replacement_request = findViewById(R.id.aat_card_replacement_request);
+            edt_card_replacement_request_submitted_details = findViewById(R.id.edt_card_replacement_request_submitted_details);
 
-            edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
-            edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
-            edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
-            edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
-            edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
-            edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
-            edt_series_no = findViewById(R.id.edt_series_no);
-            edtRepresentativeTwo= findViewById(R.id.edtRepresentativeTwo);
-            spinnerIsReasonReplacement= findViewById(R.id.spinnerIsReasonReplacement);
-            spinnerIsUnclaimedReason = findViewById(R.id.spinnerIsUnclaimedReason);
-            edtReasonNotPresented  = findViewById(R.id.edtReasonNotPresented);
-            edt_lender_name  = findViewById(R.id.edtLenderName);
-            edtCardReplacement = findViewById(R.id.edtCardReplacement);
+            ScannedImage = findViewById(R.id.ScannedImage);
+            imgUri = findViewById(R.id.imgUri);
+            btn_scanCashCard = findViewById(R.id.btn_scanCashCard);
 
-            String distribution = spinIsDistribution_1.getText().toString();
-            String card_released = edt_card_released.getText().toString();
-            String who_released = edt_who_released.getText().toString();
-            String place_released = edt_place_released.getText().toString();
-            String is_available = spinIsAvail.getText().toString();
-            String representative = edtRepresentativeTwo.getText().toString();
-            String reason_not_presented = spinIsAvailReason.getText().toString();
-            String scanned_cash_card = edt_cashCardNumber.getText().toString();
-            String series_number = edt_series_no.getText().toString();
-            String spinnerIsID = spinIsID.getText().toString();
-            String spnPinAttached =spinnerIsPinAttached.getText().toString();
-            String spnReasonReplacement = spinnerIsReasonReplacement.getText().toString();
-            String spnUnclaimedReason = spinnerIsUnclaimedReason.getText().toString();
-            String reasonNotPresented = edtReasonNotPresented.getText().toString();
-            String reasonNotUnclaimed = edtOthersUnclaimedReason.getText().toString();
-            String lenderName = edt_lender_name.getText().toString();
-            String cardReplacement = edtCardReplacement.getText().toString();
-
-            tilDistribution = findViewById(R.id.til_distribution);
-            tilCardReleased = findViewById(R.id.til_cardreleased);
-            tilWhoReleased = findViewById(R.id.til_whoreleased);
-            tilPlaceReleased = findViewById(R.id.til_placereleased);
-            tilCurrentGranteeNumber = findViewById(R.id.til_currentgranteenumber);
-            tilIsAvailable = findViewById(R.id.til_isavailable);
-            tilIsPresented1 = findViewById(R.id.til_otherisavailable1);
-            tilIsPresented2 = findViewById(R.id.til_otherisavailable2);
-            tilIsPresented3 = findViewById(R.id.til_otherisavailable3);
-            tilIsPresented4 = findViewById(R.id.til_otherisavailable4);
-            tilIsPresented5 = findViewById(R.id.til_otherisavailable5);
-            tiladditionalID = findViewById(R.id.til_additionalID);
-            tilCard = findViewById(R.id.til_cashCard);
-            tilCardBtn = findViewById(R.id.til_card);
-            tilSeriesNumber = findViewById(R.id.til_series_number);
-            tilIsID = findViewById(R.id.til_isID);
+            til_card_number_inputted = findViewById(R.id.til_card_number_inputted);
+            til_card_number_series = findViewById(R.id.til_card_number_series);
+            til_id_exists = findViewById(R.id.til_id_exists);
+            edt_card_number_inputted = findViewById(R.id.edt_card_number_inputted);
+            edt_card_number_series = findViewById(R.id.edt_card_number_series);
+            aat_id_exists = findViewById(R.id.aat_id_exists);
+            imgAdditionalId = findViewById(R.id.imgAdditionalId);
+            til_additionalID = findViewById(R.id.til_additionalID);
+            btn_scanID = findViewById(R.id.btn_scanID);
+            mGrantee = findViewById(R.id.mGrantee);
             tilGrantee = findViewById(R.id.tilGrantee);
-            tilRepresentativeIntroTwo = findViewById(R.id.til_representative);
-            tilAvailablereason = findViewById(R.id.til_isavailablereason);
-            tilisPinAttached = findViewById(R.id.til_isPinAttached);
-            tilRequestReplacement = findViewById(R.id.til_isRequestReplacement);
-            tilUnclaimedReason = findViewById(R.id.til_isUnclaimedReason);
-            tilReasonNotPresented = findViewById(R.id.til_reason_not_presented);
+            btn_grantee = findViewById(R.id.btn_grantee);
+            til_representative_name = findViewById(R.id.til_representative_name);
+            edt_representative_name = findViewById(R.id.edt_representative_name);
 
-            tilOthersUnclaimedReason = findViewById(R.id.til_OthersUnclaimedReason);
-            tilLenderName = findViewById(R.id.til_lendername);
-            tilCardReplacement = findViewById(R.id.til_cardReplacement);
+            mcvPawning = findViewById(R.id.pawning);
+            ll_additional_id_layout = findViewById(R.id.ll_additional_id_layout);
 
-            try {
-                Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image FROM tmp_blob WHERE id=1");
-                if(cursor.getCount()!=0){
-                    while (cursor.moveToNext()) {
-                        byte[] scanned_image = cursor.getBlob(0);
-                        byte[] additional_image = cursor.getBlob(1);
-                        byte[] grantee_image = cursor.getBlob(2);
-                        if (scanned_image != null) {
-                            Bitmap scanned = BitmapFactory.decodeByteArray(scanned_image, 0, scanned_image.length);
-                            mPreviewCashCard.setImageBitmap(scanned);
-                            tilCard.setError(null);
-                        }
-                        else{
-                            isValidationError++;
-                            tilCard.setError(required_field);
-                        }
+            //PAWNING
+            edt_lender_name = findViewById(R.id.edt_lender_name);
+            edt_date_pawned = findViewById(R.id.edt_date_pawned);
+            edt_loan_amount = findViewById(R.id.edt_loan_amount);
+            edt_lender_address = findViewById(R.id.edt_lender_address);
+            edt_date_retrieved = findViewById(R.id.edt_date_retrieved);
+            edt_interest = findViewById(R.id.edt_interest);
+            aat_status = findViewById(R.id.aat_status);
+            edt_reason = findViewById(R.id.edt_reason);
+            aat_offense_history =findViewById(R.id.aat_offense_history);
+            edt_offense_date = findViewById(R.id.edt_offense_date);
+            edt_remarks = findViewById(R.id.edt_remarks);
+            edt_staff_intervention = findViewById(R.id.edt_staff_intervention);
+            edt_other_details = findViewById(R.id.edt_other_details);
+            til_lender_name = findViewById(R.id.til_lender_name);
 
-                        if (spinnerIsID.matches("Yes")){
-                            if (additional_image != null) {
-                                Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
-                                mAdditionalID.setImageBitmap(additional);
-                                tiladditionalID.setError(null);
-                            }
-                            else{
-                            tiladditionalID.setError(required_field);
-                            isValidationError++;
-                            }
-                        }
-                        else {
-                            tiladditionalID.setError(null);
-                        }
+//                Other Details 1 - 5
+            otherCardAvailability1 = findViewById(R.id.otherCardAvailability1);
+            otherCardAvailability2 = findViewById(R.id.otherCardAvailability2);
+            otherCardAvailability3 = findViewById(R.id.otherCardAvailability3);
+            otherCardAvailability4 = findViewById(R.id.otherCardAvailability4);
+            otherCardAvailability5 = findViewById(R.id.otherCardAvailability5);
 
-                        if (grantee_image != null) {
-                            Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
-                            mPreviewGrantee.setImageBitmap(grantee);
-                            tilGrantee.setError(null);
-                        }
-                        else{
-                            tilGrantee.setError(required_field);
-                            isValidationError++;
-                        }
-                    }
-                }
-                else{
-                    tilCardBtn.setError(required_field);
-                    tiladditionalID.setError(required_field);
-                    tilGrantee.setError(required_field);
-                }
-            }
-            catch (Exception e){
-                Log.v(TAG,"Errors " + e);
-            }
+            btnCancelOtherCard1 = findViewById(R.id.btnCancelOtherCard1);
+            btnCancelOtherCard2 = findViewById(R.id.btnCancelOtherCard2);
+            btnCancelOtherCard3 = findViewById(R.id.btnCancelOtherCard3);
+            btnCancelOtherCard4 = findViewById(R.id.btnCancelOtherCard4);
+            btnCancelOtherCard5 = findViewById(R.id.btnCancelOtherCard5);
 
+            til_distribution_status1 = findViewById(R.id.til_distribution_status1);
+            til_distribution_status2 = findViewById(R.id.til_distribution_status2);
+            til_distribution_status3 = findViewById(R.id.til_distribution_status3);
+            til_distribution_status4 = findViewById(R.id.til_distribution_status4);
+            til_distribution_status5 = findViewById(R.id.til_distribution_status5);
 
-            if (distribution.matches("Unclaimed")){tilDistribution.setError(null);edt_card_released.setText("");edt_who_released.setText("");edt_place_released.setText("");}
-            else{
-                if (distribution.matches("")){
-                    tilDistribution.setError(required_field);
-                    isValidationError++;
-                } else {
-                    tilDistribution.setError(null);
-                    if (card_released.matches("")) {
-                        tilCardReleased.setError(required_field);
-                        isValidationError++;
-                    } else {
-                        tilCardReleased.setError(null);
-                    }
+            aat_distribution_status1 = findViewById(R.id.aat_distribution_status1);
+            aat_distribution_status2 = findViewById(R.id.aat_distribution_status2);
+            aat_distribution_status3 = findViewById(R.id.aat_distribution_status3);
+            aat_distribution_status4 = findViewById(R.id.aat_distribution_status4);
+            aat_distribution_status5 = findViewById(R.id.aat_distribution_status5);
 
-                    if (who_released.matches("")) {
-                        tilWhoReleased.setError(required_field);
-                        isValidationError++;
-                    } else {
-                        tilWhoReleased.setError(null);
-                    }
+            til_release_date1 = findViewById(R.id.til_release_date1);
+            til_release_date2 = findViewById(R.id.til_release_date2);
+            til_release_date3 = findViewById(R.id.til_release_date3);
+            til_release_date4 = findViewById(R.id.til_release_date4);
+            til_release_date5 = findViewById(R.id.til_release_date5);
 
-                    if (place_released.matches("")) {
-                        tilPlaceReleased.setError(required_field);
-                        isValidationError++;
-                    } else {
-                        tilPlaceReleased.setError(null);
-                    }
-                }
-            }
+            edt_release_date1 = findViewById(R.id.edt_release_date1);
+            edt_release_date2 = findViewById(R.id.edt_release_date2);
+            edt_release_date3 = findViewById(R.id.edt_release_date3);
+            edt_release_date4 = findViewById(R.id.edt_release_date4);
+            edt_release_date5 = findViewById(R.id.edt_release_date5);
 
-            if (is_available.matches("")) {
-                tilIsAvailable.setError(required_field);
-                isValidationError++;
-            }
-            else if (is_available.matches("Yes")){
-                if (spnPinAttached.matches("")) {
-                    tilisPinAttached.setError(required_field);
-                    isValidationError++;
-                } else {
-                    tilisPinAttached.setError(null);
-                }
-            }
-            else if (is_available.matches("No")){
-                if (reason_not_presented.matches("")){
-                    tilAvailablereason.setError(required_field);
-                    isValidationError++;
-                }
-                else if (reason_not_presented.matches("Lost/Stolen") || reason_not_presented.matches("Damaged/Defective")) {
-                    if (spnReasonReplacement.matches("")) {
-                        tilRequestReplacement.setError(required_field);
-                        isValidationError++;
-                    } else {
-                        tilRequestReplacement.setError(null);
-                    }
-                }
-                else if (reason_not_presented.matches("Unclaimed")){
-                    if (spnUnclaimedReason.matches("")) {
-                        tilUnclaimedReason.setError(required_field);
-                        isValidationError++;
-                    }
-                    else if (spnUnclaimedReason.matches("Others")){
-                        if (reasonNotUnclaimed.matches("")){
-                            tilOthersUnclaimedReason.setError(required_field);
-                            isValidationError++;
-                        }
-                        else {
-                            tilOthersUnclaimedReason.setError(null);
-                        }
-                    }
-                    else {
-                        tilUnclaimedReason.setError(null);
-                    }
-                }
-                else if (reason_not_presented.matches("Others")){
-                    if (reasonNotPresented.matches("")){
-                        tilReasonNotPresented.setError(required_field);
-                        isValidationError++;
-                    }
-                    else {
-                        tilReasonNotPresented.setError(null);
-                    }
+            til_release_by1 = findViewById(R.id.til_release_by1);
+            til_release_by2 = findViewById(R.id.til_release_by2);
+            til_release_by3 = findViewById(R.id.til_release_by3);
+            til_release_by4 = findViewById(R.id.til_release_by4);
+            til_release_by5 = findViewById(R.id.til_release_by5);
 
-                }
-            }
-            else {
-                tilIsAvailable.setError(null);
-            }
+            edt_release_by1 = findViewById(R.id.edt_release_by1);
+            edt_release_by2 = findViewById(R.id.edt_release_by2);
+            edt_release_by3 = findViewById(R.id.edt_release_by3);
+            edt_release_by4 = findViewById(R.id.edt_release_by4);
+            edt_release_by5 = findViewById(R.id.edt_release_by5);
 
-            if (spnReasonReplacement.matches("Yes")){
-                if (cardReplacement.matches("")){
-                    tilCardReplacement.setError(required_field);
-                    isValidationError++;
-                }
-                else {
-                    tilCardReplacement.setError(null);
-                }
-            }
+            til_release_place1 = findViewById(R.id.til_release_place1);
+            til_release_place2 = findViewById(R.id.til_release_place2);
+            til_release_place3 = findViewById(R.id.til_release_place3);
+            til_release_place4 = findViewById(R.id.til_release_place4);
+            til_release_place5 = findViewById(R.id.til_release_place5);
 
-            if (reason_not_presented.matches("Pawned")){
-                if (lenderName.matches("")){
-                    tilLenderName.setError(required_field);
-                    isValidationError++;
-                }
-                else {
-                    tilLenderName.setError(null);
-                }
+            edt_release_place1 = findViewById(R.id.edt_release_place1);
+            edt_release_place2 = findViewById(R.id.edt_release_place2);
+            edt_release_place3 = findViewById(R.id.edt_release_place3);
+            edt_release_place4 = findViewById(R.id.edt_release_place4);
+            edt_release_place5 = findViewById(R.id.edt_release_place5);
 
-            }
-            String grantee = sh.getString("grantee_in", "");
-            if (grantee.matches("No")){
-                if (representative.matches("")) {
-                    tilRepresentativeIntroTwo.setError(required_field);
-                    isValidationError++;
-                } else {
-                    tilRepresentativeIntroTwo.setError(null);
-                }
-            }
+            til_card_physically_presented1 = findViewById(R.id.til_card_physically_presented1);
+            til_card_physically_presented2 = findViewById(R.id.til_card_physically_presented2);
+            til_card_physically_presented3 = findViewById(R.id.til_card_physically_presented3);
+            til_card_physically_presented4 = findViewById(R.id.til_card_physically_presented4);
+            til_card_physically_presented5 = findViewById(R.id.til_card_physically_presented5);
 
-            if (scanned_cash_card.matches("")) {
-                tilCard.setError(required_field);
-                isValidationError++;
-            }
-            else if (!scanned_cash_card.matches("[0-9 ]+")){
-                tilCard.setError("Invalid format");
-                isValidationError++;
-            }
-            else {
-                tilCard.setError(null);
-            }
+            aat_card_physically_presented1 = findViewById(R.id.aat_card_physically_presented1);
+            aat_card_physically_presented2 = findViewById(R.id.aat_card_physically_presented2);
+            aat_card_physically_presented3 = findViewById(R.id.aat_card_physically_presented3);
+            aat_card_physically_presented4 = findViewById(R.id.aat_card_physically_presented4);
+            aat_card_physically_presented5 = findViewById(R.id.aat_card_physically_presented5);
 
-            if (series_number.matches("")) {
-                tilSeriesNumber.setError(required_field);
+            til_card_pin_is_attached1 = findViewById(R.id.til_card_pin_is_attached1);
+            til_card_pin_is_attached2 = findViewById(R.id.til_card_pin_is_attached2);
+            til_card_pin_is_attached3 = findViewById(R.id.til_card_pin_is_attached3);
+            til_card_pin_is_attached4 = findViewById(R.id.til_card_pin_is_attached4);
+            til_card_pin_is_attached5 = findViewById(R.id.til_card_pin_is_attached5);
+
+            aat_card_pin_is_attached1 = findViewById(R.id.aat_card_pin_is_attached1);
+            aat_card_pin_is_attached2 = findViewById(R.id.aat_card_pin_is_attached2);
+            aat_card_pin_is_attached3 = findViewById(R.id.aat_card_pin_is_attached3);
+            aat_card_pin_is_attached4 = findViewById(R.id.aat_card_pin_is_attached4);
+            aat_card_pin_is_attached5 = findViewById(R.id.aat_card_pin_is_attached5);
+
+            til_reason_not_presented1 = findViewById(R.id.til_reason_not_presented1);
+            til_reason_not_presented2 = findViewById(R.id.til_reason_not_presented2);
+            til_reason_not_presented3 = findViewById(R.id.til_reason_not_presented3);
+            til_reason_not_presented4 = findViewById(R.id.til_reason_not_presented4);
+            til_reason_not_presented5 = findViewById(R.id.til_reason_not_presented5);
+
+            aat_reason_not_presented1 = findViewById(R.id.aat_reason_not_presented1);
+            aat_reason_not_presented2 = findViewById(R.id.aat_reason_not_presented2);
+            aat_reason_not_presented3 = findViewById(R.id.aat_reason_not_presented3);
+            aat_reason_not_presented4 = findViewById(R.id.aat_reason_not_presented4);
+            aat_reason_not_presented5 = findViewById(R.id.aat_reason_not_presented5);
+
+            til_others_reason_not_presented1 = findViewById(R.id.til_others_reason_not_presented1);
+            til_others_reason_not_presented2 = findViewById(R.id.til_others_reason_not_presented2);
+            til_others_reason_not_presented3 = findViewById(R.id.til_others_reason_not_presented3);
+            til_others_reason_not_presented4 = findViewById(R.id.til_others_reason_not_presented4);
+            til_others_reason_not_presented5 = findViewById(R.id.til_others_reason_not_presented5);
+
+            edt_others_reason_not_presented1 = findViewById(R.id.edt_others_reason_not_presented1);
+            edt_others_reason_not_presented2 = findViewById(R.id.edt_others_reason_not_presented2);
+            edt_others_reason_not_presented3 = findViewById(R.id.edt_others_reason_not_presented3);
+            edt_others_reason_not_presented4 = findViewById(R.id.edt_others_reason_not_presented4);
+            edt_others_reason_not_presented5 = findViewById(R.id.edt_others_reason_not_presented5);
+
+            til_reason_unclaimed1 = findViewById(R.id.til_reason_unclaimed1);
+            til_reason_unclaimed2 = findViewById(R.id.til_reason_unclaimed2);
+            til_reason_unclaimed3 = findViewById(R.id.til_reason_unclaimed3);
+            til_reason_unclaimed4 = findViewById(R.id.til_reason_unclaimed4);
+            til_reason_unclaimed5 = findViewById(R.id.til_reason_unclaimed5);
+
+            aat_reason_unclaimed1 = findViewById(R.id.aat_reason_unclaimed1);
+            aat_reason_unclaimed2 = findViewById(R.id.aat_reason_unclaimed2);
+            aat_reason_unclaimed3 = findViewById(R.id.aat_reason_unclaimed3);
+            aat_reason_unclaimed4 = findViewById(R.id.aat_reason_unclaimed4);
+            aat_reason_unclaimed5 = findViewById(R.id.aat_reason_unclaimed5);
+
+            til_others_reason_unclaimed1 = findViewById(R.id.til_others_reason_unclaimed1);
+            til_others_reason_unclaimed2 = findViewById(R.id.til_others_reason_unclaimed2);
+            til_others_reason_unclaimed3 = findViewById(R.id.til_others_reason_unclaimed3);
+            til_others_reason_unclaimed4 = findViewById(R.id.til_others_reason_unclaimed4);
+            til_others_reason_unclaimed5 = findViewById(R.id.til_others_reason_unclaimed5);
+
+            edt_others_reason_unclaimed1 = findViewById(R.id.edt_others_reason_unclaimed1);
+            edt_others_reason_unclaimed2 = findViewById(R.id.edt_others_reason_unclaimed2);
+            edt_others_reason_unclaimed3 = findViewById(R.id.edt_others_reason_unclaimed3);
+            edt_others_reason_unclaimed4 = findViewById(R.id.edt_others_reason_unclaimed4);
+            edt_others_reason_unclaimed5 = findViewById(R.id.edt_others_reason_unclaimed5);
+
+            til_card_replacement_request1 = findViewById(R.id.til_card_replacement_request1);
+            til_card_replacement_request2 = findViewById(R.id.til_card_replacement_request2);
+            til_card_replacement_request3 = findViewById(R.id.til_card_replacement_request3);
+            til_card_replacement_request4 = findViewById(R.id.til_card_replacement_request4);
+            til_card_replacement_request5 = findViewById(R.id.til_card_replacement_request5);
+
+            aat_card_replacement_request1 = findViewById(R.id.aat_card_replacement_request1);
+            aat_card_replacement_request2 = findViewById(R.id.aat_card_replacement_request2);
+            aat_card_replacement_request3 = findViewById(R.id.aat_card_replacement_request3);
+            aat_card_replacement_request4 = findViewById(R.id.aat_card_replacement_request4);
+            aat_card_replacement_request5 = findViewById(R.id.aat_card_replacement_request5);
+
+            til_card_replacement_request_submitted_details1 = findViewById(R.id.til_card_replacement_request_submitted_details1);
+            til_card_replacement_request_submitted_details2 = findViewById(R.id.til_card_replacement_request_submitted_details2);
+            til_card_replacement_request_submitted_details3 = findViewById(R.id.til_card_replacement_request_submitted_details3);
+            til_card_replacement_request_submitted_details4 = findViewById(R.id.til_card_replacement_request_submitted_details4);
+            til_card_replacement_request_submitted_details5 = findViewById(R.id.til_card_replacement_request_submitted_details5);
+
+            edt_card_replacement_request_submitted_details1 = findViewById(R.id.edt_card_replacement_request_submitted_details1);
+            edt_card_replacement_request_submitted_details2 = findViewById(R.id.edt_card_replacement_request_submitted_details2);
+            edt_card_replacement_request_submitted_details3 = findViewById(R.id.edt_card_replacement_request_submitted_details3);
+            edt_card_replacement_request_submitted_details4 = findViewById(R.id.edt_card_replacement_request_submitted_details4);
+            edt_card_replacement_request_submitted_details5 = findViewById(R.id.edt_card_replacement_request_submitted_details5);
+
+            til_pawning_remarks1 = findViewById(R.id.til_pawning_remarks1);
+            til_pawning_remarks2 = findViewById(R.id.til_pawning_remarks2);
+            til_pawning_remarks3 = findViewById(R.id.til_pawning_remarks3);
+            til_pawning_remarks4 = findViewById(R.id.til_pawning_remarks4);
+            til_pawning_remarks5 = findViewById(R.id.til_pawning_remarks5);
+
+            edt_pawning_remarks1 = findViewById(R.id.edt_pawning_remarks1);
+            edt_pawning_remarks2 = findViewById(R.id.edt_pawning_remarks2);
+            edt_pawning_remarks3 = findViewById(R.id.edt_pawning_remarks3);
+            edt_pawning_remarks4 = findViewById(R.id.edt_pawning_remarks4);
+            edt_pawning_remarks5 = findViewById(R.id.edt_pawning_remarks5);
+
+            ivOtherScannedImage1 = findViewById(R.id.ivOtherScannedImage1);
+            ivOtherScannedImage2 = findViewById(R.id.ivOtherScannedImage2);
+            ivOtherScannedImage3 = findViewById(R.id.ivOtherScannedImage3);
+            ivOtherScannedImage4 = findViewById(R.id.ivOtherScannedImage4);
+            ivOtherScannedImage5 = findViewById(R.id.ivOtherScannedImage5);
+
+            ivOtherScannedImageUrl1 = findViewById(R.id.ivOtherScannedImageUrl1);
+            ivOtherScannedImageUrl2 = findViewById(R.id.ivOtherScannedImageUrl2);
+            ivOtherScannedImageUrl3 = findViewById(R.id.ivOtherScannedImageUrl3);
+            ivOtherScannedImageUrl4 = findViewById(R.id.ivOtherScannedImageUrl4);
+            ivOtherScannedImageUrl5 = findViewById(R.id.ivOtherScannedImageUrl5);
+
+            btnOtherScanned1 = findViewById(R.id.btnOtherScanned1);
+            btnOtherScanned2 = findViewById(R.id.btnOtherScanned2);
+            btnOtherScanned3 = findViewById(R.id.btnOtherScanned3);
+            btnOtherScanned4 = findViewById(R.id.btnOtherScanned4);
+            btnOtherScanned5 = findViewById(R.id.btnOtherScanned5);
+
+            til_card_number_inputted1 = findViewById(R.id.til_card_number_inputted1);
+            til_card_number_inputted2 = findViewById(R.id.til_card_number_inputted2);
+            til_card_number_inputted3 = findViewById(R.id.til_card_number_inputted3);
+            til_card_number_inputted4 = findViewById(R.id.til_card_number_inputted4);
+            til_card_number_inputted5 = findViewById(R.id.til_card_number_inputted5);
+
+            edt_card_number_inputted1 = findViewById(R.id.edt_card_number_inputted1);
+            edt_card_number_inputted2 = findViewById(R.id.edt_card_number_inputted2);
+            edt_card_number_inputted3 = findViewById(R.id.edt_card_number_inputted3);
+            edt_card_number_inputted4 = findViewById(R.id.edt_card_number_inputted4);
+            edt_card_number_inputted5 = findViewById(R.id.edt_card_number_inputted5);
+
+            til_card_number_series1 = findViewById(R.id.til_card_number_series1);
+            til_card_number_series2 = findViewById(R.id.til_card_number_series2);
+            til_card_number_series3 = findViewById(R.id.til_card_number_series3);
+            til_card_number_series4 = findViewById(R.id.til_card_number_series4);
+            til_card_number_series5 = findViewById(R.id.til_card_number_series5);
+
+            edt_card_number_series1 = findViewById(R.id.edt_card_number_series1);
+            edt_card_number_series2 = findViewById(R.id.edt_card_number_series2);
+            edt_card_number_series3 = findViewById(R.id.edt_card_number_series3);
+            edt_card_number_series4 = findViewById(R.id.edt_card_number_series4);
+            edt_card_number_series5 = findViewById(R.id.edt_card_number_series5);
+
+            String distribution_status = aat_distribution_status.getText().toString();
+            String release_date = edt_release_date.getText().toString();
+            String release_by = edt_release_by.getText().toString();
+            String release_place = edt_release_place.getText().toString();
+            String card_physically_presented = aat_card_physically_presented.getText().toString();
+            String card_pin_is_attached = aat_card_pin_is_attached.getText().toString();
+            String reason_not_presented = aat_reason_not_presented.getText().toString();
+            String others_reason_not_presented = edt_others_reason_not_presented.getText().toString();
+            String reason_unclaimed = aat_reason_unclaimed.getText().toString();
+            String others_reason_unclaimed = edt_others_reason_unclaimed.getText().toString();
+            String card_replacement_request = aat_card_replacement_request.getText().toString();
+            String card_replacement_request_submitted_details = edt_card_replacement_request_submitted_details.getText().toString();
+            String card_number_inputted = edt_card_number_inputted.getText().toString();
+            String card_number_series = edt_card_number_series.getText().toString();
+            String id_exists = aat_id_exists.getText().toString();
+            String representative_name = edt_representative_name.getText().toString();
+            String lender_name = edt_lender_name.getText().toString();
+
+            String distribution_status1 = aat_distribution_status1.getText().toString();
+            String distribution_status2 = aat_distribution_status2.getText().toString();
+            String distribution_status3 = aat_distribution_status3.getText().toString();
+            String distribution_status4 = aat_distribution_status4.getText().toString();
+            String distribution_status5 = aat_distribution_status5.getText().toString();
+            String release_date1 = edt_release_date1.getText().toString();
+            String release_date2 = edt_release_date2.getText().toString();
+            String release_date3 = edt_release_date3.getText().toString();
+            String release_date4 = edt_release_date4.getText().toString();
+            String release_date5 = edt_release_date5.getText().toString();
+            String release_by1 = edt_release_by1.getText().toString();
+            String release_by2 = edt_release_by2.getText().toString();
+            String release_by3 = edt_release_by3.getText().toString();
+            String release_by4 = edt_release_by4.getText().toString();
+            String release_by5 = edt_release_by5.getText().toString();
+            String release_place1 = edt_release_place1.getText().toString();
+            String release_place2 = edt_release_place2.getText().toString();
+            String release_place3 = edt_release_place3.getText().toString();
+            String release_place4 = edt_release_place4.getText().toString();
+            String release_place5 = edt_release_place5.getText().toString();
+            String card_physically_presented1 = aat_card_physically_presented1.getText().toString();
+            String card_physically_presented2 = aat_card_physically_presented2.getText().toString();
+            String card_physically_presented3 = aat_card_physically_presented3.getText().toString();
+            String card_physically_presented4 = aat_card_physically_presented4.getText().toString();
+            String card_physically_presented5 = aat_card_physically_presented5.getText().toString();
+            String card_pin_is_attached1 = aat_card_pin_is_attached1.getText().toString();
+            String card_pin_is_attached2 = aat_card_pin_is_attached2.getText().toString();
+            String card_pin_is_attached3 = aat_card_pin_is_attached3.getText().toString();
+            String card_pin_is_attached4 = aat_card_pin_is_attached4.getText().toString();
+            String card_pin_is_attached5 = aat_card_pin_is_attached5.getText().toString();
+            String reason_not_presented1 = aat_reason_not_presented1.getText().toString();
+            String reason_not_presented2 = aat_reason_not_presented2.getText().toString();
+            String reason_not_presented3 = aat_reason_not_presented3.getText().toString();
+            String reason_not_presented4 = aat_reason_not_presented4.getText().toString();
+            String reason_not_presented5 = aat_reason_not_presented5.getText().toString();
+            String others_reason_not_presented1 = edt_others_reason_not_presented1.getText().toString();
+            String others_reason_not_presented2 = edt_others_reason_not_presented2.getText().toString();
+            String others_reason_not_presented3 = edt_others_reason_not_presented3.getText().toString();
+            String others_reason_not_presented4 = edt_others_reason_not_presented4.getText().toString();
+            String others_reason_not_presented5 = edt_others_reason_not_presented5.getText().toString();
+            String reason_unclaimed1 = aat_reason_unclaimed1.getText().toString();
+            String reason_unclaimed2 = aat_reason_unclaimed2.getText().toString();
+            String reason_unclaimed3 = aat_reason_unclaimed3.getText().toString();
+            String reason_unclaimed4 = aat_reason_unclaimed4.getText().toString();
+            String reason_unclaimed5 = aat_reason_unclaimed5.getText().toString();
+            String others_reason_unclaimed1 = edt_others_reason_unclaimed1.getText().toString();
+            String others_reason_unclaimed2 = edt_others_reason_unclaimed2.getText().toString();
+            String others_reason_unclaimed3 = edt_others_reason_unclaimed3.getText().toString();
+            String others_reason_unclaimed4 = edt_others_reason_unclaimed4.getText().toString();
+            String others_reason_unclaimed5 = edt_others_reason_unclaimed5.getText().toString();
+            String card_replacement_request1 = aat_card_replacement_request1.getText().toString();
+            String card_replacement_request2 = aat_card_replacement_request2.getText().toString();
+            String card_replacement_request3 = aat_card_replacement_request3.getText().toString();
+            String card_replacement_request4 = aat_card_replacement_request4.getText().toString();
+            String card_replacement_request5 = aat_card_replacement_request5.getText().toString();
+            String card_replacement_request_submitted_details1 = edt_card_replacement_request_submitted_details1.getText().toString();
+            String card_replacement_request_submitted_details2 = edt_card_replacement_request_submitted_details2.getText().toString();
+            String card_replacement_request_submitted_details3 = edt_card_replacement_request_submitted_details3.getText().toString();
+            String card_replacement_request_submitted_details4 = edt_card_replacement_request_submitted_details4.getText().toString();
+            String card_replacement_request_submitted_details5 = edt_card_replacement_request_submitted_details5.getText().toString();
+            String card_number_inputted1 = edt_card_number_inputted1.getText().toString();
+            String card_number_inputted2 = edt_card_number_inputted2.getText().toString();
+            String card_number_inputted3 = edt_card_number_inputted3.getText().toString();
+            String card_number_inputted4 = edt_card_number_inputted4.getText().toString();
+            String card_number_inputted5 = edt_card_number_inputted5.getText().toString();
+            String card_number_series1 = edt_card_number_series1.getText().toString();
+            String card_number_series2 = edt_card_number_series2.getText().toString();
+            String card_number_series3 = edt_card_number_series3.getText().toString();
+            String card_number_series4 = edt_card_number_series4.getText().toString();
+            String card_number_series5 = edt_card_number_series5.getText().toString();
+            String pawning_remarks1 = edt_pawning_remarks1.getText().toString();
+            String pawning_remarks2 = edt_pawning_remarks1.getText().toString();
+            String pawning_remarks3 = edt_pawning_remarks1.getText().toString();
+            String pawning_remarks4 = edt_pawning_remarks1.getText().toString();
+            String pawning_remarks5 = edt_pawning_remarks1.getText().toString();
+
+            if (distribution_status.matches("")) {
+                til_distribution_status.setError(required_field);
                 isValidationError++;
             } else {
-                tilSeriesNumber.setError(null);
+                til_distribution_status.setError(null);
+
+                if (distribution_status.matches("Claimed")) {
+                    if (release_date.matches("")) {
+                        til_release_date.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_date.setError(null);
+                    }
+
+                    if (release_by.matches("")) {
+                        til_release_by.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_by.setError(null);
+                    }
+
+                    if (release_place.matches("")) {
+                        til_release_place.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_place.setError(null);
+                    }
+                }
+
             }
 
-            if (spinnerIsID.matches("")) {
-                tilIsID.setError(required_field);
+            if (card_physically_presented.matches("")) {
+                til_card_physically_presented.setError(required_field);
                 isValidationError++;
             } else {
-                tilIsID.setError(null);
+                til_card_physically_presented.setError(null);
+
+                if (card_physically_presented.matches("Yes")) {
+                    if (card_pin_is_attached.matches("")) {
+                        til_card_pin_is_attached.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_card_pin_is_attached.setError(null);
+                    }
+                } else {
+                    if (reason_not_presented.matches("")) {
+                        til_reason_not_presented.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_reason_not_presented.setError(null);
+
+                        if (reason_not_presented.matches("Unclaimed")) {
+                            if (reason_unclaimed.matches("")) {
+                                til_reason_unclaimed.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_reason_unclaimed.setError(null);
+
+                                if (reason_unclaimed.matches("Others")) {
+                                    if (others_reason_unclaimed.matches("")) {
+                                        til_others_reason_unclaimed.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_others_reason_unclaimed.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented.matches("Lost/Stolen") || reason_not_presented.matches("Damaged/Defective")) {
+                            if (card_replacement_request.matches("")) {
+                                til_card_replacement_request.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_card_replacement_request.setError(null);
+
+                                if (card_replacement_request.matches("Yes")) {
+                                    if (card_replacement_request_submitted_details.matches("")) {
+                                        til_card_replacement_request_submitted_details.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_card_replacement_request_submitted_details.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented.matches("Pawned")) {
+                            if (lender_name.matches("")) {
+                                til_lender_name.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_lender_name.setError(null);
+                            }
+                        } else if (reason_not_presented.matches("Others")) {
+                            if (others_reason_not_presented.matches("")) {
+                                til_others_reason_not_presented.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_others_reason_not_presented.setError(null);
+                            }
+                        }
+                    }
+                }
+
             }
 
-            if (isValidationError > 0){}else{MANDATORY_PAGE_LOCATION++;}
-            store_preferences(2);
+
+            if (card_number_inputted.matches("")) {
+                til_card_number_inputted.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_inputted.setError(null);
+            }
+
+            if (card_number_series.matches("")) {
+                til_card_number_series.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_series.setError(null);
+            }
+
+            if (id_exists.matches("")) {
+                til_id_exists.setError(required_field);
+                isValidationError++;
+            } else {
+                til_id_exists.setError(null);
+
+                if (id_exists.matches("Yes")) {
+
+                }
+            }
+
+            String is_grantee = sh.getString("is_grantee", "");
+            if (is_grantee.matches("No")) {
+                if (representative_name.matches("")) {
+                    til_representative_name.setError(required_field);
+                    isValidationError++;
+                } else {
+                    til_representative_name.setError(null);
+                }
+            }
+
+//            Other Card Availablity 1 - 5
+
+            if (distribution_status1.matches("")) {
+                til_distribution_status1.setError(required_field);
+                isValidationError++;
+            } else {
+                til_distribution_status1.setError(null);
+
+                if (distribution_status1.matches("Claimed")) {
+                    if (release_date1.matches("")) {
+                        til_release_date1.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_date1.setError(null);
+                    }
+
+                    if (release_by1.matches("")) {
+                        til_release_by1.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_by1.setError(null);
+                    }
+
+                    if (release_place1.matches("")) {
+                        til_release_place1.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_place1.setError(null);
+                    }
+                }
+
+            }
+
+            if (card_physically_presented1.matches("")) {
+                til_card_physically_presented1.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_physically_presented1.setError(null);
+
+                if (card_physically_presented1.matches("Yes")) {
+                    if (card_pin_is_attached1.matches("")) {
+                        til_card_pin_is_attached1.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_card_pin_is_attached1.setError(null);
+                    }
+                } else {
+                    if (reason_not_presented1.matches("")) {
+                        til_reason_not_presented1.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_reason_not_presented1.setError(null);
+
+                        if (reason_not_presented1.matches("Unclaimed")) {
+                            if (reason_unclaimed1.matches("")) {
+                                til_reason_unclaimed1.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_reason_unclaimed1.setError(null);
+
+                                if (reason_unclaimed1.matches("Others")) {
+                                    if (others_reason_unclaimed1.matches("")) {
+                                        til_others_reason_unclaimed1.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_others_reason_unclaimed1.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented1.matches("Lost/Stolen") || reason_not_presented1.matches("Damaged/Defective")) {
+                            if (card_replacement_request1.matches("")) {
+                                til_card_replacement_request1.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_card_replacement_request1.setError(null);
+
+                                if (card_replacement_request1.matches("Yes")) {
+                                    if (card_replacement_request_submitted_details1.matches("")) {
+                                        til_card_replacement_request_submitted_details1.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_card_replacement_request_submitted_details1.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented1.matches("Pawned")) {
+                            if (pawning_remarks1.matches("")) {
+                                til_pawning_remarks1.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_pawning_remarks1.setError(null);
+                            }
+                        } else if (reason_not_presented1.matches("Others")) {
+                            if (others_reason_not_presented1.matches("")) {
+                                til_others_reason_not_presented1.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_others_reason_not_presented1.setError(null);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+            if (card_number_inputted1.matches("")) {
+                til_card_number_inputted1.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_inputted1.setError(null);
+            }
+
+            if (card_number_series1.matches("")) {
+                til_card_number_series1.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_series1.setError(null);
+            }
+
+            if (distribution_status2.matches("")) {
+                til_distribution_status2.setError(required_field);
+                isValidationError++;
+            } else {
+                til_distribution_status2.setError(null);
+
+                if (distribution_status2.matches("Claimed")) {
+                    if (release_date2.matches("")) {
+                        til_release_date2.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_date2.setError(null);
+                    }
+
+                    if (release_by2.matches("")) {
+                        til_release_by2.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_by2.setError(null);
+                    }
+
+                    if (release_place2.matches("")) {
+                        til_release_place2.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_place2.setError(null);
+                    }
+                }
+
+            }
+
+            if (card_physically_presented2.matches("")) {
+                til_card_physically_presented2.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_physically_presented2.setError(null);
+
+                if (card_physically_presented2.matches("Yes")) {
+                    if (card_pin_is_attached2.matches("")) {
+                        til_card_pin_is_attached2.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_card_pin_is_attached2.setError(null);
+                    }
+                } else {
+                    if (reason_not_presented2.matches("")) {
+                        til_reason_not_presented2.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_reason_not_presented2.setError(null);
+
+                        if (reason_not_presented2.matches("Unclaimed")) {
+                            if (reason_unclaimed2.matches("")) {
+                                til_reason_unclaimed2.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_reason_unclaimed2.setError(null);
+
+                                if (reason_unclaimed2.matches("Others")) {
+                                    if (others_reason_unclaimed2.matches("")) {
+                                        til_others_reason_unclaimed2.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_others_reason_unclaimed2.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented2.matches("Lost/Stolen") || reason_not_presented2.matches("Damaged/Defective")) {
+                            if (card_replacement_request2.matches("")) {
+                                til_card_replacement_request2.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_card_replacement_request2.setError(null);
+
+                                if (card_replacement_request2.matches("Yes")) {
+                                    if (card_replacement_request_submitted_details2.matches("")) {
+                                        til_card_replacement_request_submitted_details2.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_card_replacement_request_submitted_details2.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented2.matches("Pawned")) {
+                            if (pawning_remarks2.matches("")) {
+                                til_pawning_remarks2.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_pawning_remarks2.setError(null);
+                            }
+                        } else if (reason_not_presented2.matches("Others")) {
+                            if (others_reason_not_presented2.matches("")) {
+                                til_others_reason_not_presented2.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_others_reason_not_presented2.setError(null);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+            if (card_number_inputted2.matches("")) {
+                til_card_number_inputted2.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_inputted2.setError(null);
+            }
+
+            if (card_number_series2.matches("")) {
+                til_card_number_series2.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_series2.setError(null);
+            }
+
+            if (distribution_status3.matches("")) {
+                til_distribution_status3.setError(required_field);
+                isValidationError++;
+            } else {
+                til_distribution_status3.setError(null);
+
+                if (distribution_status3.matches("Claimed")) {
+                    if (release_date3.matches("")) {
+                        til_release_date3.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_date3.setError(null);
+                    }
+
+                    if (release_by3.matches("")) {
+                        til_release_by3.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_by3.setError(null);
+                    }
+
+                    if (release_place3.matches("")) {
+                        til_release_place3.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_place3.setError(null);
+                    }
+                }
+
+            }
+
+            if (card_physically_presented3.matches("")) {
+                til_card_physically_presented3.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_physically_presented3.setError(null);
+
+                if (card_physically_presented3.matches("Yes")) {
+                    if (card_pin_is_attached3.matches("")) {
+                        til_card_pin_is_attached3.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_card_pin_is_attached3.setError(null);
+                    }
+                } else {
+                    if (reason_not_presented3.matches("")) {
+                        til_reason_not_presented3.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_reason_not_presented3.setError(null);
+
+                        if (reason_not_presented3.matches("Unclaimed")) {
+                            if (reason_unclaimed3.matches("")) {
+                                til_reason_unclaimed3.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_reason_unclaimed3.setError(null);
+
+                                if (reason_unclaimed3.matches("Others")) {
+                                    if (others_reason_unclaimed3.matches("")) {
+                                        til_others_reason_unclaimed3.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_others_reason_unclaimed3.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented3.matches("Lost/Stolen") || reason_not_presented3.matches("Damaged/Defective")) {
+                            if (card_replacement_request3.matches("")) {
+                                til_card_replacement_request3.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_card_replacement_request3.setError(null);
+
+                                if (card_replacement_request3.matches("Yes")) {
+                                    if (card_replacement_request_submitted_details3.matches("")) {
+                                        til_card_replacement_request_submitted_details3.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_card_replacement_request_submitted_details3.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented3.matches("Pawned")) {
+                            if (pawning_remarks3.matches("")) {
+                                til_pawning_remarks3.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_pawning_remarks3.setError(null);
+                            }
+                        } else if (reason_not_presented3.matches("Others")) {
+                            if (others_reason_not_presented3.matches("")) {
+                                til_others_reason_not_presented3.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_others_reason_not_presented3.setError(null);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+            if (card_number_inputted3.matches("")) {
+                til_card_number_inputted2.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_inputted3.setError(null);
+            }
+
+            if (card_number_series3.matches("")) {
+                til_card_number_series3.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_series3.setError(null);
+            }
+
+            if (distribution_status4.matches("")) {
+                til_distribution_status4.setError(required_field);
+                isValidationError++;
+            } else {
+                til_distribution_status4.setError(null);
+
+                if (distribution_status4.matches("Claimed")) {
+                    if (release_date4.matches("")) {
+                        til_release_date4.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_date4.setError(null);
+                    }
+
+                    if (release_by4.matches("")) {
+                        til_release_by4.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_by4.setError(null);
+                    }
+
+
+                    if (release_place4.matches("")) {
+                        til_release_place4.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_place4.setError(null);
+                    }
+                }
+   
+            }
+
+            if (card_physically_presented4.matches("")) {
+                til_card_physically_presented4.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_physically_presented4.setError(null);
+
+                if (card_physically_presented4.matches("Yes")) {
+                    if (card_pin_is_attached4.matches("")) {
+                        til_card_pin_is_attached4.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_card_pin_is_attached4.setError(null);
+                    }
+                } else {
+                    if (reason_not_presented4.matches("")) {
+                        til_reason_not_presented4.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_reason_not_presented4.setError(null);
+
+                        if (reason_not_presented4.matches("Unclaimed")) {
+                            if (reason_unclaimed4.matches("")) {
+                                til_reason_unclaimed4.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_reason_unclaimed4.setError(null);
+
+                                if (reason_unclaimed4.matches("Others")) {
+                                    if (others_reason_unclaimed4.matches("")) {
+                                        til_others_reason_unclaimed4.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_others_reason_unclaimed4.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented4.matches("Lost/Stolen") || reason_not_presented4.matches("Damaged/Defective")) {
+                            if (card_replacement_request4.matches("")) {
+                                til_card_replacement_request4.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_card_replacement_request4.setError(null);
+
+                                if (card_replacement_request4.matches("Yes")) {
+                                    if (card_replacement_request_submitted_details4.matches("")) {
+                                        til_card_replacement_request_submitted_details4.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_card_replacement_request_submitted_details4.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented4.matches("Pawned")) {
+                            if (pawning_remarks4.matches("")) {
+                                til_pawning_remarks4.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_pawning_remarks4.setError(null);
+                            }
+                        } else if (reason_not_presented4.matches("Others")) {
+                            if (others_reason_not_presented4.matches("")) {
+                                til_others_reason_not_presented4.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_others_reason_not_presented4.setError(null);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+            if (card_number_inputted4.matches("")) {
+                til_card_number_inputted4.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_inputted4.setError(null);
+            }
+
+            if (card_number_series4.matches("")) {
+                til_card_number_series4.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_series4.setError(null);
+            }
+
+            if (distribution_status5.matches("")) {
+                til_distribution_status5.setError(required_field);
+                isValidationError++;
+            } else {
+                til_distribution_status5.setError(null);
+
+                if (distribution_status5.matches("Claimed")) {
+                    if (release_date5.matches("")) {
+                        til_release_date5.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_date5.setError(null);
+                    }
+
+                    if (release_by5.matches("")) {
+                        til_release_by5.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_by5.setError(null);
+                    }
+
+                    if (release_place5.matches("")) {
+                        til_release_place5.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_release_place5.setError(null);
+                    }
+                }
+
+            }
+
+            if (card_physically_presented5.matches("")) {
+                til_card_physically_presented5.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_physically_presented5.setError(null);
+
+                if (card_physically_presented5.matches("Yes")) {
+                    if (card_pin_is_attached5.matches("")) {
+                        til_card_pin_is_attached5.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_card_pin_is_attached5.setError(null);
+                    }
+                } else {
+                    if (reason_not_presented5.matches("")) {
+                        til_reason_not_presented5.setError(required_field);
+                        isValidationError++;
+                    } else {
+                        til_reason_not_presented5.setError(null);
+
+                        if (reason_not_presented5.matches("Unclaimed")) {
+                            if (reason_unclaimed5.matches("")) {
+                                til_reason_unclaimed5.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_reason_unclaimed5.setError(null);
+
+                                if (reason_unclaimed5.matches("Others")) {
+                                    if (others_reason_unclaimed5.matches("")) {
+                                        til_others_reason_unclaimed5.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_others_reason_unclaimed5.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented5.matches("Lost/Stolen") || reason_not_presented5.matches("Damaged/Defective")) {
+                            if (card_replacement_request5.matches("")) {
+                                til_card_replacement_request5.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_card_replacement_request5.setError(null);
+
+                                if (card_replacement_request5.matches("Yes")) {
+                                    if (card_replacement_request_submitted_details5.matches("")) {
+                                        til_card_replacement_request_submitted_details5.setError(required_field);
+                                        isValidationError++;
+                                    } else {
+                                        til_card_replacement_request_submitted_details5.setError(null);
+                                    }
+                                }
+                            }
+                        } else if (reason_not_presented5.matches("Pawned")) {
+                            if (pawning_remarks5.matches("")) {
+                                til_pawning_remarks5.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_pawning_remarks5.setError(null);
+                            }
+                        } else if (reason_not_presented5.matches("Others")) {
+                            if (others_reason_not_presented5.matches("")) {
+                                til_others_reason_not_presented5.setError(required_field);
+                                isValidationError++;
+                            } else {
+                                til_others_reason_not_presented5.setError(null);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+            if (card_number_inputted5.matches("")) {
+                til_card_number_inputted5.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_inputted5.setError(null);
+            }
+
+            if (card_number_series5.matches("")) {
+                til_card_number_series5.setError(required_field);
+                isValidationError++;
+            } else {
+                til_card_number_series5.setError(null);
+            }
+
+
 
         }
         else if (current == 3) {
@@ -2991,26 +4612,20 @@ public class ScanCashCard extends AppCompatActivity {
                     if (reason_nma.matches("")){
                         tilNmaReason.setError(required_field);
                         isValidationError++;
-                    }
-                    else if (reason_nma.matches("Others")){
-                        if (other_reason_nma.matches("")){
+                    } else if (reason_nma.matches("Others")){
+                        if (other_reason_nma.matches("")) {
                             tilOtherReasonNma.setError(required_field);
                             isValidationError++;
-                        }
-                        else {
+                        } else {
                             tilOtherReasonNma.setError(null);
                         }
 
-                    }
-                    else {
+                    } else {
                         tilNmaReason.setError(null);
                     }
-
-                }
-                else {
+                } else {
                     tilNmaAmount.setError(null);
                 }
-
             }
             else {
                 if (nma_amount.matches("")){
@@ -3028,22 +4643,20 @@ public class ScanCashCard extends AppCompatActivity {
         } else {
             Log.v(ContentValues.TAG,"Error Current Btn Next");
         }
-
         if (isValidationError > 0) {
             Toasty.warning(getApplicationContext(), "Please fill-in all required fields!", Toast.LENGTH_SHORT).show();
         } else {
             Toasty.success(getApplicationContext(), "All fields are valid!", Toast.LENGTH_SHORT).show();
+            MANDATORY_PAGE_LOCATION++;
             if (current < layouts.length) {
                 tvPrev.setVisibility(View.VISIBLE);
                 viewPager.setCurrentItem(current);
-            }
-            else {
+            } else {
                 store_preferences(4);
                 launchHomeScreen();
             }
         }
     }
-
 
     public void store_preferences(int pos) {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
@@ -3051,188 +4664,169 @@ public class ScanCashCard extends AppCompatActivity {
 
         switch(pos) {
             case 1:
-                edt_hh = findViewById(R.id.edtHhId);
-                edt_fullname = findViewById(R.id.edtFullname);
-                spinClientStatus = findViewById(R.id.spinnerClientStatus);
-                edt_address = findViewById(R.id.edtAddress);
-                spinSex = findViewById(R.id.spinnerSex);
-                edt_set = findViewById(R.id.edtSet);
-                edt_contact_no = findViewById(R.id.edtContactNo);
-                edt_assigned = findViewById(R.id.edtAssigned);
-                spinAnswer = findViewById(R.id.spinnerMinorGrantee);
-                spinnerContactNoOf = findViewById(R.id.spinnerContactNoOf);
-                spinnerGrantee = findViewById(R.id.spinnerGrantee);
-
-
-                String household = edt_hh.getText().toString();
-                String full_name = edt_fullname.getText().toString();
-                String client_status = spinClientStatus.getText().toString();
-                String address = edt_address.getText().toString();
-                String sex = spinSex.getText().toString();
-                String hh_set = edt_set.getText().toString();
+                String hh_id = edt_hh_id.getText().toString();
+                String hh_set = aat_set.getText().toString();
+                String last_name = edt_last_name.getText().toString();
+                String first_name = edt_first_name.getText().toString();
+                String middle_name = edt_middle_name.getText().toString();
+                String ext_name = aat_ext_name.getText().toString();
+                String other_ext_name = edt_other_ext_name.getText().toString();
+                String hh_status = aat_hh_status.getText().toString();
+                String province = aat_province_code.getText().toString();
+                String municipality = aat_municipality_code.getText().toString();
+                String barangay = aat_barangay_code.getText().toString();
+                String sex = aat_sex.getText().toString();
+                String is_grantee = aat_is_grantee.getText().toString();
+                String relationship_to_grantee = aat_relationship_to_grantee.getText().toString();
                 String contact_no = edt_contact_no.getText().toString();
-                String assigned = edt_assigned.getText().toString();
-                String minor_grantee = spinAnswer.getText().toString();
-                String contact_no_of = spinnerContactNoOf.getText().toString();
-                String grantee = spinnerGrantee.getText().toString();
-                String representativeOne = edtRepresentativeOne.getText().toString();
+                String contact_no_of = aat_contact_no_of.getText().toString();
+                String contact_no_of_others = edt_contact_no_of_others.getText().toString();
+                String assigned_staff = edt_assigned_staff.getText().toString();
+                String is_minor = aat_is_minor.getText().toString();
 
-                myEdit.putString("hh_id", household);
-                myEdit.putString("full_name", full_name);
-                myEdit.putString("client_status", client_status);
-                myEdit.putString("address", address);
-                myEdit.putString("sex", sex);
-                myEdit.putString("hh_set_group", hh_set);
-                myEdit.putString("contact_no", contact_no);
-                myEdit.putString("contact_no_of", contact_no_of);
-                myEdit.putString("assigned", assigned);
-                myEdit.putString("minor_grantee", minor_grantee);
-                myEdit.putString("Informant_Identifier", full_name); //do not delete this line
-                myEdit.putString("pressBtn_search", "true");
-                myEdit.putString("grantee_in", grantee);
-                myEdit.putString("rpt_intro_one", representativeOne);
+                myEdit.putString("hh_id",hh_id);
+                myEdit.putString("hh_set",hh_set);
+                myEdit.putString("last_name",last_name);
+                myEdit.putString("first_name",first_name);
+                myEdit.putString("middle_name",middle_name);
+                myEdit.putString("ext_name",ext_name);
+                myEdit.putString("other_ext_name",other_ext_name);
+                myEdit.putString("hh_status",hh_status);
+                myEdit.putString("province",province);
+                myEdit.putString("municipality",municipality);
+                myEdit.putString("barangay",barangay);
+                myEdit.putString("sex",sex);
+                myEdit.putString("is_grantee",is_grantee);
+                myEdit.putString("relationship_to_grantee",relationship_to_grantee);
+                myEdit.putString("contact_no",contact_no);
+                myEdit.putString("contact_no_of",contact_no_of);
+                myEdit.putString("contact_no_of_others",contact_no_of_others);
+                myEdit.putString("assigned_staff",assigned_staff);
+                myEdit.putString("is_minor",is_minor);
+
                 myEdit.commit();
                 break;
             case 2:
+                aat_distribution_status = findViewById(R.id.aat_distribution_status);
+                edt_release_date = findViewById(R.id.edt_release_date);
+                edt_release_by = findViewById(R.id.edt_release_by);
+                edt_place_released = findViewById(R.id.edt_release_place);
+                edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
+                aat_card_physically_presented = findViewById(R.id.aat_card_physically_presented);
+                aat_reason_not_presented = findViewById(R.id.aat_reason_not_presented);
+                edt_other_card_number_1 = findViewById(R.id.edt_card_number_inputted1);
+                edt_other_card_number_2 = findViewById(R.id.edt_card_number_inputted2);
+                edt_other_card_number_3 = findViewById(R.id.edt_card_number_inputted3);
+                aat_card_physically_presented1 = findViewById(R.id.aat_card_physically_presented1);
+                aat_reason_not_presented1 = findViewById(R.id.aat_reason_not_presented1);
+                aat_reason_not_presented2 = findViewById(R.id.aat_reason_not_presented2);
+                aat_reason_not_presented3 = findViewById(R.id.aat_reason_not_presented3);
+                aat_reason_not_presented4 = findViewById(R.id.aat_reason_not_presented4);
+                aat_reason_not_presented5 = findViewById(R.id.aat_reason_not_presented5);
 
-                spinIsDistribution_1 = findViewById(R.id.spinnerDistribution);
-                edt_card_released = findViewById(R.id.edtCardReleased);
-                edt_who_released = findViewById(R.id.edtWhoReleased);
-                edt_place_released = findViewById(R.id.edtPlaceReleased);
-                edt_current_grantee_number = findViewById(R.id.edtCurrentGranteeNumber);
-                spinIsAvail = findViewById(R.id.spinnerIsAvailable);
-                spinIsAvailReason = findViewById(R.id.spinnerIsAvailableReason);
-                edt_other_card_number_1 = findViewById(R.id.edtOtherCardNumber1);
-                spinIsAvail1 = findViewById(R.id.spinnerOtherIsAvailable1);
-                spinIsAvailReason1 = findViewById(R.id.spinnerOtherIsAvailableReason1);
-                spinIsAvailReason2 = findViewById(R.id.spinnerOtherIsAvailableReason2);
-                spinIsAvailReason3 = findViewById(R.id.spinnerOtherIsAvailableReason3);
-                spinIsAvailReason4 = findViewById(R.id.spinnerOtherIsAvailableReason4);
-                spinIsAvailReason5 = findViewById(R.id.spinnerOtherIsAvailableReason5);
+                aat_card_physically_presented2 = findViewById(R.id.aat_card_physically_presented2);
+                aat_card_physically_presented3 = findViewById(R.id.aat_card_physically_presented3);
+                edt_other_card_number_series_1 = findViewById(R.id.edt_card_number_series1);
+                edt_other_card_number_series_2 = findViewById(R.id.edt_card_number_series2);
+                edt_other_card_number_series_3 = findViewById(R.id.edt_card_number_series3);
+                edt_representative_name = findViewById(R.id.edt_representative_name);
+                aat_id_exists = findViewById(R.id.aat_id_exists);
+                edt_card_number_inputted = findViewById(R.id.edt_card_number_inputted);
+                edt_card_number_series = findViewById(R.id.edt_card_number_series);
+                aat_card_pin_is_attached = findViewById(R.id.aat_card_pin_is_attached);
+                aat_card_replacement_request = findViewById(R.id.aat_card_replacement_request);
+                aat_reason_unclaimed = findViewById(R.id.aat_reason_unclaimed);
+                edt_others_reason_not_presented = findViewById(R.id.edt_others_reason_not_presented);
+                edt_others_reason_unclaimed = findViewById(R.id.edt_others_reason_unclaimed);
+                edt_card_replacement_request_submitted_details = findViewById(R.id.edt_card_replacement_request_submitted_details);
 
-
-                edt_other_card_number_2 = findViewById(R.id.edtOtherCardNumber2);
-                spinIsAvail2 = findViewById(R.id.spinnerOtherIsAvailable2);
-                edt_other_card_number_3 = findViewById(R.id.edtOtherCardNumber3);
-                spinIsAvail3 = findViewById(R.id.spinnerOtherIsAvailable3);
-                edt_other_card_number_series_1 = findViewById(R.id.edtOtherCardNumberSeries1);
-                edt_other_card_number_series_2 = findViewById(R.id.edtOtherCardNumberSeries2);
-                edt_other_card_number_series_3 = findViewById(R.id.edtOtherCardNumberSeries3);
-                edtRepresentativeOne = findViewById(R.id.edtRepresentativeOne);
-//                edt_other_remarks_1 = findViewById(R.id.edtotherRemarks1);
-//                edt_other_remarks_2 = findViewById(R.id.edtotherRemarks2);
-//                edt_other_remarks_3 = findViewById(R.id.edtotherRemarks3);
-                spinIsID = findViewById(R.id.spinnerIsID);
-                edt_cashCardNumber = findViewById(R.id.edt_cashCardNumber);
-                edt_series_no = findViewById(R.id.edt_series_no);
-                spinnerIsPinAttached = findViewById(R.id.spinnerIsPinAttached);
-                spinnerIsReasonReplacement = findViewById(R.id.spinnerIsReasonReplacement);
-                spinnerIsUnclaimedReason = findViewById(R.id.spinnerIsUnclaimedReason);
-                edtReasonNotPresented = findViewById(R.id.edtReasonNotPresented);
-                edtOthersUnclaimedReason = findViewById(R.id.edtOthersUnclaimedReason);
-                edtCardReplacement = findViewById(R.id.edtCardReplacement);
-
-                String distribution = spinIsDistribution_1.getText().toString();
-                String card_released = edt_card_released.getText().toString();
-                String who_released = edt_who_released.getText().toString();
+                String distribution = aat_distribution_status.getText().toString();
+                String card_released = edt_release_date.getText().toString();
+                String release_by = edt_release_by.getText().toString();
                 String place_released = edt_place_released.getText().toString();
-                String current_grantee_number = edt_current_grantee_number.getText().toString();
-                String is_available = spinIsAvail.getText().toString();
-                String is_available_reason = spinIsAvailReason.getText().toString();
+                String current_grantee_number = edt_card_number_prefilled.getText().toString();
+                String is_available = aat_card_physically_presented.getText().toString();
+                String is_available_reason = aat_reason_not_presented.getText().toString();
                 String other_card_number_1 = edt_other_card_number_1.getText().toString();
-//                String other_card_holder_name_1 = edt_other_card_holder_name_1.getText().toString();
-                String other_is_available_1 = spinIsAvail1.getText().toString();
-                String other_is_available_reason_1 = spinIsAvailReason1.getText().toString();
-                String other_is_available_reason_2 = spinIsAvailReason2.getText().toString();
-                String other_is_available_reason_3 = spinIsAvailReason3.getText().toString();
-                String other_is_available_reason_4 = spinIsAvailReason4.getText().toString();
-                String other_is_available_reason_5 = spinIsAvailReason5.getText().toString();
+                String other_is_available_1 = aat_card_physically_presented1.getText().toString();
+                String other_is_available_reason_1 = aat_reason_not_presented1.getText().toString();
+                String other_is_available_reason_2 = aat_reason_not_presented2.getText().toString();
+                String other_is_available_reason_3 = aat_reason_not_presented3.getText().toString();
+                String other_is_available_reason_4 = aat_reason_not_presented4.getText().toString();
+                String other_is_available_reason_5 = aat_reason_not_presented5.getText().toString();
 
                 String other_card_number_2 = edt_other_card_number_2.getText().toString();
-//                String other_card_holder_name_2 = edt_other_card_holder_name_2.getText().toString();
-                String other_is_available_2 = spinIsAvail2.getText().toString();
+                String other_is_available_2 = aat_card_physically_presented2.getText().toString();
                 String other_card_number_3 = edt_other_card_number_3.getText().toString();
-//                String other_card_holder_name_3 = edt_other_card_holder_name_3.getText().toString();
-                String other_is_available_3 = spinIsAvail3.getText().toString();
+                String other_is_available_3 = aat_card_physically_presented3.getText().toString();
                 String other_card_number_series_1 = edt_other_card_number_series_1.getText().toString();
                 String other_card_number_series_2 = edt_other_card_number_series_2.getText().toString();
                 String other_card_number_series_3 = edt_other_card_number_series_3.getText().toString();
-                String representative = edtRepresentativeTwo.getText().toString();
-                String pin_attached = spinnerIsPinAttached.getText().toString();
-                String reason_replacement = spinnerIsReasonReplacement.getText().toString();
-                String unclaimed_reason = spinnerIsUnclaimedReason.getText().toString();
-                String reason_not_presented = edtReasonNotPresented.getText().toString();
-                String other_unclaimed_reason = edtOthersUnclaimedReason.getText().toString();
-                String card_replacement = edtCardReplacement.getText().toString();
+                String representative = edt_representative_name.getText().toString();
+                String pin_attached = aat_card_pin_is_attached.getText().toString();
+                String reason_replacement = aat_card_replacement_request.getText().toString();
+                String unclaimed_reason = aat_reason_unclaimed.getText().toString();
+                String reason_not_presented = edt_others_reason_not_presented.getText().toString();
+                String other_unclaimed_reason = edt_others_reason_unclaimed.getText().toString();
+                String card_replacement = edt_card_replacement_request_submitted_details.getText().toString();
 
-
-
-                String spinAdditionalID = spinIsID.getText().toString();
-                String cash_card = edt_cashCardNumber.getText().toString();
-                String series_number = edt_series_no.getText().toString();
-//                String other_remarks_1 = edt_other_remarks_1.getText().toString();
-//                String other_remarks_2 = edt_other_remarks_2.getText().toString();
-//                String other_remarks_3 = edt_other_remarks_3.getText().toString();
+//                String spinAdditionalID = spinIsID.getText().toString();
+                String cash_card = edt_card_number_inputted.getText().toString();
+                String series_number = edt_card_number_series.getText().toString();
 
                 //PAWNING
 
-                edt_lender_name = findViewById(R.id.edtLenderName);
-                edt_pawning_date = findViewById(R.id.edtPawningDate);
-                edt_loaned_amount = findViewById(R.id.edtLoanedAmount);
-                edt_lender_address = findViewById(R.id.edtLenderAddress);
-                edt_date_retrieved = findViewById(R.id.edtDateRetrieved);
-                edt_interest = findViewById(R.id.edtInterest);
-                spinStatus = findViewById(R.id.spinnerStatus);
-                edt_pawning_reason = findViewById(R.id.edtPawningReason);
-                spinOffenseHistory =findViewById(R.id.spinnerOffenseHistory);
-                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
-                edt_pd_remarks = findViewById(R.id.edtPdRemarks);
-                edt_intervention = findViewById(R.id.edtIntervention);
-                edt_other_details = findViewById(R.id.edtOtherDetails);
+                edt_lender_name = findViewById(R.id.edt_lender_name);
+                edt_date_pawned = findViewById(R.id.edt_date_pawned);
+                edt_loan_amount = findViewById(R.id.edt_loan_amount);
+                edt_lender_address = findViewById(R.id.edt_lender_address);
+                edt_date_retrieved = findViewById(R.id.edt_date_retrieved);
+                edt_interest = findViewById(R.id.edt_interest);
+                aat_status = findViewById(R.id.aat_status);
+                edt_reason = findViewById(R.id.edt_reason);
+                aat_offense_history =findViewById(R.id.aat_offense_history);
+                edt_offense_date = findViewById(R.id.edt_offense_date);
+                edt_remarks = findViewById(R.id.edt_remarks);
+                edt_staff_intervention = findViewById(R.id.edt_staff_intervention);
+                edt_other_details = findViewById(R.id.edt_other_details);
 
                 String lender_name = edt_lender_name.getText().toString();
-                String pawning_date = edt_pawning_date.getText().toString();
-                String loaned_amount = edt_loaned_amount.getText().toString();
+                String pawning_date = edt_date_pawned.getText().toString();
+                String loaned_amount = edt_loan_amount.getText().toString();
                 String lender_address = edt_lender_address.getText().toString();
                 String date_retrieved = edt_date_retrieved.getText().toString();
                 String interest = edt_interest.getText().toString();
-                String spin_status = spinStatus.getText().toString();
-                String pawning_reason = edt_pawning_reason.getText().toString();
-                String offense_history = spinOffenseHistory.getText().toString();
-                String offense_history_date = edt_offense_history_date.getText().toString();
-                String pd_remarks = edt_pd_remarks.getText().toString();
-                String intervention = edt_intervention.getText().toString();
+                String spin_status = aat_status.getText().toString();
+                String pawning_reason = edt_reason.getText().toString();
+                String offense_history = aat_offense_history.getText().toString();
+                String offense_history_date = edt_offense_date.getText().toString();
+                String pd_remarks = edt_remarks.getText().toString();
+                String intervention = edt_staff_intervention.getText().toString();
                 String other_details = edt_other_details.getText().toString();
 
 
                 myEdit.putString("distribution_status", distribution);
                 myEdit.putString("card_released", card_released);
-                myEdit.putString("who_released", who_released);
+                myEdit.putString("release_by", release_by);
                 myEdit.putString("place_released", place_released);
                 myEdit.putString("temp_current_grantee_number", current_grantee_number);
                 myEdit.putString("is_available", is_available);
                 myEdit.putString("is_available_reason", is_available_reason);
                 myEdit.putString("other_card_number_1", other_card_number_1);
-//                myEdit.putString("other_card_holder_name_1", other_card_holder_name_1);
                 myEdit.putString("other_is_available_1", other_is_available_1);
                 myEdit.putString("other_is_available_reason_1", other_is_available_reason_1);
                 myEdit.putString("other_card_number_2", other_card_number_2);
-//                myEdit.putString("other_card_holder_name_2", other_card_holder_name_2);
                 myEdit.putString("other_is_available_2", other_is_available_2);
                 myEdit.putString("other_is_available_reason_2", other_is_available_reason_2);
                 myEdit.putString("other_card_number_3", other_card_number_3);
-//                myEdit.putString("other_card_holder_name_3", other_card_holder_name_3);
                 myEdit.putString("other_is_available_3", other_is_available_3);
                 myEdit.putString("other_is_available_reason_3", other_is_available_reason_3);
                 myEdit.putString("other_card_number_series_1", other_card_number_series_1);
                 myEdit.putString("other_card_number_series_2", other_card_number_series_2);
                 myEdit.putString("other_card_number_series_3", other_card_number_series_3);
-                myEdit.putString("is_additional", spinAdditionalID);
+//                myEdit.putString("is_additional", spinAdditionalID);
                 myEdit.putString("scanned_cash_card", cash_card);
                 myEdit.putString("series_number", series_number);
-//                myEdit.putString("other_remarks1", other_remarks_1);
-//                myEdit.putString("other_remarks2", other_remarks_2);
-//                myEdit.putString("other_remarks3", other_remarks_3);
                 myEdit.putString("rpt_intro_two", representative);
                 myEdit.putString("pin_attached", pin_attached);
                 myEdit.putString("reason_replacement", reason_replacement);
@@ -3276,49 +4870,6 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("other_reason_nma", other_reason_nma);
                 myEdit.commit();
                 break;
-//            case 4:
-//                edt_pawning_date = findViewById(R.id.edtPawningDate);
-//                edt_loaned_amount = findViewById(R.id.edtLoanedAmount);
-//                edt_lender_address = findViewById(R.id.edtLenderAddress);
-//                edt_date_retrieved = findViewById(R.id.edtDateRetrieved);
-//                edt_interest = findViewById(R.id.edtInterest);
-//                spinStatus = findViewById(R.id.spinnerStatus);
-//                edt_pawning_reason = findViewById(R.id.edtPawningReason);
-//                spinOffenseHistory =findViewById(R.id.spinnerOffenseHistory);
-//                edt_offense_history_date = findViewById(R.id.edtOffenseHistoryDate);
-//                edt_pd_remarks = findViewById(R.id.edtPdRemarks);
-//                edt_intervention = findViewById(R.id.edtIntervention);
-//                edt_other_details = findViewById(R.id.edtOtherDetails);
-//
-//                String lender_name = edt_lender_name.getText().toString();
-//                String pawning_date = edt_pawning_date.getText().toString();
-//                String loaned_amount = edt_loaned_amount.getText().toString();
-//                String lender_address = edt_lender_address.getText().toString();
-//                String date_retrieved = edt_date_retrieved.getText().toString();
-//                String interest = edt_interest.getText().toString();
-//                String spin_status = spinStatus.getText().toString();
-//                String pawning_reason = edt_pawning_reason.getText().toString();
-//                String offense_history = spinOffenseHistory.getText().toString();
-//                String offense_history_date = edt_offense_history_date.getText().toString();
-//                String pd_remarks = edt_pd_remarks.getText().toString();
-//                String intervention = edt_intervention.getText().toString();
-//                String other_details = edt_other_details.getText().toString();
-//
-//                myEdit.putString("lender_name", lender_name);
-//                myEdit.putString("pawning_date", pawning_date);
-//                myEdit.putString("loaned_amount", loaned_amount);
-//                myEdit.putString("lender_address", lender_address);
-//                myEdit.putString("date_retrieved", date_retrieved);
-//                myEdit.putString("interest", interest);
-//                myEdit.putString("spin_status", spin_status);
-//                myEdit.putString("pawning_reason", pawning_reason);
-//                myEdit.putString("offense_history", offense_history);
-//                myEdit.putString("offense_history_date", offense_history_date);
-//                myEdit.putString("pd_remarks", pd_remarks);
-//                myEdit.putString("intervention", intervention);
-//                myEdit.putString("other_details", other_details);
-//                myEdit.commit();
-//                break;
             default:
                 break;
         }
@@ -3326,9 +4877,9 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
 
-    public void btn_func(){
+    public void search_household(){
         String household_no ="";
-        household_no = edt_hh.getText().toString();
+        household_no = edt_hh_id.getText().toString();
 //        try {
             if (!household_no.matches("")){
                Cursor search = MainActivity.sqLiteHelper.getData("SELECT id,first_name,last_name,middle_name,ext_name,hh_id,hh_status,province,municipality,barangay,sex,hh_set_group,nma_amount,grantee_card_number,grantee_distribution_status,grantee_card_release_date,other_card_number_1,other_card_holder_1,other_card_distribution_status_1,other_card_release_date_1,other_card_number_2,other_card_holder_2,other_card_distribution_status_2,other_card_release_date_2,other_card_number_3,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4,other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5,upload_history_id,record_counter,created_at,updated_at,validated_at FROM emv_validations WHERE hh_id='"+household_no+"'");
@@ -3377,13 +4928,13 @@ public class ScanCashCard extends AppCompatActivity {
                 }
 
                 Log.v(ContentValues.TAG,"angvalue " + first_name +" " + created_at +" "+ " "+updated_at + " "+ validated_at);
+
                 if (search ==null || search.getCount() == 0){
                     clearSharedPref();
-                    edt_fullname.setText("");
-                    spinClientStatus.setText("");
-                    edt_address.setText("");
-                    edt_set.setText("");
-                    spinSex.setText("");
+                    edt_last_name.setText("");
+                    aat_hh_status.setText("");
+                    aat_set.setText("");
+                    aat_sex.setText("");
                     Toasty.error(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
 
                 }
@@ -3394,6 +4945,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                         myEdit.putInt("emv_id", emv_id);
                         myEdit.putString("hh_id", hh_id);
+
                         myEdit.putString("first_name", first_name);
                         myEdit.putString("last_name", last_name);
                         myEdit.putString("middle_name", middle_name);
@@ -3402,42 +4954,34 @@ public class ScanCashCard extends AppCompatActivity {
                         myEdit.putString("province", province);
                         myEdit.putString("municipality", municipality);
                         myEdit.putString("barangay", barangay);
+
                         myEdit.putString("sex", sex);
                         myEdit.putString("hh_set_group", hh_set_group);
                         myEdit.putString("pressBtn_search", "true");
                         myEdit.commit();
 
-                        edt_fullname.setText(first_name);
-                        spinClientStatus.setText(client_status,false);
-                        edt_address.setText(province);
-                        edt_set.setText(hh_set_group);
-                        spinSex.setText(sex,false);
+
+                        edt_last_name.setText(full_name);
+                        aat_hh_status.setText(hh_status,false);
+                        aat_set.setText(hh_set_group);
+                        aat_sex.setText(sex,false);
+
                         edt_contact_no.setText("");
                         Toasty.success(getApplicationContext(),"Household Found", Toasty.LENGTH_SHORT).show();
-
 
                         if (other_card_number_1!=null || other_card_number_1.length()!=4){
                             edt_other_card_number_1.setText(other_card_number_1);
                         }
-                        if (edt_current_grantee_number!=null || edt_current_grantee_number.length()!=4){
-                            edt_current_grantee_number.setText(current_grantee_card_number);
+                        if (edt_card_number_prefilled!=null || edt_card_number_prefilled.length()!=4){
+                            edt_card_number_prefilled.setText(current_grantee_card_number);
                         }
-//                        if (edt_other_card_holder_name_1!=null || edt_other_card_holder_name_1.length()!=4){
-//                            edt_other_card_holder_name_1.setText(other_card_holder_name_1);
-//                        }
                         if (edt_other_card_number_2!=null || edt_other_card_number_2.length()!=4){
                             edt_other_card_number_2.setText(other_card_number_2);
                         }
-//                        if (edt_other_card_holder_name_2!=null || edt_other_card_holder_name_2.length()!=4){
-//                            edt_other_card_holder_name_2.setText(other_card_holder_name_2);
-//                        }
 
                         String card_holder3 =other_card_number_3;
                         if (card_holder3.matches("null")){edt_other_card_number_3.setText("");}
                         else{edt_other_card_number_3.setText(other_card_number_3);}
-//                        String card_holder_3 =other_cardholder_name_3;
-//                        if (card_holder_3.matches("null")){edt_other_card_holder_name_3.setText("");}
-//                        else {edt_other_card_holder_name_3.setText(other_cardholder_name_3);}
                     }
                     else {
                         Toasty.info(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
@@ -3552,15 +5096,15 @@ public class ScanCashCard extends AppCompatActivity {
 
     public void btn_CheckNextValidation(){
         String household_no ="";
-        household_no = edt_hh.getText().toString();
+        household_no = edt_hh_id.getText().toString();
         try {
             if (!household_no.matches("")){
-                search = MainActivity.sqLiteHelper.getData("SELECT id,full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_card_holder_name_3,upload_history_id,created_at,updated_at,validated_at FROM emv_database_monitoring WHERE hh_id='"+household_no+"'");
-                while (search.moveToNext()) {
-                    emv_id = search.getInt(0);
-                    full_name = search.getString(1);
-                    hh_id = search.getString(2);
-                }
+                search = MainActivity.sqLiteHelper.getData("SELECT id,full_name,hh_id,hh_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_card_holder_name_3,upload_history_id,created_at,updated_at,validated_at FROM emv_database_monitoring WHERE hh_id='"+household_no+"'");
+//                while (search.moveToNext()) {
+//                    emv_id = search.getInt(0);
+//                    full_name = search.getString(1);
+//                    hh_id = search.getString(2);
+//                }
                 if (search ==null || search.getCount() == 0){
                     SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
@@ -3582,118 +5126,6 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
 
-    public void representativeOne(){
-        edtRepresentativeOne.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                if(s.toString().length() ==0){
-                    tilRepresentativeIntroOne.setError(required_field);
-                }
-                else{
-                    tilRepresentativeIntroOne.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-    }
-
-    public void contactNumber(){
-        edt_contact_no.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-
-                if(s.toString().length() != 10){
-                    tilContactNo.setError(required_field);
-                }
-                else{
-                    tilContactNo.setError(null);
-                }
-
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-    }
-    public void contactNumberOf(){
-        spinnerContactNoOf.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                if(s.toString().length() == 0){
-                    tilContactNoOf.setError(required_field);
-                }
-                else{
-                    tilContactNoOf.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-    }
-
-    public void granteeOne(){
-        spinnerGrantee.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-
-                if(s.toString().length() == 0){
-                    tilGranteeOne.setError(required_field);
-                }
-                else{
-                    tilGranteeOne.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-    }
-
-    public void setEntry(){
-        edt_set.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                if(s.toString().length() == 0){
-                    tilSet.setError(required_field);
-                }
-                else{
-                    tilSet.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-    }
-
-
     public void HouseholdOnChange(EditText household){
         household.addTextChangedListener(new TextWatcher() {
             @Override
@@ -3706,11 +5138,11 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("pressBtn_search", "false");
                 myEdit.commit();
                 if(s.toString().length() ==0){
-                    tilHhId.setError("Not enough length");
+                    til_hh_id.setError("Not enough length");
                 }
                 else{
 
-                    tilHhId.setError(null);
+                    til_hh_id.setError(null);
                 }
             }
             @Override
@@ -3728,10 +5160,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilCardReleased.setError(required_field);
+                    til_release_date.setError(required_field);
                 }
                 else{
-                    tilCardReleased.setError(null);
+                    til_release_date.setError(null);
                 }
             }
             @Override
@@ -3741,8 +5173,8 @@ public class ScanCashCard extends AppCompatActivity {
         });
     }
 
-    public void whoReleased(EditText who_released){
-        who_released.addTextChangedListener(new TextWatcher() {
+    public void whoReleased(EditText edt_release_by){
+        edt_release_by.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3750,10 +5182,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilWhoReleased.setError(required_field);
+                    til_release_place.setError(required_field);
                 }
                 else{
-                    tilWhoReleased.setError(null);
+                    til_release_place.setError(null);
                 }
             }
             @Override
@@ -3772,10 +5204,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilPlaceReleased.setError(required_field);
+                    til_release_place.setError(required_field);
                 }
                 else{
-                    tilPlaceReleased.setError(null);
+                    til_release_place.setError(null);
                 }
             }
             @Override
@@ -3786,7 +5218,7 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public void availableReason(){
-        spinIsAvailReason.addTextChangedListener(new TextWatcher() {
+        aat_reason_not_presented.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3794,10 +5226,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilAvailablereason.setError(required_field);
+                    til_reason_not_presented.setError(required_field);
                 }
                 else{
-                    tilAvailablereason.setError(null);
+                    til_reason_not_presented.setError(null);
                 }
             }
             @Override
@@ -3808,7 +5240,7 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public void reasonNotPresented(){
-        edtReasonNotPresented.addTextChangedListener(new TextWatcher() {
+        edt_others_reason_not_presented.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3816,10 +5248,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilReasonNotPresented.setError(required_field);
+                    til_reason_not_presented.setError(required_field);
                 }
                 else{
-                    tilReasonNotPresented.setError(null);
+                    til_reason_not_presented.setError(null);
                 }
             }
             @Override
@@ -3832,7 +5264,7 @@ public class ScanCashCard extends AppCompatActivity {
 
 
     public void otherReasonForUnclaimed(){
-        edtOthersUnclaimedReason.addTextChangedListener(new TextWatcher() {
+        edt_others_reason_unclaimed.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3840,10 +5272,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilOthersUnclaimedReason.setError(required_field);
+                    til_others_reason_unclaimed.setError(required_field);
                 }
                 else{
-                    tilOthersUnclaimedReason.setError(null);
+                    til_others_reason_unclaimed.setError(null);
                 }
             }
             @Override
@@ -3856,7 +5288,7 @@ public class ScanCashCard extends AppCompatActivity {
 
 
     public void pinAttatched(){
-        spinnerIsPinAttached.addTextChangedListener(new TextWatcher() {
+        aat_card_pin_is_attached.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3864,10 +5296,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilPinAttached.setError(required_field);
+                    til_card_pin_is_attached.setError(required_field);
                 }
                 else{
-                    tilPinAttached.setError(null);
+                    til_card_pin_is_attached.setError(null);
                 }
             }
             @Override
@@ -3878,7 +5310,7 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public void unclaimedReason(){
-        spinnerIsUnclaimedReason.addTextChangedListener(new TextWatcher() {
+        aat_reason_unclaimed.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3886,10 +5318,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilUnclaimedReason.setError(required_field);
+                    til_reason_unclaimed.setError(required_field);
                 }
                 else{
-                    tilUnclaimedReason.setError(null);
+                    til_reason_unclaimed.setError(null);
                 }
             }
             @Override
@@ -3900,7 +5332,7 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public void requestReplacement(){
-        spinnerIsReasonReplacement.addTextChangedListener(new TextWatcher() {
+        aat_card_replacement_request.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3908,10 +5340,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilRequestReplacement.setError(required_field);
+                    til_card_replacement_request.setError(required_field);
                 }
                 else{
-                    tilRequestReplacement.setError(null);
+                    til_card_replacement_request.setError(null);
                 }
             }
             @Override
@@ -3922,7 +5354,7 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public void replacementSubmitted(){
-        edtCardReplacement.addTextChangedListener(new TextWatcher() {
+        edt_card_replacement_request_submitted_details.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3930,10 +5362,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilCardReplacement.setError(required_field);
+                    til_card_replacement_request_submitted_details.setError(required_field);
                 }
                 else{
-                    tilCardReplacement.setError(null);
+                    til_card_replacement_request_submitted_details.setError(null);
                 }
             }
             @Override
@@ -3944,7 +5376,7 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public void representativeTwo(){
-        edtRepresentativeTwo.addTextChangedListener(new TextWatcher() {
+        edt_representative_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -3952,10 +5384,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilRepresentativeIntroTwo.setError(required_field);
+                    til_representative_name.setError(required_field);
                 }
                 else{
-                    tilRepresentativeIntroTwo.setError(null);
+                    til_representative_name.setError(null);
                 }
             }
             @Override
@@ -3964,7 +5396,6 @@ public class ScanCashCard extends AppCompatActivity {
             }
         });
     }
-
 
 
     public void cardAvailable(AutoCompleteTextView spnAvail){
@@ -3976,10 +5407,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() == 0){
-                    tilIsAvailable.setError(required_field);
+                    til_card_physically_presented.setError(required_field);
                 }
                 else{
-                    tilIsAvailable.setError(null);
+                    til_card_physically_presented.setError(null);
                 }
             }
             @Override
@@ -4075,10 +5506,10 @@ public class ScanCashCard extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 if(s.toString().length() ==0){
-                    tilLenderName.setError(required_field);
+                    til_lender_name.setError(required_field);
                 }
                 else{
-                    tilLenderName.setError(null);
+                    til_lender_name.setError(null);
                 }
             }
             @Override
@@ -4141,26 +5572,6 @@ public class ScanCashCard extends AppCompatActivity {
             }
         });
     }
-    public void clearFields(){
-        spinnerIsReasonReplacement.setText("");
-        spinnerIsUnclaimedReason.setText("");
-        edt_lender_name.setText("");
-        edtOthersUnclaimedReason.setText("");
-        edt_pawning_date.setText("");
-        edt_loaned_amount.setText("");
-        edt_lender_address.setText("");
-        edt_date_retrieved.setText("");
-        edt_interest.setText("");
-        spinStatus.setText("");
-        edt_pawning_reason.setText("");
-        spinOffenseHistory.setText("");
-        edt_offense_history_date.setText("");
-        edt_pd_remarks.setText("");
-        edt_intervention.setText("");
-        edt_other_details.setText("");
-        edtReasonNotPresented.setText("");
-    }
-
     public void clearSharedPref(){
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
@@ -4168,7 +5579,7 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("hh_id", "160310001-");
         myEdit.putInt("emv_id", 0);
         myEdit.putString("full_name", "");
-        myEdit.putString("client_status", "");
+        myEdit.putString("hh_status", "");
         myEdit.putString("address", "");
         myEdit.putString("sex", "");
         myEdit.putString("hh_set_group", "");
@@ -4178,22 +5589,19 @@ public class ScanCashCard extends AppCompatActivity {
         //2
         myEdit.putString("distribution_status", "");
         myEdit.putString("card_released", "");
-        myEdit.putString("who_released", "");
+        myEdit.putString("edt_release_by", "");
         myEdit.putString("place_released", "");
         myEdit.putString("current_grantee_number", "");
         myEdit.putString("temp_current_grantee_number", "");
         myEdit.putString("is_available", "");
         myEdit.putString("is_available_reason", "");
         myEdit.putString("other_card_number_1", "");
-//        myEdit.putString("other_card_holder_name_1", "");
         myEdit.putString("other_is_available_1", "");
         myEdit.putString("other_is_available_reason_1", "");
         myEdit.putString("other_card_number_2", "");
-//        myEdit.putString("other_card_holder_name_2", "");
         myEdit.putString("other_is_available_2", "");
         myEdit.putString("other_is_available_reason_2", "");
         myEdit.putString("other_card_number_3", "");
-//        myEdit.putString("other_card_holder_name_3", "");
         myEdit.putString("other_is_available_3", "");
         myEdit.putString("other_is_available_reason_3", "");
         myEdit.putString("other_card_number_series_1", "");
@@ -4205,26 +5613,6 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("date_withdrawn", "");
         myEdit.putString("remarks", "");
         //4
-        myEdit.putString("lender_name", "");
-        myEdit.putString("pawning_date", "");
-        myEdit.putString("loaned_amount", "");
-        myEdit.putString("lender_address", "");
-        myEdit.putString("date_retrieved", "");
-        myEdit.putString("interest", "");
-        myEdit.putString("spin_status", "");
-        myEdit.putString("pawning_reason", "");
-        myEdit.putString("offense_history", "");
-        myEdit.putString("offense_history_date", "");
-        myEdit.putString("pd_remarks", "");
-        myEdit.putString("intervention", "");
-        myEdit.putString("other_details", "");
-        myEdit.putString("pressBtn_search", "false");
-        myEdit.putString("is_additional", "");
-        myEdit.putString("scanned_cash_card", "");
-        myEdit.putString("series_number", "");
         myEdit.commit();
     }
-
-
-
 }

@@ -223,7 +223,6 @@ public class LogsData extends AppCompatActivity {
             filterDate = filterData.getString("date");
         }
 
-
         try {
             Cursor logsData;
             if (filterData!=null) {
