@@ -735,14 +735,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
                 JSONObject extractedData = remoteData.getJSONObject(i);
                 try {
-
-                    Log.v(TAG,"blavblal");
-
                     SQLiteDatabase database = getWritableDatabase();
                     String sql = "INSERT INTO emv_validations (id,first_name, last_name, middle_name, ext_name, hh_id, hh_status, province, municipality, barangay, " +
                             "sex, hh_set_group, nma_amount, grantee_card_number, grantee_distribution_status,grantee_card_release_date, " +
-                            "other_card_number_1,other_card_distribution_status_1,other_card_release_date_1," +
-                            "other_card_number_2,other_card_distribution_status_2,other_card_release_date_2,upload_history_id,record_counter,created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                            "other_card_number_1,other_card_holder_1,other_card_distribution_status_1,other_card_release_date_1," +
+                            "other_card_number_2,other_card_holder_2,other_card_distribution_status_2,other_card_release_date_2," +
+                            "other_card_number_3,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3," +
+                            "other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4," +
+                            "other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5," +
+                            "upload_history_id,record_counter,created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                     SQLiteStatement statement = database.compileStatement(sql);
                     statement.clearBindings();
@@ -763,16 +764,30 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     statement.bindString(15, extractedData.getString("grantee_distribution_status"));
                     statement.bindString(16, extractedData.getString("grantee_card_release_date"));
                     statement.bindString(17, extractedData.getString("other_card_number_1"));
-                    statement.bindString(18, extractedData.getString("other_card_distribution_status_1"));
-                    statement.bindString(19, extractedData.getString("other_card_release_date_1"));
-                    statement.bindString(20, extractedData.getString("other_card_number_2"));
-                    statement.bindString(21, extractedData.getString("other_card_distribution_status_2"));
-                    statement.bindString(22, extractedData.getString("other_card_release_date_2"));
-                    statement.bindString(23, extractedData.getString("upload_history_id"));
-                    statement.bindString(24, extractedData.getString("record_counter"));
-                    statement.bindString(25, extractedData.getString("created_at"));
-                    statement.bindString(26, extractedData.getString("updated_at"));
-                    statement.bindString(27, extractedData.getString("validated_at"));
+                    statement.bindString(18, extractedData.getString("other_card_holder_1"));
+                    statement.bindString(19, extractedData.getString("other_card_distribution_status_1"));
+                    statement.bindString(20, extractedData.getString("other_card_release_date_1"));
+                    statement.bindString(21, extractedData.getString("other_card_number_2"));
+                    statement.bindString(22, extractedData.getString("other_card_holder_2"));
+                    statement.bindString(23, extractedData.getString("other_card_distribution_status_2"));
+                    statement.bindString(24, extractedData.getString("other_card_release_date_2"));
+                    statement.bindString(25, extractedData.getString("other_card_number_3"));
+                    statement.bindString(26, extractedData.getString("other_card_holder_3"));
+                    statement.bindString(27, extractedData.getString("other_card_distribution_status_3"));
+                    statement.bindString(28, extractedData.getString("other_card_release_date_3"));
+                    statement.bindString(29, extractedData.getString("other_card_number_4"));
+                    statement.bindString(30, extractedData.getString("other_card_holder_4"));
+                    statement.bindString(31, extractedData.getString("other_card_distribution_status_4"));
+                    statement.bindString(32, extractedData.getString("other_card_release_date_4"));
+                    statement.bindString(33, extractedData.getString("other_card_number_5"));
+                    statement.bindString(34, extractedData.getString("other_card_holder_5"));
+                    statement.bindString(35, extractedData.getString("other_card_distribution_status_5"));
+                    statement.bindString(36, extractedData.getString("other_card_release_date_5"));
+                    statement.bindString(37, extractedData.getString("upload_history_id"));
+                    statement.bindString(38, extractedData.getString("record_counter"));
+                    statement.bindString(39, extractedData.getString("created_at"));
+                    statement.bindString(40, extractedData.getString("updated_at"));
+                    statement.bindString(41, extractedData.getString("validated_at"));
                     statement.executeInsert();
                 }
                 catch(Exception e){
