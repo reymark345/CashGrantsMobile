@@ -124,8 +124,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
             String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?)";
-            String sql4 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),?,?,?)";
-            String sql5 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?)";
+            String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,?)";
             String sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?)";
 
             SQLiteStatement grantee_validations = database.compileStatement(sql1);
@@ -170,24 +170,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             nma_validations.bindString(5, strDate);
             nma_validations.executeInsert();
 
-
-            SQLiteStatement emv_validation_details = database.compileStatement(sql4);
-            emv_validation_details.clearBindings();
-            emv_validation_details.bindString(1, hh_status);
-            emv_validation_details.bindString(2, contact_no);
-            emv_validation_details.bindString(3, contact_no_of);
-            emv_validation_details.bindString(4, is_grantee);
-            emv_validation_details.bindString(5, is_minor);
-            emv_validation_details.bindString(6, relationship_to_grantee);
-            emv_validation_details.bindString(7, assigned_staff);
-            emv_validation_details.bindString(8, representative_name);
-            emv_validation_details.bindString(12, sync_at);
-            emv_validation_details.bindLong(13, user_id);
-            emv_validation_details.bindString(14, strDate);
-            emv_validation_details.executeInsert();
-
-
-            SQLiteStatement card_validation_details = database.compileStatement(sql5);
+            SQLiteStatement card_validation_details = database.compileStatement(sql4);
             card_validation_details.clearBindings();
             card_validation_details.bindString(1, card_number_prefilled);
             card_validation_details.bindString(2, card_number_system_generated);
@@ -206,6 +189,20 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             card_validation_details.bindString(15, strDate);
             card_validation_details.executeInsert();
 
+            SQLiteStatement emv_validation_details = database.compileStatement(sql5);
+            emv_validation_details.clearBindings();
+            emv_validation_details.bindString(1, hh_status);
+            emv_validation_details.bindString(2, contact_no);
+            emv_validation_details.bindString(3, contact_no_of);
+            emv_validation_details.bindString(4, is_grantee);
+            emv_validation_details.bindString(5, is_minor);
+            emv_validation_details.bindString(6, relationship_to_grantee);
+            emv_validation_details.bindString(7, assigned_staff);
+            emv_validation_details.bindString(8, representative_name);
+            emv_validation_details.bindString(12, sync_at);
+            emv_validation_details.bindLong(13, user_id);
+            emv_validation_details.bindString(14, strDate);
+            emv_validation_details.executeInsert();
 
             SQLiteStatement other_card_validations1 = database.compileStatement(sql6);
             other_card_validations1.clearBindings();
@@ -311,6 +308,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations5.bindString(16, strDate);
 //            other_card_validations_5.bindString(15, emv_monitoring_id_5);
             other_card_validations5.executeInsert();
+            Log.v(TAG,"Insertedddd" + first_name);
         }
         catch(Exception e){
             Log.v(TAG,"hala naay errors"+ e);
