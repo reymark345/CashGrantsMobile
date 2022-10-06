@@ -4960,28 +4960,33 @@ public class ScanCashCard extends AppCompatActivity {
                         myEdit.putString("pressBtn_search", "true");
                         myEdit.commit();
 
-
-                        edt_last_name.setText(full_name);
-                        aat_hh_status.setText(hh_status,false);
                         aat_set.setText(hh_set_group);
+                        edt_last_name.setText(last_name);
+                        edt_first_name.setText(first_name);
+                        edt_middle_name.setText(middle_name);
+                        aat_ext_name.setText(ext_name);
+                        aat_hh_status.setText(hh_status,false);
+                        aat_province_code.setText(province,false);
+                        aat_municipality_code.setText(municipality,false);
+                        aat_barangay_code.setText(barangay,false);
                         aat_sex.setText(sex,false);
-
                         edt_contact_no.setText("");
                         Toasty.success(getApplicationContext(),"Household Found", Toasty.LENGTH_SHORT).show();
 
-                        if (other_card_number_1!=null || other_card_number_1.length()!=4){
-                            edt_other_card_number_1.setText(other_card_number_1);
-                        }
-                        if (edt_card_number_prefilled!=null || edt_card_number_prefilled.length()!=4){
-                            edt_card_number_prefilled.setText(current_grantee_card_number);
-                        }
-                        if (edt_other_card_number_2!=null || edt_other_card_number_2.length()!=4){
-                            edt_other_card_number_2.setText(other_card_number_2);
-                        }
 
-                        String card_holder3 =other_card_number_3;
-                        if (card_holder3.matches("null")){edt_other_card_number_3.setText("");}
-                        else{edt_other_card_number_3.setText(other_card_number_3);}
+//                        if (other_card_number_1!=null || other_card_number_1.length()!=4){
+//                            edt_other_card_number_1.setText(other_card_number_1);
+//                        }
+//                        if (edt_card_number_prefilled!=null || edt_card_number_prefilled.length()!=4){
+//                            edt_card_number_prefilled.setText(current_grantee_card_number);
+//                        }
+//                        if (edt_other_card_number_2!=null || edt_other_card_number_2.length()!=4){
+//                            edt_other_card_number_2.setText(other_card_number_2);
+//                        }
+
+//                        String card_holder3 =other_card_number_3;
+//                        if (card_holder3.matches("null")){edt_other_card_number_3.setText("");}
+//                        else{edt_other_card_number_3.setText(other_card_number_3);}
                     }
                     else {
                         Toasty.info(getApplicationContext(),"Household " + household_no + " already validated" + " " +validated_at, Toasty.LENGTH_SHORT).show();
