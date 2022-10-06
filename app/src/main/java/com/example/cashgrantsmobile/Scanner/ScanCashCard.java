@@ -4945,7 +4945,6 @@ public class ScanCashCard extends AppCompatActivity {
 
                         myEdit.putInt("emv_id", emv_id);
                         myEdit.putString("hh_id", hh_id);
-
                         myEdit.putString("first_name", first_name);
                         myEdit.putString("last_name", last_name);
                         myEdit.putString("middle_name", middle_name);
@@ -4954,10 +4953,32 @@ public class ScanCashCard extends AppCompatActivity {
                         myEdit.putString("province", province);
                         myEdit.putString("municipality", municipality);
                         myEdit.putString("barangay", barangay);
-
                         myEdit.putString("sex", sex);
                         myEdit.putString("hh_set_group", hh_set_group);
                         myEdit.putString("pressBtn_search", "true");
+                        myEdit.putString("grantee_card_number", grantee_card_number);
+                        myEdit.putString("grantee_distribution_status", grantee_distribution_status);
+                        myEdit.putString("grantee_card_release_date", grantee_card_release_date);
+                        myEdit.putString("other_card_number_1", other_card_number_1);
+                        myEdit.putString("other_card_holder_1", other_card_holder_1);
+                        myEdit.putString("other_card_distribution_status_1", other_card_distribution_status_1);
+                        myEdit.putString("other_card_release_date_1", other_card_release_date_1);
+                        myEdit.putString("other_card_number_2", other_card_number_2);
+                        myEdit.putString("other_card_holder_2", other_card_holder_2);
+                        myEdit.putString("other_card_distribution_status_2", other_card_distribution_status_2);
+                        myEdit.putString("other_card_release_date_2", other_card_release_date_2);
+                        myEdit.putString("other_card_number_3", other_card_number_3);
+                        myEdit.putString("other_card_holder_3", other_card_holder_3);
+                        myEdit.putString("other_card_distribution_status_3", other_card_distribution_status_3);
+                        myEdit.putString("other_card_release_date_3", other_card_release_date_3);
+                        myEdit.putString("other_card_number_4", other_card_number_4);
+                        myEdit.putString("other_card_holder_4", other_card_holder_4);
+                        myEdit.putString("other_card_distribution_status_4", other_card_distribution_status_4);
+                        myEdit.putString("other_card_release_date_4", other_card_release_date_4);
+                        myEdit.putString("other_card_number_5", other_card_number_5);
+                        myEdit.putString("other_card_holder_5", other_card_holder_5);
+                        myEdit.putString("other_card_distribution_status_5", other_card_distribution_status_5);
+                        myEdit.putString("other_card_release_date_5", other_card_release_date_5);
                         myEdit.commit();
 
                         aat_set.setText(hh_set_group);
