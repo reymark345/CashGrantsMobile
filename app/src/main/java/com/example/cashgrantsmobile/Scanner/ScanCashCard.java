@@ -113,7 +113,7 @@ public class ScanCashCard extends AppCompatActivity {
     Uri image_uri;
 
     String full_name,hh_id,client_status,address,sex,hh_set_group,current_grantee_card_number,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3, first_name,last_name,middle_name,ext_name,hh_status,province,municipality,barangay,nma_amount,grantee_card_number,grantee_card_release_date,other_card_release_date_1,other_card_release_date_2,grantee_distribution_status,other_card_distribution_status_1,other_card_distribution_status_2,upload_history_id,other_card_holder_1,other_card_holder_2,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4, other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5,created_at,updated_at,validated_at;
-    Integer emv_id,record_counter;
+    Integer emv_monitoring_id,record_counter;
 
     TextView tvAdditional,tViewCashCard1;
     ImageView mPreviewCashCard,mAdditionalID,mPreviewGrantee, mImgUri;
@@ -2808,7 +2808,7 @@ public class ScanCashCard extends AppCompatActivity {
 
     private void launchHomeScreen() {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-//        int emv_id = sh.getInt("emv_id", 0);
+
         String household_id = sh.getString("hh_id", "");
         String first_name = sh.getString("first_name","");
         String last_name = sh.getString("last_name","");
@@ -2849,6 +2849,8 @@ public class ScanCashCard extends AppCompatActivity {
         String representative_name = sh.getString("representative_name","");
         String sync_at = sh.getString("sync_at","");
         int user_id = sh.getInt("user_id",0);
+        int emv_validation_id = sh.getInt("emv_calidation_id",0);
+
 
         String card_number_prefilled = sh.getString("card_number_prefilled","");
         String card_number_system_generated = sh.getString("card_number_system_generated","");
@@ -2958,7 +2960,7 @@ public class ScanCashCard extends AppCompatActivity {
                     sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code,barangay_code,set,
                             lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
                             amount, date_claimed, nma_reason, nma_remarks,
-                            hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name,sync_at, user_id,
+                            hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name,sync_at, user_id,emv_validation_id,
                             card_number_prefilled, card_number_system_generated,  card_number_unputted,  card_number_series,  distribution_status,  release_date,  release_by,  release_place,  card_physically_presented,  card_pin_is_attached,  reason_not_presented, reason_unclaimed,  card_replacement_request,  card_replacement_submitted_details,  emv_monitoring_id,
                             card_holder_name1,card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
                             card_holder_name2,card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2,  release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
@@ -4884,7 +4886,7 @@ public class ScanCashCard extends AppCompatActivity {
             if (!household_no.matches("")){
                Cursor search = MainActivity.sqLiteHelper.getData("SELECT id,first_name,last_name,middle_name,ext_name,hh_id,hh_status,province,municipality,barangay,sex,hh_set_group,nma_amount,grantee_card_number,grantee_distribution_status,grantee_card_release_date,other_card_number_1,other_card_holder_1,other_card_distribution_status_1,other_card_release_date_1,other_card_number_2,other_card_holder_2,other_card_distribution_status_2,other_card_release_date_2,other_card_number_3,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4,other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5,upload_history_id,record_counter,created_at,updated_at,validated_at FROM emv_validations WHERE hh_id='"+household_no+"'");
                 while (search.moveToNext()) {
-                    emv_id = search.getInt(0);
+                    emv_monitoring_id = search.getInt(0);
                     first_name = search.getString(1);
                     last_name = search.getString(2);
                     middle_name = search.getString(3);
@@ -4943,7 +4945,7 @@ public class ScanCashCard extends AppCompatActivity {
                         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-                        myEdit.putInt("emv_id", emv_id);
+                        myEdit.putInt("emv_monitoring_id", emv_monitoring_id);
                         myEdit.putString("hh_id", hh_id);
                         myEdit.putString("first_name", first_name);
                         myEdit.putString("last_name", last_name);
@@ -5603,7 +5605,7 @@ public class ScanCashCard extends AppCompatActivity {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         //1
         myEdit.putString("hh_id", "160310001-");
-        myEdit.putInt("emv_id", 0);
+        myEdit.putInt("emv_monitoring_id", 0);
         myEdit.putString("full_name", "");
         myEdit.putString("hh_status", "");
         myEdit.putString("address", "");
