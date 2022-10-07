@@ -2991,7 +2991,7 @@ public class ScanCashCard extends AppCompatActivity {
 
     private void launchHomeScreen() {
 
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
 
         String household_id = sh.getString("hh_id", "");
         String first_name = sh.getString("first_name","");
@@ -3002,7 +3002,7 @@ public class ScanCashCard extends AppCompatActivity {
         String province_code = sh.getString("province_code","");
         String municipality_code = sh.getString("municipality_code","");
         String barangay_code = sh.getString("barangay_code","");
-        String set = sh.getString("set","");
+        String set = sh.getString("hh_set","");
 
         String lender_name = sh.getString("lender_name","");
         String lender_address = sh.getString("lender_address","");
@@ -4908,7 +4908,7 @@ public class ScanCashCard extends AppCompatActivity {
             if (!household_no.matches("")){
                Cursor search = MainActivity.sqLiteHelper.getData("SELECT id,first_name,last_name,middle_name,ext_name,hh_id,hh_status,province,municipality,barangay,sex,hh_set_group,nma_amount,grantee_card_number,grantee_distribution_status,grantee_card_release_date,other_card_number_1,other_card_holder_1,other_card_distribution_status_1,other_card_release_date_1,other_card_number_2,other_card_holder_2,other_card_distribution_status_2,other_card_release_date_2,other_card_number_3,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4,other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5,upload_history_id,record_counter,created_at,updated_at,validated_at FROM emv_validations WHERE hh_id='"+household_no+"'");
                 while (search.moveToNext()) {
-                    emv_id = search.getInt(0);
+//                    emv_id = search.getInt(0);
                     first_name = search.getString(1);
                     last_name = search.getString(2);
                     middle_name = search.getString(3);
@@ -4967,7 +4967,7 @@ public class ScanCashCard extends AppCompatActivity {
                         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-                        myEdit.putInt("emv_id", emv_id);
+//                        myEdit.putInt("emv_id", emv_id);
                         myEdit.putString("hh_id", hh_id);
 
                         myEdit.putString("first_name", first_name);
