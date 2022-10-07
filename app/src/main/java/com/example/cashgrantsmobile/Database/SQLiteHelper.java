@@ -189,6 +189,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             card_validation_details.bindString(15, strDate);
             card_validation_details.executeInsert();
 
+
             SQLiteStatement emv_validation_details = database.compileStatement(sql5);
             emv_validation_details.clearBindings();
             emv_validation_details.bindString(1, hh_status);
@@ -396,10 +397,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertDefaultScannedTmp(byte[] cc_image){
+    public void insertDefaultScannedTmp(String col_name, byte[] cc_image){
         try {
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "INSERT INTO tmp_blob VALUES (1,?,null,null,null,null,null,null,null)";
+            String sql = "INSERT INTO tmp_blob (id, "+col_name+") VALUES (1,?)";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.clearBindings();
             statement.bindBlob(1, cc_image);
@@ -463,10 +464,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
 
-    public void updateTmpScannedCC(byte[] cc_image){
+    public void updateTmpScannedCC(String col_name, byte[] cc_image){
         try {
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE tmp_blob SET scanned_e_image = ? WHERE id = 1";
+            String sql = "UPDATE tmp_blob SET "+col_name+" = ? WHERE id = 1";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.bindBlob(1, cc_image);
             statement.execute();
