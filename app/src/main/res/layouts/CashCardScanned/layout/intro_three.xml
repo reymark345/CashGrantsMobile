@@ -40,7 +40,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_nmaamount"
+                    android:id="@+id/til_nma_amount"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_currency_ruble_24">
 
                     <EditText
-                        android:id="@+id/edtNmaAmount"
+                        android:id="@+id/edt_nma_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="NMA Amount"
@@ -61,22 +61,22 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_nmareason"
+                    android:id="@+id/til_nma_reason"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_nmaamount"
-                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/til_nma_amount"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spnWhyMma"
+                        android:id="@+id/aat_nma_reason"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:hint="Reason for NMA"
@@ -84,7 +84,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_otherReasonNma"
+                    android:id="@+id/til_nma_others_reason"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,13 +93,14 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     app:endIconMode="clear_text"
+                    app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtOtherReasonNma"
+                        android:id="@+id/edt_nma_others_reason"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="80dp"
                         android:hint="Other reason for NMA"
                         android:inputType="textMultiLine"
                         android:overScrollMode="always"
@@ -109,11 +110,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_datewithdrawn"
+                    android:id="@+id/til_nma_date_claimed"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_nmareason"
+                    android:layout_below="@+id/til_nma_reason"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -122,7 +123,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                     <EditText
-                        android:id="@+id/edtDateWithdrawn"
+                        android:id="@+id/edt_nma_date_claimed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Date Withdrawn/Claimed"
@@ -130,11 +131,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_remarks"
+                    android:id="@+id/til_nma_remarks"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_datewithdrawn"
+                    android:layout_below="@+id/til_nma_date_claimed"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
@@ -143,7 +144,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtRemarks"
+                        android:id="@+id/edt_nma_remarks"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:hint="Remarks"
@@ -155,7 +156,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_overallremarks"
+                    android:id="@+id/til_nma_overall_remarks"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -169,7 +170,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                     <EditText
-                        android:id="@+id/edtOverAllRemarks"
+                        android:id="@+id/edt_nma_overall_remarks"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:hint="Overall Remarks"

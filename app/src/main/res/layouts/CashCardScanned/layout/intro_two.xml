@@ -670,7 +670,7 @@
                     app:srcCompat="@drawable/ic_image" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_card"
+                    android:id="@+id/til_current_scan_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tViewId"
@@ -689,8 +689,6 @@
                         android:layout_marginRight="30dp"
                         android:text="SCAN"
                         android:textColor="@color/white" />
-
-
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -811,7 +809,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginEnd="20dp"
                             android:text="SCAN"
                             android:textColor="@color/white" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -924,10 +922,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_holder_name1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_holder_name1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Card Holder Name"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status1"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_holder_name1"
                         android:layout_marginTop="10dp"
                         app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
@@ -1288,7 +1305,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text" />
+                                android:inputType="text"
+                                android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </RelativeLayout>
@@ -1335,10 +1353,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_holder_name2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_holder_name2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Card Holder Name"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status2"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_holder_name2"
                         android:layout_marginTop="10dp"
                         app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
@@ -1422,6 +1459,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_release_place2"
                         android:layout_marginTop="10dp"
+                        app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
 
@@ -1441,6 +1479,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_card_physically_presented2"
                         android:layout_marginTop="10dp"
+                        app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
@@ -1460,6 +1499,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_card_pin_is_attached2"
                         android:layout_marginTop="10dp"
+                        app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
@@ -1499,6 +1539,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_others_reason_not_presented2"
                         android:layout_marginTop="10dp"
+                        app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
@@ -1697,7 +1738,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text" />
+                                android:inputType="text"
+                                android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </RelativeLayout>
@@ -1744,11 +1786,30 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_holder_name3"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_holder_name3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Card Holder Name"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status3"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_below="@+id/til_card_holder_name3"
                         app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
@@ -2107,7 +2168,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text" />
+                                android:inputType="text"
+                                android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </RelativeLayout>
@@ -2154,10 +2216,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_holder_name4"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_holder_name4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Card Holder Name"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status4"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_holder_name4"
                         android:layout_marginTop="10dp"
                         app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
@@ -2517,7 +2598,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text" />
+                                android:inputType="text"
+                                android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </RelativeLayout>
@@ -2566,10 +2648,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_holder_name5"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_holder_name5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Card Holder Name"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status5"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_holder_name5"
                         android:layout_marginTop="10dp"
                         app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
@@ -2928,7 +3029,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text" />
+                                android:inputType="text"
+                                android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </RelativeLayout>
