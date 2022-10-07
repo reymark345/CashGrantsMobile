@@ -727,6 +727,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
+
+    public void deletePSGC() {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "DELETE FROM psgc";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.execute();
+        database.close();
+    }
     public void insertEmvData(JSONArray remoteData) {
         for (int i=0; i < remoteData.length(); i++) {
             try {

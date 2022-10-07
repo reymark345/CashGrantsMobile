@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
-                android:text="Pull Data"
+                android:text="Pull PSGC Data"
                 android:fontFamily="sans-serif-condensed"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="15dp" />
@@ -32,7 +32,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progressBarPsgc"
         style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="20dp"
@@ -44,12 +44,12 @@
         app:mpb_showProgressBackground="true" />
 
     <TextView
-        android:id="@+id/progressCount"
+        android:id="@+id/progressCountPsgc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:layout_alignLeft="@id/progressBar"
-        android:layout_below="@id/progressBar"
+        android:layout_alignLeft="@id/progressBarPsgc"
+        android:layout_below="@id/progressBarPsgc"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp" />
@@ -59,19 +59,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="23dp"
         android:text="%"
-        android:layout_alignLeft="@id/progressBar"
-        android:layout_below="@id/progressBar"
+        android:layout_alignLeft="@id/progressBarPsgc"
+        android:layout_below="@id/progressBarPsgc"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp" />
 
     <TextView
-        android:id="@+id/progressFigure"
+        android:id="@+id/progressFigurePsgc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:layout_alignRight="@id/progressBar"
-        android:layout_below="@id/progressBar"
+        android:layout_alignRight="@id/progressBarPsgc"
+        android:layout_below="@id/progressBarPsgc"
         android:layout_marginRight="42dp"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -81,20 +81,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/"
-        android:layout_alignRight="@id/progressBar"
-        android:layout_below="@id/progressBar"
+        android:layout_alignRight="@id/progressBarPsgc"
+        android:layout_below="@id/progressBarPsgc"
         android:layout_marginRight="33dp"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp" />
 
     <TextView
-        android:id="@+id/progressFigureLast"
+        android:id="@+id/progressFigureLastPsgc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:layout_alignRight="@id/progressBar"
-        android:layout_below="@id/progressBar"
+        android:layout_alignRight="@id/progressBarPsgc"
+        android:layout_below="@id/progressBarPsgc"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp" />

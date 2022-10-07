@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
+import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +36,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
 public class PullPsgcData extends AppCompatActivity {
@@ -54,7 +56,7 @@ public class PullPsgcData extends AppCompatActivity {
             lastID = lastEmvDatabaseID.getInt(0);
         }
 
-        progressCount = findViewById(R.id.progressFigure);
+        progressCount = findViewById(R.id.progressFigurePsgc);
 
         progressCount.setText(lastID.toString());
 
@@ -94,10 +96,10 @@ public class PullPsgcData extends AppCompatActivity {
 
                         Log.v(TAG,"Success");
 
-                        progressCount = findViewById(R.id.progressFigure);
-                        progressTarget = findViewById(R.id.progressFigureLast);
-                        progressPercent = findViewById(R.id.progressCount);
-                        progressBar = findViewById(R.id.progressBar);
+                        progressCount = findViewById(R.id.progressFigurePsgc);
+                        progressTarget = findViewById(R.id.progressFigureLastPsgc);
+                        progressPercent = findViewById(R.id.progressCountPsgc);
+                        progressBar = findViewById(R.id.progressBarPsgc);
                         textView1 = findViewById(R.id.textView1);
                         Double localId = Double.valueOf(getLastID());
                         Double remoteId = Double.valueOf(totalDataCount);
@@ -197,12 +199,24 @@ public class PullPsgcData extends AppCompatActivity {
 
         getLastID();
         pullPsgcData(true);
-
         btnPullPsgc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (pullstatus.matches("completed")) {
-//                    updatePsgcData();
+                    new SweetAlertDialog(PullPsgcData.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Update Data and Pull?")
+                            .setContentText("Please confirm to update changes")
+                            .setConfirmText("Confirm")
+                            .showCancelButton(false)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sqLiteHelper.deletePSGC();
+                                    pullPsgcData(false);
+                                    sDialog.dismiss();
+                                    Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
+                                }
+                            }).show();
                 } else {
                     Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
                     pullPsgcData(false);
