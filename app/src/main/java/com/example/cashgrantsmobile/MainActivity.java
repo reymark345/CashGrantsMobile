@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.cashgrantsmobile.Database.SQLiteHelper;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
+import com.example.cashgrantsmobile.PullUpdate.PullPsgcData;
 import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 import com.google.android.material.navigation.NavigationView;
 
@@ -35,10 +36,10 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView CashCardScanner, InventoryList, PullUpdateData, SyncData, LogsData, Logout;
+    CardView CashCardScanner, InventoryList, PullUpdateData,PullPsgcData, SyncData, LogsData, Logout;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
-    TextView txtInventoryCount, txtPullUpdateDataCount, txtLogsTotal, txtSyncDataCount, txtScannedTotal, txtErrorTotal, txtIncompleteTotal, txtSyncData;
+    TextView txtInventoryCount, txtPullUpdateDataCount,txtPullPsgcDataCount, txtLogsTotal, txtSyncDataCount, txtScannedTotal, txtErrorTotal, txtIncompleteTotal, txtSyncData;
     public boolean EnableNightMode = false;
     private String night = "true";
     private String light = "false";
@@ -57,13 +58,14 @@ public class MainActivity extends AppCompatActivity {
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS logs(id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR, type VARCHAR, hh_id VARCHAR, description VARCHAR, created_at TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS tmp_blob(Id INTEGER PRIMARY KEY AUTOINCREMENT, scanned_e_image BLOB, additional_id_image BLOB,grantee_e_image BLOB, other_card_e_image_1 BLOB,other_card_e_image_2 BLOB,other_card_e_image_3 BLOB,other_card_e_image_4 BLOB,other_card_e_image_5 BLOB)");
 
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_validation_details(id INTEGER PRIMARY KEY AUTOINCREMENT, hh_status VARCHAR, contact_no VARCHAR, contact_no_of VARCHAR, is_grantee VARCHAR, is_minor VARCHAR, relationship_to_grantee VARCHAR, assigned_staff VARCHAR, representative_name VARCHAR, grantee_id INTEGER, pawning_validation_detail_id INTEGER, nma_validation_id INTEGER, sync_at TIMESTAMP, user_id INTEGER, created_at TIMESTAMP)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_validation_details(id INTEGER PRIMARY KEY AUTOINCREMENT, hh_status VARCHAR, contact_no VARCHAR, contact_no_of VARCHAR, is_grantee VARCHAR, is_minor VARCHAR, relationship_to_grantee VARCHAR, assigned_staff VARCHAR, representative_name VARCHAR, grantee_validation_id INTEGER, pawning_validation_detail_id INTEGER, nma_validation_id INTEGER, card_validation_detail_id INTEGER,emv_validation_id INTEGER, sync_at TIMESTAMP, user_id INTEGER, created_at TIMESTAMP, updated_at TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS grantee_validations(id INTEGER PRIMARY KEY AUTOINCREMENT, hh_id INTEGER, first_name VARCHAR, last_name VARCHAR, middle_name VARCHAR, ext_name VARCHAR, sex VARCHAR, province_code VARCHAR, municipality_code VARCHAR, barangay_code VARCHAR, hh_set VARCHAR, created_at TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS nma_validations(id INTEGER PRIMARY KEY AUTOINCREMENT, amount DECIMAL, date_claimed DATE, reason VARCHAR, remarks VARCHAR,created_at TIMESTAMP)");
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS card_validation_details(id INTEGER PRIMARY KEY AUTOINCREMENT, card_number_prefilled VARCHAR, card_number_system_generated VARCHAR, card_number_inputted VARCHAR, card_number_series VARCHAR, distribution_status VARCHAR, release_date DATE, release_by VARCHAR, release_place VARCHAR, card_physically_presented VARCHAR, card_pin_is_attached VARCHAR, reason_not_presented VARCHAR, reason_unclaimed VARCHAR, card_replacement_requests VARCHAR,card_replacement_submitted_details VARCHAR, emv_monitoring_id INTEGER,created_at TIMESTAMP)");
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS other_card_validations(id INTEGER PRIMARY KEY AUTOINCREMENT,card_holder_name VARCHAR,card_number_system_generated VARCHAR, card_number_inputted VARCHAR, card_number_series VARCHAR, distribution_status VARCHAR, release_date DATE, release_by VARCHAR, release_place VARCHAR, card_physically_presented VARCHAR, card_pin_is_attached VARCHAR, reason_not_presented VARCHAR, reason_unclaimed VARCHAR, card_replacement_requests VARCHAR,card_replacement_request_submitted_details VARCHAR,pawning_remarks VARCHAR, emv_monitoring_id INTEGER,created_at TIMESTAMP)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS card_validation_details(id INTEGER PRIMARY KEY AUTOINCREMENT, card_number_prefilled VARCHAR, card_number_system_generated VARCHAR, card_number_inputted VARCHAR, card_number_series VARCHAR, distribution_status VARCHAR, release_date DATE, release_by VARCHAR, release_place VARCHAR, card_physically_presented VARCHAR, card_pin_is_attached VARCHAR, reason_not_presented VARCHAR, reason_unclaimed VARCHAR, card_replacement_requests VARCHAR,card_replacement_submitted_details VARCHAR,created_at TIMESTAMP)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS other_card_validations(id INTEGER PRIMARY KEY AUTOINCREMENT,card_holder_name VARCHAR,card_number_system_generated VARCHAR, card_number_inputted VARCHAR, card_number_series VARCHAR, distribution_status VARCHAR, release_date DATE, release_by VARCHAR, release_place VARCHAR, card_physically_presented VARCHAR, card_pin_is_attached VARCHAR, reason_not_presented VARCHAR, reason_unclaimed VARCHAR, card_replacement_requests VARCHAR,card_replacement_request_submitted_details VARCHAR,pawning_remarks VARCHAR, emv_validation_detail_id INTEGER,created_at TIMESTAMP)");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS pawning_validation_details(id INTEGER PRIMARY KEY AUTOINCREMENT, lender_name VARCHAR, lender_address VARCHAR, date_pawned DATE, date_retrieved DATE, loan_amount DECIMAL, status VARCHAR, reason VARCHAR, interest DECIMAL, offense_history VARCHAR, offense_date VARCHAR, remarks VARCHAR, staff_intervention VARCHAR,other_details VARCHAR,created_at TIMESTAMP)");
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_validations(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name VARCHAR, last_name VARCHAR, middle_name VARCHAR, ext_name VARCHAR, hh_id VARCHAR, hh_status VARCHAR, province VARCHAR, municipality VARCHAR, barangay VARCHAR, sex VARCHAR, hh_set_group VARCHAR, nma_amount DECIMAL,grantee_card_number VARCHAR,grantee_distribution_status VARCHAR, grantee_card_release_date VARCHAR, other_card_number_1 VARCHAR,other_card_holder_1 VARCHAR,other_card_distribution_status_1 VARCHAR,other_card_release_date_1 VARCHAR, other_card_number_2 VARCHAR,other_card_holder_2 VARCHAR,other_card_distribution_status_2 VARCHAR,other_card_release_date_2,other_card_number_3 VARCHAR,other_card_holder_3 VARCHAR,other_card_distribution_status_3 VARCHAR,other_card_release_date_3 VARCHAR, other_card_number_4 VARCHAR,other_card_holder_4 VARCHAR,other_card_distribution_status_4 VARCHAR,other_card_release_date_4 VARCHAR,other_card_number_5 VARCHAR,other_card_holder_5 VARCHAR,other_card_distribution_status_5 VARCHAR,other_card_release_date_5 VARCHAR,upload_history_id VARCHAR,record_counter VARCHAR,created_at TIMESTAMP,updated_at TIMESTAMP,validated_at DATE)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS emv_validations(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name VARCHAR, last_name VARCHAR, middle_name VARCHAR, ext_name VARCHAR, hh_id VARCHAR, hh_status VARCHAR, province VARCHAR, municipality VARCHAR, barangay VARCHAR, sex VARCHAR, hh_set_group VARCHAR, nma_amount DECIMAL,grantee_card_number VARCHAR,grantee_distribution_status VARCHAR, grantee_card_release_date VARCHAR, other_card_number_1 VARCHAR,other_card_holder_name_1 VARCHAR,other_card_distribution_status_1 VARCHAR,other_card_release_date_1 VARCHAR, other_card_number_2 VARCHAR,other_card_holder_name_2 VARCHAR,other_card_distribution_status_2 VARCHAR,other_card_release_date_2,other_card_number_3 VARCHAR,other_card_holder_name_3 VARCHAR,other_card_distribution_status_3 VARCHAR,other_card_release_date_3 VARCHAR, other_card_number_4 VARCHAR,other_card_holder_name_4 VARCHAR,other_card_distribution_status_4 VARCHAR,other_card_release_date_4 VARCHAR,other_card_number_5 VARCHAR,other_card_holder_name_5 VARCHAR,other_card_distribution_status_5 VARCHAR,other_card_release_date_5 VARCHAR,upload_history_id VARCHAR,record_counter VARCHAR,created_at TIMESTAMP,updated_at TIMESTAMP,validated_at DATE)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS psgc(id INTEGER PRIMARY KEY AUTOINCREMENT, name_new VARCHAR, name_old VARCHAR, code VARCHAR, correspondence_code VARCHAR, geographic_level VARCHAR, create_at TIMESTAMP, updated_at TIMESTAMP)");
     }
 
     @Override
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         CashCardScanner = (CardView) findViewById(R.id.cvCashCard);
         InventoryList = (CardView) findViewById(R.id.cvCashCardList);
         PullUpdateData = (CardView) findViewById(R.id.cvPullUpdateData);
+        PullPsgcData = (CardView) findViewById(R.id.cvPullPsgcData);
         LogsData = (CardView) findViewById(R.id.logsItem);
         SyncData = (CardView) findViewById(R.id.cvSyncData);
         Logout = (CardView) findViewById(R.id.cvLogout);
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         //TextView
         txtInventoryCount =(TextView)findViewById(R.id.txtInventoryAmount);
         txtPullUpdateDataCount = findViewById(R.id.textPullUpdateData);
+        txtPullPsgcDataCount = findViewById(R.id.textPullPsgcData);
         txtSyncDataCount = findViewById(R.id.txtSyncData);
         txtScannedTotal = findViewById(R.id.scannedTotal);
         txtErrorTotal = findViewById(R.id.errorTotal);
@@ -172,6 +176,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.PullUpdate.PullUpdateData.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        PullPsgcData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.PullUpdate.PullPsgcData.class);
                 startActivity(intent);
                 finish();
             }
@@ -261,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Cursor listCount = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,accomplish_by_full_name,beneficiary_picture,cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details");
         Cursor emvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations");
+        Cursor psgcList = MainActivity.sqLiteHelper.getData("SELECT id FROM psgc");
         Cursor emvListValidated = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring WHERE validated_at != 'null'");
         Cursor unsyncEmvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details");
         Cursor scanned_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"' AND type='scanned'");
@@ -271,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtInventoryCount.setText(String.valueOf(listCount.getCount()));
         txtPullUpdateDataCount.setText(String.valueOf(emvList.getCount()));
+        txtPullPsgcDataCount.setText(String.valueOf(psgcList.getCount()));
         txtSyncDataCount.setText(String.valueOf(unsyncEmvList.getCount()));
         txtScannedTotal.setText(String.valueOf(scanned_total.getCount()));
         txtErrorTotal.setText(String.valueOf(error_total.getCount()));

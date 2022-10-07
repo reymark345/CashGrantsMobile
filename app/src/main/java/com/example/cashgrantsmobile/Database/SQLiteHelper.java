@@ -108,7 +108,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void insertDatabase(String hh_id,String first_name,String last_name,String middle_name,String ext_name,String sex,String province,String municipality, String barangay, String set,
                                String lender_name,String lender_address,String date_pawned,String date_retrieved,String loaned_amount,String status,String reason,String interest,String offense_history,String offense_date,String remarks,String staff_intervention,String other_details,
                                String amount,String date_claimed,String nma_reason,String nma_remarks,
-                               String hh_status,String contact_no,String contact_no_of,String is_grantee,String is_minor,String relationship_to_grantee,String assigned_staff,String representative_name, String sync_at, int user_id,
+                               String hh_status,String contact_no,String contact_no_of,String is_grantee,String is_minor,String relationship_to_grantee,String assigned_staff,String representative_name, String sync_at, int user_id, int emv_validation_id,
                                String card_number_prefilled, String card_number_system_generated, String card_number_unputted, String card_number_series, String distribution_status, String release_date, String release_by, String release_place, String card_physically_presented, String card_pin_is_attached, String reason_not_presented,String reason_unclaimed, String card_replacement_request, String card_replacement_submitted_details, String emv_monitoring_id,
                                String card_holder_name1,String card_number_system_generated1,String card_number_inputted1,String card_number_series1,String distribution_status1,String release_date1,String release_by1,String release_place1,String card_physically_presented1,String card_pin_is_attached1,String reason_not_presented1,String reason_unclaimed1,String card_replacement_request1,String card_replacement_request_submitted_details1,String pawning_remarks1,
                                String card_holder_name2,String card_number_system_generated2,String card_number_inputted2,String card_number_series2,String distribution_status2, String release_date2,String release_by2,String release_place2,String card_physically_presented2,String card_pin_is_attached2,String reason_not_presented2,String reason_unclaimed2,String card_replacement_request2,String card_replacement_request_submitted_details2,String pawning_remarks2,
@@ -124,8 +124,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
             String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?)";
-            String sql4 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),?,?,?)";
-            String sql5 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?)";
+            String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,?)";
             String sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?)";
 
             SQLiteStatement grantee_validations = database.compileStatement(sql1);
@@ -170,24 +170,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             nma_validations.bindString(5, strDate);
             nma_validations.executeInsert();
 
-
-            SQLiteStatement emv_validation_details = database.compileStatement(sql4);
-            emv_validation_details.clearBindings();
-            emv_validation_details.bindString(1, hh_status);
-            emv_validation_details.bindString(2, contact_no);
-            emv_validation_details.bindString(3, contact_no_of);
-            emv_validation_details.bindString(4, is_grantee);
-            emv_validation_details.bindString(5, is_minor);
-            emv_validation_details.bindString(6, relationship_to_grantee);
-            emv_validation_details.bindString(7, assigned_staff);
-            emv_validation_details.bindString(8, representative_name);
-            emv_validation_details.bindString(12, sync_at);
-            emv_validation_details.bindLong(13, user_id);
-            emv_validation_details.bindString(14, strDate);
-            emv_validation_details.executeInsert();
-
-
-            SQLiteStatement card_validation_details = database.compileStatement(sql5);
+            SQLiteStatement card_validation_details = database.compileStatement(sql4);
             card_validation_details.clearBindings();
             card_validation_details.bindString(1, card_number_prefilled);
             card_validation_details.bindString(2, card_number_system_generated);
@@ -205,6 +188,22 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             card_validation_details.bindString(14, card_replacement_submitted_details);
             card_validation_details.bindString(15, strDate);
             card_validation_details.executeInsert();
+
+
+            SQLiteStatement emv_validation_details = database.compileStatement(sql5);
+            emv_validation_details.clearBindings();
+            emv_validation_details.bindString(1, hh_status);
+            emv_validation_details.bindString(2, contact_no);
+            emv_validation_details.bindString(3, contact_no_of);
+            emv_validation_details.bindString(4, is_grantee);
+            emv_validation_details.bindString(5, is_minor);
+            emv_validation_details.bindString(6, relationship_to_grantee);
+            emv_validation_details.bindString(7, assigned_staff);
+            emv_validation_details.bindString(8, representative_name);
+            emv_validation_details.bindString(12, sync_at);
+            emv_validation_details.bindLong(13, user_id);
+            emv_validation_details.bindString(14, strDate);
+            emv_validation_details.executeInsert();
 
             SQLiteStatement other_card_validations1 = database.compileStatement(sql6);
             other_card_validations1.clearBindings();
@@ -310,6 +309,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations5.bindString(16, strDate);
 //            other_card_validations_5.bindString(15, emv_monitoring_id_5);
             other_card_validations5.executeInsert();
+            Log.v(TAG,"Insertedddd" + first_name);
         }
         catch(Exception e){
             Log.v(TAG,"hala naay errors"+ e);
@@ -728,6 +728,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
+
+    public void deletePSGC() {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "DELETE FROM psgc";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.execute();
+        database.close();
+    }
     public void insertEmvData(JSONArray remoteData) {
         for (int i=0; i < remoteData.length(); i++) {
             try {
@@ -737,11 +746,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     SQLiteDatabase database = getWritableDatabase();
                     String sql = "INSERT INTO emv_validations (id,first_name, last_name, middle_name, ext_name, hh_id, hh_status, province, municipality, barangay, " +
                             "sex, hh_set_group, nma_amount, grantee_card_number, grantee_distribution_status,grantee_card_release_date, " +
-                            "other_card_number_1,other_card_holder_1,other_card_distribution_status_1,other_card_release_date_1," +
-                            "other_card_number_2,other_card_holder_2,other_card_distribution_status_2,other_card_release_date_2," +
-                            "other_card_number_3,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3," +
-                            "other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4," +
-                            "other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5," +
+                            "other_card_number_1,other_card_holder_name_1,other_card_distribution_status_1,other_card_release_date_1," +
+                            "other_card_number_2,other_card_holder_name_2,other_card_distribution_status_2,other_card_release_date_2," +
+                            "other_card_number_3,other_card_holder_name_3,other_card_distribution_status_3,other_card_release_date_3," +
+                            "other_card_number_4,other_card_holder_name_4,other_card_distribution_status_4,other_card_release_date_4," +
+                            "other_card_number_5,other_card_holder_name_5,other_card_distribution_status_5,other_card_release_date_5," +
                             "upload_history_id,record_counter,created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                     SQLiteStatement statement = database.compileStatement(sql);
@@ -763,23 +772,23 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     statement.bindString(15, extractedData.getString("grantee_distribution_status"));
                     statement.bindString(16, extractedData.getString("grantee_card_release_date"));
                     statement.bindString(17, extractedData.getString("other_card_number_1"));
-                    statement.bindString(18, extractedData.getString("other_card_holder_1"));
+                    statement.bindString(18, extractedData.getString("other_card_holder_name_1"));
                     statement.bindString(19, extractedData.getString("other_card_distribution_status_1"));
                     statement.bindString(20, extractedData.getString("other_card_release_date_1"));
                     statement.bindString(21, extractedData.getString("other_card_number_2"));
-                    statement.bindString(22, extractedData.getString("other_card_holder_2"));
+                    statement.bindString(22, extractedData.getString("other_card_holder_name_2"));
                     statement.bindString(23, extractedData.getString("other_card_distribution_status_2"));
                     statement.bindString(24, extractedData.getString("other_card_release_date_2"));
                     statement.bindString(25, extractedData.getString("other_card_number_3"));
-                    statement.bindString(26, extractedData.getString("other_card_holder_3"));
+                    statement.bindString(26, extractedData.getString("other_card_holder_name_3"));
                     statement.bindString(27, extractedData.getString("other_card_distribution_status_3"));
                     statement.bindString(28, extractedData.getString("other_card_release_date_3"));
                     statement.bindString(29, extractedData.getString("other_card_number_4"));
-                    statement.bindString(30, extractedData.getString("other_card_holder_4"));
+                    statement.bindString(30, extractedData.getString("other_card_holder_name_4"));
                     statement.bindString(31, extractedData.getString("other_card_distribution_status_4"));
                     statement.bindString(32, extractedData.getString("other_card_release_date_4"));
                     statement.bindString(33, extractedData.getString("other_card_number_5"));
-                    statement.bindString(34, extractedData.getString("other_card_holder_5"));
+                    statement.bindString(34, extractedData.getString("other_card_holder_name_5"));
                     statement.bindString(35, extractedData.getString("other_card_distribution_status_5"));
                     statement.bindString(36, extractedData.getString("other_card_release_date_5"));
                     statement.bindString(37, extractedData.getString("upload_history_id"));
@@ -832,6 +841,40 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     }
 
+
+    public void insertPsgcData(JSONArray remoteData) {
+        for (int i=0; i < remoteData.length(); i++) {
+            try {
+
+                JSONObject extractedData = remoteData.getJSONObject(i);
+                try {
+                    SQLiteDatabase database = getWritableDatabase();
+                    String sql = "INSERT INTO psgc (id,name_new, name_old, code, correspondence_code, geographic_level, created_at, updated_at) " +
+                            "VALUES (?,?,?,?,?,?,?,?)";
+
+                    SQLiteStatement statement = database.compileStatement(sql);
+                    statement.clearBindings();
+                    statement.bindLong(1, extractedData.getInt("id"));
+                    statement.bindString(2, extractedData.getString("name_new"));
+                    statement.bindString(3, extractedData.getString("name_old"));
+                    statement.bindString(4, extractedData.getString("code"));
+                    statement.bindString(5, extractedData.getString("correspondence_code"));
+                    statement.bindString(6, extractedData.getString("geographic_level"));
+                    statement.bindString(7, extractedData.getString("created_at"));
+                    statement.bindString(8, extractedData.getString("updated_at"));
+                    statement.executeInsert();
+                    Log.v(TAG,"Ni Insert");
+                }
+                catch(Exception e){
+                    Log.v(TAG,"Error wala"+e );
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
     public  void deleteEmvMonitoringDetails(int id) {
         SQLiteDatabase database = getWritableDatabase();
         String sql = "DELETE FROM emv_database_monitoring_details WHERE id = ?";
