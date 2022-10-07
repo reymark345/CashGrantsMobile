@@ -132,6 +132,8 @@
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/activity_splash.xml" value="0.1743659420289855" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/activity_splash_login.xml" value="0.25" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/check_internet_dialog.xml" value="0.35688405797101447" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_3.xml" value="0.25625" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_4.xml" value="0.25625" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_5.xml" value="0.3415384615384615" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_psgc.xml" value="0.3177083333333333" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_main.xml" value="0.23641304347826086" />
@@ -150,6 +152,7 @@
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_two.xml" value="0.3103629668595476" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/loading_bar_layout.xml" value="0.2890625" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/pull_data.xml" value="0.24320652173913043" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/pull_psgc_data.xml" value="0.3177083333333333" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/pull_update_data.xml" value="0.11145833333333334" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/sidebar_header.xml" value="0.2509057971014493" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/testing.xml" value="0.32382246376811596" />

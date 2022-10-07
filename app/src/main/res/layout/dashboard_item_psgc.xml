@@ -24,7 +24,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvPullUpdateData"
+        android:id="@+id/cvPullPsgcData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
@@ -46,7 +46,7 @@
             android:paddingBottom="@dimen/_16sdp">
 
             <TextView
-                android:id="@+id/textPullUpdateData"
+                android:id="@+id/textPullPsgcData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
