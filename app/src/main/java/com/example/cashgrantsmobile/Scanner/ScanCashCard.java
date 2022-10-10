@@ -61,6 +61,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -314,6 +315,10 @@ public class ScanCashCard extends AppCompatActivity {
     String psgc_province = "";
     String psgc_municipality = "";
     String psgc_barangay = "";
+
+    final ArrayList<String> province_list = new ArrayList<String>();
+    final ArrayList<String> municipality_list = new ArrayList<String>();
+    final ArrayList<String> barangay_list = new ArrayList<String>();
 
     public Integer getUserId() {
 
@@ -1144,13 +1149,11 @@ public class ScanCashCard extends AppCompatActivity {
             SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
             SharedPreferences.Editor myEdit = sh.edit();
 
-            final ArrayList<String> province_list = new ArrayList<String>();
-            final ArrayList<String> municipality_list = new ArrayList<String>();
-            final ArrayList<String> barangay_list = new ArrayList<String>();
+
             Cursor get_db_prov = sqLiteHelper.getData("SELECT name_old FROM psgc WHERE geographic_level='province'");
 
             while(get_db_prov.moveToNext()) {
-                province_list.add(get_db_prov.getString(0));
+                province_list.add(get_db_prov.getString(0).toUpperCase());
             }
 
             String[] prov_list = new String[province_list.size()];
@@ -1279,95 +1282,21 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_province_code.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Cursor get_prov_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE name_old='"+aat_province_code.getText().toString()+"' AND geographic_level='province' LIMIT 1");
-                        String split_prov_psgc = null;
-
-                        aat_municipality_code.setText(null, false);
-                        aat_barangay_code.setText(null, false);
-                        municipality_list.clear();
-                        barangay_list.clear();
-
-                        try {
-                            while (get_prov_psgc.moveToNext()) {
-                                psgc_province = get_prov_psgc.getString(0);
-                                split_prov_psgc = get_prov_psgc.getString(0);
-                                split_prov_psgc = split_prov_psgc.substring(0,4);
-                            }
-                        } finally {
-                            get_prov_psgc.close();
-                        }
-
-                        Cursor muni_data = sqLiteHelper.getData("SELECT name_old FROM psgc WHERE correspondence_code LIKE '%"+split_prov_psgc+"%' AND geographic_level='municipality'");
-                        municipality_list.clear();
-                        try {
-                            while(muni_data.moveToNext()) {
-                                municipality_list.add(muni_data.getString(0));
-                            }
-                        } finally {
-                            muni_data.close();
-                        }
-
-                        String[] muni_list = new String[municipality_list.size()];
-                        muni_list = municipality_list.toArray(muni_list);
-
-                        ArrayAdapter<String> adapterMunicipality = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, muni_list);
-                        adapterMunicipality.setDropDownViewResource(simple_spinner_dropdown_item);
-                        aat_municipality_code.setAdapter(adapterMunicipality);
-
+                        province_event();
                     }
                 });
 
                 aat_municipality_code.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String split_prov_code = psgc_province.substring(0, 4);
-                        Cursor get_muni_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE name_old='"+aat_municipality_code.getText().toString()+"' AND geographic_level='municipality' AND correspondence_code LIKE '%"+split_prov_code+"%' LIMIT 1");
-                        String split_muni_psgc = null;
-
-                        aat_barangay_code.setText(null, false);
-                        barangay_list.clear();
-
-                        try {
-                            while (get_muni_psgc.moveToNext()) {
-                                psgc_municipality = get_muni_psgc.getString(0);
-                                split_muni_psgc = get_muni_psgc.getString(0);
-                                split_muni_psgc = split_muni_psgc.substring(0,6);
-                            }
-                        } finally {
-                            get_muni_psgc.close();
-                        }
-
-                        Cursor brgy_data = sqLiteHelper.getData("SELECT name_old FROM psgc WHERE correspondence_code LIKE '%"+split_muni_psgc+"%' AND geographic_level='barangay'");
-                        barangay_list.clear();
-                        try {
-                            while(brgy_data.moveToNext()) {
-                                barangay_list.add(brgy_data.getString(0));
-                            }
-                        } finally {
-                            brgy_data.close();
-                        }
-
-                        String[] brgy_list = new String[barangay_list.size()];
-                        brgy_list = barangay_list.toArray(brgy_list);
-
-                        ArrayAdapter<String> adapterBarangay = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, brgy_list);
-                        adapterBarangay.setDropDownViewResource(simple_spinner_dropdown_item);
-                        aat_barangay_code.setAdapter(adapterBarangay);
+                        municipality_event();
                     }
                 });
 
                 aat_barangay_code.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String split_muni_code = psgc_municipality.substring(0, 6);
-                        Cursor get_brgy_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE name_old='"+aat_barangay_code.getText().toString()+"' AND geographic_level='barangay' AND correspondence_code LIKE '%"+ split_muni_code +"%' LIMIT 1");
-                        try {
-                            while (get_brgy_psgc.moveToNext()) {
-                                psgc_barangay = get_brgy_psgc.getString(0);
-                            }
-                        } finally {
-                            get_brgy_psgc.close();
-                        }
+                        barangay_event();
                     }
                 });
 
@@ -4733,6 +4662,92 @@ public class ScanCashCard extends AppCompatActivity {
         }
     }
 
+    public void province_event() {
+        Cursor get_prov_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_old)='"+aat_province_code.getText().toString()+"' AND geographic_level='province' LIMIT 1");
+        String split_prov_psgc = null;
+
+        aat_municipality_code.setText(null, false);
+        aat_barangay_code.setText(null, false);
+        municipality_list.clear();
+        barangay_list.clear();
+
+        try {
+            while (get_prov_psgc.moveToNext()) {
+                psgc_province = get_prov_psgc.getString(0);
+                split_prov_psgc = get_prov_psgc.getString(0);
+                split_prov_psgc = split_prov_psgc.substring(0,4);
+            }
+        } finally {
+            get_prov_psgc.close();
+        }
+
+        Cursor muni_data = sqLiteHelper.getData("SELECT name_old FROM psgc WHERE correspondence_code LIKE '%"+split_prov_psgc+"%' AND geographic_level='municipality'");
+        municipality_list.clear();
+        try {
+            while(muni_data.moveToNext()) {
+                municipality_list.add(muni_data.getString(0).toUpperCase());
+            }
+        } finally {
+            muni_data.close();
+        }
+
+        String[] muni_list = new String[municipality_list.size()];
+        muni_list = municipality_list.toArray(muni_list);
+
+        ArrayAdapter<String> adapterMunicipality = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, muni_list);
+        adapterMunicipality.setDropDownViewResource(simple_spinner_dropdown_item);
+        aat_municipality_code.setAdapter(adapterMunicipality);
+
+    }
+
+    public void municipality_event() {
+        String split_prov_code = psgc_province.substring(0, 4);
+        Cursor get_muni_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_old)='"+aat_municipality_code.getText().toString()+"' AND geographic_level='municipality' AND correspondence_code LIKE '%"+split_prov_code+"%' LIMIT 1");
+        String split_muni_psgc = null;
+
+        aat_barangay_code.setText(null, false);
+        barangay_list.clear();
+
+        try {
+            while (get_muni_psgc.moveToNext()) {
+                psgc_municipality = get_muni_psgc.getString(0);
+                split_muni_psgc = get_muni_psgc.getString(0);
+                split_muni_psgc = split_muni_psgc.substring(0,6);
+            }
+        } finally {
+            get_muni_psgc.close();
+        }
+
+        Cursor brgy_data = sqLiteHelper.getData("SELECT name_old FROM psgc WHERE correspondence_code LIKE '%"+split_muni_psgc+"%' AND geographic_level='barangay'");
+        barangay_list.clear();
+        try {
+            while(brgy_data.moveToNext()) {
+                barangay_list.add(brgy_data.getString(0).toUpperCase());
+            }
+        } finally {
+            brgy_data.close();
+        }
+
+        String[] brgy_list = new String[barangay_list.size()];
+        brgy_list = barangay_list.toArray(brgy_list);
+
+        ArrayAdapter<String> adapterBarangay = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, brgy_list);
+        adapterBarangay.setDropDownViewResource(simple_spinner_dropdown_item);
+        aat_barangay_code.setAdapter(adapterBarangay);
+    }
+
+    public void barangay_event() {
+        String split_muni_code = psgc_municipality.substring(0, 6);
+        Cursor get_brgy_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_old)='"+aat_barangay_code.getText().toString()+"' AND geographic_level='barangay' AND correspondence_code LIKE '%"+ split_muni_code +"%' LIMIT 1");
+        try {
+            while (get_brgy_psgc.moveToNext()) {
+                psgc_barangay = get_brgy_psgc.getString(0);
+            }
+        } finally {
+            get_brgy_psgc.close();
+        }
+    }
+
     public void store_preferences(int pos) {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
@@ -5139,8 +5154,11 @@ public class ScanCashCard extends AppCompatActivity {
                         aat_ext_name.setText(ext_name);
                         aat_hh_status.setText(hh_status,false);
                         aat_province_code.setText(province,false);
+                        province_event();
                         aat_municipality_code.setText(municipality,false);
+                        municipality_event();
                         aat_barangay_code.setText(barangay,false);
+                        barangay_event();
                         aat_sex.setText(sex,false);
                         edt_contact_no.setText("");
                         Toasty.success(getApplicationContext(),"Household Found", Toasty.LENGTH_SHORT).show();
@@ -5159,7 +5177,12 @@ public class ScanCashCard extends AppCompatActivity {
 //            Toasty.error(getApplicationContext(),"Household not found" + e, Toasty.LENGTH_SHORT).show();
 //        }
     }
-
+    public void showSoftKeyboard(View view){
+        if(view.requestFocus()){
+            InputMethodManager imm =(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view,InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
 //    public void btn_func(){
 //        String household_no ="";
 //        household_no = edt_hh.getText().toString();
