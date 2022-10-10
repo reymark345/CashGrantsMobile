@@ -27,6 +27,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = getWritableDatabase();
         database.execSQL(sql);
     }
+
     public void insertDarkModeStatus(String status){
         SQLiteDatabase database = getWritableDatabase();
         String sql = "INSERT INTO DarkMode VALUES (NULL,?)";
