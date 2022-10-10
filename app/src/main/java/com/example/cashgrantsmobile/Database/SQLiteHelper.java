@@ -316,12 +316,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 //            other_card_validations_5.bindString(15, emv_monitoring_id_5);
             other_card_validations5.executeInsert();
 
-//            String sql = "UPDATE emv_validations SET validated_at = ? WHERE hh_id = ?";
-//            SQLiteStatement statement = database.compileStatement(sql);
-//            statement.bindString(1, strDate);
-//            statement.bindString(2, hh_id);
-//            statement.execute();
-//            database.close();
+            String sql = "UPDATE emv_validations SET validated_at = ? WHERE hh_id = ?";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindString(1, strDate);
+            statement.bindString(2, hh_id);
+            statement.execute();
+            database.close();
         }
         catch(Exception e){
             Log.v(TAG,"hala naay errors"+ e);
