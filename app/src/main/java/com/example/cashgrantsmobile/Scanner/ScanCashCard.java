@@ -2353,7 +2353,11 @@ public class ScanCashCard extends AppCompatActivity {
                 String pawning_remarks3 = sh.getString("pawning_remarks3", "");
                 String pawning_remarks4 = sh.getString("pawning_remarks4", "");
                 String pawning_remarks5 = sh.getString("pawning_remarks5", "");
+                String current_grantee_card_old = sh.getString("current_grantee_card_old", "");
 
+
+
+                edt_card_number_prefilled.setText(current_grantee_card_old);
                 aat_distribution_status.setText(distribution_status, false);
                 edt_release_date.setText(release_date);
                 edt_release_by.setText(release_by);
@@ -2686,10 +2690,12 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_nma_remarks.setText(nma_remarks);
                 edt_nma_overall_remarks.setText(nma_overall_remarks);
 
-                if (Integer.parseInt(nma_amount) >= 100) {
-                    til_nma_reason.setVisibility(View.VISIBLE);
-                    if (nma_reason.matches("Others")) {
-                        til_nma_others_reason.setVisibility(View.VISIBLE);
+                if (!TextUtils.isEmpty(nma_amount)) {
+                    if (Integer.parseInt(nma_amount) >= 100) {
+                        til_nma_reason.setVisibility(View.VISIBLE);
+                        if (nma_reason.matches("Others")) {
+                            til_nma_others_reason.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
 
@@ -3033,7 +3039,7 @@ public class ScanCashCard extends AppCompatActivity {
         String representative_name = sh.getString("representative_name","");
         String sync_at = sh.getString("sync_at","");
         int user_id = sh.getInt("user_id",0);
-        int emv_validation_id = sh.getInt("emv_calidation_id",0);
+        int emv_validation_id = sh.getInt("emv_alidation_id",0);
 
 
         String card_number_prefilled = sh.getString("card_number_prefilled","");
@@ -3050,7 +3056,7 @@ public class ScanCashCard extends AppCompatActivity {
         String reason_unclaimed = sh.getString("reason_unclaimed","");
         String card_replacement_request = sh.getString("card_replacement_request","");
         String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details","");
-        String emv_monitoring_id = sh.getString("emv_monitoring_id","");
+        int emv_monitoring_id = sh.getInt("emv_monitoring_id",0);
 
         String card_holder_name1 = sh.getString("card_holder_name1","");
         String card_number_system_generated1 = sh.getString("card_number_system_generated1","");
@@ -3151,7 +3157,11 @@ public class ScanCashCard extends AppCompatActivity {
                             card_holder_name3,card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3,  release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
                             card_holder_name4,card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
                             card_holder_name5,card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5);
-//                    sDialog.dismiss();
+                    sDialog.dismiss();
+                    clear_preferences();
+                    Intent intent = new Intent(ScanCashCard.this, ScanCashCard.class);
+                    startActivity(intent);
+                    finish();
                 }
             })
             .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -4657,6 +4667,7 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.commit();
                 break;
             case 2:
+                String grantee_card_old = edt_card_number_prefilled.getText().toString();
                 String distribution_status = aat_distribution_status.getText().toString();
                 String release_date = edt_release_date.getText().toString();
                 String release_by = edt_release_by.getText().toString();
@@ -4767,6 +4778,7 @@ public class ScanCashCard extends AppCompatActivity {
                 String pawning_remarks4 = edt_pawning_remarks1.getText().toString();
                 String pawning_remarks5 = edt_pawning_remarks1.getText().toString();
 
+                myEdit.putString("current_grantee_card_old", grantee_card_old);
                 myEdit.putString("distribution_status", distribution_status);
                 myEdit.putString("release_date", release_date);
                 myEdit.putString("release_by", release_by);
@@ -4980,7 +4992,7 @@ public class ScanCashCard extends AppCompatActivity {
                         myEdit.putString("sex", sex);
                         myEdit.putString("hh_set", hh_set_group);
                         myEdit.putString("pressBtn_search", "true");
-                        myEdit.putString("grantee_card_number", grantee_card_number);
+                        myEdit.putString("current_grantee_card_old", grantee_card_number);
                         myEdit.putString("grantee_distribution_status", grantee_distribution_status);
                         myEdit.putString("grantee_card_release_date", grantee_card_release_date);
                         myEdit.putString("other_card_number_1", other_card_number_1);
@@ -5210,6 +5222,7 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("assigned_staff","");
         myEdit.putString("is_minor","");
         //2
+        myEdit.putString("current_grantee_card_old", "");
         myEdit.putString("distribution_status", "");
         myEdit.putString("release_date", "");
         myEdit.putString("release_by", "");
