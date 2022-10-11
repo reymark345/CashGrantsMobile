@@ -899,10 +899,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_number_prefilled1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_number_prefilled1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Grantee Card Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_card_holder_name1"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_number_prefilled1"
                         android:layout_marginTop="10dp"
                         app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
@@ -1188,64 +1207,70 @@
                         android:background="@drawable/selector_fieldset_background"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/rlOtherCardScanningText1"
+                        <RelativeLayout
+                            android:id="@+id/rlOtherCardScanningField1"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="sans-serif-condensed"
-                            android:text="Cash Card ID"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
+                            android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImage1"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText1"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <TextView
+                                android:id="@+id/rlOtherCardScanningText1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-condensed"
+                                android:text="Cash Card ID"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImage1"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImageUrl1"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText1"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImageUrl1"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilOtherScanned1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/rlOtherCardScanningText1"
-                            android:layout_alignRight="@id/rlOtherCardScanningText1"
-                            android:layout_marginTop="-20dp"
-                            app:helperText="Required"
-                            app:helperTextTextColor="@color/validation">
-
-                            <Button
-                                android:id="@+id/btnOtherScanned1"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilOtherScanned1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/tViewId"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginRight="30dp"
-                                android:text="SCAN"
-                                android:textColor="@color/white" />
+                                android:layout_below="@+id/rlOtherCardScanningText1"
+                                android:layout_alignRight="@id/rlOtherCardScanningText1"
+                                android:layout_marginTop="-20dp"
+                                app:helperText="Required"
+                                app:helperTextTextColor="@color/validation">
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <Button
+                                    android:id="@+id/btnOtherScanned1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tViewId"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="30dp"
+                                    android:text="SCAN"
+                                    android:textColor="@color/white" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </RelativeLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/til_card_number_inputted1"
@@ -1333,10 +1358,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_number_prefilled2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_number_prefilled2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Grantee Card Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_card_holder_name2"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_number_prefilled2"
                         android:layout_marginTop="10dp"
                         app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
@@ -1625,64 +1669,69 @@
                         android:background="@drawable/selector_fieldset_background"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/rlOtherCardScanningText2"
+                        <RelativeLayout
+                            android:id="@+id/rlOtherCardScanningField2"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="sans-serif-condensed"
-                            android:text="Cash Card ID"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/rlOtherCardScanningText2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-condensed"
+                                android:text="Cash Card ID"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImage2"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText2"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImage2"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText2"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImageUrl2"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText2"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImageUrl2"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText2"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilOtherScanned2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/rlOtherCardScanningText2"
-                            android:layout_alignRight="@id/rlOtherCardScanningText2"
-                            android:layout_marginTop="-20dp"
-                            app:helperText="Required"
-                            app:helperTextTextColor="@color/validation">
-
-                            <Button
-                                android:id="@+id/btnOtherScanned2"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilOtherScanned2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/tViewId"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginRight="30dp"
-                                android:text="SCAN"
-                                android:textColor="@color/white" />
+                                android:layout_below="@+id/rlOtherCardScanningText2"
+                                android:layout_alignRight="@id/rlOtherCardScanningText2"
+                                android:layout_marginTop="-20dp"
+                                app:helperText="Required"
+                                app:helperTextTextColor="@color/validation">
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <Button
+                                    android:id="@+id/btnOtherScanned2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tViewId"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="30dp"
+                                    android:text="SCAN"
+                                    android:textColor="@color/white" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </RelativeLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/til_card_number_inputted2"
@@ -1690,7 +1739,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:endIconMode="clear_text"
-                            android:layout_below="@+id/ivOtherScannedImage2"
+                            android:layout_below="@+id/rlOtherCardScanningField2"
                             app:helperTextTextColor="@color/validation"
                             app:startIconDrawable="@drawable/ic_creditcard"
                             app:counterEnabled="true"
@@ -1769,10 +1818,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_number_prefilled3"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_number_prefilled3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Grantee Card Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_card_holder_name3"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_number_prefilled3"
                         android:layout_marginTop="10dp"
                         app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
@@ -2058,71 +2126,77 @@
                         android:background="@drawable/selector_fieldset_background"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/rlOtherCardScanningText3"
+                        <RelativeLayout
+                            android:id="@+id/rlOtherCardScanningField3"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="sans-serif-condensed"
-                            android:text="Cash Card ID"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
+                            android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImage3"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText3"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <TextView
+                                android:id="@+id/rlOtherCardScanningText3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-condensed"
+                                android:text="Cash Card ID"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImage3"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText3"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImageUrl3"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText3"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImageUrl3"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText3"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilOtherScanned3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/rlOtherCardScanningText3"
-                            android:layout_alignRight="@id/rlOtherCardScanningText3"
-                            android:layout_marginTop="-20dp"
-                            app:helperText="Required"
-                            app:helperTextTextColor="@color/validation">
-
-                            <Button
-                                android:id="@+id/btnOtherScanned3"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilOtherScanned3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/tViewId"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginRight="30dp"
-                                android:text="SCAN"
-                                android:textColor="@color/white" />
+                                android:layout_below="@+id/rlOtherCardScanningText3"
+                                android:layout_alignRight="@id/rlOtherCardScanningText3"
+                                android:layout_marginTop="-20dp"
+                                app:helperText="Required"
+                                app:helperTextTextColor="@color/validation">
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <Button
+                                    android:id="@+id/btnOtherScanned3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tViewId"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="30dp"
+                                    android:text="SCAN"
+                                    android:textColor="@color/white" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </RelativeLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/til_card_number_inputted3"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ivOtherScannedImage3"
+                            android:layout_below="@+id/rlOtherCardScanningField3"
                             app:endIconMode="clear_text"
                             app:helperTextTextColor="@color/validation"
                             app:startIconDrawable="@drawable/ic_creditcard"
@@ -2202,10 +2276,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_number_prefilled4"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_number_prefilled4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Grantee Card Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_card_holder_name4"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_number_prefilled4"
                         android:layout_marginTop="10dp"
                         app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
@@ -2491,71 +2584,77 @@
                         android:background="@drawable/selector_fieldset_background"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/rlOtherCardScanningText4"
+                        <RelativeLayout
+                            android:id="@+id/rlOtherCardScanningField4"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="sans-serif-condensed"
-                            android:text="Cash Card ID"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
+                            android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImage4"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText4"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <TextView
+                                android:id="@+id/rlOtherCardScanningText4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-condensed"
+                                android:text="Cash Card ID"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImage4"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText4"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImageUrl4"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText4"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImageUrl4"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText4"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilOtherScanned4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/rlOtherCardScanningText4"
-                            android:layout_alignRight="@id/rlOtherCardScanningText4"
-                            android:layout_marginTop="-20dp"
-                            app:helperText="Required"
-                            app:helperTextTextColor="@color/validation">
-
-                            <Button
-                                android:id="@+id/btnOtherScanned4"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilOtherScanned4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/tViewId"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginRight="30dp"
-                                android:text="SCAN"
-                                android:textColor="@color/white" />
+                                android:layout_below="@+id/rlOtherCardScanningText4"
+                                android:layout_alignRight="@id/rlOtherCardScanningText4"
+                                android:layout_marginTop="-20dp"
+                                app:helperText="Required"
+                                app:helperTextTextColor="@color/validation">
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <Button
+                                    android:id="@+id/btnOtherScanned4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tViewId"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="30dp"
+                                    android:text="SCAN"
+                                    android:textColor="@color/white" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </RelativeLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/til_card_number_inputted4"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ivOtherScannedImage4"
+                            android:layout_below="@+id/rlOtherCardScanningField4"
                             app:endIconMode="clear_text"
                             app:helperTextTextColor="@color/validation"
                             app:startIconDrawable="@drawable/ic_creditcard"
@@ -2637,10 +2736,29 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_card_number_prefilled5"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_card_number_prefilled5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="Other Grantee Card Number"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_card_holder_name5"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/til_card_number_prefilled5"
                         android:layout_marginTop="10dp"
                         app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
@@ -2925,70 +3043,77 @@
                         android:background="@drawable/selector_fieldset_background"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/rlOtherCardScanningText5"
+                        <RelativeLayout
+                            android:id="@+id/rlOtherCardScanningField5"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="sans-serif-condensed"
-                            android:text="Cash Card ID"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
+                            android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImage5"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText5"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <TextView
+                                android:id="@+id/rlOtherCardScanningText5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-condensed"
+                                android:text="Cash Card ID"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImage5"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText5"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
 
-                        <ImageView
-                            android:id="@+id/ivOtherScannedImageUrl5"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_below="@id/rlOtherCardScanningText5"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/round_outline"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_image" />
+                            <ImageView
+                                android:id="@+id/ivOtherScannedImageUrl5"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_below="@id/rlOtherCardScanningText5"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/round_outline"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_image" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilOtherScanned5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/rlOtherCardScanningText5"
-                            android:layout_alignRight="@id/rlOtherCardScanningText5"
-                            android:layout_marginTop="-20dp"
-                            app:helperText="Required"
-                            app:helperTextTextColor="@color/validation">
-
-                            <Button
-                                android:id="@+id/btnOtherScanned5"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilOtherScanned5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/tViewId"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginRight="30dp"
-                                android:text="SCAN"
-                                android:textColor="@color/white" />
+                                android:layout_below="@+id/rlOtherCardScanningText5"
+                                android:layout_alignRight="@id/rlOtherCardScanningText5"
+                                android:layout_marginTop="-20dp"
+                                app:helperText="Required"
+                                app:helperTextTextColor="@color/validation">
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <Button
+                                    android:id="@+id/btnOtherScanned5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tViewId"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="30dp"
+                                    android:text="SCAN"
+                                    android:textColor="@color/white" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </RelativeLayout>
+
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/til_card_number_inputted5"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="match_parent"
-                            android:layout_below="@+id/ivOtherScannedImage5"
+                            android:layout_below="@+id/rlOtherCardScanningField5"
                             android:layout_height="wrap_content"
                             app:endIconMode="clear_text"
                             app:helperTextTextColor="@color/validation"
