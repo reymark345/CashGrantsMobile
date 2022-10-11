@@ -358,37 +358,40 @@
                         android:layout_height="wrap_content"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
-                        android:hint="Grantee?" />
+                        android:hint="Interviewee" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:id="@+id/til_relationship_to_grantee"-->
-<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@+id/til_is_grantee"-->
-<!--                    android:layout_marginLeft="10dp"-->
-<!--                    android:layout_marginTop="20dp"-->
-<!--                    android:layout_marginRight="10dp"-->
-<!--                    app:endIconMode="clear_text"-->
-<!--                    app:helperText="Required"-->
-<!--                    app:helperTextTextColor="@color/validation"-->
-<!--                    app:startIconDrawable="@drawable/ic_baseline_person_24">-->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_representative_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_is_grantee"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:endIconMode="clear_text"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_person_24">
 
-<!--                    <EditText-->
-<!--                        android:id="@+id/edt_relationship_to_grantee"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:hint="Relationship to Grantee"-->
-<!--                        android:inputType="text" />-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
+                    <EditText
+                        android:id="@+id/edt_representative_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name of Representative"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_relationship_to_grantee"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_is_grantee"
+                    android:layout_below="@+id/til_representative_name"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
