@@ -56,7 +56,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="NMA Amount"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:maxLength="12" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,32 +148,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:hint="Remarks"
-                        android:inputType="textMultiLine"
-                        android:overScrollMode="always"
-                        android:padding="15dp"
-                        android:scrollbarStyle="insideInset"
-                        android:scrollbars="vertical" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_nma_overall_remarks"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_remarks"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="80dp"
-                    app:endIconMode="clear_text"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
-
-                    <EditText
-                        android:id="@+id/edt_nma_overall_remarks"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:hint="Overall Remarks"
                         android:inputType="textMultiLine"
                         android:overScrollMode="always"
                         android:padding="15dp"
