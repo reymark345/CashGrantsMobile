@@ -759,7 +759,7 @@
                         android:layout_height="wrap_content"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
-                        android:hint="ID exists"
+                        android:hint="With other ID?"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -857,29 +857,6 @@
                         android:layout_marginRight="30dp"
                         android:text="SCAN"
                         android:textColor="@color/white" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_representative_name"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/mGrantee"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    app:endIconMode="clear_text"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-                    <EditText
-                        android:id="@+id/edt_representative_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Name of Representative"
-                        android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </RelativeLayout>
@@ -1276,8 +1253,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ivOtherScannedImageUrl1"
-                            app:endIconMode="clear_text"
                             android:layout_marginTop="10dp"
+                            app:endIconMode="clear_text"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="23"
                             app:helperTextTextColor="@color/validation"
                             app:startIconDrawable="@drawable/ic_creditcard">
 
@@ -1286,7 +1265,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Number"
-                                android:inputType="text" />
+                                android:inputType="number"
+                                android:maxLength="23"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -1712,14 +1692,17 @@
                             app:endIconMode="clear_text"
                             android:layout_below="@+id/ivOtherScannedImage2"
                             app:helperTextTextColor="@color/validation"
-                            app:startIconDrawable="@drawable/ic_creditcard">
+                            app:startIconDrawable="@drawable/ic_creditcard"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="23">
 
                             <EditText
                                 android:id="@+id/edt_card_number_inputted2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Number"
-                                android:inputType="text" />
+                                android:maxLength="23"
+                                android:inputType="number" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -2142,14 +2125,17 @@
                             android:layout_below="@+id/ivOtherScannedImage3"
                             app:endIconMode="clear_text"
                             app:helperTextTextColor="@color/validation"
-                            app:startIconDrawable="@drawable/ic_creditcard">
+                            app:startIconDrawable="@drawable/ic_creditcard"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="23">
 
                             <EditText
                                 android:id="@+id/edt_card_number_inputted3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Number"
-                                android:inputType="text" />
+                                android:maxLength="23"
+                                android:inputType="number" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -2572,14 +2558,17 @@
                             android:layout_below="@+id/ivOtherScannedImage4"
                             app:endIconMode="clear_text"
                             app:helperTextTextColor="@color/validation"
-                            app:startIconDrawable="@drawable/ic_creditcard">
+                            app:startIconDrawable="@drawable/ic_creditcard"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="23">
 
                             <EditText
                                 android:id="@+id/edt_card_number_inputted4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Number"
-                                android:inputType="text" />
+                                android:maxLength="23"
+                                android:inputType="number" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -3003,14 +2992,17 @@
                             android:layout_height="wrap_content"
                             app:endIconMode="clear_text"
                             app:helperTextTextColor="@color/validation"
-                            app:startIconDrawable="@drawable/ic_creditcard">
+                            app:startIconDrawable="@drawable/ic_creditcard"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="23">
 
                             <EditText
                                 android:id="@+id/edt_card_number_inputted5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Number"
-                                android:inputType="text" />
+                                android:maxLength="23"
+                                android:inputType="number" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout

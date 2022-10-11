@@ -115,23 +115,18 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                                String card_holder_name2,String card_number_system_generated2,String card_number_inputted2,String card_number_series2,String distribution_status2, String release_date2,String release_by2,String release_place2,String card_physically_presented2,String card_pin_is_attached2,String reason_not_presented2,String reason_unclaimed2,String card_replacement_request2,String card_replacement_request_submitted_details2,String pawning_remarks2,
                                String card_holder_name3,String card_number_system_generated3,String card_number_inputted3,String card_number_series3,String distribution_status3,String release_date3, String release_by3,String release_place3,String card_physically_presented3,String card_pin_is_attached3,String reason_not_presented3,String reason_unclaimed3,String card_replacement_request3,String card_replacement_request_submitted_details3,String pawning_remarks3,
                                String card_holder_name4,String card_number_system_generated4,String card_number_inputted4,String card_number_series4,String distribution_status4,String release_date4,String release_by4,String release_place4,String card_physically_presented4,String card_pin_is_attached4,String reason_not_presented4,String reason_unclaimed4,String card_replacement_request4,String card_replacement_request_submitted_details4,String pawning_remarks4,
-                               String card_holder_name5,String card_number_system_generated5,String card_number_inputted5,String card_number_series5,String distribution_status5,String release_date5,String release_by5,String release_place5,String card_physically_presented5,String card_pin_is_attached5,String reason_not_presented5,String reason_unclaimed5,String card_replacement_request5,String card_replacement_request_submitted_details5,String pawning_remarks5){
+                               String card_holder_name5,String card_number_system_generated5,String card_number_inputted5,String card_number_series5,String distribution_status5,String release_date5,String release_by5,String release_place5,String card_physically_presented5,String card_pin_is_attached5,String reason_not_presented5,String reason_unclaimed5,String card_replacement_request5,String card_replacement_request_submitted_details5,String pawning_remarks5, int card_count){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdf.format(new Date());
         try {
             SQLiteDatabase database = getWritableDatabase();
-
             String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
             String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?)";
             String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             String sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?)";
             String sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?)";
-
-//            String sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,?,?,?)";
-//            String sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?)";
-
 
             SQLiteStatement grantee_validations = database.compileStatement(sql1);
             grantee_validations.clearBindings();
@@ -148,24 +143,25 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             grantee_validations.bindString(11, strDate);
             grantee_validations.executeInsert();
 
-            SQLiteStatement pawning_validations_details = database.compileStatement(sql2);
-            pawning_validations_details.clearBindings();
-            pawning_validations_details.bindString(1, lender_name);
-            pawning_validations_details.bindString(2, lender_address);
-            pawning_validations_details.bindString(3, date_pawned);
-            pawning_validations_details.bindString(4, date_retrieved);
-            pawning_validations_details.bindString(5, loaned_amount);
-            pawning_validations_details.bindString(6, status);
-            pawning_validations_details.bindString(7, reason);
-            pawning_validations_details.bindString(8, interest);
-            pawning_validations_details.bindString(9, offense_history);
-            pawning_validations_details.bindString(10, offense_date);
-            pawning_validations_details.bindString(11, remarks);
-            pawning_validations_details.bindString(12, staff_intervention);
-            pawning_validations_details.bindString(13, other_details);
-            pawning_validations_details.bindString(14, strDate);
-            pawning_validations_details.executeInsert();
-
+            if (reason_not_presented.matches("Pawned")){
+                SQLiteStatement pawning_validations_details = database.compileStatement(sql2);
+                pawning_validations_details.clearBindings();
+                pawning_validations_details.bindString(1, lender_name);
+                pawning_validations_details.bindString(2, lender_address);
+                pawning_validations_details.bindString(3, date_pawned);
+                pawning_validations_details.bindString(4, date_retrieved);
+                pawning_validations_details.bindString(5, loaned_amount);
+                pawning_validations_details.bindString(6, status);
+                pawning_validations_details.bindString(7, reason);
+                pawning_validations_details.bindString(8, interest);
+                pawning_validations_details.bindString(9, offense_history);
+                pawning_validations_details.bindString(10, offense_date);
+                pawning_validations_details.bindString(11, remarks);
+                pawning_validations_details.bindString(12, staff_intervention);
+                pawning_validations_details.bindString(13, other_details);
+                pawning_validations_details.bindString(14, strDate);
+                pawning_validations_details.executeInsert();
+            }
             SQLiteStatement nma_validations = database.compileStatement(sql3);
             nma_validations.clearBindings();
             nma_validations.bindString(1, amount);
@@ -211,110 +207,116 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             emv_validation_details.bindLong(12, emv_monitoring_id);
             emv_validation_details.executeInsert();
 
-            SQLiteStatement other_card_validations1 = database.compileStatement(sql6);
-            other_card_validations1.clearBindings();
-            other_card_validations1.bindString(1, card_holder_name1);
-            other_card_validations1.bindString(2, card_number_system_generated1);
-            other_card_validations1.bindString(3, card_number_inputted1);
-            other_card_validations1.bindString(4, card_number_series1);
-            other_card_validations1.bindString(5, distribution_status1);
-            other_card_validations1.bindString(6, release_date1);
-            other_card_validations1.bindString(7, release_by1);
-            other_card_validations1.bindString(8, release_place1);
-            other_card_validations1.bindString(9, card_physically_presented1);
-            other_card_validations1.bindString(10, card_pin_is_attached1);
-            other_card_validations1.bindString(11, reason_not_presented1);
-            other_card_validations1.bindString(12, reason_unclaimed1);
-            other_card_validations1.bindString(13, card_replacement_request1);
-            other_card_validations1.bindString(14, card_replacement_request_submitted_details1);
-            other_card_validations1.bindString(15, pawning_remarks1);
-            other_card_validations1.bindString(16, strDate);
-//            other_card_validations_1.bindString(15, emv_monitoring_id_1);
-            other_card_validations1.executeInsert();
+            if (card_count >=1) {
+                SQLiteStatement other_card_validations1 = database.compileStatement(sql6);
+                other_card_validations1.clearBindings();
+                other_card_validations1.bindString(1, card_holder_name1);
+                other_card_validations1.bindString(2, card_number_system_generated1);
+                other_card_validations1.bindString(3, card_number_inputted1);
+                other_card_validations1.bindString(4, card_number_series1);
+                other_card_validations1.bindString(5, distribution_status1);
+                other_card_validations1.bindString(6, release_date1);
+                other_card_validations1.bindString(7, release_by1);
+                other_card_validations1.bindString(8, release_place1);
+                other_card_validations1.bindString(9, card_physically_presented1);
+                other_card_validations1.bindString(10, card_pin_is_attached1);
+                other_card_validations1.bindString(11, reason_not_presented1);
+                other_card_validations1.bindString(12, reason_unclaimed1);
+                other_card_validations1.bindString(13, card_replacement_request1);
+                other_card_validations1.bindString(14, card_replacement_request_submitted_details1);
+                other_card_validations1.bindString(15, pawning_remarks1);
+                other_card_validations1.bindString(16, strDate);
+                other_card_validations1.executeInsert();
+            }
 
-            SQLiteStatement other_card_validations2 = database.compileStatement(sql6);
-            other_card_validations2.clearBindings();
-            other_card_validations2.bindString(1, card_holder_name2);
-            other_card_validations2.bindString(2, card_number_system_generated2);
-            other_card_validations2.bindString(3, card_number_inputted2);
-            other_card_validations2.bindString(4, card_number_series2);
-            other_card_validations2.bindString(5, distribution_status2);
-            other_card_validations2.bindString(6, release_date2);
-            other_card_validations2.bindString(7, release_by2);
-            other_card_validations2.bindString(8, release_place2);
-            other_card_validations2.bindString(9, card_physically_presented2);
-            other_card_validations2.bindString(10, card_pin_is_attached2);
-            other_card_validations2.bindString(11, reason_not_presented2);
-            other_card_validations2.bindString(12, reason_unclaimed2);
-            other_card_validations2.bindString(13, card_replacement_request2);
-            other_card_validations2.bindString(14, card_replacement_request_submitted_details2);
-            other_card_validations2.bindString(15, pawning_remarks2);
-            other_card_validations2.bindString(16, strDate);
-//            other_card_validatios_2.bindString(15, emv_monitoring_id_2);
-            other_card_validations2.executeInsert();
+            if (card_count >=2) {
+                SQLiteStatement other_card_validations2 = database.compileStatement(sql6);
+                other_card_validations2.clearBindings();
+                other_card_validations2.bindString(1, card_holder_name2);
+                other_card_validations2.bindString(2, card_number_system_generated2);
+                other_card_validations2.bindString(3, card_number_inputted2);
+                other_card_validations2.bindString(4, card_number_series2);
+                other_card_validations2.bindString(5, distribution_status2);
+                other_card_validations2.bindString(6, release_date2);
+                other_card_validations2.bindString(7, release_by2);
+                other_card_validations2.bindString(8, release_place2);
+                other_card_validations2.bindString(9, card_physically_presented2);
+                other_card_validations2.bindString(10, card_pin_is_attached2);
+                other_card_validations2.bindString(11, reason_not_presented2);
+                other_card_validations2.bindString(12, reason_unclaimed2);
+                other_card_validations2.bindString(13, card_replacement_request2);
+                other_card_validations2.bindString(14, card_replacement_request_submitted_details2);
+                other_card_validations2.bindString(15, pawning_remarks2);
+                other_card_validations2.bindString(16, strDate);
+                other_card_validations2.executeInsert();
 
-            SQLiteStatement other_card_validations3 = database.compileStatement(sql6);
-            other_card_validations3.clearBindings();
-            other_card_validations3.bindString(1, card_holder_name3);
-            other_card_validations3.bindString(2, card_number_system_generated3);
-            other_card_validations3.bindString(3, card_number_inputted3);
-            other_card_validations3.bindString(4, card_number_series3);
-            other_card_validations3.bindString(5, distribution_status3);
-            other_card_validations3.bindString(6, release_date3);
-            other_card_validations3.bindString(7, release_by3);
-            other_card_validations3.bindString(8, release_place3);
-            other_card_validations3.bindString(9, card_physically_presented3);
-            other_card_validations3.bindString(10, card_pin_is_attached3);
-            other_card_validations3.bindString(11, reason_not_presented3);
-            other_card_validations3.bindString(12, reason_unclaimed3);
-            other_card_validations3.bindString(13, card_replacement_request3);
-            other_card_validations3.bindString(14, card_replacement_request_submitted_details3);
-            other_card_validations3.bindString(15, pawning_remarks3);
-            other_card_validations3.bindString(16, strDate);
-//            other_card_validations_3.bindString(15, emv_monitoring_id_3);
-            other_card_validations3.executeInsert();
+            }
 
-            SQLiteStatement other_card_validations4 = database.compileStatement(sql6);
-            other_card_validations4.clearBindings();
-            other_card_validations4.bindString(1, card_holder_name4);
-            other_card_validations4.bindString(2, card_number_system_generated4);
-            other_card_validations4.bindString(3, card_number_inputted4);
-            other_card_validations4.bindString(4, card_number_series4);
-            other_card_validations4.bindString(5, distribution_status4);
-            other_card_validations4.bindString(6, release_date4);
-            other_card_validations4.bindString(7, release_by4);
-            other_card_validations4.bindString(8, release_place4);
-            other_card_validations4.bindString(9, card_physically_presented4);
-            other_card_validations4.bindString(10, card_pin_is_attached4);
-            other_card_validations4.bindString(11, reason_not_presented4);
-            other_card_validations4.bindString(12, reason_unclaimed4);
-            other_card_validations4.bindString(13, card_replacement_request4);
-            other_card_validations4.bindString(14, card_replacement_request_submitted_details4);
-            other_card_validations4.bindString(15, pawning_remarks4);
-            other_card_validations4.bindString(16, strDate);
-//            other_card_validations_4.bindString(15, emv_monitoring_id_4);
-            other_card_validations4.executeInsert();
+            if (card_count >=3) {
+                SQLiteStatement other_card_validations3 = database.compileStatement(sql6);
+                other_card_validations3.clearBindings();
+                other_card_validations3.bindString(1, card_holder_name3);
+                other_card_validations3.bindString(2, card_number_system_generated3);
+                other_card_validations3.bindString(3, card_number_inputted3);
+                other_card_validations3.bindString(4, card_number_series3);
+                other_card_validations3.bindString(5, distribution_status3);
+                other_card_validations3.bindString(6, release_date3);
+                other_card_validations3.bindString(7, release_by3);
+                other_card_validations3.bindString(8, release_place3);
+                other_card_validations3.bindString(9, card_physically_presented3);
+                other_card_validations3.bindString(10, card_pin_is_attached3);
+                other_card_validations3.bindString(11, reason_not_presented3);
+                other_card_validations3.bindString(12, reason_unclaimed3);
+                other_card_validations3.bindString(13, card_replacement_request3);
+                other_card_validations3.bindString(14, card_replacement_request_submitted_details3);
+                other_card_validations3.bindString(15, pawning_remarks3);
+                other_card_validations3.bindString(16, strDate);
+                other_card_validations3.executeInsert();
+            }
 
-            SQLiteStatement other_card_validations5 = database.compileStatement(sql6);
-            other_card_validations5.clearBindings();
-            other_card_validations5.bindString(1, card_holder_name5);
-            other_card_validations5.bindString(2, card_number_system_generated5);
-            other_card_validations5.bindString(3, card_number_inputted5);
-            other_card_validations5.bindString(4, card_number_series5);
-            other_card_validations5.bindString(5, distribution_status5);
-            other_card_validations5.bindString(6, release_date5);
-            other_card_validations5.bindString(7, release_by5);
-            other_card_validations5.bindString(8, release_place5);
-            other_card_validations5.bindString(9, card_physically_presented5);
-            other_card_validations5.bindString(10, card_pin_is_attached5);
-            other_card_validations5.bindString(11, reason_not_presented5);
-            other_card_validations5.bindString(12, reason_unclaimed5);
-            other_card_validations5.bindString(13, card_replacement_request5);
-            other_card_validations5.bindString(14, card_replacement_request_submitted_details5);
-            other_card_validations5.bindString(15, pawning_remarks5);
-            other_card_validations5.bindString(16, strDate);
-//            other_card_validations_5.bindString(15, emv_monitoring_id_5);
-            other_card_validations5.executeInsert();
+            if (card_count >=4) {
+                SQLiteStatement other_card_validations4 = database.compileStatement(sql6);
+                other_card_validations4.clearBindings();
+                other_card_validations4.bindString(1, card_holder_name4);
+                other_card_validations4.bindString(2, card_number_system_generated4);
+                other_card_validations4.bindString(3, card_number_inputted4);
+                other_card_validations4.bindString(4, card_number_series4);
+                other_card_validations4.bindString(5, distribution_status4);
+                other_card_validations4.bindString(6, release_date4);
+                other_card_validations4.bindString(7, release_by4);
+                other_card_validations4.bindString(8, release_place4);
+                other_card_validations4.bindString(9, card_physically_presented4);
+                other_card_validations4.bindString(10, card_pin_is_attached4);
+                other_card_validations4.bindString(11, reason_not_presented4);
+                other_card_validations4.bindString(12, reason_unclaimed4);
+                other_card_validations4.bindString(13, card_replacement_request4);
+                other_card_validations4.bindString(14, card_replacement_request_submitted_details4);
+                other_card_validations4.bindString(15, pawning_remarks4);
+                other_card_validations4.bindString(16, strDate);
+                other_card_validations4.executeInsert();
+            }
+
+            if (card_count >=5) {
+                SQLiteStatement other_card_validations5 = database.compileStatement(sql6);
+                other_card_validations5.clearBindings();
+                other_card_validations5.bindString(1, card_holder_name5);
+                other_card_validations5.bindString(2, card_number_system_generated5);
+                other_card_validations5.bindString(3, card_number_inputted5);
+                other_card_validations5.bindString(4, card_number_series5);
+                other_card_validations5.bindString(5, distribution_status5);
+                other_card_validations5.bindString(6, release_date5);
+                other_card_validations5.bindString(7, release_by5);
+                other_card_validations5.bindString(8, release_place5);
+                other_card_validations5.bindString(9, card_physically_presented5);
+                other_card_validations5.bindString(10, card_pin_is_attached5);
+                other_card_validations5.bindString(11, reason_not_presented5);
+                other_card_validations5.bindString(12, reason_unclaimed5);
+                other_card_validations5.bindString(13, card_replacement_request5);
+                other_card_validations5.bindString(14, card_replacement_request_submitted_details5);
+                other_card_validations5.bindString(15, pawning_remarks5);
+                other_card_validations5.bindString(16, strDate);
+                other_card_validations5.executeInsert();
+            }
 
 //            String sql = "UPDATE emv_validations SET validated_at = ? WHERE hh_id = ?";
 //            SQLiteStatement statement = database.compileStatement(sql);
@@ -322,6 +324,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 //            statement.bindString(2, hh_id);
 //            statement.execute();
 //            database.close();
+
+//            String sql = "DELETE FROM tmp_blob";
+//            SQLiteStatement statement = database.compileStatement(sql);
+//            statement.clearBindings();
+//            statement.execute();
+//            database.close();
+            Log.v(TAG,"ni inseerrtty");
+
         }
         catch(Exception e){
             Log.v(TAG,"hala naay errors"+ e);
