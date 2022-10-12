@@ -231,23 +231,37 @@ public class InventoryList extends AppCompatActivity {
             scanning_status = 0;
         }
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' AND card_scanning_status LIKE '%"+scanning_status+"%' AND DATE(created_at) LIKE '%"+filter_date+"%' order by id DESC");
+            Cursor cursor = sqLiteHelper.getData("SELECT evd.id, gv.hh_id, cvd.card_number_inputted, cvd.card_number_system_generated, cvd.card_number_series FROM emv_validation_details AS evd LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id order by evd.id DESC");
+//            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' AND card_scanning_status LIKE '%"+scanning_status+"%' AND DATE(created_at) LIKE '%"+filter_date+"%' order by id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
                 String hhNumber = cursor.getString(1);
                 if (cursor.getString(2).matches("")){
-                    cashCardNumber = cursor.getString(7);
+                    cashCardNumber = cursor.getString(3);
                 }
                 else{
                     cashCardNumber = cursor.getString(2);
                 }
                 String grantee_number = cursor.getString(3);
                 String seriesNumber = cursor.getString(4);
-                byte[] CashCardImage = cursor.getBlob(5);
-                byte[] idImage = cursor.getBlob(6);
-                int status = cursor.getInt(8);
-                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
+//                int status = cursor.getInt(8);
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, id,hhNumber));
+
+                //                int id = cursor.getInt(0);
+//                String hhNumber = cursor.getString(1);
+//                if (cursor.getString(2).matches("")){
+//                    cashCardNumber = cursor.getString(7);
+//                }
+//                else{
+//                    cashCardNumber = cursor.getString(2);
+//                }
+//                String grantee_number = cursor.getString(3);
+//                String seriesNumber = cursor.getString(4);
+//                byte[] CashCardImage = cursor.getBlob(5);
+//                byte[] idImage = cursor.getBlob(6);
+//                int status = cursor.getInt(8);
+//                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
             }
             if (cursor.getCount()==0){
                 tvIdentifier.setText("Household not found");
@@ -268,23 +282,24 @@ public class InventoryList extends AppCompatActivity {
 
     public void filterAllData(ArrayList<Inventory> list, String cashCardNumber,InventoryListAdapter adapter){
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details order by id DESC");
+            Log.d(TAG, "Nisulod kay diri");
+            Cursor cursor = sqLiteHelper.getData("SELECT evd.id, gv.hh_id, cvd.card_number_inputted, cvd.card_number_system_generated, cvd.card_number_series FROM emv_validation_details AS evd LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id order by evd.id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
                 String hhNumber = cursor.getString(1);
                 if (cursor.getString(2).matches("")){
-                    cashCardNumber = cursor.getString(7);
+                    cashCardNumber = cursor.getString(3);
                 }
                 else{
                     cashCardNumber = cursor.getString(2);
                 }
                 String grantee_number = cursor.getString(3);
                 String seriesNumber = cursor.getString(4);
-                byte[] CashCardImage = cursor.getBlob(5);
-                byte[] idImage = cursor.getBlob(6);
-                int status = cursor.getInt(8);
-                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
+//                byte[] CashCardImage = cursor.getBlob(5);
+//                byte[] idImage = cursor.getBlob(6);
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, id,hhNumber));
+//                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
             }
             if (cursor.getCount()==0){
                 tvIdentifier.setText("No Scanned available");

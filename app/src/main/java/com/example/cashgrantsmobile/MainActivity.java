@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
         while (user_data.moveToNext()) {
             username = user_data.getString(0);
         }
-        Cursor listCount = MainActivity.sqLiteHelper.getData("SELECT id,current_grantee_card_number ,accomplish_by_full_name,accomplish_by_full_name,beneficiary_picture,cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details");
+        Cursor listCount = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validation_details");
         Cursor emvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations");
         Cursor psgcList = MainActivity.sqLiteHelper.getData("SELECT id FROM psgc");
         Cursor emvListValidated = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring WHERE validated_at != 'null'");
