@@ -1850,6 +1850,10 @@ public class ScanCashCard extends AppCompatActivity {
 
                         if (aat_card_physically_presented.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached.setVisibility(View.VISIBLE);
+                            if (aat_distribution_status.getText().toString().matches("Unclaimed")){
+                                til_distribution_status.setError("Must be Claimed if physical cash card presented");
+                                isValidationError++;
+                            }
                         } else {
                             til_reason_not_presented.setVisibility(View.VISIBLE);
                         }
@@ -4017,6 +4021,18 @@ public class ScanCashCard extends AppCompatActivity {
 
             }
 
+
+
+            if (aat_card_physically_presented.getText().toString().matches("Yes")) {
+
+                if (aat_distribution_status.getText().toString().matches("Unclaimed")){
+                    til_distribution_status.setError("Must be Claimed if physical cash card presented");
+                    isValidationError++;
+                }
+            } else {
+                til_reason_not_presented.setVisibility(View.VISIBLE);
+            }
+
             if (card_physically_presented.matches("")) {
                 til_card_physically_presented.setError(required_field);
                 isValidationError++;
@@ -4024,6 +4040,13 @@ public class ScanCashCard extends AppCompatActivity {
                 til_card_physically_presented.setError(null);
 
                 if (card_physically_presented.matches("Yes")) {
+                    if (distribution_status.matches("Unclaimed")){
+                        til_distribution_status.setError("Must be Claimed if Yes on physical cash card presented");
+                        isValidationError++;
+                    }
+                    else{
+                        til_distribution_status.setError(null);
+                    }
                     if (card_pin_is_attached.matches("")) {
                         til_card_pin_is_attached.setError(required_field);
                         isValidationError++;
