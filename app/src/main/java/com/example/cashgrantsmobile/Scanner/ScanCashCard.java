@@ -398,18 +398,7 @@ public class ScanCashCard extends AppCompatActivity {
                 if (hh_id.length() > 0 && buttonNext.matches("true")){
                     nextValidation();
 
-                    aat_is_grantee = findViewById(R.id.aat_is_grantee);
-                    til_representative_name = findViewById(R.id.til_representative_name);
-
                     if (MANDATORY_PAGE_LOCATION == 1) {
-                        if (aat_is_grantee.getText().toString().matches("Representative")) {
-                            til_representative_name.setVisibility(View.VISIBLE);
-                            til_relationship_to_grantee.setVisibility(View.VISIBLE);
-                        } else {
-                            til_representative_name.setVisibility(View.GONE);
-                            til_relationship_to_grantee.setVisibility(View.GONE);
-                        }
-
                         otherCardVisibility();
                     }
                 }
@@ -1283,8 +1272,17 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_ext_name.setText(other_ext_name);
                 aat_hh_status.setText(hh_status, false);
                 aat_province_code.setText(province, false);
+                if (!province.matches("")) {
+                    province_event();
+                }
                 aat_municipality_code.setText(municipality, false);
+                if (!municipality.matches("")) {
+                    municipality_event();
+                }
                 aat_barangay_code.setText(barangay, false);
+                if (!barangay.matches("")) {
+                    barangay_event();
+                }
                 aat_sex.setText(sex, false);
                 aat_is_grantee.setText(is_grantee, false);
                 aat_relationship_to_grantee.setText(relationship_to_grantee, false);
@@ -2855,7 +2853,7 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_nma_remarks.setText(nma_remarks);
 
                 if (!TextUtils.isEmpty(nma_amount)) {
-                    if (Integer.parseInt(nma_amount) >= 100) {
+                    if (Float.parseFloat(nma_amount) >= 100) {
                         til_nma_reason.setVisibility(View.VISIBLE);
                         if (nma_reason.matches("Others")) {
                             til_nma_others_reason.setVisibility(View.VISIBLE);
@@ -4628,7 +4626,6 @@ public class ScanCashCard extends AppCompatActivity {
                             til_current_scan_btn.setError(required_btn);
                         }
 
-
                         if (otherCardAvailability1.getVisibility() == View.VISIBLE) {
                             if (aat_card_physically_presented1.getText().toString().matches("Yes")) {
                                 tilOtherScanned1 = findViewById(R.id.tilOtherScanned1);
@@ -4731,12 +4728,12 @@ public class ScanCashCard extends AppCompatActivity {
                     til_current_scan_btn.setError(required_btn);
                     til_additionalID.setError(required_btn);
                     tilGrantee.setError(required_btn);
+                    isValidationError++;
                 }
             }
             catch (Exception e){
                 Log.v(TAG,"Errors " + e);
             }
-
 
             store_preferences(2);
         } else if (current == 3) {
@@ -4755,7 +4752,7 @@ public class ScanCashCard extends AppCompatActivity {
             til_nma_others_reason.setError(null);
 
             if (!TextUtils.isEmpty(nma_amount)) {
-                if (Integer.parseInt(nma_amount) >= 100) {
+                if (Float.parseFloat(nma_amount) >= 100) {
                     if (nma_reason.matches("")) {
                         til_nma_reason.setError(required_field);;
                         isValidationError++;
@@ -5251,28 +5248,27 @@ public class ScanCashCard extends AppCompatActivity {
 
                         card_count = 0;
 
-                        if (!other_card_number_1.matches("")) {
+                        if (!other_card_number_1.matches("") && !other_card_number_1.matches("null")) {
                             card_count++;
                         }
 
-                        if (!other_card_number_2.matches("")) {
+                        if (!other_card_number_2.matches("") && !other_card_number_2.matches("null")) {
                             card_count++;
                         }
 
-                        if (!other_card_number_3.matches("")) {
+                        if (!other_card_number_3.matches("") && !other_card_number_3.matches("null")) {
                             card_count++;
                         }
 
-                        if (!other_card_number_4.matches("")) {
+                        if (!other_card_number_4.matches("") && !other_card_number_4.matches("null")) {
                             card_count++;
                         }
 
-                        if (!other_card_number_5.matches("")) {
+                        if (!other_card_number_5.matches("") && !other_card_number_5.matches("null")) {
                             card_count++;
                         }
 
-                        Toast.makeText(getApplicationContext(), card_count.toString(), Toast.LENGTH_LONG).show();
-
+                        myEdit.putInt("card_count", card_count);
                         myEdit.putInt("emv_monitoring_id", emv_monitoring_id);
                         myEdit.putString("hh_id", hh_id);
                         myEdit.putString("first_name", first_name);
@@ -5319,11 +5315,17 @@ public class ScanCashCard extends AppCompatActivity {
                         aat_ext_name.setText(ext_name);
                         aat_hh_status.setText(hh_status,false);
                         aat_province_code.setText(province,false);
-                        province_event();
+                        if (!province.matches("")) {
+                            province_event();
+                        }
                         aat_municipality_code.setText(municipality,false);
-                        municipality_event();
+                        if (!municipality.matches("")) {
+                            municipality_event();
+                        }
                         aat_barangay_code.setText(barangay,false);
-                        barangay_event();
+                        if (!barangay.matches("")) {
+                            barangay_event();
+                        }
                         aat_sex.setText(sex,false);
                         Log.v(TAG,"dawwbi " + grantee_card_number);
                         Toasty.success(getApplicationContext(),"Household Found", Toasty.LENGTH_SHORT).show();
