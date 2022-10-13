@@ -132,6 +132,7 @@
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/activity_splash.xml" value="0.1743659420289855" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/activity_splash_login.xml" value="0.25" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/check_internet_dialog.xml" value="0.35688405797101447" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_1.xml" value="0.11614583333333334" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_2.xml" value="0.3140625" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_3.xml" value="0.25625" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_4.xml" value="0.25625" />
@@ -174,7 +175,7 @@
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_list.xml" value="0.35688405797101447" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_sync_data.xml" value="0.35688405797101447" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/inventory_list.xml" value="0.23641304347826086" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_inventory_list.xml" value="0.23391812865497075" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_inventory_list.xml" value="0.33" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_logs_list.xml" value="0.16666666666666666" />
       </map>
     </option>
@@ -188,7 +189,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.13333333333333333" />
+        <option name="scale" value="0.33" />
       </ProjectState>
     </option>
   </component>

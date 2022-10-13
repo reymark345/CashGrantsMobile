@@ -20,24 +20,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_filter_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
-            app:helperTextTextColor="@color/validation"
-            app:startIconDrawable="@drawable/ic_baseline_supervised_user_circle_24"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/til_filter_type"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            app:helperTextTextColor="@color/validation"-->
+<!--            app:startIconDrawable="@drawable/ic_baseline_supervised_user_circle_24"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">-->
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/spinFilterType"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:layout_width= "match_parent"
-                android:hint="Type"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+<!--            <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                android:id="@+id/spinFilterType"-->
+<!--                android:focusable="false"-->
+<!--                android:focusableInTouchMode="false"-->
+<!--                android:layout_width= "match_parent"-->
+<!--                android:hint="Type"-->
+<!--                android:layout_height="wrap_content" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_Search"
