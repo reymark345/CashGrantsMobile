@@ -742,6 +742,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     myEdit.putString("card_number_system_generated1", sTextFromET);
                                     edt_card_number_inputted1.setText(sTextFromET);
                                 }
+                                myEdit.commit();
                                 break;
                             case 2:
                                 tilOtherScanned2 = findViewById(R.id.tilOtherScanned2);
@@ -766,6 +767,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     myEdit.putString("card_number_system_generated2", sTextFromET);
                                     edt_card_number_inputted2.setText(sTextFromET);
                                 }
+                                myEdit.commit();
                                 break;
                             case 3:
                                 tilOtherScanned3 = findViewById(R.id.tilOtherScanned3);
@@ -790,6 +792,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     myEdit.putString("card_number_system_generated3", sTextFromET);
                                     edt_card_number_inputted3.setText(sTextFromET);
                                 }
+                                myEdit.commit();
                                 break;
                             case 4:
                                 tilOtherScanned4 = findViewById(R.id.tilOtherScanned4);
@@ -814,6 +817,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     myEdit.putString("card_number_system_generated4", sTextFromET);
                                     edt_card_number_inputted4.setText(sTextFromET);
                                 }
+                                myEdit.commit();
                                 break;
                             case 5:
                                 tilOtherScanned5 = findViewById(R.id.tilOtherScanned5);
@@ -824,7 +828,6 @@ public class ScanCashCard extends AppCompatActivity {
                                 } else {
                                     sqLiteHelper.updateTmpScannedCC("other_card_e_image_5", imageViewToByte(ivOtherScannedImage5));
                                 }
-
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
                                     myEdit.putString("card_number_system_generated5", limitString);
@@ -838,6 +841,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     myEdit.putString("card_number_system_generated5", sTextFromET);
                                     edt_card_number_inputted5.setText(sTextFromET);
                                 }
+                                myEdit.commit();
                                 break;
                             default:
                                 til_current_scan_btn.setError(null);
@@ -861,6 +865,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     myEdit.putString("card_number_system_generated", sTextFromET);
                                     edt_card_number_inputted.setText(sTextFromET);
                                 }
+                                myEdit.commit();
                                 break;
                         }
 
@@ -1853,6 +1858,7 @@ public class ScanCashCard extends AppCompatActivity {
                                 isValidationError++;
                             }
                         } else {
+                            til_distribution_status.setError(null);
                             til_reason_not_presented.setVisibility(View.VISIBLE);
                         }
                     }

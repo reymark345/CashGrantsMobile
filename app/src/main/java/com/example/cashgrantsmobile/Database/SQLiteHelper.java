@@ -330,7 +330,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 //            statement.clearBindings();
 //            statement.execute();
 //            database.close();
-            Log.v(TAG,"ni inseerrtty");
 
         }
         catch(Exception e){

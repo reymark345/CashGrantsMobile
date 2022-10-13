@@ -56,7 +56,7 @@ public class InventoryList extends AppCompatActivity {
     byte[] id_image;
     private TextView tvSearch, tvResultHh, tvIdentifier;
     EditText  filterDate, filterHousehold;
-    AutoCompleteTextView spinFilterType;
+//    AutoCompleteTextView spinFilterType;
     String ftype, fhhid, fdate;
     String[] typeOptions = new String[]{"", "complete", "incomplete"};
 
@@ -153,7 +153,7 @@ public class InventoryList extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.search_inventory_list);
-        spinFilterType = dialog.findViewById(R.id.spinFilterType);
+//        spinFilterType = dialog.findViewById(R.id.spinFilterType);
         filterHousehold = dialog.findViewById(R.id.edtFilterHHID);
         filterDate = dialog.findViewById(R.id.edtFilterDate);
         tvIdentifier = findViewById(R.id.tvIdentifier);
@@ -165,7 +165,7 @@ public class InventoryList extends AppCompatActivity {
 
         ArrayAdapter<String> adapterType = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, typeOptions);
         adapterType.setDropDownViewResource(simple_spinner_dropdown_item);
-        spinFilterType.setAdapter(adapterType);
+//        spinFilterType.setAdapter(adapterType);
 
         filterDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +174,7 @@ public class InventoryList extends AppCompatActivity {
             }
         });
 
-        spinFilterType.setText(ftype, false);
+//        spinFilterType.setText(ftype, false);
         filterHousehold.setText(fhhid);
         filterDate.setText(fdate);
 
@@ -182,11 +182,12 @@ public class InventoryList extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ftype = spinFilterType.getText().toString();
+//                ftype = spinFilterType.getText().toString();
                 fhhid = filterHousehold.getText().toString();
                 fdate = filterDate.getText().toString();
 
-                queries(fhhid, ftype, fdate);
+//                queries(fhhid, ftype, fdate);
+                queries(fhhid, fdate);
 
                 dialog.dismiss();
             }
@@ -225,29 +226,38 @@ public class InventoryList extends AppCompatActivity {
         new DatePickerDialog(InventoryList.this,dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    public void queries(String household_no, String filter_type, String filter_date){
-        Integer scanning_status = 1;
-        if (filter_type.matches("incomplete")){
-            scanning_status = 0;
-        }
+    public void queries(String household_no, String filter_date){
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details  WHERE hh_id LIKE'%"+household_no+"%' AND card_scanning_status LIKE '%"+scanning_status+"%' AND DATE(created_at) LIKE '%"+filter_date+"%' order by id DESC");
+            Cursor cursor = sqLiteHelper.getData("SELECT evd.id, gv.hh_id, cvd.card_number_inputted, cvd.card_number_system_generated, cvd.card_number_series FROM emv_validation_details AS evd LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id WHERE gv.hh_id LIKE'%"+household_no+"%' AND DATE(evd.created_at) LIKE'%"+filter_date+"%' order by evd.id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
                 String hhNumber = cursor.getString(1);
                 if (cursor.getString(2).matches("")){
-                    cashCardNumber = cursor.getString(7);
+                    cashCardNumber = cursor.getString(3);
                 }
                 else{
                     cashCardNumber = cursor.getString(2);
                 }
                 String grantee_number = cursor.getString(3);
                 String seriesNumber = cursor.getString(4);
-                byte[] CashCardImage = cursor.getBlob(5);
-                byte[] idImage = cursor.getBlob(6);
-                int status = cursor.getInt(8);
-                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
+//                int status = cursor.getInt(8);
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, id,hhNumber));
+
+                //                int id = cursor.getInt(0);
+//                String hhNumber = cursor.getString(1);
+//                if (cursor.getString(2).matches("")){
+//                    cashCardNumber = cursor.getString(7);
+//                }
+//                else{
+//                    cashCardNumber = cursor.getString(2);
+//                }
+//                String grantee_number = cursor.getString(3);
+//                String seriesNumber = cursor.getString(4);
+//                byte[] CashCardImage = cursor.getBlob(5);
+//                byte[] idImage = cursor.getBlob(6);
+//                int status = cursor.getInt(8);
+//                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
             }
             if (cursor.getCount()==0){
                 tvIdentifier.setText("Household not found");
@@ -268,23 +278,24 @@ public class InventoryList extends AppCompatActivity {
 
     public void filterAllData(ArrayList<Inventory> list, String cashCardNumber,InventoryListAdapter adapter){
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT id,hh_id,current_grantee_card_number ,accomplish_by_full_name,informant_full_name,current_cash_card_picture , beneficiary_picture, cash_card_scanned_no, card_scanning_status FROM emv_database_monitoring_details order by id DESC");
+            Log.d(TAG, "Nisulod kay diri");
+            Cursor cursor = sqLiteHelper.getData("SELECT evd.id, gv.hh_id, cvd.card_number_inputted, cvd.card_number_system_generated, cvd.card_number_series FROM emv_validation_details AS evd LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id order by evd.id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
                 String hhNumber = cursor.getString(1);
                 if (cursor.getString(2).matches("")){
-                    cashCardNumber = cursor.getString(7);
+                    cashCardNumber = cursor.getString(3);
                 }
                 else{
                     cashCardNumber = cursor.getString(2);
                 }
                 String grantee_number = cursor.getString(3);
                 String seriesNumber = cursor.getString(4);
-                byte[] CashCardImage = cursor.getBlob(5);
-                byte[] idImage = cursor.getBlob(6);
-                int status = cursor.getInt(8);
-                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
+//                byte[] CashCardImage = cursor.getBlob(5);
+//                byte[] idImage = cursor.getBlob(6);
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, id,hhNumber));
+//                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
             }
             if (cursor.getCount()==0){
                 tvIdentifier.setText("No Scanned available");
