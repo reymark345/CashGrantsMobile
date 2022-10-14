@@ -56,7 +56,6 @@ public class InventoryList extends AppCompatActivity {
     byte[] id_image;
     private TextView tvSearch, tvResultHh, tvIdentifier;
     EditText  filterDate, filterHousehold;
-//    AutoCompleteTextView spinFilterType;
     String ftype, fhhid, fdate;
     String[] typeOptions = new String[]{"", "complete", "incomplete"};
 
@@ -153,7 +152,6 @@ public class InventoryList extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.search_inventory_list);
-//        spinFilterType = dialog.findViewById(R.id.spinFilterType);
         filterHousehold = dialog.findViewById(R.id.edtFilterHHID);
         filterDate = dialog.findViewById(R.id.edtFilterDate);
         tvIdentifier = findViewById(R.id.tvIdentifier);
@@ -182,13 +180,9 @@ public class InventoryList extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ftype = spinFilterType.getText().toString();
                 fhhid = filterHousehold.getText().toString();
                 fdate = filterDate.getText().toString();
-
-//                queries(fhhid, ftype, fdate);
                 queries(fhhid, fdate);
-
                 dialog.dismiss();
             }
         });

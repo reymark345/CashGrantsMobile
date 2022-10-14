@@ -1134,12 +1134,17 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public static byte[] imageViewToByte(ImageView image) {
-        Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-        image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
+        try{
+            Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
+            image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+            byte[] byteArray = stream.toByteArray();
+            return byteArray;
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -3283,6 +3288,26 @@ public class ScanCashCard extends AppCompatActivity {
             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sDialog) {
+
+
+
+                    if (ScannedImage.getDrawable() == null){
+                        Log.v(TAG,"null" +ScannedImage);
+                    }
+                    else {
+                        Log.v(TAG,"not null" +ScannedImage);
+                    }
+
+
+                    if (ivOtherScannedImage3.getDrawable() == null){
+                        Log.v(TAG,"nullsiyaa " +ivOtherScannedImage3);
+                    }
+                    else {
+                        Log.v(TAG,"not null " +ivOtherScannedImage3);
+                    }
+
+
+
                     sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code,barangay_code,set,
                             lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
                             amount, date_claimed, nma_reason, nma_remarks,
@@ -3292,7 +3317,15 @@ public class ScanCashCard extends AppCompatActivity {
                             card_holder_name2,card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2,  release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
                             card_holder_name3,card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3,  release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
                             card_holder_name4,card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
-                            card_holder_name5,card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count);
+                            card_holder_name5,card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count,
+                            imageViewToByte(ScannedImage),
+                            imageViewToByte(mGrantee),
+                            imageViewToByte(imgAdditionalId),
+                            imageViewToByte(ivOtherScannedImage1),
+                            imageViewToByte(ivOtherScannedImage2),
+                            imageViewToByte(ivOtherScannedImage3),
+                            imageViewToByte(ivOtherScannedImage4),
+                            imageViewToByte(ivOtherScannedImage5));
                     sDialog.dismiss();
                     clear_preferences();
                     Intent intent = new Intent(ScanCashCard.this, ScanCashCard.class);
