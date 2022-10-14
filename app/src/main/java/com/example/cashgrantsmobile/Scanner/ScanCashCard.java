@@ -108,7 +108,7 @@ public class ScanCashCard extends AppCompatActivity {
     public static final int IMAGE_PICK_CAMERA_CODE = 1001;
 
     String cameraPermission[];
-    String StoragePermission[], required_field, required_length, required_btn;
+    String StoragePermission[], required_field, required_length, required_btn, required_cc_length,required_cc_invalid_format;
     Button btn_search_hh, rescanCashCard, btn_cash_card;
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
@@ -3746,6 +3746,8 @@ public class ScanCashCard extends AppCompatActivity {
         pressNext =true;
         isValidationError = 0;
         required_field = "This field is required!";
+        required_cc_length = "This field value must have 19 digits";
+        required_cc_invalid_format = "Invalid format!";
         required_length = "This field value must have 10 digits!";
         required_btn = "Required!";
 
@@ -4152,7 +4154,16 @@ public class ScanCashCard extends AppCompatActivity {
             if (card_number_inputted.matches("")) {
                 til_card_number_inputted.setError(required_field);
                 isValidationError++;
-            } else {
+            }
+            else if(card_number_inputted.length() != 23){
+                til_card_number_inputted.setError(required_cc_length);
+                isValidationError++;
+            }
+            else if (!card_number_inputted.matches("[0-9 ]+")){
+                til_card_number_inputted.setError(required_cc_invalid_format);
+                isValidationError++;
+            }
+            else {
                 til_card_number_inputted.setError(null);
             }
 
@@ -4329,6 +4340,19 @@ public class ScanCashCard extends AppCompatActivity {
                     til_card_number_inputted1.setError(required_field);
                     isValidationError++;
                 }
+                else if(card_number_inputted1.length() != 23){
+                    til_card_number_inputted1.setError(required_cc_length);
+                    isValidationError++;
+                }
+                else if (!card_number_inputted1.matches("[0-9 ]+")){
+                    til_card_number_inputted1.setError(required_cc_invalid_format);
+                    isValidationError++;
+                }
+
+                else {
+                    til_card_number_inputted1.setError(null);
+
+                }
                 if (card_number_series1.matches("")) {
                     til_card_number_series1.setError(required_field);
                     isValidationError++;
@@ -4414,6 +4438,18 @@ public class ScanCashCard extends AppCompatActivity {
                     til_card_number_inputted2.setError(required_field);
                     isValidationError++;
                 }
+                else if(card_number_inputted2.length() != 23){
+                    til_card_number_inputted2.setError(required_cc_length);
+                    isValidationError++;
+                }
+                else if (!card_number_inputted2.matches("[0-9 ]+")){
+                    til_card_number_inputted2.setError(required_cc_invalid_format);
+                    isValidationError++;
+                }
+                else {
+                    til_card_number_inputted2.setError(null);
+                }
+
                 if (card_number_series2.matches("")) {
                     til_card_number_series2.setError(required_field);
                     isValidationError++;
@@ -4493,9 +4529,23 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 }
                 if (card_number_inputted3.matches("")) {
-                    til_card_number_inputted2.setError(required_field);
+                    til_card_number_inputted3.setError(required_field);
                     isValidationError++;
                 }
+                else if(card_number_inputted3.length() != 23){
+                    til_card_number_inputted3.setError(required_cc_length);
+                    isValidationError++;
+                }
+                else if (!card_number_inputted3.matches("[0-9 ]+")){
+                    til_card_number_inputted3.setError(required_cc_invalid_format);
+                    isValidationError++;
+                }
+
+                else {
+                    til_card_number_inputted3.setError(null);
+
+                }
+
                 if (card_number_series3.matches("")) {
                     til_card_number_series3.setError(required_field);
                     isValidationError++;
@@ -4578,6 +4628,20 @@ public class ScanCashCard extends AppCompatActivity {
                     til_card_number_inputted4.setError(required_field);
                     isValidationError++;
                 }
+                else if(card_number_inputted4.length() != 23){
+                    til_card_number_inputted4.setError(required_cc_length);
+                    isValidationError++;
+                }
+                else if (!card_number_inputted4.matches("[0-9 ]+")){
+                    til_card_number_inputted4.setError(required_cc_invalid_format);
+                    isValidationError++;
+                }
+
+                else {
+                    til_card_number_inputted4.setError(null);
+                }
+
+
                 if (card_number_series4.matches("")) {
                     til_card_number_series4.setError(required_field);
                     isValidationError++;
@@ -4660,6 +4724,18 @@ public class ScanCashCard extends AppCompatActivity {
                     til_card_number_inputted5.setError(required_field);
                     isValidationError++;
                 }
+                else if(card_number_inputted5.length() != 23){
+                    til_card_number_inputted5.setError(required_cc_length);
+                    isValidationError++;
+                }
+                else if (!card_number_inputted5.matches("[0-9 ]+")){
+                    til_card_number_inputted5.setError(required_cc_invalid_format);
+                    isValidationError++;
+                }
+                else {
+                    til_card_number_inputted5.setError(null);
+                }
+
                 if (card_number_series5.matches("")) {
                     til_card_number_series5.setError(required_field);
                     isValidationError++;
