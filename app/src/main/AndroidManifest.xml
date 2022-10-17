@@ -31,6 +31,7 @@
 
         <activity
             android:name=".Scanner.ScanCashCard"
+            android:windowSoftInputMode="adjustResize|adjustPan"
             android:parentActivityName=".MainActivity"/>
 
         <activity
