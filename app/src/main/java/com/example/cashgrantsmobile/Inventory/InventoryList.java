@@ -222,7 +222,7 @@ public class InventoryList extends AppCompatActivity {
 
     public void queries(String household_no, String filter_date){
         try {
-            Cursor cursor = sqLiteHelper.getData("SELECT evd.id, gv.hh_id, cvd.card_number_inputted, cvd.card_number_system_generated, cvd.card_number_series FROM emv_validation_details AS evd LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id WHERE gv.hh_id LIKE'%"+household_no+"%' AND DATE(evd.created_at) LIKE'%"+filter_date+"%' order by evd.id DESC");
+            Cursor cursor = sqLiteHelper.getData("SELECT evd.id, gv.hh_id, cvd.card_number_inputted, cvd.card_number_system_generated, cvd.card_number_series,cvd.card_image, gv.grantee_image FROM emv_validation_details AS evd LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id WHERE gv.hh_id LIKE'%"+household_no+"%' AND DATE(evd.created_at) LIKE'%"+filter_date+"%' order by evd.id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
@@ -235,8 +235,11 @@ public class InventoryList extends AppCompatActivity {
                 }
                 String grantee_number = cursor.getString(3);
                 String seriesNumber = cursor.getString(4);
+                byte[] card_Image = cursor.getBlob(5);
+                byte[] grantee_Image = cursor.getBlob(6);
+
 //                int status = cursor.getInt(8);
-                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, id,hhNumber));
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber,card_Image,grantee_Image, id,hhNumber));
 
                 //                int id = cursor.getInt(0);
 //                String hhNumber = cursor.getString(1);
@@ -273,7 +276,7 @@ public class InventoryList extends AppCompatActivity {
     public void filterAllData(ArrayList<Inventory> list, String cashCardNumber,InventoryListAdapter adapter){
         try {
             Log.d(TAG, "Nisulod kay diri");
-            Cursor cursor = sqLiteHelper.getData("SELECT evd.id, gv.hh_id, cvd.card_number_inputted, cvd.card_number_system_generated, cvd.card_number_series FROM emv_validation_details AS evd LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id order by evd.id DESC");
+            Cursor cursor = sqLiteHelper.getData("SELECT evd.id, gv.hh_id, cvd.card_number_inputted, cvd.card_number_system_generated, cvd.card_number_series,cvd.card_image, gv.grantee_image FROM emv_validation_details AS evd LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id order by evd.id DESC");
             list.clear();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
@@ -286,10 +289,10 @@ public class InventoryList extends AppCompatActivity {
                 }
                 String grantee_number = cursor.getString(3);
                 String seriesNumber = cursor.getString(4);
-//                byte[] CashCardImage = cursor.getBlob(5);
-//                byte[] idImage = cursor.getBlob(6);
-                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, id,hhNumber));
-//                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage,status, id,hhNumber));
+                byte[] CashCardImage = cursor.getBlob(5);
+                byte[] idImage = cursor.getBlob(6);
+//                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, id,hhNumber));
+                list.add(new Inventory(cashCardNumber, grantee_number,seriesNumber, CashCardImage, idImage, id,hhNumber));
             }
             if (cursor.getCount()==0){
                 tvIdentifier.setText("No Scanned available");

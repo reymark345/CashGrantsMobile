@@ -75,33 +75,29 @@ public class InventoryListAdapter extends BaseAdapter {
         holder.txtPrice.setText(inventory.gethhNumber());
 //        holder.txtSeriesNo.setText(inventory.getSeriesNumber());
 
-
-//        byte[] CashCardImage = inventory.getImage();
-//        byte[] idImage = inventory.getIdImage();
-
-
         holder.imageView.setImageResource(R.drawable.ic_image);
         holder.mPreviewCashCard.setImageResource(R.drawable.ic_image);
 
-        return row;
+        byte[] card_image = inventory.getCardImage();
+        byte[] grantee_image = inventory.getGranteeImage();
 
-//        if(CashCardImage.length > 1)
-//        {
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
-//            holder.imageView.setImageBitmap(bitmap);
-//        }
-//        else{
-//            holder.imageView.setImageResource(R.drawable.ic_image);
-//        }
-//
-//        if(idImage!=null)
-//        {
-//            Bitmap bitmap2 = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
-//            holder.mPreviewCashCard.setImageBitmap(bitmap2);
-//        }
-//        else{
-//            holder.mPreviewCashCard.setImageResource(R.drawable.ic_image);
-//        }
-//        return row;
+        if(card_image.length > 1)
+        {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(card_image, 0, card_image.length);
+            holder.imageView.setImageBitmap(bitmap);
+        }
+        else{
+            holder.imageView.setImageResource(R.drawable.ic_image);
+        }
+
+        if(grantee_image!=null)
+        {
+            Bitmap bitmap2 = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
+            holder.mPreviewCashCard.setImageBitmap(bitmap2);
+        }
+        else{
+            holder.mPreviewCashCard.setImageResource(R.drawable.ic_image);
+        }
+        return row;
     }
 }
