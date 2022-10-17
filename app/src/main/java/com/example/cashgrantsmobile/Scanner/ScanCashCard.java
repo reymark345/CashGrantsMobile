@@ -1889,7 +1889,16 @@ public class ScanCashCard extends AppCompatActivity {
                         if (aat_card_physically_presented1.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached1.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField1.setVisibility(View.VISIBLE);
+                            if (aat_distribution_status1.getText().toString().matches("Unclaimed")){
+                                til_distribution_status1.setError("Must be Claimed if physical cash card presented");
+                                isValidationError++;
+                            }
+                            else {
+                                til_distribution_status1.setError(null);
+                            }
+
                         } else {
+                            til_distribution_status1.setError(null);
                             til_reason_not_presented1.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField1.setVisibility(View.GONE);
                             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_1=NULL");
@@ -1917,7 +1926,15 @@ public class ScanCashCard extends AppCompatActivity {
                         if (aat_card_physically_presented2.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached2.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField2.setVisibility(View.VISIBLE);
+                            if (aat_distribution_status2.getText().toString().matches("Unclaimed")){
+                                til_distribution_status2.setError("Must be Claimed if physical cash card presented");
+                                isValidationError++;
+                            }
+                            else {
+                                til_distribution_status2.setError(null);
+                            }
                         } else {
+                            til_distribution_status2.setError(null);
                             til_reason_not_presented2.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField2.setVisibility(View.GONE);
                             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_2=NULL");
@@ -1945,7 +1962,15 @@ public class ScanCashCard extends AppCompatActivity {
                         if (aat_card_physically_presented3.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached3.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField3.setVisibility(View.VISIBLE);
+                            if (aat_distribution_status3.getText().toString().matches("Unclaimed")){
+                                til_distribution_status3.setError("Must be Claimed if physical cash card presented");
+                                isValidationError++;
+                            }
+                            else {
+                                til_distribution_status3.setError(null);
+                            }
                         } else {
+                            til_distribution_status3.setError(null);
                             til_reason_not_presented3.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField3.setVisibility(View.GONE);
                             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_3=NULL");
@@ -1973,7 +1998,15 @@ public class ScanCashCard extends AppCompatActivity {
                         if (aat_card_physically_presented4.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached4.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField4.setVisibility(View.VISIBLE);
+                            if (aat_distribution_status4.getText().toString().matches("Unclaimed")){
+                                til_distribution_status4.setError("Must be Claimed if physical cash card presented");
+                                isValidationError++;
+                            }
+                            else {
+                                til_distribution_status4.setError(null);
+                            }
                         } else {
+                            til_distribution_status4.setError(null);
                             til_reason_not_presented4.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField4.setVisibility(View.GONE);
                             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_4=NULL");
@@ -2001,7 +2034,15 @@ public class ScanCashCard extends AppCompatActivity {
                         if (aat_card_physically_presented5.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached5.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField5.setVisibility(View.VISIBLE);
+                            if (aat_distribution_status5.getText().toString().matches("Unclaimed")){
+                                til_distribution_status5.setError("Must be Claimed if physical cash card presented");
+                                isValidationError++;
+                            }
+                            else {
+                                til_distribution_status5.setError(null);
+                            }
                         } else {
+                            til_distribution_status5.setError(null);
                             til_reason_not_presented5.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField5.setVisibility(View.GONE);
                             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_5=NULL");
@@ -3919,6 +3960,7 @@ public class ScanCashCard extends AppCompatActivity {
             xml_initialization(2);
 
 //          Grantee Details
+
             String distribution_status = aat_distribution_status.getText().toString();
             String release_date = edt_release_date.getText().toString();
             String release_by = edt_release_by.getText().toString();
@@ -4181,6 +4223,25 @@ public class ScanCashCard extends AppCompatActivity {
                 til_id_exists.setError(null);
             }
 
+
+            if (aat_card_physically_presented5.getText().toString().matches("Yes")) {
+                til_card_pin_is_attached5.setVisibility(View.VISIBLE);
+                rlOtherCardScanningField5.setVisibility(View.VISIBLE);
+                if (aat_distribution_status5.getText().toString().matches("Unclaimed")){
+                    til_distribution_status5.setError("Must be Claimed if physical cash card presented");
+                    isValidationError++;
+                }
+                else {
+                    til_distribution_status5.setError(null);
+                }
+            } else {
+                til_distribution_status5.setError(null);
+                til_reason_not_presented5.setVisibility(View.VISIBLE);
+                rlOtherCardScanningField5.setVisibility(View.GONE);
+                sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_5=NULL");
+                ivOtherScannedImage5.setImageResource(R.drawable.ic_image);
+            }
+
 //            Other Card Availablity 1 - 5
 
             til_distribution_status1.setError(null);
@@ -4263,6 +4324,11 @@ public class ScanCashCard extends AppCompatActivity {
             til_card_number_inputted5.setError(null);
             til_card_number_series5.setError(null);
 
+
+
+
+
+
             if (otherCardAvailability1.getVisibility() == View.VISIBLE) {
                 if (distribution_status1.matches("")) {
                     til_distribution_status1.setError(required_field);
@@ -4289,9 +4355,19 @@ public class ScanCashCard extends AppCompatActivity {
                     isValidationError++;
                 } else {
                     if (card_physically_presented1.matches("Yes")) {
+                        if (distribution_status1.matches("Unclaimed")){
+                            til_distribution_status1.setError("Must be Claimed if Yes on physical cash card presented");
+                            isValidationError++;
+                        }
+                        else{
+                            til_distribution_status1.setError(null);
+                        }
                         if (card_pin_is_attached1.matches("")) {
                             til_card_pin_is_attached1.setError(required_field);
                             isValidationError++;
+                        }
+                        else {
+                            til_card_pin_is_attached1.setError(null);
                         }
                     } else {
                         if (reason_not_presented1.matches("")) {
@@ -4386,6 +4462,14 @@ public class ScanCashCard extends AppCompatActivity {
                     isValidationError++;
                 } else {
                     if (card_physically_presented2.matches("Yes")) {
+                        if (distribution_status2.matches("Unclaimed")){
+                            til_distribution_status2.setError("Must be Claimed if Yes on physical cash card presented");
+                            isValidationError++;
+                        }
+                        else{
+                            til_distribution_status2.setError(null);
+                        }
+
                         if (card_pin_is_attached2.matches("")) {
                             til_card_pin_is_attached2.setError(required_field);
                             isValidationError++;
@@ -4481,10 +4565,18 @@ public class ScanCashCard extends AppCompatActivity {
                     isValidationError++;
                 } else {
                     if (card_physically_presented3.matches("Yes")) {
+                        if (distribution_status3.matches("Unclaimed")){
+                            til_distribution_status3.setError("Must be Claimed if Yes on physical cash card presented");
+                            isValidationError++;
+                        }
+                        else{
+                            til_distribution_status3.setError(null);
+                        }
                         if (card_pin_is_attached3.matches("")) {
                             til_card_pin_is_attached3.setError(required_field);
                             isValidationError++;
                         }
+
                     } else {
                         if (reason_not_presented3.matches("")) {
                             til_reason_not_presented3.setError(required_field);
@@ -4577,6 +4669,13 @@ public class ScanCashCard extends AppCompatActivity {
                     isValidationError++;
                 } else {
                     if (card_physically_presented4.matches("Yes")) {
+                        if (distribution_status4.matches("Unclaimed")){
+                            til_distribution_status4.setError("Must be Claimed if Yes on physical cash card presented");
+                            isValidationError++;
+                        }
+                        else{
+                            til_distribution_status4.setError(null);
+                        }
                         if (card_pin_is_attached4.matches("")) {
                             til_card_pin_is_attached4.setError(required_field);
                             isValidationError++;
@@ -4673,6 +4772,13 @@ public class ScanCashCard extends AppCompatActivity {
                     isValidationError++;
                 } else {
                     if (card_physically_presented5.matches("Yes")) {
+                        if (distribution_status5.matches("Unclaimed")){
+                            til_distribution_status5.setError("Must be Claimed if Yes on physical cash card presented");
+                            isValidationError++;
+                        }
+                        else{
+                            til_distribution_status5.setError(null);
+                        }
                         if (card_pin_is_attached5.matches("")) {
                             til_card_pin_is_attached5.setError(required_field);
                             isValidationError++;
