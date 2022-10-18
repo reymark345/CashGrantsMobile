@@ -3381,7 +3381,7 @@ public class ScanCashCard extends AppCompatActivity {
                     new android.os.Handler(Looper.getMainLooper()).postDelayed(
                             new Runnable() {
                                 public void run() {
-//                                    clear_preferences();
+                                    clear_preferences();
                                     hide_loading_bar();
                                     int current = viewPager.getCurrentItem();
                                     viewPager.setCurrentItem(current-3);
@@ -3392,12 +3392,6 @@ public class ScanCashCard extends AppCompatActivity {
                             },
                             300);
 //
-
-
-
-
-
-
                 }
             })
             .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
