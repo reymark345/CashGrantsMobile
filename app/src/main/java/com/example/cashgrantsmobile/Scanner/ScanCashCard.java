@@ -78,6 +78,7 @@ import android.widget.Toast;
 
 import com.example.cashgrantsmobile.Inventory.InventoryList;
 import com.example.cashgrantsmobile.Inventory.UpdateEntries;
+import com.example.cashgrantsmobile.Loading.LoadingBar;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
 import com.example.cashgrantsmobile.Signatories.Informant;
@@ -342,6 +343,8 @@ public class ScanCashCard extends AppCompatActivity {
         return userNAME;
     }
 
+    public LoadingBar loadingBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -351,6 +354,12 @@ public class ScanCashCard extends AppCompatActivity {
         mPreviewIv .setVisibility(View.INVISIBLE);
         Bundle extras = getIntent().getExtras();
         isValidationError = 0;
+
+        loadingBar = new LoadingBar(this);
+
+
+
+
         if (extras != null) {
             String value = extras.getString("toast");
             Toasty.success(this,""+value, Toasty.LENGTH_SHORT).show();
@@ -3329,8 +3338,7 @@ public class ScanCashCard extends AppCompatActivity {
             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sDialog) {
-
-
+                    load_loading_bar();
 
                     if (ScannedImage.getDrawable() == null){
                         Log.v(TAG,"null" +ScannedImage);
@@ -3346,7 +3354,6 @@ public class ScanCashCard extends AppCompatActivity {
                     else {
                         Log.v(TAG,"not null " +ivOtherScannedImage3);
                     }
-
 
 
                     sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code,barangay_code,set,
@@ -3368,10 +3375,29 @@ public class ScanCashCard extends AppCompatActivity {
                             imageViewToByte(ivOtherScannedImage4),
                             imageViewToByte(ivOtherScannedImage5));
                     sDialog.dismiss();
-                    clear_preferences();
-                    Intent intent = new Intent(ScanCashCard.this, ScanCashCard.class);
-                    startActivity(intent);
-                    finish();
+
+
+
+                    new android.os.Handler(Looper.getMainLooper()).postDelayed(
+                            new Runnable() {
+                                public void run() {
+//                                    clear_preferences();
+                                    hide_loading_bar();
+                                    int current = viewPager.getCurrentItem();
+                                    viewPager.setCurrentItem(current-3);
+//                                    Intent intent = new Intent(ScanCashCard.this, ScanCashCard.class);
+//                                    startActivity(intent);
+//                                    finish();
+                                }
+                            },
+                            300);
+//
+
+
+
+
+
+
                 }
             })
             .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -5027,6 +5053,8 @@ public class ScanCashCard extends AppCompatActivity {
                     tvPrev.setVisibility(View.VISIBLE);
                     viewPager.setCurrentItem(current + 1);
                 } else {
+                    Log.v(TAG,"dawwbiss " + grantee_card_number);
+//                    hide_loading_bar();
                     store_preferences(4);
                     launchHomeScreen();
                 }
@@ -5708,6 +5736,13 @@ public class ScanCashCard extends AppCompatActivity {
 //            Toasty.error(getApplicationContext(),"Household not found" + e, Toasty.LENGTH_SHORT).show();
 //        }
 //    }
+
+    public void load_loading_bar(){
+        loadingBar.Show_loading_bar();
+    }
+    public void hide_loading_bar(){
+        loadingBar.Hide_loading_bar();
+    }
 
     public void btn_CheckNextValidation(){
         String household_no ="";
