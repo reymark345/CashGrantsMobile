@@ -5473,8 +5473,27 @@ public class ScanCashCard extends AppCompatActivity {
                     updated_at = search.getString(39);
                     validated_at = search.getString(40);
                 }
+                String other_card1 = String.valueOf(other_card_number_1);
+                String other_card2 = String.valueOf(other_card_number_2);
+                String other_card3 = String.valueOf(other_card_number_3);
+                String other_card4 = String.valueOf(other_card_number_4);
+                String other_card5 = String.valueOf(other_card_number_5);
 
-                Log.v(ContentValues.TAG,"angvalue " + first_name +" " + created_at +" "+ " "+updated_at + " "+ validated_at);
+                if (other_card1.matches("null")){
+                    other_card_number_1 = "";
+                }
+                if (other_card2.matches("null")){
+                    other_card_number_2 = "";
+                }
+                if (other_card3.matches("null")){
+                    other_card_number_3 = "";
+                }
+                if (other_card4.matches("null")){
+                    other_card_number_4 = "";
+                }
+                if (other_card5.matches("null")){
+                    other_card_number_5 = "";
+                }
 
                 if (search ==null || search.getCount() == 0){
                     clear_preferences();
