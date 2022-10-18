@@ -3186,6 +3186,8 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
+        edt_overall_remarks = findViewById(R.id.edt_overall_remarks);
+        edt_overall_remarks.setEnabled(true);
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
 
@@ -3339,22 +3341,7 @@ public class ScanCashCard extends AppCompatActivity {
                 @Override
                 public void onClick(SweetAlertDialog sDialog) {
                     load_loading_bar();
-
-                    if (ScannedImage.getDrawable() == null){
-                        Log.v(TAG,"null" +ScannedImage);
-                    }
-                    else {
-                        Log.v(TAG,"not null" +ScannedImage);
-                    }
-
-
-                    if (ivOtherScannedImage3.getDrawable() == null){
-                        Log.v(TAG,"nullsiyaa " +ivOtherScannedImage3);
-                    }
-                    else {
-                        Log.v(TAG,"not null " +ivOtherScannedImage3);
-                    }
-
+                    edt_overall_remarks.setEnabled(false);
 
                     sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code,barangay_code,set,
                             lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
@@ -3383,11 +3370,11 @@ public class ScanCashCard extends AppCompatActivity {
                                 public void run() {
                                     clear_preferences();
                                     hide_loading_bar();
-                                    int current = viewPager.getCurrentItem();
-                                    viewPager.setCurrentItem(current-3);
-//                                    Intent intent = new Intent(ScanCashCard.this, ScanCashCard.class);
-//                                    startActivity(intent);
-//                                    finish();
+//                                    int current = viewPager.getCurrentItem();
+//                                    viewPager.setCurrentItem(current-3);
+                                    Intent intent = new Intent(ScanCashCard.this, ScanCashCard.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             },
                             300);
