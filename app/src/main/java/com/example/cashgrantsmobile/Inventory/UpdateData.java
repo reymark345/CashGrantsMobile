@@ -3251,6 +3251,7 @@ public class UpdateData extends AppCompatActivity {
         String reason_unclaimed = sh.getString("reason_unclaimed","");
         String card_replacement_request = sh.getString("card_replacement_request","");
         String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details","");
+        String overall_remarks = sh.getString("overall_remarks","");
         int emv_monitoring_id = sh.getInt("emv_monitoring_id",0);
 
         String card_holder_name1 = sh.getString("card_holder_name1","");
@@ -3363,7 +3364,7 @@ public class UpdateData extends AppCompatActivity {
                                 imageViewToByte(ivOtherScannedImage2),
                                 imageViewToByte(ivOtherScannedImage3),
                                 imageViewToByte(ivOtherScannedImage4),
-                                imageViewToByte(ivOtherScannedImage5));
+                                imageViewToByte(ivOtherScannedImage5), overall_remarks);
                         sDialog.dismiss();
 
 

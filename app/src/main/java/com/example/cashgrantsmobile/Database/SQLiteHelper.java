@@ -293,7 +293,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
         if (card_count >=5) {
-            SQLiteStatement other_card_validations5 = database.compileStatement(sql10;
+            SQLiteStatement other_card_validations5 = database.compileStatement(sql10);
             other_card_validations5.clearBindings();
             other_card_validations5.bindString(1, card_holder_name5);
             other_card_validations5.bindString(2, card_number_system_generated5);
