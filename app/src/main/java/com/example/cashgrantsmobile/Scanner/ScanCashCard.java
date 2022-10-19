@@ -591,8 +591,6 @@ public class ScanCashCard extends AppCompatActivity {
             try {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 imgAdditionalId.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
 
                 SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
                 String count = "SELECT count(*) FROM tmp_blob";
@@ -615,9 +613,6 @@ public class ScanCashCard extends AppCompatActivity {
             try {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 mGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
-
                 SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
                 String count = "SELECT count(*) FROM tmp_blob";
                 Cursor mCursor = db.rawQuery(count, null);
