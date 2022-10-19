@@ -52,10 +52,14 @@
 
                     <EditText
                         android:id="@+id/edt_overall_remarks"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:maxLines ="4"
+                        android:maxLength ="2000"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:hint="Overall Remarks"
-                        android:inputType="text" />
+                        android:scrollHorizontally="false"
+                         />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
