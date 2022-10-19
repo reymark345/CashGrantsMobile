@@ -6,6 +6,8 @@ import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Base64;
@@ -23,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,9 +42,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,74 +76,16 @@ public class SyncData extends AppCompatActivity {
     VolleyMultipartRequest request;
     final Double[] progressCC = {0.00};
 
-    Integer evd_id = null;
-    String evd_hh_status = null;
-    String evd_contact_no = null;
-    String evd_contact_no_of = null;
-    String evd_is_grantee = null;
-    String evd_is_minor = null;
-    String evd_relationship_to_grantee = null;
-    String evd_assigned_staff = null;
-    String evd_representative_name = null;
-    String evd_sync_at = null;
-    String evd_user_id = null;
-    String evd_created_at = null;
 
-    Integer other_card = 0;
 
-    Integer gv_id = null;
-    String gv_hh_id = null;
-    String gv_first_name = null;
-    String gv_last_name = null;
-    String gv_middle_name = null;
-    String gv_ext_name = null;
-    String gv_sex = null;
-    String gv_province_code = null;
-    String gv_municipality_code = null;
-    String gv_barangay_code = null;
-    String gv_hh_set = null;
-
-    Integer pvd_id = null;
-    String pvd_lender_name = null;
-    String pvd_lender_address = null;
-    String pvd_date_pawned = null;
-    String pvd_date_retrieved = null;
-    String pvd_loan_amount = null;
-    String pvd_status = null;
-    String pvd_reason = null;
-    String pvd_interest = null;
-    String pvd_offense_history = null;
-    String pvd_offense_date = null;
-    String pvd_remarks = null;
-    String pvd_staff_intervention = null;
-    String pvd_other_details = null;
-
-    Integer nv_id = null;
-    String nv_amount = null;
-    String nv_date_claimed = null;
-    String nv_reason = null;
-    String nv_remarks = null;
-
-    Integer cvd_id = null;
-    String cvd_card_number_prefilled = null;
-    String cvd_card_number_system_generated = null;
-    String cvd_card_number_inputted = null;
-    String cvd_card_number_series = null;
-    String cvd_distribution_status = null;
-    String cvd_release_date = null;
-    String cvd_release_by = null;
-    String cvd_release_place = null;
-    String cvd_card_physically_presented = null;
-    String cvd_card_pin_is_attached = null;
-    String cvd_reason_not_presented = null;
-    String cvd_reason_unclaimed = null;
-    String cvd_card_replacement_requests = null;
-    String cvd_card_replacement_submitted_details = null;
-
-    JSONArray arr_other_card = new JSONArray();
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
 
     public void getCountEmvDetails() {
-        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details");
+        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validation_details");
         Integer totalCount = lastEmvDatabaseID.getCount();
         countEmvDetails = totalCount;
 
@@ -144,13 +93,13 @@ public class SyncData extends AppCompatActivity {
         progressTarget.setText(totalCount.toString());
     }
 
-    public void updaterEmvMonitoring() {
+    public void updateEmvValidations() {
         Activity_Splash_Login.NukeSSLCerts.nuke();
 
         btnSync = findViewById(R.id.btnSync);
         btnSync.setEnabled(false);
 
-        String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoring/updater";
+        String url = BASE_URL + "/api/v1/staff/emvvalidations/updater";
 
         // creating a new variable for our request queue
         RequestQueue queue = Volley.newRequestQueue(SyncData.this);
@@ -170,13 +119,13 @@ public class SyncData extends AppCompatActivity {
                         Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
                         for (int i = 0; i < dataSets.length(); i++) {
                             JSONObject jsonData = dataSets.getJSONObject(i);
-                            sqLiteHelper.updateEmvMonitoring(jsonData.getString("validated_at"), jsonData.getString("id"));
+                            sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"));
                         }
 
                         btnSync.setEnabled(true);
                     }
                     else{
-                        Toasty.error(getApplicationContext(), "Error on updateing the  data.", Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(getApplicationContext(), "Error on updating the  data.", Toast.LENGTH_SHORT, true).show();
                     }
 
                 } catch (JSONException e) {
@@ -219,6 +168,7 @@ public class SyncData extends AppCompatActivity {
     }
 
     public void syncEmvData() {
+
         Activity_Splash_Login.NukeSSLCerts.nuke();
 
         Toasty.info(getApplicationContext(), "Now syncing the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
@@ -237,9 +187,86 @@ public class SyncData extends AppCompatActivity {
         btnSync = findViewById(R.id.btnSync);
         btnSync.setEnabled(false);
 
-        Cursor emv_validation_details = sqLiteHelper.getData("SELECT id, hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, grantee_validation_id, pawning_validation_detail_id, nma_validation_id, card_validation_detail_id, emv_validation_id, sync_at, user_id, created_at, updated_at FROM emv_validation_details");
+        Cursor emv_validation_details = sqLiteHelper.getData("SELECT id, hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, grantee_validation_id, pawning_validation_detail_id, nma_validation_id, card_validation_detail_id, emv_validation_id, sync_at, user_id, additional_image, created_at, updated_at, overall_remarks FROM emv_validation_details");
 
         while (emv_validation_details.moveToNext()) {
+            JSONArray arr_other_card = new JSONArray();
+            JSONArray arr_ocv_id = new JSONArray();
+
+            Integer evd_id = 0;
+            String evd_hh_status = "";
+            String evd_contact_no = "";
+            String evd_contact_no_of = "";
+            String evd_is_grantee = "";
+            String evd_is_minor = "";
+            String evd_relationship_to_grantee = "";
+            String evd_assigned_staff = "";
+            String evd_representative_name = "";
+            String evd_sync_at = "";
+            String evd_user_id = "";
+            String evd_created_at = "";
+            String evd_overall_remarks = "";
+            byte[] evd_additional_image = null;
+
+            Integer other_card = 0;
+
+            Integer gv_id = 0;
+            String gv_hh_id = "";
+            String gv_first_name = "";
+            String gv_last_name = "";
+            String gv_middle_name = "";
+            String gv_ext_name = "";
+            String gv_sex = "";
+            String gv_province_code = "";
+            String gv_municipality_code = "";
+            String gv_barangay_code = "";
+            String gv_hh_set = "";
+            byte[] gv_grantee_image = null;
+
+            Integer pvd_id = 0;
+            String pvd_lender_name = "";
+            String pvd_lender_address = "";
+            String pvd_date_pawned = "";
+            String pvd_date_retrieved = "";
+            String pvd_loan_amount = "0";
+            String pvd_status = "";
+            String pvd_reason = "";
+            String pvd_interest = "0";
+            String pvd_offense_history = "";
+            String pvd_offense_date = "";
+            String pvd_remarks = "";
+            String pvd_staff_intervention = "";
+            String pvd_other_details = "";
+
+            Integer nv_id = 0;
+            String nv_amount = "0";
+            String nv_date_claimed = "";
+            String nv_reason = "";
+            String nv_remarks = "";
+
+            Integer cvd_id = 0;
+            String cvd_card_number_prefilled = "";
+            String cvd_card_number_system_generated = "";
+            String cvd_card_number_inputted = "";
+            String cvd_card_number_series = "";
+            String cvd_distribution_status = "";
+            String cvd_release_date = "";
+            String cvd_release_by = "";
+            String cvd_release_place = "";
+            String cvd_card_physically_presented = "";
+            String cvd_card_pin_is_attached = "";
+            String cvd_reason_not_presented = "";
+            String cvd_reason_unclaimed = "";
+            String cvd_card_replacement_requests = "";
+            String cvd_card_replacement_submitted_details = "";
+            byte[] cvd_card_image = null;
+
+            byte[] ocv_other_image_1 = null;
+            byte[] ocv_other_image_2 = null;
+            byte[] ocv_other_image_3 = null;
+            byte[] ocv_other_image_4 = null;
+            byte[] ocv_other_image_5 = null;
+
             evd_id = emv_validation_details.getInt(0);
             evd_hh_status = emv_validation_details.getString(1);
             evd_contact_no = emv_validation_details.getString(2);
@@ -251,9 +278,11 @@ public class SyncData extends AppCompatActivity {
             evd_representative_name = emv_validation_details.getString(8);
             evd_sync_at = emv_validation_details.getString(14);
             evd_user_id = emv_validation_details.getString(15);
-            evd_created_at = emv_validation_details.getString(16);
+            evd_additional_image = emv_validation_details.getBlob(16);
+            evd_created_at = emv_validation_details.getString(17);
+            evd_overall_remarks = emv_validation_details.getString(19);
 
-            Cursor grantee_validations = sqLiteHelper.getData("SELECT id, hh_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, hh_set FROM grantee_validations WHERE id=" + emv_validation_details.getInt(9));
+            Cursor grantee_validations = sqLiteHelper.getData("SELECT id, hh_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, hh_set, grantee_image FROM grantee_validations WHERE id=" + emv_validation_details.getInt(9));
             while (grantee_validations.moveToNext()) {
                 gv_id = grantee_validations.getInt(0);
                 gv_hh_id = grantee_validations.getString(1);
@@ -266,6 +295,7 @@ public class SyncData extends AppCompatActivity {
                 gv_municipality_code = grantee_validations.getString(8);
                 gv_barangay_code = grantee_validations.getString(9);
                 gv_hh_set = grantee_validations.getString(10);
+                gv_grantee_image = grantee_validations.getBlob(11);
             }
             grantee_validations.close();
 
@@ -274,17 +304,19 @@ public class SyncData extends AppCompatActivity {
                 pvd_id = pawning_validation_details.getInt(0);
                 pvd_lender_name = pawning_validation_details.getString(1);
                 pvd_lender_address = pawning_validation_details.getString(2);
-                pvd_date_pawned = pawning_validation_details.getString(3);
-                pvd_date_retrieved = pawning_validation_details.getString(4);
                 pvd_loan_amount = pawning_validation_details.getString(5);
                 pvd_status = pawning_validation_details.getString(6);
                 pvd_reason = pawning_validation_details.getString(7);
                 pvd_interest = pawning_validation_details.getString(8);
                 pvd_offense_history = pawning_validation_details.getString(9);
-                pvd_offense_date = pawning_validation_details.getString(10);
                 pvd_remarks = pawning_validation_details.getString(11);
                 pvd_staff_intervention = pawning_validation_details.getString(12);
                 pvd_other_details = pawning_validation_details.getString(13);
+
+                pvd_date_retrieved = pawning_validation_details.getString(4);
+                pvd_offense_date = pawning_validation_details.getString(10);
+                pvd_date_pawned = pawning_validation_details.getString(3);
+
             }
             pawning_validation_details.close();
 
@@ -292,13 +324,13 @@ public class SyncData extends AppCompatActivity {
             while (nma_validations.moveToNext()) {
                 nv_id = nma_validations.getInt(0);
                 nv_amount = nma_validations.getString(1);
-                nv_date_claimed = nma_validations.getString(2);
                 nv_reason = nma_validations.getString(3);
                 nv_remarks = nma_validations.getString(4);
+                nv_date_claimed = nma_validations.getString(2);
             }
             nma_validations.close();
 
-            Cursor card_validation_details = sqLiteHelper.getData("SELECT id, card_number_prefilled, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_submitted_details FROM card_validation_details WHERE id=" + emv_validation_details.getInt(12));
+            Cursor card_validation_details = sqLiteHelper.getData("SELECT id, card_number_prefilled, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_submitted_details, card_image FROM card_validation_details WHERE id=" + emv_validation_details.getInt(12));
             while (card_validation_details.moveToNext()) {
                 cvd_id = card_validation_details.getInt(0);
                 cvd_card_number_prefilled = card_validation_details.getString(1);
@@ -306,7 +338,6 @@ public class SyncData extends AppCompatActivity {
                 cvd_card_number_inputted = card_validation_details.getString(3);
                 cvd_card_number_series = card_validation_details.getString(4);
                 cvd_distribution_status = card_validation_details.getString(5);
-                cvd_release_date = card_validation_details.getString(6);
                 cvd_release_by = card_validation_details.getString(7);
                 cvd_release_place = card_validation_details.getString(8);
                 cvd_card_physically_presented = card_validation_details.getString(9);
@@ -315,13 +346,18 @@ public class SyncData extends AppCompatActivity {
                 cvd_reason_unclaimed = card_validation_details.getString(12);
                 cvd_card_replacement_requests = card_validation_details.getString(13);
                 cvd_card_replacement_submitted_details = card_validation_details.getString(14);
+                cvd_card_image = card_validation_details.getBlob(15);
+                cvd_release_date = card_validation_details.getString(6);
             }
             card_validation_details.close();
 
-            Cursor other_card_validations = sqLiteHelper.getData("SELECT id, card_holder_name, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_request_submitted_details, pawning_remarks FROM other_card_validations WHERE emv_validation_detail_id=" + emv_validation_details.getInt(0));
+            Cursor other_card_validations = sqLiteHelper.getData("SELECT id, card_holder_name, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_request_submitted_details, pawning_remarks, other_image FROM other_card_validations WHERE emv_validation_detail_id=" + emv_validation_details.getInt(0));
+            Integer ocv_counter = 0;
             while (other_card_validations.moveToNext()) {
+                ocv_counter++;
                 JSONObject obj_other_card = new JSONObject();
                 try {
+                    arr_ocv_id.put(other_card_validations.getString(0));
                     obj_other_card.put("id", other_card_validations.getString(0));
                     obj_other_card.put("card_holder_name", other_card_validations.getString(1));
                     obj_other_card.put("card_number_system_generated", other_card_validations.getString(2));
@@ -338,116 +374,108 @@ public class SyncData extends AppCompatActivity {
                     obj_other_card.put("card_replacement_requests", other_card_validations.getString(13));
                     obj_other_card.put("card_replacement_request_submitted_details", other_card_validations.getString(14));
                     obj_other_card.put("pawning_remarks", other_card_validations.getString(15));
-                    obj_other_card.put("emv_validation_id", other_card_validations.getString(16));
+                    if (other_card_validations.getBlob(16) != null) {
+                        if (ocv_counter == 1) {
+                            ocv_other_image_1 = other_card_validations.getBlob(16);
+                        } else if (ocv_counter == 2) {
+                            ocv_other_image_2 = other_card_validations.getBlob(16);
+                        } else if (ocv_counter == 3) {
+                            ocv_other_image_3 = other_card_validations.getBlob(16);
+                        } else if (ocv_counter == 4) {
+                            ocv_other_image_4 = other_card_validations.getBlob(16);
+                        } else if (ocv_counter == 5) {
+                            ocv_other_image_5 = other_card_validations.getBlob(16);
+                        }
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 arr_other_card.put(obj_other_card);
             }
-//            String full_name = emv_validation_details.getString(1) != null ? emv_validation_details.getString(1) : "";
-//            String hh_id = emv_validation_details.getString(2) != null ? emv_validation_details.getString(2) : "";
-//            String client_status = emv_validation_details.getString(3) != null ? emv_validation_details.getString(3) : "";
-//            String address = emv_validation_details.getString(4) != null ? emv_validation_details.getString(4) : "";
-//            String sex = emv_validation_details.getString(5) != null ? emv_validation_details.getString(5) : "";
-//            String hh_set_group = emv_validation_details.getString(6) != null ? emv_validation_details.getString(6) : "";
-//            String assigned_staff = emv_validation_details.getString(7) != null ? emv_validation_details.getString(7) : "";
-//            String minor_grantee = emv_validation_details.getString(8) != null ? emv_validation_details.getString(8) : "";
-//            String contact = emv_validation_details.getString(9) != null ? emv_validation_details.getString(9) : "";
-//            String current_grantee_card_release_date = emv_validation_details.getString(10) != null ? emv_validation_details.getString(10) : "";
-//            String current_grantee_card_release_place = emv_validation_details.getString(11) != null ? emv_validation_details.getString(11) : "";
-//            String current_grantee_card_release_by = emv_validation_details.getString(12) != null ? emv_validation_details.getString(12) : "";
-//            String current_grantee_is_available = emv_validation_details.getString(13) != null ? emv_validation_details.getString(13) : "";
-//            String current_grantee_reason = emv_validation_details.getString(14) != null ? emv_validation_details.getString(14) : "";
-//            String current_grantee_card_number = emv_validation_details.getString(15) != null ? emv_validation_details.getString(15) : "";
-//            String other_card_number_1 = emv_validation_details.getString(16) != null ? emv_validation_details.getString(16) : "";
-//            String other_card_holder_name_1 = emv_validation_details.getString(17) != null ? emv_validation_details.getString(17) : "";
-//            String other_card_number_2 = emv_validation_details.getString(18) != null ? emv_validation_details.getString(18) : "";
-//            String other_card_holder_name_2 = emv_validation_details.getString(19) != null ? emv_validation_details.getString(19) : "";
-//            String other_card_number_3 = emv_validation_details.getString(20) != null ? emv_validation_details.getString(20) : "";
-//            String other_card_holder_name_3 = emv_validation_details.getString(21) != null ? emv_validation_details.getString(21) : "";
-//            String other_card_is_available = emv_validation_details.getString(22) != null ? emv_validation_details.getString(22) : "";
-//            String other_card_reason = emv_validation_details.getString(23) != null ? emv_validation_details.getString(23) : "";
-//            String nma_amount = emv_validation_details.getString(24) != null ? emv_validation_details.getString(24) : "";
-//            String nma_date_claimed = emv_validation_details.getString(25) != null ? emv_validation_details.getString(25) : "";
-//            String nma_reason = emv_validation_details.getString(26) != null ? emv_validation_details.getString(26) : "";
-//            String nma_remarks = emv_validation_details.getString(27) != null ? emv_validation_details.getString(27) : "";
-//            String pawn_name_of_lender = emv_validation_details.getString(28) != null ? emv_validation_details.getString(28) : "";
-//            String pawn_date = emv_validation_details.getString(29) != null ? emv_validation_details.getString(29) : "";
-//            String pawn_retrieved_date = emv_validation_details.getString(30) != null ? emv_validation_details.getString(30) : "";
-//            String pawn_status = emv_validation_details.getString(31) != null ? emv_validation_details.getString(31) : "";
-//            String pawn_reason = emv_validation_details.getString(32) != null ? emv_validation_details.getString(32) : "";
-//            String pawn_offense_history = emv_validation_details.getString(33) != null ? emv_validation_details.getString(33) : "";
-//            String pawn_offense_date = emv_validation_details.getString(34) != null ? emv_validation_details.getString(34) : "";
-//            String pawn_remarks = emv_validation_details.getString(35) != null ? emv_validation_details.getString(35) : "";
-//            String pawn_intervention_staff = emv_validation_details.getString(36) != null ? emv_validation_details.getString(36) : "";
-//            String pawn_other_details = emv_validation_details.getString(37) != null ? emv_validation_details.getString(37) : "";
-//            String informant_full_name = emv_validation_details.getString(38) != null ? emv_validation_details.getString(38) : "";
-//            String accomplish_by_full_name = emv_validation_details.getString(39) != null ? emv_validation_details.getString(39) : "";
-//            byte[] accomplish_e_signature = emv_validation_details.getBlob(40);
-//            byte[] informant_e_signature = emv_validation_details.getBlob(41);
-//            byte[] attested_by_e_signature = emv_validation_details.getBlob(42);
-//            byte[] current_cash_card_picture = emv_validation_details.getBlob(43);
-//            byte[] beneficiary_picture = emv_validation_details.getBlob(44);
-//
-//            String accomplish_e_signature_base64 = "";
-//            String informant_e_signature_base64 = "";
-//            String attested_by_e_signature_base64 = "";
-//            String current_cash_card_picture_base64 = "";
-//            String beneficiary_picture_base64 = "";
-//
-//            if (accomplish_e_signature != null) {
-//                accomplish_e_signature_base64 = Base64.encodeToString(accomplish_e_signature, Base64.DEFAULT);
-//            }
-//            if (informant_e_signature != null) {
-//                informant_e_signature_base64 = Base64.encodeToString(informant_e_signature, Base64.DEFAULT);
-//            }
-//            if (attested_by_e_signature != null) {
-//                attested_by_e_signature_base64 = Base64.encodeToString(attested_by_e_signature, Base64.DEFAULT);
-//            }
-//            if (current_cash_card_picture != null) {
-//                current_cash_card_picture_base64 = Base64.encodeToString(current_cash_card_picture, Base64.DEFAULT);
-//            }
-//            if (beneficiary_picture != null) {
-//                beneficiary_picture_base64 = Base64.encodeToString(beneficiary_picture, Base64.DEFAULT);
-//            }
-//
-//            String attested_by_full_name = emv_validation_details.getString(45) != null ? emv_validation_details.getString(45) : "";
-//            String other_card_number_series_1 = emv_validation_details.getString(46) != null ? emv_validation_details.getString(46) : "";
-//            String other_card_number_series_2 = emv_validation_details.getString(47) != null ? emv_validation_details.getString(47) : "";
-//            String other_card_number_series_3 = emv_validation_details.getString(48) != null ? emv_validation_details.getString(48) : "";
-//            String emv_database_monitoring_id = emv_validation_details.getString(49) != null ? emv_validation_details.getString(49) : "";
-//            String current_grantee_card_number_series = emv_validation_details.getString(50) != null ? emv_validation_details.getString(50) : "";
-//            String user_id = emv_validation_details.getString(59) != null ? emv_validation_details.getString(59) : "";
-//            String created_at = emv_validation_details.getString(51) != null ? emv_validation_details.getString(51) : "";
-//            String other_card_is_available_2 = emv_validation_details.getString(52) != null ? emv_validation_details.getString(52) : "";
-//            String other_card_is_available_3 = emv_validation_details.getString(53) != null ? emv_validation_details.getString(53) : "";
-//            String other_card_reason_2 = emv_validation_details.getString(54) != null ? emv_validation_details.getString(54) : "";
-//            String other_card_reason_3 = emv_validation_details.getString(55) != null ? emv_validation_details.getString(55) : "";
-//            String pawn_loaned_amount = emv_validation_details.getString(56) != null ? emv_validation_details.getString(56) : "";
-//            String pawn_lender_address = emv_validation_details.getString(57) != null ? emv_validation_details.getString(57) : "";
-//            String pawn_interest = emv_validation_details.getString(58) != null ? emv_validation_details.getString(58) : "";
-//            String finalAccomplish_e_signature_base6 = accomplish_e_signature_base64;
-//            String finalInformant_e_signature_base6 = informant_e_signature_base64;
-//            String finalAttested_by_e_signature_base6 = attested_by_e_signature_base64;
-//            String finalCurrent_cash_card_picture_base6 = current_cash_card_picture_base64;
-//            String finalBeneficiary_picture_base6 = beneficiary_picture_base64;
+
 
             String url = BASE_URL + "/api/v1/staff/emvvalidationdetails/sync";
 
-            request = new VolleyMultipartRequest(Request.Method.POST, url,  new Response.Listener<String>() {
+            String finalGv_hh_id = gv_hh_id;
+            String finalEvd_hh_status = evd_hh_status;
+            String finalEvd_contact_no = evd_contact_no;
+            String finalEvd_contact_no_of = evd_contact_no_of;
+            String finalEvd_is_grantee = evd_is_grantee;
+            String finalEvd_is_minor = evd_is_minor;
+            String finalEvd_relationship_to_grantee = evd_relationship_to_grantee;
+            String finalEvd_assigned_staff = evd_assigned_staff;
+            String finalEvd_representative_name = evd_representative_name;
+            String finalEvd_user_id = evd_user_id;
+            String finalEvd_created_at = evd_created_at;
+            String finalEvd_overall_remarks = evd_overall_remarks;
+            String finalGv_hh_id1 = gv_hh_id;
+            String finalGv_first_name = gv_first_name;
+            String finalGv_last_name = gv_last_name;
+            String finalGv_middle_name = gv_middle_name;
+            String finalGv_ext_name = gv_ext_name;
+            String finalGv_sex = gv_sex;
+            String finalGv_province_code = gv_province_code;
+            String finalGv_municipality_code = gv_municipality_code;
+            String finalGv_barangay_code = gv_barangay_code;
+            String finalGv_hh_set = gv_hh_set;
+            String finalPvd_lender_name = pvd_lender_name;
+            String finalPvd_lender_address = pvd_lender_address;
+            String finalPvd_date_pawned = pvd_date_pawned;
+            String finalPvd_date_retrieved = pvd_date_retrieved;
+            String finalPvd_loan_amount = pvd_loan_amount;
+            String finalPvd_status = pvd_status;
+            String finalPvd_reason = pvd_reason;
+            String finalPvd_interest = pvd_interest;
+            String finalPvd_offense_history = pvd_offense_history;
+            String finalPvd_offense_date = pvd_offense_date;
+            String finalPvd_remarks = pvd_remarks;
+            String finalPvd_staff_intervention = pvd_staff_intervention;
+            String finalPvd_other_details = pvd_other_details;
+            String finalNv_amount = nv_amount;
+            String finalNv_date_claimed = nv_date_claimed;
+            String finalNv_reason = nv_reason;
+            String finalNv_remarks = nv_remarks;
+            String finalCvd_card_number_prefilled = cvd_card_number_prefilled;
+            String finalCvd_card_number_system_generated = cvd_card_number_system_generated;
+            String finalCvd_card_number_inputted = cvd_card_number_inputted;
+            String finalCvd_card_number_series = cvd_card_number_series;
+            String finalCvd_distribution_status = cvd_distribution_status;
+            String finalCvd_release_date = cvd_release_date;
+            String finalCvd_release_by = cvd_release_by;
+            String finalCvd_release_place = cvd_release_place;
+            String finalCvd_card_physically_presented = cvd_card_physically_presented;
+            String finalCvd_card_pin_is_attached = cvd_card_pin_is_attached;
+            String finalCvd_reason_not_presented = cvd_reason_not_presented;
+            String finalCvd_reason_unclaimed = cvd_reason_unclaimed;
+            String finalCvd_card_replacement_requests = cvd_card_replacement_requests;
+            String finalCvd_card_replacement_submitted_details = cvd_card_replacement_submitted_details;
+            byte[] finalCvd_card_image = cvd_card_image;
+            byte[] finalEvd_additional_image = evd_additional_image;
+            byte[] finalGv_grantee_image = gv_grantee_image;
+            byte[] finalOcv_other_image_1 = ocv_other_image_1;
+            byte[] finalOcv_other_image_2 = ocv_other_image_2;
+            byte[] finalOcv_other_image_3 = ocv_other_image_3;
+            byte[] finalOcv_other_image_4 = ocv_other_image_4;
+            byte[] finalOcv_other_image_5 = ocv_other_image_5;
+            Integer finalEvd_id = evd_id;
+            Integer finalGv_id = gv_id;
+            Integer finalCvd_id = cvd_id;
+            Integer finalNv_id = nv_id;
+            Integer finalPvd_id = pvd_id;
+            request = new VolleyMultipartRequest(Request.Method.POST, url,  new Response.Listener<NetworkResponse>() {
                 @Override
-                public void onResponse(String response) {
+                public void onResponse(NetworkResponse response) {
                     // on below line we are displaying a success toast message.
                     try {
-                        JSONObject data = new JSONObject(response);
+                        JSONObject data = new JSONObject(new String(response.data));
+                        Log.v("Response Data", data.toString());
                         String status = data.getString("status");
                         String description = data.getString("description");
                         JSONObject dataObject = data.getJSONObject("data");
-                        String household = dataObject.getString("hh_id");
+
 
                         if (status.matches("success")){
-
+                            JSONObject granteeObj = dataObject.getJSONObject("grantee_validations");
                             progressCC[0]++;
 
                             progressPercent = findViewById(R.id.progressCount);
@@ -459,25 +487,26 @@ public class SyncData extends AppCompatActivity {
                             progressPercent.setText(String.valueOf(progressCalc.intValue()));
                             progressBar.setProgress(progressCalc.intValue());
 
-                            lst.add(description + "household id: " + household);
+                            lst.add(description + " household id: " + granteeObj.getString("hh_id"));
                             gvMain.setAdapter(adapter);
+
+                            sqLiteHelper.storeLogs("sync", finalGv_hh_id, "Sync data successfully.");
+                            sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
 
                             if (progressPercent.getText().toString().matches("100")) {
                                 Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
-                                Toasty.success(SyncData.this, "Updating local data please wait!", Toast.LENGTH_SHORT, true).show();
-                                updaterEmvMonitoring();
+                                Toasty.info(SyncData.this, "Updating local data please wait!", Toast.LENGTH_SHORT, true).show();
+                                updateEmvValidations();
                             }
-//
-//                            sqLiteHelper.storeLogs("sync", hh_id, "Sync data successfully.");
-//                            sqLiteHelper.deleteEmvMonitoringDetails(id);
+
 
                         }
                         else{
                             btnSync.setEnabled(true);
                             lst2.add("Error on syncing the data!");
                             gvMain2.setAdapter(adapter2);
-//                            sqLiteHelper.storeLogs("error", hh_id, "Error on syncing data.");
-//                            Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
+                            sqLiteHelper.storeLogs("error", finalGv_hh_id, "Error on syncing data.");
+                            Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
                         }
 
                     } catch (JSONException e) {
@@ -501,21 +530,21 @@ public class SyncData extends AppCompatActivity {
                             Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
                             lst2.add(message);
                             gvMain2.setAdapter(adapter2);
-//                            sqLiteHelper.storeLogs("error", hh_id, "Sync: " + message);
+                            sqLiteHelper.storeLogs("error", finalGv_hh_id, "Sync: " + message);
                         } else if (responseCode == 404) {
                             JSONObject data = new JSONObject(responseBody);
                             String desc = data.getString("description");
                             Toasty.error(SyncData.this, "Error 404:" + desc, Toast.LENGTH_SHORT, true).show();
                             lst2.add(desc);
                             gvMain2.setAdapter(adapter2);
-//                            sqLiteHelper.storeLogs("error", hh_id, "Sync: Error 404");
+                            sqLiteHelper.storeLogs("error", finalGv_hh_id, "Sync: Error 404");
                         }
                     } catch (Exception e) {
                         Log.d("Error co", String.valueOf(e));
                         queue.cancelAll(this);
                         lst2.add("Network not found");
                         gvMain2.setAdapter(adapter2);
-//                        sqLiteHelper.storeLogs("error", hh_id, " Sync: Network Not Found");
+                        sqLiteHelper.storeLogs("error", finalGv_hh_id, " Sync: Network Not Found");
                         Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                     }
                 }
@@ -530,82 +559,95 @@ public class SyncData extends AppCompatActivity {
                 @Override
                 protected Map<String,String> getParams(){
                     Map<String, String> params = new HashMap<>();
-                    params.put("evd_hh_status", evd_hh_status);
-                    params.put("evd_contact_no", evd_contact_no);
-                    params.put("evd_contact_no_of", evd_contact_no_of);
-                    params.put("evd_is_grantee", evd_is_grantee);
-                    params.put("evd_is_minor", evd_is_minor);
-                    params.put("evd_relationship_to_grantee", evd_relationship_to_grantee);
-                    params.put("evd_assigned_staff", evd_assigned_staff);
-                    params.put("evd_representative_name", evd_representative_name);
-                    params.put("evd_user_id", evd_user_id);
-                    params.put("evd_created_at", evd_created_at);
-                    params.put("gv_hh_id", gv_hh_id);
-                    params.put("gv_first_name", gv_first_name);
-                    params.put("gv_last_name", gv_last_name);
-                    params.put("gv_middle_name", gv_middle_name);
-                    params.put("gv_ext_name", gv_ext_name);
-                    params.put("gv_sex", gv_sex);
-                    params.put("gv_province", gv_province_code);
-                    params.put("gv_municipality", gv_municipality_code);
-                    params.put("gv_barangay", gv_barangay_code);
-                    params.put("gv_hh_set", gv_hh_set);
-                    params.put("pvd_lender_name", pvd_lender_name);
-                    params.put("pvd_lender_address", pvd_lender_address);
-                    params.put("pvd_date_pawned", pvd_date_pawned);
-                    params.put("pvd_date_retrieved", pvd_date_retrieved);
-                    params.put("pvd_loan_amount", pvd_loan_amount);
-                    params.put("pvd_status", pvd_status);
-                    params.put("pvd_reason", pvd_reason);
-                    params.put("pvd_interest", pvd_interest);
-                    params.put("pvd_offense_history", pvd_offense_history);
-                    params.put("pvd_offense_date", pvd_offense_date);
-                    params.put("pvd_remarks", pvd_remarks);
-                    params.put("pvd_staff_intervention", pvd_staff_intervention);
-                    params.put("pvd_other_details", pvd_other_details);
-                    params.put("nv_amount", nv_amount);
-                    params.put("nv_date_claimed", nv_date_claimed);
-                    params.put("nv_nma_reason", nv_reason);
-                    params.put("nv_nma_remarks", nv_remarks);
-                    params.put("cvd_card_number_prefilled", cvd_card_number_prefilled);
-                    params.put("cvd_card_number_system_generated", cvd_card_number_system_generated);
-                    params.put("cvd_card_number_inputted", cvd_card_number_inputted);
-                    params.put("cvd_card_number_series", cvd_card_number_series);
-                    params.put("cvd_distribution_status", cvd_distribution_status);
-                    params.put("cvd_release_date", cvd_release_date);
-                    params.put("cvd_release_by", cvd_release_by);
-                    params.put("cvd_release_place", cvd_release_place);
-                    params.put("cvd_card_physically_presented", cvd_card_physically_presented);
-                    params.put("cvd_card_pin_is_attached", cvd_card_pin_is_attached);
-                    params.put("cvd_reason_not_presented", cvd_reason_not_presented);
-                    params.put("cvd_reason_unclaimed", cvd_reason_unclaimed);
-                    params.put("cvd_card_replacement_requests", cvd_card_replacement_requests);
-                    params.put("cvd_card_replacement_submitted_details", cvd_card_replacement_submitted_details);
+                    params.put("evd_hh_status", finalEvd_hh_status);
+                    params.put("evd_contact_no", finalEvd_contact_no);
+                    params.put("evd_contact_no_of", finalEvd_contact_no_of);
+                    params.put("evd_is_grantee", finalEvd_is_grantee);
+                    params.put("evd_is_minor", finalEvd_is_minor);
+                    params.put("evd_relationship_to_grantee", finalEvd_relationship_to_grantee);
+                    params.put("evd_assigned_staff", finalEvd_assigned_staff);
+                    params.put("evd_representative_name", finalEvd_representative_name);
+                    params.put("evd_user_id", finalEvd_user_id);
+                    params.put("evd_created_at", finalEvd_created_at);
+                    params.put("evd_overall_remarks", finalEvd_overall_remarks);
+                    params.put("gv_hh_id", finalGv_hh_id1);
+                    params.put("gv_first_name", finalGv_first_name);
+                    params.put("gv_last_name", finalGv_last_name);
+                    params.put("gv_middle_name", finalGv_middle_name);
+                    params.put("gv_ext_name", finalGv_ext_name);
+                    params.put("gv_sex", finalGv_sex);
+                    params.put("gv_province_code", finalGv_province_code);
+                    params.put("gv_municipality_code", finalGv_municipality_code);
+                    params.put("gv_barangay_code", finalGv_barangay_code);
+                    params.put("gv_hh_set", finalGv_hh_set);
+                    params.put("pvd_lender_name", finalPvd_lender_name);
+                    params.put("pvd_lender_address", finalPvd_lender_address);
+                    if (!finalPvd_date_pawned.matches("")) {
+                        params.put("pvd_date_pawned", finalPvd_date_pawned);
+                    }
+                    if (!finalPvd_date_retrieved.matches("")) {
+                        params.put("pvd_date_retrieved", finalPvd_date_retrieved);
+                    }
+                    params.put("pvd_loan_amount", finalPvd_loan_amount);
+                    params.put("pvd_status", finalPvd_status);
+                    params.put("pvd_reason", finalPvd_reason);
+                    params.put("pvd_interest", finalPvd_interest);
+                    params.put("pvd_offense_history", finalPvd_offense_history);
+                    if (!finalPvd_offense_date.matches("")) {
+                        params.put("pvd_offense_date", finalPvd_offense_date);
+                    }
+                    params.put("pvd_remarks", finalPvd_remarks);
+                    params.put("pvd_staff_intervention", finalPvd_staff_intervention);
+                    params.put("pvd_other_details", finalPvd_other_details);
+                    params.put("nv_amount", finalNv_amount);
+                    if (!finalNv_date_claimed.matches("")) {
+                        params.put("nv_date_claimed", finalNv_date_claimed);
+                    }
+                    params.put("nv_nma_reason", finalNv_reason);
+                    params.put("nv_nma_remarks", finalNv_remarks);
+                    params.put("cvd_card_number_prefilled", finalCvd_card_number_prefilled);
+                    params.put("cvd_card_number_system_generated", finalCvd_card_number_system_generated);
+                    params.put("cvd_card_number_inputted", finalCvd_card_number_inputted);
+                    params.put("cvd_card_number_series", finalCvd_card_number_series);
+                    params.put("cvd_distribution_status", finalCvd_distribution_status);
+                    if (!finalCvd_release_date.matches("")) {
+                        params.put("cvd_release_date", finalCvd_release_date);
+                    }
+                    params.put("cvd_release_by", finalCvd_release_by);
+                    params.put("cvd_release_place", finalCvd_release_place);
+                    params.put("cvd_card_physically_presented", finalCvd_card_physically_presented);
+                    params.put("cvd_card_pin_is_attached", finalCvd_card_pin_is_attached);
+                    params.put("cvd_reason_not_presented", finalCvd_reason_not_presented);
+                    params.put("cvd_reason_unclaimed", finalCvd_reason_unclaimed);
+                    params.put("cvd_card_replacement_request", finalCvd_card_replacement_requests);
+                    params.put("cvd_card_replacement_submitted_details", finalCvd_card_replacement_submitted_details);
 
-                    params.put("other_card_counter", String.valueOf(arr_other_card.length()));
-
+                    Log.d("OBJ OTHER CARD =", "Length " + arr_other_card.length());
                     for (int i = 0; i < arr_other_card.length(); i++) {
                         try {
                             JSONObject new_obj = arr_other_card.getJSONObject(i);
-                            params.put("ocv_card_holder_name_" + i, new_obj.getString("card_holder_name"));
-                            params.put("ocv_card_number_system_generated_" + i, new_obj.getString("card_number_system_generated"));
-                            params.put("ocv_card_number_inputted_" + i, new_obj.getString("card_number_inputted"));
-                            params.put("ocv_card_number_series_" + i, new_obj.getString("card_number_series"));
-                            params.put("ocv_distribution_status_" + i, new_obj.getString("distribution_status"));
-                            params.put("ocv_release_date_" + i, new_obj.getString("release_date"));
-                            params.put("ocv_release_by_" + i, new_obj.getString("release_by"));
-                            params.put("ocv_release_place_" + i, new_obj.getString("release_place"));
-                            params.put("ocv_card_physically_presented_" + i, new_obj.getString("card_physically_presented"));
-                            params.put("ocv_card_pin_is_attached_" + i, new_obj.getString("card_pin_is_attached"));
-                            params.put("ocv_reason_not_presented_" + i, new_obj.getString("reason_not_presented"));
-                            params.put("ocv_reason_unclaimed_" + i, new_obj.getString("reason_unclaimed"));
-                            params.put("ocv_card_replacement_requests_" + i, new_obj.getString("card_replacement_requests"));
-                            params.put("ocv_card_replacement_request_submitted_details_" + i, new_obj.getString("card_replacement_request_submitted_details"));
-                            params.put("ocv_pawning_remarks_" + i, new_obj.getString("pawning_remarks"));
+                            params.put("ocv_card_holder_name_" + (i + 1), new_obj.getString("card_holder_name"));
+                            params.put("ocv_card_number_system_generated_" + (i + 1), new_obj.getString("card_number_system_generated"));
+                            params.put("ocv_card_number_inputted_" + (i + 1), new_obj.getString("card_number_inputted"));
+                            params.put("ocv_card_number_series_" + (i + 1), new_obj.getString("card_number_series"));
+                            params.put("ocv_distribution_status_" + (i + 1), new_obj.getString("distribution_status"));
+                            if (!new_obj.getString("release_date").matches("")) {
+                                params.put("ocv_release_date_" + (i + 1), new_obj.getString("release_date"));
+                            }
+                            params.put("ocv_release_by_" + (i + 1), new_obj.getString("release_by"));
+                            params.put("ocv_release_place_" + (i + 1), new_obj.getString("release_place"));
+                            params.put("ocv_card_physically_presented_" + (i + 1), new_obj.getString("card_physically_presented"));
+                            params.put("ocv_card_pin_is_attached_" + (i + 1), new_obj.getString("card_pin_is_attached"));
+                            params.put("ocv_reason_not_presented_" + (i + 1), new_obj.getString("reason_not_presented"));
+                            params.put("ocv_reason_unclaimed_" + (i + 1), new_obj.getString("reason_unclaimed"));
+                            params.put("ocv_card_replacement_request_" + (i + 1), new_obj.getString("card_replacement_requests"));
+                            params.put("ocv_card_replacement_submitted_details_" + (i + 1), new_obj.getString("card_replacement_request_submitted_details"));
+                            params.put("ocv_pawning_remarks_" + (i + 1), new_obj.getString("pawning_remarks"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
+
                     return params;
                 }
                 /*
@@ -614,8 +656,38 @@ public class SyncData extends AppCompatActivity {
                 @Override
                 protected Map<String, DataPart> getByteData() {
                     Map<String, DataPart> params = new HashMap<>();
-                    long imagename = System.currentTimeMillis();
-//                    params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                        if (finalCvd_card_image != null) {
+                            Bitmap card_image = BitmapFactory.decodeByteArray(finalCvd_card_image, 0, finalCvd_card_image.length);
+                            params.put("gv_image", new DataPart("cvd_card_image.png",getFileDataFromDrawable(card_image) ) );
+                        }
+                        if (finalEvd_additional_image != null) {
+                            Bitmap additional_image = BitmapFactory.decodeByteArray(finalEvd_additional_image, 0, finalEvd_additional_image.length);
+                            params.put("gv_image_additional", new DataPart("evd_additional_image.png",getFileDataFromDrawable(additional_image) ));
+                        }
+                        if (finalGv_grantee_image != null) {
+                            Bitmap grantee_image = BitmapFactory.decodeByteArray(finalGv_grantee_image, 0, finalGv_grantee_image.length);
+                            params.put("cvd_card_image", new DataPart("gv_grantee_image.png",getFileDataFromDrawable(grantee_image) ));
+                        }
+
+                        for (int i = 1; i <= arr_other_card.length(); i++) {
+                            if (i == 1 && finalOcv_other_image_1 != null) {
+                                Bitmap image1 = BitmapFactory.decodeByteArray(finalOcv_other_image_1, 0, finalOcv_other_image_1.length);
+                                params.put("ocv_card_image_1", new DataPart("ocv_card_image_1.png", getFileDataFromDrawable(image1)));
+                            } else if (i == 2 && finalOcv_other_image_2 != null) {
+                                Bitmap image2 = BitmapFactory.decodeByteArray(finalOcv_other_image_2, 0, finalOcv_other_image_2.length);
+                                params.put("ocv_card_image_2", new DataPart("ocv_card_image_2.png", getFileDataFromDrawable(image2)));
+                            } else if (i == 3 && finalOcv_other_image_3 != null) {
+                                Bitmap image3 = BitmapFactory.decodeByteArray(finalOcv_other_image_3, 0, finalOcv_other_image_3.length);
+                                params.put("ocv_card_image_3", new DataPart("ocv_card_image_3.png", getFileDataFromDrawable(image3)));
+                            } else if (i == 4 && finalOcv_other_image_4 != null) {
+                                Bitmap image4 = BitmapFactory.decodeByteArray(finalOcv_other_image_4, 0, finalOcv_other_image_4.length);
+                                params.put("ocv_card_image_4", new DataPart("ocv_card_image_4.png", getFileDataFromDrawable(image4)));
+                            } else if (i == 5 && finalOcv_other_image_5 != null) {
+                                Bitmap image5 = BitmapFactory.decodeByteArray(finalOcv_other_image_5, 0, finalOcv_other_image_5.length);
+                                params.put("ocv_card_image_5", new DataPart("ocv_card_image_5.png", getFileDataFromDrawable(image5)));
+                            }
+                        }
+
                     return params;
                 }
 
