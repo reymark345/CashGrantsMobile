@@ -97,7 +97,7 @@ public class PullUpdateData extends AppCompatActivity {
                             counter++;
                             JSONObject jsonData = dataSets.getJSONObject(i);
                             HHID = jsonData.getString("hh_id");
-                            sqLiteHelper.updateEmvMonitoring(jsonData.getString("validated_at"), jsonData.getString("id"));
+                            sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"));
 
                             progressFormula = counter / dLength * 100;
                             progressCount.setText(String.valueOf(counter.intValue()));

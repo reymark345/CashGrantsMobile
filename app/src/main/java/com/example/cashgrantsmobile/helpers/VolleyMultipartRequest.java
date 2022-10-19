@@ -1,5 +1,7 @@
 package com.example.cashgrantsmobile.helpers;
 
+import android.graphics.Bitmap;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -25,13 +27,13 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
     private final String lineEnd = "\r\n";
     private final String boundary = "apiclient-" + System.currentTimeMillis();
 
-    private Response.Listener<String> mListener;
+    private Response.Listener<NetworkResponse> mListener;
     private Response.ErrorListener mErrorListener;
     private Map<String, String> mHeaders;
 
 
     public VolleyMultipartRequest(int method, String url,
-                                  Response.Listener<String> listener,
+                                  Response.Listener<NetworkResponse> listener,
                                   Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.mListener = listener;
@@ -99,7 +101,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     @Override
     protected void deliverResponse(NetworkResponse response) {
-        mListener.onResponse(String.valueOf(response));
+        mListener.onResponse(response);
     }
 
     @Override
@@ -197,7 +199,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
         public DataPart() {
         }
 
-        DataPart(String name, byte[] data) {
+        public DataPart(String name, byte[] data) {
             fileName = name;
             content = data;
         }
