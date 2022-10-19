@@ -89,50 +89,20 @@ public class InventoryList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Inventory data = list.get(position);
                 Integer emv_id = data.getEmvId();
-                Long l= new Long(id);
-                int i=l.intValue();
-                int stats = i+1;
-                Cursor cursor = sqLiteHelper.getData("SELECT id,beneficiary_picture,card_scanning_status FROM emv_database_monitoring_details WHERE id ="+stats);
-                while (cursor.moveToNext()) {
-                    id_image = cursor.getBlob(1);
-                    status = cursor.getInt(2);
-                }
+                String householdNumber = data.gethhNumber();
+
                 new SweetAlertDialog(InventoryList.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Edit information")
-                        .setContentText("Please choose corresponding action")
-                        .setConfirmText("Scanner")
-                        .setCancelText("Details")
-                        .showCancelButton(true)
+                        .setTitleText("Update household?")
+                        .setContentText(householdNumber)
+                        .setConfirmText("Proceed")
+                        .showCancelButton(false)
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                ScannedDetails.scanned = false;
-
-                                Intent in = new Intent(getApplicationContext(), ScannedDetails.class);
-                                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                                SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                                myEdit.putString("signatureAccomplishment", "false");
-                                myEdit.putInt("updateValue", emv_id);
-                                myEdit.putString("identifier", "true");
-                                myEdit.commit();
-
-                                if (id_image ==null){
-                                    in.putExtra("updateData", emv_id);
-                                    in.putExtra("EmptyImageView","triggerEvent");
-                                }
-                                else{
-                                    in.putExtra("updateData", emv_id);
-                                }
+                                Intent in = new Intent(getApplicationContext(), UpdateData.class);
+                                in.putExtra("emv_id", emv_id);
                                 startActivity(in);
-                            }
-                        })
-                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                    Intent in = new Intent(getApplicationContext(), UpdateEntries.class);
-                                    in.putExtra("list_emv_id", emv_id);
-                                    startActivity(in);
-                                    finish();
+                                finish();
                             }
                         }).show();
                     }

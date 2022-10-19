@@ -126,33 +126,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?)";
             String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            String sql5,sql6;
+            String sql5,sql6,sql7,sql8,sql9,sql10;
 
-            if (additional_image!=null){
-                sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?)";
-            }
-            else {
-                sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?)";
-            }
+            if (additional_image!=null){sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?)";}
+            else {sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?)";}
 
-            if (other_scanned_image1!=null){
-                sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";
-            }
-            else if (other_scanned_image2!=null){
-                sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";
-            }
-            else if (other_scanned_image3!=null){
-                sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";
-            }
-            else if (other_scanned_image4!=null){
-                sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";
-            }
-            else if (other_scanned_image5!=null){
-                sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";
-            }
-            else {
-                sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";
-            }
+            if (other_scanned_image1!=null){sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
+            else {sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
+            if (other_scanned_image2!=null){sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
+            else {sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
+            if (other_scanned_image3!=null){sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
+            else {sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
+            if (other_scanned_image4!=null){sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
+            else {sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
+            if (other_scanned_image5!=null){sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
+            else {sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
 
             SQLiteStatement grantee_validations = database.compileStatement(sql1);
             grantee_validations.clearBindings();
@@ -269,7 +257,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             }
 
             if (card_count >=2) {
-                SQLiteStatement other_card_validations2 = database.compileStatement(sql6);
+                SQLiteStatement other_card_validations2 = database.compileStatement(sql7);
                 other_card_validations2.clearBindings();
                 other_card_validations2.bindString(1, card_holder_name2);
                 other_card_validations2.bindString(2, card_number_system_generated2);
@@ -299,7 +287,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             }
 
             if (card_count >=3) {
-                SQLiteStatement other_card_validations3 = database.compileStatement(sql6);
+                SQLiteStatement other_card_validations3 = database.compileStatement(sql8);
                 other_card_validations3.clearBindings();
                 other_card_validations3.bindString(1, card_holder_name3);
                 other_card_validations3.bindString(2, card_number_system_generated3);
@@ -328,7 +316,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             }
 
             if (card_count >=4) {
-                SQLiteStatement other_card_validations4 = database.compileStatement(sql6);
+                SQLiteStatement other_card_validations4 = database.compileStatement(sql9);
                 other_card_validations4.clearBindings();
                 other_card_validations4.bindString(1, card_holder_name4);
                 other_card_validations4.bindString(2, card_number_system_generated4);
@@ -356,7 +344,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             }
 
             if (card_count >=5) {
-                SQLiteStatement other_card_validations5 = database.compileStatement(sql6);
+                SQLiteStatement other_card_validations5 = database.compileStatement(sql10);
                 other_card_validations5.clearBindings();
                 other_card_validations5.bindString(1, card_holder_name5);
                 other_card_validations5.bindString(2, card_number_system_generated5);
