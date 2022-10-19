@@ -81,6 +81,10 @@
             android:name=".Inventory.UpdateEntries"
             android:parentActivityName=".MainActivity"/>
 
+        <activity
+            android:name=".Inventory.UpdateData"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 
 </manifest>

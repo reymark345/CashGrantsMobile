@@ -24,12 +24,10 @@
             android:textSize="15dp" />
     </LinearLayout>
 
-
-
     <ScrollView
         android:background="@color/white"
         android:layout_width="wrap_content"
-        android:layout_height="660dp"
+        android:layout_height="match_parent"
         android:fillViewport="true"
         >
 
@@ -50,7 +48,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_hhid"
+                    android:id="@+id/til_hh_id"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,7 +64,7 @@
                     app:startIconDrawable="@drawable/ic_hh">
 
                     <EditText
-                        android:id="@+id/edtHhId"
+                        android:id="@+id/edt_hh_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Household no."
@@ -77,33 +75,48 @@
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right">
 
+                    <Button
+                        android:id="@+id/btnSearchHh"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:padding="10dp"
+                        android:text="Search"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_set"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_hhid"
+                    android:layout_below="@+id/til_search"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    app:endIconMode="clear_text"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
-
                     app:startIconDrawable="@drawable/ic_assigned">
 
-                    <EditText
-                        android:id="@+id/edtSet"
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_set"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:hint="Set"
-                        android:inputType="text" />
+                        android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_fullname"
+                    android:id="@+id/til_last_name"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,20 +130,21 @@
                     app:startIconDrawable="@drawable/ic_person">
 
                     <EditText
-                        android:id="@+id/edtFullname"
+                        android:id="@+id/edt_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Last Name:"
                         android:inputType="textMultiLine" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_firstname"
+                    android:id="@+id/til_first_name"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_fullname"
+                    android:layout_below="@+id/til_last_name"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -140,55 +154,258 @@
                     app:startIconDrawable="@drawable/ic_lastname">
 
                     <EditText
-                        android:id="@+id/edtFirstname"
+                        android:id="@+id/edt_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="First name:"
+                        android:hint="First name"
                         android:inputType="textMultiLine" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_middlename"
+                    android:id="@+id/til_middle_name"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_firstname"
+                    android:layout_below="@+id/til_first_name"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
                     app:endIconMode="clear_text"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_middle">
 
                     <EditText
-                        android:id="@+id/edtMiddlename"
+                        android:id="@+id/edt_middle_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Middle name:"
+                        android:hint="Middle name"
                         android:inputType="textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_extension"
+                    android:id="@+id/til_ext_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_middle_name"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:startIconDrawable="@drawable/ic_assigned">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_ext_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Extension name"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_other_ext_name"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_middlename"
+                    android:layout_below="@+id/til_ext_name"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
-                    app:endIconMode="clear_text"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
+                    app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/ic_middle">
 
                     <EditText
-                        android:id="@+id/edtExtension"
+                        android:id="@+id/edt_other_ext_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Extension:"
+                        android:hint="Other extension name"
                         android:inputType="textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_hh_status"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_other_ext_name"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_client">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_hh_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Client status"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_province_code"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_hh_status"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_location_city_24">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_province_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Province"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_municipality_code"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_province_code"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_client">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_municipality_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Municipality"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_barangay_code"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_municipality_code"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_client">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_barangay_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Barangay"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_sex"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_barangay_code"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_supervised_user_circle_24">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_sex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Sex" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_is_grantee"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_sex"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_escalator_warning_24">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_is_grantee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Interviewee" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_representative_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_is_grantee"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:endIconMode="clear_text"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                    <EditText
+                        android:id="@+id/edt_representative_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name of Representative"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_relationship_to_grantee"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_representative_name"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_escalator_warning_24">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/aat_relationship_to_grantee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Relationship to Grantee" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -196,7 +413,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_extension"
+                    android:layout_below="@+id/til_relationship_to_grantee"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
@@ -207,7 +424,7 @@
                     app:helperTextTextColor="@color/validation">
 
                     <EditText
-                        android:id="@+id/edtContactNo"
+                        android:id="@+id/edt_contact_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/icon_contacts"
@@ -232,7 +449,7 @@
                     app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerContactNoOf"
+                        android:id="@+id/aat_contact_no_of"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusable="false"
@@ -241,11 +458,33 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_representative_one"
+                    android:id="@+id/til_contact_no_of_others"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/til_contact_no_of"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:helperText="Required"
+                    app:endIconMode="clear_text"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                    <EditText
+                        android:id="@+id/edt_contact_no_of_others"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Other's Name"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_assigned_staff"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_contact_no_of_others"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
@@ -254,174 +493,35 @@
                     app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                     <EditText
-                        android:id="@+id/edtRepresentativeOne"
+                        android:id="@+id/edt_assigned_staff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name of Representative"
+                        android:hint="Assigned C/ML"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_clientstatus"
+                    android:id="@+id/til_is_minor"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_contactOthers"
+                    android:layout_below="@+id/til_assigned_staff"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_client">
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerClientStatus"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:hint="Client status"
-                        android:inputType="none" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_province"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_clientstatus"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_baseline_location_city_24">
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerProvince"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:hint="Province"
-                        android:inputType="none" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_municipality"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_clientstatus"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_client">
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerMunicipality"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:hint="Municipality"
-                        android:inputType="none" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_barangay"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_municipality"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_client">
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerBarangay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:hint="Barangay"
-                        android:inputType="none" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_address"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_clientstatus"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    app:endIconMode="clear_text"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_baseline_location_on_24">
-
-                    <EditText
-                        android:id="@+id/edtAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Address"
-                        android:inputType="textMultiLine" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_sex"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_address"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    app:helperText="Required"
-                    app:helperTextTextColor="@color/validation"
-                    app:startIconDrawable="@drawable/ic_baseline_supervised_user_circle_24">
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerSex"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:hint="Sex" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_grantee"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_sex"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="50dp"
-                    app:helperText="Required"
+                    android:layout_marginBottom="80dp"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_baseline_escalator_warning_24">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/spinnerGrantee"
+                        android:id="@+id/aat_is_minor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
-                        android:hint="Grantee?" />
+                        android:hint="Minor Grantee" />
                 </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
 
