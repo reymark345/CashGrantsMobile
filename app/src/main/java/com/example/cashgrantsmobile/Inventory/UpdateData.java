@@ -408,19 +408,11 @@ public class UpdateData extends AppCompatActivity {
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                 String hh_id = sh.getString("hh_id", "");
                 String buttonNext = sh.getString("pressBtn_search", "");
-
-                if (hh_id.length() > 0 && buttonNext.matches("true")){
-                    nextValidation();
-
-                    if (MANDATORY_PAGE_LOCATION == 1) {
-                        otherCardVisibility();
-                    }
+                nextValidation();
+                if (MANDATORY_PAGE_LOCATION == 1) {
+                    Log.v(TAG,"Tesssssssssssss");
+                    otherCardVisibility();
                 }
-                else{
-                    Log.v(ContentValues.TAG,"Error" + " " +hh_id.length() + " " +buttonNext);
-                    Toasty.info(getApplicationContext(),"Search household first", Toasty.LENGTH_SHORT).show();
-                }
-
             }
         });
 
@@ -1111,7 +1103,6 @@ public class UpdateData extends AppCompatActivity {
                 String representative_name = sh.getString("representative_name_u", "");
 
 
-
                 edt_hh_id.setText(hh_id);
                 aat_set.setText(hh_set, false);
                 edt_last_name.setText(last_name);
@@ -1467,7 +1458,7 @@ public class UpdateData extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         card_count++;
-                        myEdit.putInt("card_count", card_count);
+                        myEdit.putInt("card_count_u", card_count);
                         myEdit.commit();
                         Toasty.info(getApplicationContext(), card_count.toString(), Toasty.LENGTH_SHORT).show();
                         otherCardVisibility();
@@ -2820,7 +2811,11 @@ public class UpdateData extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sh.edit();
 
-        card_count = sh.getInt("card_count", 0);
+        card_count = sh.getInt("card_count_u", 0);
+
+        Integer newcard_count = sh.getInt("card_count_u", 0);
+
+        Log.v(TAG,"Nisuloddddd " + newcard_count);
 
         otherCardAvailability1 = findViewById(R.id.otherCardAvailability1);
         otherCardAvailability2 = findViewById(R.id.otherCardAvailability2);
@@ -2850,7 +2845,7 @@ public class UpdateData extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             card_count--;
-                            myEdit.putInt("card_count", card_count);
+                            myEdit.putInt("card_count_u", card_count);
                             myEdit.commit();
                             otherCardVisibility();
                         }
@@ -2862,7 +2857,7 @@ public class UpdateData extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             card_count--;
-                            myEdit.putInt("card_count", card_count);
+                            myEdit.putInt("card_count_u", card_count);
                             myEdit.commit();
                             otherCardVisibility();
                         }
@@ -2874,7 +2869,7 @@ public class UpdateData extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             card_count--;
-                            myEdit.putInt("card_count", card_count);
+                            myEdit.putInt("card_count_u", card_count);
                             myEdit.commit();
                             otherCardVisibility();
                         }
@@ -2886,7 +2881,7 @@ public class UpdateData extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             card_count--;
-                            myEdit.putInt("card_count", card_count);
+                            myEdit.putInt("card_count_u", card_count);
                             myEdit.commit();
                             otherCardVisibility();
                         }
@@ -2899,7 +2894,7 @@ public class UpdateData extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             card_count--;
-                            myEdit.putInt("card_count", card_count);
+                            myEdit.putInt("card_count_u", card_count);
                             myEdit.commit();
                             otherCardVisibility();
                         }
@@ -3177,8 +3172,8 @@ public class UpdateData extends AppCompatActivity {
         Integer card_count = sh.getInt("card_count_u", 0);
 
         new SweetAlertDialog(UpdateData.this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Save data?")
-                .setContentText("Please confirm to save data")
+                .setTitleText("Update data?")
+                .setContentText("Please confirm to update data")
                 .setConfirmText("Confirm")
                 .setCancelText("Cancel")
                 .showCancelButton(true)
@@ -3188,27 +3183,26 @@ public class UpdateData extends AppCompatActivity {
                         load_loading_bar();
                         edt_overall_remarks.setEnabled(false);
 
-                        sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code,barangay_code,set,
-                                lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
-                                amount, date_claimed, nma_reason, nma_remarks,
-                                hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name,sync_at, user_id,emv_validation_id,
-                                card_number_prefilled, card_number_system_generated,  card_number_unputted,  card_number_series,  distribution_status,  release_date,  release_by,  release_place,  card_physically_presented,  card_pin_is_attached,  reason_not_presented, reason_unclaimed,  card_replacement_request,  card_replacement_submitted_details,  emv_monitoring_id,
-                                card_holder_name1,card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
-                                card_holder_name2,card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2,  release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
-                                card_holder_name3,card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3,  release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
-                                card_holder_name4,card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
-                                card_holder_name5,card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count,
-                                imageViewToByte(ScannedImage),
-                                imageViewToByte(mGrantee),
-                                imageViewToByte(imgAdditionalId),
-                                imageViewToByte(ivOtherScannedImage1),
-                                imageViewToByte(ivOtherScannedImage2),
-                                imageViewToByte(ivOtherScannedImage3),
-                                imageViewToByte(ivOtherScannedImage4),
-                                imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason);
-                        sDialog.dismiss();
-
-
+                        Toasty.warning(getApplicationContext(), "UPDATED FUNCTION NOT YET COMPLETED", Toast.LENGTH_SHORT).show();
+//                        sqLiteHelper.updateDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code,barangay_code,set,
+//                                lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
+//                                amount, date_claimed, nma_reason, nma_remarks,
+//                                hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name,sync_at, user_id,emv_validation_id,
+//                                card_number_prefilled, card_number_system_generated,  card_number_unputted,  card_number_series,  distribution_status,  release_date,  release_by,  release_place,  card_physically_presented,  card_pin_is_attached,  reason_not_presented, reason_unclaimed,  card_replacement_request,  card_replacement_submitted_details,  emv_monitoring_id,
+//                                card_holder_name1,card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
+//                                card_holder_name2,card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2,  release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
+//                                card_holder_name3,card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3,  release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
+//                                card_holder_name4,card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
+//                                card_holder_name5,card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count,
+//                                imageViewToByte(ScannedImage),
+//                                imageViewToByte(mGrantee),
+//                                imageViewToByte(imgAdditionalId),
+//                                imageViewToByte(ivOtherScannedImage1),
+//                                imageViewToByte(ivOtherScannedImage2),
+//                                imageViewToByte(ivOtherScannedImage3),
+//                                imageViewToByte(ivOtherScannedImage4),
+//                                imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason);
+//                        sDialog.dismiss();
 
                         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                                 new Runnable() {
@@ -5809,8 +5803,8 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("representative_name_u",cursor.getString(8));
             myEdit.putString("user_id_u",cursor.getString(9));
             int additional_image = cursor.getInt(10);
-            if(additional_image >4){ additonal_image_u = cursor.getBlob(11);}
-            else{additonal_image_u =null;}
+            if(additional_image >4){additonal_image_u = cursor.getBlob(11);myEdit.putString("id_exists_u","Yes");}
+            else{additonal_image_u =null;myEdit.putString("id_exists_u","No");}
             myEdit.putString("overall_remarks_u",cursor.getString(12));
             //2 grantee_validations
             myEdit.putString("hh_id_u",cursor.getString(13));
@@ -5870,12 +5864,11 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("others_reason_not_presented_u", cursor.getString(59));
             myEdit.putString("others_reason_unclaimed_u", cursor.getString(60));
             myEdit.putString("nma_others_reason_u", cursor.getString(61));
-
             myEdit.commit();
         }
         cursor.close();
 
-        Cursor cursor_other_card = MainActivity.sqLiteHelper.getData("SELECT ocv.id,ocv.card_holder_name,ocv.card_number_system_generated,ocv.card_number_inputted,ocv.card_number_series,ocv.distribution_status,ocv.release_date,ocv.release_by,ocv.release_place,ocv.card_physically_presented,ocv.card_pin_is_attached,ocv.reason_not_presented,ocv.reason_unclaimed,ocv.card_replacement_requests,ocv.card_replacement_request_submitted_details,ocv.pawning_remarks,ocv.other_image, ocv.others_reason_unclaimed, ocv.others_reason_not_presented FROM other_card_validations AS ocv LEFT JOIN emv_validation_details AS evd ON evd.id = ocv.emv_validation_detail_id WHERE evd.id="+id);
+        Cursor cursor_other_card = MainActivity.sqLiteHelper.getData("SELECT ocv.id,ocv.card_holder_name,ocv.card_number_system_generated,ocv.card_number_inputted,ocv.card_number_series,ocv.distribution_status,ocv.release_date,ocv.release_by,ocv.release_place,ocv.card_physically_presented,ocv.card_pin_is_attached,ocv.reason_not_presented,ocv.reason_unclaimed,ocv.card_replacement_requests,ocv.card_replacement_request_submitted_details,ocv.pawning_remarks,ocv.other_image, ocv.others_reason_not_presented,ocv.others_reason_unclaimed FROM other_card_validations AS ocv LEFT JOIN emv_validation_details AS evd ON evd.id = ocv.emv_validation_detail_id WHERE evd.id="+id);
         Integer i =0;
         while (cursor_other_card.moveToNext()) {
             i++;
@@ -5895,9 +5888,6 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("card_replacement_request"+i+"_u",cursor_other_card.getString(13));
             myEdit.putString("card_replacement_request_submitted_details"+i+"_u",cursor_other_card.getString(14));
             myEdit.putString("pawning_remarks"+i+"_u",cursor_other_card.getString(15));
-            myEdit.putString("others_reason_unclaimed"+i+"_u", cursor.getString(17));
-            myEdit.putString("others_reason_not_presented"+i+"_u", cursor.getString(18));
-
             if (cursor_other_card.getBlob(16) != null) {
                 if (i == 1) {
                     ocv_other_image_1_u = cursor_other_card.getBlob(16);
@@ -5911,7 +5901,14 @@ public class UpdateData extends AppCompatActivity {
                     ocv_other_image_5_u = cursor_other_card.getBlob(16);
                 }
             }
+
+            Log.v(ContentValues.TAG,"testttbeta2"+cursor_other_card.getString(18));
+            myEdit.putString("others_reason_not_presented"+i+"_u", cursor_other_card.getString(17));
+            myEdit.putString("others_reason_unclaimed"+i+"_u", cursor_other_card.getString(18));
+
         }
+        myEdit.putInt("card_count_u",i);
+        myEdit.commit();
         cursor_other_card.close();
     }
 }
