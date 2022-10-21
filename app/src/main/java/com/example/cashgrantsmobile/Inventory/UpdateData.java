@@ -3025,6 +3025,7 @@ public class UpdateData extends AppCompatActivity {
         String last_name = sh.getString("last_name_u","");
         String middle_name = sh.getString("middle_name_u","");
         String ext_name = sh.getString("ext_name_u","");
+        String other_ext_name = sh.getString("other_ext_name_u","");
         String sex = sh.getString("sex_u","");
         String province_code = psgc_province;
         String municipality_code = psgc_municipality;
@@ -3048,11 +3049,13 @@ public class UpdateData extends AppCompatActivity {
         String amount = sh.getString("amount_u","");
         String date_claimed = sh.getString("date_claimed_u","");
         String nma_reason = sh.getString("nma_reason_u","");
+        String nma_others_reason = sh.getString("nma_others_reason_u","");
         String nma_remarks = sh.getString("nma_remarks_u","");
 
         String hh_status = sh.getString("hh_status_u","");
         String contact_no = sh.getString("contact_no_u","");
         String contact_no_of = sh.getString("contact_no_of_u","");
+        String contact_no_of_others = sh.getString("contact_no_of_others_u","");
         String is_grantee = sh.getString("is_grantee_u","");
         String is_minor = sh.getString("is_minor_u","");
         String relationship_to_grantee = sh.getString("relationship_to_grantee_u","");
@@ -3074,7 +3077,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented = sh.getString("card_physically_presented_u","");
         String card_pin_is_attached = sh.getString("card_pin_is_attached_u","");
         String reason_not_presented = sh.getString("reason_not_presented_u","");
+        String others_reason_not_presented = sh.getString("others_reason_not_presented_u","");
         String reason_unclaimed = sh.getString("reason_unclaimed_u","");
+        String others_reason_unclaimed = sh.getString("others_reason_unclaimed_u","");
         String card_replacement_request = sh.getString("card_replacement_request_u","");
         String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details_u","");
         String overall_remarks = sh.getString("overall_remarks_u","");
@@ -3091,7 +3096,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented1 = sh.getString("card_physically_presented1_u","");
         String card_pin_is_attached1 = sh.getString("card_pin_is_attached1_u","");
         String reason_not_presented1 = sh.getString("reason_not_presented1_u","");
+        String others_reason_not_presented1 = sh.getString("others_reason_not_presented1_u","");
         String reason_unclaimed1 = sh.getString("reason_unclaimed1_u","");
+        String others_reason_unclaimed1 = sh.getString("others_reason_unclaimed1_u","");
         String card_replacement_request1 = sh.getString("card_replacement_request1_u","");
         String card_replacement_request_submitted_details1 = sh.getString("card_replacement_request_submitted_details1_u","");
         String pawning_remarks1 = sh.getString("pawning_remarks1_u","");
@@ -3107,7 +3114,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented2 = sh.getString("card_physically_presented2_u","");
         String card_pin_is_attached2 = sh.getString("card_pin_is_attached2_u","");
         String reason_not_presented2 = sh.getString("reason_not_presented2_u","");
+        String others_reason_not_presented2 = sh.getString("others_reason_not_presented2_u","");
         String reason_unclaimed2 = sh.getString("reason_unclaimed2_u","");
+        String others_reason_unclaimed2 = sh.getString("others_reason_unclaimed2_u","");
         String card_replacement_request2 = sh.getString("card_replacement_request2_u","");
         String card_replacement_request_submitted_details2 = sh.getString("card_replacement_request_submitted_details2_u","");
         String pawning_remarks2 = sh.getString("pawning_remarks2_u","");
@@ -3123,7 +3132,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented3 = sh.getString("card_physically_presented3_u","");
         String card_pin_is_attached3 = sh.getString("card_pin_is_attached3_u","");
         String reason_not_presented3 = sh.getString("reason_not_presented3_u","");
+        String others_reason_not_presented3 = sh.getString("others_reason_not_presented3_u","");
         String reason_unclaimed3 = sh.getString("reason_unclaimed3_u","");
+        String others_reason_unclaimed3 = sh.getString("others_reason_unclaimed3_u","");
         String card_replacement_request3 = sh.getString("card_replacement_request3_u","");
         String card_replacement_request_submitted_details3 = sh.getString("card_replacement_request_submitted_details3_u","");
         String pawning_remarks3 = sh.getString("pawning_remarks3_u","");
@@ -3139,7 +3150,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented4 = sh.getString("card_physically_presented4_u","");
         String card_pin_is_attached4 = sh.getString("card_pin_is_attached4_u","");
         String reason_not_presented4 = sh.getString("reason_not_presented4_u","");
+        String others_reason_not_presented4 = sh.getString("others_reason_not_presented4_u","");
         String reason_unclaimed4 = sh.getString("reason_unclaimed4_u","");
+        String others_reason_unclaimed4 = sh.getString("others_reason_unclaimed4_u","");
         String card_replacement_request4 = sh.getString("card_replacement_request4_u","");
         String card_replacement_request_submitted_details4 = sh.getString("card_replacement_request_submitted_details4_u","");
         String pawning_remarks4 = sh.getString("pawning_remarks4_u","");
@@ -3155,7 +3168,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented5 = sh.getString("card_physically_presented5_u","");
         String card_pin_is_attached5 = sh.getString("card_pin_is_attached5_u","");
         String reason_not_presented5 = sh.getString("reason_not_presented5_u","");
+        String others_reason_not_presented5 = sh.getString("others_reason_not_presented5_u","");
         String reason_unclaimed5 = sh.getString("reason_unclaimed5_u","");
+        String others_reason_unclaimed5 = sh.getString("others_reason_unclaimed5_u","");
         String card_replacement_request5 = sh.getString("card_replacement_request5_u","");
         String card_replacement_request_submitted_details5 = sh.getString("card_replacement_request_submitted_details5_u","");
         String pawning_remarks5 = sh.getString("pawning_remarks5_u","");
@@ -5780,7 +5795,7 @@ public class UpdateData extends AppCompatActivity {
                 "gv.hh_id,gv.first_name,gv.last_name,gv.middle_name,gv.ext_name,gv.sex,gv.province_code,gv.municipality_code,gv.barangay_code,gv.hh_set,gv.grantee_image," +
                 "pvd.lender_name,pvd.lender_address,pvd.date_pawned,pvd.date_retrieved,pvd.loan_amount,pvd.status,pvd.reason,pvd.interest,pvd.offense_history,pvd.offense_date,pvd.remarks,pvd.staff_intervention,pvd.other_details," +
                 "cvd.card_number_prefilled,cvd.card_number_system_generated,cvd.card_number_inputted,cvd.card_number_series,cvd.distribution_status,cvd.release_date,cvd.release_by,cvd.release_place,cvd.card_physically_presented,cvd.card_pin_is_attached,cvd.reason_not_presented,cvd.reason_unclaimed,cvd.card_replacement_requests,cvd.card_replacement_submitted_details,cvd.card_image," +
-                "nv.amount,nv.date_claimed,nv.reason,nv.remarks FROM emv_validation_details AS evd LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id LEFT JOIN pawning_validation_details AS pvd ON pvd.id = evd.pawning_validation_detail_id LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id  LEFT JOIN nma_validations AS nv ON nv.id = evd.nma_validation_id WHERE evd.id="+id);
+                "nv.amount,nv.date_claimed,nv.reason,nv.remarks, evd.overall_remarks, gv.other_ext_name, evd.contact_no_of_others, cvd.others_reason_not_presented, ocv.others_reason_not_presented1, ocv.others_reason_not_presented2, ocv.others_reason_not_presented3, ocv.others_reason_not_presented4, ocv.others_reason_not_presented5, cvd.others_reason_unclaimed, ocv.others_reason_unclaimed1, ocv.others_reason_unclaimed2, ocv.others_reason_unclaimed3, ocv.others_reason_unclaimed4, ocv.others_reason_unclaimed5, nv.nma_others_reason FROM emv_validation_details AS evd LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id LEFT JOIN pawning_validation_details AS pvd ON pvd.id = evd.pawning_validation_detail_id LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id  LEFT JOIN nma_validations AS nv ON nv.id = evd.nma_validation_id WHERE evd.id="+id);
 
         while (cursor.moveToNext()) {
             //1 emv_validation_details
@@ -5849,6 +5864,24 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("date_claimed_u", cursor.getString(53));
             myEdit.putString("nma_reason_u", cursor.getString(54));
             myEdit.putString("nma_remarks_u", cursor.getString(55));
+
+            myEdit.putString("overall_remarks_u", cursor.getString(56));
+            myEdit.putString("other_ext_name_u", cursor.getString(57));
+            myEdit.putString("contact_no_of_others_u", cursor.getString(58));
+            myEdit.putString("others_reason_not_presented_u", cursor.getString(59));
+            myEdit.putString("others_reason_not_presented1_u", cursor.getString(60));
+            myEdit.putString("others_reason_not_presented2_u", cursor.getString(61));
+            myEdit.putString("others_reason_not_presented3_u", cursor.getString(62));
+            myEdit.putString("others_reason_not_presented4_u", cursor.getString(63));
+            myEdit.putString("others_reason_not_presented5_u", cursor.getString(64));
+            myEdit.putString("others_reason_unclaimed_u", cursor.getString(65));
+            myEdit.putString("others_reason_unclaimed1_u", cursor.getString(66));
+            myEdit.putString("others_reason_unclaimed2_u", cursor.getString(67));
+            myEdit.putString("others_reason_unclaimed3_u", cursor.getString(68));
+            myEdit.putString("others_reason_unclaimed4_u", cursor.getString(69));
+            myEdit.putString("others_reason_unclaimed5_u", cursor.getString(70));
+            myEdit.putString("nma_others_reason_u", cursor.getString(71));
+
             myEdit.commit();
         }
         cursor.close();
