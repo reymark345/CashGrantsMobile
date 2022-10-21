@@ -76,6 +76,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String sql5,sql6,sql7,sql8,sql9,sql10;
 
+
         if (additional_image!=null){
             sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?,?,?)";
         } else {
@@ -196,7 +197,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations1.bindString(1, card_holder_name1);
             other_card_validations1.bindString(2, card_number_system_generated1);
             if (!card_number_inputted1.matches("")) {
-                card_number_inputted1 = "LBP" + card_number_inputted1;
+                card_number_inputted1 = card_number_inputted1;
             }
             other_card_validations1.bindString(3, card_number_inputted1);
             other_card_validations1.bindString(4, card_number_series1);
@@ -231,7 +232,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations2.bindString(1, card_holder_name2);
             other_card_validations2.bindString(2, card_number_system_generated2);
             if (!card_number_inputted2.matches("")) {
-                card_number_inputted2 = "LBP" + card_number_inputted2;
+                card_number_inputted2 = card_number_inputted2;
             }
             other_card_validations2.bindString(3, card_number_inputted2);
             other_card_validations2.bindString(4, card_number_series2);
@@ -264,7 +265,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations3.bindString(1, card_holder_name3);
             other_card_validations3.bindString(2, card_number_system_generated3);
             if (!card_number_inputted3.matches("")) {
-                card_number_inputted3 = "LBP" + card_number_inputted3;
+                card_number_inputted3 = card_number_inputted3;
             }
             other_card_validations3.bindString(3, card_number_inputted3);
             other_card_validations3.bindString(4, card_number_series3);
@@ -296,7 +297,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations4.bindString(1, card_holder_name4);
             other_card_validations4.bindString(2, card_number_system_generated4);
             if (!card_number_inputted4.matches("")) {
-                card_number_inputted4 = "LBP" + card_number_inputted4;
+                card_number_inputted4 = card_number_inputted4;
             }
             other_card_validations4.bindString(3, card_number_inputted4);
             other_card_validations4.bindString(4, card_number_series4);
@@ -328,7 +329,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations5.bindString(1, card_holder_name5);
             other_card_validations5.bindString(2, card_number_system_generated5);
             if (!card_number_inputted5.matches("")) {
-                card_number_inputted5 = "LBP" + card_number_inputted5;
+                card_number_inputted5 = card_number_inputted5;
             }
             other_card_validations5.bindString(3, card_number_inputted5);
             other_card_validations5.bindString(4, card_number_series5);
@@ -353,7 +354,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations5.executeInsert();
         }
 
-
         String sql_emv_validations = "UPDATE emv_validations SET validated_at = ? WHERE hh_id = ?";
         SQLiteStatement statement_emv_validations = database.compileStatement(sql_emv_validations);
         statement_emv_validations.bindString(1, strDate);
@@ -364,7 +364,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteStatement statement_tmp_blob = database.compileStatement(sql_tmp_blob);
         statement_tmp_blob.clearBindings();
         statement_tmp_blob.execute();
-
 
         database.close();
     }

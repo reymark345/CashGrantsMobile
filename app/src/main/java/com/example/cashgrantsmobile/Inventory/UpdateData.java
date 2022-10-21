@@ -111,7 +111,6 @@ public class UpdateData extends AppCompatActivity {
 
     String cameraPermission[];
     String StoragePermission[], required_field, required_length, required_btn, required_cc_length,required_cc_invalid_format;
-    Button btn_search_hh, rescanCashCard, btn_cash_card;
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     public static boolean pressNext = false;
@@ -130,7 +129,7 @@ public class UpdateData extends AppCompatActivity {
         return currCount == 4 ||currCount == 9 || currCount == 14 || currCount == 19;
     }
 
-    byte [] card_image_u,additonal_image_u,grantee_image_u,other_card_image1_u,other_card_image2_u,other_card_image3_u,other_card_image4_u,other_card_image5_u;
+    byte [] card_image_u,additonal_image_u,grantee_image_u,ocv_other_image_1_u,ocv_other_image_2_u,ocv_other_image_3_u,ocv_other_image_4_u,ocv_other_image_5_u;
 
     //onboard
 
@@ -353,6 +352,7 @@ public class UpdateData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.cash_card_scanner_entries);
+        clear_preferences();
         mPreviewIv = findViewById(R.id.imageIv);
         mPreviewIv .setVisibility(View.INVISIBLE);
         Bundle extras = getIntent().getExtras();
@@ -360,6 +360,8 @@ public class UpdateData extends AppCompatActivity {
 
         Intent in = getIntent();
         Integer emv_details_id = in.getIntExtra("emv_id", 0);
+
+        Log.v(ContentValues.TAG,"hala ang id"+emv_details_id);
         getEntries(emv_details_id);
 
 
@@ -744,14 +746,14 @@ public class UpdateData extends AppCompatActivity {
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
                                     edt_card_number_inputted1.setText(limitString);
-                                    myEdit.putString("card_number_system_generated1", limitString);
+                                    myEdit.putString("card_number_system_generated1_u", limitString);
                                     String CardResult = edt_card_number_inputted1.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
                                         til_card_number_inputted1.setError("Invalid format");
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated1", sTextFromET);
+                                    myEdit.putString("card_number_system_generated1_u", sTextFromET);
                                     edt_card_number_inputted1.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -769,14 +771,14 @@ public class UpdateData extends AppCompatActivity {
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
                                     edt_card_number_inputted2.setText(limitString);
-                                    myEdit.putString("card_number_system_generated2", limitString);
+                                    myEdit.putString("card_number_system_generated2_u", limitString);
                                     String CardResult = edt_card_number_inputted2.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
                                         til_card_number_inputted2.setError("Invalid format");
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated2", sTextFromET);
+                                    myEdit.putString("card_number_system_generated2_u", sTextFromET);
                                     edt_card_number_inputted2.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -794,14 +796,14 @@ public class UpdateData extends AppCompatActivity {
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
                                     edt_card_number_inputted3.setText(limitString);
-                                    myEdit.putString("card_number_system_generated3", limitString);
+                                    myEdit.putString("card_number_system_generated3_u", limitString);
                                     String CardResult = edt_card_number_inputted3.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
                                         til_card_number_inputted3.setError("Invalid format");
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated3", sTextFromET);
+                                    myEdit.putString("card_number_system_generated3_u", sTextFromET);
                                     edt_card_number_inputted3.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -818,7 +820,7 @@ public class UpdateData extends AppCompatActivity {
 
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated4", limitString);
+                                    myEdit.putString("card_number_system_generated4_u", limitString);
                                     edt_card_number_inputted4.setText(limitString);
                                     String CardResult = edt_card_number_inputted4.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
@@ -826,7 +828,7 @@ public class UpdateData extends AppCompatActivity {
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated4", sTextFromET);
+                                    myEdit.putString("card_number_system_generated4_u", sTextFromET);
                                     edt_card_number_inputted4.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -842,7 +844,7 @@ public class UpdateData extends AppCompatActivity {
                                 }
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated5", limitString);
+                                    myEdit.putString("card_number_system_generated5_u", limitString);
                                     edt_card_number_inputted5.setText(limitString);
                                     String CardResult = edt_card_number_inputted5.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
@@ -850,7 +852,7 @@ public class UpdateData extends AppCompatActivity {
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated5", sTextFromET);
+                                    myEdit.putString("card_number_system_generated5_u", sTextFromET);
                                     edt_card_number_inputted5.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -866,7 +868,7 @@ public class UpdateData extends AppCompatActivity {
 
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated", limitString);
+                                    myEdit.putString("card_number_system_generated_u", limitString);
                                     edt_card_number_inputted.setText(limitString);
                                     String CardResult = edt_card_number_inputted.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
@@ -874,7 +876,7 @@ public class UpdateData extends AppCompatActivity {
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated", sTextFromET);
+                                    myEdit.putString("card_number_system_generated_u", sTextFromET);
                                     edt_card_number_inputted.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -893,226 +895,51 @@ public class UpdateData extends AppCompatActivity {
                 sqLiteHelper.storeLogs("error", "", "Scanned: " + error);
             }
         }
-        // -------------------- THIS LINE is OLD feature , Image Digitalization Signature ---------------------------------------------
-
-//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            if(resultCode ==RESULT_OK){
-//                Uri resultUri = result.getUri();
-//                resultUri.getPath();
-//                mPreviewIv.setImageURI(resultUri);
-//                BitmapDrawable bitmapDrawable = (BitmapDrawable)mPreviewIv.getDrawable();
-//                Bitmap bitmap = bitmapDrawable.getBitmap();
-//                TextRecognizer recognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-//
-//                if(!recognizer.isOperational()){
-//                    Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-//                    SparseArray<TextBlock> items = recognizer.detect(frame);
-//                    StringBuilder sb = new StringBuilder();
-//
-//                    for (int i = 0; i<items.size(); i++){
-//                        TextBlock myItem = items.valueAt(i);
-//                        sb.append(myItem.getValue());
-//                        sb.append("\n");
-//                    }
-//
-//                    String sTextFromET=sb.toString().replaceAll("\\s+", "");
-//                    sTextFromET = sTextFromET.replace("a", "8");
-//                    sTextFromET = sTextFromET.replace("A", "8");
-//                    sTextFromET = sTextFromET.replace("B", "6");
-//                    sTextFromET = sTextFromET.replace("b", "6");
-//                    sTextFromET = sTextFromET.replace("D", "0");
-//                    sTextFromET = sTextFromET.replace("e", "8");
-//                    sTextFromET = sTextFromET.replace("E", "8");
-//                    sTextFromET = sTextFromET.replace("L", "6");
-//                    sTextFromET = sTextFromET.replace("S", "5");
-//                    sTextFromET = sTextFromET.replace("G", "6");
-//                    sTextFromET = sTextFromET.replace("%", "6");
-//                    sTextFromET = sTextFromET.replace("&", "6");
-//                    sTextFromET = sTextFromET.replace("?", "7");
-//                    sTextFromET = sTextFromET.replace("l", "1");
-//                    sTextFromET = sTextFromET.replace("+", "7");
-//                    sTextFromET = sTextFromET.replace("}", "7");
-//                    sTextFromET = sTextFromET.replace("O", "0");
-//                    sTextFromET = sTextFromET.replaceAll("....", "$0 ");
-//                    //save temp database
-//                    image_uri = Uri.parse(image_uri.toString());
-//
-//                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-//                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
-//                    myEdit.putString("signatureAccomplishment", "false");
-//                    myEdit.putString("identifier", "false");
-//                    myEdit.putString("granteeBtn", "false");
-//                    myEdit.putInt("updateValue", 0);
-//                    myEdit.commit();
-//
-//                    SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-//                    ScannedDetails.scanned = true;
-//
-//                    int emv_id = sh.getInt("emv_id", 0);
-//                    String full_name = sh.getString("full_name", "");
-//                    String household = sh.getString("hh_id", "160310001-");
-//                    String hh_status = sh.getString("hh_status", "");
-//                    String address = sh.getString("address", "");
-//                    String sex = sh.getString("sex", "");
-//                    String hh_set_group = sh.getString("hh_set_group", "");
-//                    String contact_no = sh.getString("contact_no", "");
-//                    String assigned = sh.getString("assigned", "");
-//                    String minor_grantee = sh.getString("minor_grantee", "");
-//
-//                    String card_released = sh.getString("card_released", "");
-//                    String edt_release_by = sh.getString("edt_release_by", "");
-//                    String place_released = sh.getString("place_released", "");
-//                    String is_available = sh.getString("is_available", "");
-//                    String is_available_reason = sh.getString("is_available_reason", "");
-//
-//                    String other_card_number_1 = sh.getString("other_card_number_1", "");
-//                    String other_card_holder_name_1 = sh.getString("other_card_holder_name_1", "");
-//                    String other_is_available_1 = sh.getString("other_is_available_1", "");
-//                    String other_is_available_reason_1 = sh.getString("other_is_available_reason_1", "");
-//
-//
-//                    String other_card_number_2 = sh.getString("other_card_number_2", "");
-//                    String other_card_holder_name_2 = sh.getString("other_card_holder_name_2", "");
-//                    String other_is_available_2 = sh.getString("other_is_available_2", "");
-//
-//                    String other_is_available_reason_2 = sh.getString("other_is_available_reason_2", "");
-//                    String other_card_number_3 = sh.getString("other_card_number_3", "");
-//                    String other_card_holder_name_3 = sh.getString("other_card_holder_name_3", "");
-//                    String other_is_available_3 = sh.getString("other_is_available_3", "");
-//                    String other_is_available_reason_3 = sh.getString("other_is_available_reason_3", "");
-//
-//                    String other_card_number_series_1 = sh.getString("other_card_number_series_1", "");
-//                    String other_card_number_series_2 = sh.getString("other_card_number_series_2", "");
-//                    String other_card_number_series_3 = sh.getString("other_card_number_series_3", "");
-//
-//                    String nma_amount = sh.getString("nma_amount", "");
-//                    String nma_reason = sh.getString("nma_reason", "");
-//                    String date_withdrawn = sh.getString("date_withdrawn", "");
-//                    String remarks = sh.getString("remarks", "");
-//
-//                    String lender_name = sh.getString("lender_name", "");
-//                    String pawning_date = sh.getString("pawning_date", "");
-//                    String date_retrieved = sh.getString("date_retrieved", "");
-//                    String spin_status = sh.getString("spin_status", "");
-//                    String pawning_reason = sh.getString("pawning_reason", "");
-//
-//                    String offense_history = sh.getString("offense_history", "");
-//                    String offense_history_date = sh.getString("offense_history_date", "");
-//                    String pd_remarks = sh.getString("pd_remarks", "");
-//                    String intervention = sh.getString("intervention", "");
-//                    String other_details = sh.getString("other_details", "");
-//
-//                    String pawn_loaned_amount = sh.getString("loaned_amount", "");
-//                    String pawn_lender_address = sh.getString("lender_address", "");
-//                    String pawn_interest = sh.getString("interest", "");
-//                    String hh_no_1 = sh.getString("hh_id", "160310001-");
-//
-//                    Intent i = new Intent(ScanCashCard.this, ScannedDetails.class);
-//
-//                    try {
-//                        Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
-//                        mPreviewIv.setImageBitmap(Bitmap.createScaledBitmap(bm, 187, 250, false));
-//                        if (sTextFromET.length() >23){
-//                            String limitString = sTextFromET.substring(0,23);
-//                            i.putExtra("cashCardNumber",limitString);
-//                            sqLiteHelper.insertEmvDatabase(full_name,household,hh_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,edt_release_by,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,limitString,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id, getUserName());
-//                        }
-//                        else{
-//                            i.putExtra("cashCardNumber",sTextFromET);
-//                            sqLiteHelper.insertEmvDatabase(full_name,household,hh_status,address,sex,hh_set_group,contact_no,assigned,minor_grantee,card_released,edt_release_by,place_released,is_available,is_available_reason,other_card_number_1,other_card_holder_name_1,other_is_available_1,other_is_available_reason_1,other_card_number_2,other_card_holder_name_2,other_is_available_2,other_is_available_reason_2,other_card_number_3,other_card_holder_name_3,other_is_available_3,other_is_available_reason_3,nma_amount,nma_reason,date_withdrawn,remarks, lender_name,pawning_date,date_retrieved,spin_status,pawning_reason,offense_history,offense_history_date,pd_remarks,intervention,other_details,sTextFromET,imageViewToByte(mPreviewIv), pawn_loaned_amount,pawn_lender_address,pawn_interest, other_card_number_series_1, other_card_number_series_2, other_card_number_series_3, getUserId(), emv_id, getUserName());
-//                        }
-//                        sqLiteHelper.update_emv_monitoring(
-//                                hh_no_1
-//                        );
-//                        sqLiteHelper.storeLogs("scanned", household, "Scanned household successfully");
-//                        clear_preferences();
-//
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                        sqLiteHelper.storeLogs("error", household, "Scanned household failed");
-//                    }
-//                    //camera
-//                    i.putExtra("CashCardImage",image_uri.toString());
-//                    startActivity(i);
-//                    finish();
-//                }
-//            }
-//            else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
-//
-//                Exception error = result.getError();
-//                Toasty.error(this,""+error, Toasty.LENGTH_SHORT).show();
-//                sqLiteHelper.storeLogs("error", "", "Scanned: " + error);
-//            }
-//        }
     }
 
-    public void getImage(int validation){
+    public void getImage(){
         try {
-            Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image,other_card_e_image_1,other_card_e_image_2, other_card_e_image_3,other_card_e_image_4,other_card_e_image_5 FROM tmp_blob WHERE id=1");
-            Log.v(TAG,"cursorrr" + cursor.getCount());
-            if(cursor.getCount()!=0){
-                while (cursor.moveToNext()) {
-                    byte[] scanned_image = cursor.getBlob(0);
-                    byte[] additional_image = cursor.getBlob(1);
-                    byte[] grantee_image = cursor.getBlob(2);
-                    byte[] other_image1 = cursor.getBlob(3);
-                    byte[] other_image2 = cursor.getBlob(4);
-                    byte[] other_image3 = cursor.getBlob(5);
-                    byte[] other_image4 = cursor.getBlob(6);
-                    byte[] other_image5 = cursor.getBlob(7);
-                    if (scanned_image != null) {
-                        Bitmap scanned = BitmapFactory.decodeByteArray(scanned_image, 0, scanned_image.length);
-                        ScannedImage.setImageBitmap(scanned);
-                    }
-                    if (additional_image != null) {
-                        Bitmap additional = BitmapFactory.decodeByteArray(additional_image, 0, additional_image.length);
-                        imgAdditionalId.setImageBitmap(additional);
-                    }
-                    if (grantee_image != null) {
-                        Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
-                        mGrantee.setImageBitmap(grantee);
-                    }
-                    if (other_image1 != null) {
-                        if (otherCardAvailability1.getVisibility() == View.VISIBLE) {
-                            Bitmap b_o_image1 = BitmapFactory.decodeByteArray(other_image1, 0, other_image1.length);
-                            ivOtherScannedImage1.setImageBitmap(b_o_image1);
-                        }
-                    }
-                    if (other_image2 != null) {
-                        if (otherCardAvailability2.getVisibility() == View.VISIBLE) {
-                            Bitmap b_o_image2 = BitmapFactory.decodeByteArray(other_image2, 0, other_image2.length);
-                            ivOtherScannedImage2.setImageBitmap(b_o_image2);
-                        }
-                    }
-                    if (other_image3 != null) {
-                        if (otherCardAvailability3.getVisibility() == View.VISIBLE) {
-                            Bitmap b_o_image3 = BitmapFactory.decodeByteArray(other_image3, 0, other_image3.length);
-                            ivOtherScannedImage3.setImageBitmap(b_o_image3);
-                        }
-                    }
-                    if (other_image4 != null) {
-                        if (otherCardAvailability4.getVisibility() == View.VISIBLE) {
-                            Bitmap b_o_image4 = BitmapFactory.decodeByteArray(other_image4, 0, other_image4.length);
-                            ivOtherScannedImage4.setImageBitmap(b_o_image4);
-                        }
-                    }
-                    if (other_image5 != null) {
-                        if (otherCardAvailability5.getVisibility() == View.VISIBLE) {
-                            Bitmap b_o_image5 = BitmapFactory.decodeByteArray(other_image5, 0, other_image5.length);
-                            ivOtherScannedImage5.setImageBitmap(b_o_image5);
-                        }
-                    }
-                }
-
+            if (card_image_u != null) {
+                Bitmap scanned = BitmapFactory.decodeByteArray(card_image_u, 0, card_image_u.length);
+                ScannedImage.setImageBitmap(scanned);
             }
-            else{
-                til_current_scan_btn.setError(required_field);
-                til_additionalID.setError(required_field);
-                tilGrantee.setError(required_field);
+            if (additonal_image_u != null) {
+                Bitmap additional = BitmapFactory.decodeByteArray(additonal_image_u, 0, additonal_image_u.length);
+                imgAdditionalId.setImageBitmap(additional);
+            }
+            if (grantee_image_u != null) {
+                Bitmap grantee = BitmapFactory.decodeByteArray(grantee_image_u, 0, grantee_image_u.length);
+                mGrantee.setImageBitmap(grantee);
+            }
+            if (ocv_other_image_1_u != null) {
+                if (otherCardAvailability1.getVisibility() == View.VISIBLE) {
+                    Bitmap b_o_image1 = BitmapFactory.decodeByteArray(ocv_other_image_1_u, 0, ocv_other_image_1_u.length);
+                    ivOtherScannedImage1.setImageBitmap(b_o_image1);
+                }
+            }
+            if (ocv_other_image_2_u != null) {
+                if (otherCardAvailability2.getVisibility() == View.VISIBLE) {
+                    Bitmap b_o_image2 = BitmapFactory.decodeByteArray(ocv_other_image_2_u, 0, ocv_other_image_2_u.length);
+                    ivOtherScannedImage2.setImageBitmap(b_o_image2);
+                }
+            }
+            if (ocv_other_image_3_u != null) {
+                if (otherCardAvailability3.getVisibility() == View.VISIBLE) {
+                    Bitmap b_o_image3 = BitmapFactory.decodeByteArray(ocv_other_image_3_u, 0, ocv_other_image_3_u.length);
+                    ivOtherScannedImage3.setImageBitmap(b_o_image3);
+                }
+            }
+            if (ocv_other_image_4_u != null) {
+                if (otherCardAvailability4.getVisibility() == View.VISIBLE) {
+                    Bitmap b_o_image4 = BitmapFactory.decodeByteArray(ocv_other_image_4_u, 0, ocv_other_image_4_u.length);
+                    ivOtherScannedImage4.setImageBitmap(b_o_image4);
+                }
+            }
+            if (ocv_other_image_5_u != null) {
+                if (otherCardAvailability5.getVisibility() == View.VISIBLE) {
+                    Bitmap b_o_image5 = BitmapFactory.decodeByteArray(ocv_other_image_5_u, 0, ocv_other_image_5_u.length);
+                    ivOtherScannedImage5.setImageBitmap(b_o_image5);
+                }
             }
         }
         catch (Exception e){
@@ -1229,8 +1056,6 @@ public class UpdateData extends AppCompatActivity {
 
             //intro_one.xml
             if (position == 0) {
-                btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
-
                 xml_initialization(1);
                 til_representative_name.setVisibility(View.GONE);
 
@@ -1284,6 +1109,8 @@ public class UpdateData extends AppCompatActivity {
                 String assigned_staff = sh.getString("assigned_staff_u","");
                 String is_minor = sh.getString("is_minor_u","");
                 String representative_name = sh.getString("representative_name_u", "");
+
+
 
                 edt_hh_id.setText(hh_id);
                 aat_set.setText(hh_set, false);
@@ -1351,12 +1178,6 @@ public class UpdateData extends AppCompatActivity {
                 til_assigned_staff.setVisibility(View.GONE);
                 til_is_minor.setVisibility(View.GONE);
 
-                btn_search_hh.setOnClickListener( new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        search_household();
-                    }
-                });
 
                 aat_ext_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -1456,6 +1277,7 @@ public class UpdateData extends AppCompatActivity {
             } else if (position == 1) {
 //                Grantee Details
                 xml_initialization(2);
+
 
                 rlOtherCardScanningField1 = findViewById(R.id.rlOtherCardScanningField1);
                 rlOtherCardScanningField2 = findViewById(R.id.rlOtherCardScanningField2);
@@ -1721,7 +1543,7 @@ public class UpdateData extends AppCompatActivity {
                         ll_additional_id_layout.setVisibility(View.GONE);
                         if (aat_id_exists.getText().toString().matches("Yes")) {
                             ll_additional_id_layout.setVisibility(View.VISIBLE);
-                            getImage(0);
+                            getImage();
                         } else {
                             sqLiteHelper.queryData("UPDATE tmp_blob SET additional_id_image=NULL");
                             imgAdditionalId.setImageResource(R.drawable.ic_image);
@@ -2385,7 +2207,7 @@ public class UpdateData extends AppCompatActivity {
                 ivOtherScannedImage5.setClipToOutline(true);
                 ivOtherScannedImageUrl5.setClipToOutline(true);
 
-                getImage(0);
+                getImage();
 
                 btn_scanCashCard.setOnClickListener( new View.OnClickListener() {
                     @Override
@@ -2451,125 +2273,128 @@ public class UpdateData extends AppCompatActivity {
                     }
                 });
 
-                String current_grantee_card_old = sh.getString("current_grantee_card_old", "");
-                String distribution_status = sh.getString("distribution_status", "");
-                String release_date = sh.getString("release_date", "");
-                String release_by = sh.getString("release_by", "");
-                String release_place = sh.getString("release_place", "");
-                String card_physically_presented = sh.getString("card_physically_presented", "");
-                String card_pin_is_attached = sh.getString("card_pin_is_attached", "");
-                String reason_not_presented = sh.getString("reason_not_presented", "");
-                String others_reason_not_presented = sh.getString("others_reason_not_presented", "");
-                String reason_unclaimed = sh.getString("reason_unclaimed", "");
-                String others_reason_unclaimed = sh.getString("others_reason_unclaimed", "");
-                String card_replacement_request = sh.getString("card_replacement_request", "");
-                String card_replacement_request_submitted_details = sh.getString("card_replacement_request_submitted_details", "");
-                String card_number_inputted = sh.getString("card_number_inputted", "");
-                String card_number_series = sh.getString("card_number_series", "");
-                String id_exists = sh.getString("id_exists", "");
-                String lender_name = sh.getString("lender_name", "");
-                String date_pawned = sh.getString("date_pawned", "");
-                String loan_amount = sh.getString("loan_amount", "");
-                String lender_address = sh.getString("lender_address", "");
-                String date_retrieved = sh.getString("date_retrieved", "");
-                String interest = sh.getString("interest", "");
-                String status = sh.getString("status", "");
-                String reason = sh.getString("reason", "");
-                String offense_history = sh.getString("offense_history", "");
-                String offense_date = sh.getString("offense_date", "");
-                String remarks = sh.getString("remarks", "");
-                String staff_intervention = sh.getString("staff_intervention", "");
-                String other_details = sh.getString("other_details", "");
-                String distribution_status1 = sh.getString("distribution_status1", "");
-                String distribution_status2 = sh.getString("distribution_status2", "");
-                String distribution_status3 = sh.getString("distribution_status3", "");
-                String distribution_status4 = sh.getString("distribution_status4", "");
-                String distribution_status5 = sh.getString("distribution_status5", "");
-                String card_number_prefilled1 = sh.getString("card_number_prefilled1", "");
-                String card_number_prefilled2 = sh.getString("card_number_prefilled2", "");
-                String card_number_prefilled3 = sh.getString("card_number_prefilled3", "");
-                String card_number_prefilled4 = sh.getString("card_number_prefilled4", "");
-                String card_number_prefilled5 = sh.getString("card_number_prefilled5", "");
-                String card_holder_name1 = sh.getString("card_holder_name1", "");
-                String card_holder_name2 = sh.getString("card_holder_name2", "");
-                String card_holder_name3 = sh.getString("card_holder_name3", "");
-                String card_holder_name4 = sh.getString("card_holder_name4", "");
-                String card_holder_name5 = sh.getString("card_holder_name5", "");
-                String release_date1 = sh.getString("release_date1", "");
-                String release_date2 = sh.getString("release_date2", "");
-                String release_date3 = sh.getString("release_date3", "");
-                String release_date4 = sh.getString("release_date4", "");
-                String release_date5 = sh.getString("release_date5", "");
-                String release_by1 = sh.getString("release_by1", "");
-                String release_by2 = sh.getString("release_by2", "");
-                String release_by3 = sh.getString("release_by3", "");
-                String release_by4 = sh.getString("release_by4", "");
-                String release_by5 = sh.getString("release_by5", "");
-                String release_place1 = sh.getString("release_place1", "");
-                String release_place2 = sh.getString("release_place2", "");
-                String release_place3 = sh.getString("release_place3", "");
-                String release_place4 = sh.getString("release_place4", "");
-                String release_place5 = sh.getString("release_place5", "");
-                String card_physically_presented1 = sh.getString("card_physically_presented1", "");
-                String card_physically_presented2 = sh.getString("card_physically_presented2", "");
-                String card_physically_presented3 = sh.getString("card_physically_presented3", "");
-                String card_physically_presented4 = sh.getString("card_physically_presented4", "");
-                String card_physically_presented5 = sh.getString("card_physically_presented5", "");
-                String card_pin_is_attached1 = sh.getString("card_pin_is_attached1", "");
-                String card_pin_is_attached2 = sh.getString("card_pin_is_attached2", "");
-                String card_pin_is_attached3 = sh.getString("card_pin_is_attached3", "");
-                String card_pin_is_attached4 = sh.getString("card_pin_is_attached4", "");
-                String card_pin_is_attached5 = sh.getString("card_pin_is_attached5", "");
-                String reason_not_presented1 = sh.getString("reason_not_presented1", "");
-                String reason_not_presented2 = sh.getString("reason_not_presented2", "");
-                String reason_not_presented3 = sh.getString("reason_not_presented3", "");
-                String reason_not_presented4 = sh.getString("reason_not_presented4", "");
-                String reason_not_presented5 = sh.getString("reason_not_presented5", "");
-                String others_reason_not_presented1 = sh.getString("others_reason_not_presented1", "");
-                String others_reason_not_presented2 = sh.getString("others_reason_not_presented2", "");
-                String others_reason_not_presented3 = sh.getString("others_reason_not_presented3", "");
-                String others_reason_not_presented4 = sh.getString("others_reason_not_presented4", "");
-                String others_reason_not_presented5 = sh.getString("others_reason_not_presented5", "");
-                String reason_unclaimed1 = sh.getString("reason_unclaimed1", "");
-                String reason_unclaimed2 = sh.getString("reason_unclaimed2", "");
-                String reason_unclaimed3 = sh.getString("reason_unclaimed3", "");
-                String reason_unclaimed4 = sh.getString("reason_unclaimed4", "");
-                String reason_unclaimed5 = sh.getString("reason_unclaimed5", "");
-                String others_reason_unclaimed1 = sh.getString("others_reason_unclaimed1", "");
-                String others_reason_unclaimed2 = sh.getString("others_reason_unclaimed2", "");
-                String others_reason_unclaimed3 = sh.getString("others_reason_unclaimed3", "");
-                String others_reason_unclaimed4 = sh.getString("others_reason_unclaimed4", "");
-                String others_reason_unclaimed5 = sh.getString("others_reason_unclaimed5", "");
-                String card_replacement_request1 = sh.getString("card_replacement_request1", "");
-                String card_replacement_request2 = sh.getString("card_replacement_request2", "");
-                String card_replacement_request3 = sh.getString("card_replacement_request3", "");
-                String card_replacement_request4 = sh.getString("card_replacement_request4", "");
-                String card_replacement_request5 = sh.getString("card_replacement_request5", "");
-                String card_replacement_request_submitted_details1 = sh.getString("card_replacement_request_submitted_details1", "");
-                String card_replacement_request_submitted_details2 = sh.getString("card_replacement_request_submitted_details2", "");
-                String card_replacement_request_submitted_details3 = sh.getString("card_replacement_request_submitted_details3", "");
-                String card_replacement_request_submitted_details4 = sh.getString("card_replacement_request_submitted_details4", "");
-                String card_replacement_request_submitted_details5 = sh.getString("card_replacement_request_submitted_details5", "");
-                String card_number_inputted1 = sh.getString("card_number_inputted1", "");
-                String card_number_inputted2 = sh.getString("card_number_inputted2", "");
-                String card_number_inputted3 = sh.getString("card_number_inputted3", "");
-                String card_number_inputted4 = sh.getString("card_number_inputted4", "");
-                String card_number_inputted5 = sh.getString("card_number_inputted5", "");
-                String card_number_series1 = sh.getString("card_number_series1", "");
-                String card_number_series2 = sh.getString("card_number_series2", "");
-                String card_number_series3 = sh.getString("card_number_series3", "");
-                String card_number_series4 = sh.getString("card_number_series4", "");
-                String card_number_series5 = sh.getString("card_number_series5", "");
-                String pawning_remarks1 = sh.getString("pawning_remarks1", "");
-                String pawning_remarks2 = sh.getString("pawning_remarks2", "");
-                String pawning_remarks3 = sh.getString("pawning_remarks3", "");
-                String pawning_remarks4 = sh.getString("pawning_remarks4", "");
-                String pawning_remarks5 = sh.getString("pawning_remarks5", "");
+                String current_grantee_card_old = sh.getString("current_grantee_card_old_u", "");
+                String distribution_status = sh.getString("distribution_status_u", "");
+
+                String release_date = sh.getString("release_date_u", "");
+                String release_by = sh.getString("release_by_u", "");
+                String release_place = sh.getString("release_place_u", "");
+                String card_physically_presented = sh.getString("card_physically_presented_u", "");
+
+                Log.v(TAG,"distribution_status" + distribution_status);
+                Log.v(TAG,"card_physically_presented_u " + card_physically_presented);
+
+
+                String card_pin_is_attached = sh.getString("card_pin_is_attached_u", "");
+                String reason_not_presented = sh.getString("reason_not_presented_u", "");
+                String others_reason_not_presented = sh.getString("others_reason_not_presented_u", "");
+                String reason_unclaimed = sh.getString("reason_unclaimed_u", "");
+                String others_reason_unclaimed = sh.getString("others_reason_unclaimed_u", "");
+                String card_replacement_request = sh.getString("card_replacement_request_u", "");
+                String card_replacement_request_submitted_details = sh.getString("card_replacement_request_submitted_details_u", "");
+                String card_number_inputted = sh.getString("card_number_inputted_u", "");
+                String card_number_series = sh.getString("card_number_series_u", "");
+                String id_exists = sh.getString("id_exists_u", "");
+                String lender_name = sh.getString("lender_name_u", "");
+                String date_pawned = sh.getString("date_pawned_u", "");
+                String loan_amount = sh.getString("loan_amount_u", "");
+                String lender_address = sh.getString("lender_address_u", "");
+                String date_retrieved = sh.getString("date_retrieved_u", "");
+                String interest = sh.getString("interest_u", "");
+                String status = sh.getString("status_u", "");
+                String reason = sh.getString("reason_u", "");
+                String offense_history = sh.getString("offense_history_u", "");
+                String offense_date = sh.getString("offense_date_u", "");
+                String remarks = sh.getString("remarks_u", "");
+                String staff_intervention = sh.getString("staff_intervention_u", "");
+                String other_details = sh.getString("other_details_u", "");
+                String distribution_status1 = sh.getString("distribution_status1_u", "");
+                String distribution_status2 = sh.getString("distribution_status2_u", "");
+                String distribution_status3 = sh.getString("distribution_status3_u", "");
+                String distribution_status4 = sh.getString("distribution_status4_u", "");
+                String distribution_status5 = sh.getString("distribution_status5_u", "");
+                String card_number_prefilled1 = sh.getString("card_number_prefilled1_u", "");
+                String card_number_prefilled2 = sh.getString("card_number_prefilled2_u", "");
+                String card_number_prefilled3 = sh.getString("card_number_prefilled3_u", "");
+                String card_number_prefilled4 = sh.getString("card_number_prefilled4_u", "");
+                String card_number_prefilled5 = sh.getString("card_number_prefilled5_u", "");
+                String card_holder_name1 = sh.getString("card_holder_name1_u", "");
+                String card_holder_name2 = sh.getString("card_holder_name2_u", "");
+                String card_holder_name3 = sh.getString("card_holder_name3_u", "");
+                String card_holder_name4 = sh.getString("card_holder_name4_u", "");
+                String card_holder_name5 = sh.getString("card_holder_name5_u", "");
+                String release_date1 = sh.getString("release_date1_u", "");
+                String release_date2 = sh.getString("release_date2_u", "");
+                String release_date3 = sh.getString("release_date3_u", "");
+                String release_date4 = sh.getString("release_date4_u", "");
+                String release_date5 = sh.getString("release_date5_u", "");
+                String release_by1 = sh.getString("release_by1_u", "");
+                String release_by2 = sh.getString("release_by2_u", "");
+                String release_by3 = sh.getString("release_by3_u", "");
+                String release_by4 = sh.getString("release_by4_u", "");
+                String release_by5 = sh.getString("release_by5_u", "");
+                String release_place1 = sh.getString("release_place1_u", "");
+                String release_place2 = sh.getString("release_place2_u", "");
+                String release_place3 = sh.getString("release_place3_u", "");
+                String release_place4 = sh.getString("release_place4_u", "");
+                String release_place5 = sh.getString("release_place5_u", "");
+                String card_physically_presented1 = sh.getString("card_physically_presented1_u", "");
+                String card_physically_presented2 = sh.getString("card_physically_presented2_u", "");
+                String card_physically_presented3 = sh.getString("card_physically_presented3_u", "");
+                String card_physically_presented4 = sh.getString("card_physically_presented4_u", "");
+                String card_physically_presented5 = sh.getString("card_physically_presented5_u", "");
+                String card_pin_is_attached1 = sh.getString("card_pin_is_attached1_u", "");
+                String card_pin_is_attached2 = sh.getString("card_pin_is_attached2_u", "");
+                String card_pin_is_attached3 = sh.getString("card_pin_is_attached3_u", "");
+                String card_pin_is_attached4 = sh.getString("card_pin_is_attached4_u", "");
+                String card_pin_is_attached5 = sh.getString("card_pin_is_attached5_u", "");
+                String reason_not_presented1 = sh.getString("reason_not_presented1_u", "");
+                String reason_not_presented2 = sh.getString("reason_not_presented2_u", "");
+                String reason_not_presented3 = sh.getString("reason_not_presented3_u", "");
+                String reason_not_presented4 = sh.getString("reason_not_presented4_u", "");
+                String reason_not_presented5 = sh.getString("reason_not_presented5_u", "");
+                String others_reason_not_presented1 = sh.getString("others_reason_not_presented1_u", "");
+                String others_reason_not_presented2 = sh.getString("others_reason_not_presented2_u", "");
+                String others_reason_not_presented3 = sh.getString("others_reason_not_presented3_u", "");
+                String others_reason_not_presented4 = sh.getString("others_reason_not_presented4_u", "");
+                String others_reason_not_presented5 = sh.getString("others_reason_not_presented5_u", "");
+                String reason_unclaimed1 = sh.getString("reason_unclaimed1_u", "");
+                String reason_unclaimed2 = sh.getString("reason_unclaimed2_u", "");
+                String reason_unclaimed3 = sh.getString("reason_unclaimed3_u", "");
+                String reason_unclaimed4 = sh.getString("reason_unclaimed4_u", "");
+                String reason_unclaimed5 = sh.getString("reason_unclaimed5_u", "");
+                String others_reason_unclaimed1 = sh.getString("others_reason_unclaimed1_u", "");
+                String others_reason_unclaimed2 = sh.getString("others_reason_unclaimed2_u", "");
+                String others_reason_unclaimed3 = sh.getString("others_reason_unclaimed3_u", "");
+                String others_reason_unclaimed4 = sh.getString("others_reason_unclaimed4_u", "");
+                String others_reason_unclaimed5 = sh.getString("others_reason_unclaimed5_u", "");
+                String card_replacement_request1 = sh.getString("card_replacement_request1_u", "");
+                String card_replacement_request2 = sh.getString("card_replacement_request2_u", "");
+                String card_replacement_request3 = sh.getString("card_replacement_request3_u", "");
+                String card_replacement_request4 = sh.getString("card_replacement_request4_u", "");
+                String card_replacement_request5 = sh.getString("card_replacement_request5_u", "");
+                String card_replacement_request_submitted_details1 = sh.getString("card_replacement_request_submitted_details1_u", "");
+                String card_replacement_request_submitted_details2 = sh.getString("card_replacement_request_submitted_details2_u", "");
+                String card_replacement_request_submitted_details3 = sh.getString("card_replacement_request_submitted_details3_u", "");
+                String card_replacement_request_submitted_details4 = sh.getString("card_replacement_request_submitted_details4_u", "");
+                String card_replacement_request_submitted_details5 = sh.getString("card_replacement_request_submitted_details5_u", "");
+                String card_number_inputted1 = sh.getString("card_number_inputted1_u", "");
+                String card_number_inputted2 = sh.getString("card_number_inputted2_u", "");
+                String card_number_inputted3 = sh.getString("card_number_inputted3_u", "");
+                String card_number_inputted4 = sh.getString("card_number_inputted4_u", "");
+                String card_number_inputted5 = sh.getString("card_number_inputted5_u", "");
+                String card_number_series1 = sh.getString("card_number_series1_u", "");
+                String card_number_series2 = sh.getString("card_number_series2_u", "");
+                String card_number_series3 = sh.getString("card_number_series3_u", "");
+                String card_number_series4 = sh.getString("card_number_series4_u", "");
+                String card_number_series5 = sh.getString("card_number_series5_u", "");
+                String pawning_remarks1 = sh.getString("pawning_remarks1_u", "");
+                String pawning_remarks2 = sh.getString("pawning_remarks2_u", "");
+                String pawning_remarks3 = sh.getString("pawning_remarks3_u", "");
+                String pawning_remarks4 = sh.getString("pawning_remarks4_u", "");
+                String pawning_remarks5 = sh.getString("pawning_remarks5_u", "");
 
                 edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
-
-
-
                 aat_distribution_status.setText(distribution_status, false);
                 edt_release_date.setText(release_date);
                 edt_release_by.setText(release_by);
@@ -2908,11 +2733,11 @@ public class UpdateData extends AppCompatActivity {
                     }
                 });
 
-                String nma_amount = sh.getString("nma_amount", "0");
-                String nma_reason = sh.getString("nma_reason", "");
-                String nma_others_reason = sh.getString("nma_others_reason", "");
-                String nma_date_claimed = sh.getString("nma_date_claimed", "");
-                String nma_remarks = sh.getString("nma_remarks", "");
+                String nma_amount = sh.getString("nma_amount_u", "0");
+                String nma_reason = sh.getString("nma_reason_u", "");
+                String nma_others_reason = sh.getString("nma_others_reason_u", "");
+                String nma_date_claimed = sh.getString("nma_date_claimed_u", "");
+                String nma_remarks = sh.getString("nma_remarks_u", "");
 
                 edt_nma_amount.setText(nma_amount);
                 aat_nma_reason.setText(nma_reason, false);
@@ -2932,7 +2757,7 @@ public class UpdateData extends AppCompatActivity {
             } else if (position == 3) {
                 //intro_four.xml
                 xml_initialization(4);
-                String overall_remarks = sh.getString("overall_remarks", "");
+                String overall_remarks = sh.getString("overall_remarks_u", "");
                 edt_overall_remarks.setText(overall_remarks);
             }
 
@@ -3194,162 +3019,147 @@ public class UpdateData extends AppCompatActivity {
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
 
-        String household_id = sh.getString("hh_id", "");
-        String first_name = sh.getString("first_name","");
-        String last_name = sh.getString("last_name","");
-        String middle_name = sh.getString("middle_name","");
-        String ext_name = sh.getString("ext_name","");
-        String other_ext_name = sh.getString("other_ext_name","");
-        String sex = sh.getString("sex","");
+
+        String household_id = sh.getString("hh_id_u", "");
+        String first_name = sh.getString("first_name_u","");
+        String last_name = sh.getString("last_name_u","");
+        String middle_name = sh.getString("middle_name_u","");
+        String ext_name = sh.getString("ext_name_u","");
+        String sex = sh.getString("sex_u","");
         String province_code = psgc_province;
         String municipality_code = psgc_municipality;
         String barangay_code = psgc_barangay;
-        String set = sh.getString("hh_set","");
+        String set = sh.getString("hh_set_u","");
 
-        String lender_name = sh.getString("lender_name","");
-        String lender_address = sh.getString("lender_address","");
-        String date_pawned = sh.getString("date_pawned","");
-        String date_retrieved = sh.getString("date_retrieved","");
-        String loaned_amount = sh.getString("loan_amount","");
-        String status = sh.getString("status","");
-        String reason = sh.getString("reason","");
-        String interest = sh.getString("interest","");
-        String offense_history = sh.getString("offense_history","");
-        String offense_date = sh.getString("offense_date","");
-        String remarks = sh.getString("remarks","");
-        String staff_intervention = sh.getString("staff_intervention","");
-        String other_details = sh.getString("other_details","");
+        String lender_name = sh.getString("lender_name_u","");
+        String lender_address = sh.getString("lender_address_u","");
+        String date_pawned = sh.getString("date_pawned_u","");
+        String date_retrieved = sh.getString("date_retrieved_u","");
+        String loaned_amount = sh.getString("loan_amount_u","");
+        String status = sh.getString("status_u","");
+        String reason = sh.getString("reason_u","");
+        String interest = sh.getString("interest_u","");
+        String offense_history = sh.getString("offense_history_u","");
+        String offense_date = sh.getString("offense_date_u","");
+        String remarks = sh.getString("remarks_u","");
+        String staff_intervention = sh.getString("staff_intervention_u","");
+        String other_details = sh.getString("other_details_u","");
 
-        String amount = sh.getString("amount","");
-        String date_claimed = sh.getString("date_claimed","");
-        String nma_reason = sh.getString("nma_reason","");
-        String nma_others_reason = sh.getString("nma_others_reason","");
-        String nma_remarks = sh.getString("nma_remarks","");
+        String amount = sh.getString("amount_u","");
+        String date_claimed = sh.getString("date_claimed_u","");
+        String nma_reason = sh.getString("nma_reason_u","");
+        String nma_remarks = sh.getString("nma_remarks_u","");
 
-        String hh_status = sh.getString("hh_status","");
-        String contact_no = sh.getString("contact_no","");
-        String contact_no_of = sh.getString("contact_no_of","");
-        String contact_no_of_others = sh.getString("contact_no_of_others","");
-        String is_grantee = sh.getString("is_grantee","");
-        String is_minor = sh.getString("is_minor","");
-        String relationship_to_grantee = sh.getString("relationship_to_grantee","");
-        String assigned_staff = sh.getString("assigned_staff","");
-        String representative_name = sh.getString("representative_name","");
-        String sync_at = sh.getString("sync_at","");
-        int user_id = sh.getInt("user_id",0);
-        int emv_validation_id = sh.getInt("emv_alidation_id",0);
+        String hh_status = sh.getString("hh_status_u","");
+        String contact_no = sh.getString("contact_no_u","");
+        String contact_no_of = sh.getString("contact_no_of_u","");
+        String is_grantee = sh.getString("is_grantee_u","");
+        String is_minor = sh.getString("is_minor_u","");
+        String relationship_to_grantee = sh.getString("relationship_to_grantee_u","");
+        String assigned_staff = sh.getString("assigned_staff_u","");
+        String representative_name = sh.getString("representative_name_u","");
+        String sync_at = sh.getString("sync_at_u","");
+        int user_id = sh.getInt("user_id_u",0);
+        int emv_validation_id = sh.getInt("emv_alidation_id_u",0);
 
 
-        String card_number_prefilled = sh.getString("card_number_prefilled","");
-        String card_number_system_generated = sh.getString("card_number_system_generated","");
-        String card_number_unputted = sh.getString("card_number_inputted","");
-        String card_number_series = sh.getString("card_number_series","");
-        String distribution_status = sh.getString("distribution_status","");
-        String release_date = sh.getString("release_date","");
-        String release_by = sh.getString("release_by","");
-        String release_place = sh.getString("release_place","");
-        String card_physically_presented = sh.getString("card_physically_presented","");
-        String card_pin_is_attached = sh.getString("card_pin_is_attached","");
-        String reason_not_presented = sh.getString("reason_not_presented","");
-        String others_reason_not_presented = sh.getString("others_reason_not_presented","");
-        String reason_unclaimed = sh.getString("reason_unclaimed","");
-        String others_reason_unclaimed = sh.getString("others_reason_unclaimed","");
+        String card_number_prefilled = sh.getString("card_number_prefilled_u","");
+        String card_number_system_generated = sh.getString("card_number_system_generated_u","");
+        String card_number_unputted = sh.getString("card_number_inputted_u","");
+        String card_number_series = sh.getString("card_number_series_u","");
+        String distribution_status = sh.getString("distribution_status_u","");
+        String release_date = sh.getString("release_date_u","");
+        String release_by = sh.getString("release_by_u","");
+        String release_place = sh.getString("release_place_u","");
+        String card_physically_presented = sh.getString("card_physically_presented_u","");
+        String card_pin_is_attached = sh.getString("card_pin_is_attached_u","");
+        String reason_not_presented = sh.getString("reason_not_presented_u","");
+        String reason_unclaimed = sh.getString("reason_unclaimed_u","");
+        String card_replacement_request = sh.getString("card_replacement_request_u","");
+        String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details_u","");
+        String overall_remarks = sh.getString("overall_remarks_u","");
+        int emv_monitoring_id = sh.getInt("emv_monitoring_id_u",0);
 
-        String card_replacement_request = sh.getString("card_replacement_request","");
-        String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details","");
-        String overall_remarks = sh.getString("overall_remarks","");
-        int emv_monitoring_id = sh.getInt("emv_monitoring_id",0);
+        String card_holder_name1 = sh.getString("card_holder_name1_u","");
+        String card_number_system_generated1 = sh.getString("card_number_system_generated1_u","");
+        String card_number_inputted1 = sh.getString("card_number_inputted1_u","");
+        String card_number_series1 = sh.getString("card_number_series1_u","");
+        String distribution_status1 = sh.getString("distribution_status1_u","");
+        String release_date1 = sh.getString("release_date1_u","");
+        String release_by1 = sh.getString("release_by1_u","");
+        String release_place1 = sh.getString("release_place1_u","");
+        String card_physically_presented1 = sh.getString("card_physically_presented1_u","");
+        String card_pin_is_attached1 = sh.getString("card_pin_is_attached1_u","");
+        String reason_not_presented1 = sh.getString("reason_not_presented1_u","");
+        String reason_unclaimed1 = sh.getString("reason_unclaimed1_u","");
+        String card_replacement_request1 = sh.getString("card_replacement_request1_u","");
+        String card_replacement_request_submitted_details1 = sh.getString("card_replacement_request_submitted_details1_u","");
+        String pawning_remarks1 = sh.getString("pawning_remarks1_u","");
 
-        String card_holder_name1 = sh.getString("card_holder_name1","");
-        String card_number_system_generated1 = sh.getString("card_number_system_generated1","");
-        String card_number_inputted1 = sh.getString("card_number_inputted1","");
-        String card_number_series1 = sh.getString("card_number_series1","");
-        String distribution_status1 = sh.getString("distribution_status1","");
-        String release_date1 = sh.getString("release_date1","");
-        String release_by1 = sh.getString("release_by1","");
-        String release_place1 = sh.getString("release_place1","");
-        String card_physically_presented1 = sh.getString("card_physically_presented1","");
-        String card_pin_is_attached1 = sh.getString("card_pin_is_attached1","");
-        String reason_not_presented1 = sh.getString("reason_not_presented1","");
-        String others_reason_not_presented1 = sh.getString("others_reason_not_presented1","");
-        String reason_unclaimed1 = sh.getString("reason_unclaimed1","");
-        String others_reason_unclaimed1 = sh.getString("others_reason_unclaimed1","");
-        String card_replacement_request1 = sh.getString("card_replacement_request1","");
-        String card_replacement_request_submitted_details1 = sh.getString("card_replacement_request_submitted_details1","");
-        String pawning_remarks1 = sh.getString("pawning_remarks1","");
+        String card_holder_name2 = sh.getString("card_holder_name2_u","");
+        String card_number_system_generated2 = sh.getString("card_number_system_generated2_u","");
+        String card_number_inputted2 = sh.getString("card_number_inputted2_u","");
+        String card_number_series2 = sh.getString("card_number_series2_u","");
+        String distribution_status2 = sh.getString("distribution_status2_u","");
+        String release_date2 = sh.getString("release_date2_u","");
+        String release_by2 = sh.getString("release_by2_u","");
+        String release_place2 = sh.getString("release_place2_u","");
+        String card_physically_presented2 = sh.getString("card_physically_presented2_u","");
+        String card_pin_is_attached2 = sh.getString("card_pin_is_attached2_u","");
+        String reason_not_presented2 = sh.getString("reason_not_presented2_u","");
+        String reason_unclaimed2 = sh.getString("reason_unclaimed2_u","");
+        String card_replacement_request2 = sh.getString("card_replacement_request2_u","");
+        String card_replacement_request_submitted_details2 = sh.getString("card_replacement_request_submitted_details2_u","");
+        String pawning_remarks2 = sh.getString("pawning_remarks2_u","");
 
-        String card_holder_name2 = sh.getString("card_holder_name2","");
-        String card_number_system_generated2 = sh.getString("card_number_system_generated2","");
-        String card_number_inputted2 = sh.getString("card_number_inputted2","");
-        String card_number_series2 = sh.getString("card_number_series2","");
-        String distribution_status2 = sh.getString("distribution_status2","");
-        String release_date2 = sh.getString("release_date2","");
-        String release_by2 = sh.getString("release_by2","");
-        String release_place2 = sh.getString("release_place2","");
-        String card_physically_presented2 = sh.getString("card_physically_presented2","");
-        String card_pin_is_attached2 = sh.getString("card_pin_is_attached2","");
-        String reason_not_presented2 = sh.getString("reason_not_presented2","");
-        String others_reason_not_presented2 = sh.getString("others_reason_not_presented2","");
-        String reason_unclaimed2 = sh.getString("reason_unclaimed2","");
-        String others_reason_unclaimed2 = sh.getString("others_reason_unclaimed2","");
-        String card_replacement_request2 = sh.getString("card_replacement_request2","");
-        String card_replacement_request_submitted_details2 = sh.getString("card_replacement_request_submitted_details2","");
-        String pawning_remarks2 = sh.getString("pawning_remarks2","");
+        String card_holder_name3 = sh.getString("card_holder_name3_u","");
+        String card_number_system_generated3 = sh.getString("card_number_system_generated3_u","");
+        String card_number_inputted3 = sh.getString("card_number_inputted3_u","");
+        String card_number_series3 = sh.getString("card_number_series3_u","");
+        String distribution_status3 = sh.getString("distribution_status3_u","");
+        String release_date3 = sh.getString("release_date3_u","");
+        String release_by3 = sh.getString("release_by3_u","");
+        String release_place3 = sh.getString("release_place3_u","");
+        String card_physically_presented3 = sh.getString("card_physically_presented3_u","");
+        String card_pin_is_attached3 = sh.getString("card_pin_is_attached3_u","");
+        String reason_not_presented3 = sh.getString("reason_not_presented3_u","");
+        String reason_unclaimed3 = sh.getString("reason_unclaimed3_u","");
+        String card_replacement_request3 = sh.getString("card_replacement_request3_u","");
+        String card_replacement_request_submitted_details3 = sh.getString("card_replacement_request_submitted_details3_u","");
+        String pawning_remarks3 = sh.getString("pawning_remarks3_u","");
 
-        String card_holder_name3 = sh.getString("card_holder_name3","");
-        String card_number_system_generated3 = sh.getString("card_number_system_generated3","");
-        String card_number_inputted3 = sh.getString("card_number_inputted3","");
-        String card_number_series3 = sh.getString("card_number_series3","");
-        String distribution_status3 = sh.getString("distribution_status3","");
-        String release_date3 = sh.getString("release_date3","");
-        String release_by3 = sh.getString("release_by3","");
-        String release_place3 = sh.getString("release_place3","");
-        String card_physically_presented3 = sh.getString("card_physically_presented3","");
-        String card_pin_is_attached3 = sh.getString("card_pin_is_attached3","");
-        String reason_not_presented3 = sh.getString("reason_not_presented3","");
-        String others_reason_not_presented3 = sh.getString("others_reason_not_presented3","");
-        String reason_unclaimed3 = sh.getString("reason_unclaimed3","");
-        String others_reason_unclaimed3 = sh.getString("others_reason_unclaimed3","");
-        String card_replacement_request3 = sh.getString("card_replacement_request3","");
-        String card_replacement_request_submitted_details3 = sh.getString("card_replacement_request_submitted_details3","");
-        String pawning_remarks3 = sh.getString("pawning_remarks3","");
+        String card_holder_name4 = sh.getString("card_holder_name4_u","");
+        String card_number_system_generated4 = sh.getString("card_number_system_generated4_u","");
+        String card_number_inputted4 = sh.getString("card_number_inputted4_u","");
+        String card_number_series4 = sh.getString("card_number_series4_u","");
+        String distribution_status4 = sh.getString("distribution_status4_u","");
+        String release_date4 = sh.getString("release_date4_u","");
+        String release_by4 = sh.getString("release_by4_u","");
+        String release_place4 = sh.getString("release_place4_u","");
+        String card_physically_presented4 = sh.getString("card_physically_presented4_u","");
+        String card_pin_is_attached4 = sh.getString("card_pin_is_attached4_u","");
+        String reason_not_presented4 = sh.getString("reason_not_presented4_u","");
+        String reason_unclaimed4 = sh.getString("reason_unclaimed4_u","");
+        String card_replacement_request4 = sh.getString("card_replacement_request4_u","");
+        String card_replacement_request_submitted_details4 = sh.getString("card_replacement_request_submitted_details4_u","");
+        String pawning_remarks4 = sh.getString("pawning_remarks4_u","");
 
-        String card_holder_name4 = sh.getString("card_holder_name4","");
-        String card_number_system_generated4 = sh.getString("card_number_system_generated4","");
-        String card_number_inputted4 = sh.getString("card_number_inputted4","");
-        String card_number_series4 = sh.getString("card_number_series4","");
-        String distribution_status4 = sh.getString("distribution_status4","");
-        String release_date4 = sh.getString("release_date4","");
-        String release_by4 = sh.getString("release_by4","");
-        String release_place4 = sh.getString("release_place4","");
-        String card_physically_presented4 = sh.getString("card_physically_presented4","");
-        String card_pin_is_attached4 = sh.getString("card_pin_is_attached4","");
-        String reason_not_presented4 = sh.getString("reason_not_presented4","");
-        String others_reason_not_presented4 = sh.getString("others_reason_not_presented4","");
-        String reason_unclaimed4 = sh.getString("reason_unclaimed4","");
-        String others_reason_unclaimed4 = sh.getString("others_reason_unclaimed4","");
-        String card_replacement_request4 = sh.getString("card_replacement_request4","");
-        String card_replacement_request_submitted_details4 = sh.getString("card_replacement_request_submitted_details4","");
-        String pawning_remarks4 = sh.getString("pawning_remarks4","");
-
-        String card_holder_name5= sh.getString("card_holder_name5","");
-        String card_number_system_generated5 = sh.getString("card_number_system_generated5","");
-        String card_number_inputted5 = sh.getString("card_number_inputted5","");
-        String card_number_series5 = sh.getString("card_number_series5","");
-        String distribution_status5 = sh.getString("distribution_status5","");
-        String release_date5 = sh.getString("release_date5","");
-        String release_by5 = sh.getString("release_by5","");
-        String release_place5 = sh.getString("release_place5","");
-        String card_physically_presented5 = sh.getString("card_physically_presented5","");
-        String card_pin_is_attached5 = sh.getString("card_pin_is_attached5","");
-        String reason_not_presented5 = sh.getString("reason_not_presented5","");
-        String others_reason_not_presented5 = sh.getString("others_reason_not_presented5","");
-        String reason_unclaimed5 = sh.getString("reason_unclaimed5","");
-        String others_reason_unclaimed5 = sh.getString("others_reason_unclaimed5","");
-        String card_replacement_request5 = sh.getString("card_replacement_request5","");
-        String card_replacement_request_submitted_details5 = sh.getString("card_replacement_request_submitted_details5","");
-        String pawning_remarks5 = sh.getString("pawning_remarks5","");
-        Integer card_count = sh.getInt("card_count", 0);
+        String card_holder_name5= sh.getString("card_holder_name5_u","");
+        String card_number_system_generated5 = sh.getString("card_number_system_generated5_u","");
+        String card_number_inputted5 = sh.getString("card_number_inputted5_u","");
+        String card_number_series5 = sh.getString("card_number_series5_u","");
+        String distribution_status5 = sh.getString("distribution_status5_u","");
+        String release_date5 = sh.getString("release_date5_u","");
+        String release_by5 = sh.getString("release_by5_u","");
+        String release_place5 = sh.getString("release_place5_u","");
+        String card_physically_presented5 = sh.getString("card_physically_presented5_u","");
+        String card_pin_is_attached5 = sh.getString("card_pin_is_attached5_u","");
+        String reason_not_presented5 = sh.getString("reason_not_presented5_u","");
+        String reason_unclaimed5 = sh.getString("reason_unclaimed5_u","");
+        String card_replacement_request5 = sh.getString("card_replacement_request5_u","");
+        String card_replacement_request_submitted_details5 = sh.getString("card_replacement_request_submitted_details5_u","");
+        String pawning_remarks5 = sh.getString("pawning_remarks5_u","");
+        Integer card_count = sh.getInt("card_count_u", 0);
 
         new SweetAlertDialog(UpdateData.this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Save data?")
@@ -3392,7 +3202,7 @@ public class UpdateData extends AppCompatActivity {
                                         hide_loading_bar();
 //                                    int current = viewPager.getCurrentItem();
 //                                    viewPager.setCurrentItem(current-3);
-                                        Intent intent = new Intent(UpdateData.this, UpdateData.class);
+                                        Intent intent = new Intent(UpdateData.this, InventoryList.class);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -5185,26 +4995,26 @@ public class UpdateData extends AppCompatActivity {
                 String is_minor = aat_is_minor.getText().toString();
                 String representative_name = edt_representative_name.getText().toString();
 
-                myEdit.putString("hh_id",hh_id);
-                myEdit.putString("hh_set",hh_set);
-                myEdit.putString("last_name",last_name);
-                myEdit.putString("first_name",first_name);
-                myEdit.putString("middle_name",middle_name);
-                myEdit.putString("ext_name",ext_name);
-                myEdit.putString("other_ext_name",other_ext_name);
-                myEdit.putString("hh_status",hh_status);
-                myEdit.putString("province",province);
-                myEdit.putString("municipality",municipality);
-                myEdit.putString("barangay",barangay);
-                myEdit.putString("sex",sex);
-                myEdit.putString("is_grantee",is_grantee);
-                myEdit.putString("relationship_to_grantee",relationship_to_grantee);
-                myEdit.putString("contact_no",contact_no);
-                myEdit.putString("contact_no_of",contact_no_of);
-                myEdit.putString("contact_no_of_others",contact_no_of_others);
-                myEdit.putString("assigned_staff",assigned_staff);
-                myEdit.putString("is_minor",is_minor);
-                myEdit.putString("representative_name", representative_name);
+                myEdit.putString("hh_id_u",hh_id);
+                myEdit.putString("hh_set_u",hh_set);
+                myEdit.putString("last_name_u",last_name);
+                myEdit.putString("first_name_u",first_name);
+                myEdit.putString("middle_name_u",middle_name);
+                myEdit.putString("ext_name_u",ext_name);
+                myEdit.putString("other_ext_name_u",other_ext_name);
+                myEdit.putString("hh_status_u",hh_status);
+                myEdit.putString("province_u",province);
+                myEdit.putString("municipality_u",municipality);
+                myEdit.putString("barangay_u",barangay);
+                myEdit.putString("sex_u",sex);
+                myEdit.putString("is_grantee_u",is_grantee);
+                myEdit.putString("relationship_to_grantee_u",relationship_to_grantee);
+                myEdit.putString("contact_no_u",contact_no);
+                myEdit.putString("contact_no_of_u",contact_no_of);
+                myEdit.putString("contact_no_of_others_u",contact_no_of_others);
+                myEdit.putString("assigned_staff_u",assigned_staff);
+                myEdit.putString("is_minor_u",is_minor);
+                myEdit.putString("representative_name_u", representative_name);
 
                 myEdit.commit();
                 break;
@@ -5319,115 +5129,115 @@ public class UpdateData extends AppCompatActivity {
                 String pawning_remarks4 = edt_pawning_remarks1.getText().toString();
                 String pawning_remarks5 = edt_pawning_remarks1.getText().toString();
 
-                myEdit.putString("current_grantee_card_old", grantee_card_old);
-                myEdit.putString("distribution_status", distribution_status);
-                myEdit.putString("release_date", release_date);
-                myEdit.putString("release_by", release_by);
-                myEdit.putString("release_place", release_place);
-                myEdit.putString("card_physically_presented", card_physically_presented);
-                myEdit.putString("card_pin_is_attached", card_pin_is_attached);
-                myEdit.putString("reason_not_presented", reason_not_presented);
-                myEdit.putString("others_reason_not_presented", others_reason_not_presented);
-                myEdit.putString("reason_unclaimed", reason_unclaimed);
-                myEdit.putString("others_reason_unclaimed", others_reason_unclaimed);
-                myEdit.putString("card_replacement_request", card_replacement_request);
-                myEdit.putString("card_replacement_request_submitted_details", card_replacement_request_submitted_details);
-                myEdit.putString("card_number_inputted", card_number_inputted);
-                myEdit.putString("card_number_series", card_number_series);
-                myEdit.putString("id_exists", id_exists);
-                myEdit.putString("lender_name", lender_name);
-                myEdit.putString("date_pawned", date_pawned);
-                myEdit.putString("loan_amount", loan_amount);
-                myEdit.putString("lender_address", lender_address);
-                myEdit.putString("date_retrieved", date_retrieved);
-                myEdit.putString("interest", interest);
-                myEdit.putString("status", status);
-                myEdit.putString("reason", reason);
-                myEdit.putString("offense_history", offense_history);
-                myEdit.putString("offense_date", offense_date);
-                myEdit.putString("remarks", remarks);
-                myEdit.putString("staff_intervention", staff_intervention);
-                myEdit.putString("other_details", other_details);
-                myEdit.putString("card_holder_name1", card_holder_name1);
-                myEdit.putString("card_holder_name2", card_holder_name2);
-                myEdit.putString("card_holder_name3", card_holder_name3);
-                myEdit.putString("card_holder_name4", card_holder_name4);
-                myEdit.putString("card_holder_name5", card_holder_name5);
-                myEdit.putString("distribution_status1", distribution_status1);
-                myEdit.putString("distribution_status2", distribution_status2);
-                myEdit.putString("distribution_status3", distribution_status3);
-                myEdit.putString("distribution_status4", distribution_status4);
-                myEdit.putString("distribution_status5", distribution_status5);
-                myEdit.putString("release_date1", release_date1);
-                myEdit.putString("release_date2", release_date2);
-                myEdit.putString("release_date3", release_date3);
-                myEdit.putString("release_date4", release_date4);
-                myEdit.putString("release_date5", release_date5);
-                myEdit.putString("release_by1", release_by1);
-                myEdit.putString("release_by2", release_by2);
-                myEdit.putString("release_by3", release_by3);
-                myEdit.putString("release_by4", release_by4);
-                myEdit.putString("release_by5", release_by5);
-                myEdit.putString("release_place1", release_place1);
-                myEdit.putString("release_place2", release_place2);
-                myEdit.putString("release_place3", release_place3);
-                myEdit.putString("release_place4", release_place4);
-                myEdit.putString("release_place5", release_place5);
-                myEdit.putString("card_physically_presented1", card_physically_presented1);
-                myEdit.putString("card_physically_presented2", card_physically_presented2);
-                myEdit.putString("card_physically_presented3", card_physically_presented3);
-                myEdit.putString("card_physically_presented4", card_physically_presented4);
-                myEdit.putString("card_physically_presented5", card_physically_presented5);
-                myEdit.putString("card_pin_is_attached1", card_pin_is_attached1);
-                myEdit.putString("card_pin_is_attached2", card_pin_is_attached2);
-                myEdit.putString("card_pin_is_attached3", card_pin_is_attached3);
-                myEdit.putString("card_pin_is_attached4", card_pin_is_attached4);
-                myEdit.putString("card_pin_is_attached5", card_pin_is_attached5);
-                myEdit.putString("reason_not_presented1", reason_not_presented1);
-                myEdit.putString("reason_not_presented2", reason_not_presented2);
-                myEdit.putString("reason_not_presented3", reason_not_presented3);
-                myEdit.putString("reason_not_presented4", reason_not_presented4);
-                myEdit.putString("reason_not_presented5", reason_not_presented5);
-                myEdit.putString("others_reason_not_presented1", others_reason_not_presented1);
-                myEdit.putString("others_reason_not_presented2", others_reason_not_presented2);
-                myEdit.putString("others_reason_not_presented3", others_reason_not_presented3);
-                myEdit.putString("others_reason_not_presented4", others_reason_not_presented4);
-                myEdit.putString("others_reason_not_presented5", others_reason_not_presented5);
-                myEdit.putString("reason_unclaimed1", reason_unclaimed1);
-                myEdit.putString("reason_unclaimed2", reason_unclaimed2);
-                myEdit.putString("reason_unclaimed3", reason_unclaimed3);
-                myEdit.putString("reason_unclaimed4", reason_unclaimed4);
-                myEdit.putString("reason_unclaimed5", reason_unclaimed5);
-                myEdit.putString("others_reason_unclaimed1", others_reason_unclaimed1);
-                myEdit.putString("others_reason_unclaimed2", others_reason_unclaimed2);
-                myEdit.putString("others_reason_unclaimed3", others_reason_unclaimed3);
-                myEdit.putString("others_reason_unclaimed4", others_reason_unclaimed4);
-                myEdit.putString("others_reason_unclaimed5", others_reason_unclaimed5);
-                myEdit.putString("card_replacement_request1", card_replacement_request1);
-                myEdit.putString("card_replacement_request2", card_replacement_request2);
-                myEdit.putString("card_replacement_request3", card_replacement_request3);
-                myEdit.putString("card_replacement_request4", card_replacement_request4);
-                myEdit.putString("card_replacement_request5", card_replacement_request5);
-                myEdit.putString("card_replacement_request_submitted_details1", card_replacement_request_submitted_details1);
-                myEdit.putString("card_replacement_request_submitted_details2", card_replacement_request_submitted_details2);
-                myEdit.putString("card_replacement_request_submitted_details3", card_replacement_request_submitted_details3);
-                myEdit.putString("card_replacement_request_submitted_details4", card_replacement_request_submitted_details4);
-                myEdit.putString("card_replacement_request_submitted_details5", card_replacement_request_submitted_details5);
-                myEdit.putString("card_number_inputted1", card_number_inputted1);
-                myEdit.putString("card_number_inputted2", card_number_inputted2);
-                myEdit.putString("card_number_inputted3", card_number_inputted3);
-                myEdit.putString("card_number_inputted4", card_number_inputted4);
-                myEdit.putString("card_number_inputted5", card_number_inputted5);
-                myEdit.putString("card_number_series1", card_number_series1);
-                myEdit.putString("card_number_series2", card_number_series2);
-                myEdit.putString("card_number_series3", card_number_series3);
-                myEdit.putString("card_number_series4", card_number_series4);
-                myEdit.putString("card_number_series5", card_number_series5);
-                myEdit.putString("pawning_remarks1", pawning_remarks1);
-                myEdit.putString("pawning_remarks2", pawning_remarks2);
-                myEdit.putString("pawning_remarks3", pawning_remarks3);
-                myEdit.putString("pawning_remarks4", pawning_remarks4);
-                myEdit.putString("pawning_remarks5", pawning_remarks5);
+                myEdit.putString("current_grantee_card_old_u", grantee_card_old);
+                myEdit.putString("distribution_status_u", distribution_status);
+                myEdit.putString("release_date_u", release_date);
+                myEdit.putString("release_by_u", release_by);
+                myEdit.putString("release_place_u", release_place);
+                myEdit.putString("card_physically_presented_u", card_physically_presented);
+                myEdit.putString("card_pin_is_attached_u", card_pin_is_attached);
+                myEdit.putString("reason_not_presented_u", reason_not_presented);
+                myEdit.putString("others_reason_not_presented_u", others_reason_not_presented);
+                myEdit.putString("reason_unclaimed_u", reason_unclaimed);
+                myEdit.putString("others_reason_unclaimed_u", others_reason_unclaimed);
+                myEdit.putString("card_replacement_request_u", card_replacement_request);
+                myEdit.putString("card_replacement_request_submitted_details_u", card_replacement_request_submitted_details);
+                myEdit.putString("card_number_inputted_u", card_number_inputted);
+                myEdit.putString("card_number_series_u", card_number_series);
+                myEdit.putString("id_exists_u", id_exists);
+                myEdit.putString("lender_name_u", lender_name);
+                myEdit.putString("date_pawned_u", date_pawned);
+                myEdit.putString("loan_amount_u", loan_amount);
+                myEdit.putString("lender_address_u", lender_address);
+                myEdit.putString("date_retrieved_u", date_retrieved);
+                myEdit.putString("interest_u", interest);
+                myEdit.putString("status_u", status);
+                myEdit.putString("reason_u", reason);
+                myEdit.putString("offense_history_u", offense_history);
+                myEdit.putString("offense_date_u", offense_date);
+                myEdit.putString("remarks_u", remarks);
+                myEdit.putString("staff_intervention_u", staff_intervention);
+                myEdit.putString("other_details_u", other_details);
+                myEdit.putString("card_holder_name1_u", card_holder_name1);
+                myEdit.putString("card_holder_name2_u", card_holder_name2);
+                myEdit.putString("card_holder_name3_u", card_holder_name3);
+                myEdit.putString("card_holder_name4_u", card_holder_name4);
+                myEdit.putString("card_holder_name5_u", card_holder_name5);
+                myEdit.putString("distribution_status1_u", distribution_status1);
+                myEdit.putString("distribution_status2_u", distribution_status2);
+                myEdit.putString("distribution_status3_u", distribution_status3);
+                myEdit.putString("distribution_status4_u", distribution_status4);
+                myEdit.putString("distribution_status5_u", distribution_status5);
+                myEdit.putString("release_date1_u", release_date1);
+                myEdit.putString("release_date2_u", release_date2);
+                myEdit.putString("release_date3_u", release_date3);
+                myEdit.putString("release_date4_u", release_date4);
+                myEdit.putString("release_date5_u", release_date5);
+                myEdit.putString("release_by1_u", release_by1);
+                myEdit.putString("release_by2_u", release_by2);
+                myEdit.putString("release_by3_u", release_by3);
+                myEdit.putString("release_by4_u", release_by4);
+                myEdit.putString("release_by5_u", release_by5);
+                myEdit.putString("release_place1_u", release_place1);
+                myEdit.putString("release_place2_u", release_place2);
+                myEdit.putString("release_place3_u", release_place3);
+                myEdit.putString("release_place4_u", release_place4);
+                myEdit.putString("release_place5_u", release_place5);
+                myEdit.putString("card_physically_presented1_u", card_physically_presented1);
+                myEdit.putString("card_physically_presented2_u", card_physically_presented2);
+                myEdit.putString("card_physically_presented3_u", card_physically_presented3);
+                myEdit.putString("card_physically_presented4_u", card_physically_presented4);
+                myEdit.putString("card_physically_presented5_u", card_physically_presented5);
+                myEdit.putString("card_pin_is_attached1_u", card_pin_is_attached1);
+                myEdit.putString("card_pin_is_attached2_u", card_pin_is_attached2);
+                myEdit.putString("card_pin_is_attached3_u", card_pin_is_attached3);
+                myEdit.putString("card_pin_is_attached4_u", card_pin_is_attached4);
+                myEdit.putString("card_pin_is_attached5_u", card_pin_is_attached5);
+                myEdit.putString("reason_not_presented1_u", reason_not_presented1);
+                myEdit.putString("reason_not_presented2_u", reason_not_presented2);
+                myEdit.putString("reason_not_presented3_u", reason_not_presented3);
+                myEdit.putString("reason_not_presented4_u", reason_not_presented4);
+                myEdit.putString("reason_not_presented5_u", reason_not_presented5);
+                myEdit.putString("others_reason_not_presented1_u", others_reason_not_presented1);
+                myEdit.putString("others_reason_not_presented2_u", others_reason_not_presented2);
+                myEdit.putString("others_reason_not_presented3_u", others_reason_not_presented3);
+                myEdit.putString("others_reason_not_presented4_u", others_reason_not_presented4);
+                myEdit.putString("others_reason_not_presented5_u", others_reason_not_presented5);
+                myEdit.putString("reason_unclaimed1_u", reason_unclaimed1);
+                myEdit.putString("reason_unclaimed2_u", reason_unclaimed2);
+                myEdit.putString("reason_unclaimed3_u", reason_unclaimed3);
+                myEdit.putString("reason_unclaimed4_u", reason_unclaimed4);
+                myEdit.putString("reason_unclaimed5_u", reason_unclaimed5);
+                myEdit.putString("others_reason_unclaimed1_u", others_reason_unclaimed1);
+                myEdit.putString("others_reason_unclaimed2_u", others_reason_unclaimed2);
+                myEdit.putString("others_reason_unclaimed3_u", others_reason_unclaimed3);
+                myEdit.putString("others_reason_unclaimed4_u", others_reason_unclaimed4);
+                myEdit.putString("others_reason_unclaimed5_u", others_reason_unclaimed5);
+                myEdit.putString("card_replacement_request1_u", card_replacement_request1);
+                myEdit.putString("card_replacement_request2_u", card_replacement_request2);
+                myEdit.putString("card_replacement_request3_u", card_replacement_request3);
+                myEdit.putString("card_replacement_request4_u", card_replacement_request4);
+                myEdit.putString("card_replacement_request5_u", card_replacement_request5);
+                myEdit.putString("card_replacement_request_submitted_details1_u", card_replacement_request_submitted_details1);
+                myEdit.putString("card_replacement_request_submitted_details2_u", card_replacement_request_submitted_details2);
+                myEdit.putString("card_replacement_request_submitted_details3_u", card_replacement_request_submitted_details3);
+                myEdit.putString("card_replacement_request_submitted_details4_u", card_replacement_request_submitted_details4);
+                myEdit.putString("card_replacement_request_submitted_details5_u", card_replacement_request_submitted_details5);
+                myEdit.putString("card_number_inputted1_u", card_number_inputted1);
+                myEdit.putString("card_number_inputted2_u", card_number_inputted2);
+                myEdit.putString("card_number_inputted3_u", card_number_inputted3);
+                myEdit.putString("card_number_inputted4_u", card_number_inputted4);
+                myEdit.putString("card_number_inputted5_u", card_number_inputted5);
+                myEdit.putString("card_number_series1_u", card_number_series1);
+                myEdit.putString("card_number_series2_u", card_number_series2);
+                myEdit.putString("card_number_series3_u", card_number_series3);
+                myEdit.putString("card_number_series4_u", card_number_series4);
+                myEdit.putString("card_number_series5_u", card_number_series5);
+                myEdit.putString("pawning_remarks1_u", pawning_remarks1);
+                myEdit.putString("pawning_remarks2_u", pawning_remarks2);
+                myEdit.putString("pawning_remarks3_u", pawning_remarks3);
+                myEdit.putString("pawning_remarks4_u", pawning_remarks4);
+                myEdit.putString("pawning_remarks5_u", pawning_remarks5);
                 myEdit.commit();
                 break;
             case 3:
@@ -5438,12 +5248,12 @@ public class UpdateData extends AppCompatActivity {
                 String nma_remarks = edt_nma_remarks.getText().toString();
                 String overall_remarks = edt_overall_remarks.getText().toString();
 
-                myEdit.putString("nma_amount", nma_amount);
-                myEdit.putString("nma_reason", nma_reason);
-                myEdit.putString("nma_others_reason", nma_others_reason);
-                myEdit.putString("nma_date_claimed", nma_date_claimed);
-                myEdit.putString("nma_remarks", nma_remarks);
-                myEdit.putString("overall_remarks", overall_remarks);
+                myEdit.putString("nma_amount_u", nma_amount);
+                myEdit.putString("nma_reason_u", nma_reason);
+                myEdit.putString("nma_others_reason_u", nma_others_reason);
+                myEdit.putString("nma_date_claimed_u", nma_date_claimed);
+                myEdit.putString("nma_remarks_u", nma_remarks);
+                myEdit.putString("overall_remarks_u", overall_remarks);
 
                 myEdit.commit();
                 break;
@@ -5560,44 +5370,44 @@ public class UpdateData extends AppCompatActivity {
                         card_count++;
                     }
 
-                    myEdit.putInt("card_count", card_count);
-                    myEdit.putInt("emv_monitoring_id", emv_monitoring_id);
-                    myEdit.putString("hh_id", hh_id);
-                    myEdit.putString("first_name", first_name);
-                    myEdit.putString("last_name", last_name);
-                    myEdit.putString("middle_name", middle_name);
-                    myEdit.putString("ext_name", ext_name);
-                    myEdit.putString("hh_status", hh_status);
-                    myEdit.putString("province", province);
-                    myEdit.putString("municipality", municipality);
-                    myEdit.putString("barangay", barangay);
-                    myEdit.putString("sex", sex);
-                    myEdit.putString("hh_set", hh_set_group);
-                    myEdit.putString("nma_amount", nma_amount);
-                    myEdit.putString("pressBtn_search", "true");
-                    myEdit.putString("current_grantee_card_old", grantee_card_number);
-                    myEdit.putString("grantee_distribution_status", grantee_distribution_status);
-                    myEdit.putString("grantee_card_release_date", grantee_card_release_date);
-                    myEdit.putString("card_number_prefilled1", other_card_number_1);
-                    myEdit.putString("other_card_holder_1", other_card_holder_1);
-                    myEdit.putString("other_card_distribution_status_1", other_card_distribution_status_1);
-                    myEdit.putString("other_card_release_date_1", other_card_release_date_1);
-                    myEdit.putString("card_number_prefilled2", other_card_number_2);
-                    myEdit.putString("other_card_holder_2", other_card_holder_2);
-                    myEdit.putString("other_card_distribution_status_2", other_card_distribution_status_2);
-                    myEdit.putString("other_card_release_date_2", other_card_release_date_2);
-                    myEdit.putString("card_number_prefilled3", other_card_number_3);
-                    myEdit.putString("other_card_holder_3", other_card_holder_3);
-                    myEdit.putString("other_card_distribution_status_3", other_card_distribution_status_3);
-                    myEdit.putString("other_card_release_date_3", other_card_release_date_3);
-                    myEdit.putString("card_number_prefilled4", other_card_number_4);
-                    myEdit.putString("other_card_holder_4", other_card_holder_4);
-                    myEdit.putString("other_card_distribution_status_4", other_card_distribution_status_4);
-                    myEdit.putString("other_card_release_date_4", other_card_release_date_4);
-                    myEdit.putString("card_number_prefilled5", other_card_number_5);
-                    myEdit.putString("other_card_holder_5", other_card_holder_5);
-                    myEdit.putString("other_card_distribution_status_5", other_card_distribution_status_5);
-                    myEdit.putString("other_card_release_date_5", other_card_release_date_5);
+                    myEdit.putInt("card_count_u", card_count);
+                    myEdit.putInt("emv_monitoring_id_u", emv_monitoring_id);
+                    myEdit.putString("hh_id_u", hh_id);
+                    myEdit.putString("first_name_u", first_name);
+                    myEdit.putString("last_name_u", last_name);
+                    myEdit.putString("middle_name_u", middle_name);
+                    myEdit.putString("ext_name_u", ext_name);
+                    myEdit.putString("hh_status_u", hh_status);
+                    myEdit.putString("province_u", province);
+                    myEdit.putString("municipality_u", municipality);
+                    myEdit.putString("barangay_u", barangay);
+                    myEdit.putString("sex_u", sex);
+                    myEdit.putString("hh_set_u", hh_set_group);
+                    myEdit.putString("nma_amount_u", nma_amount);
+                    myEdit.putString("pressBtn_search_u", "true");
+                    myEdit.putString("current_grantee_card_old_u", grantee_card_number);
+                    myEdit.putString("grantee_distribution_status_u", grantee_distribution_status);
+                    myEdit.putString("grantee_card_release_date_u", grantee_card_release_date);
+                    myEdit.putString("card_number_prefilled1_u", other_card_number_1);
+                    myEdit.putString("other_card_holder_1_u", other_card_holder_1);
+                    myEdit.putString("other_card_distribution_status_1_u", other_card_distribution_status_1);
+                    myEdit.putString("other_card_release_date_1_u", other_card_release_date_1);
+                    myEdit.putString("card_number_prefilled2_u", other_card_number_2);
+                    myEdit.putString("other_card_holder_2_u", other_card_holder_2);
+                    myEdit.putString("other_card_distribution_status_2_u", other_card_distribution_status_2);
+                    myEdit.putString("other_card_release_date_2_u", other_card_release_date_2);
+                    myEdit.putString("card_number_prefilled3_u", other_card_number_3);
+                    myEdit.putString("other_card_holder_3_u", other_card_holder_3);
+                    myEdit.putString("other_card_distribution_status_3_u", other_card_distribution_status_3);
+                    myEdit.putString("other_card_release_date_3_u", other_card_release_date_3);
+                    myEdit.putString("card_number_prefilled4_u", other_card_number_4);
+                    myEdit.putString("other_card_holder_4_u", other_card_holder_4);
+                    myEdit.putString("other_card_distribution_status_4_u", other_card_distribution_status_4);
+                    myEdit.putString("other_card_release_date_4_u", other_card_release_date_4);
+                    myEdit.putString("card_number_prefilled5_u", other_card_number_5);
+                    myEdit.putString("other_card_holder_5_u", other_card_holder_5);
+                    myEdit.putString("other_card_distribution_status_5_u", other_card_distribution_status_5);
+                    myEdit.putString("other_card_release_date_5_u", other_card_release_date_5);
                     myEdit.commit();
 
                     aat_set.setText(hh_set_group);
@@ -5806,145 +5616,159 @@ public class UpdateData extends AppCompatActivity {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         //1
 
-        myEdit.putString("hh_id","");
-        myEdit.putString("hh_set","");
-        myEdit.putString("last_name","");
-        myEdit.putString("first_name","");
-        myEdit.putString("middle_name","");
-        myEdit.putString("ext_name","");
-        myEdit.putString("other_ext_name","");
-        myEdit.putString("hh_status","");
-        myEdit.putString("province","");
-        myEdit.putString("municipality","");
-        myEdit.putString("barangay","");
-        myEdit.putString("sex","");
-        myEdit.putString("is_grantee","");
-        myEdit.putString("relationship_to_grantee","");
-        myEdit.putString("contact_no","");
-        myEdit.putString("contact_no_of","");
-        myEdit.putString("contact_no_of_others","");
-        myEdit.putString("assigned_staff","");
-        myEdit.putString("is_minor","");
+        myEdit.putString("hh_id_u","");
+        myEdit.putString("hh_set_u","");
+        myEdit.putString("last_name_u","");
+        myEdit.putString("first_name_u","");
+        myEdit.putString("middle_name_u","");
+        myEdit.putString("ext_name_u","");
+        myEdit.putString("other_ext_name_u","");
+        myEdit.putString("hh_status_u","");
+        myEdit.putString("province_u","");
+        myEdit.putString("municipality_u","");
+        myEdit.putString("barangay_u","");
+        myEdit.putString("sex_u","");
+        myEdit.putString("is_grantee_u","");
+        myEdit.putString("relationship_to_grantee_u","");
+        myEdit.putString("contact_no_u","");
+        myEdit.putString("contact_no_of_u","");
+        myEdit.putString("contact_no_of_others_u","");
+        myEdit.putString("assigned_staff_u","");
+        myEdit.putString("is_minor_u","");
         //2
-        myEdit.putString("current_grantee_card_old", "");
-        myEdit.putString("distribution_status", "");
-        myEdit.putString("release_date", "");
-        myEdit.putString("release_by", "");
-        myEdit.putString("release_place", "");
-        myEdit.putString("card_physically_presented", "");
-        myEdit.putString("card_pin_is_attached", "");
-        myEdit.putString("reason_not_presented", "");
-        myEdit.putString("others_reason_not_presented", "");
-        myEdit.putString("reason_unclaimed", "");
-        myEdit.putString("others_reason_unclaimed", "");
-        myEdit.putString("card_replacement_request", "");
-        myEdit.putString("card_replacement_request_submitted_details", "");
-        myEdit.putString("card_number_inputted", "");
-        myEdit.putString("card_number_series", "");
-        myEdit.putString("id_exists", "");
-        myEdit.putString("representative_name", "");
-        myEdit.putString("lender_name", "");
-        myEdit.putString("date_pawned", "");
-        myEdit.putString("loan_amount", "");
-        myEdit.putString("lender_address", "");
-        myEdit.putString("date_retrieved", "");
-        myEdit.putString("interest", "");
-        myEdit.putString("status", "");
-        myEdit.putString("reason", "");
-        myEdit.putString("offense_history", "");
-        myEdit.putString("offense_date", "");
-        myEdit.putString("remarks", "");
-        myEdit.putString("staff_intervention", "");
-        myEdit.putString("other_details", "");
-        myEdit.putString("card_holder_name1", "");
-        myEdit.putString("card_holder_name2", "");
-        myEdit.putString("card_holder_name3", "");
-        myEdit.putString("card_holder_name4", "");
-        myEdit.putString("card_holder_name5", "");
-        myEdit.putString("distribution_status1", "");
-        myEdit.putString("distribution_status2", "");
-        myEdit.putString("distribution_status3", "");
-        myEdit.putString("distribution_status4", "");
-        myEdit.putString("distribution_status5", "");
-        myEdit.putString("release_date1", "");
-        myEdit.putString("release_date2", "");
-        myEdit.putString("release_date3", "");
-        myEdit.putString("release_date4", "");
-        myEdit.putString("release_date5", "");
-        myEdit.putString("release_by1", "");
-        myEdit.putString("release_by2", "");
-        myEdit.putString("release_by3", "");
-        myEdit.putString("release_by4", "");
-        myEdit.putString("release_by5", "");
-        myEdit.putString("release_place1", "");
-        myEdit.putString("release_place2", "");
-        myEdit.putString("release_place3", "");
-        myEdit.putString("release_place4", "");
-        myEdit.putString("release_place5", "");
-        myEdit.putString("card_physically_presented1", "");
-        myEdit.putString("card_physically_presented2", "");
-        myEdit.putString("card_physically_presented3", "");
-        myEdit.putString("card_physically_presented4", "");
-        myEdit.putString("card_physically_presented5", "");
-        myEdit.putString("card_pin_is_attached1", "");
-        myEdit.putString("card_pin_is_attached2", "");
-        myEdit.putString("card_pin_is_attached3", "");
-        myEdit.putString("card_pin_is_attached4", "");
-        myEdit.putString("card_pin_is_attached5", "");
-        myEdit.putString("reason_not_presented1", "");
-        myEdit.putString("reason_not_presented2", "");
-        myEdit.putString("reason_not_presented3", "");
-        myEdit.putString("reason_not_presented4", "");
-        myEdit.putString("reason_not_presented5", "");
-        myEdit.putString("others_reason_not_presented1", "");
-        myEdit.putString("others_reason_not_presented2", "");
-        myEdit.putString("others_reason_not_presented3", "");
-        myEdit.putString("others_reason_not_presented4", "");
-        myEdit.putString("others_reason_not_presented5", "");
-        myEdit.putString("reason_unclaimed1", "");
-        myEdit.putString("reason_unclaimed2", "");
-        myEdit.putString("reason_unclaimed3", "");
-        myEdit.putString("reason_unclaimed4", "");
-        myEdit.putString("reason_unclaimed5", "");
-        myEdit.putString("others_reason_unclaimed1", "");
-        myEdit.putString("others_reason_unclaimed2", "");
-        myEdit.putString("others_reason_unclaimed3", "");
-        myEdit.putString("others_reason_unclaimed4", "");
-        myEdit.putString("others_reason_unclaimed5", "");
-        myEdit.putString("card_replacement_request1", "");
-        myEdit.putString("card_replacement_request2", "");
-        myEdit.putString("card_replacement_request3", "");
-        myEdit.putString("card_replacement_request4", "");
-        myEdit.putString("card_replacement_request5", "");
-        myEdit.putString("card_replacement_request_submitted_details1", "");
-        myEdit.putString("card_replacement_request_submitted_details2", "");
-        myEdit.putString("card_replacement_request_submitted_details3", "");
-        myEdit.putString("card_replacement_request_submitted_details4", "");
-        myEdit.putString("card_replacement_request_submitted_details5", "");
-        myEdit.putString("card_number_inputted1", "");
-        myEdit.putString("card_number_inputted2", "");
-        myEdit.putString("card_number_inputted3", "");
-        myEdit.putString("card_number_inputted4", "");
-        myEdit.putString("card_number_inputted5", "");
-        myEdit.putString("card_number_series1", "");
-        myEdit.putString("card_number_series2", "");
-        myEdit.putString("card_number_series3", "");
-        myEdit.putString("card_number_series4", "");
-        myEdit.putString("card_number_series5", "");
-        myEdit.putString("pawning_remarks1", "");
-        myEdit.putString("pawning_remarks2", "");
-        myEdit.putString("pawning_remarks3", "");
-        myEdit.putString("pawning_remarks4", "");
-        myEdit.putString("pawning_remarks5", "");
+        myEdit.putString("current_grantee_card_old_u", "");
+        myEdit.putString("distribution_status_u", "");
+        myEdit.putString("release_date_u", "");
+        myEdit.putString("release_by_u", "");
+        myEdit.putString("release_place_u", "");
+        myEdit.putString("card_physically_presented_u", "");
+        myEdit.putString("card_pin_is_attached_u", "");
+        myEdit.putString("reason_not_presented_u", "");
+        myEdit.putString("others_reason_not_presented_u", "");
+        myEdit.putString("reason_unclaimed_u", "");
+        myEdit.putString("others_reason_unclaimed_u", "");
+        myEdit.putString("card_replacement_request_u", "");
+        myEdit.putString("card_replacement_request_submitted_details_u", "");
+        myEdit.putString("card_number_inputted_u", "");
+        myEdit.putString("card_number_series_u", "");
+        myEdit.putString("id_exists_u", "");
+        myEdit.putString("representative_name_u", "");
+        myEdit.putString("lender_name_u", "");
+        myEdit.putString("date_pawned_u", "");
+        myEdit.putString("loan_amount_u", "");
+        myEdit.putString("lender_address_u", "");
+        myEdit.putString("date_retrieved_u", "");
+        myEdit.putString("interest_u", "");
+        myEdit.putString("status_u", "");
+        myEdit.putString("reason_u", "");
+        myEdit.putString("offense_history_u", "");
+        myEdit.putString("offense_date_u", "");
+        myEdit.putString("remarks_u", "");
+        myEdit.putString("staff_intervention_u", "");
+        myEdit.putString("other_details_u", "");
+        myEdit.putString("card_holder_name1_u", "");
+        myEdit.putString("card_holder_name2_u", "");
+        myEdit.putString("card_holder_name3_u", "");
+        myEdit.putString("card_holder_name4_u", "");
+        myEdit.putString("card_holder_name5_u", "");
+        myEdit.putString("distribution_status1_u", "");
+        myEdit.putString("distribution_status2_u", "");
+        myEdit.putString("distribution_status3_u", "");
+        myEdit.putString("distribution_status4_u", "");
+        myEdit.putString("distribution_status5_u", "");
+        myEdit.putString("release_date1_u", "");
+        myEdit.putString("release_date2_u", "");
+        myEdit.putString("release_date3_u", "");
+        myEdit.putString("release_date4_u", "");
+        myEdit.putString("release_date5_u", "");
+        myEdit.putString("release_by1_u", "");
+        myEdit.putString("release_by2_u", "");
+        myEdit.putString("release_by3_u", "");
+        myEdit.putString("release_by4_u", "");
+        myEdit.putString("release_by5_u", "");
+        myEdit.putString("release_place1_u", "");
+        myEdit.putString("release_place2_u", "");
+        myEdit.putString("release_place3_u", "");
+        myEdit.putString("release_place4_u", "");
+        myEdit.putString("release_place5_u", "");
+        myEdit.putString("card_physically_presented1_u", "");
+        myEdit.putString("card_physically_presented2_u", "");
+        myEdit.putString("card_physically_presented3_u", "");
+        myEdit.putString("card_physically_presented4_u", "");
+        myEdit.putString("card_physically_presented5_u", "");
+        myEdit.putString("card_pin_is_attached1_u", "");
+        myEdit.putString("card_pin_is_attached2_u", "");
+        myEdit.putString("card_pin_is_attached3_u", "");
+        myEdit.putString("card_pin_is_attached4_u", "");
+        myEdit.putString("card_pin_is_attached5_u", "");
+        myEdit.putString("reason_not_presented1_u", "");
+        myEdit.putString("reason_not_presented2_u", "");
+        myEdit.putString("reason_not_presented3_u", "");
+        myEdit.putString("reason_not_presented4_u", "");
+        myEdit.putString("reason_not_presented5_u", "");
+        myEdit.putString("others_reason_not_presented1_u", "");
+        myEdit.putString("others_reason_not_presented2_u", "");
+        myEdit.putString("others_reason_not_presented3_u", "");
+        myEdit.putString("others_reason_not_presented4_u", "");
+        myEdit.putString("others_reason_not_presented5_u", "");
+        myEdit.putString("reason_unclaimed1_u", "");
+        myEdit.putString("reason_unclaimed2_u", "");
+        myEdit.putString("reason_unclaimed3_u", "");
+        myEdit.putString("reason_unclaimed4_u", "");
+        myEdit.putString("reason_unclaimed5_u", "");
+        myEdit.putString("others_reason_unclaimed1_u", "");
+        myEdit.putString("others_reason_unclaimed2_u", "");
+        myEdit.putString("others_reason_unclaimed3_u", "");
+        myEdit.putString("others_reason_unclaimed4_u", "");
+        myEdit.putString("others_reason_unclaimed5_u", "");
+        myEdit.putString("card_replacement_request1_u", "");
+        myEdit.putString("card_replacement_request2_u", "");
+        myEdit.putString("card_replacement_request3_u", "");
+        myEdit.putString("card_replacement_request4_u", "");
+        myEdit.putString("card_replacement_request5_u", "");
+        myEdit.putString("card_replacement_request_submitted_details1_u", "");
+        myEdit.putString("card_replacement_request_submitted_details2_u", "");
+        myEdit.putString("card_replacement_request_submitted_details3_u", "");
+        myEdit.putString("card_replacement_request_submitted_details4_u", "");
+        myEdit.putString("card_replacement_request_submitted_details5_u", "");
+        myEdit.putString("card_number_inputted1_u", "");
+        myEdit.putString("card_number_inputted2_u", "");
+        myEdit.putString("card_number_inputted3_u", "");
+        myEdit.putString("card_number_inputted4_u", "");
+        myEdit.putString("card_number_inputted5_u", "");
+        myEdit.putString("card_number_series1_u", "");
+        myEdit.putString("card_number_series2_u", "");
+        myEdit.putString("card_number_series3_u", "");
+        myEdit.putString("card_number_series4_u", "");
+        myEdit.putString("card_number_series5_u", "");
+        myEdit.putString("pawning_remarks1_u", "");
+        myEdit.putString("pawning_remarks2_u", "");
+        myEdit.putString("pawning_remarks3_u", "");
+        myEdit.putString("pawning_remarks4_u", "");
+        myEdit.putString("pawning_remarks5_u", "");
         //3
-        myEdit.putString("nma_amount", "0");
-        myEdit.putString("nma_reason", "");
-        myEdit.putString("nma_others_reason", "");
-        myEdit.putString("nma_date_claimed", "");
-        myEdit.putString("nma_remarks", "");
-        myEdit.putString("overall_remarks", "");
+        myEdit.putString("nma_amount_u", "0");
+        myEdit.putString("nma_reason_u", "");
+        myEdit.putString("nma_others_reason_u", "");
+        myEdit.putString("nma_date_claimed_u", "");
+        myEdit.putString("nma_remarks_u", "");
+        myEdit.putString("overall_remarks_u", "");
         //4
         myEdit.commit();
+    }
+    public void addressIdentifier(String province, String municipality, String barangay){
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        Cursor cursor_province = MainActivity.sqLiteHelper.getData("SELECT name_new FROM psgc WHERE correspondence_code='"+province+"'");
+        Cursor cursor_municipality = MainActivity.sqLiteHelper.getData("SELECT name_new FROM psgc WHERE correspondence_code='"+municipality+"'");
+        Cursor cursor_barangay = MainActivity.sqLiteHelper.getData("SELECT name_new FROM psgc WHERE correspondence_code='"+barangay+"'");
+        while (cursor_province.moveToNext()){myEdit.putString("province_u",cursor_province.getString(0).toUpperCase());}
+        while (cursor_municipality.moveToNext()){myEdit.putString("municipality_u",cursor_municipality.getString(0));}
+        while (cursor_barangay.moveToNext()){myEdit.putString("barangay_u",cursor_barangay.getString(0));}
+        myEdit.commit();
+        cursor_province.close();
+        cursor_municipality.close();
+        cursor_barangay.close();
     }
 
     public void getEntries(Integer id){
@@ -5952,25 +5776,15 @@ public class UpdateData extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-        //1 emv_validation_details
-        //2 grantee_validations
-        //3 pawning_validation_details
-        //4 card_validation_details
-        //5 other_card_validations
-        //6 nma_validations
-
-        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT evd.id,evd.hh_status,evd.contact_no,evd.contact_no_of,evd.is_grantee,evd.is_minor,evd.relationship_to_grantee,evd.assigned_staff,evd.representative_name,evd.user_id,evd.additional_image," +
+        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT evd.id,evd.hh_status,evd.contact_no,evd.contact_no_of,evd.is_grantee,evd.is_minor,evd.relationship_to_grantee,evd.assigned_staff,evd.representative_name,evd.user_id,LENGTH(evd.additional_image),evd.additional_image,evd.overall_remarks," +
                 "gv.hh_id,gv.first_name,gv.last_name,gv.middle_name,gv.ext_name,gv.sex,gv.province_code,gv.municipality_code,gv.barangay_code,gv.hh_set,gv.grantee_image," +
                 "pvd.lender_name,pvd.lender_address,pvd.date_pawned,pvd.date_retrieved,pvd.loan_amount,pvd.status,pvd.reason,pvd.interest,pvd.offense_history,pvd.offense_date,pvd.remarks,pvd.staff_intervention,pvd.other_details," +
                 "cvd.card_number_prefilled,cvd.card_number_system_generated,cvd.card_number_inputted,cvd.card_number_series,cvd.distribution_status,cvd.release_date,cvd.release_by,cvd.release_place,cvd.card_physically_presented,cvd.card_pin_is_attached,cvd.reason_not_presented,cvd.reason_unclaimed,cvd.card_replacement_requests,cvd.card_replacement_submitted_details,cvd.card_image," +
                 "nv.amount,nv.date_claimed,nv.reason,nv.remarks FROM emv_validation_details AS evd LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id LEFT JOIN pawning_validation_details AS pvd ON pvd.id = evd.pawning_validation_detail_id LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id  LEFT JOIN nma_validations AS nv ON nv.id = evd.nma_validation_id WHERE evd.id="+id);
 
-        Cursor cursor_other_card = MainActivity.sqLiteHelper.getData("SELECT ocv.card_holder_name,ocv.card_number_system_generated,ocv.card_number_inputted,ocv.card_number_series,ocv.distribution_status,ocv.release_date,ocv.release_by,ocv.release_place,ocv.card_physically_presented,ocv.card_pin_is_attached,ocv.reason_not_presented,ocv.reason_unclaimed,ocv.card_replacement_requests,ocv.card_replacement_request_submitted_details,ocv.pawning_remarks,ocv.other_image FROM other_card_validations AS ocv LEFT JOIN emv_validation_details AS evd ON evd.id = ocv.emv_validation_detail_id WHERE evd.id="+id);
-
-//        byte card_image_u,additonal_image_u,grantee_image_u,other_card_image1_u,other_card_image2_u,other_card_image3_u,other_card_image4_u,other_card_image5_u;
-
         while (cursor.moveToNext()) {
-            myEdit.putString("emv_id",cursor.getString(0));
+            //1 emv_validation_details
+            myEdit.putString("emv_id_u",cursor.getString(0));
             myEdit.putString("hh_status_u",cursor.getString(1));
             myEdit.putString("contact_no_u",cursor.getString(2));
             myEdit.putString("contact_no_of_u",cursor.getString(3));
@@ -5980,263 +5794,98 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("assigned_staff_u",cursor.getString(7));
             myEdit.putString("representative_name_u",cursor.getString(8));
             myEdit.putString("user_id_u",cursor.getString(9));
-            additonal_image_u = cursor.getBlob(10);
-            myEdit.putString("hh_id_u",cursor.getString(11));
-            myEdit.putString("first_name_u",cursor.getString(12));
-            myEdit.putString("last_name_u",cursor.getString(13));
-            myEdit.putString("middle_name_u",cursor.getString(14));
-            myEdit.putString("ext_name_u",cursor.getString(15));
-            myEdit.putString("sex_u",cursor.getString(16));
-            myEdit.putString("province_u",cursor.getString(17));
-            myEdit.putString("municipality_u",cursor.getString(18));
-            myEdit.putString("barangay_u",cursor.getString(19));
-            myEdit.putString("hh_set_u",cursor.getString(20));
-            grantee_image_u = cursor.getBlob(21);
-            myEdit.putString("other_ext_name_u",ext_name);
-            myEdit.putString("hh_status_u",hh_status);
-
-//            myEdit.putString("province_u",province);
-//            myEdit.putString("municipality_u",municipality);
-//            myEdit.putString("barangay_u",barangay);
-
-//            myEdit.putString("is_grantee_u",is_grantee);
-//            myEdit.putString("relationship_to_grantee_u",relationship_to_grantee);
-//            myEdit.putString("contact_no_u",contact_no);
-//            myEdit.putString("contact_no_of_u",contact_no_of);
-//            myEdit.putString("contact_no_of_others_u",contact_no_of_others);
-//            myEdit.putString("assigned_staff_u",assigned_staff);
-//            myEdit.putString("is_minor_u",is_minor);
-
-//            myEdit.putString("assigned_staff",cursor.getString(12));
-
-
+            int additional_image = cursor.getInt(10);
+            if(additional_image >4){ additonal_image_u = cursor.getBlob(11);}
+            else{additonal_image_u =null;}
+            myEdit.putString("overall_remarks_u",cursor.getString(12));
+            //2 grantee_validations
+            myEdit.putString("hh_id_u",cursor.getString(13));
+            myEdit.putString("first_name_u",cursor.getString(14));
+            myEdit.putString("last_name_u",cursor.getString(15));
+            myEdit.putString("middle_name_u",cursor.getString(16));
+            myEdit.putString("ext_name_u",cursor.getString(17));
+            myEdit.putString("sex_u",cursor.getString(18));
+            String province_code = cursor.getString(19);
+            String municipality_code = cursor.getString(20);
+            String barangay_code = cursor.getString(21);
+            addressIdentifier(province_code,municipality_code,barangay_code);
+            myEdit.putString("hh_set_u",cursor.getString(22));
+            grantee_image_u = cursor.getBlob(23);
+//
+            myEdit.putString("lender_name_u", cursor.getString(24));
+            myEdit.putString("lender_address_u", cursor.getString(25));
+            myEdit.putString("date_pawned_u", cursor.getString(26));
+            myEdit.putString("date_retrieved_u", cursor.getString(27));
+            myEdit.putString("loan_amount_u", cursor.getString(28));
+            myEdit.putString("status_u", cursor.getString(29));
+            myEdit.putString("reason_u", cursor.getString(30));
+            myEdit.putString("interest_u", cursor.getString(31));
+            myEdit.putString("offense_history_u", cursor.getString(32));
+            myEdit.putString("offense_date_u", cursor.getString(33));
+            myEdit.putString("remarks_u", cursor.getString(34));
+            myEdit.putString("staff_intervention_u", cursor.getString(35));
+            myEdit.putString("other_details_u", cursor.getString(36));
+//            myEdit.putString("current_grantee_card_old_u", cursor.getString(36));
+//
+//            //4 card_validation_details
+            myEdit.putString("card_number_prefilled_u", cursor.getString(37));
+            myEdit.putString("card_number_system_generated_u", cursor.getString(38));
+            myEdit.putString("card_number_inputted_u", cursor.getString(39));
+            myEdit.putString("card_number_series_u", cursor.getString(40));
+            myEdit.putString("distribution_status_u", cursor.getString(41));
+            myEdit.putString("release_date_u", cursor.getString(42));
+            myEdit.putString("release_by_u", cursor.getString(43));
+            myEdit.putString("release_place_u", cursor.getString(44));
+            myEdit.putString("card_physically_presented_u", cursor.getString(45));
+            myEdit.putString("card_pin_is_attached_u", cursor.getString(46));
+            myEdit.putString("reason_not_presented_u", cursor.getString(47));
+            myEdit.putString("reason_unclaimed_u", cursor.getString(48));
+            myEdit.putString("card_replacement_request_u", cursor.getString(49));
+            myEdit.putString("card_replacement_submitted_details_u", cursor.getString(50));
+            card_image_u = cursor.getBlob(51);
+//
+//            //6 nma_validations
+            myEdit.putString("amount_u", cursor.getString(52));
+            myEdit.putString("date_claimed_u", cursor.getString(53));
+            myEdit.putString("nma_reason_u", cursor.getString(54));
+            myEdit.putString("nma_remarks_u", cursor.getString(55));
+            myEdit.commit();
         }
-
-
-        //            myEdit.putString("hh_id_u",hh_id);
-//            myEdit.putString("hh_set_u",hh_set_group);
-//            myEdit.putString("last_name_u",last_name);
-//            myEdit.putString("first_name_u",first_name);
-//            myEdit.putString("middle_name_u",middle_name);
-//            myEdit.putString("ext_name_u",ext_name);
-//            myEdit.putString("other_ext_name_u",ext_name);
-//            myEdit.putString("hh_status_u",hh_status);
-//            myEdit.putString("province_u",province);
-//            myEdit.putString("municipality_u",municipality);
-//            myEdit.putString("barangay_u",barangay);
-//            myEdit.putString("sex_u",sex);
-//            myEdit.putString("is_grantee_u",is_grantee);
-//            myEdit.putString("relationship_to_grantee_u",relationship_to_grantee);
-//            myEdit.putString("contact_no_u",contact_no);
-//            myEdit.putString("contact_no_of_u",contact_no_of);
-//            myEdit.putString("contact_no_of_others_u",contact_no_of_others);
-//            myEdit.putString("assigned_staff_u",assigned_staff);
-//            myEdit.putString("is_minor_u",is_minor);
-
-
-
-
-
-//        while (cursor.moveToNext()) {
-//            full_name_get = cursor.getString(1);
-//            hh_id_get = cursor.getString(2);
-//            client_status_get = cursor.getString(3);
-//            address_get = cursor.getString(4);
-//            sex_get = cursor.getString(5);
-//            contact_get = cursor.getString(6);
-//            hh_set_group_get = cursor.getString(7);
-//            assigned_staff_get = cursor.getString(8);
-//            minor_grantee_get = cursor.getString(9);
-//            current_grantee_release_date_get = cursor.getString(10);
-//            current_grantee_release_place_get = cursor.getString(11);
-//            current_grantee_release_by_get = cursor.getString(12);
-//            current_grantee_is_available_get = cursor.getString(13);
-//            current_grantee_reason_get = cursor.getString(14);
-//            current_grantee_card_number_get = cursor.getString(15);
-//            other_card_number_1_get = cursor.getString(16);
-//            other_card_holder_name_1_get = cursor.getString(17);
-//            other_card_number_21_get = cursor.getString(18);
-//            other_card_holder_name_21_get = cursor.getString(19);
-//            other_card_number_31_get = cursor.getString(20);
-//            other_card_holder_name_31_get = cursor.getString(21);
-//            other_card_is_available1_get = cursor.getString(22);
-//            other_card_reason1_get = cursor.getString(23);
-//            nma_amount1_get = cursor.getString(24);
-//            nma_date_claimed1_get = cursor.getString(25);
-//            nma_reason_get = cursor.getString(26);
-//            nma_remarks_get = cursor.getString(27);
-//            pawn_name_of_lender_get = cursor.getString(28);
-//            pawn_date_get = cursor.getString(29);
-//            pawn_retrieved_date_get = cursor.getString(30);
-//            pawn_status_get = cursor.getString(31);
-//            pawn_reason_get = cursor.getString(32);
-//            pawn_offense_history_get = cursor.getString(33);
-//            pawn_offense_date_get = cursor.getString(34);
-//            pawn_remarks_get = cursor.getString(35);
-//            pawn_intervention_staff_get = cursor.getString(36);
-//            pawn_other_details_get = cursor.getString(37);
-//            informant_full_name_get = cursor.getString(38);
-//            accomplish_by_full_name_get = cursor.getString(39);
-//            cash_card_scanned_no_get = cursor.getString(40);
-//            attested_by_full_name_get = cursor.getString(41);
-//            other_card_number_series_1_get = cursor.getString(42);
-//            other_card_number_series_2_get = cursor.getString(43);
-//            other_card_number_series_3_get = cursor.getString(44);
-//            emv_database_monitoring_id_get = cursor.getString(45);
-//            current_grantee_card_number_series_get = cursor.getString(46);
-//            other_card_is_available_2_get = cursor.getString(47);
-//            other_card_is_available_3_get = cursor.getString(48);
-//            other_card_reason_2_get = cursor.getString(49);
-//            other_card_reason_3_get = cursor.getString(50);
-//            pawn_loaned_amount_get = cursor.getString(51);
-//            pawn_lender_address_get = cursor.getString(52);
-//            pawn_interest_get = cursor.getString(53);
-//
-//
-//            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-//            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-//            //1
-//
-//
-//            myEdit.putString("hh_id_u",hh_id);
-//            myEdit.putString("hh_set_u",hh_set_group);
-//            myEdit.putString("last_name_u",last_name);
-//            myEdit.putString("first_name_u",first_name);
-//            myEdit.putString("middle_name_u",middle_name);
-//            myEdit.putString("ext_name_u",ext_name);
-//            myEdit.putString("other_ext_name_u",ext_name);
-//            myEdit.putString("hh_status_u",hh_status);
-//            myEdit.putString("province_u",province);
-//            myEdit.putString("municipality_u",municipality);
-//            myEdit.putString("barangay_u",barangay);
-//            myEdit.putString("sex_u",sex);
-//            myEdit.putString("is_grantee_u",is_grantee);
-//            myEdit.putString("relationship_to_grantee_u",relationship_to_grantee);
-//            myEdit.putString("contact_no_u",contact_no);
-//            myEdit.putString("contact_no_of_u",contact_no_of);
-//            myEdit.putString("contact_no_of_others_u",contact_no_of_others);
-//            myEdit.putString("assigned_staff_u",assigned_staff);
-//            myEdit.putString("is_minor_u",is_minor);
-            //2
-//            myEdit.putString("current_grantee_card_old_u", "");
-//            myEdit.putString("distribution_status_u", "");
-//            myEdit.putString("release_date_u", "");
-//            myEdit.putString("release_by_u", "");
-//            myEdit.putString("release_place_u", "");
-//            myEdit.putString("card_physically_presented_u", "");
-//            myEdit.putString("card_pin_is_attached_u", "");
-//            myEdit.putString("reason_not_presented_u", "");
-//            myEdit.putString("others_reason_not_presented_u", "");
-//            myEdit.putString("reason_unclaimed_u", "");
-//            myEdit.putString("others_reason_unclaimed_u", "");
-//            myEdit.putString("card_replacement_request_u", "");
-//            myEdit.putString("card_replacement_request_submitted_details_u", "");
-//            myEdit.putString("card_number_inputted_u", "");
-//            myEdit.putString("card_number_series_u", "");
-//            myEdit.putString("id_exists_u", "");
-//            myEdit.putString("representative_name_u", "");
-//            myEdit.putString("lender_name_u", "");
-//            myEdit.putString("date_pawned_u", "");
-//            myEdit.putString("loan_amount_u", "");
-//            myEdit.putString("lender_address_u", "");
-//            myEdit.putString("date_retrieved_u", "");
-//            myEdit.putString("interest_u", "");
-//            myEdit.putString("status_u", "");
-//            myEdit.putString("reason_u", "");
-//            myEdit.putString("offense_history_u", "");
-//            myEdit.putString("offense_date_u", "");
-//            myEdit.putString("remarks_u", "");
-//            myEdit.putString("staff_intervention_u", "");
-//            myEdit.putString("other_details_u", "");
-//            myEdit.putString("card_holder_name1_u", "");
-//            myEdit.putString("card_holder_name2_u", "");
-//            myEdit.putString("card_holder_name3_u", "");
-//            myEdit.putString("card_holder_name4_u", "");
-//            myEdit.putString("card_holder_name5_u", "");
-//            myEdit.putString("distribution_status1_u", "");
-//            myEdit.putString("distribution_status2_u", "");
-//            myEdit.putString("distribution_status3_u", "");
-//            myEdit.putString("distribution_status4_u", "");
-//            myEdit.putString("distribution_status5_u", "");
-//            myEdit.putString("release_date1_u", "");
-//            myEdit.putString("release_date2_u", "");
-//            myEdit.putString("release_date3_u", "");
-//            myEdit.putString("release_date4_u", "");
-//            myEdit.putString("release_date5_u", "");
-//            myEdit.putString("release_by1_u", "");
-//            myEdit.putString("release_by2_u", "");
-//            myEdit.putString("release_by3_u", "");
-//            myEdit.putString("release_by4_u", "");
-//            myEdit.putString("release_by5_u", "");
-//            myEdit.putString("release_place1_u", "");
-//            myEdit.putString("release_place2_u", "");
-//            myEdit.putString("release_place3_u", "");
-//            myEdit.putString("release_place4_u", "");
-//            myEdit.putString("release_place5_u", "");
-//            myEdit.putString("card_physically_presented1_u", "");
-//            myEdit.putString("card_physically_presented2_u", "");
-//            myEdit.putString("card_physically_presented3_u", "");
-//            myEdit.putString("card_physically_presented4_u", "");
-//            myEdit.putString("card_physically_presented5_u", "");
-//            myEdit.putString("card_pin_is_attached1_u", "");
-//            myEdit.putString("card_pin_is_attached2_u", "");
-//            myEdit.putString("card_pin_is_attached3_u", "");
-//            myEdit.putString("card_pin_is_attached4_u", "");
-//            myEdit.putString("card_pin_is_attached5_u", "");
-//            myEdit.putString("reason_not_presented1_u", "");
-//            myEdit.putString("reason_not_presented2_u", "");
-//            myEdit.putString("reason_not_presented3_u", "");
-//            myEdit.putString("reason_not_presented4_u", "");
-//            myEdit.putString("reason_not_presented5_u", "");
-//            myEdit.putString("others_reason_not_presented1_u", "");
-//            myEdit.putString("others_reason_not_presented2_u", "");
-//            myEdit.putString("others_reason_not_presented3_u", "");
-//            myEdit.putString("others_reason_not_presented4_u", "");
-//            myEdit.putString("others_reason_not_presented5_u", "");
-//            myEdit.putString("reason_unclaimed1_u", "");
-//            myEdit.putString("reason_unclaimed2_u", "");
-//            myEdit.putString("reason_unclaimed3_u", "");
-//            myEdit.putString("reason_unclaimed4_u", "");
-//            myEdit.putString("reason_unclaimed5_u", "");
-//            myEdit.putString("others_reason_unclaimed1_u", "");
-//            myEdit.putString("others_reason_unclaimed2_u", "");
-//            myEdit.putString("others_reason_unclaimed3_u", "");
-//            myEdit.putString("others_reason_unclaimed4_u", "");
-//            myEdit.putString("others_reason_unclaimed5_u", "");
-//            myEdit.putString("card_replacement_request1_u", "");
-//            myEdit.putString("card_replacement_request2_u", "");
-//            myEdit.putString("card_replacement_request3_u", "");
-//            myEdit.putString("card_replacement_request4_u", "");
-//            myEdit.putString("card_replacement_request5_u", "");
-//            myEdit.putString("card_replacement_request_submitted_details1_u", "");
-//            myEdit.putString("card_replacement_request_submitted_details2_u", "");
-//            myEdit.putString("card_replacement_request_submitted_details3_u", "");
-//            myEdit.putString("card_replacement_request_submitted_details4_u", "");
-//            myEdit.putString("card_replacement_request_submitted_details5_u", "");
-//            myEdit.putString("card_number_inputted1_u", "");
-//            myEdit.putString("card_number_inputted2_u", "");
-//            myEdit.putString("card_number_inputted3_u", "");
-//            myEdit.putString("card_number_inputted4_u", "");
-//            myEdit.putString("card_number_inputted5_u", "");
-//            myEdit.putString("card_number_series1_u", "");
-//            myEdit.putString("card_number_series2_u", "");
-//            myEdit.putString("card_number_series3_u", "");
-//            myEdit.putString("card_number_series4_u", "");
-//            myEdit.putString("card_number_series5_u", "");
-//            myEdit.putString("pawning_remarks1_u", "");
-//            myEdit.putString("pawning_remarks2_u", "");
-//            myEdit.putString("pawning_remarks3_u", "");
-//            myEdit.putString("pawning_remarks4_u", "");
-//            myEdit.putString("pawning_remarks5_u", "");
-//            //3
-//            myEdit.putString("nma_amount_u", nma_amount);
-//            myEdit.putString("nma_reason_u", "");
-//            myEdit.putString("nma_others_reason_u", "");
-//            myEdit.putString("nma_date_claimed_u", "");
-//            myEdit.putString("nma_remarks_u", "");
-//            myEdit.putString("overall_remarks_u", "");
-            //4
-
+        cursor.close();
+        Cursor cursor_other_card = MainActivity.sqLiteHelper.getData("SELECT ocv.id,ocv.card_holder_name,ocv.card_number_system_generated,ocv.card_number_inputted,ocv.card_number_series,ocv.distribution_status,ocv.release_date,ocv.release_by,ocv.release_place,ocv.card_physically_presented,ocv.card_pin_is_attached,ocv.reason_not_presented,ocv.reason_unclaimed,ocv.card_replacement_requests,ocv.card_replacement_request_submitted_details,ocv.pawning_remarks,ocv.other_image FROM other_card_validations AS ocv LEFT JOIN emv_validation_details AS evd ON evd.id = ocv.emv_validation_detail_id WHERE evd.id="+id);
+        Integer i =0;
+        while (cursor_other_card.moveToNext()) {
+            i++;
+            //5 other_card_validations
+            myEdit.putString("card_holder_name_"+i+"_u",cursor_other_card.getString(1));
+            myEdit.putString("card_number_system_generated_"+i+"_u",cursor_other_card.getString(2));
+            myEdit.putString("card_number_inputted_"+i+"_u",cursor_other_card.getString(3));
+            myEdit.putString("card_number_series_"+i+"_u",cursor_other_card.getString(4));
+            myEdit.putString("distribution_status_"+i+"_u",cursor_other_card.getString(5));
+            myEdit.putString("release_date_"+i+"_u",cursor_other_card.getString(6));
+            myEdit.putString("release_by_"+i+"_u",cursor_other_card.getString(7));
+            myEdit.putString("release_place_"+i+"_u",cursor_other_card.getString(8));
+            myEdit.putString("card_physically_presented_"+i+"_u",cursor_other_card.getString(9));
+            myEdit.putString("card_pin_is_attached_"+i+"_u",cursor_other_card.getString(10));
+            myEdit.putString("reason_not_presented_"+i+"_u",cursor_other_card.getString(11));
+            myEdit.putString("reason_unclaimed_"+i+"_u",cursor_other_card.getString(12));
+            myEdit.putString("card_replacement_request_"+i+"_u",cursor_other_card.getString(13));
+            myEdit.putString("card_replacement_request_submitted_details_"+i+"_u",cursor_other_card.getString(14));
+            myEdit.putString("pawning_remarks_"+i+"_u",cursor_other_card.getString(15));
+            if (cursor_other_card.getBlob(16) != null) {
+                if (i == 1) {
+                    ocv_other_image_1_u = cursor_other_card.getBlob(16);
+                } else if (i == 2) {
+                    ocv_other_image_2_u = cursor_other_card.getBlob(17);
+                } else if (i == 3) {
+                    ocv_other_image_3_u = cursor_other_card.getBlob(18);
+                } else if (i == 4) {
+                    ocv_other_image_4_u = cursor_other_card.getBlob(19);
+                } else if (i == 5) {
+                    ocv_other_image_5_u = cursor_other_card.getBlob(20);
+                }
+            }
         }
-
+        cursor_other_card.close();
+    }
 }

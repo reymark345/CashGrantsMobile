@@ -733,14 +733,14 @@ public class ScanCashCard extends AppCompatActivity {
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
                                     edt_card_number_inputted1.setText(limitString);
-                                    myEdit.putString("card_number_system_generated1", "LBP" + limitString.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated1",  limitString);
                                     String CardResult = edt_card_number_inputted1.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
                                         til_card_number_inputted1.setError("Invalid format");
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated1", "LBP" + sTextFromET.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated1", sTextFromET);
                                     edt_card_number_inputted1.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -758,14 +758,14 @@ public class ScanCashCard extends AppCompatActivity {
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
                                     edt_card_number_inputted2.setText(limitString);
-                                    myEdit.putString("card_number_system_generated2", "LBP" + limitString.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated2", limitString);
                                     String CardResult = edt_card_number_inputted2.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
                                         til_card_number_inputted2.setError("Invalid format");
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated2", "LBP" + sTextFromET.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated2", sTextFromET);
                                     edt_card_number_inputted2.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -783,14 +783,14 @@ public class ScanCashCard extends AppCompatActivity {
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
                                     edt_card_number_inputted3.setText(limitString);
-                                    myEdit.putString("card_number_system_generated3", "LBP" + limitString.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated3", limitString);
                                     String CardResult = edt_card_number_inputted3.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
                                         til_card_number_inputted3.setError("Invalid format");
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated3", "LBP" + sTextFromET.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated3", sTextFromET);
                                     edt_card_number_inputted3.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -807,7 +807,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated4", "LBP" + limitString.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated4", limitString);
                                     edt_card_number_inputted4.setText(limitString);
                                     String CardResult = edt_card_number_inputted4.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
@@ -815,7 +815,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated4", "LBP" + sTextFromET.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated4", sTextFromET);
                                     edt_card_number_inputted4.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -831,7 +831,7 @@ public class ScanCashCard extends AppCompatActivity {
                                 }
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated5", "LBP" + limitString.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated5", limitString);
                                     edt_card_number_inputted5.setText(limitString);
                                     String CardResult = edt_card_number_inputted5.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
@@ -839,7 +839,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated5", "LBP" + sTextFromET.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated5", sTextFromET);
                                     edt_card_number_inputted5.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -855,7 +855,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                                 if (sTextFromET.length() >23){
                                     String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated", "LBP" + limitString.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated", limitString);
                                     edt_card_number_inputted.setText(limitString);
                                     String CardResult = edt_card_number_inputted.getText().toString();
                                     if (!CardResult.matches("[0-9 ]+")){
@@ -863,7 +863,7 @@ public class ScanCashCard extends AppCompatActivity {
                                     }
                                 }
                                 else{
-                                    myEdit.putString("card_number_system_generated", "LBP" + sTextFromET.replace(" ", ""));
+                                    myEdit.putString("card_number_system_generated", sTextFromET);
                                     edt_card_number_inputted.setText(sTextFromET);
                                 }
                                 myEdit.commit();
@@ -5249,7 +5249,7 @@ public class ScanCashCard extends AppCompatActivity {
                 String pawning_remarks4 = edt_pawning_remarks1.getText().toString();
                 String pawning_remarks5 = edt_pawning_remarks1.getText().toString();
 
-                myEdit.putString("card_number_prefilled", "LBP" + card_number_prefilled);
+                myEdit.putString("card_number_prefilled", card_number_prefilled);
                 myEdit.putString("distribution_status", distribution_status);
                 myEdit.putString("release_date", release_date);
                 myEdit.putString("release_by", release_by);
@@ -5262,7 +5262,7 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("others_reason_unclaimed", others_reason_unclaimed);
                 myEdit.putString("card_replacement_request", card_replacement_request);
                 myEdit.putString("card_replacement_request_submitted_details", card_replacement_request_submitted_details);
-                myEdit.putString("card_number_inputted", "LBP" + card_number_inputted.replace(" ", ""));
+                myEdit.putString("card_number_inputted", card_number_inputted);
                 myEdit.putString("card_number_series", card_number_series);
                 myEdit.putString("id_exists", id_exists);
                 myEdit.putString("lender_name", lender_name);
@@ -5343,11 +5343,11 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("card_replacement_request_submitted_details3", card_replacement_request_submitted_details3);
                 myEdit.putString("card_replacement_request_submitted_details4", card_replacement_request_submitted_details4);
                 myEdit.putString("card_replacement_request_submitted_details5", card_replacement_request_submitted_details5);
-                myEdit.putString("card_number_inputted1", "LBP" + card_number_inputted1.replace(" ", ""));
-                myEdit.putString("card_number_inputted2", "LBP" + card_number_inputted2.replace(" ", ""));
-                myEdit.putString("card_number_inputted3", "LBP" + card_number_inputted3.replace(" ", ""));
-                myEdit.putString("card_number_inputted4", "LBP" + card_number_inputted4.replace(" ", ""));
-                myEdit.putString("card_number_inputted5", "LBP" + card_number_inputted5.replace(" ", ""));
+                myEdit.putString("card_number_inputted1", card_number_inputted1);
+                myEdit.putString("card_number_inputted2", card_number_inputted2);
+                myEdit.putString("card_number_inputted3", card_number_inputted3);
+                myEdit.putString("card_number_inputted4", card_number_inputted4);
+                myEdit.putString("card_number_inputted5", card_number_inputted5);
                 myEdit.putString("card_number_series1", card_number_series1);
                 myEdit.putString("card_number_series2", card_number_series2);
                 myEdit.putString("card_number_series3", card_number_series3);
