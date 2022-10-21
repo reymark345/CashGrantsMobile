@@ -1126,11 +1126,11 @@ public class UpdateData extends AppCompatActivity {
                 }
                 aat_municipality_code.setText(municipality, false);
                 if (!municipality.matches("")) {
-//                    municipality_event();
+                    municipality_event();
                 }
                 aat_barangay_code.setText(barangay, false);
                 if (!barangay.matches("")) {
-//                    barangay_event();
+                    barangay_event();
                 }
                 aat_sex.setText(sex, false);
                 aat_is_grantee.setText(is_grantee, false);
