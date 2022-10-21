@@ -3232,7 +3232,7 @@ public class ScanCashCard extends AppCompatActivity {
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
 
-//                    clear_preferences();
+                    clear_preferences();
 
                     sDialog.dismiss();
 
