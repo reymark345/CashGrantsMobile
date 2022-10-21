@@ -354,16 +354,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations5.executeInsert();
         }
 
-//        String sql_emv_validations = "UPDATE emv_validations SET validated_at = ? WHERE hh_id = ?";
-//        SQLiteStatement statement_emv_validations = database.compileStatement(sql_emv_validations);
-//        statement_emv_validations.bindString(1, strDate);
-//        statement_emv_validations.bindString(2, hh_id);
-//        statement_emv_validations.execute();
+        String sql_emv_validations = "UPDATE emv_validations SET validated_at = ? WHERE hh_id = ?";
+        SQLiteStatement statement_emv_validations = database.compileStatement(sql_emv_validations);
+        statement_emv_validations.bindString(1, strDate);
+        statement_emv_validations.bindString(2, hh_id);
+        statement_emv_validations.execute();
 
-//        String sql_tmp_blob = "DELETE FROM tmp_blob";
-//        SQLiteStatement statement_tmp_blob = database.compileStatement(sql_tmp_blob);
-//        statement_tmp_blob.clearBindings();
-//        statement_tmp_blob.execute();
+        String sql_tmp_blob = "DELETE FROM tmp_blob";
+        SQLiteStatement statement_tmp_blob = database.compileStatement(sql_tmp_blob);
+        statement_tmp_blob.clearBindings();
+        statement_tmp_blob.execute();
 
         database.close();
     }
