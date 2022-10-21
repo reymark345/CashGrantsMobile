@@ -3054,8 +3054,8 @@ public class ScanCashCard extends AppCompatActivity {
         String staff_intervention = sh.getString("staff_intervention","");
         String other_details = sh.getString("other_details","");
 
-        String amount = sh.getString("amount","");
-        String date_claimed = sh.getString("date_claimed","");
+        String amount = sh.getString("nma_amount","");
+        String date_claimed = sh.getString("nma_date_claimed","");
         String nma_reason = sh.getString("nma_reason","");
         String nma_others_reason = sh.getString("nma_others_reason","");
         String nma_remarks = sh.getString("nma_remarks","");
@@ -3819,92 +3819,92 @@ public class ScanCashCard extends AppCompatActivity {
                 }
             }
 
-//            if (isValidationError == 0) {
-//                xml_initialization(2);
-//
-//                String card_number_prefilled = sh.getString("card_number_prefilled", "");
-//                String card_number_prefilled1 = sh.getString("card_number_prefilled1", "");
-//                String card_number_prefilled2 = sh.getString("card_number_prefilled2", "");
-//                String card_number_prefilled3 = sh.getString("card_number_prefilled3", "");
-//                String card_number_prefilled4 = sh.getString("card_number_prefilled4", "");
-//                String card_number_prefilled5 = sh.getString("card_number_prefilled5", "");
-//                String str_distribution_status = sh.getString("distribution_status", "");
-//                String str_distribution_status1 = sh.getString("distribution_status1", "");
-//                String str_distribution_status2 = sh.getString("distribution_status2", "");
-//                String str_distribution_status3 = sh.getString("distribution_status3", "");
-//                String str_distribution_status4 = sh.getString("distribution_status4", "");
-//                String str_distribution_status5 = sh.getString("distribution_status5", "");
-//                String str_release_date = sh.getString("release_date", "");
-//                String str_release_date1 = sh.getString("release_date1", "");
-//                String str_release_date2 = sh.getString("release_date2", "");
-//                String str_release_date3 = sh.getString("release_date3", "");
-//                String str_release_date4 = sh.getString("release_date4", "");
-//                String str_release_date5 = sh.getString("release_date5", "");
-//                String str_card_holder_name1 = sh.getString("card_holder_name1", "");
-//                String str_card_holder_name2 = sh.getString("card_holder_name2", "");
-//                String str_card_holder_name3 = sh.getString("card_holder_name3", "");
-//                String str_card_holder_name4 = sh.getString("card_holder_name4", "");
-//                String str_card_holder_name5 = sh.getString("card_holder_name5", "");
-//                edt_card_number_prefilled.setText(card_number_prefilled);
-//                edt_card_number_prefilled1.setText(card_number_prefilled1);
-//                edt_card_number_prefilled2.setText(card_number_prefilled2);
-//                edt_card_number_prefilled3.setText(card_number_prefilled3);
-//                edt_card_number_prefilled4.setText(card_number_prefilled4);
-//                edt_card_number_prefilled5.setText(card_number_prefilled5);
-//                aat_distribution_status.setText(str_distribution_status, false);
-//                aat_distribution_status1.setText(str_distribution_status1, false);
-//                aat_distribution_status2.setText(str_distribution_status2, false);
-//                aat_distribution_status3.setText(str_distribution_status3, false);
-//                aat_distribution_status4.setText(str_distribution_status4, false);
-//                aat_distribution_status5.setText(str_distribution_status5, false);
-//                edt_release_date.setText(str_release_date);
-//                edt_release_date1.setText(str_release_date1);
-//                edt_release_date2.setText(str_release_date2);
-//                edt_release_date3.setText(str_release_date3);
-//                edt_release_date4.setText(str_release_date4);
-//                edt_release_date5.setText(str_release_date5);
-//                edt_card_holder_name1.setText(str_card_holder_name1);
-//                edt_card_holder_name2.setText(str_card_holder_name2);
-//                edt_card_holder_name3.setText(str_card_holder_name3);
-//                edt_card_holder_name4.setText(str_card_holder_name4);
-//                edt_card_holder_name5.setText(str_card_holder_name5);
-//
-//                if (str_distribution_status.matches("Claimed")) {
-//                    til_release_date.setVisibility(View.VISIBLE);
-//                    til_release_place.setVisibility(View.VISIBLE);
-//                    til_release_by.setVisibility(View.VISIBLE);
-//                }
-//
-//                if (str_distribution_status1.matches("Claimed")) {
-//                    til_release_date1.setVisibility(View.VISIBLE);
-//                    til_release_place1.setVisibility(View.VISIBLE);
-//                    til_release_by1.setVisibility(View.VISIBLE);
-//                }
-//
-//                if (str_distribution_status2.matches("Claimed")) {
-//                    til_release_date2.setVisibility(View.VISIBLE);
-//                    til_release_place2.setVisibility(View.VISIBLE);
-//                    til_release_by2.setVisibility(View.VISIBLE);
-//                }
-//
-//                if (str_distribution_status3.matches("Claimed")) {
-//                    til_release_date3.setVisibility(View.VISIBLE);
-//                    til_release_place3.setVisibility(View.VISIBLE);
-//                    til_release_by3.setVisibility(View.VISIBLE);
-//                }
-//
-//                if (str_distribution_status4.matches("Claimed")) {
-//                    til_release_date4.setVisibility(View.VISIBLE);
-//                    til_release_place4.setVisibility(View.VISIBLE);
-//                    til_release_by4.setVisibility(View.VISIBLE);
-//                }
-//
-//                if (str_distribution_status5.matches("Claimed")) {
-//                    til_release_date5.setVisibility(View.VISIBLE);
-//                    til_release_place5.setVisibility(View.VISIBLE);
-//                    til_release_by5.setVisibility(View.VISIBLE);
-//                }
-//            }
+            if (isValidationError == 0) {
+                xml_initialization(2);
+
+                String card_number_prefilled = sh.getString("card_number_prefilled", "");
+                String card_number_prefilled1 = sh.getString("card_number_prefilled1", "");
+                String card_number_prefilled2 = sh.getString("card_number_prefilled2", "");
+                String card_number_prefilled3 = sh.getString("card_number_prefilled3", "");
+                String card_number_prefilled4 = sh.getString("card_number_prefilled4", "");
+                String card_number_prefilled5 = sh.getString("card_number_prefilled5", "");
+                String str_distribution_status = sh.getString("distribution_status", "");
+                String str_distribution_status1 = sh.getString("distribution_status1", "");
+                String str_distribution_status2 = sh.getString("distribution_status2", "");
+                String str_distribution_status3 = sh.getString("distribution_status3", "");
+                String str_distribution_status4 = sh.getString("distribution_status4", "");
+                String str_distribution_status5 = sh.getString("distribution_status5", "");
+                String str_release_date = sh.getString("release_date", "");
+                String str_release_date1 = sh.getString("release_date1", "");
+                String str_release_date2 = sh.getString("release_date2", "");
+                String str_release_date3 = sh.getString("release_date3", "");
+                String str_release_date4 = sh.getString("release_date4", "");
+                String str_release_date5 = sh.getString("release_date5", "");
+                String str_card_holder_name1 = sh.getString("card_holder_name1", "");
+                String str_card_holder_name2 = sh.getString("card_holder_name2", "");
+                String str_card_holder_name3 = sh.getString("card_holder_name3", "");
+                String str_card_holder_name4 = sh.getString("card_holder_name4", "");
+                String str_card_holder_name5 = sh.getString("card_holder_name5", "");
+                edt_card_number_prefilled.setText(card_number_prefilled);
+                edt_card_number_prefilled1.setText(card_number_prefilled1);
+                edt_card_number_prefilled2.setText(card_number_prefilled2);
+                edt_card_number_prefilled3.setText(card_number_prefilled3);
+                edt_card_number_prefilled4.setText(card_number_prefilled4);
+                edt_card_number_prefilled5.setText(card_number_prefilled5);
+                aat_distribution_status.setText(str_distribution_status, false);
+                aat_distribution_status1.setText(str_distribution_status1, false);
+                aat_distribution_status2.setText(str_distribution_status2, false);
+                aat_distribution_status3.setText(str_distribution_status3, false);
+                aat_distribution_status4.setText(str_distribution_status4, false);
+                aat_distribution_status5.setText(str_distribution_status5, false);
+                edt_release_date.setText(str_release_date);
+                edt_release_date1.setText(str_release_date1);
+                edt_release_date2.setText(str_release_date2);
+                edt_release_date3.setText(str_release_date3);
+                edt_release_date4.setText(str_release_date4);
+                edt_release_date5.setText(str_release_date5);
+                edt_card_holder_name1.setText(str_card_holder_name1);
+                edt_card_holder_name2.setText(str_card_holder_name2);
+                edt_card_holder_name3.setText(str_card_holder_name3);
+                edt_card_holder_name4.setText(str_card_holder_name4);
+                edt_card_holder_name5.setText(str_card_holder_name5);
+
+                if (str_distribution_status.matches("Claimed")) {
+                    til_release_date.setVisibility(View.VISIBLE);
+                    til_release_place.setVisibility(View.VISIBLE);
+                    til_release_by.setVisibility(View.VISIBLE);
+                }
+
+                if (str_distribution_status1.matches("Claimed")) {
+                    til_release_date1.setVisibility(View.VISIBLE);
+                    til_release_place1.setVisibility(View.VISIBLE);
+                    til_release_by1.setVisibility(View.VISIBLE);
+                }
+
+                if (str_distribution_status2.matches("Claimed")) {
+                    til_release_date2.setVisibility(View.VISIBLE);
+                    til_release_place2.setVisibility(View.VISIBLE);
+                    til_release_by2.setVisibility(View.VISIBLE);
+                }
+
+                if (str_distribution_status3.matches("Claimed")) {
+                    til_release_date3.setVisibility(View.VISIBLE);
+                    til_release_place3.setVisibility(View.VISIBLE);
+                    til_release_by3.setVisibility(View.VISIBLE);
+                }
+
+                if (str_distribution_status4.matches("Claimed")) {
+                    til_release_date4.setVisibility(View.VISIBLE);
+                    til_release_place4.setVisibility(View.VISIBLE);
+                    til_release_by4.setVisibility(View.VISIBLE);
+                }
+
+                if (str_distribution_status5.matches("Claimed")) {
+                    til_release_date5.setVisibility(View.VISIBLE);
+                    til_release_place5.setVisibility(View.VISIBLE);
+                    til_release_by5.setVisibility(View.VISIBLE);
+                }
+            }
 
             store_preferences(1);
 
@@ -5376,11 +5376,8 @@ public class ScanCashCard extends AppCompatActivity {
                 break;
             case 4:
                 String overall_remarks = edt_overall_remarks.getText().toString();
-                if (!overall_remarks.matches("")) {
-                    myEdit.putString("overall_remarks", overall_remarks);
-                } else {
-                    myEdit.putString("overall_remarks", "");
-                }
+
+                myEdit.putString("overall_remarks", overall_remarks);
                 myEdit.commit();
                 break;
             default:
