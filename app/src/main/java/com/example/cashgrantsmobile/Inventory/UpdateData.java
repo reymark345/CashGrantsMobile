@@ -3199,6 +3199,7 @@ public class UpdateData extends AppCompatActivity {
         String last_name = sh.getString("last_name","");
         String middle_name = sh.getString("middle_name","");
         String ext_name = sh.getString("ext_name","");
+        String other_ext_name = sh.getString("other_ext_name","");
         String sex = sh.getString("sex","");
         String province_code = psgc_province;
         String municipality_code = psgc_municipality;
@@ -3222,11 +3223,13 @@ public class UpdateData extends AppCompatActivity {
         String amount = sh.getString("amount","");
         String date_claimed = sh.getString("date_claimed","");
         String nma_reason = sh.getString("nma_reason","");
+        String nma_others_reason = sh.getString("nma_others_reason","");
         String nma_remarks = sh.getString("nma_remarks","");
 
         String hh_status = sh.getString("hh_status","");
         String contact_no = sh.getString("contact_no","");
         String contact_no_of = sh.getString("contact_no_of","");
+        String contact_no_of_others = sh.getString("contact_no_of_others","");
         String is_grantee = sh.getString("is_grantee","");
         String is_minor = sh.getString("is_minor","");
         String relationship_to_grantee = sh.getString("relationship_to_grantee","");
@@ -3248,7 +3251,10 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented = sh.getString("card_physically_presented","");
         String card_pin_is_attached = sh.getString("card_pin_is_attached","");
         String reason_not_presented = sh.getString("reason_not_presented","");
+        String others_reason_not_presented = sh.getString("others_reason_not_presented","");
         String reason_unclaimed = sh.getString("reason_unclaimed","");
+        String others_reason_unclaimed = sh.getString("others_reason_unclaimed","");
+
         String card_replacement_request = sh.getString("card_replacement_request","");
         String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details","");
         String overall_remarks = sh.getString("overall_remarks","");
@@ -3265,7 +3271,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented1 = sh.getString("card_physically_presented1","");
         String card_pin_is_attached1 = sh.getString("card_pin_is_attached1","");
         String reason_not_presented1 = sh.getString("reason_not_presented1","");
+        String others_reason_not_presented1 = sh.getString("others_reason_not_presented1","");
         String reason_unclaimed1 = sh.getString("reason_unclaimed1","");
+        String others_reason_unclaimed1 = sh.getString("others_reason_unclaimed1","");
         String card_replacement_request1 = sh.getString("card_replacement_request1","");
         String card_replacement_request_submitted_details1 = sh.getString("card_replacement_request_submitted_details1","");
         String pawning_remarks1 = sh.getString("pawning_remarks1","");
@@ -3281,7 +3289,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented2 = sh.getString("card_physically_presented2","");
         String card_pin_is_attached2 = sh.getString("card_pin_is_attached2","");
         String reason_not_presented2 = sh.getString("reason_not_presented2","");
+        String others_reason_not_presented2 = sh.getString("others_reason_not_presented2","");
         String reason_unclaimed2 = sh.getString("reason_unclaimed2","");
+        String others_reason_unclaimed2 = sh.getString("others_reason_unclaimed2","");
         String card_replacement_request2 = sh.getString("card_replacement_request2","");
         String card_replacement_request_submitted_details2 = sh.getString("card_replacement_request_submitted_details2","");
         String pawning_remarks2 = sh.getString("pawning_remarks2","");
@@ -3297,7 +3307,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented3 = sh.getString("card_physically_presented3","");
         String card_pin_is_attached3 = sh.getString("card_pin_is_attached3","");
         String reason_not_presented3 = sh.getString("reason_not_presented3","");
+        String others_reason_not_presented3 = sh.getString("others_reason_not_presented3","");
         String reason_unclaimed3 = sh.getString("reason_unclaimed3","");
+        String others_reason_unclaimed3 = sh.getString("others_reason_unclaimed3","");
         String card_replacement_request3 = sh.getString("card_replacement_request3","");
         String card_replacement_request_submitted_details3 = sh.getString("card_replacement_request_submitted_details3","");
         String pawning_remarks3 = sh.getString("pawning_remarks3","");
@@ -3313,7 +3325,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented4 = sh.getString("card_physically_presented4","");
         String card_pin_is_attached4 = sh.getString("card_pin_is_attached4","");
         String reason_not_presented4 = sh.getString("reason_not_presented4","");
+        String others_reason_not_presented4 = sh.getString("others_reason_not_presented4","");
         String reason_unclaimed4 = sh.getString("reason_unclaimed4","");
+        String others_reason_unclaimed4 = sh.getString("others_reason_unclaimed4","");
         String card_replacement_request4 = sh.getString("card_replacement_request4","");
         String card_replacement_request_submitted_details4 = sh.getString("card_replacement_request_submitted_details4","");
         String pawning_remarks4 = sh.getString("pawning_remarks4","");
@@ -3329,7 +3343,9 @@ public class UpdateData extends AppCompatActivity {
         String card_physically_presented5 = sh.getString("card_physically_presented5","");
         String card_pin_is_attached5 = sh.getString("card_pin_is_attached5","");
         String reason_not_presented5 = sh.getString("reason_not_presented5","");
+        String others_reason_not_presented5 = sh.getString("others_reason_not_presented5","");
         String reason_unclaimed5 = sh.getString("reason_unclaimed5","");
+        String others_reason_unclaimed5 = sh.getString("others_reason_unclaimed5","");
         String card_replacement_request5 = sh.getString("card_replacement_request5","");
         String card_replacement_request_submitted_details5 = sh.getString("card_replacement_request_submitted_details5","");
         String pawning_remarks5 = sh.getString("pawning_remarks5","");
@@ -3364,7 +3380,7 @@ public class UpdateData extends AppCompatActivity {
                                 imageViewToByte(ivOtherScannedImage2),
                                 imageViewToByte(ivOtherScannedImage3),
                                 imageViewToByte(ivOtherScannedImage4),
-                                imageViewToByte(ivOtherScannedImage5), overall_remarks);
+                                imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason);
                         sDialog.dismiss();
 
 
