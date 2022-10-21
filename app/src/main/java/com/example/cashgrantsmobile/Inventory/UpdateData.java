@@ -5895,7 +5895,6 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("card_replacement_request"+i+"_u",cursor_other_card.getString(13));
             myEdit.putString("card_replacement_request_submitted_details"+i+"_u",cursor_other_card.getString(14));
             myEdit.putString("pawning_remarks"+i+"_u",cursor_other_card.getString(15));
-
             myEdit.putString("others_reason_unclaimed"+i+"_u", cursor.getString(17));
             myEdit.putString("others_reason_not_presented"+i+"_u", cursor.getString(18));
 
