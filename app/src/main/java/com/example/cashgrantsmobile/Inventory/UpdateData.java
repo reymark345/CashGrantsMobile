@@ -5795,8 +5795,7 @@ public class UpdateData extends AppCompatActivity {
                 "gv.hh_id,gv.first_name,gv.last_name,gv.middle_name,gv.ext_name,gv.sex,gv.province_code,gv.municipality_code,gv.barangay_code,gv.hh_set,gv.grantee_image," +
                 "pvd.lender_name,pvd.lender_address,pvd.date_pawned,pvd.date_retrieved,pvd.loan_amount,pvd.status,pvd.reason,pvd.interest,pvd.offense_history,pvd.offense_date,pvd.remarks,pvd.staff_intervention,pvd.other_details," +
                 "cvd.card_number_prefilled,cvd.card_number_system_generated,cvd.card_number_inputted,cvd.card_number_series,cvd.distribution_status,cvd.release_date,cvd.release_by,cvd.release_place,cvd.card_physically_presented,cvd.card_pin_is_attached,cvd.reason_not_presented,cvd.reason_unclaimed,cvd.card_replacement_requests,cvd.card_replacement_submitted_details,cvd.card_image," +
-                "nv.amount,nv.date_claimed,nv.reason,nv.remarks, evd.overall_remarks, gv.other_ext_name, evd.contact_no_of_others, cvd.others_reason_not_presented, ocv.others_reason_not_presented1, ocv.others_reason_not_presented2, ocv.others_reason_not_presented3, ocv.others_reason_not_presented4, ocv.others_reason_not_presented5, cvd.others_reason_unclaimed, ocv.others_reason_unclaimed1, ocv.others_reason_unclaimed2, ocv.others_reason_unclaimed3, ocv.others_reason_unclaimed4, ocv.others_reason_unclaimed5, nv.nma_others_reason FROM emv_validation_details AS evd LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id LEFT JOIN pawning_validation_details AS pvd ON pvd.id = evd.pawning_validation_detail_id LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id  LEFT JOIN nma_validations AS nv ON nv.id = evd.nma_validation_id WHERE evd.id="+id);
-
+                "nv.amount,nv.date_claimed,nv.reason,nv.remarks, evd.overall_remarks, gv.other_ext_name, evd.contact_no_of_others, cvd.others_reason_not_presented, cvd.others_reason_unclaimed, nv.nma_others_reason FROM emv_validation_details AS evd LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id LEFT JOIN pawning_validation_details AS pvd ON pvd.id = evd.pawning_validation_detail_id LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id  LEFT JOIN nma_validations AS nv ON nv.id = evd.nma_validation_id WHERE evd.id="+id);
         while (cursor.moveToNext()) {
             //1 emv_validation_details
             myEdit.putString("emv_id_u",cursor.getString(0));
@@ -5869,53 +5868,48 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("other_ext_name_u", cursor.getString(57));
             myEdit.putString("contact_no_of_others_u", cursor.getString(58));
             myEdit.putString("others_reason_not_presented_u", cursor.getString(59));
-            myEdit.putString("others_reason_not_presented1_u", cursor.getString(60));
-            myEdit.putString("others_reason_not_presented2_u", cursor.getString(61));
-            myEdit.putString("others_reason_not_presented3_u", cursor.getString(62));
-            myEdit.putString("others_reason_not_presented4_u", cursor.getString(63));
-            myEdit.putString("others_reason_not_presented5_u", cursor.getString(64));
-            myEdit.putString("others_reason_unclaimed_u", cursor.getString(65));
-            myEdit.putString("others_reason_unclaimed1_u", cursor.getString(66));
-            myEdit.putString("others_reason_unclaimed2_u", cursor.getString(67));
-            myEdit.putString("others_reason_unclaimed3_u", cursor.getString(68));
-            myEdit.putString("others_reason_unclaimed4_u", cursor.getString(69));
-            myEdit.putString("others_reason_unclaimed5_u", cursor.getString(70));
-            myEdit.putString("nma_others_reason_u", cursor.getString(71));
+            myEdit.putString("others_reason_unclaimed_u", cursor.getString(60));
+            myEdit.putString("nma_others_reason_u", cursor.getString(61));
 
             myEdit.commit();
         }
         cursor.close();
-        Cursor cursor_other_card = MainActivity.sqLiteHelper.getData("SELECT ocv.id,ocv.card_holder_name,ocv.card_number_system_generated,ocv.card_number_inputted,ocv.card_number_series,ocv.distribution_status,ocv.release_date,ocv.release_by,ocv.release_place,ocv.card_physically_presented,ocv.card_pin_is_attached,ocv.reason_not_presented,ocv.reason_unclaimed,ocv.card_replacement_requests,ocv.card_replacement_request_submitted_details,ocv.pawning_remarks,ocv.other_image FROM other_card_validations AS ocv LEFT JOIN emv_validation_details AS evd ON evd.id = ocv.emv_validation_detail_id WHERE evd.id="+id);
+
+        Cursor cursor_other_card = MainActivity.sqLiteHelper.getData("SELECT ocv.id,ocv.card_holder_name,ocv.card_number_system_generated,ocv.card_number_inputted,ocv.card_number_series,ocv.distribution_status,ocv.release_date,ocv.release_by,ocv.release_place,ocv.card_physically_presented,ocv.card_pin_is_attached,ocv.reason_not_presented,ocv.reason_unclaimed,ocv.card_replacement_requests,ocv.card_replacement_request_submitted_details,ocv.pawning_remarks,ocv.other_image, ocv.others_reason_unclaimed, ocv.others_reason_not_presented FROM other_card_validations AS ocv LEFT JOIN emv_validation_details AS evd ON evd.id = ocv.emv_validation_detail_id WHERE evd.id="+id);
         Integer i =0;
         while (cursor_other_card.moveToNext()) {
             i++;
             //5 other_card_validations
-            myEdit.putString("card_holder_name_"+i+"_u",cursor_other_card.getString(1));
-            myEdit.putString("card_number_system_generated_"+i+"_u",cursor_other_card.getString(2));
-            myEdit.putString("card_number_inputted_"+i+"_u",cursor_other_card.getString(3));
-            myEdit.putString("card_number_series_"+i+"_u",cursor_other_card.getString(4));
-            myEdit.putString("distribution_status_"+i+"_u",cursor_other_card.getString(5));
-            myEdit.putString("release_date_"+i+"_u",cursor_other_card.getString(6));
-            myEdit.putString("release_by_"+i+"_u",cursor_other_card.getString(7));
-            myEdit.putString("release_place_"+i+"_u",cursor_other_card.getString(8));
-            myEdit.putString("card_physically_presented_"+i+"_u",cursor_other_card.getString(9));
-            myEdit.putString("card_pin_is_attached_"+i+"_u",cursor_other_card.getString(10));
-            myEdit.putString("reason_not_presented_"+i+"_u",cursor_other_card.getString(11));
-            myEdit.putString("reason_unclaimed_"+i+"_u",cursor_other_card.getString(12));
-            myEdit.putString("card_replacement_request_"+i+"_u",cursor_other_card.getString(13));
-            myEdit.putString("card_replacement_request_submitted_details_"+i+"_u",cursor_other_card.getString(14));
-            myEdit.putString("pawning_remarks_"+i+"_u",cursor_other_card.getString(15));
+            myEdit.putString("card_holder_name"+i+"_u",cursor_other_card.getString(1));
+            myEdit.putString("card_number_system_generated"+i+"_u",cursor_other_card.getString(2));
+            myEdit.putString("card_number_inputted"+i+"_u",cursor_other_card.getString(3));
+            myEdit.putString("card_number_series"+i+"_u",cursor_other_card.getString(4));
+            myEdit.putString("distribution_status"+i+"_u",cursor_other_card.getString(5));
+            myEdit.putString("release_date"+i+"_u",cursor_other_card.getString(6));
+            myEdit.putString("release_by"+i+"_u",cursor_other_card.getString(7));
+            myEdit.putString("release_place"+i+"_u",cursor_other_card.getString(8));
+            myEdit.putString("card_physically_presented"+i+"_u",cursor_other_card.getString(9));
+            myEdit.putString("card_pin_is_attached"+i+"_u",cursor_other_card.getString(10));
+            myEdit.putString("reason_not_presented"+i+"_u",cursor_other_card.getString(11));
+            myEdit.putString("reason_unclaimed"+i+"_u",cursor_other_card.getString(12));
+            myEdit.putString("card_replacement_request"+i+"_u",cursor_other_card.getString(13));
+            myEdit.putString("card_replacement_request_submitted_details"+i+"_u",cursor_other_card.getString(14));
+            myEdit.putString("pawning_remarks"+i+"_u",cursor_other_card.getString(15));
+
+            myEdit.putString("others_reason_unclaimed"+i+"_u", cursor.getString(17));
+            myEdit.putString("others_reason_not_presented"+i+"_u", cursor.getString(18));
+
             if (cursor_other_card.getBlob(16) != null) {
                 if (i == 1) {
                     ocv_other_image_1_u = cursor_other_card.getBlob(16);
                 } else if (i == 2) {
-                    ocv_other_image_2_u = cursor_other_card.getBlob(17);
+                    ocv_other_image_2_u = cursor_other_card.getBlob(16);
                 } else if (i == 3) {
-                    ocv_other_image_3_u = cursor_other_card.getBlob(18);
+                    ocv_other_image_3_u = cursor_other_card.getBlob(16);
                 } else if (i == 4) {
-                    ocv_other_image_4_u = cursor_other_card.getBlob(19);
+                    ocv_other_image_4_u = cursor_other_card.getBlob(16);
                 } else if (i == 5) {
-                    ocv_other_image_5_u = cursor_other_card.getBlob(20);
+                    ocv_other_image_5_u = cursor_other_card.getBlob(16);
                 }
             }
         }
