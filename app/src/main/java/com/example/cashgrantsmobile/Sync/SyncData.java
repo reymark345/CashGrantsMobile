@@ -187,7 +187,7 @@ public class SyncData extends AppCompatActivity {
         btnSync = findViewById(R.id.btnSync);
         btnSync.setEnabled(false);
 
-        Cursor emv_validation_details = sqLiteHelper.getData("SELECT id, hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, grantee_validation_id, pawning_validation_detail_id, nma_validation_id, card_validation_detail_id, emv_validation_id, sync_at, user_id, additional_image, created_at, updated_at, overall_remarks FROM emv_validation_details");
+        Cursor emv_validation_details = sqLiteHelper.getData("SELECT id, hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, grantee_validation_id, pawning_validation_detail_id, nma_validation_id, card_validation_detail_id, emv_validation_id, sync_at, user_id, additional_image, created_at, updated_at, overall_remarks, contact_no_of_others FROM emv_validation_details");
 
         while (emv_validation_details.moveToNext()) {
             JSONArray arr_other_card = new JSONArray();
@@ -270,7 +270,6 @@ public class SyncData extends AppCompatActivity {
             evd_id = emv_validation_details.getInt(0);
             evd_hh_status = emv_validation_details.getString(1);
             evd_contact_no = emv_validation_details.getString(2);
-            evd_contact_no_of = emv_validation_details.getString(3);
             evd_is_grantee = emv_validation_details.getString(4);
             evd_is_minor = emv_validation_details.getString(5);
             evd_relationship_to_grantee = emv_validation_details.getString(6);
@@ -281,21 +280,30 @@ public class SyncData extends AppCompatActivity {
             evd_additional_image = emv_validation_details.getBlob(16);
             evd_created_at = emv_validation_details.getString(17);
             evd_overall_remarks = emv_validation_details.getString(19);
+            if (emv_validation_details.getString(3).matches("Others")) {
+                evd_contact_no_of = emv_validation_details.getString(20);
+            } else {
+                evd_contact_no_of = emv_validation_details.getString(3);
+            }
 
-            Cursor grantee_validations = sqLiteHelper.getData("SELECT id, hh_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, hh_set, grantee_image FROM grantee_validations WHERE id=" + emv_validation_details.getInt(9));
+            Cursor grantee_validations = sqLiteHelper.getData("SELECT id, hh_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, hh_set, grantee_image, other_ext_name FROM grantee_validations WHERE id=" + emv_validation_details.getInt(9));
             while (grantee_validations.moveToNext()) {
                 gv_id = grantee_validations.getInt(0);
                 gv_hh_id = grantee_validations.getString(1);
                 gv_first_name = grantee_validations.getString(2);
                 gv_last_name = grantee_validations.getString(3);
                 gv_middle_name = grantee_validations.getString(4);
-                gv_ext_name = grantee_validations.getString(5);
                 gv_sex = grantee_validations.getString(6);
                 gv_province_code = grantee_validations.getString(7);
                 gv_municipality_code = grantee_validations.getString(8);
                 gv_barangay_code = grantee_validations.getString(9);
                 gv_hh_set = grantee_validations.getString(10);
                 gv_grantee_image = grantee_validations.getBlob(11);
+                if (grantee_validations.getString(5).matches("Others")) {
+                    gv_ext_name = grantee_validations.getString(12);
+                } else {
+                    gv_ext_name = grantee_validations.getString(5);
+                }
             }
             grantee_validations.close();
 
@@ -312,7 +320,6 @@ public class SyncData extends AppCompatActivity {
                 pvd_remarks = pawning_validation_details.getString(11);
                 pvd_staff_intervention = pawning_validation_details.getString(12);
                 pvd_other_details = pawning_validation_details.getString(13);
-
                 pvd_date_retrieved = pawning_validation_details.getString(4);
                 pvd_offense_date = pawning_validation_details.getString(10);
                 pvd_date_pawned = pawning_validation_details.getString(3);
@@ -320,17 +327,21 @@ public class SyncData extends AppCompatActivity {
             }
             pawning_validation_details.close();
 
-            Cursor nma_validations = sqLiteHelper.getData("SELECT id, amount, date_claimed, reason, remarks FROM nma_validations WHERE id="+emv_validation_details.getInt(11));
+            Cursor nma_validations = sqLiteHelper.getData("SELECT id, amount, date_claimed, reason, remarks, nma_others_reason FROM nma_validations WHERE id="+emv_validation_details.getInt(11));
             while (nma_validations.moveToNext()) {
                 nv_id = nma_validations.getInt(0);
                 nv_amount = nma_validations.getString(1);
-                nv_reason = nma_validations.getString(3);
                 nv_remarks = nma_validations.getString(4);
                 nv_date_claimed = nma_validations.getString(2);
+                if (nma_validations.getString(3).matches("Others")) {
+                    nv_reason = nma_validations.getString(5);
+                } else {
+                    nv_reason = nma_validations.getString(3);
+                }
             }
             nma_validations.close();
 
-            Cursor card_validation_details = sqLiteHelper.getData("SELECT id, card_number_prefilled, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_submitted_details, card_image FROM card_validation_details WHERE id=" + emv_validation_details.getInt(12));
+            Cursor card_validation_details = sqLiteHelper.getData("SELECT id, card_number_prefilled, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_submitted_details, card_image, others_reason_not_presented, others_reason_unclaimed FROM card_validation_details WHERE id=" + emv_validation_details.getInt(12));
             while (card_validation_details.moveToNext()) {
                 cvd_id = card_validation_details.getInt(0);
                 cvd_card_number_prefilled = card_validation_details.getString(1);
@@ -342,16 +353,24 @@ public class SyncData extends AppCompatActivity {
                 cvd_release_place = card_validation_details.getString(8);
                 cvd_card_physically_presented = card_validation_details.getString(9);
                 cvd_card_pin_is_attached = card_validation_details.getString(10);
-                cvd_reason_not_presented = card_validation_details.getString(11);
-                cvd_reason_unclaimed = card_validation_details.getString(12);
                 cvd_card_replacement_requests = card_validation_details.getString(13);
                 cvd_card_replacement_submitted_details = card_validation_details.getString(14);
                 cvd_card_image = card_validation_details.getBlob(15);
                 cvd_release_date = card_validation_details.getString(6);
+                if (card_validation_details.getString(11).matches("Others")) {
+                    cvd_reason_not_presented = card_validation_details.getString(16);
+                } else {
+                    cvd_reason_not_presented = card_validation_details.getString(11);
+                }
+                if (card_validation_details.getString(12).matches("Others")) {
+                    cvd_reason_unclaimed = card_validation_details.getString(17);
+                } else {
+                    cvd_reason_unclaimed = card_validation_details.getString(12);
+                }
             }
             card_validation_details.close();
 
-            Cursor other_card_validations = sqLiteHelper.getData("SELECT id, card_holder_name, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_request_submitted_details, pawning_remarks, other_image FROM other_card_validations WHERE emv_validation_detail_id=" + emv_validation_details.getInt(0));
+            Cursor other_card_validations = sqLiteHelper.getData("SELECT id, card_holder_name, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_request_submitted_details, pawning_remarks, other_image, others_reason_not_presented, others_reason_unclaimed FROM other_card_validations WHERE emv_validation_detail_id=" + emv_validation_details.getInt(0));
             Integer ocv_counter = 0;
             while (other_card_validations.moveToNext()) {
                 ocv_counter++;
@@ -369,11 +388,20 @@ public class SyncData extends AppCompatActivity {
                     obj_other_card.put("release_place", other_card_validations.getString(8));
                     obj_other_card.put("card_physically_presented", other_card_validations.getString(9));
                     obj_other_card.put("card_pin_is_attached", other_card_validations.getString(10));
-                    obj_other_card.put("reason_not_presented", other_card_validations.getString(11));
-                    obj_other_card.put("reason_unclaimed", other_card_validations.getString(12));
                     obj_other_card.put("card_replacement_requests", other_card_validations.getString(13));
                     obj_other_card.put("card_replacement_request_submitted_details", other_card_validations.getString(14));
                     obj_other_card.put("pawning_remarks", other_card_validations.getString(15));
+                    if (other_card_validations.getString(11).matches("Others")) {
+                        obj_other_card.put("reason_not_presented", other_card_validations.getString(17));
+                    } else {
+                        obj_other_card.put("reason_not_presented", other_card_validations.getString(11));
+                    }
+                    if (other_card_validations.getString(12).matches("Others")) {
+                        obj_other_card.put("reason_unclaimed", other_card_validations.getString(18));
+                    } else {
+                        obj_other_card.put("reason_unclaimed", other_card_validations.getString(12));
+                    }
+
                     if (other_card_validations.getBlob(16) != null) {
                         if (ocv_counter == 1) {
                             ocv_other_image_1 = other_card_validations.getBlob(16);
@@ -605,9 +633,9 @@ public class SyncData extends AppCompatActivity {
                     }
                     params.put("nv_nma_reason", finalNv_reason);
                     params.put("nv_nma_remarks", finalNv_remarks);
-                    params.put("cvd_card_number_prefilled", finalCvd_card_number_prefilled);
-                    params.put("cvd_card_number_system_generated", finalCvd_card_number_system_generated);
-                    params.put("cvd_card_number_inputted", finalCvd_card_number_inputted);
+                    params.put("cvd_card_number_prefilled", "LBP" + finalCvd_card_number_prefilled.replace(" ", ""));
+                    params.put("cvd_card_number_system_generated", "LBP" + finalCvd_card_number_system_generated.replace(" ", ""));
+                    params.put("cvd_card_number_inputted", "LBP" + finalCvd_card_number_inputted.replace(" ", ""));
                     params.put("cvd_card_number_series", finalCvd_card_number_series);
                     params.put("cvd_distribution_status", finalCvd_distribution_status);
                     if (!finalCvd_release_date.matches("")) {
@@ -627,8 +655,8 @@ public class SyncData extends AppCompatActivity {
                         try {
                             JSONObject new_obj = arr_other_card.getJSONObject(i);
                             params.put("ocv_card_holder_name_" + (i + 1), new_obj.getString("card_holder_name"));
-                            params.put("ocv_card_number_system_generated_" + (i + 1), new_obj.getString("card_number_system_generated"));
-                            params.put("ocv_card_number_inputted_" + (i + 1), new_obj.getString("card_number_inputted"));
+                            params.put("ocv_card_number_system_generated_" + (i + 1), "LBP" + new_obj.getString("card_number_system_generated").replace(" ", ""));
+                            params.put("ocv_card_number_inputted_" + (i + 1), "LBP" + new_obj.getString("card_number_inputted").replace(" ", ""));
                             params.put("ocv_card_number_series_" + (i + 1), new_obj.getString("card_number_series"));
                             params.put("ocv_distribution_status_" + (i + 1), new_obj.getString("distribution_status"));
                             if (!new_obj.getString("release_date").matches("")) {

@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,6 +38,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.executeInsert();
     }
 
+    public String convertDateFormat(String date_format) {
+        String result = "";
+        if (!date_format.matches("")) {
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                Date convertedDate = dateFormat.parse(date_format);
+                SimpleDateFormat sdfnewformat = new SimpleDateFormat("yyyy-MM-dd");
+                result = sdfnewformat.format(convertedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
 
     public void insertDatabase(String hh_id,String first_name,String last_name,String middle_name,String ext_name,String sex,String province,String municipality, String barangay, String set,
                                String lender_name,String lender_address,String date_pawned,String date_retrieved,String loaned_amount,String status,String reason,String interest,String offense_history,String offense_date,String remarks,String staff_intervention,String other_details,
@@ -48,31 +64,35 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                                String card_holder_name3,String card_number_system_generated3,String card_number_inputted3,String card_number_series3,String distribution_status3,String release_date3, String release_by3,String release_place3,String card_physically_presented3,String card_pin_is_attached3,String reason_not_presented3,String reason_unclaimed3,String card_replacement_request3,String card_replacement_request_submitted_details3,String pawning_remarks3,
                                String card_holder_name4,String card_number_system_generated4,String card_number_inputted4,String card_number_series4,String distribution_status4,String release_date4,String release_by4,String release_place4,String card_physically_presented4,String card_pin_is_attached4,String reason_not_presented4,String reason_unclaimed4,String card_replacement_request4,String card_replacement_request_submitted_details4,String pawning_remarks4,
                                String card_holder_name5,String card_number_system_generated5,String card_number_inputted5,String card_number_series5,String distribution_status5,String release_date5,String release_by5,String release_place5,String card_physically_presented5,String card_pin_is_attached5,String reason_not_presented5,String reason_unclaimed5,String card_replacement_request5,String card_replacement_request_submitted_details5,String pawning_remarks5, int card_count,
-                               byte[] card_image,byte[] grantee_image,byte[] additional_image,byte[] other_scanned_image1,byte[] other_scanned_image2,byte[] other_scanned_image3,byte[] other_scanned_image4,byte[] other_scanned_image5, String overall_remarks){
+                               byte[] card_image,byte[] grantee_image,byte[] additional_image,byte[] other_scanned_image1,byte[] other_scanned_image2,byte[] other_scanned_image3,byte[] other_scanned_image4,byte[] other_scanned_image5, String overall_remarks, String other_ext_name, String contact_no_of_others, String others_reason_not_presented, String others_reason_not_presented1, String others_reason_not_presented2, String others_reason_not_presented3, String others_reason_not_presented4, String others_reason_not_presented5, String others_reason_unclaimed, String others_reason_unclaimed1, String others_reason_unclaimed2, String others_reason_unclaimed3, String others_reason_unclaimed4, String others_reason_unclaimed5, String nma_others_reason) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdf.format(new Date());
 
         SQLiteDatabase database = getWritableDatabase();
-        String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?)";
-        String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?,?)";
+        String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String sql5,sql6,sql7,sql8,sql9,sql10;
 
-        if (additional_image!=null){sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?,?)";}
-        else {sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?,?)";}
 
-        if (other_scanned_image1!=null){sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
-        else {sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
-        if (other_scanned_image2!=null){sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
-        else {sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
-        if (other_scanned_image3!=null){sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
-        else {sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
-        if (other_scanned_image4!=null){sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
-        else {sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
-        if (other_scanned_image5!=null){sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?)";}
-        else {sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?)";}
+        if (additional_image!=null){
+            sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?,?,?)";
+        } else {
+            sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?,?,?)";
+        }
+
+        if (other_scanned_image1!=null){sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
+        else {sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
+        if (other_scanned_image2!=null){sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
+        else {sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
+        if (other_scanned_image3!=null){sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
+        else {sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
+        if (other_scanned_image4!=null){sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
+        else {sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
+        if (other_scanned_image5!=null){sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
+        else {sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
 
 
         SQLiteStatement grantee_validations = database.compileStatement(sql1);
@@ -88,6 +108,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         grantee_validations.bindString(9, barangay);
         grantee_validations.bindString(10, set);
         grantee_validations.bindBlob(11, grantee_image);
+        grantee_validations.bindString(12, strDate);
+        grantee_validations.bindString(13, other_ext_name);
         grantee_validations.executeInsert();
 
         if (reason_not_presented.matches("Pawned")){
@@ -95,14 +117,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             pawning_validations_details.clearBindings();
             pawning_validations_details.bindString(1, lender_name);
             pawning_validations_details.bindString(2, lender_address);
-            pawning_validations_details.bindString(3, date_pawned);
-            pawning_validations_details.bindString(4, date_retrieved);
+            pawning_validations_details.bindString(3, convertDateFormat(date_pawned));
+            pawning_validations_details.bindString(4, convertDateFormat(date_retrieved));
             pawning_validations_details.bindString(5, loaned_amount);
             pawning_validations_details.bindString(6, status);
             pawning_validations_details.bindString(7, reason);
             pawning_validations_details.bindString(8, interest);
             pawning_validations_details.bindString(9, offense_history);
-            pawning_validations_details.bindString(10, offense_date);
+            pawning_validations_details.bindString(10, convertDateFormat(offense_date));
             pawning_validations_details.bindString(11, remarks);
             pawning_validations_details.bindString(12, staff_intervention);
             pawning_validations_details.bindString(13, other_details);
@@ -113,10 +135,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteStatement nma_validations = database.compileStatement(sql3);
         nma_validations.clearBindings();
         nma_validations.bindString(1, amount);
-        nma_validations.bindString(2, date_claimed);
+        nma_validations.bindString(2, convertDateFormat(date_claimed));
         nma_validations.bindString(3, nma_reason);
         nma_validations.bindString(4, nma_remarks);
         nma_validations.bindString(5, strDate);
+        nma_validations.bindString(6, nma_others_reason);
         nma_validations.executeInsert();
 
         SQLiteStatement card_validation_details = database.compileStatement(sql4);
@@ -126,7 +149,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         card_validation_details.bindString(3, card_number_unputted);
         card_validation_details.bindString(4, card_number_series);
         card_validation_details.bindString(5, distribution_status);
-        card_validation_details.bindString(6, release_date);
+        card_validation_details.bindString(6, convertDateFormat(release_date));
         card_validation_details.bindString(7, release_by);
         card_validation_details.bindString(8, release_place);
         card_validation_details.bindString(9, card_physically_presented);
@@ -137,6 +160,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         card_validation_details.bindString(14, card_replacement_submitted_details);
         card_validation_details.bindBlob(15, card_image);
         card_validation_details.bindString(16, strDate);
+        card_validation_details.bindString(17, others_reason_not_presented);
+        card_validation_details.bindString(18, others_reason_unclaimed);
         card_validation_details.executeInsert();
 
         SQLiteStatement emv_validation_details = database.compileStatement(sql5);
@@ -156,11 +181,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             emv_validation_details.bindString(12, overall_remarks);
             emv_validation_details.bindString(13, strDate);
             emv_validation_details.bindLong(14, emv_monitoring_id);
+            emv_validation_details.bindString(15, contact_no_of_others);
         }
         else {
             emv_validation_details.bindString(11, overall_remarks);
             emv_validation_details.bindString(12, strDate);
             emv_validation_details.bindLong(13, emv_monitoring_id);
+            emv_validation_details.bindString(14, contact_no_of_others);
         }
         emv_validation_details.executeInsert();
 
@@ -175,7 +202,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations1.bindString(3, card_number_inputted1);
             other_card_validations1.bindString(4, card_number_series1);
             other_card_validations1.bindString(5, distribution_status1);
-            other_card_validations1.bindString(6, release_date1);
+            other_card_validations1.bindString(6, convertDateFormat(release_date1));
             other_card_validations1.bindString(7, release_by1);
             other_card_validations1.bindString(8, release_place1);
             other_card_validations1.bindString(9, card_physically_presented1);
@@ -188,9 +215,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             if (other_scanned_image1 !=null){
                 other_card_validations1.bindBlob(16, other_scanned_image1);
                 other_card_validations1.bindString(17, strDate);
+                other_card_validations1.bindString(18, others_reason_not_presented);
+                other_card_validations1.bindString(19, others_reason_unclaimed);
             }
             else {
                 other_card_validations1.bindString(16, strDate);
+                other_card_validations1.bindString(17, others_reason_not_presented);
+                other_card_validations1.bindString(18, others_reason_unclaimed);
             }
             other_card_validations1.executeInsert();
         }
@@ -206,7 +237,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations2.bindString(3, card_number_inputted2);
             other_card_validations2.bindString(4, card_number_series2);
             other_card_validations2.bindString(5, distribution_status2);
-            other_card_validations2.bindString(6, release_date2);
+            other_card_validations2.bindString(6, convertDateFormat(release_date2));
             other_card_validations2.bindString(7, release_by2);
             other_card_validations2.bindString(8, release_place2);
             other_card_validations2.bindString(9, card_physically_presented2);
@@ -239,7 +270,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations3.bindString(3, card_number_inputted3);
             other_card_validations3.bindString(4, card_number_series3);
             other_card_validations3.bindString(5, distribution_status3);
-            other_card_validations3.bindString(6, release_date3);
+            other_card_validations3.bindString(6, convertDateFormat(release_date3));
             other_card_validations3.bindString(7, release_by3);
             other_card_validations3.bindString(8, release_place3);
             other_card_validations3.bindString(9, card_physically_presented3);
@@ -271,7 +302,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations4.bindString(3, card_number_inputted4);
             other_card_validations4.bindString(4, card_number_series4);
             other_card_validations4.bindString(5, distribution_status4);
-            other_card_validations4.bindString(6, release_date4);
+            other_card_validations4.bindString(6, convertDateFormat(release_date4));
             other_card_validations4.bindString(7, release_by4);
             other_card_validations4.bindString(8, release_place4);
             other_card_validations4.bindString(9, card_physically_presented4);
@@ -303,7 +334,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations5.bindString(3, card_number_inputted5);
             other_card_validations5.bindString(4, card_number_series5);
             other_card_validations5.bindString(5, distribution_status5);
-            other_card_validations5.bindString(6, release_date5);
+            other_card_validations5.bindString(6, convertDateFormat(release_date5));
             other_card_validations5.bindString(7, release_by5);
             other_card_validations5.bindString(8, release_place5);
             other_card_validations5.bindString(9, card_physically_presented5);
