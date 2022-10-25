@@ -146,16 +146,16 @@ public class MainActivity extends AppCompatActivity {
         DarkMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(EnableNightMode ==false){
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                    EnableNightMode = true;
-//                    sqLiteHelper.updateDarkmodeStatus(night,1);
-//                }
-//                else{
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                    EnableNightMode = false;
-//                    sqLiteHelper.updateDarkmodeStatus(light,1);
-//                }
+                if(EnableNightMode ==false){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    EnableNightMode = true;
+                    sqLiteHelper.updateDarkmodeStatus(night,1);
+                }
+                else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    EnableNightMode = false;
+                    sqLiteHelper.updateDarkmodeStatus(light,1);
+                }
             }
         });
         InventoryList.setOnClickListener(new View.OnClickListener() {
