@@ -654,7 +654,8 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_outline"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_image" />
+                    app:srcCompat="@drawable/ic_image"
+                    android:contentDescription="@null"/>
 
 
                 <ImageView
@@ -667,7 +668,8 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_outline"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_image" />
+                    app:srcCompat="@drawable/ic_image"
+                    android:contentDescription="@null"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_current_scan_btn"
@@ -792,7 +794,8 @@
                         android:layout_margin="8dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_additionalID"
@@ -835,7 +838,8 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/round_outline"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_image" />
+                    app:srcCompat="@drawable/ic_image"
+                    android:contentDescription="@null"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilGrantee"
@@ -895,7 +899,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
-                            android:background="@drawable/ic_baseline_cancel_24" />
+                            android:background="@drawable/ic_baseline_cancel_24"
+                            android:contentDescription="@null"/>
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -1233,7 +1238,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
 
                             <ImageView
@@ -1246,7 +1252,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/tilOtherScanned1"
@@ -1354,7 +1361,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
-                            android:background="@drawable/ic_baseline_cancel_24" />
+                            android:background="@drawable/ic_baseline_cancel_24"
+                            android:contentDescription="@null"/>
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -1694,7 +1702,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
 
                             <ImageView
@@ -1707,7 +1716,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/tilOtherScanned2"
@@ -1814,7 +1824,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
-                            android:background="@drawable/ic_baseline_cancel_24" />
+                            android:background="@drawable/ic_baseline_cancel_24"
+                            android:contentDescription="@null"/>
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -2152,7 +2163,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
 
                             <ImageView
@@ -2165,7 +2177,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/tilOtherScanned3"
@@ -2272,7 +2285,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
-                            android:background="@drawable/ic_baseline_cancel_24" />
+                            android:background="@drawable/ic_baseline_cancel_24"
+                            android:contentDescription="@null"/>
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -2610,7 +2624,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
 
                             <ImageView
@@ -2623,7 +2638,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/tilOtherScanned4"
@@ -2732,7 +2748,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
-                            android:background="@drawable/ic_baseline_cancel_24" />
+                            android:background="@drawable/ic_baseline_cancel_24"
+                            android:contentDescription="@null"/>
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -3069,7 +3086,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
 
                             <ImageView
@@ -3082,7 +3100,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/round_outline"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/ic_image" />
+                                app:srcCompat="@drawable/ic_image"
+                                android:contentDescription="@null"/>
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/tilOtherScanned5"

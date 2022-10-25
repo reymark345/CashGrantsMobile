@@ -84,7 +84,8 @@
             android:id ="@+id/imageIv_1"
             android:height ="60dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"/>
     </LinearLayout>
 
 

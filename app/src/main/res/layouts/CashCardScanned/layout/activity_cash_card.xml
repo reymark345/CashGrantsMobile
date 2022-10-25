@@ -130,7 +130,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
                     <ImageView
                         android:id="@+id/imgUri"
                         android:layout_width="90dp"
@@ -141,21 +142,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
-
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/textView2"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_centerHorizontal="true"-->
-                    <!--                        android:background="@color/background"-->
-                    <!--                        android:layout_marginRight="15dp"-->
-                    <!--                        android:layout_alignParentRight="true"-->
-                    <!--                        android:text="Image Details"-->
-                    <!--                        android:fontFamily="sans-serif-condensed"-->
-                    <!--                        android:textAppearance="?android:attr/textAppearanceLarge"-->
-                    <!--                        android:textSize="15dp" />-->
-
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                     <ImageView
                         android:id="@+id/PsID"
@@ -167,7 +155,8 @@
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                 </RelativeLayout>
 
@@ -239,7 +228,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                 </RelativeLayout>
 
@@ -311,7 +301,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                 </RelativeLayout>
 
@@ -383,7 +374,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                 </RelativeLayout>
 

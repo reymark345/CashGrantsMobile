@@ -17,7 +17,8 @@
         android:src="@drawable/cglogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@null"/>
 
 
     <ImageView
@@ -43,7 +44,8 @@
         android:translationX="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/lightGrey" />
+        app:tint="@color/lightGrey"
+        android:contentDescription="@null"/>
 
     <LinearLayout
         android:id="@+id/linlay_inputs"

@@ -12,7 +12,8 @@
         android:layout_height="150dp"
         app:tint="@color/colorAccentDemo"
         android:src="@drawable/ic_nowifi"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:contentDescription="@null"/>
     
     <TextView
         android:layout_width="match_parent"
