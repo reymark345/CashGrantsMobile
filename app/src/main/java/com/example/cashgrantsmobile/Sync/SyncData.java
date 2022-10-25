@@ -3,6 +3,7 @@ package com.example.cashgrantsmobile.Sync;
 import static com.example.cashgrantsmobile.Login.Activity_Splash_Login.BASE_URL;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
@@ -10,32 +11,28 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cashgrantsmobile.Internet.NetworkChangeListener;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
-import com.example.cashgrantsmobile.Internet.NetworkChangeListener;
 import com.example.cashgrantsmobile.helpers.VolleyMultipartRequest;
 
 import org.json.JSONArray;
@@ -43,12 +40,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,13 +54,12 @@ public class SyncData extends AppCompatActivity {
 
     Button btnSync;
     String token = null;
-    Toolbar mainToolbar;
     TextView progressCount, progressTarget, progressPercent;
     ProgressBar progressBar;
     Integer countEmvDetails = 0;
 
-    ArrayList<String> lst = new ArrayList<String>();
-    ArrayList<String> lst2 = new ArrayList<String>();
+    ArrayList<String> lst = new ArrayList<>();
+    ArrayList<String> lst2 = new ArrayList<>();
     GridView gvMain, gvMain2;
     String[] data = {};
     String[] data2 = {};
@@ -84,13 +77,113 @@ public class SyncData extends AppCompatActivity {
         return byteArrayOutputStream.toByteArray();
     }
 
+    @SuppressLint("SetTextI18n")
     public void getCountEmvDetails() {
         Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validation_details");
-        Integer totalCount = lastEmvDatabaseID.getCount();
+        int totalCount = lastEmvDatabaseID.getCount();
         countEmvDetails = totalCount;
 
         progressTarget = findViewById(R.id.progressFigureLast);
-        progressTarget.setText(totalCount.toString());
+        progressTarget.setText(Integer.toString(totalCount));
+    }
+
+    public void updateEmvData() {
+        Activity_Splash_Login.NukeSSLCerts.nuke();
+
+        progressPercent = findViewById(R.id.progressCount);
+        progressCount = findViewById(R.id.progressFigure);
+        progressTarget = findViewById(R.id.progressFigureLast);
+        progressBar = findViewById(R.id.progressBar);
+
+        btnSync = findViewById(R.id.btnSync);
+        btnSync.setEnabled(false);
+
+        String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoring/updater";
+
+        // creating a new variable for our request queue
+        RequestQueue queue = Volley.newRequestQueue(SyncData.this);
+
+        // in this we are calling a post method.
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // on below line we are displaying a success toast message.
+                try {
+                    JSONObject data = new JSONObject(response);
+                    JSONArray dataSets = data.getJSONArray("data");
+                    Double counter = 0.00;
+                    double progressFormula;
+                    Double dLength;
+                    dLength = (double) dataSets.length();
+                    String HHID = "";
+                    progressTarget.setText(String.valueOf(dataSets.length()));
+
+                    String status = data.getString("status");
+
+                    if (status.matches("success")){
+                        Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
+                        for (int i = 0; i < dataSets.length(); i++) {
+                            counter++;
+                            JSONObject jsonData = dataSets.getJSONObject(i);
+                            HHID = jsonData.getString("hh_id");
+                            sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"));
+
+                            progressFormula = counter / dLength * 100;
+                            progressCount.setText(String.valueOf(counter.intValue()));
+                            progressPercent.setText(String.valueOf((int) progressFormula));
+                            progressBar.setProgress((int) progressFormula);
+                        }
+
+                        if (progressPercent.getText().toString().matches("100")) {
+                            Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
+                            btnSync.setEnabled(true);
+                        }
+
+                        sqLiteHelper.storeLogs("update", HHID, "Successfully update data");
+
+                    }
+                    else{
+                        Toasty.error(getApplicationContext(), "Error on updating the  data.", Toast.LENGTH_SHORT, true).show();
+                        sqLiteHelper.storeLogs("error", "", "Error on updating the data");
+                    }
+
+                } catch (JSONException e) {
+
+                    queue.cancelAll(this);
+                    btnSync.setEnabled(true);
+                    e.printStackTrace();
+                }
+            }
+        }, error -> {
+            // method to handle errors.
+            try {
+                String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                JSONObject data = new JSONObject(responseBody);
+                JSONArray errors = data.getJSONArray("errors");
+                JSONObject jsonMessage = errors.getJSONObject(0);
+                String message = jsonMessage.getString("message");
+                Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
+                sqLiteHelper.storeLogs("error", "", "Update: " + message);
+            } catch (JSONException e) {
+                btnSync.setEnabled(true);
+                sqLiteHelper.storeLogs("error", "", "Update: Exception.");
+            }
+            catch (Exception e) {
+                btnSync.setEnabled(true);
+                Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
+                sqLiteHelper.storeLogs("error", "", "Update: Network not found.");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        // below line is to make
+        // a json object request.
+        queue.add(request);
     }
 
     public void updateEmvValidations() {
@@ -105,55 +198,48 @@ public class SyncData extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(SyncData.this);
 
         // in this we are calling a post method.
-        StringRequest request = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // on below line we are displaying a success toast message.
-                try {
-                    JSONObject data = new JSONObject(response);
-                    JSONArray dataSets = data.getJSONArray("data");
+        StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
+            // on below line we are displaying a success toast message.
+            try {
+                JSONObject data = new JSONObject(response);
+                JSONArray dataSets = data.getJSONArray("data");
 
-                    String status = data.getString("status");
+                String status = data.getString("status");
 
-                    if (status.matches("success")){
-                        Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
-                        for (int i = 0; i < dataSets.length(); i++) {
-                            JSONObject jsonData = dataSets.getJSONObject(i);
-                            sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"));
-                        }
-
-                        btnSync.setEnabled(true);
-                    }
-                    else{
-                        Toasty.error(getApplicationContext(), "Error on updating the  data.", Toast.LENGTH_SHORT, true).show();
+                if (status.matches("success")){
+                    Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
+                    for (int i = 0; i < dataSets.length(); i++) {
+                        JSONObject jsonData = dataSets.getJSONObject(i);
+                        sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"));
                     }
 
-                } catch (JSONException e) {
                     btnSync.setEnabled(true);
-                    e.printStackTrace();
                 }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                try {
-                    String responseBody = new String(error.networkResponse.data, "utf-8");
-                    JSONObject data = new JSONObject(responseBody);
-                    JSONArray errors = data.getJSONArray("errors");
-                    JSONObject jsonMessage = errors.getJSONObject(0);
-                    String message = jsonMessage.getString("message");
-                    Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
-                } catch (JSONException | UnsupportedEncodingException e) {
-                    btnSync.setEnabled(true);
-                    Toasty.warning(SyncData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
+                else{
+                    Toasty.error(getApplicationContext(), "Error on updating the  data.", Toast.LENGTH_SHORT, true).show();
                 }
-                catch (Exception e) {
-                    btnSync.setEnabled(true);
-                    Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
-                }
-            }
 
+            } catch (JSONException e) {
+                btnSync.setEnabled(true);
+                e.printStackTrace();
+            }
+        }, error -> {
+            // method to handle errors.
+            try {
+                String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                JSONObject data = new JSONObject(responseBody);
+                JSONArray errors = data.getJSONArray("errors");
+                JSONObject jsonMessage = errors.getJSONObject(0);
+                String message = jsonMessage.getString("message");
+                Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
+            } catch (JSONException e) {
+                btnSync.setEnabled(true);
+                Toasty.warning(SyncData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
+            }
+            catch (Exception e) {
+                btnSync.setEnabled(true);
+                Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
+            }
         }) {
             @Override
             public Map<String, String> getHeaders() {
@@ -175,8 +261,8 @@ public class SyncData extends AppCompatActivity {
 
         lst.addAll(Arrays.asList(data));
         lst2.addAll(Arrays.asList(data2));
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,lst);
-        adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,lst2);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lst);
+        adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lst2);
 
         gvMain = (GridView) findViewById(R.id.gridView);
         gvMain2 = (GridView) findViewById(R.id.gridView1);
@@ -193,24 +279,21 @@ public class SyncData extends AppCompatActivity {
             JSONArray arr_other_card = new JSONArray();
             JSONArray arr_ocv_id = new JSONArray();
 
-            Integer evd_id = 0;
-            String evd_hh_status = "";
-            String evd_contact_no = "";
-            String evd_contact_no_of = "";
-            String evd_is_grantee = "";
-            String evd_is_minor = "";
-            String evd_relationship_to_grantee = "";
-            String evd_assigned_staff = "";
-            String evd_representative_name = "";
-            String evd_sync_at = "";
-            String evd_user_id = "";
-            String evd_created_at = "";
-            String evd_overall_remarks = "";
-            byte[] evd_additional_image = null;
+            int evd_id;
+            String evd_hh_status;
+            String evd_contact_no;
+            String evd_contact_no_of;
+            String evd_is_grantee;
+            String evd_is_minor;
+            String evd_relationship_to_grantee;
+            String evd_assigned_staff;
+            String evd_representative_name;
+            String evd_user_id;
+            String evd_created_at;
+            String evd_overall_remarks;
+            byte[] evd_additional_image;
 
-            Integer other_card = 0;
-
-            Integer gv_id = 0;
+            int gv_id = 0;
             String gv_hh_id = "";
             String gv_first_name = "";
             String gv_last_name = "";
@@ -223,7 +306,7 @@ public class SyncData extends AppCompatActivity {
             String gv_hh_set = "";
             byte[] gv_grantee_image = null;
 
-            Integer pvd_id = 0;
+            int pvd_id = 0;
             String pvd_lender_name = "";
             String pvd_lender_address = "";
             String pvd_date_pawned = "";
@@ -238,13 +321,13 @@ public class SyncData extends AppCompatActivity {
             String pvd_staff_intervention = "";
             String pvd_other_details = "";
 
-            Integer nv_id = 0;
+            int nv_id = 0;
             String nv_amount = "0";
             String nv_date_claimed = "";
             String nv_reason = "";
             String nv_remarks = "";
 
-            Integer cvd_id = 0;
+            int cvd_id = 0;
             String cvd_card_number_prefilled = "";
             String cvd_card_number_system_generated = "";
             String cvd_card_number_inputted = "";
@@ -275,7 +358,6 @@ public class SyncData extends AppCompatActivity {
             evd_relationship_to_grantee = emv_validation_details.getString(6);
             evd_assigned_staff = emv_validation_details.getString(7);
             evd_representative_name = emv_validation_details.getString(8);
-            evd_sync_at = emv_validation_details.getString(14);
             evd_user_id = emv_validation_details.getString(15);
             evd_additional_image = emv_validation_details.getBlob(16);
             evd_created_at = emv_validation_details.getString(17);
@@ -371,7 +453,7 @@ public class SyncData extends AppCompatActivity {
             card_validation_details.close();
 
             Cursor other_card_validations = sqLiteHelper.getData("SELECT id, card_holder_name, card_number_system_generated, card_number_inputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_requests, card_replacement_request_submitted_details, pawning_remarks, other_image, others_reason_not_presented, others_reason_unclaimed FROM other_card_validations WHERE emv_validation_detail_id=" + emv_validation_details.getInt(0));
-            Integer ocv_counter = 0;
+            int ocv_counter = 0;
             while (other_card_validations.moveToNext()) {
                 ocv_counter++;
                 JSONObject obj_other_card = new JSONObject();
@@ -490,57 +572,54 @@ public class SyncData extends AppCompatActivity {
             Integer finalCvd_id = cvd_id;
             Integer finalNv_id = nv_id;
             Integer finalPvd_id = pvd_id;
-            request = new VolleyMultipartRequest(Request.Method.POST, url,  new Response.Listener<NetworkResponse>() {
-                @Override
-                public void onResponse(NetworkResponse response) {
-                    // on below line we are displaying a success toast message.
-                    try {
-                        JSONObject data = new JSONObject(new String(response.data));
-                        Log.v("Response Data", data.toString());
-                        String status = data.getString("status");
-                        String description = data.getString("description");
-                        JSONObject dataObject = data.getJSONObject("data");
+            request = new VolleyMultipartRequest(Request.Method.POST, url, response -> {
+                // on below line we are displaying a success toast message.
+                try {
+                    JSONObject data = new JSONObject(new String(response.data));
+                    Log.v("Response Data", data.toString());
+                    String status = data.getString("status");
+                    String description = data.getString("description");
+                    JSONObject dataObject = data.getJSONObject("data");
 
 
-                        if (status.matches("success")){
-                            JSONObject granteeObj = dataObject.getJSONObject("grantee_validations");
-                            progressCC[0]++;
+                    if (status.matches("success")){
+                        JSONObject granteeObj = dataObject.getJSONObject("grantee_validations");
+                        progressCC[0]++;
 
-                            progressPercent = findViewById(R.id.progressCount);
-                            progressBar = findViewById(R.id.progressBar);
-                            progressCount = findViewById(R.id.progressFigure);
-                            Double progressCalc = progressCC[0] / countEmvDetails * 100;
+                        progressPercent = findViewById(R.id.progressCount);
+                        progressBar = findViewById(R.id.progressBar);
+                        progressCount = findViewById(R.id.progressFigure);
+                        Double progressCalc = progressCC[0] / countEmvDetails * 100;
 
-                            progressCount.setText(String.valueOf(progressCC[0].intValue()));
-                            progressPercent.setText(String.valueOf(progressCalc.intValue()));
-                            progressBar.setProgress(progressCalc.intValue());
+                        progressCount.setText(String.valueOf(progressCC[0].intValue()));
+                        progressPercent.setText(String.valueOf(progressCalc.intValue()));
+                        progressBar.setProgress(progressCalc.intValue());
 
-                            lst.add(description + " household id: " + granteeObj.getString("hh_id"));
-                            gvMain.setAdapter(adapter);
+                        lst.add(description + " household id: " + granteeObj.getString("hh_id"));
+                        gvMain.setAdapter(adapter);
 
-                            sqLiteHelper.storeLogs("sync", finalGv_hh_id, "Sync data successfully.");
-                            sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
+                        sqLiteHelper.storeLogs("sync", finalGv_hh_id, "Sync data successfully.");
+                        sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
 
-                            if (progressPercent.getText().toString().matches("100")) {
-                                Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
-                                Toasty.info(SyncData.this, "Updating local data please wait!", Toast.LENGTH_SHORT, true).show();
-                                updateEmvValidations();
-                            }
-
-
-                        }
-                        else{
-                            btnSync.setEnabled(true);
-                            lst2.add("Error on syncing the data!");
-                            gvMain2.setAdapter(adapter2);
-                            sqLiteHelper.storeLogs("error", finalGv_hh_id, "Error on syncing data.");
-                            Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
+                        if (progressPercent.getText().toString().matches("100")) {
+                            Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
+                            Toasty.info(SyncData.this, "Updating local data please wait!", Toast.LENGTH_SHORT, true).show();
+                            updateEmvValidations();
                         }
 
-                    } catch (JSONException e) {
-                        btnSync.setEnabled(true);
-                        e.printStackTrace();
+
                     }
+                    else{
+                        btnSync.setEnabled(true);
+                        lst2.add("Error on syncing the data!");
+                        gvMain2.setAdapter(adapter2);
+                        sqLiteHelper.storeLogs("error", finalGv_hh_id, "Error on syncing data.");
+                        Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
+                    }
+
+                } catch (JSONException e) {
+                    btnSync.setEnabled(true);
+                    e.printStackTrace();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -548,8 +627,8 @@ public class SyncData extends AppCompatActivity {
                     // method to handle errors.
                     btnSync.setEnabled(true);
                     try {
-                        String responseBody = new String(error.networkResponse.data, "utf-8");
-                        Integer responseCode = error.networkResponse.statusCode;
+                        String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                        int responseCode = error.networkResponse.statusCode;
                         if (responseCode == 401) {
                             JSONObject data = new JSONObject(responseBody);
                             JSONArray errors = data.getJSONArray("errors");
@@ -748,35 +827,19 @@ public class SyncData extends AppCompatActivity {
 
         btnSync = findViewById(R.id.btnSync);
 
-
-//        if (countEmvDetails == 0) {
-//            mainToolbar = findViewById(R.id.mainToolbar);
-//            mainToolbar.setTitle("No data to be sync!");
-//
-//            btnSync.setEnabled(false);
-//        }
-
-        btnSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SweetAlertDialog(SyncData.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Are you sure?")
-                        .setContentText("Please Confirm to Sync Data")
-                        .setConfirmText("Sync Now")
-                        .showCancelButton(false)
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-                                registerReceiver(networkChangeListener, filter);
-                                if (networkChangeListener.connection == true){
-                                    syncEmvData();
-                                    sDialog.dismiss();
-                                }
-                            }
-                        }).show();
-                }
-            });
+        btnSync.setOnClickListener(v -> new SweetAlertDialog(SyncData.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText("Please Confirm to Sync Data")
+                .setConfirmText("Sync Now")
+                .showCancelButton(false)
+                .setConfirmClickListener(sDialog -> {
+                    IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+                    registerReceiver(networkChangeListener, filter);
+                    if (networkChangeListener.connection){
+                        syncEmvData();
+                        sDialog.dismiss();
+                    }
+                }).show());
     }
 
     @Override

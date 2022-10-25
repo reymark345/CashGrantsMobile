@@ -21,13 +21,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
-
     public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
     public void queryData(String sql){
         SQLiteDatabase database = getWritableDatabase();
         database.execSQL(sql);
+        database.close();
     }
 
     public void insertDarkModeStatus(String status){
@@ -37,6 +37,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.clearBindings();
         statement.bindString(1, status);
         statement.executeInsert();
+        database.close();
     }
 
     public String convertDateFormat(String date_format) {
@@ -57,7 +58,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
         return result;
     }
-
 
     public void insertDatabase(String hh_id,String first_name,String last_name,String middle_name,String ext_name,String sex,String province,String municipality, String barangay, String set,
                                String lender_name,String lender_address,String date_pawned,String date_retrieved,String loaned_amount,String status,String reason,String interest,String offense_history,String offense_date,String remarks,String staff_intervention,String other_details,
@@ -460,7 +460,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         grantee_validations.bindString(10, set);
         grantee_validations.bindBlob(11, grantee_image);
         grantee_validations.bindString(12, other_ext_name);
-        grantee_validations.bindLong(13, gv_id); //ID
+        grantee_validations.bindLong(13, gv_id);
         grantee_validations.execute();
 
         if (reason_not_presented.matches("Pawned")){
@@ -479,7 +479,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             pawning_validations_details.bindString(11, remarks);
             pawning_validations_details.bindString(12, staff_intervention);
             pawning_validations_details.bindString(13, other_details);
-            pawning_validations_details.bindLong(14, pvd_id);//ID
+            pawning_validations_details.bindLong(14, pvd_id);
             pawning_validations_details.execute();
         }
 
@@ -490,7 +490,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         nma_validations.bindString(3, nma_reason);
         nma_validations.bindString(4, nma_remarks);
         nma_validations.bindString(5, nma_others_reason);
-        nma_validations.bindLong(6, nv_id); //ID
+        nma_validations.bindLong(6, nv_id);
         nma_validations.execute();
 
         SQLiteStatement card_validation_details = database.compileStatement(sql4);
@@ -512,7 +512,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         card_validation_details.bindBlob(15, card_image);
         card_validation_details.bindString(16, others_reason_not_presented);
         card_validation_details.bindString(17, others_reason_unclaimed);
-        card_validation_details.bindLong(18, cvd_id);//ID
+        card_validation_details.bindLong(18, cvd_id);
         card_validation_details.execute();
 
         SQLiteStatement emv_validation_details = database.compileStatement(sql5);
@@ -530,13 +530,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             emv_validation_details.bindString(10, overall_remarks);
             emv_validation_details.bindString(11, strDate);
             emv_validation_details.bindString(12, contact_no_of_others);
-            emv_validation_details.bindLong(13, evd_id); // ID
+            emv_validation_details.bindLong(13, evd_id);
         }
         else {
             emv_validation_details.bindString(9, overall_remarks);
             emv_validation_details.bindString(10, strDate);
             emv_validation_details.bindString(11, contact_no_of_others);
-            emv_validation_details.bindLong(12, evd_id); // ID
+            emv_validation_details.bindLong(12, evd_id);
         }
         emv_validation_details.execute();
         if (card_count >=1) {
@@ -782,8 +782,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         deleteOtherCardValidations(ocv_id4);
         deleteOtherCardValidations(ocv_id5);
 
-
-
     }
 
     public void deleteOtherCardValidations(int ocv_id) {
@@ -850,6 +848,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindString(5, name);
             statement.bindString(6, username);
             statement.executeInsert();
+            database.close();
         }
         catch(Exception e){
             Log.v(TAG,"error ");
@@ -872,6 +871,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindBlob(1, cc_image);
             statement.bindLong(2, true_id);
             statement.execute();
+            database.close();
         }
     }
 
@@ -915,185 +915,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.bindString(4, description);
         statement.bindString(5, strDate);
         statement.executeInsert();
-    }
-
-
-
-    public void updateScannedCashCard_emv(String scannedCashCard,byte[] cc_image){
-
-        try {
-            SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE emv_database_monitoring_details SET cash_card_actual_no = ?,current_cash_card_picture =? WHERE id = (SELECT max(id) FROM emv_database_monitoring_details) ";
-            SQLiteStatement statement = database.compileStatement(sql);
-//            statement.clearBindings();
-            statement.bindString(1, scannedCashCard);
-            statement.bindBlob(2, cc_image);
-            statement.execute();
-            database.close();
-        }
-        catch(Exception e){
-            Log.v(TAG,e.toString());
-        }
-    }
-    public void updateSubmitData_emv(String cash_card_actual_no, String accomplishBy,String informant, byte[] cc_image, byte[] id_image, String attested, String series_number) {
-        SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE emv_database_monitoring_details SET current_grantee_card_number  = ?,current_grantee_card_number_series =?, accomplish_by_full_name = ?, informant_full_name = ?, current_cash_card_picture =?, beneficiary_picture =?, attested_by_full_name =?, card_scanning_status = 1  WHERE id = (SELECT max(id) FROM emv_database_monitoring_details)";
-        SQLiteStatement statement = database.compileStatement(sql);
-        statement.bindString(1, cash_card_actual_no);
-        statement.bindString(2, series_number);
-        statement.bindString(3, accomplishBy);
-        statement.bindString(4, informant);
-        statement.bindBlob(5, cc_image);
-        statement.bindBlob(6, id_image);
-        statement.bindString(7, attested);
-        statement.execute();
         database.close();
     }
-    public void update_emv_monitoring(String household_id) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String strDate = sdf.format(new Date());
-        SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE emv_database_monitoring SET validated_at = ? WHERE hh_id = ?";
-        SQLiteStatement statement = database.compileStatement(sql);
-        statement.bindString(1, strDate);
-        statement.bindString(2, household_id);
-        statement.execute();
-        database.close();
-    }
-    public void updateAccomplishSignature_emv(int current_idd,String cash_card ,String accomplish,String informant,String attested ,byte[] signature, String series_number) {
-        try {
-            SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE emv_database_monitoring_details SET  current_grantee_card_number  =?,current_grantee_card_number_series=?, accomplish_e_signature =?,accomplish_by_full_name = ?,informant_full_name = ?,attested_by_full_name = ? WHERE id = ?";
-            SQLiteStatement statement = database.compileStatement(sql);
-            statement.bindString(1, cash_card);
-            statement.bindString(2, series_number);
-            statement.bindBlob(3, signature);
-            statement.bindString(4, accomplish);
-            statement.bindString(5, informant);
-            statement.bindString(6, attested);
-            statement.bindLong(7, current_idd);
-            statement.execute();
-            database.close();
-        }
-        catch (Exception e){
-            Log.v(TAG,e.toString());
-        }
-    }
 
-    public void updateAccomplishSignature(byte[] signature){
-        try {
-            SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE Api SET accomplish_e_signature = ? WHERE id = 1";
-            SQLiteStatement statement = database.compileStatement(sql);
-            statement.bindBlob(1, signature);
-            statement.execute();
-            database.close();
-        }
-        catch(Exception e){
-            Log.v(TAG,e.toString());
-        }
-    }
-
-
-    public void updateInformantSignature_emv(int current_idd,String cash_card,String accomplish,String informant,String attested ,byte[] signature,String series_number) {
-        try {
-
-            SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE emv_database_monitoring_details SET current_grantee_card_number  = ?,current_grantee_card_number_series =?,informant_e_signature =?,accomplish_by_full_name = ?,informant_full_name = ?,attested_by_full_name = ? WHERE id = ?";
-            SQLiteStatement statement = database.compileStatement(sql);
-            statement.bindString(1, cash_card);
-            statement.bindString(2, series_number);
-            statement.bindBlob(3, signature);
-            statement.bindString(4, accomplish);
-            statement.bindString(5, informant);
-            statement.bindString(6, attested);
-            statement.bindLong(7, current_idd);
-            statement.execute();
-            database.close();
-        }
-        catch (Exception e){
-            Log.v(TAG,"Error "+e);
-        }
-    }
-
-    public void updateAttestedSignature_emv(int current_idd,String cash_card,String accomplish,String informant,String attested ,byte[] signature, String series_number) {
-        try {
-
-            SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE emv_database_monitoring_details SET current_grantee_card_number  =?,current_grantee_card_number_series =?, attested_by_e_signature =?,accomplish_by_full_name = ?,informant_full_name = ?,attested_by_full_name = ? WHERE id = ?";
-            SQLiteStatement statement = database.compileStatement(sql);
-            statement.bindString(1, cash_card);
-            statement.bindString(2, series_number);
-            statement.bindBlob(3, signature);
-            statement.bindString(4, accomplish);
-            statement.bindString(5, informant);
-            statement.bindString(6, attested);
-            statement.bindLong(7, current_idd);
-            statement.execute();
-            database.close();
-        }
-        catch (Exception e){
-            Log.v(TAG,"Error"+e);
-        }
-    }
-    public void updateCashCardEmv(int current_idd,byte[] cash_card) {
-        try {
-            SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE emv_database_monitoring_details SET current_cash_card_picture  =? WHERE id = ?";
-            SQLiteStatement statement = database.compileStatement(sql);
-            statement.bindBlob(1, cash_card);
-            statement.bindLong(2, current_idd);
-            statement.execute();
-            database.close();
-        }
-        catch (Exception e){
-            Log.v(TAG,"Error"+e);
-        }
-    }
-
-    public void updateGranteeEmv(int current_idd,byte[] grantee) {
-        try {
-            SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE emv_database_monitoring_details SET beneficiary_picture =? WHERE id = ?";
-            SQLiteStatement statement = database.compileStatement(sql);
-            statement.bindBlob(1, grantee);
-            statement.bindLong(2, current_idd);
-            statement.execute();
-            database.close();
-        }
-        catch (Exception e){
-            Log.v(TAG,"Error");
-        }
-    }
-    public void updateAccomplishSign(byte[] accomplish_sign) {
-        try {
-            SQLiteDatabase database = getWritableDatabase();
-            String sql = "UPDATE emv_database_monitoring_details SET accomplish_e_signature =? WHERE id = (SELECT max(id) FROM emv_database_monitoring_details)";
-            SQLiteStatement statement = database.compileStatement(sql);
-            statement.bindBlob(1, accomplish_sign);
-            statement.execute();
-            database.close();
-        }
-        catch (Exception e){
-            Log.v(TAG,"Error");
-        }
-    }
-    public void updateInventoryList_emv(String cash_card_actual_no, String accomplishBy,String informant, byte[] cc_image, byte[] id_image, int id, String attested, String series_number, int completed) {
-        SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE emv_database_monitoring_details SET current_grantee_card_number  = ?, current_grantee_card_number_series = ?, accomplish_by_full_name = ?, informant_full_name = ?, current_cash_card_picture =?, beneficiary_picture =?, attested_by_full_name=? , card_scanning_status = ?  WHERE id = ?";
-        SQLiteStatement statement = database.compileStatement(sql);
-        statement.bindString(1, cash_card_actual_no);
-        statement.bindString(2, series_number);
-        statement.bindString(3, accomplishBy);
-        statement.bindString(4, informant);
-        statement.bindBlob(5, cc_image);
-        statement.bindBlob(6, id_image);
-        statement.bindString(7, attested);
-        statement.bindDouble(8, completed);
-        statement.bindDouble(9, id);
-        statement.execute();
-        database.close();
-    }
     public void updateDarkmodeStatus(String status, int id) {
         SQLiteDatabase database = getWritableDatabase();
         String sql = "UPDATE DarkMode SET status = ? WHERE id = ?";
@@ -1103,10 +927,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
+
     public Cursor getData(String sql){
         SQLiteDatabase database = getReadableDatabase();
         return database.rawQuery(sql, null);
     }
+
     public void deleteAccess() {
         SQLiteDatabase database = getWritableDatabase();
         String sql = "DELETE FROM Api";
@@ -1124,6 +950,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.execute();
         database.close();
     }
+
     public void insertEmvData(JSONArray remoteData) {
         for (int i=0; i < remoteData.length(); i++) {
             try {
@@ -1189,38 +1016,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     Log.v(TAG,"Error "+e );
                 }
 
-
-
-
-//                try {
-//                    SQLiteDatabase database = getWritableDatabase();
-//                    String sql = "INSERT INTO emv_database_monitoring (id, full_name, hh_id, client_status, address, sex, hh_set_group, current_grantee_card_number, other_card_number_1, other_card_holder_name_1, other_card_number_2, other_card_holder_name_2, other_card_number_3, other_card_holder_name_3, upload_history_id, created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-//                    SQLiteStatement statement = database.compileStatement(sql);
-//                    statement.clearBindings();
-//                    statement.bindLong(1, extractedData.getInt("id"));
-//                    statement.bindString(2, extractedData.getString("full_name"));
-//                    statement.bindString(3, extractedData.getString("hh_id"));
-//                    statement.bindString(4, extractedData.getString("client_status"));
-//                    statement.bindString(5, extractedData.getString("address"));
-//                    statement.bindString(6, extractedData.getString("sex"));
-//                    statement.bindString(7, extractedData.getString("hh_set_group"));
-//                    statement.bindString(8, extractedData.getString("current_grantee_card_number"));
-//                    statement.bindString(9, extractedData.getString("other_card_number_1"));
-//                    statement.bindString(10, extractedData.getString("other_card_holder_name_1"));
-//                    statement.bindString(11, extractedData.getString("other_card_number_2"));
-//                    statement.bindString(12, extractedData.getString("other_card_holder_name_2"));
-//                    statement.bindString(13, extractedData.getString("other_card_number_3"));
-//                    statement.bindString(14, extractedData.getString("other_card_holder_name_3"));
-//                    statement.bindLong(15, extractedData.getInt("upload_history_id"));
-//                    statement.bindString(16, extractedData.getString("created_at"));
-//                    statement.bindString(17, extractedData.getString("updated_at"));
-//                    statement.bindString(18, extractedData.getString("validated_at"));
-//                    statement.executeInsert();
-//                }
-//                catch(Exception e){
-//                    Log.v(TAG,"Error "+e );
-//                }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1250,10 +1045,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     statement.bindString(7, extractedData.getString("created_at"));
                     statement.bindString(8, extractedData.getString("updated_at"));
                     statement.executeInsert();
-                    Log.v(TAG,"Ni Insert");
+                    database.close();
                 }
                 catch(Exception e){
-                    Log.v(TAG,"Error wala"+e );
+                    Log.v(TAG,"Error "+e );
                 }
 
             } catch (JSONException e) {
@@ -1261,15 +1056,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             }
         }
 
-    }
-    public  void deleteEmvMonitoringDetails(int id) {
-        SQLiteDatabase database = getWritableDatabase();
-        String sql = "DELETE FROM emv_database_monitoring_details WHERE id = ?";
-        SQLiteStatement statement = database.compileStatement(sql);
-        statement.clearBindings();
-        statement.bindDouble(1, (double)id);
-        statement.execute();
-        database.close();
     }
 
     public void updateEmvValidations(String validated, String id) {

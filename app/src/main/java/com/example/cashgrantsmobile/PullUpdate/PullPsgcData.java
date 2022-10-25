@@ -4,12 +4,12 @@ import static android.content.ContentValues.TAG;
 import static com.example.cashgrantsmobile.Login.Activity_Splash_Login.BASE_URL;
 import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,13 +26,12 @@ import com.android.volley.toolbox.Volley;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
 import com.example.cashgrantsmobile.MainActivity;
 import com.example.cashgrantsmobile.R;
-import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,9 +47,9 @@ public class PullPsgcData extends AppCompatActivity {
     ProgressBar progressBar;
     String pullstatus = "uncomplete";
 
-
+    @SuppressLint("SetTextI18n")
     public Integer getLastID() {
-        Integer lastID = 0;
+        int lastID = 0;
         Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM psgc ORDER BY id DESC LIMIT 1");
         while (lastEmvDatabaseID.moveToNext()) {
             lastID = lastEmvDatabaseID.getInt(0);
@@ -58,7 +57,7 @@ public class PullPsgcData extends AppCompatActivity {
 
         progressCount = findViewById(R.id.progressFigurePsgc);
 
-        progressCount.setText(lastID.toString());
+        progressCount.setText(Integer.toString(lastID));
 
         return lastID;
     }
@@ -76,91 +75,83 @@ public class PullPsgcData extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(PullPsgcData.this);
 
         // in this we are calling a post method.
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // on below line we are displaying a success toast message.
-                try {
-                    remoteData = null;
+        @SuppressLint("SetTextI18n") StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
+            // on below line we are displaying a success toast message.
+            try {
+                remoteData = null;
 
-                    JSONObject data = new JSONObject(response);
-                    JSONArray dataSets = data.getJSONArray("data");
+                JSONObject data = new JSONObject(response);
+                JSONArray dataSets = data.getJSONArray("data");
 
-                    Integer totalDataCount = dataSets.length();
-                    String status = data.getString("status");
+                Integer totalDataCount = dataSets.length();
+                String status = data.getString("status");
 
 
-                    Log.v(TAG,"stattt");
+                if (status.matches("success")){
+                    progressCount = findViewById(R.id.progressFigurePsgc);
+                    progressTarget = findViewById(R.id.progressFigureLastPsgc);
+                    progressPercent = findViewById(R.id.progressCountPsgc);
+                    progressBar = findViewById(R.id.progressBarPsgc);
+                    textView1 = findViewById(R.id.textView1);
+                    Double localId = Double.valueOf(getLastID());
+                    Double remoteId = Double.valueOf(totalDataCount);
+                    Double progressCalc = localId / remoteId * 100;
 
-                    if (status.matches("success")){
+                    progressTarget.setText(totalDataCount.toString());
+                    progressPercent.setText(String.valueOf(progressCalc.intValue()));
+                    progressBar.setProgress(progressCalc.intValue());
 
-                        Log.v(TAG,"Success");
-
-                        progressCount = findViewById(R.id.progressFigurePsgc);
-                        progressTarget = findViewById(R.id.progressFigureLastPsgc);
-                        progressPercent = findViewById(R.id.progressCountPsgc);
-                        progressBar = findViewById(R.id.progressBarPsgc);
-                        textView1 = findViewById(R.id.textView1);
-                        Double localId = Double.valueOf(getLastID());
-                        Double remoteId = Double.valueOf(totalDataCount);
-                        Double progressCalc = localId / remoteId * 100;
-
-                        progressTarget.setText(totalDataCount.toString());
-                        progressPercent.setText(String.valueOf(progressCalc.intValue()));
-                        progressBar.setProgress(progressCalc.intValue());
-
-                        if (init) {
-                            btnPullPsgc.setEnabled(true);
-                            if (progressCalc.intValue() == 100) {
-                                progressTarget.setText("0");
-                                progressPercent.setText("0");
-                                progressBar.setProgress(0);
-                                textView1.setText("Update Data");
-                                pullstatus = "completed";
-                                progressCount.setText("0");
-                                btnPullPsgc.setText("UPDATE");
-                            }
-                        }
-
-                        if (!init) {
-                            MainActivity.sqLiteHelper.insertPsgcData(dataSets);
-                            if (progressPercent.getText().toString().matches("100")) {
-                                btnPullPsgc.setEnabled(true);
-                                Toasty.success(PullPsgcData.this, "Completed", Toast.LENGTH_SHORT, true).show();
-                                sqLiteHelper.storeLogs("pull", "", "Pull Data Completed.");
-                            } else {
-                                sqLiteHelper.storeLogs("pull", "", "Pull Data Successfully.");
-                                pullPsgcData(false);
-                            }
-                        }
-
-                    }
-                    else{
+                    if (init) {
                         btnPullPsgc.setEnabled(true);
-                        sqLiteHelper.storeLogs("error", "", "Pull: Error on pulling data.");
-                        Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
+                        if (progressCalc.intValue() == 100) {
+                            progressTarget.setText("0");
+                            progressPercent.setText("0");
+                            progressBar.setProgress(0);
+                            textView1.setText("Update Data");
+                            pullstatus = "completed";
+                            progressCount.setText("0");
+                            btnPullPsgc.setText("UPDATE");
+                        }
                     }
 
-                } catch (JSONException e) {
-                    Log.v(TAG,"nag error " + e);
-                    Toasty.error(getApplicationContext(), "Request to PULL Data Error!", Toast.LENGTH_SHORT, true).show();
-                    btnPullPsgc.setEnabled(true);
-                    e.printStackTrace();
+                    if (!init) {
+                        MainActivity.sqLiteHelper.insertPsgcData(dataSets);
+                        if (progressPercent.getText().toString().matches("100")) {
+                            btnPullPsgc.setEnabled(true);
+                            Toasty.success(PullPsgcData.this, "Completed", Toast.LENGTH_SHORT, true).show();
+                            sqLiteHelper.storeLogs("pull", "", "Pull Data Completed.");
+                        } else {
+                            sqLiteHelper.storeLogs("pull", "", "Pull Data Successfully.");
+                            pullPsgcData(false);
+                        }
+                    }
+
                 }
+                else{
+                    btnPullPsgc.setEnabled(true);
+                    sqLiteHelper.storeLogs("error", "", "Pull: Error on pulling data.");
+                    Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
+                }
+
+            } catch (JSONException e) {
+                Log.v(TAG,"nag error " + e);
+                Toasty.error(getApplicationContext(), "Request to PULL Data Error!", Toast.LENGTH_SHORT, true).show();
+                btnPullPsgc.setEnabled(true);
+                e.printStackTrace();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 btnPullPsgc.setEnabled(true);
                 try {
-                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
                     JSONObject data = new JSONObject(responseBody);
                     JSONArray errors = data.getJSONArray("errors");
                     JSONObject jsonMessage = errors.getJSONObject(0);
                     String message = jsonMessage.getString("message");
                     Toasty.warning(PullPsgcData.this, message, Toast.LENGTH_SHORT, true).show();
                     sqLiteHelper.storeLogs("error", "", "Pull: " +  message);
-                } catch (JSONException | UnsupportedEncodingException e) {
+                } catch (JSONException e) {
                     sqLiteHelper.storeLogs("error", "", "Pull: Error Exception Found.");
 //                    Toasty.warning(PullUpdateData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
                 }
@@ -199,28 +190,22 @@ public class PullPsgcData extends AppCompatActivity {
 
         getLastID();
         pullPsgcData(true);
-        btnPullPsgc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (pullstatus.matches("completed")) {
-                    new SweetAlertDialog(PullPsgcData.this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Update Data and Pull?")
-                            .setContentText("Please confirm to update changes")
-                            .setConfirmText("Confirm")
-                            .showCancelButton(false)
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sqLiteHelper.deletePSGC();
-                                    pullPsgcData(false);
-                                    sDialog.dismiss();
-                                    Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
-                                }
-                            }).show();
-                } else {
-                    Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
-                    pullPsgcData(false);
-                }
+        btnPullPsgc.setOnClickListener(view -> {
+            if (pullstatus.matches("completed")) {
+                new SweetAlertDialog(PullPsgcData.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Update Data and Pull?")
+                        .setContentText("Please confirm to update changes")
+                        .setConfirmText("Confirm")
+                        .showCancelButton(false)
+                        .setConfirmClickListener(sDialog -> {
+                            sqLiteHelper.deletePSGC();
+                            pullPsgcData(false);
+                            sDialog.dismiss();
+                            Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
+                        }).show();
+            } else {
+                Toasty.info(getApplicationContext(), "Now pulling the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
+                pullPsgcData(false);
             }
         });
     }

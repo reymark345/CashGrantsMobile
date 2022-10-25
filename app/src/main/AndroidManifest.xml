@@ -34,9 +34,6 @@
             android:parentActivityName=".MainActivity"/>
 
         <activity
-            android:name=".Scanner.ScannedDetails"
-            android:parentActivityName=".Scanner.ScanCashCard"/>
-        <activity
             android:name=".Inventory.InventoryList"
             android:parentActivityName=".MainActivity"/>
         <activity
