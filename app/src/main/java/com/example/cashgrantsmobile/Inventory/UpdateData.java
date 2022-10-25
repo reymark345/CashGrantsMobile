@@ -3628,6 +3628,7 @@ public class UpdateData extends AppCompatActivity {
 
 
                 edt_hh_id.setText(hh_id);
+                edt_hh_id.setEnabled(false);
                 aat_set.setText(hh_set, false);
                 edt_last_name.setText(last_name);
                 edt_first_name.setText(first_name);
