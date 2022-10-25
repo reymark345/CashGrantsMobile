@@ -57,7 +57,6 @@
                     android:layout_marginRight="10dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="30"
-                    app:endIconMode="clear_text"
                     app:errorEnabled="true"
                     app:helperText="Search Household ID!"
                     app:helperTextTextColor="@color/validation"
