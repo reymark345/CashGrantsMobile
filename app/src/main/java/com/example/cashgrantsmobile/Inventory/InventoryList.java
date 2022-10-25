@@ -105,8 +105,8 @@ public class InventoryList extends AppCompatActivity {
                                 finish();
                             }
                         }).show();
-                    }
-                });
+                }
+            });
         try {
             Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
             field.setAccessible(true);
