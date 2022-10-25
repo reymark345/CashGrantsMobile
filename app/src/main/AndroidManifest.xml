@@ -36,9 +36,6 @@
         <activity
             android:name=".Inventory.InventoryList"
             android:parentActivityName=".MainActivity"/>
-        <activity
-            android:name=".PullUpdate.PullUpdateData"
-            android:parentActivityName=".MainActivity"/>
 
         <activity
             android:name=".PullUpdate.PullPsgcData"

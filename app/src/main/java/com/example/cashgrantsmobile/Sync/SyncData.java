@@ -54,9 +54,10 @@ public class SyncData extends AppCompatActivity {
 
     Button btnSync;
     String token = null;
-    TextView progressCount, progressTarget, progressPercent;
+    TextView progressCount, progressTarget, progressPercent, tvStatus;
     ProgressBar progressBar;
     Integer countEmvDetails = 0;
+    JSONArray remoteData;
 
     ArrayList<String> lst = new ArrayList<>();
     ArrayList<String> lst2 = new ArrayList<>();
@@ -68,6 +69,7 @@ public class SyncData extends AppCompatActivity {
     RequestQueue queue;
     VolleyMultipartRequest request;
     final Double[] progressCC = {0.00};
+    String pullStatus = "";
 
 
 
@@ -78,101 +80,158 @@ public class SyncData extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    public void getCountEmvDetails() {
+    public Integer getCountEmvDetails() {
+        int result = 0;
         Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validation_details");
-        int totalCount = lastEmvDatabaseID.getCount();
-        countEmvDetails = totalCount;
-
-        progressTarget = findViewById(R.id.progressFigureLast);
-        progressTarget.setText(Integer.toString(totalCount));
+        result = lastEmvDatabaseID.getCount();
+        lastEmvDatabaseID.close();
+        return result;
     }
 
-    public void updateEmvData() {
-        Activity_Splash_Login.NukeSSLCerts.nuke();
+    @SuppressLint("SetTextI18n")
+    public Integer getLastID() {
+        int lastID = 0;
+        Cursor lastEmvDatabaseID = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations ORDER BY id DESC LIMIT 1");
+        while (lastEmvDatabaseID.moveToNext()) {
+            lastID = lastEmvDatabaseID.getInt(0);
+        }
+        lastEmvDatabaseID.close();
 
-        progressPercent = findViewById(R.id.progressCount);
         progressCount = findViewById(R.id.progressFigure);
-        progressTarget = findViewById(R.id.progressFigureLast);
-        progressBar = findViewById(R.id.progressBar);
+
+        progressCount.setText(Integer.toString(lastID));
+
+        return lastID;
+    }
+
+    public void initialize_logs() {
+        lst.addAll(Arrays.asList(data));
+        lst2.addAll(Arrays.asList(data2));
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lst);
+        adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lst2);
+
+        gvMain = (GridView) findViewById(R.id.gridView);
+        gvMain2 = (GridView) findViewById(R.id.gridView1);
+
+        gvMain.setAdapter(adapter);
+        gvMain2.setAdapter(adapter2);
+    }
+
+    public void pullEmvData(Boolean init) {
+
+        tvStatus.setText("Initializeing Pulling...");
+
+        if (pullStatus.matches("completed")) {
+            syncEmvData();
+            progressTarget.setText("0");
+            progressPercent.setText("0");
+            progressBar.setProgress(0);
+            progressCount.setText("0");
+            return;
+        }
 
         btnSync = findViewById(R.id.btnSync);
         btnSync.setEnabled(false);
 
-        String url = BASE_URL + "/api/v1/staff/emvdatabasemonitoring/updater";
+        Activity_Splash_Login.NukeSSLCerts.nuke();
 
-        // creating a new variable for our request queue
+        String url = BASE_URL + "/api/v1/staff/emvvalidations/pulldata/" + getLastID();
+
         RequestQueue queue = Volley.newRequestQueue(SyncData.this);
 
-        // in this we are calling a post method.
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // on below line we are displaying a success toast message.
-                try {
-                    JSONObject data = new JSONObject(response);
-                    JSONArray dataSets = data.getJSONArray("data");
-                    Double counter = 0.00;
-                    double progressFormula;
-                    Double dLength;
-                    dLength = (double) dataSets.length();
-                    String HHID = "";
-                    progressTarget.setText(String.valueOf(dataSets.length()));
+        StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
+            try {
+                remoteData = null;
+                JSONObject data = new JSONObject(response);
+                JSONArray dataSets = data.getJSONArray("data");
 
-                    String status = data.getString("status");
+                Integer totalDataCount = Integer.parseInt(data.getString("total_data_count"));
+                String status = data.getString("status");
 
-                    if (status.matches("success")){
-                        Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
-                        for (int i = 0; i < dataSets.length(); i++) {
-                            counter++;
-                            JSONObject jsonData = dataSets.getJSONObject(i);
-                            HHID = jsonData.getString("hh_id");
-                            sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"));
+                if (status.matches("success")){
+                    sqLiteHelper.storeLogs("pull", "", "Pull data successfully.");
+                    progressCount = findViewById(R.id.progressFigure);
+                    progressTarget = findViewById(R.id.progressFigureLast);
+                    progressPercent = findViewById(R.id.progressCount);
+                    progressBar = findViewById(R.id.progressBar);
+                    Double localId = Double.valueOf(getLastID());
+                    Double remoteId = Double.valueOf(totalDataCount);
+                    Double progressCalc = localId / remoteId * 100;
 
-                            progressFormula = counter / dLength * 100;
-                            progressCount.setText(String.valueOf(counter.intValue()));
-                            progressPercent.setText(String.valueOf((int) progressFormula));
-                            progressBar.setProgress((int) progressFormula);
+                    progressTarget.setText(totalDataCount.toString());
+                    progressPercent.setText(String.valueOf(progressCalc.intValue()));
+                    progressBar.setProgress(progressCalc.intValue());
+
+                    if (init) {
+                        initialize_logs();
+                        btnSync.setEnabled(true);
+                        tvStatus.setText("Checking pulled data...");
+                        if (progressCalc.intValue() == 100) {
+                            lst.add("Pull data omitted.");
+                            progressTarget.setText("0");
+                            progressPercent.setText("0");
+                            progressBar.setProgress(0);
+                            progressCount.setText("0");
+                            pullStatus = "completed";
+                            tvStatus.setText("Preparing for syncing...");
                         }
+                    }
 
+                    if (!init) {
+                        MainActivity.sqLiteHelper.insertEmvData(dataSets);
                         if (progressPercent.getText().toString().matches("100")) {
-                            Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
                             btnSync.setEnabled(true);
+                            Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
+                            sqLiteHelper.storeLogs("pull", "", "Pull Data Completed.");
+                            initialize_logs();
+                            lst.add("Pull data completed!.");
+                            pullStatus = "completed";
+                        } else {
+                            sqLiteHelper.storeLogs("pull", "", "Pull Data Successfully.");
+                            pullEmvData(false);
                         }
-
-                        sqLiteHelper.storeLogs("update", HHID, "Successfully update data");
-
-                    }
-                    else{
-                        Toasty.error(getApplicationContext(), "Error on updating the  data.", Toast.LENGTH_SHORT, true).show();
-                        sqLiteHelper.storeLogs("error", "", "Error on updating the data");
                     }
 
-                } catch (JSONException e) {
-
-                    queue.cancelAll(this);
+                }
+                else{
                     btnSync.setEnabled(true);
-                    e.printStackTrace();
+                    sqLiteHelper.storeLogs("error", "", "Pull: Error on pulling data.");
+                    initialize_logs();
+                    lst2.add("Error on pulling data.");
+                }
+
+            } catch (JSONException e) {
+                initialize_logs();
+                lst2.add("Request to PULL Data Error!");
+                btnSync.setEnabled(true);
+                e.printStackTrace();
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                btnSync.setEnabled(true);
+                initialize_logs();
+                try {
+                    String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                    JSONObject data = new JSONObject(responseBody);
+                    JSONArray errors = data.getJSONArray("errors");
+                    JSONObject jsonMessage = errors.getJSONObject(0);
+                    String message = jsonMessage.getString("message");
+                    Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
+                    sqLiteHelper.storeLogs("error", "", "Pull: " +  message);
+                    lst2.add("Pull: " +  message);
+                } catch (JSONException e) {
+                    sqLiteHelper.storeLogs("error", "", "Pull: Error Exception Found.");
+                    lst2.add("Pull: Error Exception Found.");
+                }
+                catch (Exception e) {
+                    queue.cancelAll(this);
+                    sqLiteHelper.storeLogs("error", "", "Pull: Network not found.");
+                    lst2.add("Pull: Network not found.");
+                    Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                 }
             }
-        }, error -> {
-            // method to handle errors.
-            try {
-                String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                JSONObject data = new JSONObject(responseBody);
-                JSONArray errors = data.getJSONArray("errors");
-                JSONObject jsonMessage = errors.getJSONObject(0);
-                String message = jsonMessage.getString("message");
-                Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
-                sqLiteHelper.storeLogs("error", "", "Update: " + message);
-            } catch (JSONException e) {
-                btnSync.setEnabled(true);
-                sqLiteHelper.storeLogs("error", "", "Update: Exception.");
-            }
-            catch (Exception e) {
-                btnSync.setEnabled(true);
-                Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
-                sqLiteHelper.storeLogs("error", "", "Update: Network not found.");
-            }
+
         }) {
             @Override
             public Map<String, String> getHeaders() {
@@ -192,12 +251,15 @@ public class SyncData extends AppCompatActivity {
         btnSync = findViewById(R.id.btnSync);
         btnSync.setEnabled(false);
 
+        tvStatus.setText("Initializing update...");
+
         String url = BASE_URL + "/api/v1/staff/emvvalidations/updater";
 
         // creating a new variable for our request queue
         RequestQueue queue = Volley.newRequestQueue(SyncData.this);
 
         // in this we are calling a post method.
+        Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             // on below line we are displaying a success toast message.
             try {
@@ -205,18 +267,35 @@ public class SyncData extends AppCompatActivity {
                 JSONArray dataSets = data.getJSONArray("data");
 
                 String status = data.getString("status");
-
                 if (status.matches("success")){
-                    Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
+                    initialize_logs();
+                    lst.add("Update data succeed.");
+                    tvStatus.setText("Updating success...");
+                    progressCount = findViewById(R.id.progressFigure);
+                    progressTarget = findViewById(R.id.progressFigureLast);
+                    progressPercent = findViewById(R.id.progressCount);
+                    progressBar = findViewById(R.id.progressBar);
+
+                    progressTarget.setText(String.valueOf(dataSets.length()));
+
                     for (int i = 0; i < dataSets.length(); i++) {
+                        Double localId = Double.valueOf(i + 1);
+                        Double remoteId = Double.valueOf(dataSets.length());
+                        Double progressCalc = localId / remoteId * 100;
+                        progressCount.setText(String.valueOf(i + 1));
+                        progressPercent.setText(String.valueOf(progressCalc.intValue()));
+                        progressBar.setProgress(progressCalc.intValue());
                         JSONObject jsonData = dataSets.getJSONObject(i);
                         sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"));
                     }
-
+                    sqLiteHelper.storeLogs("update", "", "Update Data Completed.");
                     btnSync.setEnabled(true);
                 }
                 else{
-                    Toasty.error(getApplicationContext(), "Error on updating the  data.", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(getApplicationContext(), "Error on updating the data.", Toast.LENGTH_SHORT, true).show();
+                    initialize_logs();
+                    lst.add("Error on updating the data.");
+                    sqLiteHelper.storeLogs("error", "", "Update Data Error.");
                 }
 
             } catch (JSONException e) {
@@ -232,13 +311,20 @@ public class SyncData extends AppCompatActivity {
                 JSONObject jsonMessage = errors.getJSONObject(0);
                 String message = jsonMessage.getString("message");
                 Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
+                sqLiteHelper.storeLogs("error", "", "Update Error.");
+                lst2.add("Update data error.");
             } catch (JSONException e) {
                 btnSync.setEnabled(true);
                 Toasty.warning(SyncData.this, (CharSequence) e, Toast.LENGTH_SHORT, true).show();
+                sqLiteHelper.storeLogs("error", "", "Update Error.");
+                lst2.add("Update error.");
             }
             catch (Exception e) {
                 btnSync.setEnabled(true);
                 Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
+                initialize_logs();
+                lst.add("Network not found.");
+                sqLiteHelper.storeLogs("error", "", "Update Network not found.");
             }
         }) {
             @Override
@@ -259,21 +345,23 @@ public class SyncData extends AppCompatActivity {
 
         Toasty.info(getApplicationContext(), "Now syncing the data from the server. Please wait!", Toast.LENGTH_SHORT, true).show();
 
-        lst.addAll(Arrays.asList(data));
-        lst2.addAll(Arrays.asList(data2));
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lst);
-        adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lst2);
-
-        gvMain = (GridView) findViewById(R.id.gridView);
-        gvMain2 = (GridView) findViewById(R.id.gridView1);
-
-        gvMain.setAdapter(adapter);
-        gvMain2.setAdapter(adapter2);
-
-        btnSync = findViewById(R.id.btnSync);
         btnSync.setEnabled(false);
 
         Cursor emv_validation_details = sqLiteHelper.getData("SELECT id, hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, grantee_validation_id, pawning_validation_detail_id, nma_validation_id, card_validation_detail_id, emv_validation_id, sync_at, user_id, additional_image, created_at, updated_at, overall_remarks, contact_no_of_others FROM emv_validation_details");
+
+        tvStatus.setText("Initializing syncing...");
+
+        if (getCountEmvDetails() == 0) {
+            tvStatus.setText("Preparing update...");
+            initialize_logs();
+            lst.add("Sync data omitted");
+            updateEmvValidations();
+            progressTarget.setText("0");
+            progressPercent.setText("0");
+            progressBar.setProgress(0);
+            progressCount.setText("0");
+            return;
+        }
 
         while (emv_validation_details.moveToNext()) {
             JSONArray arr_other_card = new JSONArray();
@@ -572,24 +660,28 @@ public class SyncData extends AppCompatActivity {
             Integer finalCvd_id = cvd_id;
             Integer finalNv_id = nv_id;
             Integer finalPvd_id = pvd_id;
+
+
+            tvStatus.setText("Syncing...");
+
             request = new VolleyMultipartRequest(Request.Method.POST, url, response -> {
-                // on below line we are displaying a success toast message.
                 try {
                     JSONObject data = new JSONObject(new String(response.data));
-                    Log.v("Response Data", data.toString());
                     String status = data.getString("status");
                     String description = data.getString("description");
                     JSONObject dataObject = data.getJSONObject("data");
 
-
+                    initialize_logs();
                     if (status.matches("success")){
+                        tvStatus.setText("Success syncing...");
+
                         JSONObject granteeObj = dataObject.getJSONObject("grantee_validations");
                         progressCC[0]++;
 
                         progressPercent = findViewById(R.id.progressCount);
                         progressBar = findViewById(R.id.progressBar);
                         progressCount = findViewById(R.id.progressFigure);
-                        Double progressCalc = progressCC[0] / countEmvDetails * 100;
+                        Double progressCalc = progressCC[0] / getCountEmvDetails() * 100;
 
                         progressCount.setText(String.valueOf(progressCC[0].intValue()));
                         progressPercent.setText(String.valueOf(progressCalc.intValue()));
@@ -602,14 +694,12 @@ public class SyncData extends AppCompatActivity {
                         sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
 
                         if (progressPercent.getText().toString().matches("100")) {
+                            tvStatus.setText("Syncing completed...");
                             Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
-                            Toasty.info(SyncData.this, "Updating local data please wait!", Toast.LENGTH_SHORT, true).show();
-                            updateEmvValidations();
                         }
-
-
                     }
                     else{
+                        tvStatus.setText("Syncing encountered an error...");
                         btnSync.setEnabled(true);
                         lst2.add("Error on syncing the data!");
                         gvMain2.setAdapter(adapter2);
@@ -620,11 +710,13 @@ public class SyncData extends AppCompatActivity {
                 } catch (JSONException e) {
                     btnSync.setEnabled(true);
                     e.printStackTrace();
+                    tvStatus.setText("Syncing encountered an error...");
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    // method to handle errors.
+                    tvStatus.setText("Syncing encountered an error...");
+                    initialize_logs();
                     btnSync.setEnabled(true);
                     try {
                         String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
@@ -823,9 +915,11 @@ public class SyncData extends AppCompatActivity {
             token = resultApi.getString(0);
         }
 
-        getCountEmvDetails();
-
         btnSync = findViewById(R.id.btnSync);
+        tvStatus = findViewById(R.id.tv_status);
+
+        getLastID();
+        pullEmvData(true);
 
         btnSync.setOnClickListener(v -> new SweetAlertDialog(SyncData.this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Are you sure?")
@@ -836,7 +930,7 @@ public class SyncData extends AppCompatActivity {
                     IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
                     registerReceiver(networkChangeListener, filter);
                     if (networkChangeListener.connection){
-                        syncEmvData();
+                        pullEmvData(false);
                         sDialog.dismiss();
                     }
                 }).show());
