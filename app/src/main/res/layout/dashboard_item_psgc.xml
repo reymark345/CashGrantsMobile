@@ -66,7 +66,7 @@
                 android:text="Pull PSGC Data"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/_14ssp"
-                app:layout_constraintEnd_toStartOf="@id/textPullUpdateData"
+                app:layout_constraintEnd_toStartOf="@id/textPullPsgcData"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 

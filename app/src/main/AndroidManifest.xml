@@ -63,21 +63,6 @@
             android:parentActivityName=".Login.Activity_Splash_Login"/>
 
         <activity
-            android:name=".Signatories.Accomplish"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".Scanner.ScannedDetails"/>
-
-        <activity
-            android:name=".Signatories.Informant"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".Scanner.ScannedDetails"/>
-
-        <activity
-            android:name=".Signatories.Attested"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".Scanner.ScannedDetails"/>
-
-        <activity
             android:name=".Inventory.UpdateEntries"
             android:parentActivityName=".MainActivity"/>
 

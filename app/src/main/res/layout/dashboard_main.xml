@@ -115,7 +115,8 @@
 
                     android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@null"/>
                 <LinearLayout
                     android:id="@+id/layoutClients"
                     android:layout_width="0dp"
