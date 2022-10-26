@@ -10,13 +10,13 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,11 +25,9 @@ import android.widget.Toast;
 
 import com.example.cashgrantsmobile.Database.SQLiteHelper;
 import com.example.cashgrantsmobile.Login.Activity_Splash_Login;
-import com.example.cashgrantsmobile.PullUpdate.PullPsgcData;
 import com.example.cashgrantsmobile.Scanner.ScanCashCard;
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.IOException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
@@ -39,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
     CardView CashCardScanner, InventoryList, PullUpdateData,PullPsgcData, SyncData, LogsData, Logout;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
-    TextView txtInventoryCount, txtPullUpdateDataCount,txtPullPsgcDataCount, txtLogsTotal, txtSyncDataCount, txtScannedTotal, txtErrorTotal, txtIncompleteTotal, txtSyncData;
+    TextView txtInventoryCount, txtPullPsgcDataCount, txtLogsTotal, txtSyncData, txtScannedTotal, txtErrorTotal, txtIncompleteTotal;
     public boolean EnableNightMode = false;
-    private String night = "true";
-    private String light = "false";
+    private final String night = "true";
+    private final String light = "false";
     String status;
 
     DrawerLayout drawerlayout;
@@ -81,14 +79,9 @@ public class MainActivity extends AppCompatActivity {
         Logout = (CardView) findViewById(R.id.cvLogout);
 
 
-//        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
-//        String accomplish_name = sh.getString("accomplish_by_name", "");
-
         //TextView
         txtInventoryCount =(TextView)findViewById(R.id.txtInventoryAmount);
-        txtPullUpdateDataCount = findViewById(R.id.textPullUpdateData);
         txtPullPsgcDataCount = findViewById(R.id.textPullPsgcData);
-        txtSyncDataCount = findViewById(R.id.txtSyncData);
         txtScannedTotal = findViewById(R.id.scannedTotal);
         txtErrorTotal = findViewById(R.id.errorTotal);
         txtIncompleteTotal = findViewById(R.id.incompleteTotal);
@@ -109,15 +102,12 @@ public class MainActivity extends AppCompatActivity {
         String accomplish_name = sh.getString("accomplish_by_name", "");
         navfullName.setText(accomplish_name);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                if (item.getItemId() == R.id.logout_menu)
-                {
-                    logout();
-                }
-                return false;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.logout_menu)
+            {
+                logout();
             }
+            return false;
         });
 
         toolbar = findViewById(R.id.toolbar);
@@ -135,76 +125,45 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 101);
         }
 
-        CashCardScanner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ScanCashCard.class);
-                startActivity(intent);
-                finish();
+        CashCardScanner.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ScanCashCard.class);
+            startActivity(intent);
+            finish();
+        });
+        DarkMode.setOnClickListener(v -> {
+            if(!EnableNightMode){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                EnableNightMode = true;
+                sqLiteHelper.updateDarkmodeStatus(night,1);
+            }
+            else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                EnableNightMode = false;
+                sqLiteHelper.updateDarkmodeStatus(light,1);
             }
         });
-        DarkMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(EnableNightMode ==false){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    EnableNightMode = true;
-                    sqLiteHelper.updateDarkmodeStatus(night,1);
-                }
-                else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    EnableNightMode = false;
-                    sqLiteHelper.updateDarkmodeStatus(light,1);
-                }
-            }
-        });
-        InventoryList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Inventory.InventoryList.class);
-                startActivity(intent);
-                finish();
+        InventoryList.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Inventory.InventoryList.class);
+            startActivity(intent);
+            finish();
 
-            }
         });
-        PullUpdateData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.PullUpdate.PullUpdateData.class);
-                startActivity(intent);
-                finish();
-            }
+        PullPsgcData.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.PullUpdate.PullPsgcData.class);
+            startActivity(intent);
+            finish();
         });
-        PullPsgcData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.PullUpdate.PullPsgcData.class);
-                startActivity(intent);
-                finish();
-            }
+        SyncData.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Sync.SyncData.class);
+            startActivity(intent);
+            finish();
         });
-        SyncData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Sync.SyncData.class);
-                startActivity(intent);
-                finish();
-            }
+        LogsData.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Logs.LogsData.class);
+            startActivity(intent);
+            finish();
         });
-        LogsData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Logs.LogsData.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
+        Logout.setOnClickListener(v -> logout());
     }
 
     public void logout(){
@@ -214,20 +173,17 @@ public class MainActivity extends AppCompatActivity {
             .setContentText("Are you sure?")
             .setConfirmText("Confirm")
             .showCancelButton(true)
-            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sDialog) {
-                    sqLiteHelper.deleteAccess();
-                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                    myEdit.putString("tokenStatus", "0");
-                    myEdit.commit();
-                    clearSharedPref();
-                    Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
-                    Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
-                    startActivity(intent);
-                    finish();
-                }
+            .setConfirmClickListener(sDialog -> {
+                sqLiteHelper.deleteAccess();
+                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putString("tokenStatus", "0");
+                myEdit.apply();
+                clearSharedPref();
+                Toasty.success(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT, true).show();
+                Intent intent = new Intent(MainActivity.this, Activity_Splash_Login.class);
+                startActivity(intent);
+                finish();
             }).show();
     }
 
@@ -238,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
             Cursor mCursor = db.rawQuery(count, null);
             mCursor.moveToFirst();
             int iCount = mCursor.getInt(0);
+            mCursor.close();
             if(iCount==0){
                 sqLiteHelper.insertDarkModeStatus(light);
             }
@@ -260,30 +217,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void dashboardDataCount() {
         Cursor user_data = MainActivity.sqLiteHelper.getData("SELECT username FROM Api");
         String username = null;
+
         while (user_data.moveToNext()) {
             username = user_data.getString(0);
         }
+
         Cursor listCount = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validation_details");
         Cursor emvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations");
         Cursor psgcList = MainActivity.sqLiteHelper.getData("SELECT id FROM psgc");
-//        Cursor unsyncEmvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_database_monitoring_details");
         Cursor scanned_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"' AND type='scanned'");
         Cursor error_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='error'");
-        Cursor sync_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='sync'");
         Cursor logs_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'");
 
         txtInventoryCount.setText(String.valueOf(listCount.getCount()));
-        txtPullUpdateDataCount.setText(String.valueOf(emvList.getCount()));
         txtPullPsgcDataCount.setText(String.valueOf(psgcList.getCount()));
-        txtSyncDataCount.setText("None");
+        txtSyncData.setText("None");
         txtScannedTotal.setText(String.valueOf(scanned_total.getCount()));
         txtErrorTotal.setText(String.valueOf(error_total.getCount()));
         txtLogsTotal.setText(String.valueOf(logs_total.getCount()));
-        txtIncompleteTotal.setText(String.valueOf("0"));
-        txtSyncData.setText(String.valueOf(sync_total.getCount()));
+        txtIncompleteTotal.setText("0");
+        txtSyncData.setText(String.valueOf(emvList.getCount()));
+
+        listCount.close();
+        emvList.close();
+        psgcList.close();
+        scanned_total.close();
+        error_total.close();
+        logs_total.close();
     }
 
     public void clearSharedPref(){
@@ -320,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
         myEdit.putString("other_card_holder_name_3", "");
         myEdit.putString("other_is_available_3", "");
         myEdit.putString("other_is_available_reason_3", "");
-
         myEdit.putString("accomplish_by_name", "");
 
         //3
@@ -343,6 +306,6 @@ public class MainActivity extends AppCompatActivity {
         myEdit.putString("pd_remarks", "");
         myEdit.putString("intervention", "");
         myEdit.putString("other_details", "");
-        myEdit.commit();
+        myEdit.apply();
     }
 }

@@ -42,16 +42,6 @@
             android:background="@color/primary"
             app:layout_constraintTop_toTopOf="parent"/>
 
-<!--        <com.github.ybq.android.spinkit.SpinKitView-->
-<!--            xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--            android:id="@+id/spin_kit"-->
-<!--            style="@style/SpinKitView.Large.Circle"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            app:SpinKit_Color="@color/validation"-->
-<!--            tools:ignore="MissingConstraints" />-->
-
 
         <TextView
             android:id="@+id/textTitle"
@@ -237,9 +227,8 @@
                 android:orientation="vertical">
                 <include layout="@layout/dashboard_item_1"/>
                 <include layout="@layout/dashboard_item_2"/>
-                <include layout="@layout/dashboard_item_5"/>
-                <include layout="@layout/dashboard_item_psgc"/>
                 <include layout="@layout/dashboard_item_3"/>
+                <include layout="@layout/dashboard_item_psgc"/>
                 <include layout="@layout/dashboard_item_logs"/>
                 <include layout="@layout/dashboard_item_4"/>
             </LinearLayout>
