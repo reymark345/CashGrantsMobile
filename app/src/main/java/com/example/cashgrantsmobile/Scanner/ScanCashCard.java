@@ -72,6 +72,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -145,6 +146,8 @@ public class ScanCashCard extends AppCompatActivity {
     String[] CardRequired = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
+    String[] modifiedArray = Arrays.copyOfRange(Reasons, 1, Reasons.length);
+
     String[] Contact_no_of = new String[]{"Grantee", "Others"};
     String[] Interviewee = new String[]{"Grantee", "Representative"};
     String[] ClientStatus = new String[]{
@@ -1011,7 +1014,6 @@ public class ScanCashCard extends AppCompatActivity {
                     appendOrStrip(field, false, card_number);
                 }
                 prevCount = card_number.getText().toString().length();
-
             }
         });
     }
@@ -2157,9 +2159,10 @@ public class ScanCashCard extends AppCompatActivity {
                     til_distribution_status.setError("Must be Claimed if physical cash card presented");
                     isValidationError++;
                 }
-            } else {
-                til_reason_not_presented.setVisibility(View.VISIBLE);
             }
+//            else {
+//                til_reason_not_presented.setVisibility(View.VISIBLE);
+//            }
 
             if (card_physically_presented.matches("")) {
                 til_card_physically_presented.setError(required_field);
@@ -4236,13 +4239,29 @@ public class ScanCashCard extends AppCompatActivity {
                             edt_release_date.setText("");
                             edt_release_by.setText("");
                             edt_release_place.setText("");
+                            aat_reason_not_presented.setText("");
+                            aat_card_physically_presented.setText("");
+                            aat_card_replacement_request.setText("");
+                            edt_card_replacement_request_submitted_details.setText("");
+                            til_reason_not_presented.setVisibility(View.GONE);
+                            til_card_replacement_request.setVisibility(View.GONE); //new
                             til_release_date.setVisibility(View.GONE);
                             til_release_place.setVisibility(View.GONE);
                             til_release_by.setVisibility(View.GONE);
+                            til_reason_unclaimed.setVisibility(View.VISIBLE);
+                            til_card_physically_presented.setVisibility(View.GONE);
+
+//                            Reasons = Arrays.copyOfRange(Reasons, 1, Reasons.length);
+//                            ArrayAdapter<String> adapterYesNo = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
+//                            adapterYesNo.setDropDownViewResource(simple_spinner_dropdown_item);
+//                            aat_reason_not_presented.setAdapter(adapterYesNo);
                         } else {
+//                            til_reason_not_presented.setVisibility(View.VISIBLE);
                             til_release_date.setVisibility(View.VISIBLE);
                             til_release_place.setVisibility(View.VISIBLE);
                             til_release_by.setVisibility(View.VISIBLE);
+                            til_reason_unclaimed.setVisibility(View.GONE);
+                            til_card_physically_presented.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -4374,7 +4393,8 @@ public class ScanCashCard extends AppCompatActivity {
                                 til_distribution_status.setError("Must be Claimed if physical cash card presented");
                                 isValidationError++;
                             }
-                        } else {
+                        }
+                        else {
                             til_distribution_status.setError(null);
                             til_reason_not_presented.setVisibility(View.VISIBLE);
                         }
@@ -4591,10 +4611,12 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_remarks.setText(null);
                         edt_staff_intervention.setText(null);
                         edt_other_details.setText(null);
-                        if (aat_reason_not_presented.getText().toString().matches("Unclaimed")) {
-                            til_reason_unclaimed.setVisibility(View.VISIBLE);
-                        } else if (aat_reason_not_presented.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented.getText().toString().matches("Damaged/Defective")) {
-                            til_card_replacement_request.setVisibility(View.VISIBLE);
+//                        if (aat_reason_not_presented.getText().toString().matches("Unclaimed")) {
+//                            til_reason_unclaimed.setVisibility(View.VISIBLE);
+//                        }
+                         if (aat_reason_not_presented.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented.getText().toString().matches("Damaged/Defective")) {
+                             aat_card_replacement_request.setText("");
+                             til_card_replacement_request.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented.getText().toString().matches("Pawned")) {
                             mcvPawning.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented.getText().toString().matches("Others")) {
@@ -5065,6 +5087,7 @@ public class ScanCashCard extends AppCompatActivity {
                 String pawning_remarks3 = sh.getString("pawning_remarks3", "");
                 String pawning_remarks4 = sh.getString("pawning_remarks4", "");
                 String pawning_remarks5 = sh.getString("pawning_remarks5", "");
+                String distribution_status_actual = aat_distribution_status.getText().toString();
 
                 edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
 
@@ -5073,8 +5096,8 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status_record.setEnabled(false);
                 edt_release_date_record.setEnabled(false);
 
-                aat_distribution_status.setText(distribution_status, false);
-                edt_release_date.setText(release_date);
+//                aat_distribution_status.setText(distribution_status, false); not prefilled
+//                edt_release_date.setText(release_date); not prefilled
                 edt_release_by.setText(release_by);
                 edt_release_place.setText(release_place);
                 aat_card_physically_presented.setText(card_physically_presented, false);
@@ -5188,10 +5211,15 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_pawning_remarks5.setText(pawning_remarks5);
                 edt_card_number_prefilled.setText(card_number_prefilled);
 
-                if (distribution_status.matches("Claimed")) {
+                if (distribution_status_actual.matches("Claimed")) {
                     til_release_date.setVisibility(View.VISIBLE);
                     til_release_by.setVisibility(View.VISIBLE);
                     til_release_place.setVisibility(View.VISIBLE);
+                }
+                else{
+                    til_release_date.setVisibility(View.GONE);
+                    til_release_by.setVisibility(View.GONE);
+                    til_release_place.setVisibility(View.GONE);
                 }
 
                 if (card_physically_presented.matches("Yes")) {
