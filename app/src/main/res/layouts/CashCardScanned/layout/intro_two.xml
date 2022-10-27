@@ -1151,7 +1151,7 @@
                         app:startIconDrawable="@drawable/ic_baseline_text_snippet_24">
 
                         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:id="@+id/aat_reason_unclaimed1"
+                            android:id="@+id/aat_reason_unclaimed1"       
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="false"
