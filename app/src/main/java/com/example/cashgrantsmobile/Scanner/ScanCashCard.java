@@ -145,7 +145,7 @@ public class ScanCashCard extends AppCompatActivity {
     String[] Ans = new String[]{"Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
-    String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
+    String[] Reasons = new String[]{"Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
     String[] modifiedArray = Arrays.copyOfRange(Reasons, 1, Reasons.length);
 
     String[] Contact_no_of = new String[]{"Grantee", "Others"};
@@ -3620,8 +3620,8 @@ public class ScanCashCard extends AppCompatActivity {
                     myEdit.putString("hh_set", hh_set_group);
                     myEdit.putString("nma_amount", nma_amount);
                     myEdit.putString("pressBtn_search", "true");
-                    myEdit.putString("card_number_prefilled", grantee_card_number);
-                    myEdit.putString("distribution_status", grantee_distribution_status);
+//                    myEdit.putString("card_number_prefilled", grantee_card_number); // not prefilled
+//                    myEdit.putString("distribution_status", grantee_distribution_status); not prefilled
                     myEdit.putString("release_date", grantee_card_release_date);
                     myEdit.putString("card_number_prefilled1", other_card_number_1);
                     myEdit.putString("card_holder_name1", other_card_holder_1);
@@ -3970,6 +3970,7 @@ public class ScanCashCard extends AppCompatActivity {
                 til_release_date.setVisibility(View.GONE);
                 til_release_by.setVisibility(View.GONE);
                 til_release_place.setVisibility(View.GONE);
+                til_card_physically_presented.setVisibility(View.GONE);//new
                 til_card_pin_is_attached.setVisibility(View.GONE);
                 til_reason_not_presented.setVisibility(View.GONE);
                 til_others_reason_not_presented.setVisibility(View.GONE);
@@ -4395,6 +4396,8 @@ public class ScanCashCard extends AppCompatActivity {
                             }
                         }
                         else {
+                            aat_card_pin_is_attached.setText("");
+                            til_card_pin_is_attached.setVisibility(View.GONE);
                             til_distribution_status.setError(null);
                             til_reason_not_presented.setVisibility(View.VISIBLE);
                         }
@@ -5096,8 +5099,8 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status_record.setEnabled(false);
                 edt_release_date_record.setEnabled(false);
 
-//                aat_distribution_status.setText(distribution_status, false); not prefilled
-//                edt_release_date.setText(release_date); not prefilled
+                aat_distribution_status.setText(distribution_status, false);
+                edt_release_date.setText(release_date);
                 edt_release_by.setText(release_by);
                 edt_release_place.setText(release_place);
                 aat_card_physically_presented.setText(card_physically_presented, false);
@@ -5211,12 +5214,14 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_pawning_remarks5.setText(pawning_remarks5);
                 edt_card_number_prefilled.setText(card_number_prefilled);
 
-                if (distribution_status_actual.matches("Claimed")) {
+                if (distribution_status.matches("Claimed")) {
+                    Log.v(TAG,"Wlaa man ni clear"+ distribution_status_actual);
                     til_release_date.setVisibility(View.VISIBLE);
                     til_release_by.setVisibility(View.VISIBLE);
                     til_release_place.setVisibility(View.VISIBLE);
                 }
                 else{
+                    Log.v(TAG,"Wlaa man ni clear gonee" + distribution_status_actual);
                     til_release_date.setVisibility(View.GONE);
                     til_release_by.setVisibility(View.GONE);
                     til_release_place.setVisibility(View.GONE);
