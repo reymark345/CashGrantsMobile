@@ -144,10 +144,15 @@ public class SyncData extends AppCompatActivity {
                 remoteData = null;
                 JSONObject data = new JSONObject(response);
                 JSONArray dataSets = data.getJSONArray("data");
-
-                Integer totalDataCount = Integer.parseInt(data.getString("total_data_count"));
-                String status = data.getString("status");
-
+                Integer totalDataCount = 0;
+                String status = "";
+                try {
+                    totalDataCount = Integer.parseInt(data.getString("total_data_count"));
+                    status = data.getString("status");
+                } catch (Exception e) {
+                    Toasty.error(getApplicationContext(), "Error on API Conversion of Data!", Toasty.LENGTH_LONG).show();
+                    btnSync.setEnabled(false);
+                }
                 if (status.matches("success")){
                     sqLiteHelper.storeLogs("pull", "", "Pull data successfully.");
                     progressCount = findViewById(R.id.progressFigure);
