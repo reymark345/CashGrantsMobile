@@ -55,7 +55,7 @@
                         android:id="@+id/edt_nma_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="NMA Amount"
+                        android:hint="NMA Amount as of Sep. 30, 2020"
                         android:inputType="numberDecimal"
                         android:maxLength="12" />
                 </com.google.android.material.textfield.TextInputLayout>

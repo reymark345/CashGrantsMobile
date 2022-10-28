@@ -72,6 +72,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -144,7 +145,9 @@ public class ScanCashCard extends AppCompatActivity {
     String[] Ans = new String[]{"Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
-    String[] Reasons = new String[]{"Unclaimed", "Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
+    String[] Reasons = new String[]{"Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
+    String[] modifiedArray = Arrays.copyOfRange(Reasons, 1, Reasons.length);
+
     String[] Contact_no_of = new String[]{"Grantee", "Others"};
     String[] Interviewee = new String[]{"Grantee", "Representative"};
     String[] ClientStatus = new String[]{
@@ -1011,7 +1014,6 @@ public class ScanCashCard extends AppCompatActivity {
                     appendOrStrip(field, false, card_number);
                 }
                 prevCount = card_number.getText().toString().length();
-
             }
         });
     }
@@ -1049,6 +1051,7 @@ public class ScanCashCard extends AppCompatActivity {
                     btnCancelOtherCard1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
                             card_count--;
                             myEdit.putInt("card_count", card_count);
                             myEdit.commit();
@@ -1126,6 +1129,7 @@ public class ScanCashCard extends AppCompatActivity {
             edt_card_number_inputted1.setText("");
             edt_card_number_series1.setText("");
             edt_pawning_remarks1.setText("");
+            edt_card_holder_name1.setText("");
         }
 
         if (otherCardAvailability2.getVisibility() == View.GONE) {
@@ -1146,6 +1150,7 @@ public class ScanCashCard extends AppCompatActivity {
             edt_card_number_inputted2.setText("");
             edt_card_number_series2.setText("");
             edt_pawning_remarks2.setText("");
+            edt_card_holder_name2.setText("");
         }
 
         if (otherCardAvailability3.getVisibility() == View.GONE) {
@@ -1166,6 +1171,7 @@ public class ScanCashCard extends AppCompatActivity {
             edt_card_number_inputted3.setText("");
             edt_card_number_series3.setText("");
             edt_pawning_remarks3.setText("");
+            edt_card_holder_name3.setText("");
         }
 
         if (otherCardAvailability4.getVisibility() == View.GONE) {
@@ -1186,6 +1192,7 @@ public class ScanCashCard extends AppCompatActivity {
             edt_card_number_inputted4.setText("");
             edt_card_number_series4.setText("");
             edt_pawning_remarks4.setText("");
+            edt_card_holder_name4.setText("");
         }
 
         if (otherCardAvailability5.getVisibility() == View.GONE) {
@@ -1206,6 +1213,7 @@ public class ScanCashCard extends AppCompatActivity {
             edt_card_number_inputted5.setText("");
             edt_card_number_series5.setText("");
             edt_pawning_remarks5.setText("");
+            edt_card_holder_name5.setText("");
         }
     }
 
@@ -1828,6 +1836,7 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_nma_others_reason = findViewById(R.id.edt_nma_others_reason);
                 edt_nma_date_claimed = findViewById(R.id.edt_nma_date_claimed);
                 edt_nma_remarks = findViewById(R.id.edt_nma_remarks);
+                edt_nma_amount.setEnabled(false);
                 break;
             case 4:
                 til_overall_remarks = findViewById(R.id.til_overall_remarks);
@@ -2112,15 +2121,16 @@ public class ScanCashCard extends AppCompatActivity {
             String card_number_series4 = edt_card_number_series4.getText().toString();
             String card_number_series5 = edt_card_number_series5.getText().toString();
             String pawning_remarks1 = edt_pawning_remarks1.getText().toString();
-            String pawning_remarks2 = edt_pawning_remarks1.getText().toString();
-            String pawning_remarks3 = edt_pawning_remarks1.getText().toString();
-            String pawning_remarks4 = edt_pawning_remarks1.getText().toString();
-            String pawning_remarks5 = edt_pawning_remarks1.getText().toString();
+            String pawning_remarks2 = edt_pawning_remarks2.getText().toString();
+            String pawning_remarks3 = edt_pawning_remarks3.getText().toString();
+            String pawning_remarks4 = edt_pawning_remarks4.getText().toString();
+            String pawning_remarks5 = edt_pawning_remarks5.getText().toString();
 
 
             if (distribution_status.matches("")) {
                 til_distribution_status.setError(required_field);
                 isValidationError++;
+                Log.v(TAG,"tracingerror 1 ");
             } else {
                 til_distribution_status.setError(null);
 
@@ -2128,6 +2138,7 @@ public class ScanCashCard extends AppCompatActivity {
                     if (release_date.matches("")) {
                         til_release_date.setError(required_field);
                         isValidationError++;
+                        Log.v(TAG,"tracingerror 2 ");
                     } else {
                         til_release_date.setError(null);
                     }
@@ -2135,6 +2146,7 @@ public class ScanCashCard extends AppCompatActivity {
                     if (release_by.matches("")) {
                         til_release_by.setError(required_field);
                         isValidationError++;
+                        Log.v(TAG,"tracingerror 3 ");
                     } else {
                         til_release_by.setError(null);
                     }
@@ -2142,10 +2154,122 @@ public class ScanCashCard extends AppCompatActivity {
                     if (release_place.matches("")) {
                         til_release_place.setError(required_field);
                         isValidationError++;
+                        Log.v(TAG,"tracingerror 4 ");
                     } else {
                         til_release_place.setError(null);
                     }
+
+                    //new
+                    if (card_physically_presented.matches("")) {
+                        til_card_physically_presented.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG,"tracingerror 8 ");
+                    } else {
+                        til_card_physically_presented.setError(null);
+
+                        if (card_physically_presented.matches("Yes")) {
+                            if (distribution_status.matches("Unclaimed")){
+                                til_distribution_status.setError("Must be Claimed if Yes on physical cash card presented");
+                                isValidationError++;
+                                Log.v(TAG,"tracingerror 9 ");
+                            }
+                            else{
+                                til_distribution_status.setError(null);
+                            }
+                            if (card_pin_is_attached.matches("")) {
+                                til_card_pin_is_attached.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"tracingerror 10 ");
+                            } else {
+                                til_card_pin_is_attached.setError(null);
+                            }
+                        } else {
+                            if (reason_not_presented.matches("")) {
+                                til_reason_not_presented.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"tracingerror 11 ");
+                            } else {
+                                til_reason_not_presented.setError(null);
+
+                                if (reason_not_presented.matches("Unclaimed")) {
+//                            if (reason_unclaimed.matches("")) {
+//                                til_reason_unclaimed.setError(required_field);
+//                                isValidationError++;
+//                            } else {
+//                                til_reason_unclaimed.setError(null);
+//
+//                                if (reason_unclaimed.matches("Others")) {
+//                                    if (others_reason_unclaimed.matches("")) {
+//                                        til_others_reason_unclaimed.setError(required_field);
+//                                        isValidationError++;
+//                                    } else {
+//                                        til_others_reason_unclaimed.setError(null);
+//                                    }
+//                                }
+//                            }
+                                } else
+
+                                if (reason_not_presented.matches("Lost/Stolen") || reason_not_presented.matches("Damaged/Defective")) {
+                                    if (card_replacement_request.matches("")) {
+                                        til_card_replacement_request.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG,"tracingerror 12 ");
+                                    } else {
+                                        til_card_replacement_request.setError(null);
+
+                                        if (card_replacement_request.matches("Yes")) {
+                                            if (card_replacement_request_submitted_details.matches("")) {
+                                                til_card_replacement_request_submitted_details.setError(required_field);
+                                                isValidationError++;
+                                                Log.v(TAG,"tracingerror 13 ");
+                                            } else {
+                                                til_card_replacement_request_submitted_details.setError(null);
+                                            }
+                                        }
+                                    }
+                                } else if (reason_not_presented.matches("Pawned")) {
+                                    if (lender_name.matches("")) {
+                                        til_lender_name.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG,"tracingerror 14 ");
+                                    } else {
+                                        til_lender_name.setError(null);
+                                    }
+                                } else if (reason_not_presented.matches("Others")) {
+                                    if (others_reason_not_presented.matches("")) {
+                                        til_others_reason_not_presented.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG,"tracingerror 15 ");
+                                    } else {
+                                        til_others_reason_not_presented.setError(null);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //end
                 }
+                //new
+                else {
+                    if (reason_unclaimed.matches("")) {
+                        til_reason_unclaimed.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG,"tracingerror 5 ");
+                    } else {
+                        til_reason_unclaimed.setError(null);
+                        if (reason_unclaimed.matches("Others")) {
+                            if (others_reason_unclaimed.matches("")) {
+                                til_others_reason_unclaimed.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"tracingerror 6 ");
+                            } else {
+                                til_others_reason_unclaimed.setError(null);
+                            }
+                        }
+                    }
+
+                }
+                //end
 
             }
 
@@ -2156,101 +2280,28 @@ public class ScanCashCard extends AppCompatActivity {
                 if (aat_distribution_status.getText().toString().matches("Unclaimed")){
                     til_distribution_status.setError("Must be Claimed if physical cash card presented");
                     isValidationError++;
-                }
-            } else {
-                til_reason_not_presented.setVisibility(View.VISIBLE);
-            }
-
-            if (card_physically_presented.matches("")) {
-                til_card_physically_presented.setError(required_field);
-                isValidationError++;
-            } else {
-                til_card_physically_presented.setError(null);
-
-                if (card_physically_presented.matches("Yes")) {
-                    if (distribution_status.matches("Unclaimed")){
-                        til_distribution_status.setError("Must be Claimed if Yes on physical cash card presented");
-                        isValidationError++;
-                    }
-                    else{
-                        til_distribution_status.setError(null);
-                    }
-                    if (card_pin_is_attached.matches("")) {
-                        til_card_pin_is_attached.setError(required_field);
-                        isValidationError++;
-                    } else {
-                        til_card_pin_is_attached.setError(null);
-                    }
-                } else {
-                    if (reason_not_presented.matches("")) {
-                        til_reason_not_presented.setError(required_field);
-                        isValidationError++;
-                    } else {
-                        til_reason_not_presented.setError(null);
-
-                        if (reason_not_presented.matches("Unclaimed")) {
-                            if (reason_unclaimed.matches("")) {
-                                til_reason_unclaimed.setError(required_field);
-                                isValidationError++;
-                            } else {
-                                til_reason_unclaimed.setError(null);
-
-                                if (reason_unclaimed.matches("Others")) {
-                                    if (others_reason_unclaimed.matches("")) {
-                                        til_others_reason_unclaimed.setError(required_field);
-                                        isValidationError++;
-                                    } else {
-                                        til_others_reason_unclaimed.setError(null);
-                                    }
-                                }
-                            }
-                        } else if (reason_not_presented.matches("Lost/Stolen") || reason_not_presented.matches("Damaged/Defective")) {
-                            if (card_replacement_request.matches("")) {
-                                til_card_replacement_request.setError(required_field);
-                                isValidationError++;
-                            } else {
-                                til_card_replacement_request.setError(null);
-
-                                if (card_replacement_request.matches("Yes")) {
-                                    if (card_replacement_request_submitted_details.matches("")) {
-                                        til_card_replacement_request_submitted_details.setError(required_field);
-                                        isValidationError++;
-                                    } else {
-                                        til_card_replacement_request_submitted_details.setError(null);
-                                    }
-                                }
-                            }
-                        } else if (reason_not_presented.matches("Pawned")) {
-                            if (lender_name.matches("")) {
-                                til_lender_name.setError(required_field);
-                                isValidationError++;
-                            } else {
-                                til_lender_name.setError(null);
-                            }
-                        } else if (reason_not_presented.matches("Others")) {
-                            if (others_reason_not_presented.matches("")) {
-                                til_others_reason_not_presented.setError(required_field);
-                                isValidationError++;
-                            } else {
-                                til_others_reason_not_presented.setError(null);
-                            }
-                        }
-                    }
+                    Log.v(TAG,"tracingerror 7 ");
                 }
             }
+//            else {
+//                til_reason_not_presented.setVisibility(View.VISIBLE);
+//            }
 
 
             if (card_number_inputted.matches("")) {
                 til_card_number_inputted.setError(required_field);
                 isValidationError++;
+                Log.v(TAG,"tracingerror 16 ");
             }
             else if(card_number_inputted.length() != 23){
                 til_card_number_inputted.setError(required_cc_length);
                 isValidationError++;
+                Log.v(TAG,"tracingerror 17");
             }
             else if (!card_number_inputted.matches("[0-9 ]+")){
                 til_card_number_inputted.setError(required_cc_invalid_format);
                 isValidationError++;
+                Log.v(TAG,"tracingerror 18 ");
             }
             else {
                 til_card_number_inputted.setError(null);
@@ -2259,6 +2310,7 @@ public class ScanCashCard extends AppCompatActivity {
             if (card_number_series.matches("")) {
                 til_card_number_series.setError(required_field);
                 isValidationError++;
+                Log.v(TAG,"tracingerror 19 ");
             } else {
                 til_card_number_series.setError(null);
             }
@@ -2266,6 +2318,7 @@ public class ScanCashCard extends AppCompatActivity {
             if (id_exists.matches("")) {
                 til_id_exists.setError(required_field);
                 isValidationError++;
+                Log.v(TAG,"tracingerror 20 ");
             } else {
                 til_id_exists.setError(null);
             }
@@ -2277,6 +2330,7 @@ public class ScanCashCard extends AppCompatActivity {
                 if (aat_distribution_status5.getText().toString().matches("Unclaimed")){
                     til_distribution_status5.setError("Must be Claimed if physical cash card presented");
                     isValidationError++;
+                    Log.v(TAG,"tracingerror 21 ");
                 }
                 else {
                     til_distribution_status5.setError(null);
@@ -2372,76 +2426,98 @@ public class ScanCashCard extends AppCompatActivity {
             til_card_number_series5.setError(null);
 
 
-
-
-
-
             if (otherCardAvailability1.getVisibility() == View.VISIBLE) {
                 if (distribution_status1.matches("")) {
                     til_distribution_status1.setError(required_field);
                     isValidationError++;
+                    Log.v(TAG, "newtracedaerror 1 ");
                 } else {
 
                     if (distribution_status1.matches("Claimed")) {
                         if (release_date1.matches("")) {
                             til_release_date1.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 2 ");
                         }
                         if (release_by1.matches("")) {
                             til_release_by1.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 3 ");
                         }
                         if (release_place1.matches("")) {
                             til_release_place1.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 4 ");
                         }
                     }
                 }
+
+            if (distribution_status1.matches("Claimed")){
                 if (card_physically_presented1.matches("")) {
                     til_card_physically_presented1.setError(required_field);
                     isValidationError++;
+                    Log.v(TAG, "newtracedaerror 5 ");
                 } else {
                     if (card_physically_presented1.matches("Yes")) {
-                        if (distribution_status1.matches("Unclaimed")){
+                        if (distribution_status1.matches("Unclaimed")) {
                             til_distribution_status1.setError("Must be Claimed if Yes on physical cash card presented");
                             isValidationError++;
-                        }
-                        else{
+                            Log.v(TAG, "newtracedaerror 6 ");
+                        } else {
                             til_distribution_status1.setError(null);
                         }
                         if (card_pin_is_attached1.matches("")) {
                             til_card_pin_is_attached1.setError(required_field);
                             isValidationError++;
-                        }
-                        else {
+                            Log.v(TAG, "newtracedaerror 7 ");
+                        } else {
                             til_card_pin_is_attached1.setError(null);
                         }
+                        //start
+                        if (card_number_inputted1.matches("")) {
+                            til_card_number_inputted1.setError(required_field);
+                            isValidationError++;
+                            Log.v(TAG,"newtracedaerror 15 ");
+                        }
+                        else if(card_number_inputted1.length() != 23){
+                            til_card_number_inputted1.setError(required_cc_length);
+                            isValidationError++;
+                            Log.v(TAG,"newtracedaerror 16");
+                        }
+                        else if (!card_number_inputted1.matches("[0-9 ]+")){
+                            til_card_number_inputted1.setError(required_cc_invalid_format);
+                            isValidationError++;
+                            Log.v(TAG,"newtracedaerror 17 ");
+                        }
+
+                        else {
+                            til_card_number_inputted1.setError(null);
+
+                        }
+                        if (card_number_series1.matches("")) {
+                            til_card_number_series1.setError(required_field);
+                            isValidationError++;
+                            Log.v(TAG,"newtracedaerror 18 ");
+                        }
+                        //end
+
                     } else {
                         if (reason_not_presented1.matches("")) {
                             til_reason_not_presented1.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 8 ");
                         } else {
-                            if (reason_not_presented1.matches("Unclaimed")) {
-                                if (reason_unclaimed1.matches("")) {
-                                    til_reason_unclaimed1.setError(required_field);
-                                    isValidationError++;
-                                } else {
-                                    if (reason_unclaimed1.matches("Others")) {
-                                        if (others_reason_unclaimed1.matches("")) {
-                                            til_others_reason_unclaimed1.setError(required_field);
-                                            isValidationError++;
-                                        }
-                                    }
-                                }
-                            } else if (reason_not_presented1.matches("Lost/Stolen") || reason_not_presented1.matches("Damaged/Defective")) {
+                             if (reason_not_presented1.matches("Lost/Stolen") || reason_not_presented1.matches("Damaged/Defective")) {
                                 if (card_replacement_request1.matches("")) {
                                     til_card_replacement_request1.setError(required_field);
                                     isValidationError++;
+                                    Log.v(TAG, "newtracedaerror 11 ");
                                 } else {
                                     if (card_replacement_request1.matches("Yes")) {
                                         if (card_replacement_request_submitted_details1.matches("")) {
                                             til_card_replacement_request_submitted_details1.setError(required_field);
                                             isValidationError++;
+                                            Log.v(TAG, "newtracedaerror 12 ");
                                         }
                                     }
                                 }
@@ -2449,245 +2525,401 @@ public class ScanCashCard extends AppCompatActivity {
                                 if (pawning_remarks1.matches("")) {
                                     til_pawning_remarks1.setError(required_field);
                                     isValidationError++;
+                                    Log.v(TAG, "pawwneed daww ");
                                 }
                             } else if (reason_not_presented1.matches("Others")) {
                                 if (others_reason_not_presented1.matches("")) {
                                     til_others_reason_not_presented1.setError(required_field);
                                     isValidationError++;
+                                    Log.v(TAG, "newtracedaerror 14 ");
                                 }
                             }
                         }
                     }
                 }
-                if (card_number_inputted1.matches("")) {
-                    til_card_number_inputted1.setError(required_field);
+            }
+            else if (distribution_status1.matches("Unclaimed")) {
+                if (reason_unclaimed1.matches("")) {
+                    til_reason_unclaimed1.setError(required_field);
                     isValidationError++;
+                    Log.v(TAG, "newtracedaerror 9 ");
+                } else {
+                    if (reason_unclaimed1.matches("Others")) {
+                        if (others_reason_unclaimed1.matches("")) {
+                            til_others_reason_unclaimed1.setError(required_field);
+                            isValidationError++;
+                            Log.v(TAG, "newtracedaerror 10 ");
+                        }
+                    }
                 }
-                else if(card_number_inputted1.length() != 23){
-                    til_card_number_inputted1.setError(required_cc_length);
-                    isValidationError++;
-                }
-                else if (!card_number_inputted1.matches("[0-9 ]+")){
-                    til_card_number_inputted1.setError(required_cc_invalid_format);
-                    isValidationError++;
-                }
-
-                else {
-                    til_card_number_inputted1.setError(null);
-
-                }
-                if (card_number_series1.matches("")) {
-                    til_card_number_series1.setError(required_field);
-                    isValidationError++;
-                }
+              }
             }
 
             if (otherCardAvailability2.getVisibility() == View.VISIBLE) {
                 if (distribution_status2.matches("")) {
                     til_distribution_status2.setError(required_field);
                     isValidationError++;
+                    Log.v(TAG, "newtracedaerror 1 ");
                 } else {
                     if (distribution_status2.matches("Claimed")) {
                         if (release_date2.matches("")) {
                             til_release_date2.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 2 ");
                         }
                         if (release_by2.matches("")) {
                             til_release_by2.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 3 ");
                         }
                         if (release_place2.matches("")) {
                             til_release_place2.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 4 ");
                         }
                     }
-
                 }
 
-                if (card_physically_presented2.matches("")) {
-                    til_card_physically_presented2.setError(required_field);
-                    isValidationError++;
-                } else {
-                    if (card_physically_presented2.matches("Yes")) {
-                        if (distribution_status2.matches("Unclaimed")){
-                            til_distribution_status2.setError("Must be Claimed if Yes on physical cash card presented");
-                            isValidationError++;
-                        }
-                        else{
-                            til_distribution_status2.setError(null);
-                        }
-
-                        if (card_pin_is_attached2.matches("")) {
-                            til_card_pin_is_attached2.setError(required_field);
-                            isValidationError++;
-                        }
+                if (distribution_status2.matches("Claimed")){
+                    if (card_physically_presented2.matches("")) {
+                        til_card_physically_presented2.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG, "newtracedaerror 5 ");
                     } else {
-                        if (reason_not_presented2.matches("")) {
-                            til_reason_not_presented2.setError(required_field);
-                            isValidationError++;
-                        } else {
-                            if (reason_not_presented2.matches("Unclaimed")) {
-                                if (reason_unclaimed2.matches("")) {
-                                    til_reason_unclaimed2.setError(required_field);
-                                    isValidationError++;
-                                } else {
-                                    if (reason_unclaimed2.matches("Others")) {
-                                        if (others_reason_unclaimed2.matches("")) {
-                                            til_others_reason_unclaimed2.setError(required_field);
-                                            isValidationError++;
-                                        }
-                                    }
-                                }
-                            } else if (reason_not_presented2.matches("Lost/Stolen") || reason_not_presented2.matches("Damaged/Defective")) {
-                                if (card_replacement_request2.matches("")) {
-                                    til_card_replacement_request2.setError(required_field);
-                                    isValidationError++;
-                                } else {
+                        if (card_physically_presented2.matches("Yes")) {
+                            if (distribution_status2.matches("Unclaimed")) {
+                                til_distribution_status2.setError("Must be Claimed if Yes on physical cash card presented");
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 6 ");
+                            } else {
+                                til_distribution_status2.setError(null);
+                            }
+                            if (card_pin_is_attached2.matches("")) {
+                                til_card_pin_is_attached2.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 7 ");
+                            } else {
+                                til_card_pin_is_attached2.setError(null);
+                            }
+                            //start
+                            if (card_number_inputted2.matches("")) {
+                                til_card_number_inputted2.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 15 ");
+                            }
+                            else if(card_number_inputted2.length() != 23){
+                                til_card_number_inputted2.setError(required_cc_length);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 16");
+                            }
+                            else if (!card_number_inputted2.matches("[0-9 ]+")){
+                                til_card_number_inputted2.setError(required_cc_invalid_format);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 17 ");
+                            }
 
-                                    if (card_replacement_request2.matches("Yes")) {
-                                        if (card_replacement_request_submitted_details2.matches("")) {
-                                            til_card_replacement_request_submitted_details2.setError(required_field);
-                                            isValidationError++;
+                            else {
+                                til_card_number_inputted2.setError(null);
+
+                            }
+                            if (card_number_series2.matches("")) {
+                                til_card_number_series2.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 18 ");
+                            }
+                            //end
+
+                        } else {
+                            if (reason_not_presented2.matches("")) {
+                                til_reason_not_presented2.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 8 ");
+                            } else {
+                                if (reason_not_presented2.matches("Lost/Stolen") || reason_not_presented2.matches("Damaged/Defective")) {
+                                    if (card_replacement_request2.matches("")) {
+                                        til_card_replacement_request2.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 11 ");
+                                    } else {
+                                        if (card_replacement_request2.matches("Yes")) {
+                                            if (card_replacement_request_submitted_details2.matches("")) {
+                                                til_card_replacement_request_submitted_details2.setError(required_field);
+                                                isValidationError++;
+                                                Log.v(TAG, "newtracedaerror 12 ");
+                                            }
                                         }
                                     }
-                                }
-                            } else if (reason_not_presented2.matches("Pawned")) {
-                                if (pawning_remarks2.matches("")) {
-                                    til_pawning_remarks2.setError(required_field);
-                                    isValidationError++;
-                                }
-                            } else if (reason_not_presented2.matches("Others")) {
-                                if (others_reason_not_presented2.matches("")) {
-                                    til_others_reason_not_presented2.setError(required_field);
-                                    isValidationError++;
+                                } else if (reason_not_presented2.matches("Pawned")) {
+                                    Log.v(TAG, "resson 1111");
+                                    if (pawning_remarks2.matches("")) {
+                                        til_pawning_remarks2.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "resson 2222" + pawning_remarks2);
+                                    }
+                                    else{
+                                        Log.v(TAG, "resson 3333 " +pawning_remarks2 );
+                                    }
+                                } else if (reason_not_presented2.matches("Others")) {
+                                    if (others_reason_not_presented2.matches("")) {
+                                        til_others_reason_not_presented2.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 14 ");
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                if (card_number_inputted2.matches("")) {
-                    til_card_number_inputted2.setError(required_field);
-                    isValidationError++;
-                }
-                else if(card_number_inputted2.length() != 23){
-                    til_card_number_inputted2.setError(required_cc_length);
-                    isValidationError++;
-                }
-                else if (!card_number_inputted2.matches("[0-9 ]+")){
-                    til_card_number_inputted2.setError(required_cc_invalid_format);
-                    isValidationError++;
-                }
-                else {
-                    til_card_number_inputted2.setError(null);
+                else if (distribution_status2.matches("Unclaimed")) {
+                    if (reason_unclaimed2.matches("")) {
+                        til_reason_unclaimed2.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG, "newtracedaerror 9 ");
+                    } else {
+                        if (reason_unclaimed2.matches("Others")) {
+                            if (others_reason_unclaimed2.matches("")) {
+                                til_others_reason_unclaimed2.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 10 ");
+                            }
+                        }
+                    }
                 }
 
-                if (card_number_series2.matches("")) {
-                    til_card_number_series2.setError(required_field);
-                    isValidationError++;
-                }
+
+
+//                if (distribution_status2.matches("")) {
+//                    til_distribution_status2.setError(required_field);
+//                    isValidationError++;
+//
+//                } else {
+//                    if (distribution_status2.matches("Claimed")) {
+//                        if (release_date2.matches("")) {
+//                            til_release_date2.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        if (release_by2.matches("")) {
+//                            til_release_by2.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        if (release_place2.matches("")) {
+//                            til_release_place2.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                    }
+//
+//                }
+//
+//                if (card_physically_presented2.matches("")) {
+//                    til_card_physically_presented2.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    if (card_physically_presented2.matches("Yes")) {
+//                        if (distribution_status2.matches("Unclaimed")){
+//                            til_distribution_status2.setError("Must be Claimed if Yes on physical cash card presented");
+//                            isValidationError++;
+//                        }
+//                        else{
+//                            til_distribution_status2.setError(null);
+//                        }
+//
+//                        if (card_pin_is_attached2.matches("")) {
+//                            til_card_pin_is_attached2.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                    } else {
+//                        if (reason_not_presented2.matches("")) {
+//                            til_reason_not_presented2.setError(required_field);
+//                            isValidationError++;
+//                        } else {
+//                            if (reason_not_presented2.matches("Unclaimed")) {
+//                                if (reason_unclaimed2.matches("")) {
+//                                    til_reason_unclaimed2.setError(required_field);
+//                                    isValidationError++;
+//                                } else {
+//                                    if (reason_unclaimed2.matches("Others")) {
+//                                        if (others_reason_unclaimed2.matches("")) {
+//                                            til_others_reason_unclaimed2.setError(required_field);
+//                                            isValidationError++;
+//                                        }
+//                                    }
+//                                }
+//                            } else if (reason_not_presented2.matches("Lost/Stolen") || reason_not_presented2.matches("Damaged/Defective")) {
+//                                if (card_replacement_request2.matches("")) {
+//                                    til_card_replacement_request2.setError(required_field);
+//                                    isValidationError++;
+//                                } else {
+//
+//                                    if (card_replacement_request2.matches("Yes")) {
+//                                        if (card_replacement_request_submitted_details2.matches("")) {
+//                                            til_card_replacement_request_submitted_details2.setError(required_field);
+//                                            isValidationError++;
+//                                        }
+//                                    }
+//                                }
+//                            } else if (reason_not_presented2.matches("Pawned")) {
+//                                if (pawning_remarks2.matches("")) {
+//                                    til_pawning_remarks2.setError(required_field);
+//                                    isValidationError++;
+//                                }
+//                            } else if (reason_not_presented2.matches("Others")) {
+//                                if (others_reason_not_presented2.matches("")) {
+//                                    til_others_reason_not_presented2.setError(required_field);
+//                                    isValidationError++;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                if (card_number_inputted2.matches("")) {
+//                    til_card_number_inputted2.setError(required_field);
+//                    isValidationError++;
+//                }
+//                else if(card_number_inputted2.length() != 23){
+//                    til_card_number_inputted2.setError(required_cc_length);
+//                    isValidationError++;
+//                }
+//                else if (!card_number_inputted2.matches("[0-9 ]+")){
+//                    til_card_number_inputted2.setError(required_cc_invalid_format);
+//                    isValidationError++;
+//                }
+//                else {
+//                    til_card_number_inputted2.setError(null);
+//                }
+//
+//                if (card_number_series2.matches("")) {
+//                    til_card_number_series2.setError(required_field);
+//                    isValidationError++;
+//                }
             }
+
 
             if (otherCardAvailability3.getVisibility() == View.VISIBLE) {
                 if (distribution_status3.matches("")) {
                     til_distribution_status3.setError(required_field);
                     isValidationError++;
+                    Log.v(TAG, "newtracedaerror 1 ");
                 } else {
+
                     if (distribution_status3.matches("Claimed")) {
                         if (release_date3.matches("")) {
                             til_release_date3.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 2 ");
                         }
                         if (release_by3.matches("")) {
                             til_release_by3.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 3 ");
                         }
                         if (release_place3.matches("")) {
                             til_release_place3.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 4 ");
                         }
                     }
                 }
-                if (card_physically_presented3.matches("")) {
-                    til_card_physically_presented3.setError(required_field);
-                    isValidationError++;
-                } else {
-                    if (card_physically_presented3.matches("Yes")) {
-                        if (distribution_status3.matches("Unclaimed")){
-                            til_distribution_status3.setError("Must be Claimed if Yes on physical cash card presented");
-                            isValidationError++;
-                        }
-                        else{
-                            til_distribution_status3.setError(null);
-                        }
-                        if (card_pin_is_attached3.matches("")) {
-                            til_card_pin_is_attached3.setError(required_field);
-                            isValidationError++;
-                        }
 
+                if (distribution_status3.matches("Claimed")){
+                    if (card_physically_presented3.matches("")) {
+                        til_card_physically_presented3.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG, "newtracedaerror 5 ");
                     } else {
-                        if (reason_not_presented3.matches("")) {
-                            til_reason_not_presented3.setError(required_field);
-                            isValidationError++;
+                        if (card_physically_presented3.matches("Yes")) {
+                            if (distribution_status3.matches("Unclaimed")) {
+                                til_distribution_status3.setError("Must be Claimed if Yes on physical cash card presented");
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 6 ");
+                            } else {
+                                til_distribution_status3.setError(null);
+                            }
+                            if (card_pin_is_attached3.matches("")) {
+                                til_card_pin_is_attached3.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 7 ");
+                            } else {
+                                til_card_pin_is_attached3.setError(null);
+                            }
+                            //start
+                            if (card_number_inputted3.matches("")) {
+                                til_card_number_inputted3.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 15 ");
+                            }
+                            else if(card_number_inputted3.length() != 23){
+                                til_card_number_inputted3.setError(required_cc_length);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 16");
+                            }
+                            else if (!card_number_inputted3.matches("[0-9 ]+")){
+                                til_card_number_inputted3.setError(required_cc_invalid_format);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 17 ");
+                            }
+
+                            else {
+                                til_card_number_inputted3.setError(null);
+
+                            }
+                            if (card_number_series3.matches("")) {
+                                til_card_number_series3.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 18 ");
+                            }
+                            //end
+
                         } else {
-                            if (reason_not_presented3.matches("Unclaimed")) {
-                                if (reason_unclaimed3.matches("")) {
-                                    til_reason_unclaimed3.setError(required_field);
-                                    isValidationError++;
-                                } else {
-                                    if (reason_unclaimed3.matches("Others")) {
-                                        if (others_reason_unclaimed3.matches("")) {
-                                            til_others_reason_unclaimed3.setError(required_field);
-                                            isValidationError++;
+                            if (reason_not_presented3.matches("")) {
+                                til_reason_not_presented3.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 8 ");
+                            } else {
+                                if (reason_not_presented3.matches("Lost/Stolen") || reason_not_presented3.matches("Damaged/Defective")) {
+                                    if (card_replacement_request3.matches("")) {
+                                        til_card_replacement_request3.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 11 ");
+                                    } else {
+                                        if (card_replacement_request3.matches("Yes")) {
+                                            if (card_replacement_request_submitted_details3.matches("")) {
+                                                til_card_replacement_request_submitted_details3.setError(required_field);
+                                                isValidationError++;
+                                                Log.v(TAG, "newtracedaerror 12 ");
+                                            }
                                         }
                                     }
-                                }
-                            } else if (reason_not_presented3.matches("Lost/Stolen") || reason_not_presented3.matches("Damaged/Defective")) {
-                                if (card_replacement_request3.matches("")) {
-                                    til_card_replacement_request3.setError(required_field);
-                                    isValidationError++;
-                                } else {
-                                    if (card_replacement_request3.matches("Yes")) {
-                                        if (card_replacement_request_submitted_details3.matches("")) {
-                                            til_card_replacement_request_submitted_details3.setError(required_field);
-                                            isValidationError++;
-                                        }
+                                } else if (reason_not_presented3.matches("Pawned")) {
+                                    if (pawning_remarks3.matches("")) {
+                                        til_pawning_remarks3.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 13 ");
                                     }
-                                }
-                            } else if (reason_not_presented3.matches("Pawned")) {
-                                if (pawning_remarks3.matches("")) {
-                                    til_pawning_remarks3.setError(required_field);
-                                    isValidationError++;
-                                }
-                            } else if (reason_not_presented3.matches("Others")) {
-                                if (others_reason_not_presented3.matches("")) {
-                                    til_others_reason_not_presented3.setError(required_field);
-                                    isValidationError++;
+                                } else if (reason_not_presented3.matches("Others")) {
+                                    if (others_reason_not_presented3.matches("")) {
+                                        til_others_reason_not_presented3.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 14 ");
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                if (card_number_inputted3.matches("")) {
-                    til_card_number_inputted3.setError(required_field);
-                    isValidationError++;
-                }
-                else if(card_number_inputted3.length() != 23){
-                    til_card_number_inputted3.setError(required_cc_length);
-                    isValidationError++;
-                }
-                else if (!card_number_inputted3.matches("[0-9 ]+")){
-                    til_card_number_inputted3.setError(required_cc_invalid_format);
-                    isValidationError++;
-                }
-
-                else {
-                    til_card_number_inputted3.setError(null);
-
-                }
-
-                if (card_number_series3.matches("")) {
-                    til_card_number_series3.setError(required_field);
-                    isValidationError++;
+                else if (distribution_status3.matches("Unclaimed")) {
+                    if (reason_unclaimed3.matches("")) {
+                        til_reason_unclaimed3.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG, "newtracedaerror 9 ");
+                    } else {
+                        if (reason_unclaimed3.matches("Others")) {
+                            if (others_reason_unclaimed3.matches("")) {
+                                til_others_reason_unclaimed3.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 10 ");
+                            }
+                        }
+                    }
                 }
             }
 
@@ -2695,102 +2927,128 @@ public class ScanCashCard extends AppCompatActivity {
                 if (distribution_status4.matches("")) {
                     til_distribution_status4.setError(required_field);
                     isValidationError++;
+                    Log.v(TAG, "newtracedaerror 4 ");
                 } else {
+
                     if (distribution_status4.matches("Claimed")) {
                         if (release_date4.matches("")) {
                             til_release_date4.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 2 ");
                         }
                         if (release_by4.matches("")) {
                             til_release_by4.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 3 ");
                         }
                         if (release_place4.matches("")) {
                             til_release_place4.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 4 ");
                         }
                     }
                 }
-                if (card_physically_presented4.matches("")) {
-                    til_card_physically_presented4.setError(required_field);
-                    isValidationError++;
-                } else {
-                    if (card_physically_presented4.matches("Yes")) {
-                        if (distribution_status4.matches("Unclaimed")){
-                            til_distribution_status4.setError("Must be Claimed if Yes on physical cash card presented");
-                            isValidationError++;
-                        }
-                        else{
-                            til_distribution_status4.setError(null);
-                        }
-                        if (card_pin_is_attached4.matches("")) {
-                            til_card_pin_is_attached4.setError(required_field);
-                            isValidationError++;
-                        }
+
+                if (distribution_status4.matches("Claimed")){
+                    if (card_physically_presented4.matches("")) {
+                        til_card_physically_presented4.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG, "newtracedaerror 5 ");
                     } else {
-                        if (reason_not_presented4.matches("")) {
-                            til_reason_not_presented4.setError(required_field);
-                            isValidationError++;
+                        if (card_physically_presented4.matches("Yes")) {
+                            if (distribution_status4.matches("Unclaimed")) {
+                                til_distribution_status4.setError("Must be Claimed if Yes on physical cash card presented");
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 6 ");
+                            } else {
+                                til_distribution_status4.setError(null);
+                            }
+                            if (card_pin_is_attached4.matches("")) {
+                                til_card_pin_is_attached4.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 7 ");
+                            } else {
+                                til_card_pin_is_attached4.setError(null);
+                            }
+                            //start
+                            if (card_number_inputted4.matches("")) {
+                                til_card_number_inputted4.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 45 ");
+                            }
+                            else if(card_number_inputted4.length() != 23){
+                                til_card_number_inputted4.setError(required_cc_length);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 46");
+                            }
+                            else if (!card_number_inputted4.matches("[0-9 ]+")){
+                                til_card_number_inputted4.setError(required_cc_invalid_format);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 47 ");
+                            }
+
+                            else {
+                                til_card_number_inputted4.setError(null);
+
+                            }
+                            if (card_number_series4.matches("")) {
+                                til_card_number_series4.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 48 ");
+                            }
+                            //end
+
                         } else {
-                            if (reason_not_presented4.matches("Unclaimed")) {
-                                if (reason_unclaimed4.matches("")) {
-                                    til_reason_unclaimed4.setError(required_field);
-                                    isValidationError++;
-                                } else {
-                                    if (reason_unclaimed4.matches("Others")) {
-                                        if (others_reason_unclaimed4.matches("")) {
-                                            til_others_reason_unclaimed4.setError(required_field);
-                                            isValidationError++;
+                            if (reason_not_presented4.matches("")) {
+                                til_reason_not_presented4.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 8 ");
+                            } else {
+                                if (reason_not_presented4.matches("Lost/Stolen") || reason_not_presented4.matches("Damaged/Defective")) {
+                                    if (card_replacement_request4.matches("")) {
+                                        til_card_replacement_request4.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 44 ");
+                                    } else {
+                                        if (card_replacement_request4.matches("Yes")) {
+                                            if (card_replacement_request_submitted_details4.matches("")) {
+                                                til_card_replacement_request_submitted_details4.setError(required_field);
+                                                isValidationError++;
+                                                Log.v(TAG, "newtracedaerror 42 ");
+                                            }
                                         }
                                     }
-                                }
-                            } else if (reason_not_presented4.matches("Lost/Stolen") || reason_not_presented4.matches("Damaged/Defective")) {
-                                if (card_replacement_request4.matches("")) {
-                                    til_card_replacement_request4.setError(required_field);
-                                    isValidationError++;
-                                } else {
-                                    if (card_replacement_request4.matches("Yes")) {
-                                        if (card_replacement_request_submitted_details4.matches("")) {
-                                            til_card_replacement_request_submitted_details4.setError(required_field);
-                                            isValidationError++;
-                                        }
+                                } else if (reason_not_presented4.matches("Pawned")) {
+                                    if (pawning_remarks4.matches("")) {
+                                        til_pawning_remarks4.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 43 ");
                                     }
-                                }
-                            } else if (reason_not_presented4.matches("Pawned")) {
-                                if (pawning_remarks4.matches("")) {
-                                    til_pawning_remarks4.setError(required_field);
-                                    isValidationError++;
-                                }
-                            } else if (reason_not_presented4.matches("Others")) {
-                                if (others_reason_not_presented4.matches("")) {
-                                    til_others_reason_not_presented4.setError(required_field);
-                                    isValidationError++;
+                                } else if (reason_not_presented4.matches("Others")) {
+                                    if (others_reason_not_presented4.matches("")) {
+                                        til_others_reason_not_presented4.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 44 ");
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                if (card_number_inputted4.matches("")) {
-                    til_card_number_inputted4.setError(required_field);
-                    isValidationError++;
-                }
-                else if(card_number_inputted4.length() != 23){
-                    til_card_number_inputted4.setError(required_cc_length);
-                    isValidationError++;
-                }
-                else if (!card_number_inputted4.matches("[0-9 ]+")){
-                    til_card_number_inputted4.setError(required_cc_invalid_format);
-                    isValidationError++;
-                }
-
-                else {
-                    til_card_number_inputted4.setError(null);
-                }
-
-
-                if (card_number_series4.matches("")) {
-                    til_card_number_series4.setError(required_field);
-                    isValidationError++;
+                else if (distribution_status4.matches("Unclaimed")) {
+                    if (reason_unclaimed4.matches("")) {
+                        til_reason_unclaimed4.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG, "newtracedaerror 9 ");
+                    } else {
+                        if (reason_unclaimed4.matches("Others")) {
+                            if (others_reason_unclaimed4.matches("")) {
+                                til_others_reason_unclaimed4.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 40 ");
+                            }
+                        }
+                    }
                 }
             }
 
@@ -2798,102 +3056,438 @@ public class ScanCashCard extends AppCompatActivity {
                 if (distribution_status5.matches("")) {
                     til_distribution_status5.setError(required_field);
                     isValidationError++;
+                    Log.v(TAG, "newtracedaerror 5 ");
                 } else {
+
                     if (distribution_status5.matches("Claimed")) {
                         if (release_date5.matches("")) {
                             til_release_date5.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 2 ");
                         }
                         if (release_by5.matches("")) {
                             til_release_by5.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 3 ");
                         }
                         if (release_place5.matches("")) {
                             til_release_place5.setError(required_field);
                             isValidationError++;
+                            Log.v(TAG, "newtracedaerror 5 ");
                         }
                     }
                 }
-                if (card_physically_presented5.matches("")) {
-                    til_card_physically_presented5.setError(required_field);
-                    isValidationError++;
-                } else {
-                    if (card_physically_presented5.matches("Yes")) {
-                        if (distribution_status5.matches("Unclaimed")){
-                            til_distribution_status5.setError("Must be Claimed if Yes on physical cash card presented");
-                            isValidationError++;
-                        }
-                        else{
-                            til_distribution_status5.setError(null);
-                        }
-                        if (card_pin_is_attached5.matches("")) {
-                            til_card_pin_is_attached5.setError(required_field);
-                            isValidationError++;
-                        }
+
+                if (distribution_status5.matches("Claimed")){
+                    if (card_physically_presented5.matches("")) {
+                        til_card_physically_presented5.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG, "newtracedaerror 5 ");
                     } else {
-                        if (reason_not_presented5.matches("")) {
-                            til_reason_not_presented5.setError(required_field);
-                            isValidationError++;
+                        if (card_physically_presented5.matches("Yes")) {
+                            if (distribution_status5.matches("Unclaimed")) {
+                                til_distribution_status5.setError("Must be Claimed if Yes on physical cash card presented");
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 6 ");
+                            } else {
+                                til_distribution_status5.setError(null);
+                            }
+                            if (card_pin_is_attached5.matches("")) {
+                                til_card_pin_is_attached5.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 7 ");
+                            } else {
+                                til_card_pin_is_attached5.setError(null);
+                            }
+                            //start
+                            if (card_number_inputted5.matches("")) {
+                                til_card_number_inputted5.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 55 ");
+                            }
+                            else if(card_number_inputted5.length() != 23){
+                                til_card_number_inputted5.setError(required_cc_length);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 56");
+                            }
+                            else if (!card_number_inputted5.matches("[0-9 ]+")){
+                                til_card_number_inputted5.setError(required_cc_invalid_format);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 57 ");
+                            }
+
+                            else {
+                                til_card_number_inputted5.setError(null);
+
+                            }
+                            if (card_number_series5.matches("")) {
+                                til_card_number_series5.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG,"newtracedaerror 58 ");
+                            }
+                            //end
+
                         } else {
-                            if (reason_not_presented5.matches("Unclaimed")) {
-                                if (reason_unclaimed5.matches("")) {
-                                    til_reason_unclaimed5.setError(required_field);
-                                    isValidationError++;
-                                } else {
-                                    if (reason_unclaimed5.matches("Others")) {
-                                        if (others_reason_unclaimed5.matches("")) {
-                                            til_others_reason_unclaimed5.setError(required_field);
-                                            isValidationError++;
+                            if (reason_not_presented5.matches("")) {
+                                til_reason_not_presented5.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 8 ");
+                            } else {
+                                if (reason_not_presented5.matches("Lost/Stolen") || reason_not_presented5.matches("Damaged/Defective")) {
+                                    if (card_replacement_request5.matches("")) {
+                                        til_card_replacement_request5.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 55 ");
+                                    } else {
+                                        if (card_replacement_request5.matches("Yes")) {
+                                            if (card_replacement_request_submitted_details5.matches("")) {
+                                                til_card_replacement_request_submitted_details5.setError(required_field);
+                                                isValidationError++;
+                                                Log.v(TAG, "newtracedaerror 52 ");
+                                            }
                                         }
                                     }
-                                }
-                            } else if (reason_not_presented5.matches("Lost/Stolen") || reason_not_presented5.matches("Damaged/Defective")) {
-                                if (card_replacement_request5.matches("")) {
-                                    til_card_replacement_request5.setError(required_field);
-                                    isValidationError++;
-                                } else {
-                                    if (card_replacement_request5.matches("Yes")) {
-                                        if (card_replacement_request_submitted_details5.matches("")) {
-                                            til_card_replacement_request_submitted_details5.setError(required_field);
-                                            isValidationError++;
-                                        }
+                                } else if (reason_not_presented5.matches("Pawned")) {
+                                    if (pawning_remarks5.matches("")) {
+                                        til_pawning_remarks5.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 53 ");
                                     }
-                                }
-                            } else if (reason_not_presented5.matches("Pawned")) {
-                                if (pawning_remarks5.matches("")) {
-                                    til_pawning_remarks5.setError(required_field);
-                                    isValidationError++;
-                                }
-                            } else if (reason_not_presented5.matches("Others")) {
-                                if (others_reason_not_presented5.matches("")) {
-                                    til_others_reason_not_presented5.setError(required_field);
-                                    isValidationError++;
+                                } else if (reason_not_presented5.matches("Others")) {
+                                    if (others_reason_not_presented5.matches("")) {
+                                        til_others_reason_not_presented5.setError(required_field);
+                                        isValidationError++;
+                                        Log.v(TAG, "newtracedaerror 55 ");
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                if (card_number_inputted5.matches("")) {
-                    til_card_number_inputted5.setError(required_field);
-                    isValidationError++;
-                }
-                else if(card_number_inputted5.length() != 23){
-                    til_card_number_inputted5.setError(required_cc_length);
-                    isValidationError++;
-                }
-                else if (!card_number_inputted5.matches("[0-9 ]+")){
-                    til_card_number_inputted5.setError(required_cc_invalid_format);
-                    isValidationError++;
-                }
-                else {
-                    til_card_number_inputted5.setError(null);
-                }
-
-                if (card_number_series5.matches("")) {
-                    til_card_number_series5.setError(required_field);
-                    isValidationError++;
+                else if (distribution_status5.matches("Unclaimed")) {
+                    if (reason_unclaimed5.matches("")) {
+                        til_reason_unclaimed5.setError(required_field);
+                        isValidationError++;
+                        Log.v(TAG, "newtracedaerror 9 ");
+                    } else {
+                        if (reason_unclaimed5.matches("Others")) {
+                            if (others_reason_unclaimed5.matches("")) {
+                                til_others_reason_unclaimed5.setError(required_field);
+                                isValidationError++;
+                                Log.v(TAG, "newtracedaerror 50 ");
+                            }
+                        }
+                    }
                 }
             }
+
+//            if (otherCardAvailability3.getVisibility() == View.VISIBLE) {
+//                if (distribution_status3.matches("")) {
+//                    til_distribution_status3.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    if (distribution_status3.matches("Claimed")) {
+//                        if (release_date3.matches("")) {
+//                            til_release_date3.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        if (release_by3.matches("")) {
+//                            til_release_by3.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        if (release_place3.matches("")) {
+//                            til_release_place3.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                    }
+//                }
+//                if (card_physically_presented3.matches("")) {
+//                    til_card_physically_presented3.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    if (card_physically_presented3.matches("Yes")) {
+//                        if (distribution_status3.matches("Unclaimed")){
+//                            til_distribution_status3.setError("Must be Claimed if Yes on physical cash card presented");
+//                            isValidationError++;
+//                        }
+//                        else{
+//                            til_distribution_status3.setError(null);
+//                        }
+//                        if (card_pin_is_attached3.matches("")) {
+//                            til_card_pin_is_attached3.setError(required_field);
+//                            isValidationError++;
+//                        }
+//
+//                    } else {
+//                        if (reason_not_presented3.matches("")) {
+//                            til_reason_not_presented3.setError(required_field);
+//                            isValidationError++;
+//                        } else {
+//                            if (reason_not_presented3.matches("Unclaimed")) {
+//                                if (reason_unclaimed3.matches("")) {
+//                                    til_reason_unclaimed3.setError(required_field);
+//                                    isValidationError++;
+//                                } else {
+//                                    if (reason_unclaimed3.matches("Others")) {
+//                                        if (others_reason_unclaimed3.matches("")) {
+//                                            til_others_reason_unclaimed3.setError(required_field);
+//                                            isValidationError++;
+//                                        }
+//                                    }
+//                                }
+//                            } else if (reason_not_presented3.matches("Lost/Stolen") || reason_not_presented3.matches("Damaged/Defective")) {
+//                                if (card_replacement_request3.matches("")) {
+//                                    til_card_replacement_request3.setError(required_field);
+//                                    isValidationError++;
+//                                } else {
+//                                    if (card_replacement_request3.matches("Yes")) {
+//                                        if (card_replacement_request_submitted_details3.matches("")) {
+//                                            til_card_replacement_request_submitted_details3.setError(required_field);
+//                                            isValidationError++;
+//                                        }
+//                                    }
+//                                }
+//                            } else if (reason_not_presented3.matches("Pawned")) {
+//                                if (pawning_remarks3.matches("")) {
+//                                    til_pawning_remarks3.setError(required_field);
+//                                    isValidationError++;
+//                                }
+//                            } else if (reason_not_presented3.matches("Others")) {
+//                                if (others_reason_not_presented3.matches("")) {
+//                                    til_others_reason_not_presented3.setError(required_field);
+//                                    isValidationError++;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                if (card_number_inputted3.matches("")) {
+//                    til_card_number_inputted3.setError(required_field);
+//                    isValidationError++;
+//                }
+//                else if(card_number_inputted3.length() != 23){
+//                    til_card_number_inputted3.setError(required_cc_length);
+//                    isValidationError++;
+//                }
+//                else if (!card_number_inputted3.matches("[0-9 ]+")){
+//                    til_card_number_inputted3.setError(required_cc_invalid_format);
+//                    isValidationError++;
+//                }
+//
+//                else {
+//                    til_card_number_inputted3.setError(null);
+//
+//                }
+//
+//                if (card_number_series3.matches("")) {
+//                    til_card_number_series3.setError(required_field);
+//                    isValidationError++;
+//                }
+//            }
+
+//            if (otherCardAvailability4.getVisibility() == View.VISIBLE) {
+//                if (distribution_status4.matches("")) {
+//                    til_distribution_status4.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    if (distribution_status4.matches("Claimed")) {
+//                        if (release_date4.matches("")) {
+//                            til_release_date4.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        if (release_by4.matches("")) {
+//                            til_release_by4.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        if (release_place4.matches("")) {
+//                            til_release_place4.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                    }
+//                }
+//                if (card_physically_presented4.matches("")) {
+//                    til_card_physically_presented4.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    if (card_physically_presented4.matches("Yes")) {
+//                        if (distribution_status4.matches("Unclaimed")){
+//                            til_distribution_status4.setError("Must be Claimed if Yes on physical cash card presented");
+//                            isValidationError++;
+//                        }
+//                        else{
+//                            til_distribution_status4.setError(null);
+//                        }
+//                        if (card_pin_is_attached4.matches("")) {
+//                            til_card_pin_is_attached4.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                    } else {
+//                        if (reason_not_presented4.matches("")) {
+//                            til_reason_not_presented4.setError(required_field);
+//                            isValidationError++;
+//                        } else {
+//                            if (reason_not_presented4.matches("Unclaimed")) {
+//                                if (reason_unclaimed4.matches("")) {
+//                                    til_reason_unclaimed4.setError(required_field);
+//                                    isValidationError++;
+//                                } else {
+//                                    if (reason_unclaimed4.matches("Others")) {
+//                                        if (others_reason_unclaimed4.matches("")) {
+//                                            til_others_reason_unclaimed4.setError(required_field);
+//                                            isValidationError++;
+//                                        }
+//                                    }
+//                                }
+//                            } else if (reason_not_presented4.matches("Lost/Stolen") || reason_not_presented4.matches("Damaged/Defective")) {
+//                                if (card_replacement_request4.matches("")) {
+//                                    til_card_replacement_request4.setError(required_field);
+//                                    isValidationError++;
+//                                } else {
+//                                    if (card_replacement_request4.matches("Yes")) {
+//                                        if (card_replacement_request_submitted_details4.matches("")) {
+//                                            til_card_replacement_request_submitted_details4.setError(required_field);
+//                                            isValidationError++;
+//                                        }
+//                                    }
+//                                }
+//                            } else if (reason_not_presented4.matches("Pawned")) {
+//                                if (pawning_remarks4.matches("")) {
+//                                    til_pawning_remarks4.setError(required_field);
+//                                    isValidationError++;
+//                                }
+//                            } else if (reason_not_presented4.matches("Others")) {
+//                                if (others_reason_not_presented4.matches("")) {
+//                                    til_others_reason_not_presented4.setError(required_field);
+//                                    isValidationError++;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                if (card_number_inputted4.matches("")) {
+//                    til_card_number_inputted4.setError(required_field);
+//                    isValidationError++;
+//                }
+//                else if(card_number_inputted4.length() != 23){
+//                    til_card_number_inputted4.setError(required_cc_length);
+//                    isValidationError++;
+//                }
+//                else if (!card_number_inputted4.matches("[0-9 ]+")){
+//                    til_card_number_inputted4.setError(required_cc_invalid_format);
+//                    isValidationError++;
+//                }
+//
+//                else {
+//                    til_card_number_inputted4.setError(null);
+//                }
+//
+//
+//                if (card_number_series4.matches("")) {
+//                    til_card_number_series4.setError(required_field);
+//                    isValidationError++;
+//                }
+//            }
+
+//            if (otherCardAvailability5.getVisibility() == View.VISIBLE) {
+//                if (distribution_status5.matches("")) {
+//                    til_distribution_status5.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    if (distribution_status5.matches("Claimed")) {
+//                        if (release_date5.matches("")) {
+//                            til_release_date5.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        if (release_by5.matches("")) {
+//                            til_release_by5.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                        if (release_place5.matches("")) {
+//                            til_release_place5.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                    }
+//                }
+//                if (card_physically_presented5.matches("")) {
+//                    til_card_physically_presented5.setError(required_field);
+//                    isValidationError++;
+//                } else {
+//                    if (card_physically_presented5.matches("Yes")) {
+//                        if (distribution_status5.matches("Unclaimed")){
+//                            til_distribution_status5.setError("Must be Claimed if Yes on physical cash card presented");
+//                            isValidationError++;
+//                        }
+//                        else{
+//                            til_distribution_status5.setError(null);
+//                        }
+//                        if (card_pin_is_attached5.matches("")) {
+//                            til_card_pin_is_attached5.setError(required_field);
+//                            isValidationError++;
+//                        }
+//                    } else {
+//                        if (reason_not_presented5.matches("")) {
+//                            til_reason_not_presented5.setError(required_field);
+//                            isValidationError++;
+//                        } else {
+//                            if (reason_not_presented5.matches("Unclaimed")) {
+//                                if (reason_unclaimed5.matches("")) {
+//                                    til_reason_unclaimed5.setError(required_field);
+//                                    isValidationError++;
+//                                } else {
+//                                    if (reason_unclaimed5.matches("Others")) {
+//                                        if (others_reason_unclaimed5.matches("")) {
+//                                            til_others_reason_unclaimed5.setError(required_field);
+//                                            isValidationError++;
+//                                        }
+//                                    }
+//                                }
+//                            } else if (reason_not_presented5.matches("Lost/Stolen") || reason_not_presented5.matches("Damaged/Defective")) {
+//                                if (card_replacement_request5.matches("")) {
+//                                    til_card_replacement_request5.setError(required_field);
+//                                    isValidationError++;
+//                                } else {
+//                                    if (card_replacement_request5.matches("Yes")) {
+//                                        if (card_replacement_request_submitted_details5.matches("")) {
+//                                            til_card_replacement_request_submitted_details5.setError(required_field);
+//                                            isValidationError++;
+//                                        }
+//                                    }
+//                                }
+//                            } else if (reason_not_presented5.matches("Pawned")) {
+//                                if (pawning_remarks5.matches("")) {
+//                                    til_pawning_remarks5.setError(required_field);
+//                                    isValidationError++;
+//                                }
+//                            } else if (reason_not_presented5.matches("Others")) {
+//                                if (others_reason_not_presented5.matches("")) {
+//                                    til_others_reason_not_presented5.setError(required_field);
+//                                    isValidationError++;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                if (card_number_inputted5.matches("")) {
+//                    til_card_number_inputted5.setError(required_field);
+//                    isValidationError++;
+//                }
+//                else if(card_number_inputted5.length() != 23){
+//                    til_card_number_inputted5.setError(required_cc_length);
+//                    isValidationError++;
+//                }
+//                else if (!card_number_inputted5.matches("[0-9 ]+")){
+//                    til_card_number_inputted5.setError(required_cc_invalid_format);
+//                    isValidationError++;
+//                }
+//                else {
+//                    til_card_number_inputted5.setError(null);
+//                }
+//
+//                if (card_number_series5.matches("")) {
+//                    til_card_number_series5.setError(required_field);
+//                    isValidationError++;
+//                }
+//            }
 
             try {
                 Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT scanned_e_image,additional_id_image,grantee_e_image,other_card_e_image_1, other_card_e_image_2, other_card_e_image_3, other_card_e_image_4, other_card_e_image_5 FROM tmp_blob WHERE id=1");
@@ -3618,8 +4212,8 @@ public class ScanCashCard extends AppCompatActivity {
                     myEdit.putString("nma_amount", nma_amount);
                     myEdit.putString("pressBtn_search", "true");
                     myEdit.putString("card_number_prefilled", grantee_card_number);
-                    myEdit.putString("distribution_status", grantee_distribution_status);
-                    myEdit.putString("release_date", grantee_card_release_date);
+                    myEdit.putString("distribution_status_record", grantee_distribution_status);
+                    myEdit.putString("release_date_record", grantee_card_release_date);
                     myEdit.putString("card_number_prefilled1", other_card_number_1);
                     myEdit.putString("card_holder_name1", other_card_holder_1);
                     myEdit.putString("distribution_status1", other_card_distribution_status_1);
@@ -3958,15 +4552,17 @@ public class ScanCashCard extends AppCompatActivity {
             case 1:
                 xml_initialization(2);
 
-                rlOtherCardScanningField1 = findViewById(R.id.rlOtherCardScanningField1);
-                rlOtherCardScanningField2 = findViewById(R.id.rlOtherCardScanningField2);
-                rlOtherCardScanningField3 = findViewById(R.id.rlOtherCardScanningField3);
-                rlOtherCardScanningField4 = findViewById(R.id.rlOtherCardScanningField4);
-                rlOtherCardScanningField5 = findViewById(R.id.rlOtherCardScanningField5);
+                rlOtherCardScanningField1 = findViewById(R.id.rlOtherCardScanning1);
+                rlOtherCardScanningField2 = findViewById(R.id.rlOtherCardScanning2);
+                rlOtherCardScanningField3 = findViewById(R.id.rlOtherCardScanning3);
+                rlOtherCardScanningField4 = findViewById(R.id.rlOtherCardScanning4);
+                rlOtherCardScanningField5 = findViewById(R.id.rlOtherCardScanning5);
+
 
                 til_release_date.setVisibility(View.GONE);
                 til_release_by.setVisibility(View.GONE);
                 til_release_place.setVisibility(View.GONE);
+                til_card_physically_presented.setVisibility(View.GONE);//new
                 til_card_pin_is_attached.setVisibility(View.GONE);
                 til_reason_not_presented.setVisibility(View.GONE);
                 til_others_reason_not_presented.setVisibility(View.GONE);
@@ -3999,6 +4595,25 @@ public class ScanCashCard extends AppCompatActivity {
                 til_release_place3.setVisibility(View.GONE);
                 til_release_place4.setVisibility(View.GONE);
                 til_release_place5.setVisibility(View.GONE);
+                til_card_number_inputted1.setVisibility(View.GONE);
+                til_card_number_inputted2.setVisibility(View.GONE);
+                til_card_number_inputted3.setVisibility(View.GONE);
+                til_card_number_inputted4.setVisibility(View.GONE);
+                til_card_number_inputted5.setVisibility(View.GONE);
+                til_card_number_series1.setVisibility(View.GONE);
+                til_card_number_series2.setVisibility(View.GONE);
+                til_card_number_series3.setVisibility(View.GONE);
+                til_card_number_series4.setVisibility(View.GONE);
+                til_card_number_series5.setVisibility(View.GONE);
+
+                til_card_physically_presented1.setVisibility(View.GONE);
+                til_card_physically_presented2.setVisibility(View.GONE);
+                til_card_physically_presented3.setVisibility(View.GONE);
+                til_card_physically_presented4.setVisibility(View.GONE);
+                til_card_physically_presented5.setVisibility(View.GONE);
+
+
+
                 til_card_pin_is_attached1.setVisibility(View.GONE);
                 til_card_pin_is_attached2.setVisibility(View.GONE);
                 til_card_pin_is_attached3.setVisibility(View.GONE);
@@ -4236,13 +4851,34 @@ public class ScanCashCard extends AppCompatActivity {
                             edt_release_date.setText("");
                             edt_release_by.setText("");
                             edt_release_place.setText("");
+                            aat_reason_not_presented.setText("");
+                            aat_card_physically_presented.setText("");
+                            aat_card_replacement_request.setText("");
+                            aat_reason_unclaimed.setText(""); //new
+                            aat_card_pin_is_attached.setText("");//new
+                            edt_card_replacement_request_submitted_details.setText("");
+                            edt_others_reason_not_presented.setText("");
+                            til_card_pin_is_attached.setVisibility(View.GONE);//new
+                            til_reason_not_presented.setVisibility(View.GONE);
+                            til_others_reason_not_presented.setVisibility(View.GONE);//new
+                            til_card_replacement_request.setVisibility(View.GONE); //new
                             til_release_date.setVisibility(View.GONE);
                             til_release_place.setVisibility(View.GONE);
                             til_release_by.setVisibility(View.GONE);
+                            til_reason_unclaimed.setVisibility(View.VISIBLE);
+                            til_card_physically_presented.setVisibility(View.GONE);
+
+//                            Reasons = Arrays.copyOfRange(Reasons, 1, Reasons.length);
+//                            ArrayAdapter<String> adapterYesNo = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
+//                            adapterYesNo.setDropDownViewResource(simple_spinner_dropdown_item);
+//                            aat_reason_not_presented.setAdapter(adapterYesNo);
                         } else {
+//                            til_reason_not_presented.setVisibility(View.VISIBLE);
                             til_release_date.setVisibility(View.VISIBLE);
                             til_release_place.setVisibility(View.VISIBLE);
                             til_release_by.setVisibility(View.VISIBLE);
+                            til_reason_unclaimed.setVisibility(View.GONE);
+                            til_card_physically_presented.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -4250,17 +4886,40 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+
                         if (aat_distribution_status1.getText().toString().matches("Unclaimed")||aat_distribution_status1.getText().toString().matches("")) {
                             edt_release_date1.setText("");
                             edt_release_by1.setText("");
                             edt_release_place1.setText("");
+                            aat_card_physically_presented1.setText("");
+                            aat_reason_not_presented1.setText("");//start
+                            aat_card_replacement_request1.setText("");//start
+                            edt_card_replacement_request_submitted_details1.setText("");//start
+                            edt_pawning_remarks1.setText("");
+                            aat_card_pin_is_attached1.setText("");
+                            edt_others_reason_not_presented1.setText("");
+
+                            til_reason_not_presented1.setVisibility(View.GONE);//start
+                            til_card_replacement_request1.setVisibility(View.GONE);//start
+                            til_card_replacement_request_submitted_details1.setVisibility(View.GONE);//start
+                            til_pawning_remarks1.setVisibility(View.GONE);//start
                             til_release_date1.setVisibility(View.GONE);
                             til_release_place1.setVisibility(View.GONE);
                             til_release_by1.setVisibility(View.GONE);
+                            til_card_physically_presented1.setVisibility(View.GONE);
+                            til_card_pin_is_attached1.setVisibility(View.GONE);
+                            til_others_reason_not_presented1.setVisibility(View.GONE);
+                            aat_reason_unclaimed1.setText("");//newother
+                            til_reason_unclaimed1.setVisibility(View.VISIBLE); //newother
                         } else {
+
                             til_release_date1.setVisibility(View.VISIBLE);
                             til_release_place1.setVisibility(View.VISIBLE);
                             til_release_by1.setVisibility(View.VISIBLE);
+                            til_card_physically_presented1.setVisibility(View.VISIBLE);
+                            aat_reason_unclaimed1.setText("");//newother
+                            til_reason_unclaimed1.setVisibility(View.GONE); //newother
+                            til_reason_not_presented1.setVisibility(View.GONE); //start
                         }
                     }
                 });
@@ -4272,13 +4931,51 @@ public class ScanCashCard extends AppCompatActivity {
                             edt_release_date2.setText("");
                             edt_release_by2.setText("");
                             edt_release_place2.setText("");
+                            aat_card_physically_presented2.setText("");
+                            aat_reason_not_presented2.setText("");
+                            aat_card_replacement_request2.setText("");
+                            edt_card_replacement_request_submitted_details2.setText("");
+                            edt_pawning_remarks2.setText("");
+                            aat_card_pin_is_attached2.setText("");
+                            edt_others_reason_not_presented2.setText("");
+
+                            til_reason_not_presented2.setVisibility(View.GONE);
+                            til_card_replacement_request2.setVisibility(View.GONE);
+                            til_card_replacement_request_submitted_details2.setVisibility(View.GONE);
+                            til_pawning_remarks2.setVisibility(View.GONE);
                             til_release_date2.setVisibility(View.GONE);
                             til_release_place2.setVisibility(View.GONE);
                             til_release_by2.setVisibility(View.GONE);
+                            til_card_physically_presented2.setVisibility(View.GONE);
+                            til_card_pin_is_attached2.setVisibility(View.GONE);
+                            til_others_reason_not_presented2.setVisibility(View.GONE);
+                            aat_reason_unclaimed2.setText("");
+                            til_reason_unclaimed2.setVisibility(View.VISIBLE);
+//                            edt_release_date2.setText("");
+//                            edt_release_by2.setText("");
+//                            edt_release_place2.setText("");
+//                            til_release_date2.setVisibility(View.GONE);
+//                            til_release_place2.setVisibility(View.GONE);
+//                            til_release_by2.setVisibility(View.GONE);
+//                            til_card_physically_presented2.setVisibility(View.GONE);
+//                            aat_reason_unclaimed2.setText("");//newother
+//                            til_reason_unclaimed2.setVisibility(View.VISIBLE); //newother
                         } else {
+
                             til_release_date2.setVisibility(View.VISIBLE);
                             til_release_place2.setVisibility(View.VISIBLE);
                             til_release_by2.setVisibility(View.VISIBLE);
+                            til_card_physically_presented2.setVisibility(View.VISIBLE);
+                            aat_reason_unclaimed2.setText("");//newother
+                            til_reason_unclaimed2.setVisibility(View.GONE); //newother
+                            til_reason_not_presented2.setVisibility(View.GONE); //start
+
+//                            til_release_date2.setVisibility(View.VISIBLE);
+//                            til_release_place2.setVisibility(View.VISIBLE);
+//                            til_release_by2.setVisibility(View.VISIBLE);
+//                            til_card_physically_presented2.setVisibility(View.VISIBLE);
+//                            aat_reason_unclaimed2.setText("");//newother
+//                            til_reason_unclaimed2.setVisibility(View.GONE); //newother
                         }
                     }
                 });
@@ -4287,16 +4984,56 @@ public class ScanCashCard extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (aat_distribution_status3.getText().toString().matches("Unclaimed")||aat_distribution_status3.getText().toString().matches("")) {
+
                             edt_release_date3.setText("");
                             edt_release_by3.setText("");
                             edt_release_place3.setText("");
+                            aat_card_physically_presented3.setText("");
+                            aat_reason_not_presented3.setText("");
+                            aat_card_replacement_request3.setText("");
+                            edt_card_replacement_request_submitted_details3.setText("");
+                            edt_pawning_remarks3.setText("");
+                            aat_card_pin_is_attached3.setText("");
+                            edt_others_reason_not_presented3.setText("");
+                            til_reason_not_presented3.setVisibility(View.GONE);
+                            til_card_replacement_request3.setVisibility(View.GONE);
+                            til_card_replacement_request_submitted_details3.setVisibility(View.GONE);
+                            til_pawning_remarks3.setVisibility(View.GONE);
                             til_release_date3.setVisibility(View.GONE);
                             til_release_place3.setVisibility(View.GONE);
                             til_release_by3.setVisibility(View.GONE);
+                            til_card_physically_presented3.setVisibility(View.GONE);
+                            til_card_pin_is_attached3.setVisibility(View.GONE);
+                            til_others_reason_not_presented3.setVisibility(View.GONE);
+                            aat_reason_unclaimed3.setText("");
+                            til_reason_unclaimed3.setVisibility(View.VISIBLE);
+
+
+//                            edt_release_date3.setText("");
+//                            edt_release_by3.setText("");
+//                            edt_release_place3.setText("");
+//                            til_release_date3.setVisibility(View.GONE);
+//                            til_release_place3.setVisibility(View.GONE);
+//                            til_release_by3.setVisibility(View.GONE);
+//                            til_card_physically_presented3.setVisibility(View.GONE);
+//                            aat_reason_unclaimed3.setText("");//newother
+//                            til_reason_unclaimed3.setVisibility(View.VISIBLE); //newother
                         } else {
                             til_release_date3.setVisibility(View.VISIBLE);
                             til_release_place3.setVisibility(View.VISIBLE);
                             til_release_by3.setVisibility(View.VISIBLE);
+                            til_card_physically_presented3.setVisibility(View.VISIBLE);
+                            aat_reason_unclaimed3.setText("");//newother
+                            til_reason_unclaimed3.setVisibility(View.GONE); //newother
+                            til_reason_not_presented3.setVisibility(View.GONE); //start
+
+
+//                            til_release_date3.setVisibility(View.VISIBLE);
+//                            til_release_place3.setVisibility(View.VISIBLE);
+//                            til_release_by3.setVisibility(View.VISIBLE);
+//                            til_card_physically_presented3.setVisibility(View.VISIBLE);
+//                            aat_reason_unclaimed3.setText("");//newother
+//                            til_reason_unclaimed3.setVisibility(View.GONE); //newother
                         }
                     }
                 });
@@ -4305,16 +5042,57 @@ public class ScanCashCard extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (aat_distribution_status4.getText().toString().matches("Unclaimed")||aat_distribution_status4.getText().toString().matches("")) {
+
                             edt_release_date4.setText("");
                             edt_release_by4.setText("");
                             edt_release_place4.setText("");
+                            aat_card_physically_presented4.setText("");
+                            aat_reason_not_presented4.setText("");
+                            aat_card_replacement_request4.setText("");
+                            edt_card_replacement_request_submitted_details4.setText("");
+                            edt_pawning_remarks4.setText("");
+                            aat_card_pin_is_attached4.setText("");
+                            edt_others_reason_not_presented4.setText("");
+
+                            til_reason_not_presented4.setVisibility(View.GONE);
+                            til_card_replacement_request4.setVisibility(View.GONE);
+                            til_card_replacement_request_submitted_details4.setVisibility(View.GONE);
+                            til_pawning_remarks4.setVisibility(View.GONE);
                             til_release_date4.setVisibility(View.GONE);
                             til_release_place4.setVisibility(View.GONE);
                             til_release_by4.setVisibility(View.GONE);
+                            til_card_physically_presented4.setVisibility(View.GONE);
+                            til_card_pin_is_attached4.setVisibility(View.GONE);
+                            til_others_reason_not_presented4.setVisibility(View.GONE);
+                            aat_reason_unclaimed4.setText("");
+                            til_reason_unclaimed4.setVisibility(View.VISIBLE);
+
+
+//                            edt_release_date4.setText("");
+//                            edt_release_by4.setText("");
+//                            edt_release_place4.setText("");
+//                            til_release_date4.setVisibility(View.GONE);
+//                            til_release_place4.setVisibility(View.GONE);
+//                            til_release_by4.setVisibility(View.GONE);
+//                            til_card_physically_presented4.setVisibility(View.GONE);
+//                            aat_reason_unclaimed4.setText("");//newother
+//                            til_reason_unclaimed4.setVisibility(View.VISIBLE); //newother
                         } else {
                             til_release_date4.setVisibility(View.VISIBLE);
                             til_release_place4.setVisibility(View.VISIBLE);
                             til_release_by4.setVisibility(View.VISIBLE);
+                            til_card_physically_presented4.setVisibility(View.VISIBLE);
+                            aat_reason_unclaimed4.setText("");//newother
+                            til_reason_unclaimed4.setVisibility(View.GONE); //newother
+                            til_reason_not_presented4.setVisibility(View.GONE); //start
+
+
+/*                            til_release_date4.setVisibility(View.VISIBLE);
+                            til_release_place4.setVisibility(View.VISIBLE);
+                            til_release_by4.setVisibility(View.VISIBLE);
+                            til_card_physically_presented4.setVisibility(View.VISIBLE);
+                            aat_reason_unclaimed4.setText("");//newother
+                            til_reason_unclaimed4.setVisibility(View.GONE); //newother*/
                         }
                     }
                 });
@@ -4323,16 +5101,58 @@ public class ScanCashCard extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (aat_distribution_status5.getText().toString().matches("Unclaimed")||aat_distribution_status5.getText().toString().matches("")) {
+
                             edt_release_date5.setText("");
                             edt_release_by5.setText("");
                             edt_release_place5.setText("");
+                            aat_card_physically_presented5.setText("");
+                            aat_reason_not_presented5.setText("");
+                            aat_card_replacement_request5.setText("");
+                            edt_card_replacement_request_submitted_details5.setText("");
+                            edt_pawning_remarks5.setText("");
+                            aat_card_pin_is_attached5.setText("");
+                            edt_others_reason_not_presented5.setText("");
+
+                            til_reason_not_presented5.setVisibility(View.GONE);
+                            til_card_replacement_request5.setVisibility(View.GONE);
+                            til_card_replacement_request_submitted_details5.setVisibility(View.GONE);
+                            til_pawning_remarks5.setVisibility(View.GONE);
                             til_release_date5.setVisibility(View.GONE);
                             til_release_place5.setVisibility(View.GONE);
                             til_release_by5.setVisibility(View.GONE);
+                            til_card_physically_presented5.setVisibility(View.GONE);
+                            til_card_pin_is_attached5.setVisibility(View.GONE);
+                            til_others_reason_not_presented5.setVisibility(View.GONE);
+                            aat_reason_unclaimed5.setText("");
+                            til_reason_unclaimed5.setVisibility(View.VISIBLE);
+
+
+//                            edt_release_date5.setText("");
+//                            edt_release_by5.setText("");
+//                            edt_release_place5.setText("");
+//                            aat_reason_unclaimed5.setText("");//newother
+//                            til_reason_unclaimed5.setVisibility(View.VISIBLE); //newother
+//
+//                            til_release_date5.setVisibility(View.GONE);
+//                            til_release_place5.setVisibility(View.GONE);
+//                            til_release_by5.setVisibility(View.GONE);
+//                            til_card_physically_presented5.setVisibility(View.GONE);
+
                         } else {
                             til_release_date5.setVisibility(View.VISIBLE);
                             til_release_place5.setVisibility(View.VISIBLE);
                             til_release_by5.setVisibility(View.VISIBLE);
+                            til_card_physically_presented5.setVisibility(View.VISIBLE);
+                            aat_reason_unclaimed5.setText("");//newother
+                            til_reason_unclaimed5.setVisibility(View.GONE); //newother
+                            til_reason_not_presented5.setVisibility(View.GONE); //start
+
+//                            til_release_date5.setVisibility(View.VISIBLE);
+//                            til_release_place5.setVisibility(View.VISIBLE);
+//                            til_release_by5.setVisibility(View.VISIBLE);
+//                            til_card_physically_presented5.setVisibility(View.VISIBLE);
+//                            aat_reason_unclaimed5.setText("");//newother
+//                            til_reason_unclaimed5.setVisibility(View.GONE); //newother
                         }
                     }
                 });
@@ -4346,6 +5166,9 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request.setVisibility(View.GONE);
                         til_card_replacement_request_submitted_details.setVisibility(View.GONE);
                         til_card_pin_is_attached.setVisibility(View.GONE);
+
+                        til_others_reason_not_presented.setVisibility(View.GONE);//new
+                        edt_others_reason_not_presented.setText("");//new
 
                         aat_card_pin_is_attached.setText(null, false);
                         aat_reason_not_presented.setText(null, false);
@@ -4374,7 +5197,10 @@ public class ScanCashCard extends AppCompatActivity {
                                 til_distribution_status.setError("Must be Claimed if physical cash card presented");
                                 isValidationError++;
                             }
-                        } else {
+                        }
+                        else {
+                            aat_card_pin_is_attached.setText("");
+                            til_card_pin_is_attached.setVisibility(View.GONE);
                             til_distribution_status.setError(null);
                             til_reason_not_presented.setVisibility(View.VISIBLE);
                         }
@@ -4389,6 +5215,9 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request1.setVisibility(View.GONE);
                         til_reason_not_presented1.setVisibility(View.GONE);
                         til_card_pin_is_attached1.setVisibility(View.GONE);
+                        til_card_number_inputted1.setVisibility(View.GONE); //newother
+                        til_card_number_series1.setVisibility(View.GONE); //newother
+
 
                         aat_card_pin_is_attached1.setText(null, false);
                         aat_reason_not_presented1.setText(null, false);
@@ -4401,6 +5230,8 @@ public class ScanCashCard extends AppCompatActivity {
                         if (aat_card_physically_presented1.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached1.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField1.setVisibility(View.VISIBLE);
+                            til_card_number_inputted1.setVisibility(View.VISIBLE); //newother
+                            til_card_number_series1.setVisibility(View.VISIBLE); //newother
                             if (aat_distribution_status1.getText().toString().matches("Unclaimed")){
                                 til_distribution_status1.setError("Must be Claimed if physical cash card presented");
                                 isValidationError++;
@@ -4427,6 +5258,8 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request2.setVisibility(View.GONE);
                         til_reason_not_presented2.setVisibility(View.GONE);
                         til_card_pin_is_attached2.setVisibility(View.GONE);
+                        til_card_number_inputted2.setVisibility(View.GONE); //newother
+                        til_card_number_series2.setVisibility(View.GONE); //newother
 
                         aat_card_pin_is_attached2.setText(null, false);
                         aat_reason_not_presented2.setText(null, false);
@@ -4435,9 +5268,12 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed2.setText(null);
                         edt_card_replacement_request_submitted_details2.setText(null);
                         edt_pawning_remarks2.setText(null);
+
                         if (aat_card_physically_presented2.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached2.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField2.setVisibility(View.VISIBLE);
+                            til_card_number_inputted2.setVisibility(View.VISIBLE); //newother
+                            til_card_number_series2.setVisibility(View.VISIBLE); //newother
                             if (aat_distribution_status2.getText().toString().matches("Unclaimed")){
                                 til_distribution_status2.setError("Must be Claimed if physical cash card presented");
                                 isValidationError++;
@@ -4445,6 +5281,7 @@ public class ScanCashCard extends AppCompatActivity {
                             else {
                                 til_distribution_status2.setError(null);
                             }
+
                         } else {
                             til_distribution_status2.setError(null);
                             til_reason_not_presented2.setVisibility(View.VISIBLE);
@@ -4452,6 +5289,7 @@ public class ScanCashCard extends AppCompatActivity {
                             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_2=NULL WHERE id=1");
                             ivOtherScannedImage2.setImageResource(R.drawable.ic_image);
                         }
+
                     }
                 });
 
@@ -4463,6 +5301,8 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request3.setVisibility(View.GONE);
                         til_reason_not_presented3.setVisibility(View.GONE);
                         til_card_pin_is_attached3.setVisibility(View.GONE);
+                        til_card_number_inputted3.setVisibility(View.GONE); //newother
+                        til_card_number_series3.setVisibility(View.GONE); //newother
 
                         aat_card_pin_is_attached3.setText(null, false);
                         aat_reason_not_presented3.setText(null, false);
@@ -4471,9 +5311,12 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed3.setText(null);
                         edt_card_replacement_request_submitted_details3.setText(null);
                         edt_pawning_remarks3.setText(null);
+
                         if (aat_card_physically_presented3.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached3.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField3.setVisibility(View.VISIBLE);
+                            til_card_number_inputted3.setVisibility(View.VISIBLE); //newother
+                            til_card_number_series3.setVisibility(View.VISIBLE); //newother
                             if (aat_distribution_status3.getText().toString().matches("Unclaimed")){
                                 til_distribution_status3.setError("Must be Claimed if physical cash card presented");
                                 isValidationError++;
@@ -4481,6 +5324,7 @@ public class ScanCashCard extends AppCompatActivity {
                             else {
                                 til_distribution_status3.setError(null);
                             }
+
                         } else {
                             til_distribution_status3.setError(null);
                             til_reason_not_presented3.setVisibility(View.VISIBLE);
@@ -4488,6 +5332,7 @@ public class ScanCashCard extends AppCompatActivity {
                             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_3=NULL WHERE id=1");
                             ivOtherScannedImage3.setImageResource(R.drawable.ic_image);
                         }
+
                     }
                 });
 
@@ -4499,6 +5344,9 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request4.setVisibility(View.GONE);
                         til_reason_not_presented4.setVisibility(View.GONE);
                         til_card_pin_is_attached4.setVisibility(View.GONE);
+                        til_card_number_inputted4.setVisibility(View.GONE); //newother
+                        til_card_number_series4.setVisibility(View.GONE); //newother
+
 
                         aat_card_pin_is_attached4.setText(null, false);
                         aat_reason_not_presented4.setText(null, false);
@@ -4507,9 +5355,12 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed4.setText(null);
                         edt_card_replacement_request_submitted_details4.setText(null);
                         edt_pawning_remarks4.setText(null);
+
                         if (aat_card_physically_presented4.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached4.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField4.setVisibility(View.VISIBLE);
+                            til_card_number_inputted4.setVisibility(View.VISIBLE); //newother
+                            til_card_number_series4.setVisibility(View.VISIBLE); //newother
                             if (aat_distribution_status4.getText().toString().matches("Unclaimed")){
                                 til_distribution_status4.setError("Must be Claimed if physical cash card presented");
                                 isValidationError++;
@@ -4517,6 +5368,7 @@ public class ScanCashCard extends AppCompatActivity {
                             else {
                                 til_distribution_status4.setError(null);
                             }
+
                         } else {
                             til_distribution_status4.setError(null);
                             til_reason_not_presented4.setVisibility(View.VISIBLE);
@@ -4524,6 +5376,7 @@ public class ScanCashCard extends AppCompatActivity {
                             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_4=NULL WHERE id=1");
                             ivOtherScannedImage4.setImageResource(R.drawable.ic_image);
                         }
+
                     }
                 });
 
@@ -4535,6 +5388,8 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request5.setVisibility(View.GONE);
                         til_reason_not_presented5.setVisibility(View.GONE);
                         til_card_pin_is_attached5.setVisibility(View.GONE);
+                        til_card_number_inputted5.setVisibility(View.GONE); //newother
+                        til_card_number_series5.setVisibility(View.GONE); //newother
 
                         aat_card_pin_is_attached5.setText(null, false);
                         aat_reason_not_presented5.setText(null, false);
@@ -4543,9 +5398,12 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed5.setText(null);
                         edt_card_replacement_request_submitted_details5.setText(null);
                         edt_pawning_remarks5.setText(null);
+
                         if (aat_card_physically_presented5.getText().toString().matches("Yes")) {
                             til_card_pin_is_attached5.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField5.setVisibility(View.VISIBLE);
+                            til_card_number_inputted5.setVisibility(View.VISIBLE); //newother
+                            til_card_number_series5.setVisibility(View.VISIBLE); //newother
                             if (aat_distribution_status5.getText().toString().matches("Unclaimed")){
                                 til_distribution_status5.setError("Must be Claimed if physical cash card presented");
                                 isValidationError++;
@@ -4553,6 +5411,7 @@ public class ScanCashCard extends AppCompatActivity {
                             else {
                                 til_distribution_status5.setError(null);
                             }
+
                         } else {
                             til_distribution_status5.setError(null);
                             til_reason_not_presented5.setVisibility(View.VISIBLE);
@@ -4591,15 +5450,24 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_remarks.setText(null);
                         edt_staff_intervention.setText(null);
                         edt_other_details.setText(null);
-                        if (aat_reason_not_presented.getText().toString().matches("Unclaimed")) {
-                            til_reason_unclaimed.setVisibility(View.VISIBLE);
-                        } else if (aat_reason_not_presented.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented.getText().toString().matches("Damaged/Defective")) {
-                            til_card_replacement_request.setVisibility(View.VISIBLE);
+//                        if (aat_reason_not_presented.getText().toString().matches("Unclaimed")) {
+//                            til_reason_unclaimed.setVisibility(View.VISIBLE);
+//                        }
+                        if (aat_reason_not_presented.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented.getText().toString().matches("Damaged/Defective")) {
+                             aat_card_replacement_request.setText("");
+                             til_card_replacement_request.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented.getText().toString().matches("Pawned")) {
                             mcvPawning.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented.getText().toString().matches("Others")) {
                             til_others_reason_not_presented.setVisibility(View.VISIBLE);
                         }
+                        else {
+                            aat_card_replacement_request.setText("");//new
+                            til_card_replacement_request.setVisibility(View.GONE);
+                            til_others_reason_not_presented.setVisibility(View.GONE);//new
+                            edt_others_reason_not_presented.setText("");//new
+                        }
+
                     }
                 });
 
@@ -4618,10 +5486,12 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed1.setText(null);
                         edt_card_replacement_request_submitted_details1.setText(null);
                         edt_pawning_remarks1.setText(null);
-                        if (aat_reason_not_presented1.getText().toString().matches("Unclaimed")) {
-                            til_reason_unclaimed1.setVisibility(View.VISIBLE);
-                        } else if (aat_reason_not_presented1.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented1.getText().toString().matches("Damaged/Defective")) {
+                        aat_card_replacement_request1.setText(null);
+
+
+                        if (aat_reason_not_presented1.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented1.getText().toString().matches("Damaged/Defective")) {
                             til_card_replacement_request1.setVisibility(View.VISIBLE);
+
                         } else if (aat_reason_not_presented1.getText().toString().matches("Pawned")) {
                             til_pawning_remarks1.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented1.getText().toString().matches("Others")) {
@@ -4645,9 +5515,9 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed2.setText(null);
                         edt_card_replacement_request_submitted_details2.setText(null);
                         edt_pawning_remarks2.setText(null);
-                        if (aat_reason_not_presented2.getText().toString().matches("Unclaimed")) {
-                            til_reason_unclaimed2.setVisibility(View.VISIBLE);
-                        } else if (aat_reason_not_presented2.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented2.getText().toString().matches("Damaged/Defective")) {
+                        aat_card_replacement_request2.setText(null);
+
+                        if (aat_reason_not_presented2.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented2.getText().toString().matches("Damaged/Defective")) {
                             til_card_replacement_request2.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented2.getText().toString().matches("Pawned")) {
                             til_pawning_remarks2.setVisibility(View.VISIBLE);
@@ -4672,9 +5542,9 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed3.setText(null);
                         edt_card_replacement_request_submitted_details3.setText(null);
                         edt_pawning_remarks3.setText(null);
-                        if (aat_reason_not_presented3.getText().toString().matches("Unclaimed")) {
-                            til_reason_unclaimed3.setVisibility(View.VISIBLE);
-                        } else if (aat_reason_not_presented3.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented3.getText().toString().matches("Damaged/Defective")) {
+                        aat_card_replacement_request3.setText(null);
+
+                        if (aat_reason_not_presented3.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented3.getText().toString().matches("Damaged/Defective")) {
                             til_card_replacement_request3.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented3.getText().toString().matches("Pawned")) {
                             til_pawning_remarks3.setVisibility(View.VISIBLE);
@@ -4699,9 +5569,9 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed4.setText(null);
                         edt_card_replacement_request_submitted_details4.setText(null);
                         edt_pawning_remarks4.setText(null);
-                        if (aat_reason_not_presented4.getText().toString().matches("Unclaimed")) {
-                            til_reason_unclaimed4.setVisibility(View.VISIBLE);
-                        } else if (aat_reason_not_presented4.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented4.getText().toString().matches("Damaged/Defective")) {
+                        aat_card_replacement_request4.setText(null);
+
+                        if (aat_reason_not_presented4.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented4.getText().toString().matches("Damaged/Defective")) {
                             til_card_replacement_request4.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented4.getText().toString().matches("Pawned")) {
                             til_pawning_remarks4.setVisibility(View.VISIBLE);
@@ -4726,9 +5596,9 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_others_reason_unclaimed5.setText(null);
                         edt_card_replacement_request_submitted_details5.setText(null);
                         edt_pawning_remarks5.setText(null);
-                        if (aat_reason_not_presented5.getText().toString().matches("Unclaimed")) {
-                            til_reason_unclaimed5.setVisibility(View.VISIBLE);
-                        } else if (aat_reason_not_presented5.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented5.getText().toString().matches("Damaged/Defective")) {
+                        aat_card_replacement_request5.setText(null);
+
+                        if (aat_reason_not_presented5.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented5.getText().toString().matches("Damaged/Defective")) {
                             til_card_replacement_request5.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented5.getText().toString().matches("Pawned")) {
                             til_pawning_remarks5.setVisibility(View.VISIBLE);
@@ -4952,6 +5822,8 @@ public class ScanCashCard extends AppCompatActivity {
                 });
 
                 String card_number_prefilled = sh.getString("card_number_prefilled", "");
+                String distribution_status_record = sh.getString("distribution_status_record", "");
+                String release_date_record = sh.getString("release_date_record", "");
                 String distribution_status = sh.getString("distribution_status", "");
                 String release_date = sh.getString("release_date", "");
                 String release_by = sh.getString("release_by", "");
@@ -5065,11 +5937,12 @@ public class ScanCashCard extends AppCompatActivity {
                 String pawning_remarks3 = sh.getString("pawning_remarks3", "");
                 String pawning_remarks4 = sh.getString("pawning_remarks4", "");
                 String pawning_remarks5 = sh.getString("pawning_remarks5", "");
+                String distribution_status_actual = aat_distribution_status.getText().toString();
 
                 edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
 
-                aat_distribution_status_record.setText(distribution_status);
-                edt_release_date_record.setText(release_date);
+                aat_distribution_status_record.setText(distribution_status_record);
+                edt_release_date_record.setText(release_date_record);
                 aat_distribution_status_record.setEnabled(false);
                 edt_release_date_record.setEnabled(false);
 
@@ -5192,6 +6065,18 @@ public class ScanCashCard extends AppCompatActivity {
                     til_release_date.setVisibility(View.VISIBLE);
                     til_release_by.setVisibility(View.VISIBLE);
                     til_release_place.setVisibility(View.VISIBLE);
+                    til_card_physically_presented.setVisibility(View.VISIBLE);//new
+
+                }
+                else if (distribution_status.matches("Unclaimed")){
+                    til_reason_unclaimed.setVisibility(View.VISIBLE);
+                }
+                else{
+                    til_reason_unclaimed.setVisibility(View.GONE);
+                    til_release_date.setVisibility(View.GONE);
+                    til_release_by.setVisibility(View.GONE);
+                    til_release_place.setVisibility(View.GONE);
+                    til_card_physically_presented.setVisibility(View.GONE); //new
                 }
 
                 if (card_physically_presented.matches("Yes")) {
@@ -5226,11 +6111,28 @@ public class ScanCashCard extends AppCompatActivity {
                     til_release_date1.setVisibility(View.VISIBLE);
                     til_release_by1.setVisibility(View.VISIBLE);
                     til_release_place1.setVisibility(View.VISIBLE);
+                    til_card_physically_presented1.setVisibility(View.VISIBLE);//new
+                }
+                else if (distribution_status1.matches("Unclaimed")){
+                    Log.v(TAG,"Unclaimmmeed");
+                    aat_card_physically_presented1.setText("");
+                    aat_reason_not_presented1.setText("");
+                    til_reason_unclaimed1.setVisibility(View.VISIBLE);
+                    til_reason_not_presented1.setVisibility(View.GONE);
+                }
+                else {
+                    til_reason_unclaimed1.setVisibility(View.GONE);
+                    til_release_date1.setVisibility(View.GONE);
+                    til_release_by1.setVisibility(View.GONE);
+                    til_release_place1.setVisibility(View.GONE);
+                    til_card_physically_presented1.setVisibility(View.GONE); //new
                 }
 
                 if (card_physically_presented1.matches("Yes")) {
                     til_card_pin_is_attached1.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField1.setVisibility(View.VISIBLE);
+                    til_card_number_inputted1.setVisibility(View.VISIBLE);
+                    til_card_number_series1.setVisibility(View.VISIBLE);
                 } else if (card_physically_presented1.matches("No")) {
                     til_reason_not_presented1.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField1.setVisibility(View.GONE);
@@ -5251,15 +6153,35 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 }
 
+                // other card 2
+
                 if (distribution_status2.matches("Claimed")) {
                     til_release_date2.setVisibility(View.VISIBLE);
                     til_release_by2.setVisibility(View.VISIBLE);
                     til_release_place2.setVisibility(View.VISIBLE);
+                    til_card_physically_presented2.setVisibility(View.VISIBLE);//new
+                }
+
+                else if (distribution_status2.matches("Unclaimed")){
+                    Log.v(TAG,"Unclaimmmeed");
+                    aat_card_physically_presented2.setText("");
+                    aat_reason_not_presented2.setText("");
+                    til_reason_unclaimed2.setVisibility(View.VISIBLE);
+                    til_reason_not_presented2.setVisibility(View.GONE);
+                }
+                else {
+                    til_reason_unclaimed2.setVisibility(View.GONE);
+                    til_release_date2.setVisibility(View.GONE);
+                    til_release_by2.setVisibility(View.GONE);
+                    til_release_place2.setVisibility(View.GONE);
+                    til_card_physically_presented2.setVisibility(View.GONE); //new
                 }
 
                 if (card_physically_presented2.matches("Yes")) {
                     til_card_pin_is_attached2.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField2.setVisibility(View.VISIBLE);
+                    til_card_number_inputted2.setVisibility(View.VISIBLE);
+                    til_card_number_series2.setVisibility(View.VISIBLE);
                 } else if (card_physically_presented2.matches("No")) {
                     til_reason_not_presented2.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField2.setVisibility(View.GONE);
@@ -5280,15 +6202,34 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 }
 
+                //other card 3
+
                 if (distribution_status3.matches("Claimed")) {
                     til_release_date3.setVisibility(View.VISIBLE);
                     til_release_by3.setVisibility(View.VISIBLE);
                     til_release_place3.setVisibility(View.VISIBLE);
+                    til_card_physically_presented3.setVisibility(View.VISIBLE);//new
+                }
+                else if (distribution_status3.matches("Unclaimed")){
+                    Log.v(TAG,"Unclaimmmeed");
+                    aat_card_physically_presented3.setText("");
+                    aat_reason_not_presented3.setText("");
+                    til_reason_unclaimed3.setVisibility(View.VISIBLE);
+                    til_reason_not_presented3.setVisibility(View.GONE);
+                }
+                else {
+                    til_reason_unclaimed3.setVisibility(View.GONE);
+                    til_release_date3.setVisibility(View.GONE);
+                    til_release_by3.setVisibility(View.GONE);
+                    til_release_place3.setVisibility(View.GONE);
+                    til_card_physically_presented3.setVisibility(View.GONE); //new
                 }
 
                 if (card_physically_presented3.matches("Yes")) {
                     til_card_pin_is_attached3.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField3.setVisibility(View.VISIBLE);
+                    til_card_number_inputted3.setVisibility(View.VISIBLE);
+                    til_card_number_series3.setVisibility(View.VISIBLE);
                 } else if (card_physically_presented3.matches("No")) {
                     til_reason_not_presented3.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField3.setVisibility(View.GONE);
@@ -5309,15 +6250,33 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 }
 
+                //other card 4
                 if (distribution_status4.matches("Claimed")) {
                     til_release_date4.setVisibility(View.VISIBLE);
                     til_release_by4.setVisibility(View.VISIBLE);
                     til_release_place4.setVisibility(View.VISIBLE);
+                    til_card_physically_presented4.setVisibility(View.VISIBLE);//new
+                }
+                else if (distribution_status4.matches("Unclaimed")){
+                    Log.v(TAG,"Unclaimmmeed");
+                    aat_card_physically_presented4.setText("");
+                    aat_reason_not_presented4.setText("");
+                    til_reason_unclaimed4.setVisibility(View.VISIBLE);
+                    til_reason_not_presented4.setVisibility(View.GONE);
+                }
+                else {
+                    til_reason_unclaimed4.setVisibility(View.GONE);
+                    til_release_date4.setVisibility(View.GONE);
+                    til_release_by4.setVisibility(View.GONE);
+                    til_release_place4.setVisibility(View.GONE);
+                    til_card_physically_presented4.setVisibility(View.GONE); //new
                 }
 
                 if (card_physically_presented4.matches("Yes")) {
                     til_card_pin_is_attached4.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField4.setVisibility(View.VISIBLE);
+                    til_card_number_inputted4.setVisibility(View.VISIBLE);
+                    til_card_number_series4.setVisibility(View.VISIBLE);
                 } else if (card_physically_presented4.matches("No")) {
                     til_reason_not_presented4.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField4.setVisibility(View.GONE);
@@ -5338,15 +6297,33 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 }
 
+                //other card 5
                 if (distribution_status5.matches("Claimed")) {
                     til_release_date5.setVisibility(View.VISIBLE);
                     til_release_by5.setVisibility(View.VISIBLE);
                     til_release_place5.setVisibility(View.VISIBLE);
+                    til_card_physically_presented5.setVisibility(View.VISIBLE);//new
+                }
+                else if (distribution_status5.matches("Unclaimed")){
+                    Log.v(TAG,"Unclaimmmeed");
+                    aat_card_physically_presented5.setText("");
+                    aat_reason_not_presented5.setText("");
+                    til_reason_unclaimed5.setVisibility(View.VISIBLE);
+                    til_reason_not_presented5.setVisibility(View.GONE);
+                }
+                else {
+                    til_reason_unclaimed5.setVisibility(View.GONE);
+                    til_release_date5.setVisibility(View.GONE);
+                    til_release_by5.setVisibility(View.GONE);
+                    til_release_place5.setVisibility(View.GONE);
+                    til_card_physically_presented5.setVisibility(View.GONE); //new
                 }
 
                 if (card_physically_presented5.matches("Yes")) {
                     til_card_pin_is_attached5.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField5.setVisibility(View.VISIBLE);
+                    til_card_number_inputted5.setVisibility(View.VISIBLE);
+                    til_card_number_series5.setVisibility(View.VISIBLE);
                 } else if (card_physically_presented5.matches("No")) {
                     til_reason_not_presented5.setVisibility(View.VISIBLE);
                     rlOtherCardScanningField5.setVisibility(View.GONE);

@@ -680,7 +680,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="Cash card"
+                    android:text="Picture of Cash Card and/or RPs ID"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
@@ -866,7 +866,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="Grantee"
+                    android:text="Picture of Grantee/Representative Holding Cash Card and/or ID"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
@@ -976,7 +976,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:editable="false"
-                            android:hint="Other Card Holder Name"
+                            android:hint="Other Member CardHolder Name"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -1438,7 +1438,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:editable="false"
-                            android:hint="Other Card Holder Name"
+                            android:hint="Other Member CardHolder Name"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -1901,7 +1901,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:editable="false"
-                            android:hint="Other Card Holder Name"
+                            android:hint="Other Member CardHolder Name"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -2362,7 +2362,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:editable="false"
-                            android:hint="Other Card Holder Name"
+                            android:hint="Other Member CardHolder Name"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -2825,7 +2825,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:editable="false"
-                            android:hint="Other Card Holder Name"
+                            android:hint="Other Member CardHolder Name"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
