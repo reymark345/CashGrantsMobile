@@ -15,6 +15,7 @@
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/dashboard_item_logs.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/dashboard_main.xml" value="0.33" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/internet_connection.xml" value="0.3625" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layout/search_unvalidated_list.xml" value="0.33" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/accomplished_signature.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_cash_card.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_home.xml" value="0.24139492753623187" />
@@ -27,15 +28,18 @@
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_one_sex_list_items.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_three.xml" value="0.33" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/intro_two.xml" value="0.33" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/layout.xml" value="0.19322916666666667" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/pull_data.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/pull_update_data.xml" value="0.3625" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/unvalidated_list.xml" value="0.33" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/unvalidated_list_item.xml" value="0.33" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update1_one.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_data.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/update_main_scanner_entries.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_items.xml" value="0.24139492753623187" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/inventory_list.xml" value="0.3625" />
-        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/logs_list.xml" value="0.3625" />
-        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/logs_list_item.xml" value="0.33" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/logs_list.xml" value="0.17647058823529413" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/logs_list_item.xml" value="0.20474777448071216" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_inventory_list.xml" value="0.5" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_logs_list.xml" value="0.3569230769230769" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/sync_data.xml" value="0.33" />

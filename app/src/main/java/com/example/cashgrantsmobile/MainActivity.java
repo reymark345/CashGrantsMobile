@@ -34,10 +34,10 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView CashCardScanner, InventoryList, PullUpdateData,PullPsgcData, SyncData, LogsData, Logout;
+    CardView CashCardScanner, InventoryList, PullPsgcData, SyncData, LogsData, Logout, UnvalidatedData;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
-    TextView txtInventoryCount, txtPullPsgcDataCount, txtLogsTotal, txtSyncData, txtScannedTotal, txtErrorTotal, txtIncompleteTotal;
+    TextView txtInventoryCount, txtPullPsgcDataCount, txtLogsTotal, txtSyncData, txtScannedTotal, txtErrorTotal, txtIncompleteTotal, txtUnvalidatedCount;
     public boolean EnableNightMode = false;
     private final String night = "true";
     private final String light = "false";
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         //CardView
         CashCardScanner = (CardView) findViewById(R.id.cvCashCard);
         InventoryList = (CardView) findViewById(R.id.cvCashCardList);
-        PullUpdateData = (CardView) findViewById(R.id.cvPullUpdateData);
+        UnvalidatedData = (CardView) findViewById(R.id.mc_unvalidated_field);
         PullPsgcData = (CardView) findViewById(R.id.cvPullPsgcData);
         LogsData = (CardView) findViewById(R.id.logsItem);
         SyncData = (CardView) findViewById(R.id.cvSyncData);
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         txtIncompleteTotal = findViewById(R.id.incompleteTotal);
         txtLogsTotal = findViewById(R.id.textLogsCount);
         txtSyncData = findViewById(R.id.txtSyncData);
+        txtUnvalidatedCount = findViewById(R.id.txtUnvalidatedCount);
 
         //Button
         DarkMode =(ImageButton) findViewById(R.id.textViews);
@@ -147,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
 
+        });
+        UnvalidatedData.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Unvalidated.UnvalidatedData.class);
+            startActivity(intent);
+            finish();
         });
         PullPsgcData.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.PullUpdate.PullPsgcData.class);
@@ -232,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor scanned_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"' AND type='scanned'");
         Cursor error_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='error'");
         Cursor logs_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'");
+        Cursor unvalidated_total = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations WHERE validated_at ='null'");
 
         txtInventoryCount.setText(String.valueOf(listCount.getCount()));
         txtPullPsgcDataCount.setText(String.valueOf(psgcList.getCount()));
@@ -241,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
         txtLogsTotal.setText(String.valueOf(logs_total.getCount()));
         txtIncompleteTotal.setText("0");
         txtSyncData.setText(String.valueOf(emvList.getCount()));
+        txtUnvalidatedCount.setText(String.valueOf(unvalidated_total.getCount()));
 
         listCount.close();
         emvList.close();
@@ -248,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
         scanned_total.close();
         error_total.close();
         logs_total.close();
+        unvalidated_total.close();
     }
 
     public void clearSharedPref(){

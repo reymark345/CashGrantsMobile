@@ -3761,7 +3761,7 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_contact_no_of.setAdapter(adapterContact_no_of);
                 aat_is_grantee.setAdapter(adapterInterviewee);
                 aat_relationship_to_grantee.setAdapter(adapterRelationshipToGrantee);
-//                aat_set.setAdapter(adapterHouseholdSet);
+                aat_set.setAdapter(adapterHouseholdSet);
                 aat_ext_name.setAdapter(adapterExtensionName);
                 aat_province_code.setAdapter(adapterProvince);
 
