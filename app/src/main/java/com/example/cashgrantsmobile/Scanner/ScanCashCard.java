@@ -146,7 +146,6 @@ public class ScanCashCard extends AppCompatActivity {
     String[] CardRequired = new String[]{"Yes", "No"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
-    String[] modifiedArray = Arrays.copyOfRange(Reasons, 1, Reasons.length);
 
     String[] Contact_no_of = new String[]{"Grantee", "Others"};
     String[] Interviewee = new String[]{"Grantee", "Representative"};
@@ -4184,6 +4183,21 @@ public class ScanCashCard extends AppCompatActivity {
              String other_card3 = String.valueOf(other_card_number_3);
              String other_card4 = String.valueOf(other_card_number_4);
              String other_card5 = String.valueOf(other_card_number_5);
+
+            String distribution_record1 = String.valueOf(grantee_distribution_status_record1);
+            String distribution_record2 = String.valueOf(grantee_distribution_status_record2);
+            String distribution_record3 = String.valueOf(grantee_distribution_status_record3);
+            String distribution_record4 = String.valueOf(grantee_distribution_status_record4);
+            String distribution_record5 = String.valueOf(grantee_distribution_status_record5);
+
+            String card_release_date1 = String.valueOf(grantee_card_release_date1);
+            String card_release_date2 = String.valueOf(grantee_card_release_date2);
+            String card_release_date3 = String.valueOf(grantee_card_release_date3);
+            String card_release_date4 = String.valueOf(grantee_card_release_date4);
+            String card_release_date5 = String.valueOf(grantee_card_release_date5);
+
+
+
              
              if (other_card1.matches("null")){
                  other_card_number_1 = "";
@@ -4200,6 +4214,39 @@ public class ScanCashCard extends AppCompatActivity {
              if (other_card5.matches("null")){
                  other_card_number_5 = "";
              }
+
+            if (distribution_record1.matches("null")){
+                grantee_distribution_status_record1 = "";
+            }
+            if (distribution_record2.matches("null")){
+                grantee_distribution_status_record2 = "";
+            }
+            if (distribution_record3.matches("null")){
+                grantee_distribution_status_record3 = "";
+            }
+            if (distribution_record4.matches("null")){
+                grantee_distribution_status_record4 = "";
+            }
+            if (distribution_record5.matches("null")){
+                grantee_distribution_status_record5 = "";
+            }
+
+            if (card_release_date1.matches("null")){
+                grantee_card_release_date1 = "";
+            }
+            if (card_release_date2.matches("null")){
+                grantee_card_release_date2 = "";
+            }
+            if (card_release_date3.matches("null")){
+                grantee_card_release_date3 = "";
+            }
+            if (card_release_date4.matches("null")){
+                grantee_card_release_date4 = "";
+            }
+            if (card_release_date5.matches("null")){
+                grantee_card_release_date5 = "";
+            }
+
 
             clear_preferences();
             aat_set.setText(null, false);
@@ -5903,7 +5950,6 @@ public class ScanCashCard extends AppCompatActivity {
                 });
 
                 String card_number_prefilled = sh.getString("card_number_prefilled", "");
-
                 String distribution_status_record = sh.getString("distribution_status_record", "");
                 String release_date_record = sh.getString("release_date_record", "");
 
@@ -6031,10 +6077,8 @@ public class ScanCashCard extends AppCompatActivity {
                 String pawning_remarks3 = sh.getString("pawning_remarks3", "");
                 String pawning_remarks4 = sh.getString("pawning_remarks4", "");
                 String pawning_remarks5 = sh.getString("pawning_remarks5", "");
-                String distribution_status_actual = aat_distribution_status.getText().toString();
 
                 edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
-
                 aat_distribution_status_record.setText(distribution_status_record);
                 edt_release_date_record.setText(release_date_record);
 
