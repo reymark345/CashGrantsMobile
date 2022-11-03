@@ -980,12 +980,49 @@
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_distribution_status1_record"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_card_number_prefilled1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <EditText
+                            android:id="@+id/aat_distribution_status_record1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Distribution status (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_date_claimed_record1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_distribution_status_record1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_release_date_record1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Date of Card Released (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status1"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/til_card_holder_name1"
+                        android:layout_below="@+id/til_distribution_status1_record"
                         android:layout_marginTop="10dp"
                         app:helperText="Required"
                         app:helperTextTextColor="@color/validation"
@@ -997,7 +1034,7 @@
                             android:layout_height="wrap_content"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Distribution Status"
+                            android:hint="Distribution Status (Actual)"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -1357,7 +1394,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -1443,6 +1480,42 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_distribution_status2_record"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_card_holder_name2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <EditText
+                            android:id="@+id/aat_distribution_status_record2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Distribution status (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_date_claimed_record2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_distribution_status_record2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_release_date_record2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Date of Card Released (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status2"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
@@ -1459,7 +1532,7 @@
                             android:layout_height="wrap_content"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Distribution Status"
+                            android:hint="Distribution Status (Actual)"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -1820,7 +1893,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -1906,6 +1979,43 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_distribution_status3_record"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_card_holder_name3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <EditText
+                            android:id="@+id/aat_distribution_status_record3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Distribution status (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_date_claimed_record3"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_distribution_status3_record"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_release_date_record3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Date of Card Released (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status3"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
@@ -1922,7 +2032,7 @@
                             android:layout_height="wrap_content"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Distribution Status"
+                            android:hint="Distribution Status (Actual)"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -2281,7 +2391,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -2366,6 +2476,43 @@
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_distribution_status4_record"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_card_holder_name4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <EditText
+                            android:id="@+id/aat_distribution_status_record4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Distribution status (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_date_claimed_record4"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_distribution_status_record4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_release_date_record4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Date of Card Released (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status4"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
@@ -2383,7 +2530,7 @@
                             android:layout_height="wrap_content"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Distribution Status"
+                            android:hint="Distribution Status (Actual)"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -2742,7 +2889,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -2829,6 +2976,43 @@
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_distribution_status5_record"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_card_holder_name5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
+
+                        <EditText
+                            android:id="@+id/aat_distribution_status_record5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Distribution status (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_date_claimed_record5"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_below="@+id/til_distribution_status_record2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:helperTextTextColor="@color/validation"
+                        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                        <EditText
+                            android:id="@+id/edt_release_date_record5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Date of Card Released (Record)"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_distribution_status5"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
@@ -2846,7 +3030,7 @@
                             android:layout_height="wrap_content"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Distribution Status"
+                            android:hint="Distribution Status (Actual)"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -3205,7 +3389,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 

@@ -69,7 +69,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                                String card_holder_name3,String card_number_system_generated3,String card_number_inputted3,String card_number_series3,String distribution_status3,String release_date3, String release_by3,String release_place3,String card_physically_presented3,String card_pin_is_attached3,String reason_not_presented3,String reason_unclaimed3,String card_replacement_request3,String card_replacement_request_submitted_details3,String pawning_remarks3,
                                String card_holder_name4,String card_number_system_generated4,String card_number_inputted4,String card_number_series4,String distribution_status4,String release_date4,String release_by4,String release_place4,String card_physically_presented4,String card_pin_is_attached4,String reason_not_presented4,String reason_unclaimed4,String card_replacement_request4,String card_replacement_request_submitted_details4,String pawning_remarks4,
                                String card_holder_name5,String card_number_system_generated5,String card_number_inputted5,String card_number_series5,String distribution_status5,String release_date5,String release_by5,String release_place5,String card_physically_presented5,String card_pin_is_attached5,String reason_not_presented5,String reason_unclaimed5,String card_replacement_request5,String card_replacement_request_submitted_details5,String pawning_remarks5, int card_count,
-                               byte[] card_image,byte[] grantee_image,byte[] additional_image,byte[] other_scanned_image1,byte[] other_scanned_image2,byte[] other_scanned_image3,byte[] other_scanned_image4,byte[] other_scanned_image5, String overall_remarks, String other_ext_name, String contact_no_of_others, String others_reason_not_presented, String others_reason_not_presented1, String others_reason_not_presented2, String others_reason_not_presented3, String others_reason_not_presented4, String others_reason_not_presented5, String others_reason_unclaimed, String others_reason_unclaimed1, String others_reason_unclaimed2, String others_reason_unclaimed3, String others_reason_unclaimed4, String others_reason_unclaimed5, String nma_others_reason) {
+                               byte[] card_image,byte[] grantee_image,byte[] additional_image,byte[] other_scanned_image1,byte[] other_scanned_image2,byte[] other_scanned_image3,byte[] other_scanned_image4,byte[] other_scanned_image5, String overall_remarks, String other_ext_name, String contact_no_of_others, String others_reason_not_presented, String others_reason_not_presented1, String others_reason_not_presented2, String others_reason_not_presented3, String others_reason_not_presented4, String others_reason_not_presented5, String others_reason_unclaimed, String others_reason_unclaimed1, String others_reason_unclaimed2, String others_reason_unclaimed3, String others_reason_unclaimed4, String others_reason_unclaimed5, String nma_others_reason, String nma_non_emv, String nma_card_name,
+                               String distribution_status_record,String distribution_status_record1,String distribution_status_record2,String distribution_status_record3,String distribution_status_record4,String distribution_status_record5,
+                               String release_date_record,String release_date_record1,String release_date_record2,String release_date_record3,String release_date_record4,String release_date_record5) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdf.format(new Date());
@@ -77,8 +79,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = getWritableDatabase();
         String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?,?)";
-        String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?,?,?,?)";
+        String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String sql5,sql6,sql7,sql8,sql9,sql10;
 
 
@@ -88,16 +90,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?,?,?)";
         }
 
-        if (other_scanned_image1!=null){sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
-        else {sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
-        if (other_scanned_image2!=null){sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
-        else {sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
-        if (other_scanned_image3!=null){sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
-        else {sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
-        if (other_scanned_image4!=null){sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
-        else {sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
-        if (other_scanned_image5!=null){sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?)";}
-        else {sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?)";}
+        if (other_scanned_image1!=null){sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?)";}
+        else {sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?)";}
+        if (other_scanned_image2!=null){sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?)";}
+        else {sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?)";}
+        if (other_scanned_image3!=null){sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?)";}
+        else {sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?)";}
+        if (other_scanned_image4!=null){sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?)";}
+        else {sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?)";}
+        if (other_scanned_image5!=null){sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?)";}
+        else {sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?)";}
 
 
         SQLiteStatement grantee_validations = database.compileStatement(sql1);
@@ -145,6 +147,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         nma_validations.bindString(4, nma_remarks);
         nma_validations.bindString(5, strDate);
         nma_validations.bindString(6, nma_others_reason);
+        nma_validations.bindString(7, nma_non_emv);
+        nma_validations.bindString(8, nma_card_name);
         nma_validations.executeInsert();
 
         SQLiteStatement card_validation_details = database.compileStatement(sql4);
@@ -167,6 +171,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         card_validation_details.bindString(16, strDate);
         card_validation_details.bindString(17, others_reason_not_presented);
         card_validation_details.bindString(18, others_reason_unclaimed);
+        card_validation_details.bindString(19, distribution_status_record);
+        card_validation_details.bindString(20, convertDateFormat(release_date_record));
         card_validation_details.executeInsert();
 
         SQLiteStatement emv_validation_details = database.compileStatement(sql5);
@@ -220,13 +226,18 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             if (other_scanned_image1 !=null){
                 other_card_validations1.bindBlob(16, other_scanned_image1);
                 other_card_validations1.bindString(17, strDate);
-                other_card_validations1.bindString(18, others_reason_not_presented);
-                other_card_validations1.bindString(19, others_reason_unclaimed);
+                other_card_validations1.bindString(18, others_reason_not_presented1);
+                other_card_validations1.bindString(19, others_reason_unclaimed1);
+                other_card_validations1.bindString(20, distribution_status_record1);
+                other_card_validations1.bindString(21, convertDateFormat(release_date_record1));
+
             }
             else {
                 other_card_validations1.bindString(16, strDate);
-                other_card_validations1.bindString(17, others_reason_not_presented);
-                other_card_validations1.bindString(18, others_reason_unclaimed);
+                other_card_validations1.bindString(17, others_reason_not_presented1);
+                other_card_validations1.bindString(18, others_reason_unclaimed1);
+                other_card_validations1.bindString(19, distribution_status_record1);
+                other_card_validations1.bindString(20, convertDateFormat(release_date_record1));
             }
             other_card_validations1.executeInsert();
         }
@@ -256,9 +267,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             if (other_scanned_image2 !=null){
                 other_card_validations2.bindBlob(16, other_scanned_image2);
                 other_card_validations2.bindString(17, strDate);
+                //here
+                other_card_validations2.bindString(18, others_reason_not_presented2);
+                other_card_validations2.bindString(19, others_reason_unclaimed2);
+                other_card_validations2.bindString(20, distribution_status_record2);
+                other_card_validations2.bindString(21, convertDateFormat(release_date_record2));
             }
             else {
                 other_card_validations2.bindString(16, strDate);
+                //here
+                other_card_validations2.bindString(17, others_reason_not_presented2);
+                other_card_validations2.bindString(18, others_reason_unclaimed2);
+                other_card_validations2.bindString(19, distribution_status_record2);
+                other_card_validations2.bindString(20, convertDateFormat(release_date_record2));
             }
             other_card_validations2.executeInsert();
 
@@ -289,9 +310,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             if (other_scanned_image3 !=null){
                 other_card_validations3.bindBlob(16, other_scanned_image3);
                 other_card_validations3.bindString(17, strDate);
+                //here
+                other_card_validations3.bindString(18, others_reason_not_presented3);
+                other_card_validations3.bindString(19, others_reason_unclaimed3);
+                other_card_validations3.bindString(20, distribution_status_record3);
+                other_card_validations3.bindString(21, convertDateFormat(release_date_record3));
             }
             else {
                 other_card_validations3.bindString(16, strDate);
+                other_card_validations3.bindString(17, others_reason_not_presented3);
+                other_card_validations3.bindString(18, others_reason_unclaimed3);
+                other_card_validations3.bindString(19, distribution_status_record3);
+                other_card_validations3.bindString(20, convertDateFormat(release_date_record3));
+                //here
             }
             other_card_validations3.executeInsert();
         }
@@ -320,9 +351,20 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             if (other_scanned_image4 !=null){
                 other_card_validations4.bindBlob(16, other_scanned_image4);
                 other_card_validations4.bindString(17, strDate);
+                //here
+                other_card_validations4.bindString(18, others_reason_not_presented4);
+                other_card_validations4.bindString(19, others_reason_unclaimed4);
+                other_card_validations4.bindString(20, distribution_status_record4);
+                other_card_validations4.bindString(21, convertDateFormat(release_date_record4));
+
             }
             else {
                 other_card_validations4.bindString(16, strDate);
+                //here
+                other_card_validations4.bindString(17, others_reason_not_presented4);
+                other_card_validations4.bindString(18, others_reason_unclaimed4);
+                other_card_validations4.bindString(19, distribution_status_record4);
+                other_card_validations4.bindString(20, convertDateFormat(release_date_record4));
             }
             other_card_validations4.executeInsert();
         }
@@ -352,9 +394,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             if (other_scanned_image5 !=null){
                 other_card_validations5.bindBlob(16, other_scanned_image5);
                 other_card_validations5.bindString(17, strDate);
+                //here
+                other_card_validations5.bindString(18, others_reason_not_presented5);
+                other_card_validations5.bindString(19, others_reason_unclaimed5);
+                other_card_validations5.bindString(20, distribution_status_record5);
+                other_card_validations5.bindString(21, convertDateFormat(release_date_record5));
             }
             else {
                 other_card_validations5.bindString(16, strDate);
+                //here
+                other_card_validations5.bindString(17, others_reason_not_presented5);
+                other_card_validations5.bindString(18, others_reason_unclaimed5);
+                other_card_validations5.bindString(19, distribution_status_record5);
+                other_card_validations5.bindString(20, convertDateFormat(release_date_record5));
             }
             other_card_validations5.executeInsert();
         }

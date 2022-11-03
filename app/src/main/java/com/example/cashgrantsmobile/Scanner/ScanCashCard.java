@@ -94,7 +94,7 @@ public class ScanCashCard extends AppCompatActivity {
     public static boolean pressNext = false;
     Uri image_uri;
 
-    String hh_id,sex,hh_set_group,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3, first_name,last_name,middle_name,ext_name,hh_status,province,municipality,barangay,nma_amount,grantee_card_number,grantee_card_release_date,other_card_release_date_1,other_card_release_date_2,grantee_distribution_status,other_card_distribution_status_1,other_card_distribution_status_2,upload_history_id,other_card_holder_1,other_card_holder_2,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4, other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5,created_at,updated_at,validated_at;
+    String hh_id,sex,hh_set_group,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3, first_name,last_name,middle_name,ext_name,hh_status,province,municipality,barangay,nma_amount,nma_non_emv,nma_card_name,grantee_card_number,grantee_card_release_date,grantee_card_release_date1,grantee_card_release_date2,grantee_card_release_date3,grantee_card_release_date4,grantee_card_release_date5,other_card_release_date_1,other_card_release_date_2,grantee_distribution_status,grantee_distribution_status_record,grantee_distribution_status_record1,grantee_distribution_status_record2,grantee_distribution_status_record3,grantee_distribution_status_record4,grantee_distribution_status_record5,other_card_distribution_status_1,other_card_distribution_status_2,upload_history_id,other_card_holder_1,other_card_holder_2,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4, other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5,created_at,updated_at,validated_at;
     Integer emv_monitoring_id,record_counter;
 
     private int prevCount = 0;
@@ -125,7 +125,7 @@ public class ScanCashCard extends AppCompatActivity {
 
 //    Intro 2 XML Fields
     TextInputLayout til_card_number_prefilled, til_distribution_status, til_release_date, til_release_by, til_release_place, til_card_physically_presented, til_card_pin_is_attached, til_reason_not_presented, til_reason_unclaimed, til_card_replacement_request, til_others_reason_not_presented, til_others_reason_unclaimed, til_card_replacement_request_submitted_details, til_lender_name, til_date_pawned, til_loan_amount, til_lender_address, til_date_retrieved, til_interest, til_status, til_reason, til_offense_history, til_offense_date, til_staff_intervention, til_other_details, til_card, til_card_number_inputted, til_card_number_series, til_id_exists, til_additionalID, tilGrantee, til_representative_name, til_card_number_prefilled1, til_card_holder_name1, til_distribution_status1, til_release_date1, til_release_by1, til_release_place1, til_card_physically_presented1, til_card_pin_is_attached1, til_reason_not_presented1, til_others_reason_not_presented1, til_reason_unclaimed1, til_others_reason_unclaimed1, til_card_replacement_request1, til_card_replacement_request_submitted_details1, til_pawning_remarks1, tilOtherScanned1, til_card_number_inputted1, til_card_number_series1, til_card_number_prefilled2, til_card_holder_name2, til_distribution_status2, til_release_date2, til_release_by2, til_release_place2, til_card_physically_presented2, til_card_pin_is_attached2, til_reason_not_presented2, til_others_reason_not_presented2, til_reason_unclaimed2, til_others_reason_unclaimed2, til_card_replacement_request2, til_card_replacement_request_submitted_details2, til_pawning_remarks2, tilOtherScanned2, til_card_number_inputted2, til_card_number_series2, til_card_number_prefilled3, til_card_holder_name3, til_distribution_status3, til_release_date3, til_release_by3, til_release_place3, til_card_physically_presented3, til_card_pin_is_attached3, til_reason_not_presented3, til_others_reason_not_presented3, til_reason_unclaimed3, til_others_reason_unclaimed3, til_card_replacement_request3, til_card_replacement_request_submitted_details3, til_pawning_remarks3, tilOtherScanned3, til_card_number_inputted3, til_card_number_series3, til_card_number_prefilled4, til_card_holder_name4, til_distribution_status4, til_release_date4, til_release_by4, til_release_place4, til_card_physically_presented4, til_card_pin_is_attached4, til_reason_not_presented4, til_others_reason_not_presented4, til_reason_unclaimed4, til_others_reason_unclaimed4, til_card_replacement_request4, til_card_replacement_request_submitted_details4, til_pawning_remarks4, tilOtherScanned4, til_card_number_inputted4, til_card_number_series4, til_card_number_prefilled5, til_card_holder_name5, til_distribution_status5, til_release_date5, til_release_by5, til_release_place5, til_card_physically_presented5, til_card_pin_is_attached5, til_reason_not_presented5, til_others_reason_not_presented5, til_reason_unclaimed5, til_others_reason_unclaimed5, til_card_replacement_request5, til_card_replacement_request_submitted_details5, til_pawning_remarks5, tilOtherScanned5, til_card_number_inputted5, til_card_number_series5, til_current_scan_btn;
-    EditText edt_card_number_prefilled, edt_release_date, edt_release_by, edt_release_place, edt_others_reason_not_presented, edt_others_reason_unclaimed, edt_card_replacement_request_submitted_details, edt_lender_name, edt_date_pawned, edt_loan_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_reason, edt_offense_date, edt_remarks, edt_staff_intervention, edt_other_details, edt_card_number_inputted, edt_card_number_series, edt_representative_name, edt_card_number_prefilled1, edt_card_holder_name1, edt_release_date1, edt_release_by1, edt_release_place1, edt_others_reason_not_presented1, edt_others_reason_unclaimed1, edt_card_replacement_request_submitted_details1, edt_pawning_remarks1, edt_card_number_inputted1, edt_card_number_series1, edt_card_number_prefilled2, edt_card_holder_name2, edt_release_date2, edt_release_by2, edt_release_place2, edt_others_reason_not_presented2, edt_others_reason_unclaimed2, edt_card_replacement_request_submitted_details2, edt_pawning_remarks2, edt_card_number_inputted2, edt_card_number_series2, edt_card_number_prefilled3, edt_card_holder_name3, edt_release_date3, edt_release_by3, edt_release_place3, edt_others_reason_not_presented3, edt_others_reason_unclaimed3, edt_card_replacement_request_submitted_details3, edt_pawning_remarks3, edt_card_number_inputted3, edt_card_number_series3, edt_card_number_prefilled4, edt_card_holder_name4, edt_release_date4, edt_release_by4, edt_release_place4, edt_others_reason_not_presented4, edt_others_reason_unclaimed4, edt_card_replacement_request_submitted_details4, edt_pawning_remarks4, edt_card_number_inputted4, edt_card_number_series4, edt_card_number_prefilled5, edt_card_holder_name5, edt_release_date5, edt_release_by5, edt_release_place5, edt_others_reason_not_presented5, edt_others_reason_unclaimed5, edt_card_replacement_request_submitted_details5, edt_pawning_remarks5, edt_card_number_inputted5, edt_card_number_series5, aat_distribution_status_record, edt_release_date_record;
+    EditText edt_card_number_prefilled, edt_release_date, edt_release_by, edt_release_place, edt_others_reason_not_presented, edt_others_reason_unclaimed, edt_card_replacement_request_submitted_details, edt_lender_name, edt_date_pawned, edt_loan_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_reason, edt_offense_date, edt_remarks, edt_staff_intervention, edt_other_details, edt_card_number_inputted, edt_card_number_series, edt_representative_name, edt_card_number_prefilled1, edt_card_holder_name1, edt_release_date1, edt_release_by1, edt_release_place1, edt_others_reason_not_presented1, edt_others_reason_unclaimed1, edt_card_replacement_request_submitted_details1, edt_pawning_remarks1, edt_card_number_inputted1, edt_card_number_series1, edt_card_number_prefilled2, edt_card_holder_name2, edt_release_date2, edt_release_by2, edt_release_place2, edt_others_reason_not_presented2, edt_others_reason_unclaimed2, edt_card_replacement_request_submitted_details2, edt_pawning_remarks2, edt_card_number_inputted2, edt_card_number_series2, edt_card_number_prefilled3, edt_card_holder_name3, edt_release_date3, edt_release_by3, edt_release_place3, edt_others_reason_not_presented3, edt_others_reason_unclaimed3, edt_card_replacement_request_submitted_details3, edt_pawning_remarks3, edt_card_number_inputted3, edt_card_number_series3, edt_card_number_prefilled4, edt_card_holder_name4, edt_release_date4, edt_release_by4, edt_release_place4, edt_others_reason_not_presented4, edt_others_reason_unclaimed4, edt_card_replacement_request_submitted_details4, edt_pawning_remarks4, edt_card_number_inputted4, edt_card_number_series4, edt_card_number_prefilled5, edt_card_holder_name5, edt_release_date5, edt_release_by5, edt_release_place5, edt_others_reason_not_presented5, edt_others_reason_unclaimed5, edt_card_replacement_request_submitted_details5, edt_pawning_remarks5, edt_card_number_inputted5, edt_card_number_series5, aat_distribution_status_record, edt_release_date_record, aat_distribution_status_record1, edt_release_date_record1, aat_distribution_status_record2, edt_release_date_record2, aat_distribution_status_record3, edt_release_date_record3, aat_distribution_status_record4, edt_release_date_record4, aat_distribution_status_record5, edt_release_date_record5;
     AutoCompleteTextView aat_distribution_status, aat_card_physically_presented, aat_card_pin_is_attached, aat_reason_not_presented, aat_reason_unclaimed, aat_card_replacement_request, aat_status, aat_offense_history, aat_id_exists, aat_distribution_status1, aat_card_physically_presented1, aat_card_pin_is_attached1, aat_reason_not_presented1, aat_reason_unclaimed1, aat_card_replacement_request1, aat_distribution_status2, aat_card_physically_presented2, aat_card_pin_is_attached2, aat_reason_not_presented2, aat_reason_unclaimed2, aat_card_replacement_request2, aat_distribution_status3, aat_card_physically_presented3, aat_card_pin_is_attached3, aat_reason_not_presented3, aat_reason_unclaimed3, aat_card_replacement_request3, aat_distribution_status4, aat_card_physically_presented4, aat_card_pin_is_attached4, aat_reason_not_presented4, aat_reason_unclaimed4, aat_card_replacement_request4, aat_distribution_status5, aat_card_physically_presented5, aat_card_pin_is_attached5, aat_reason_not_presented5, aat_reason_unclaimed5, aat_card_replacement_request5;
     ImageView ScannedImage, imgUri, imgAdditionalId, mGrantee, ivOtherScannedImage1, ivOtherScannedImageUrl1, ivOtherScannedImage2, ivOtherScannedImageUrl2, ivOtherScannedImage3, ivOtherScannedImageUrl3, ivOtherScannedImage4, ivOtherScannedImageUrl4, ivOtherScannedImage5, ivOtherScannedImageUrl5;
     Button btn_scanCashCard, btn_scanID, btn_grantee, btnOtherScanned1, btnOtherScanned2, btnOtherScanned3, btnOtherScanned4, btnOtherScanned5;
@@ -139,7 +139,7 @@ public class ScanCashCard extends AppCompatActivity {
 
 //    Intro 3 XML Fields
     TextInputLayout til_nma_amount, til_nma_reason, til_nma_others_reason, til_nma_date_claimed, til_nma_remarks, til_overall_remarks;
-    EditText edt_nma_amount, edt_nma_others_reason, edt_nma_date_claimed, edt_nma_remarks, edt_overall_remarks;
+    EditText edt_nma_amount, edt_nma_others_reason, edt_nma_date_claimed, edt_nma_remarks, edt_overall_remarks, edt_non_emv, edt_card_name;
     AutoCompleteTextView aat_nma_reason;
 
     String[] Ans = new String[]{"Yes", "No"};
@@ -1253,6 +1253,8 @@ public class ScanCashCard extends AppCompatActivity {
         String staff_intervention = sh.getString("staff_intervention","");
         String other_details = sh.getString("other_details","");
 
+        String nma_non_emv = sh.getString("nma_non_emv","");
+        String nma_card_name = sh.getString("nma_card_name","");
         String amount = sh.getString("nma_amount","");
         String date_claimed = sh.getString("nma_date_claimed","");
         String nma_reason = sh.getString("nma_reason","");
@@ -1277,6 +1279,29 @@ public class ScanCashCard extends AppCompatActivity {
         String card_number_unputted = sh.getString("card_number_inputted","");
         String card_number_series = sh.getString("card_number_series","");
         String distribution_status = sh.getString("distribution_status","");
+
+        //new
+        String distribution_status_record = sh.getString("distribution_status_record","");
+        String distribution_status_record1 = sh.getString("distribution_status_record1","");
+        String distribution_status_record2 = sh.getString("distribution_status_record2","");
+        String distribution_status_record3 = sh.getString("distribution_status_record3","");
+        String distribution_status_record4 = sh.getString("distribution_status_record4","");
+        String distribution_status_record5 = sh.getString("distribution_status_record5","");
+        //end"distribution_status_record"
+
+
+        //new
+        String release_date_record = sh.getString("release_date_record","");
+        String release_date_record1 = sh.getString("release_date_record1","");
+        String release_date_record2 = sh.getString("release_date_record2","");
+        String release_date_record3 = sh.getString("release_date_record3","");
+        String release_date_record4 = sh.getString("release_date_record4","");
+        String release_date_record5 = sh.getString("release_date_record5","");
+        //end"distribution_status_record"
+
+
+
+
         String release_date = sh.getString("release_date","");
         String release_by = sh.getString("release_by","");
         String release_place = sh.getString("release_place","");
@@ -1410,14 +1435,14 @@ public class ScanCashCard extends AppCompatActivity {
                                 imageViewToByte(ivOtherScannedImage2),
                                 imageViewToByte(ivOtherScannedImage3),
                                 imageViewToByte(ivOtherScannedImage4),
-                                imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason);
-
+                                imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason,nma_non_emv,nma_card_name,
+                                distribution_status_record,distribution_status_record1,distribution_status_record2,distribution_status_record3,distribution_status_record4,distribution_status_record5,
+                                release_date_record,release_date_record1,release_date_record2,release_date_record3,release_date_record4,release_date_record5);
 
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
 
                     clear_preferences();
-
                     sDialog.dismiss();
 
                     new android.os.Handler(Looper.getMainLooper()).postDelayed(
@@ -1535,9 +1560,22 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status_record = findViewById(R.id.aat_distribution_status_record);
                 edt_release_date_record = findViewById(R.id.edt_release_date_record);
 
+                aat_distribution_status_record1 = findViewById(R.id.aat_distribution_status_record1);
+                aat_distribution_status_record2 = findViewById(R.id.aat_distribution_status_record2);
+                aat_distribution_status_record3 = findViewById(R.id.aat_distribution_status_record3);
+                aat_distribution_status_record4 = findViewById(R.id.aat_distribution_status_record4);
+                aat_distribution_status_record5 = findViewById(R.id.aat_distribution_status_record5);
+
                 edt_card_number_prefilled = findViewById(R.id.edt_card_number_prefilled);
                 aat_distribution_status = findViewById(R.id.aat_distribution_status);
+
                 edt_release_date = findViewById(R.id.edt_release_date);
+                edt_release_date_record1 = findViewById(R.id.edt_release_date_record1);
+                edt_release_date_record2 = findViewById(R.id.edt_release_date_record2);
+                edt_release_date_record3 = findViewById(R.id.edt_release_date_record3);
+                edt_release_date_record4 = findViewById(R.id.edt_release_date_record4);
+                edt_release_date_record5 = findViewById(R.id.edt_release_date_record5);
+
                 edt_release_by = findViewById(R.id.edt_release_by);
                 edt_release_place = findViewById(R.id.edt_release_place);
                 aat_card_physically_presented = findViewById(R.id.aat_card_physically_presented);
@@ -1831,12 +1869,16 @@ public class ScanCashCard extends AppCompatActivity {
                 til_nma_date_claimed = findViewById(R.id.til_nma_date_claimed);
                 til_nma_remarks = findViewById(R.id.til_nma_remarks);
 
+                edt_non_emv = findViewById(R.id.edt_non_emv);
+                edt_card_name = findViewById(R.id.edt_card_name);
                 edt_nma_amount = findViewById(R.id.edt_nma_amount);
                 aat_nma_reason = findViewById(R.id.aat_nma_reason);
                 edt_nma_others_reason = findViewById(R.id.edt_nma_others_reason);
                 edt_nma_date_claimed = findViewById(R.id.edt_nma_date_claimed);
                 edt_nma_remarks = findViewById(R.id.edt_nma_remarks);
                 edt_nma_amount.setEnabled(false);
+                edt_non_emv.setEnabled(false);
+                edt_card_name.setEnabled(false);
                 break;
             case 4:
                 til_overall_remarks = findViewById(R.id.til_overall_remarks);
@@ -3626,6 +3668,9 @@ public class ScanCashCard extends AppCompatActivity {
 
             xml_initialization(3);
 
+            String nma_non_emv = edt_non_emv.getText().toString();
+            String nma_card_name = edt_card_name.getText().toString();
+
             String nma_amount = edt_nma_amount.getText().toString();
             String nma_reason = aat_nma_reason.getText().toString();
             String nma_others_reason = edt_nma_others_reason.getText().toString();
@@ -4076,7 +4121,7 @@ public class ScanCashCard extends AppCompatActivity {
         String household_no ="";
         household_no = edt_hh_id.getText().toString();
         if (!household_no.matches("")){
-           Cursor search = MainActivity.sqLiteHelper.getData("SELECT id,first_name,last_name,middle_name,ext_name,hh_id,hh_status,province,municipality,barangay,sex,hh_set_group,nma_amount,grantee_card_number,grantee_distribution_status,grantee_card_release_date,other_card_number_1,other_card_holder_name_1,other_card_distribution_status_1,other_card_release_date_1,other_card_number_2,other_card_holder_name_2,other_card_distribution_status_2,other_card_release_date_2,other_card_number_3,other_card_holder_name_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_name_4,other_card_distribution_status_4,other_card_release_date_4,other_card_number_5,other_card_holder_name_5,other_card_distribution_status_5,other_card_release_date_5,upload_history_id,record_counter,created_at,updated_at,validated_at FROM emv_validations WHERE hh_id='"+household_no+"'");
+           Cursor search = MainActivity.sqLiteHelper.getData("SELECT id,first_name,last_name,middle_name,ext_name,hh_id,hh_status,province,municipality,barangay,sex,hh_set_group,nma_amount,grantee_card_number,grantee_distribution_status,grantee_card_release_date,other_card_number_1,other_card_holder_name_1,other_card_distribution_status_1,other_card_release_date_1,other_card_number_2,other_card_holder_name_2,other_card_distribution_status_2,other_card_release_date_2,other_card_number_3,other_card_holder_name_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_name_4,other_card_distribution_status_4,other_card_release_date_4,other_card_number_5,other_card_holder_name_5,other_card_distribution_status_5,other_card_release_date_5,upload_history_id,record_counter,created_at,updated_at,validated_at, nma_non_emv, nma_card_name FROM emv_validations WHERE hh_id='"+household_no+"'");
             while (search.moveToNext()) {
                 emv_monitoring_id = search.getInt(0);
                 first_name = search.getString(1);
@@ -4093,32 +4138,45 @@ public class ScanCashCard extends AppCompatActivity {
                 nma_amount = search.getString(12);
                 grantee_card_number = search.getString(13);
                 grantee_distribution_status = search.getString(14);
+                grantee_distribution_status_record = search.getString(14);
                 grantee_card_release_date = search.getString(15);
                 other_card_number_1 = search.getString(16);
                 other_card_holder_1 = search.getString(17);
                 other_card_distribution_status_1 = search.getString(18);
+                grantee_distribution_status_record1 = search.getString(18);
                 other_card_release_date_1 = search.getString(19);
+                grantee_card_release_date1 = search.getString(19);
                 other_card_number_2 = search.getString(20);
                 other_card_holder_2 = search.getString(21);
                 other_card_distribution_status_2 = search.getString(22);
+                grantee_distribution_status_record2 = search.getString(22);
                 other_card_release_date_2 = search.getString(23);
+                grantee_card_release_date2 = search.getString(23);
                 other_card_number_3 = search.getString(24);
                 other_card_holder_3 = search.getString(25);
                 other_card_distribution_status_3 = search.getString(26);
+                grantee_distribution_status_record3 = search.getString(26);
                 other_card_release_date_3 = search.getString(27);
+                grantee_card_release_date3 = search.getString(27);
                 other_card_number_4 = search.getString(28);
                 other_card_holder_4 = search.getString(29);
                 other_card_distribution_status_4 = search.getString(30);
+                grantee_distribution_status_record4 = search.getString(30);
                 other_card_release_date_4 = search.getString(31);
+                grantee_card_release_date4 = search.getString(31);
                 other_card_number_5 = search.getString(32);
                 other_card_holder_5 = search.getString(33);
                 other_card_distribution_status_5 = search.getString(34);
+                grantee_distribution_status_record5 = search.getString(34);
                 other_card_release_date_5 = search.getString(35);
+                grantee_card_release_date5 = search.getString(35);
                 upload_history_id = search.getString(36);
                 record_counter = search.getInt(37);
                 created_at = search.getString(38);
                 updated_at = search.getString(39);
                 validated_at = search.getString(40);
+                nma_non_emv = search.getString(41);
+                nma_card_name = search.getString(42);
             }
             
              String other_card1 = String.valueOf(other_card_number_1);
@@ -4209,11 +4267,28 @@ public class ScanCashCard extends AppCompatActivity {
                     myEdit.putString("barangay", barangay);
                     myEdit.putString("sex", sex);
                     myEdit.putString("hh_set", hh_set_group);
+
+                    myEdit.putString("nma_non_emv", nma_non_emv);
+                    myEdit.putString("nma_card_name", nma_card_name);
                     myEdit.putString("nma_amount", nma_amount);
                     myEdit.putString("pressBtn_search", "true");
                     myEdit.putString("card_number_prefilled", grantee_card_number);
+
                     myEdit.putString("distribution_status_record", grantee_distribution_status);
+                    myEdit.putString("distribution_status_record1", grantee_distribution_status_record1);
+                    myEdit.putString("distribution_status_record2", grantee_distribution_status_record2);
+                    myEdit.putString("distribution_status_record3", grantee_distribution_status_record3);
+                    myEdit.putString("distribution_status_record4", grantee_distribution_status_record4);
+                    myEdit.putString("distribution_status_record5", grantee_distribution_status_record5);
+
                     myEdit.putString("release_date_record", grantee_card_release_date);
+                    myEdit.putString("release_date_record1", grantee_card_release_date1);
+                    myEdit.putString("release_date_record2", grantee_card_release_date2);
+                    myEdit.putString("release_date_record3", grantee_card_release_date3);
+                    myEdit.putString("release_date_record4", grantee_card_release_date4);
+                    myEdit.putString("release_date_record5", grantee_card_release_date5);
+
+
                     myEdit.putString("card_number_prefilled1", other_card_number_1);
                     myEdit.putString("card_holder_name1", other_card_holder_1);
                     myEdit.putString("distribution_status1", other_card_distribution_status_1);
@@ -4742,6 +4817,12 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_card_number_prefilled3.setEnabled(false);
                 edt_card_number_prefilled4.setEnabled(false);
                 edt_card_number_prefilled5.setEnabled(false);
+
+                aat_distribution_status_record1.setEnabled(false);
+                aat_distribution_status_record2.setEnabled(false);
+                aat_distribution_status_record3.setEnabled(false);
+                aat_distribution_status_record4.setEnabled(false);
+                aat_distribution_status_record5.setEnabled(false);
 
 
                 btnAddCard = findViewById(R.id.btnAddCard);
@@ -5822,8 +5903,21 @@ public class ScanCashCard extends AppCompatActivity {
                 });
 
                 String card_number_prefilled = sh.getString("card_number_prefilled", "");
+
                 String distribution_status_record = sh.getString("distribution_status_record", "");
                 String release_date_record = sh.getString("release_date_record", "");
+
+                String distribution_status_record1 = sh.getString("distribution_status_record1", "");
+                String release_date_record1 = sh.getString("release_date_record1", "");
+                String distribution_status_record2 = sh.getString("distribution_status_record2", "");
+                String release_date_record2 = sh.getString("release_date_record2", "");
+                String distribution_status_record3 = sh.getString("distribution_status_record3", "");
+                String release_date_record3 = sh.getString("release_date_record3", "");
+                String distribution_status_record4 = sh.getString("distribution_status_record4", "");
+                String release_date_record4 = sh.getString("release_date_record4", "");
+                String distribution_status_record5 = sh.getString("distribution_status_record5", "");
+                String release_date_record5 = sh.getString("release_date_record5", "");
+
                 String distribution_status = sh.getString("distribution_status", "");
                 String release_date = sh.getString("release_date", "");
                 String release_by = sh.getString("release_by", "");
@@ -5943,8 +6037,26 @@ public class ScanCashCard extends AppCompatActivity {
 
                 aat_distribution_status_record.setText(distribution_status_record);
                 edt_release_date_record.setText(release_date_record);
+
+                aat_distribution_status_record1.setText(distribution_status_record1);
+                edt_release_date_record1.setText(release_date_record1);
+                aat_distribution_status_record2.setText(distribution_status_record2);
+                edt_release_date_record2.setText(release_date_record2);
+                aat_distribution_status_record3.setText(distribution_status_record3);
+                edt_release_date_record3.setText(release_date_record3);
+                aat_distribution_status_record4.setText(distribution_status_record4);
+                edt_release_date_record4.setText(release_date_record4);
+                aat_distribution_status_record5.setText(distribution_status_record5);
+                edt_release_date_record5.setText(release_date_record5);
+
+
                 aat_distribution_status_record.setEnabled(false);
                 edt_release_date_record.setEnabled(false);
+                edt_release_date_record1.setEnabled(false);
+                edt_release_date_record2.setEnabled(false);
+                edt_release_date_record3.setEnabled(false);
+                edt_release_date_record4.setEnabled(false);
+                edt_release_date_record5.setEnabled(false);
 
                 aat_distribution_status.setText(distribution_status, false);
                 edt_release_date.setText(release_date);
@@ -6387,11 +6499,17 @@ public class ScanCashCard extends AppCompatActivity {
                     }
                 });
 
+                String nma_non_emv = sh.getString("nma_non_emv", "");
+                String nma_card_name = sh.getString("nma_card_name", "");
+
                 String nma_amount = sh.getString("nma_amount", "0");
                 String nma_reason = sh.getString("nma_reason", "");
                 String nma_others_reason = sh.getString("nma_others_reason", "");
                 String nma_date_claimed = sh.getString("nma_date_claimed", "");
                 String nma_remarks = sh.getString("nma_remarks", "");
+
+                edt_non_emv.setText(nma_non_emv);
+                edt_card_name.setText(nma_card_name);
 
                 edt_nma_amount.setText(nma_amount);
                 aat_nma_reason.setText(nma_reason, false);
@@ -6444,6 +6562,12 @@ public class ScanCashCard extends AppCompatActivity {
         //2
         myEdit.putString("card_number_prefilled", "");
         myEdit.putString("distribution_status", "");
+        myEdit.putString("distribution_status_record", "");
+        myEdit.putString("distribution_status_record1", "");
+        myEdit.putString("distribution_status_record2", "");
+        myEdit.putString("distribution_status_record3", "");
+        myEdit.putString("distribution_status_record4", "");
+        myEdit.putString("distribution_status_record5", "");
         myEdit.putString("release_date", "");
         myEdit.putString("release_by", "");
         myEdit.putString("release_place", "");
@@ -6482,6 +6606,7 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("distribution_status3", "");
         myEdit.putString("distribution_status4", "");
         myEdit.putString("distribution_status5", "");
+
         myEdit.putString("release_date1", "");
         myEdit.putString("release_date2", "");
         myEdit.putString("release_date3", "");
@@ -6554,6 +6679,8 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("pawning_remarks5", "");
 
         //3
+        myEdit.putString("nma_non_emv", "0");
+        myEdit.putString("nma_card_name", "0");
         myEdit.putString("nma_amount", "0");
         myEdit.putString("nma_reason", "");
         myEdit.putString("nma_others_reason", "");
