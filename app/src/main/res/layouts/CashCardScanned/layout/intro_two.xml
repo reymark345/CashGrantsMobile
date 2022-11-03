@@ -987,9 +987,7 @@
                         android:layout_below="@+id/til_card_number_prefilled1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
 
@@ -1007,9 +1005,7 @@
                         android:layout_below="@+id/til_distribution_status_record1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
@@ -1038,7 +1034,7 @@
                             android:layout_height="wrap_content"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Distribution Status"
+                            android:hint="Distribution Status (Actual)"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -1398,7 +1394,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -1489,9 +1485,7 @@
                         android:layout_below="@+id/til_card_holder_name2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
 
@@ -1509,9 +1503,7 @@
                         android:layout_below="@+id/til_distribution_status_record2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
@@ -1901,7 +1893,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -1992,9 +1984,7 @@
                         android:layout_below="@+id/til_card_holder_name3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
 
@@ -2012,9 +2002,7 @@
                         android:layout_below="@+id/til_distribution_status3_record"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
@@ -2403,7 +2391,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -2495,9 +2483,7 @@
                         android:layout_below="@+id/til_card_holder_name4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
 
@@ -2515,9 +2501,7 @@
                         android:layout_below="@+id/til_distribution_status_record4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
@@ -2546,7 +2530,7 @@
                             android:layout_height="wrap_content"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Distribution Status"
+                            android:hint="Distribution Status (Actual)"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -2905,7 +2889,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -2999,9 +2983,7 @@
                         android:layout_below="@+id/til_card_holder_name5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_credit_card_off_24">
 
@@ -3019,9 +3001,7 @@
                         android:layout_below="@+id/til_distribution_status_record2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
                         app:helperTextTextColor="@color/validation"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
@@ -3050,7 +3030,7 @@
                             android:layout_height="wrap_content"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Distribution Status"
+                            android:hint="Distribution Status (Actual)"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -3409,7 +3389,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Other Card Series Number"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLength="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
