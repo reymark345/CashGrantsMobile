@@ -91,6 +91,9 @@ public class UnvalidatedData extends AppCompatActivity {
     public void getData(ArrayList<UnvalidatedItem> list, UnvalidatedAdapter adapter, JSONObject filterData) throws JSONException {
         tvIdentifier = findViewById(R.id.tvIdentifier);
         tv_result = findViewById(R.id.tv_result);
+
+        list.clear();
+
         String f_hh_id = null, f_fname = null, f_mname = null, f_lname = null, f_province = null, f_municipality = null, f_barangay = null;
 
         if (filterData != null) {
@@ -102,17 +105,14 @@ public class UnvalidatedData extends AppCompatActivity {
             f_municipality = filterData.getString("municipality");
             f_barangay = filterData.getString("barangay");
         }
-
         try {
             Cursor unvalidatedData;
-
             if (filterData != null) {
                 unvalidatedData = sqLiteHelper.getData("SELECT id, first_name, last_name, middle_name, ext_name, hh_id, province, municipality, barangay FROM emv_validations WHERE first_name LIKE '%"+ f_fname +"%' AND middle_name LIKE '%"+f_mname+"%' AND last_name LIKE '%"+f_lname+"%' AND hh_id LIKE '%"+f_hh_id+"%' AND province LIKE '%"+f_province+"%' AND municipality LIKE '%"+f_municipality+"%' AND barangay LIKE '%"+f_barangay+"%' AND validated_at='null'");
             } else {
                 unvalidatedData = sqLiteHelper.getData("SELECT id, first_name, last_name, middle_name, ext_name, hh_id, province, municipality, barangay FROM emv_validations WHERE validated_at='null'");
             }
 
-            list.clear();
 
             while (unvalidatedData.moveToNext()) {
                 int id = unvalidatedData.getInt(0);

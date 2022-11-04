@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textStyle="bold"
-                    android:text="ANGAS, SANTA JOSEFA, AGUSAN DEL SUR"
+                    android:text="MY ADDRESS"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
                     />

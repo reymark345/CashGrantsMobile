@@ -149,14 +149,8 @@
                         android:text="0"
                         />
                 </LinearLayout>
-
-
             </LinearLayout>
-
-
-
         </com.google.android.material.card.MaterialCardView>
-
         <GridView
             android:id="@+id/gridView"
             android:layout_width="wrap_content"

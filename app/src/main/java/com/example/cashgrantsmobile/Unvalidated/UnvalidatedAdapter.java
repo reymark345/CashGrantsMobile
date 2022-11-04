@@ -43,6 +43,7 @@ public class UnvalidatedAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         ViewHolder holder = new ViewHolder();
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -53,12 +54,11 @@ public class UnvalidatedAdapter extends BaseAdapter {
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
-
-            UnvalidatedItem unvalidatedItem = unvalidatedList.get(i);
-            holder.textHHID.setText(unvalidatedItem.getHh_id());
-            holder.textName.setText(unvalidatedItem.getFullname());
-            holder.textAddress.setText(unvalidatedItem.getAddress());
         }
+        UnvalidatedItem unvalidatedItem = unvalidatedList.get(i);
+        holder.textHHID.setText(unvalidatedItem.getHh_id());
+        holder.textName.setText(unvalidatedItem.getFullname());
+        holder.textAddress.setText(unvalidatedItem.getAddress());
 
         return view;
     }
