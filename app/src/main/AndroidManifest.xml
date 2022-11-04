@@ -15,7 +15,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CashGrantsMobile">
+        android:theme="@style/Theme.CashGrantsMobile"
+        >
         <activity
             android:name=".Login.Activity_Splash_Login"
             android:exported="true">

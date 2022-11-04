@@ -74,6 +74,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
@@ -1299,6 +1300,13 @@ public class ScanCashCard extends AppCompatActivity {
         String release_date_record5 = sh.getString("release_date_record5","");
         //end"distribution_status_record"
 
+        Log.v(TAG,"test "+release_date_record);
+        Log.v(TAG,"test "+release_date_record1);
+        Log.v(TAG,"test "+release_date_record2);
+        Log.v(TAG,"test "+release_date_record3);
+        Log.v(TAG,"test "+release_date_record4);
+        Log.v(TAG,"test "+release_date_record5);
+
 
 
 
@@ -1408,6 +1416,17 @@ public class ScanCashCard extends AppCompatActivity {
         String pawning_remarks5 = sh.getString("pawning_remarks5","");
         Integer card_count = sh.getInt("card_count", 0);
 
+        String card_number_prefilled1 = sh.getString("card_number_prefilled1", "");
+        String card_number_prefilled2 = sh.getString("card_number_prefilled2", "");
+        String card_number_prefilled3 = sh.getString("card_number_prefilled3", "");
+        String card_number_prefilled4 = sh.getString("card_number_prefilled4", "");
+        String card_number_prefilled5 = sh.getString("card_number_prefilled5", "");
+        Log.v(TAG,"distribution_status_record" + distribution_status_record);
+        Log.v(TAG,"distribution_status_record1" + distribution_status_record1);
+        Log.v(TAG,"distribution_status_record2" + distribution_status_record2);
+        Log.v(TAG,"distribution_status_record3" + distribution_status_record3);
+        Log.v(TAG,"distribution_status_record4" + distribution_status_record4);
+
         new SweetAlertDialog(ScanCashCard.this, SweetAlertDialog.WARNING_TYPE)
             .setTitleText("Save data?")
             .setContentText("Please confirm to save data")
@@ -1437,7 +1456,10 @@ public class ScanCashCard extends AppCompatActivity {
                                 imageViewToByte(ivOtherScannedImage4),
                                 imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason,nma_non_emv,nma_card_name,
                                 distribution_status_record,distribution_status_record1,distribution_status_record2,distribution_status_record3,distribution_status_record4,distribution_status_record5,
-                                release_date_record,release_date_record1,release_date_record2,release_date_record3,release_date_record4,release_date_record5);
+                                release_date_record,release_date_record1,release_date_record2,release_date_record3,release_date_record4,release_date_record5,
+                                card_number_prefilled1,card_number_prefilled2,card_number_prefilled3,card_number_prefilled4,card_number_prefilled5);
+
+
 
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
@@ -2056,8 +2078,8 @@ public class ScanCashCard extends AppCompatActivity {
 
             xml_initialization(2);
 
-//          Grantee Details
 
+            //old_data
             String distribution_status = aat_distribution_status.getText().toString();
             String release_date = edt_release_date.getText().toString();
             String release_by = edt_release_by.getText().toString();
@@ -2699,7 +2721,7 @@ public class ScanCashCard extends AppCompatActivity {
                                         Log.v(TAG, "resson 2222" + pawning_remarks2);
                                     }
                                     else{
-                                        Log.v(TAG, "resson 3333 " +pawning_remarks2 );
+                                        til_pawning_remarks2.setError(null);
                                     }
                                 } else if (reason_not_presented2.matches("Others")) {
                                     if (others_reason_not_presented2.matches("")) {
@@ -3734,7 +3756,8 @@ public class ScanCashCard extends AppCompatActivity {
     }
 
     public void province_event() {
-        Cursor get_prov_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_new)='"+aat_province_code.getText().toString()+"' AND geographic_level='province' LIMIT 1");
+        String tmp_province_code = !aat_province_code.getText().toString().matches("") ? aat_province_code.getText().toString().toUpperCase() : "";
+        Cursor get_prov_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_new)='"+tmp_province_code+"' AND geographic_level='province' LIMIT 1");
         String split_prov_psgc = null;
 
         aat_municipality_code.setText(null, false);
@@ -3773,7 +3796,8 @@ public class ScanCashCard extends AppCompatActivity {
 
     public void municipality_event() {
         String split_prov_code = psgc_province.substring(0, 4);
-        Cursor get_muni_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_new)='"+aat_municipality_code.getText().toString()+"' AND geographic_level='municipality' AND correspondence_code LIKE '%"+split_prov_code+"%' LIMIT 1");
+        String tmp_municipality_code = !aat_municipality_code.getText().toString().matches("") ? aat_municipality_code.getText().toString().toUpperCase() : "";
+        Cursor get_muni_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_new)='"+tmp_municipality_code+"' AND geographic_level='municipality' AND correspondence_code LIKE '%"+split_prov_code+"%' LIMIT 1");
         String split_muni_psgc = null;
 
         aat_barangay_code.setText(null, false);
@@ -3809,7 +3833,8 @@ public class ScanCashCard extends AppCompatActivity {
 
     public void barangay_event() {
         String split_muni_code = psgc_municipality.substring(0, 6);
-        Cursor get_brgy_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_new)='"+aat_barangay_code.getText().toString()+"' AND geographic_level='barangay' AND correspondence_code LIKE '%"+ split_muni_code +"%' LIMIT 1");
+        String tmp_barangay_code = !aat_barangay_code.getText().toString().matches("") ? aat_barangay_code.getText().toString().toUpperCase() : "";
+        Cursor get_brgy_psgc = sqLiteHelper.getData("SELECT correspondence_code FROM psgc WHERE upper(name_new)='"+tmp_barangay_code+"' AND geographic_level='barangay' AND correspondence_code LIKE '%"+ split_muni_code +"%' LIMIT 1");
         try {
             while (get_brgy_psgc.moveToNext()) {
                 psgc_barangay = get_brgy_psgc.getString(0);
@@ -6606,7 +6631,6 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("distribution_status3", "");
         myEdit.putString("distribution_status4", "");
         myEdit.putString("distribution_status5", "");
-
         myEdit.putString("release_date1", "");
         myEdit.putString("release_date2", "");
         myEdit.putString("release_date3", "");
