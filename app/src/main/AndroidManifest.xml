@@ -64,6 +64,10 @@
             android:name=".Inventory.UpdateData"
             android:parentActivityName=".MainActivity"/>
 
+        <activity
+            android:name=".Unvalidated.UnvalidatedData"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 
 </manifest>
