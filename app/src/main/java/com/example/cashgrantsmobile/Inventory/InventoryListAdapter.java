@@ -74,38 +74,25 @@ public class InventoryListAdapter extends BaseAdapter {
         holder.txtName.setText(inventory.getName());
         holder.txtPrice.setText(inventory.gethhNumber());
 //        holder.txtSeriesNo.setText(inventory.getSeriesNumber());
-        int status = inventory.getStatus();
-        if (status==0 && DarkModeStatus.matches("false")){
-              //exclude and white
-            row.setBackgroundColor(Color.parseColor("#FEF8DD")); //
-        }
-        else if(status==0 && DarkModeStatus.matches("true")){
-            //exclude and dark
-            row.setBackgroundColor(Color.parseColor("#282828"));
-        }
-        else if (status==1 && DarkModeStatus.matches("false")) {
-            //include and white
-            row.setBackgroundColor(Color.parseColor("#F7F7FA")); // white background color you are using
-        }
-        else if (status==1 && DarkModeStatus.matches("true")) {
-            //include and white
-            row.setBackgroundColor(Color.parseColor("#252C4B")); // white background color you are using
-        }
 
-        byte[] CashCardImage = inventory.getImage();
+        holder.imageView.setImageResource(R.drawable.ic_image);
+        holder.mPreviewCashCard.setImageResource(R.drawable.ic_image);
 
-        byte[] idImage = inventory.getIdImage();
-        if(CashCardImage.length > 1)
+        byte[] card_image = inventory.getCardImage();
+        byte[] grantee_image = inventory.getGranteeImage();
+
+        if(card_image.length > 1)
         {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(CashCardImage, 0, CashCardImage.length);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(card_image, 0, card_image.length);
             holder.imageView.setImageBitmap(bitmap);
         }
         else{
             holder.imageView.setImageResource(R.drawable.ic_image);
         }
-        if(idImage!=null)
+
+        if(grantee_image!=null)
         {
-            Bitmap bitmap2 = BitmapFactory.decodeByteArray(idImage, 0, idImage.length);
+            Bitmap bitmap2 = BitmapFactory.decodeByteArray(grantee_image, 0, grantee_image.length);
             holder.mPreviewCashCard.setImageBitmap(bitmap2);
         }
         else{

@@ -15,7 +15,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CashGrantsMobile">
+        android:theme="@style/Theme.CashGrantsMobile"
+        >
         <activity
             android:name=".Login.Activity_Splash_Login"
             android:exported="true">
@@ -34,14 +35,13 @@
             android:parentActivityName=".MainActivity"/>
 
         <activity
-            android:name=".Scanner.ScannedDetails"
-            android:parentActivityName=".Scanner.ScanCashCard"/>
-        <activity
             android:name=".Inventory.InventoryList"
             android:parentActivityName=".MainActivity"/>
+
         <activity
-            android:name=".PullUpdate.PullUpdateData"
+            android:name=".PullUpdate.PullPsgcData"
             android:parentActivityName=".MainActivity"/>
+
         <activity
             android:name=".Sync.SyncData"
             android:parentActivityName=".MainActivity"/>
@@ -58,22 +58,15 @@
             android:parentActivityName=".Login.Activity_Splash_Login"/>
 
         <activity
-            android:name=".Signatories.Accomplish"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".Scanner.ScannedDetails"/>
-
-        <activity
-            android:name=".Signatories.Informant"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".Scanner.ScannedDetails"/>
-
-        <activity
-            android:name=".Signatories.Attested"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".Scanner.ScannedDetails"/>
-
-        <activity
             android:name=".Inventory.UpdateEntries"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".Inventory.UpdateData"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".Unvalidated.UnvalidatedData"
             android:parentActivityName=".MainActivity"/>
 
     </application>

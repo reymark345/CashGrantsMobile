@@ -147,7 +147,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                     <ImageView
                         android:id="@+id/imgUri"
@@ -159,7 +160,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                     <ImageView
                         android:id="@+id/PsID"
@@ -171,7 +173,8 @@
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                 </RelativeLayout>
 
@@ -242,7 +245,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                 </RelativeLayout>
 
@@ -314,7 +318,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                 </RelativeLayout>
 
@@ -386,7 +391,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/round_outline"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_image" />
+                        app:srcCompat="@drawable/ic_image"
+                        android:contentDescription="@null"/>
 
                 </RelativeLayout>
 

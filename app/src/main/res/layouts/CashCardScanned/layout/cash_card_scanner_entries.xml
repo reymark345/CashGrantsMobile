@@ -15,6 +15,7 @@
 
 
     <LinearLayout
+        android:layout_marginTop="100dp"
         android:id="@+id/layoutDots"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -60,7 +61,8 @@
             android:id ="@+id/imageIv"
             android:height ="60dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
