@@ -343,7 +343,6 @@ public class UpdateData extends AppCompatActivity {
 
         if (extras != null) {
             String value = extras.getString("toast");
-            Toasty.success(this,""+value, Toasty.LENGTH_SHORT).show();
             extras.clear();
         }
         temp_BLOB_status();
@@ -380,10 +379,6 @@ public class UpdateData extends AppCompatActivity {
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                btn_CheckNextValidation();
-                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-                String hh_id = sh.getString("hh_id", "");
-                String buttonNext = sh.getString("pressBtn_search", "");
                 nextValidation();
                 if (MANDATORY_PAGE_LOCATION == 1) {
                     otherCardVisibility();
@@ -446,7 +441,7 @@ public class UpdateData extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            Intent intent = new Intent(UpdateData.this, MainActivity.class);
+            Intent intent = new Intent(UpdateData.this, InventoryList.class);
             startActivity(intent);
             finish();
         }
@@ -469,6 +464,7 @@ public class UpdateData extends AppCompatActivity {
         Intent cameraIntent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
         startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA_CODE);
+
     }
 
     public void requestCameraPermission() {
@@ -8757,7 +8753,7 @@ public class UpdateData extends AppCompatActivity {
                 "gv.hh_id,gv.first_name,gv.last_name,gv.middle_name,gv.ext_name,gv.sex,gv.province_code,gv.municipality_code,gv.barangay_code,gv.hh_set,gv.grantee_image," +
                 "pvd.lender_name,pvd.lender_address,pvd.date_pawned,pvd.date_retrieved,pvd.loan_amount,pvd.status,pvd.reason,pvd.interest,pvd.offense_history,pvd.offense_date,pvd.remarks,pvd.staff_intervention,pvd.other_details," +
                 "cvd.card_number_prefilled,cvd.card_number_system_generated,cvd.card_number_inputted,cvd.card_number_series,cvd.distribution_status,cvd.release_date,cvd.release_by,cvd.release_place,cvd.card_physically_presented,cvd.card_pin_is_attached,cvd.reason_not_presented,cvd.reason_unclaimed,cvd.card_replacement_requests,cvd.card_replacement_submitted_details,cvd.card_image," +
-                "nv.amount,nv.date_claimed,nv.reason,nv.remarks, evd.overall_remarks, gv.other_ext_name, evd.contact_no_of_others, cvd.others_reason_not_presented, cvd.others_reason_unclaimed, nv.nma_others_reason, gv.id, cvd.id, nv.id, pvd.id, cvd.distribution_status_record" +
+                "nv.amount,nv.date_claimed,nv.reason,nv.remarks, evd.overall_remarks, gv.other_ext_name, evd.contact_no_of_others, cvd.others_reason_not_presented, cvd.others_reason_unclaimed, nv.nma_others_reason, gv.id, cvd.id, nv.id, pvd.id, cvd.distribution_status_record, cvd.release_date_record" +
                 " FROM emv_validation_details AS evd LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id LEFT JOIN pawning_validation_details AS pvd ON pvd.id = evd.pawning_validation_detail_id LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id  LEFT JOIN nma_validations AS nv ON nv.id = evd.nma_validation_id WHERE evd.id="+id);
 
         while (cursor.moveToNext()) {
@@ -8815,7 +8811,6 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("card_number_inputted_u", cursor.getString(39));
             myEdit.putString("card_number_series_u", cursor.getString(40));
             myEdit.putString("distribution_status_u", cursor.getString(41));
-            myEdit.putString("distribution_status_record_u", cursor.getString(41));
 
             myEdit.putString("release_date_u", cursor.getString(42));
             myEdit.putString("release_by_u", cursor.getString(43));
@@ -8845,6 +8840,7 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putInt("nv_id", cursor.getInt(64));
             myEdit.putInt("pvd_id", cursor.getInt(65));
             myEdit.putString("distribution_status_record_u", cursor.getString(66));
+            myEdit.putString("release_date_record_u", cursor.getString(67));
             myEdit.putInt("evd_id", cursor.getInt(0));
             myEdit.commit();
         }
