@@ -4969,12 +4969,7 @@ public class ScanCashCard extends AppCompatActivity {
                             til_reason_unclaimed.setVisibility(View.VISIBLE);
                             til_card_physically_presented.setVisibility(View.GONE);
 
-//                            Reasons = Arrays.copyOfRange(Reasons, 1, Reasons.length);
-//                            ArrayAdapter<String> adapterYesNo = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Reasons);
-//                            adapterYesNo.setDropDownViewResource(simple_spinner_dropdown_item);
-//                            aat_reason_not_presented.setAdapter(adapterYesNo);
                         } else {
-//                            til_reason_not_presented.setVisibility(View.VISIBLE);
                             til_release_date.setVisibility(View.VISIBLE);
                             til_release_place.setVisibility(View.VISIBLE);
                             til_release_by.setVisibility(View.VISIBLE);
@@ -4987,22 +4982,23 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_others_reason_unclaimed1.setVisibility(View.GONE);
 
                         if (aat_distribution_status1.getText().toString().matches("Unclaimed")||aat_distribution_status1.getText().toString().matches("")) {
                             edt_release_date1.setText("");
                             edt_release_by1.setText("");
                             edt_release_place1.setText("");
                             aat_card_physically_presented1.setText("");
-                            aat_reason_not_presented1.setText("");//start
-                            aat_card_replacement_request1.setText("");//start
-                            edt_card_replacement_request_submitted_details1.setText("");//start
+                            aat_reason_not_presented1.setText("");
+                            aat_card_replacement_request1.setText("");
+                            edt_card_replacement_request_submitted_details1.setText("");
                             edt_pawning_remarks1.setText("");
                             aat_card_pin_is_attached1.setText("");
                             edt_others_reason_not_presented1.setText("");
 
-                            til_reason_not_presented1.setVisibility(View.GONE);//start
-                            til_card_replacement_request1.setVisibility(View.GONE);//start
-                            til_card_replacement_request_submitted_details1.setVisibility(View.GONE);//start
+                            til_reason_not_presented1.setVisibility(View.GONE);
+                            til_card_replacement_request1.setVisibility(View.GONE);
+                            til_card_replacement_request_submitted_details1.setVisibility(View.GONE);
                             til_pawning_remarks1.setVisibility(View.GONE);//start
                             til_release_date1.setVisibility(View.GONE);
                             til_release_place1.setVisibility(View.GONE);
@@ -5010,17 +5006,18 @@ public class ScanCashCard extends AppCompatActivity {
                             til_card_physically_presented1.setVisibility(View.GONE);
                             til_card_pin_is_attached1.setVisibility(View.GONE);
                             til_others_reason_not_presented1.setVisibility(View.GONE);
-                            aat_reason_unclaimed1.setText("");//newother
-                            til_reason_unclaimed1.setVisibility(View.VISIBLE); //newother
+                            aat_reason_unclaimed1.setText("");
+                            til_reason_unclaimed1.setVisibility(View.VISIBLE);
                         } else {
 
                             til_release_date1.setVisibility(View.VISIBLE);
                             til_release_place1.setVisibility(View.VISIBLE);
                             til_release_by1.setVisibility(View.VISIBLE);
                             til_card_physically_presented1.setVisibility(View.VISIBLE);
-                            aat_reason_unclaimed1.setText("");//newother
-                            til_reason_unclaimed1.setVisibility(View.GONE); //newother
-                            til_reason_not_presented1.setVisibility(View.GONE); //start
+                            aat_reason_unclaimed1.setText("");
+                            til_reason_unclaimed1.setVisibility(View.GONE);
+                            til_reason_not_presented1.setVisibility(View.GONE);
+                            edt_others_reason_unclaimed1.setText("");
                         }
                     }
                 });
@@ -5028,6 +5025,7 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_others_reason_unclaimed2.setVisibility(View.GONE);
                         if (aat_distribution_status2.getText().toString().matches("Unclaimed")||aat_distribution_status2.getText().toString().matches("")) {
                             edt_release_date2.setText("");
                             edt_release_by2.setText("");
@@ -5052,31 +5050,17 @@ public class ScanCashCard extends AppCompatActivity {
                             til_others_reason_not_presented2.setVisibility(View.GONE);
                             aat_reason_unclaimed2.setText("");
                             til_reason_unclaimed2.setVisibility(View.VISIBLE);
-//                            edt_release_date2.setText("");
-//                            edt_release_by2.setText("");
-//                            edt_release_place2.setText("");
-//                            til_release_date2.setVisibility(View.GONE);
-//                            til_release_place2.setVisibility(View.GONE);
-//                            til_release_by2.setVisibility(View.GONE);
-//                            til_card_physically_presented2.setVisibility(View.GONE);
-//                            aat_reason_unclaimed2.setText("");//newother
-//                            til_reason_unclaimed2.setVisibility(View.VISIBLE); //newother
                         } else {
 
                             til_release_date2.setVisibility(View.VISIBLE);
                             til_release_place2.setVisibility(View.VISIBLE);
                             til_release_by2.setVisibility(View.VISIBLE);
                             til_card_physically_presented2.setVisibility(View.VISIBLE);
-                            aat_reason_unclaimed2.setText("");//newother
-                            til_reason_unclaimed2.setVisibility(View.GONE); //newother
-                            til_reason_not_presented2.setVisibility(View.GONE); //start
+                            aat_reason_unclaimed2.setText("");
+                            til_reason_unclaimed2.setVisibility(View.GONE);
+                            til_reason_not_presented2.setVisibility(View.GONE);
+                            edt_others_reason_unclaimed2.setText("");
 
-//                            til_release_date2.setVisibility(View.VISIBLE);
-//                            til_release_place2.setVisibility(View.VISIBLE);
-//                            til_release_by2.setVisibility(View.VISIBLE);
-//                            til_card_physically_presented2.setVisibility(View.VISIBLE);
-//                            aat_reason_unclaimed2.setText("");//newother
-//                            til_reason_unclaimed2.setVisibility(View.GONE); //newother
                         }
                     }
                 });
@@ -5084,6 +5068,7 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_others_reason_unclaimed3.setVisibility(View.GONE);
                         if (aat_distribution_status3.getText().toString().matches("Unclaimed")||aat_distribution_status3.getText().toString().matches("")) {
 
                             edt_release_date3.setText("");
@@ -5108,33 +5093,15 @@ public class ScanCashCard extends AppCompatActivity {
                             til_others_reason_not_presented3.setVisibility(View.GONE);
                             aat_reason_unclaimed3.setText("");
                             til_reason_unclaimed3.setVisibility(View.VISIBLE);
-
-
-//                            edt_release_date3.setText("");
-//                            edt_release_by3.setText("");
-//                            edt_release_place3.setText("");
-//                            til_release_date3.setVisibility(View.GONE);
-//                            til_release_place3.setVisibility(View.GONE);
-//                            til_release_by3.setVisibility(View.GONE);
-//                            til_card_physically_presented3.setVisibility(View.GONE);
-//                            aat_reason_unclaimed3.setText("");//newother
-//                            til_reason_unclaimed3.setVisibility(View.VISIBLE); //newother
                         } else {
                             til_release_date3.setVisibility(View.VISIBLE);
                             til_release_place3.setVisibility(View.VISIBLE);
                             til_release_by3.setVisibility(View.VISIBLE);
                             til_card_physically_presented3.setVisibility(View.VISIBLE);
-                            aat_reason_unclaimed3.setText("");//newother
-                            til_reason_unclaimed3.setVisibility(View.GONE); //newother
-                            til_reason_not_presented3.setVisibility(View.GONE); //start
-
-
-//                            til_release_date3.setVisibility(View.VISIBLE);
-//                            til_release_place3.setVisibility(View.VISIBLE);
-//                            til_release_by3.setVisibility(View.VISIBLE);
-//                            til_card_physically_presented3.setVisibility(View.VISIBLE);
-//                            aat_reason_unclaimed3.setText("");//newother
-//                            til_reason_unclaimed3.setVisibility(View.GONE); //newother
+                            aat_reason_unclaimed3.setText("");
+                            til_reason_unclaimed3.setVisibility(View.GONE);
+                            til_reason_not_presented3.setVisibility(View.GONE);
+                            edt_others_reason_unclaimed3.setText("");
                         }
                     }
                 });
@@ -5142,8 +5109,8 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_others_reason_unclaimed4.setVisibility(View.GONE);
                         if (aat_distribution_status4.getText().toString().matches("Unclaimed")||aat_distribution_status4.getText().toString().matches("")) {
-
                             edt_release_date4.setText("");
                             edt_release_by4.setText("");
                             edt_release_place4.setText("");
@@ -5168,32 +5135,15 @@ public class ScanCashCard extends AppCompatActivity {
                             aat_reason_unclaimed4.setText("");
                             til_reason_unclaimed4.setVisibility(View.VISIBLE);
 
-
-//                            edt_release_date4.setText("");
-//                            edt_release_by4.setText("");
-//                            edt_release_place4.setText("");
-//                            til_release_date4.setVisibility(View.GONE);
-//                            til_release_place4.setVisibility(View.GONE);
-//                            til_release_by4.setVisibility(View.GONE);
-//                            til_card_physically_presented4.setVisibility(View.GONE);
-//                            aat_reason_unclaimed4.setText("");//newother
-//                            til_reason_unclaimed4.setVisibility(View.VISIBLE); //newother
                         } else {
                             til_release_date4.setVisibility(View.VISIBLE);
                             til_release_place4.setVisibility(View.VISIBLE);
                             til_release_by4.setVisibility(View.VISIBLE);
                             til_card_physically_presented4.setVisibility(View.VISIBLE);
-                            aat_reason_unclaimed4.setText("");//newother
-                            til_reason_unclaimed4.setVisibility(View.GONE); //newother
-                            til_reason_not_presented4.setVisibility(View.GONE); //start
-
-
-/*                            til_release_date4.setVisibility(View.VISIBLE);
-                            til_release_place4.setVisibility(View.VISIBLE);
-                            til_release_by4.setVisibility(View.VISIBLE);
-                            til_card_physically_presented4.setVisibility(View.VISIBLE);
-                            aat_reason_unclaimed4.setText("");//newother
-                            til_reason_unclaimed4.setVisibility(View.GONE); //newother*/
+                            aat_reason_unclaimed4.setText("");
+                            til_reason_unclaimed4.setVisibility(View.GONE);
+                            til_reason_not_presented4.setVisibility(View.GONE);
+                            edt_others_reason_unclaimed4.setText("");
                         }
                     }
                 });
@@ -5201,6 +5151,7 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_distribution_status5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                        til_others_reason_unclaimed5.setVisibility(View.GONE);
                         if (aat_distribution_status5.getText().toString().matches("Unclaimed")||aat_distribution_status5.getText().toString().matches("")) {
 
                             edt_release_date5.setText("");
@@ -5227,33 +5178,15 @@ public class ScanCashCard extends AppCompatActivity {
                             aat_reason_unclaimed5.setText("");
                             til_reason_unclaimed5.setVisibility(View.VISIBLE);
 
-
-//                            edt_release_date5.setText("");
-//                            edt_release_by5.setText("");
-//                            edt_release_place5.setText("");
-//                            aat_reason_unclaimed5.setText("");//newother
-//                            til_reason_unclaimed5.setVisibility(View.VISIBLE); //newother
-//
-//                            til_release_date5.setVisibility(View.GONE);
-//                            til_release_place5.setVisibility(View.GONE);
-//                            til_release_by5.setVisibility(View.GONE);
-//                            til_card_physically_presented5.setVisibility(View.GONE);
-
                         } else {
                             til_release_date5.setVisibility(View.VISIBLE);
                             til_release_place5.setVisibility(View.VISIBLE);
                             til_release_by5.setVisibility(View.VISIBLE);
                             til_card_physically_presented5.setVisibility(View.VISIBLE);
-                            aat_reason_unclaimed5.setText("");//newother
-                            til_reason_unclaimed5.setVisibility(View.GONE); //newother
-                            til_reason_not_presented5.setVisibility(View.GONE); //start
-
-//                            til_release_date5.setVisibility(View.VISIBLE);
-//                            til_release_place5.setVisibility(View.VISIBLE);
-//                            til_release_by5.setVisibility(View.VISIBLE);
-//                            til_card_physically_presented5.setVisibility(View.VISIBLE);
-//                            aat_reason_unclaimed5.setText("");//newother
-//                            til_reason_unclaimed5.setVisibility(View.GONE); //newother
+                            aat_reason_unclaimed5.setText("");
+                            til_reason_unclaimed5.setVisibility(View.GONE);
+                            til_reason_not_presented5.setVisibility(View.GONE);
+                            edt_others_reason_unclaimed5.setText("");
                         }
                     }
                 });
