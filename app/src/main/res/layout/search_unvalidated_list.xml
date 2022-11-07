@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="280dp"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unvalidated Filter"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/textAppointment"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_filter_hh_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_household"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <EditText
+                android:id="@+id/edtFilterHHID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Household Number"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_filter_fname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <EditText
+                android:id="@+id/edtFilterFname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_filter_Mname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <EditText
+                android:id="@+id/edtFilterMname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Middle Name"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_filter_Lname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <EditText
+                android:id="@+id/edtFilterLname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_filter_province"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_baseline_location_on_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/aatFilterProvince"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Province" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_filter_municipality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_baseline_location_on_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/aatFilterMunicipality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Municipality" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_filter_barangay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:helperTextTextColor="@color/validation"
+            app:startIconDrawable="@drawable/ic_baseline_location_on_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/aatFilterBarangay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Barangay" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right">
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="@dimen/_23ssp"
+            android:text="Reset"
+            android:textColor="@color/white"
+            android:background="@color/primary"
+            />
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="0dp"
+            android:padding="10dp"
+            android:textSize="12dp"
+            android:text="Search"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>
