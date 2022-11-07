@@ -119,7 +119,7 @@ public class SyncData extends AppCompatActivity {
 
     public void pullEmvData(Boolean init) {
 
-        tvStatus.setText("Initializeing Pulling...");
+        tvStatus.setText("Initializing Pulling...");
 
         if (pullStatus.matches("completed")) {
             syncEmvData();

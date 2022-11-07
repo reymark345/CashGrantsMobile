@@ -1457,11 +1457,8 @@ public class ScanCashCard extends AppCompatActivity {
                                 release_date_record,release_date_record1,release_date_record2,release_date_record3,release_date_record4,release_date_record5,
                                 card_number_prefilled1,card_number_prefilled2,card_number_prefilled3,card_number_prefilled4,card_number_prefilled5);
 
-
-
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
-
                     clear_preferences();
                     sDialog.dismiss();
 
@@ -4200,8 +4197,8 @@ public class ScanCashCard extends AppCompatActivity {
                 validated_at = search.getString(40);
                 nma_non_emv = search.getString(41);
                 nma_card_name = search.getString(42);
+
             }
-            
              String other_card1 = String.valueOf(other_card_number_1);
              String other_card2 = String.valueOf(other_card_number_2);
              String other_card3 = String.valueOf(other_card_number_3);
@@ -6275,7 +6272,6 @@ public class ScanCashCard extends AppCompatActivity {
                     til_card_physically_presented1.setVisibility(View.VISIBLE);//new
                 }
                 else if (distribution_status1.matches("Unclaimed")){
-                    Log.v(TAG,"Unclaimmmeed");
                     aat_card_physically_presented1.setText("");
                     aat_reason_not_presented1.setText("");
                     til_reason_unclaimed1.setVisibility(View.VISIBLE);
@@ -6542,6 +6538,7 @@ public class ScanCashCard extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         til_nma_others_reason.setVisibility(View.GONE);
+                        edt_nma_others_reason.setText("");
                         if (aat_nma_reason.getText().toString().matches("Others")) {
                             til_nma_others_reason.setVisibility(View.VISIBLE);
                         }
