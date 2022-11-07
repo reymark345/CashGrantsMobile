@@ -390,7 +390,6 @@ public class ScanCashCard extends AppCompatActivity {
                 else{
                     Toasty.info(getApplicationContext(),"Search household first", Toasty.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -5333,6 +5332,10 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_pawning_remarks1.setText(null);
 
                         if (aat_card_physically_presented1.getText().toString().matches("Yes")) {
+                            til_card_replacement_request1.setVisibility(View.GONE);
+                            til_pawning_remarks1.setVisibility(View.GONE);
+                            til_others_reason_not_presented1.setVisibility(View.GONE);
+
                             til_card_pin_is_attached1.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField1.setVisibility(View.VISIBLE);
                             til_card_number_inputted1.setVisibility(View.VISIBLE); //newother
@@ -5375,6 +5378,10 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_pawning_remarks2.setText(null);
 
                         if (aat_card_physically_presented2.getText().toString().matches("Yes")) {
+                            til_card_replacement_request2.setVisibility(View.GONE);
+                            til_pawning_remarks2.setVisibility(View.GONE);
+                            til_others_reason_not_presented2.setVisibility(View.GONE);
+
                             til_card_pin_is_attached2.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField2.setVisibility(View.VISIBLE);
                             til_card_number_inputted2.setVisibility(View.VISIBLE); //newother
@@ -5418,6 +5425,10 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_pawning_remarks3.setText(null);
 
                         if (aat_card_physically_presented3.getText().toString().matches("Yes")) {
+                            til_card_replacement_request3.setVisibility(View.GONE);
+                            til_pawning_remarks3.setVisibility(View.GONE);
+                            til_others_reason_not_presented3.setVisibility(View.GONE);
+
                             til_card_pin_is_attached3.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField3.setVisibility(View.VISIBLE);
                             til_card_number_inputted3.setVisibility(View.VISIBLE); //newother
@@ -5462,6 +5473,10 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_pawning_remarks4.setText(null);
 
                         if (aat_card_physically_presented4.getText().toString().matches("Yes")) {
+                            til_card_replacement_request4.setVisibility(View.GONE);
+                            til_pawning_remarks4.setVisibility(View.GONE);
+                            til_others_reason_not_presented4.setVisibility(View.GONE);
+
                             til_card_pin_is_attached4.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField4.setVisibility(View.VISIBLE);
                             til_card_number_inputted4.setVisibility(View.VISIBLE); //newother
@@ -5505,6 +5520,10 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_pawning_remarks5.setText(null);
 
                         if (aat_card_physically_presented5.getText().toString().matches("Yes")) {
+                            til_card_replacement_request5.setVisibility(View.GONE);
+                            til_pawning_remarks5.setVisibility(View.GONE);
+                            til_others_reason_not_presented5.setVisibility(View.GONE);
+
                             til_card_pin_is_attached5.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField5.setVisibility(View.VISIBLE);
                             til_card_number_inputted5.setVisibility(View.VISIBLE); //newother
@@ -5579,6 +5598,7 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_reason_not_presented1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                         til_reason_unclaimed1.setVisibility(View.GONE);
                         til_card_replacement_request1.setVisibility(View.GONE);
                         til_pawning_remarks1.setVisibility(View.GONE);
@@ -5601,6 +5621,11 @@ public class ScanCashCard extends AppCompatActivity {
                             til_pawning_remarks1.setVisibility(View.VISIBLE);
                         } else if (aat_reason_not_presented1.getText().toString().matches("Others")) {
                             til_others_reason_not_presented1.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            til_card_replacement_request1.setVisibility(View.GONE);
+                            til_pawning_remarks1.setVisibility(View.GONE);
+                            til_others_reason_not_presented1.setVisibility(View.GONE);
                         }
                     }
                 });
