@@ -110,6 +110,12 @@ public class MainActivity extends AppCompatActivity {
             {
                 logout();
             }
+            else if (item.getItemId() == R.id.change_password){
+                Intent intent = new Intent(MainActivity.this, ChangePassword.class);
+                startActivity(intent);
+                finish();
+            }
+
             return false;
         });
 
