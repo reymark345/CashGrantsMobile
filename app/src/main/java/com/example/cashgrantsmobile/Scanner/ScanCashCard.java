@@ -376,7 +376,6 @@ public class ScanCashCard extends AppCompatActivity {
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                btn_CheckNextValidation();
                 SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                 String hh_id = sh.getString("hh_id", "");
                 String buttonNext = sh.getString("pressBtn_search", "");
