@@ -152,7 +152,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         nma_validations.bindString(8, nma_card_name);
         nma_validations.executeInsert();
 
-        Log.v(TAG,"Nganoomankaa" + distribution_status_record);
+
 
 
         SQLiteStatement card_validation_details = database.compileStatement(sql4);
@@ -1031,7 +1031,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                             "other_card_number_3,other_card_holder_name_3,other_card_distribution_status_3,other_card_release_date_3," +
                             "other_card_number_4,other_card_holder_name_4,other_card_distribution_status_4,other_card_release_date_4," +
                             "other_card_number_5,other_card_holder_name_5,other_card_distribution_status_5,other_card_release_date_5," +
-                            "upload_history_id,record_counter,created_at, updated_at, validated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                            "upload_history_id,record_counter,created_at, updated_at, validated_at,nma_non_emv,nma_card_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                     SQLiteStatement statement = database.compileStatement(sql);
                     statement.clearBindings();
@@ -1076,10 +1076,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     statement.bindString(39, extractedData.getString("created_at"));
                     statement.bindString(40, extractedData.getString("updated_at"));
                     statement.bindString(41, extractedData.getString("validated_at"));
+                    statement.bindString(42, extractedData.getString("non_emv_card_number"));
+                    statement.bindString(43, extractedData.getString("card_name"));
                     statement.executeInsert();
                 }
                 catch(Exception e){
-                    Log.v(TAG,"Error "+e );
+                    Log.v(TAG,"Errordawwwohhh "+e );
                 }
 
             } catch (JSONException e) {

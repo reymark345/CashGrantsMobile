@@ -76,6 +76,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="15dp" />
 
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,19 +96,21 @@
                 android:text="0"
                 android:layout_alignRight="@id/progressBar"
                 android:layout_below="@id/progressBar"
-                android:layout_marginRight="42dp"
+                android:layout_marginRight="80dp"
                 android:fontFamily="sans-serif-condensed"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="15dp" />
 
+
             <TextView
+                android:id="@+id/slash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="/"
-                android:layout_alignRight="@id/progressBar"
                 android:layout_below="@id/progressBar"
-                android:layout_marginRight="33dp"
+                android:layout_alignRight="@id/progressBar"
+                android:layout_marginRight="60dp"
                 android:fontFamily="sans-serif-condensed"
+                android:text="/"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="15dp" />
 
@@ -181,18 +185,18 @@
             android:numColumns="auto_fit" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSync"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_below="@+id/ll_error_logs"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/mybutton"
-        android:text="SYNC"
-        android:textColor="@color/white"
-        android:textSize="30dp" />
+            <Button
+                android:id="@+id/btnSync"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_below="@+id/ll_error_logs"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/mybutton"
+                android:text="SYNC"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
