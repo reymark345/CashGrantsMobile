@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerlayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    Cursor psgcList;
+    Cursor emvList;
 
     public void createDatabase(){
         sqLiteHelper = new SQLiteHelper(this, "CgTracking.sqlite", null, 1);
@@ -127,9 +129,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         CashCardScanner.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ScanCashCard.class);
-            startActivity(intent);
-            finish();
+            if (psgcList.getCount() ==0){
+                String identifier = "PSGC";
+                countIdentifier(identifier);
+            }
+            else if(emvList.getCount()==0){
+                String identifier = "SYNC";
+                countIdentifier(identifier);
+            }
+            else{
+                Intent intent = new Intent(MainActivity.this, ScanCashCard.class);
+                startActivity(intent);
+                finish();
+            }
         });
         DarkMode.setOnClickListener(v -> {
             if(!EnableNightMode){
@@ -193,6 +205,17 @@ public class MainActivity extends AppCompatActivity {
             }).show();
     }
 
+    public void countIdentifier(String validation){
+        new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Cannot proceed!")
+                .setContentText("Please pull the " + validation +" Data")
+                .setConfirmText("Confirm")
+                .showCancelButton(true)
+                .setConfirmClickListener(sDialog -> {
+                    sDialog.dismiss();
+                }).show();
+    }
+
     public void darkModeStatus(){
         try {
             SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
@@ -233,8 +256,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Cursor listCount = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validation_details");
-        Cursor emvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations");
-        Cursor psgcList = MainActivity.sqLiteHelper.getData("SELECT id FROM psgc");
+        emvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations");
+        psgcList = MainActivity.sqLiteHelper.getData("SELECT id FROM psgc");
         Cursor scanned_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"' AND type='scanned'");
         Cursor error_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='error'");
         Cursor logs_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'");
