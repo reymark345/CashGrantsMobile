@@ -77,6 +77,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdf.format(new Date());
 
+        Log.v(TAG,"valuee of  " + card_number_prefilled1);
         SQLiteDatabase database = getWritableDatabase();
         String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -195,13 +196,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             emv_validation_details.bindBlob(11,additional_image);
             emv_validation_details.bindString(12, overall_remarks);
             emv_validation_details.bindString(13, strDate);
-            emv_validation_details.bindLong(14, emv_monitoring_id);
+            emv_validation_details.bindString(14, strDate);
             emv_validation_details.bindString(15, contact_no_of_others);
         }
         else {
             emv_validation_details.bindString(11, overall_remarks);
             emv_validation_details.bindString(12, strDate);
-            emv_validation_details.bindLong(13, emv_monitoring_id);
+            emv_validation_details.bindString(13, strDate);
             emv_validation_details.bindString(14, contact_no_of_others);
         }
         emv_validation_details.executeInsert();
@@ -469,9 +470,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
         if (additional_image!=null){
-            sql5 = "UPDATE emv_validation_details SET hh_status = ?, contact_no = ?, contact_no_of = ?, is_grantee = ?, is_minor = ?, relationship_to_grantee = ?, assigned_staff = ?, representative_name = ?, additional_image = ?, overall_remarks = ?, created_at = ?, contact_no_of_others = ? WHERE id = ?";
+            sql5 = "UPDATE emv_validation_details SET hh_status = ?, contact_no = ?, contact_no_of = ?, is_grantee = ?, is_minor = ?, relationship_to_grantee = ?, assigned_staff = ?, representative_name = ?, additional_image = ?, overall_remarks = ?, contact_no_of_others = ?,  updated_at = ? WHERE id = ?";
         } else {
-            sql5 = "UPDATE emv_validation_details SET hh_status = ?, contact_no = ?, contact_no_of = ?, is_grantee = ?, is_minor = ?, relationship_to_grantee = ?, assigned_staff = ?, representative_name = ?, additional_image = NULL, overall_remarks = ?, created_at = ?, contact_no_of_others = ? WHERE id = ?";
+            sql5 = "UPDATE emv_validation_details SET hh_status = ?, contact_no = ?, contact_no_of = ?, is_grantee = ?, is_minor = ?, relationship_to_grantee = ?, assigned_staff = ?, representative_name = ?, additional_image = NULL, overall_remarks = ?, contact_no_of_others = ?,  updated_at = ? WHERE id = ?";
         }
 
         if (other_scanned_image1!=null) {
@@ -594,15 +595,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         if (additional_image !=null){
             emv_validation_details.bindBlob(9,additional_image);
             emv_validation_details.bindString(10, overall_remarks);
-            emv_validation_details.bindString(11, strDate);
-            emv_validation_details.bindString(12, contact_no_of_others);
+            emv_validation_details.bindString(11, contact_no_of_others);
+            emv_validation_details.bindString(12, strDate);
             emv_validation_details.bindLong(13, evd_id);
+
         }
         else {
             emv_validation_details.bindString(9, overall_remarks);
-            emv_validation_details.bindString(10, strDate);
-            emv_validation_details.bindString(11, contact_no_of_others);
+            emv_validation_details.bindString(10, contact_no_of_others);
+            emv_validation_details.bindString(11, strDate);
             emv_validation_details.bindLong(12, evd_id);
+
         }
         emv_validation_details.execute();
         if (card_count >=1) {

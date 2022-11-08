@@ -2757,6 +2757,16 @@ public class UpdateData extends AppCompatActivity {
             til_card_number_series5.setError(null);
 
             if (otherCardAvailability1.getVisibility() == View.VISIBLE) {
+                if(!edt_card_number_prefilled1.getText().toString().matches("")){
+                    if(edt_card_holder_name1.getText().toString().matches("")){
+                        til_card_holder_name1.setError(required_field);
+                        isValidationError++;
+                    }
+                }
+                else{
+                    til_card_holder_name1.setError(null);
+                }
+
                 if (distribution_status1.matches("")) {
                     til_distribution_status1.setError(required_field);
                     isValidationError++;
@@ -2878,6 +2888,16 @@ public class UpdateData extends AppCompatActivity {
             }
 
             if (otherCardAvailability2.getVisibility() == View.VISIBLE) {
+                if(!edt_card_number_prefilled2.getText().toString().matches("")){
+                    if(edt_card_holder_name2.getText().toString().matches("")){
+                        til_card_holder_name2.setError(required_field);
+                        isValidationError++;
+                    }
+                }
+                else{
+                    til_card_holder_name2.setError(null);
+                }
+
                 if (distribution_status2.matches("")) {
                     til_distribution_status2.setError(required_field);
                     isValidationError++;
@@ -2992,6 +3012,15 @@ public class UpdateData extends AppCompatActivity {
                 }
             }
             if (otherCardAvailability3.getVisibility() == View.VISIBLE) {
+                if(!edt_card_number_prefilled3.getText().toString().matches("")){
+                    if(edt_card_holder_name3.getText().toString().matches("")){
+                        til_card_holder_name3.setError(required_field);
+                        isValidationError++;
+                    }
+                }
+                else{
+                    til_card_holder_name3.setError(null);
+                }
                 if (distribution_status3.matches("")) {
                     til_distribution_status3.setError(required_field);
                     isValidationError++;
@@ -3103,6 +3132,16 @@ public class UpdateData extends AppCompatActivity {
             }
 
             if (otherCardAvailability4.getVisibility() == View.VISIBLE) {
+                if(!edt_card_number_prefilled3.getText().toString().matches("")){
+                    if(edt_card_holder_name3.getText().toString().matches("")){
+                        til_card_holder_name3.setError(required_field);
+                        isValidationError++;
+                    }
+                }
+                else{
+                    til_card_holder_name3.setError(null);
+                }
+
                 if (distribution_status4.matches("")) {
                     til_distribution_status4.setError(required_field);
                     isValidationError++;
@@ -3214,6 +3253,16 @@ public class UpdateData extends AppCompatActivity {
             }
 
             if (otherCardAvailability5.getVisibility() == View.VISIBLE) {
+                if(!edt_card_number_prefilled5.getText().toString().matches("")){
+                    if(edt_card_holder_name5.getText().toString().matches("")){
+                        til_card_holder_name5.setError(required_field);
+                        isValidationError++;
+                    }
+                }
+                else{
+                    til_card_holder_name5.setError(null);
+                }
+
                 if (distribution_status5.matches("")) {
                     til_distribution_status5.setError(required_field);
                     isValidationError++;
@@ -5637,6 +5686,17 @@ public class UpdateData extends AppCompatActivity {
                 edt_card_number_prefilled3.setText(card_number_prefilled3);
                 edt_card_number_prefilled4.setText(card_number_prefilled4);
                 edt_card_number_prefilled5.setText(card_number_prefilled5);
+
+
+                if (edt_card_number_prefilled1.getText().toString().matches("")){edt_card_number_prefilled1.setEnabled(true);}else{edt_card_number_prefilled1.setEnabled(false);}
+                if (edt_card_number_prefilled2.getText().toString().matches("")){edt_card_number_prefilled2.setEnabled(true);}else{edt_card_number_prefilled2.setEnabled(false);}
+                if (edt_card_number_prefilled3.getText().toString().matches("")){edt_card_number_prefilled3.setEnabled(true);}else{edt_card_number_prefilled3.setEnabled(false);}
+                if (edt_card_number_prefilled4.getText().toString().matches("")){edt_card_number_prefilled4.setEnabled(true);}else{edt_card_number_prefilled4.setEnabled(false);}
+                if (edt_card_number_prefilled5.getText().toString().matches("")){edt_card_number_prefilled5.setEnabled(true);}else{edt_card_number_prefilled5.setEnabled(false);}
+
+
+
+
                 edt_card_holder_name1.setText(card_holder_name1);
                 edt_card_holder_name2.setText(card_holder_name2);
                 edt_card_holder_name3.setText(card_holder_name3);

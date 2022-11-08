@@ -159,7 +159,9 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
                                     SharedPreferences sharedPreferencess = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                     SharedPreferences.Editor myEdits = sharedPreferencess.edit();
+                                    myEdits.putString("user_id_pass", user_id);
                                     myEdits.putString("accomplish_by_name", name);
+                                    myEdits.putString("password_txt", password);
                                     myEdits.commit();
 
 
