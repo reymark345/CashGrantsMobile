@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     CardView CashCardScanner, InventoryList, PullPsgcData, SyncData, LogsData, Logout, UnvalidatedData;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
-    TextView txtInventoryCount, txtPullPsgcDataCount, txtLogsTotal, txtSyncData, txtScannedTotal, txtErrorTotal, txtIncompleteTotal, txtUnvalidatedCount;
+    TextView txtInventoryCount, txtPullPsgcDataCount, txtLogsTotal, txtSyncData, txtScannedTotal, txtErrorTotal, txtUnvalidatedCount;
     public boolean EnableNightMode = false;
     private final String night = "true";
     private final String light = "false";
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         txtPullPsgcDataCount = findViewById(R.id.textPullPsgcData);
         txtScannedTotal = findViewById(R.id.scannedTotal);
         txtErrorTotal = findViewById(R.id.errorTotal);
-        txtIncompleteTotal = findViewById(R.id.incompleteTotal);
         txtLogsTotal = findViewById(R.id.textLogsCount);
         txtSyncData = findViewById(R.id.txtSyncData);
         txtUnvalidatedCount = findViewById(R.id.txtUnvalidatedCount);
@@ -110,6 +109,12 @@ public class MainActivity extends AppCompatActivity {
             {
                 logout();
             }
+            else if (item.getItemId() == R.id.change_password){
+                Intent intent = new Intent(MainActivity.this, ChangePassword.class);
+                startActivity(intent);
+                finish();
+            }
+
             return false;
         });
 
@@ -181,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-        Logout.setOnClickListener(v -> logout());
+//        Logout.setOnClickListener(v -> logout());
     }
 
     public void logout(){
@@ -269,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
         txtScannedTotal.setText(String.valueOf(scanned_total.getCount()));
         txtErrorTotal.setText(String.valueOf(error_total.getCount()));
         txtLogsTotal.setText(String.valueOf(logs_total.getCount()));
-        txtIncompleteTotal.setText("0");
         txtSyncData.setText(String.valueOf(emvList.getCount()));
         txtUnvalidatedCount.setText(String.valueOf(unvalidated_total.getCount()));
 

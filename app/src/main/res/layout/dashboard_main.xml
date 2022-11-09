@@ -111,10 +111,10 @@
                     android:id="@+id/layoutClients"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    app:layout_constraintEnd_toStartOf="@id/layoutImpacted"
+                    app:layout_constraintEnd_toStartOf="@id/layoutFollowing"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViews">
 
@@ -142,13 +142,13 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layoutImpacted"
+                    android:id="@+id/layoutFollowing"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    app:layout_constraintEnd_toStartOf="@id/layoutFollowing"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/layoutClients"
                     app:layout_constraintTop_toBottomOf="@id/textViews">
 
@@ -166,45 +166,11 @@
                         android:textSize="@dimen/_10ssp"/>
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="0"
                         android:id="@+id/errorTotal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:text="0"
-                        android:textColor="@color/primary_text"
-                        android:textSize="@dimen/_16ssp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutFollowing"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/layoutImpacted"
-                    app:layout_constraintTop_toBottomOf="@id/textViews">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_28sdp"
-                        android:layout_height="@dimen/_28sdp"
-                        android:src="@drawable/ic_following"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:text="Incomplete"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="@dimen/_10ssp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:text="0"
-                        android:id="@+id/incompleteTotal"
                         android:textColor="@color/primary_text"
                         android:textSize="@dimen/_16ssp"/>
                 </LinearLayout>
@@ -231,7 +197,7 @@
                 <include layout="@layout/dashboard_item_3"/>
                 <include layout="@layout/dashboard_item_psgc"/>
                 <include layout="@layout/dashboard_item_logs"/>
-                <include layout="@layout/dashboard_item_4"/>
+<!--                <include layout="@layout/dashboard_item_4"/>-->
             </LinearLayout>
 
         </ScrollView>
