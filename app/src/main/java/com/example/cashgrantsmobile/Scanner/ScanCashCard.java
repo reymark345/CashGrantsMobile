@@ -106,6 +106,12 @@ public class ScanCashCard extends AppCompatActivity {
         return currCount == 4 ||currCount == 9 || currCount == 14 || currCount == 19;
     }
 
+    String card_1="";
+    String card_2="";
+    String card_3="";
+    String card_4="";
+    String card_5="";
+
     //onboard
 
     Cursor search;
@@ -510,39 +516,104 @@ public class ScanCashCard extends AppCompatActivity {
         }
     }
 
-    private void appendOrStrip(String field, boolean shouldAppend, EditText textName) {
+    private void appendOrStrip(String field, boolean shouldAppend) {
         StringBuilder sb = new StringBuilder(field);
         if (shouldAppend) {
             sb.append(" ");
         } else {
             sb.setLength(sb.length() - 1);
         }
-
-        if (textName.toString().contains("edt_card_number_inputted1")){
-            edt_card_number_inputted1.setText(sb.toString());
-            edt_card_number_inputted1.setSelection(sb.length());
-        }
-        else if (textName.toString().contains("edt_card_number_inputted2")){
-            edt_card_number_inputted2.setText(sb.toString());
-            edt_card_number_inputted2.setSelection(sb.length());
-        }
-        else if (textName.toString().contains("edt_card_number_inputted3")){
-            edt_card_number_inputted3.setText(sb.toString());
-            edt_card_number_inputted3.setSelection(sb.length());
-        }
-        else if (textName.toString().contains("edt_card_number_inputted4")){
-            edt_card_number_inputted4.setText(sb.toString());
-            edt_card_number_inputted4.setSelection(sb.length());
-        }
-        else if (textName.toString().contains("edt_card_number_inputted5")){
-            edt_card_number_inputted5.setText(sb.toString());
-            edt_card_number_inputted5.setSelection(sb.length());
-        }
-        else {
-            edt_card_number_inputted.setText(sb.toString());
-            edt_card_number_inputted.setSelection(sb.length());
-        }
+        edt_card_number_inputted.setText(sb.toString());
+        edt_card_number_inputted.setSelection(sb.length());
     }
+
+    private void appendOrStrip1(String field, boolean shouldAppend) {
+        StringBuilder sb = new StringBuilder(field);
+        if (shouldAppend) {
+            sb.append(" ");
+        } else {
+            sb.setLength(sb.length() - 1);
+        }
+        edt_card_number_inputted1.setText(sb.toString());
+        edt_card_number_inputted1.setSelection(sb.length());
+    }
+
+    private void appendOrStrip2(String field, boolean shouldAppend) {
+        StringBuilder sb = new StringBuilder(field);
+        if (shouldAppend) {
+            sb.append(" ");
+        } else {
+            sb.setLength(sb.length() - 1);
+        }
+        edt_card_number_inputted2.setText(sb.toString());
+        edt_card_number_inputted2.setSelection(sb.length());
+    }
+    private void appendOrStrip3(String field, boolean shouldAppend) {
+        StringBuilder sb = new StringBuilder(field);
+        if (shouldAppend) {
+            sb.append(" ");
+        } else {
+            sb.setLength(sb.length() - 1);
+        }
+        edt_card_number_inputted3.setText(sb.toString());
+        edt_card_number_inputted3.setSelection(sb.length());
+    }
+    private void appendOrStrip4(String field, boolean shouldAppend) {
+        StringBuilder sb = new StringBuilder(field);
+        if (shouldAppend) {
+            sb.append(" ");
+        } else {
+            sb.setLength(sb.length() - 1);
+        }
+        edt_card_number_inputted4.setText(sb.toString());
+        edt_card_number_inputted4.setSelection(sb.length());
+    }
+
+    private void appendOrStrip5(String field, boolean shouldAppend) {
+        StringBuilder sb = new StringBuilder(field);
+        if (shouldAppend) {
+            sb.append(" ");
+        } else {
+            sb.setLength(sb.length() - 1);
+        }
+        edt_card_number_inputted5.setText(sb.toString());
+        edt_card_number_inputted5.setSelection(sb.length());
+    }
+
+
+//    private void appendOrStrip(String field, boolean shouldAppend, EditText textName) {
+//        StringBuilder sb = new StringBuilder(field);
+//        if (shouldAppend) {
+//            sb.append(" ");
+//        } else {
+//            sb.setLength(sb.length() - 1);
+//        }
+//
+//        if (textName.toString().contains("edt_card_number_inputted1")){
+//            edt_card_number_inputted1.setText(sb.toString());
+//            edt_card_number_inputted1.setSelection(sb.length());
+//        }
+//        else if (textName.toString().contains("edt_card_number_inputted2")){
+//            edt_card_number_inputted2.setText(sb.toString());
+//            edt_card_number_inputted2.setSelection(sb.length());
+//        }
+//        else if (textName.toString().contains("edt_card_number_inputted3")){
+//            edt_card_number_inputted3.setText(sb.toString());
+//            edt_card_number_inputted3.setSelection(sb.length());
+//        }
+//        else if (textName.toString().contains("edt_card_number_inputted4")){
+//            edt_card_number_inputted4.setText(sb.toString());
+//            edt_card_number_inputted4.setSelection(sb.length());
+//        }
+//        else if (textName.toString().contains("edt_card_number_inputted5")){
+//            edt_card_number_inputted5.setText(sb.toString());
+//            edt_card_number_inputted5.setSelection(sb.length());
+//        }
+//        else {
+//            edt_card_number_inputted.setText(sb.toString());
+//            edt_card_number_inputted.setSelection(sb.length());
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -983,8 +1054,10 @@ public class ScanCashCard extends AppCompatActivity {
         }
     }
 
-    public void scannedCardNumber(EditText card_number, TextInputLayout tilCard ){
+
+    public void scannedCardNumber(EditText card_number , TextInputLayout tilCard){
         card_number.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -1008,14 +1081,231 @@ public class ScanCashCard extends AppCompatActivity {
                 int currCount = field.length();
 
                 if (shouldIncrementOrDecrement(currCount, true)){
-                    appendOrStrip(field, true,card_number);
+                    appendOrStrip(field, true);
                 } else if (shouldIncrementOrDecrement(currCount, false)) {
-                    appendOrStrip(field, false, card_number);
+                    appendOrStrip(field, false);
                 }
                 prevCount = card_number.getText().toString().length();
+
             }
         });
     }
+
+    public void scannedCardNumber1(EditText card_number , TextInputLayout tilCard){
+        card_number.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                String cardNumber = card_number.getText().toString();
+                if(s.toString().length() != 23){
+                    tilCard.setError(required_field);
+                }
+                else if(!cardNumber.matches("[0-9 ]+")) {
+                    tilCard.setError("Invalid Format");
+                }
+                else{
+                    tilCard.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String field = editable.toString();
+                int currCount = field.length();
+
+                if (shouldIncrementOrDecrement(currCount, true)){
+                    appendOrStrip1(field, true);
+                } else if (shouldIncrementOrDecrement(currCount, false)) {
+                    appendOrStrip1(field, false);
+                }
+                prevCount = card_number.getText().toString().length();
+
+            }
+        });
+    }
+
+    public void scannedCardNumber2(EditText card_number , TextInputLayout tilCard){
+        card_number.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                String cardNumber = card_number.getText().toString();
+                if(s.toString().length() != 23){
+                    tilCard.setError(required_field);
+                }
+                else if(!cardNumber.matches("[0-9 ]+")) {
+                    tilCard.setError("Invalid Format");
+                }
+                else{
+                    tilCard.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String field = editable.toString();
+                int currCount = field.length();
+
+                if (shouldIncrementOrDecrement(currCount, true)){
+                    appendOrStrip2(field, true);
+                } else if (shouldIncrementOrDecrement(currCount, false)) {
+                    appendOrStrip2(field, false);
+                }
+                prevCount = card_number.getText().toString().length();
+
+            }
+        });
+    }
+
+    public void scannedCardNumber3(EditText card_number , TextInputLayout tilCard){
+        card_number.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                String cardNumber = card_number.getText().toString();
+                if(s.toString().length() != 23){
+                    tilCard.setError(required_field);
+                }
+                else if(!cardNumber.matches("[0-9 ]+")) {
+                    tilCard.setError("Invalid Format");
+                }
+                else{
+                    tilCard.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String field = editable.toString();
+                int currCount = field.length();
+
+                if (shouldIncrementOrDecrement(currCount, true)){
+                    appendOrStrip3(field, true);
+                } else if (shouldIncrementOrDecrement(currCount, false)) {
+                    appendOrStrip3(field, false);
+                }
+                prevCount = card_number.getText().toString().length();
+
+            }
+        });
+    }
+
+    public void scannedCardNumber4(EditText card_number , TextInputLayout tilCard){
+        card_number.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                String cardNumber = card_number.getText().toString();
+                if(s.toString().length() != 23){
+                    tilCard.setError(required_field);
+                }
+                else if(!cardNumber.matches("[0-9 ]+")) {
+                    tilCard.setError("Invalid Format");
+                }
+                else{
+                    tilCard.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String field = editable.toString();
+                int currCount = field.length();
+
+                if (shouldIncrementOrDecrement(currCount, true)){
+                    appendOrStrip4(field, true);
+                } else if (shouldIncrementOrDecrement(currCount, false)) {
+                    appendOrStrip4(field, false);
+                }
+                prevCount = card_number.getText().toString().length();
+
+            }
+        });
+    }
+
+    public void scannedCardNumber5(EditText card_number , TextInputLayout tilCard){
+        card_number.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                String cardNumber = card_number.getText().toString();
+                if(s.toString().length() != 23){
+                    tilCard.setError(required_field);
+                }
+                else if(!cardNumber.matches("[0-9 ]+")) {
+                    tilCard.setError("Invalid Format");
+                }
+                else{
+                    tilCard.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String field = editable.toString();
+                int currCount = field.length();
+
+                if (shouldIncrementOrDecrement(currCount, true)){
+                    appendOrStrip5(field, true);
+                } else if (shouldIncrementOrDecrement(currCount, false)) {
+                    appendOrStrip5(field, false);
+                }
+                prevCount = card_number.getText().toString().length();
+
+            }
+        });
+    }
+
+
+
+//    public void scannedCardNumber(EditText card_number, TextInputLayout tilCard ){
+//        card_number.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+//                String cardNumber = card_number.getText().toString();
+//                if(s.toString().length() != 23){
+//                    tilCard.setError(required_field);
+//                }
+//                else if(!cardNumber.matches("[0-9 ]+")) {
+//                    tilCard.setError("Invalid Format");
+//                }
+//                else{
+//                    tilCard.setError(null);
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String field = editable.toString();
+//                int currCount = field.length();
+//
+//                if (shouldIncrementOrDecrement(currCount, true)){
+//                    appendOrStrip(field, true,card_number);
+//                } else if (shouldIncrementOrDecrement(currCount, false)) {
+//                    appendOrStrip(field, false, card_number);
+//                }
+//                prevCount = card_number.getText().toString().length();
+//            }
+//        });
+//    }
 
     private void otherCardVisibility() {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
@@ -1114,6 +1404,7 @@ public class ScanCashCard extends AppCompatActivity {
             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_1=NULL WHERE id=1");
             ivOtherScannedImage1.setImageResource(R.drawable.ic_image);
             aat_distribution_status1.setText("", false);
+            edt_card_number_prefilled1.setText("");
             edt_release_date1.setText("");
             edt_release_by1.setText("");
             edt_release_place1.setText("");
@@ -1135,6 +1426,7 @@ public class ScanCashCard extends AppCompatActivity {
             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_2=NULL WHERE id=1");
             ivOtherScannedImage2.setImageResource(R.drawable.ic_image);
             aat_distribution_status2.setText("", false);
+            edt_card_number_prefilled2.setText("");
             edt_release_date2.setText("");
             edt_release_by2.setText("");
             edt_release_place2.setText("");
@@ -1156,6 +1448,7 @@ public class ScanCashCard extends AppCompatActivity {
             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_3=NULL WHERE id=1");
             ivOtherScannedImage3.setImageResource(R.drawable.ic_image);
             aat_distribution_status3.setText("", false);
+            edt_card_number_prefilled3.setText("");
             edt_release_date3.setText("");
             edt_release_by3.setText("");
             edt_release_place3.setText("");
@@ -1177,6 +1470,7 @@ public class ScanCashCard extends AppCompatActivity {
             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_4=NULL WHERE id=1");
             ivOtherScannedImage4.setImageResource(R.drawable.ic_image);
             aat_distribution_status4.setText("", false);
+            edt_card_number_prefilled4.setText("");
             edt_release_date4.setText("");
             edt_release_by4.setText("");
             edt_release_place4.setText("");
@@ -1198,6 +1492,7 @@ public class ScanCashCard extends AppCompatActivity {
             sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_5=NULL WHERE id=1");
             ivOtherScannedImage5.setImageResource(R.drawable.ic_image);
             aat_distribution_status5.setText("", false);
+            edt_card_number_prefilled5.setText("");
             edt_release_date5.setText("");
             edt_release_by5.setText("");
             edt_release_place5.setText("");
@@ -3767,6 +4062,19 @@ public class ScanCashCard extends AppCompatActivity {
                 nma_card_name = search.getString(42);
 
             }
+
+            Cursor cursor_get_household = MainActivity.sqLiteHelper.getData("SELECT other_card_number_1,other_card_number_2,other_card_number_3,other_card_number_4,other_card_number_5 FROM emv_validations WHERE hh_id='"+household_no+"'");
+            while (cursor_get_household.moveToNext()) {
+                card_1 = cursor_get_household.getString(0);
+                card_2 = cursor_get_household.getString(1);
+                card_3 = cursor_get_household.getString(2);
+                card_4 = cursor_get_household.getString(3);
+                card_5 = cursor_get_household.getString(4);
+            }
+
+            cursor_get_household.close();
+
+
              String other_card1 = String.valueOf(other_card_number_1);
              String other_card2 = String.valueOf(other_card_number_2);
              String other_card3 = String.valueOf(other_card_number_3);
@@ -3785,11 +4093,10 @@ public class ScanCashCard extends AppCompatActivity {
             String grantee_card_date4 = String.valueOf(grantee_card_release_date4);
             String grantee_card_date5 = String.valueOf(grantee_card_release_date5);
 
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
 
-
-
-             
              if (other_card1.matches("null")){
                  other_card_number_1 = "";
              }
@@ -3805,6 +4112,7 @@ public class ScanCashCard extends AppCompatActivity {
              if (other_card5.matches("null")){
                  other_card_number_5 = "";
              }
+
 
             if (grantee_distribution_record1.matches("null")){
                 grantee_distribution_status_record1 = "";
@@ -3869,9 +4177,6 @@ public class ScanCashCard extends AppCompatActivity {
                 Toasty.error(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
             } else {
                 if  (validated_at.matches("null")){
-                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
-
                     card_count = 0;
 
                     if (!other_card_number_1.matches("") && !other_card_number_1.matches("null")) {
@@ -4454,11 +4759,11 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_card_number_prefilled.setEnabled(false);
 
 
-                edt_card_number_prefilled1.setEnabled(false);
-                edt_card_number_prefilled2.setEnabled(false);
-                edt_card_number_prefilled3.setEnabled(false);
-                edt_card_number_prefilled4.setEnabled(false);
-                edt_card_number_prefilled5.setEnabled(false);
+//                edt_card_number_prefilled1.setEnabled(false);
+//                edt_card_number_prefilled2.setEnabled(false);
+//                edt_card_number_prefilled3.setEnabled(false);
+//                edt_card_number_prefilled4.setEnabled(false);
+//                edt_card_number_prefilled5.setEnabled(false);
 
                 aat_distribution_status_record1.setEnabled(false);
                 aat_distribution_status_record2.setEnabled(false);
@@ -4473,11 +4778,11 @@ public class ScanCashCard extends AppCompatActivity {
 
 
                 scannedCardNumber(edt_card_number_inputted,til_card_number_inputted);
-                scannedCardNumber(edt_card_number_inputted1,til_card_number_inputted1);
-                scannedCardNumber(edt_card_number_inputted2,til_card_number_inputted2);
-                scannedCardNumber(edt_card_number_inputted3,til_card_number_inputted3);
-                scannedCardNumber(edt_card_number_inputted4,til_card_number_inputted4);
-                scannedCardNumber(edt_card_number_inputted5,til_card_number_inputted5);
+                scannedCardNumber1(edt_card_number_inputted1,til_card_number_inputted1);
+                scannedCardNumber2(edt_card_number_inputted2,til_card_number_inputted2);
+                scannedCardNumber3(edt_card_number_inputted3,til_card_number_inputted3);
+                scannedCardNumber4(edt_card_number_inputted4,til_card_number_inputted4);
+                scannedCardNumber5(edt_card_number_inputted5,til_card_number_inputted5);
 
 
                 btnAddCard.setOnClickListener(new View.OnClickListener() {
@@ -5693,12 +5998,12 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_card_number_prefilled4.setText(card_number_prefilled4);
                 edt_card_number_prefilled5.setText(card_number_prefilled5);
 
-                if (edt_card_number_prefilled1.getText().toString().matches("")){edt_card_number_prefilled1.setEnabled(true);}else{edt_card_number_prefilled1.setEnabled(false);}
-                if (edt_card_number_prefilled2.getText().toString().matches("")){edt_card_number_prefilled2.setEnabled(true);}else{edt_card_number_prefilled2.setEnabled(false);}
-                if (edt_card_number_prefilled3.getText().toString().matches("")){edt_card_number_prefilled3.setEnabled(true);}else{edt_card_number_prefilled3.setEnabled(false);}
-                if (edt_card_number_prefilled4.getText().toString().matches("")){edt_card_number_prefilled4.setEnabled(true);}else{edt_card_number_prefilled4.setEnabled(false);}
-                if (edt_card_number_prefilled5.getText().toString().matches("")){edt_card_number_prefilled5.setEnabled(true);}else{edt_card_number_prefilled5.setEnabled(false);}
 
+                if (card_1.matches("") || card_1.matches("null")){edt_card_number_prefilled1.setEnabled(true);}else{edt_card_number_prefilled1.setEnabled(false);}
+                if (card_2.matches("") || card_2.matches("null")){edt_card_number_prefilled2.setEnabled(true);}else{edt_card_number_prefilled2.setEnabled(false);}
+                if (card_3.matches("") || card_3.matches("null")){edt_card_number_prefilled3.setEnabled(true);}else{edt_card_number_prefilled3.setEnabled(false);}
+                if (card_4.matches("") || card_4.matches("null")){edt_card_number_prefilled4.setEnabled(true);}else{edt_card_number_prefilled4.setEnabled(false);}
+                if (card_5.matches("") || card_5.matches("null")){edt_card_number_prefilled5.setEnabled(true);}else{edt_card_number_prefilled5.setEnabled(false);}
 
                 edt_card_holder_name1.setText(card_holder_name1);
                 edt_card_holder_name2.setText(card_holder_name2);
@@ -6294,6 +6599,13 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("nma_others_reason", "");
         myEdit.putString("nma_date_claimed", "");
         myEdit.putString("nma_remarks", "");
+
+        myEdit.putString("card_number_prefilled1", "");
+        myEdit.putString("card_number_prefilled2", "");
+        myEdit.putString("card_number_prefilled3", "");
+        myEdit.putString("card_number_prefilled4", "");
+        myEdit.putString("card_number_prefilled5", "");
+
 
         //4
         myEdit.putString("overall_remarks", "");

@@ -104,7 +104,7 @@ public class ChangePassword extends AppCompatActivity {
                     isValidationError++;
                 }
                 else if(newPass.length()<8){
-                    tilNew.setError("The New Password must be at least 8 characters.");
+                    tilNew.setError("Password must be at least 8 characters.");
                     isValidationError++;
                 }
                 else {
