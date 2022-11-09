@@ -131,7 +131,7 @@ public class UpdateData extends AppCompatActivity {
     AutoCompleteTextView aat_set, aat_ext_name, aat_hh_status, aat_province_code, aat_municipality_code, aat_barangay_code, aat_sex, aat_is_grantee, aat_relationship_to_grantee, aat_contact_no_of, aat_is_minor;
 
     //    Intro 2 XML Fields
-    TextInputLayout til_card_number_prefilled, til_distribution_status, til_release_date, til_release_by, til_release_place, til_card_physically_presented, til_card_pin_is_attached, til_reason_not_presented, til_reason_unclaimed, til_card_replacement_request, til_others_reason_not_presented, til_others_reason_unclaimed, til_card_replacement_request_submitted_details, til_lender_name, til_date_pawned, til_loan_amount, til_lender_address, til_date_retrieved, til_interest, til_status, til_reason, til_offense_history, til_offense_date, til_staff_intervention, til_other_details, til_card, til_card_number_inputted, til_card_number_series, til_id_exists, til_additionalID, tilGrantee, til_representative_name, til_card_number_prefilled1, til_card_holder_name1, til_distribution_status1, til_release_date1, til_release_by1, til_release_place1, til_card_physically_presented1, til_card_pin_is_attached1, til_reason_not_presented1, til_others_reason_not_presented1, til_reason_unclaimed1, til_others_reason_unclaimed1, til_card_replacement_request1, til_card_replacement_request_submitted_details1, til_pawning_remarks1, tilOtherScanned1, til_card_number_inputted1, til_card_number_series1, til_card_number_prefilled2, til_card_holder_name2, til_distribution_status2, til_release_date2, til_release_by2, til_release_place2, til_card_physically_presented2, til_card_pin_is_attached2, til_reason_not_presented2, til_others_reason_not_presented2, til_reason_unclaimed2, til_others_reason_unclaimed2, til_card_replacement_request2, til_card_replacement_request_submitted_details2, til_pawning_remarks2, tilOtherScanned2, til_card_number_inputted2, til_card_number_series2, til_card_number_prefilled3, til_card_holder_name3, til_distribution_status3, til_release_date3, til_release_by3, til_release_place3, til_card_physically_presented3, til_card_pin_is_attached3, til_reason_not_presented3, til_others_reason_not_presented3, til_reason_unclaimed3, til_others_reason_unclaimed3, til_card_replacement_request3, til_card_replacement_request_submitted_details3, til_pawning_remarks3, tilOtherScanned3, til_card_number_inputted3, til_card_number_series3, til_card_number_prefilled4, til_card_holder_name4, til_distribution_status4, til_release_date4, til_release_by4, til_release_place4, til_card_physically_presented4, til_card_pin_is_attached4, til_reason_not_presented4, til_others_reason_not_presented4, til_reason_unclaimed4, til_others_reason_unclaimed4, til_card_replacement_request4, til_card_replacement_request_submitted_details4, til_pawning_remarks4, tilOtherScanned4, til_card_number_inputted4, til_card_number_series4, til_card_number_prefilled5, til_card_holder_name5, til_distribution_status5, til_release_date5, til_release_by5, til_release_place5, til_card_physically_presented5, til_card_pin_is_attached5, til_reason_not_presented5, til_others_reason_not_presented5, til_reason_unclaimed5, til_others_reason_unclaimed5, til_card_replacement_request5, til_card_replacement_request_submitted_details5, til_pawning_remarks5, tilOtherScanned5, til_card_number_inputted5, til_card_number_series5, til_current_scan_btn;
+    TextInputLayout til_card_number_prefilled, til_distribution_status, til_release_date, til_release_by, til_release_place, til_card_physically_presented, til_card_pin_is_attached, til_reason_not_presented, til_reason_unclaimed, til_card_replacement_request, til_others_reason_not_presented, til_others_reason_unclaimed, til_card_replacement_request_submitted_details, til_lender_name, til_date_pawned, til_loan_amount, til_lender_address, til_date_retrieved, til_interest, til_status, til_reason, til_offense_history, til_offense_date, til_staff_intervention, til_other_details, til_card, til_card_number_inputted, til_card_number_series, til_id_exists, til_additionalID, tilGrantee, til_representative_name, til_card_number_prefilled1, til_card_holder_name1, til_distribution_status1, til_release_date1, til_release_by1, til_release_place1, til_card_physically_presented1, til_card_pin_is_attached1, til_reason_not_presented1, til_others_reason_not_presented1, til_reason_unclaimed1, til_others_reason_unclaimed1, til_card_replacement_request1, til_card_replacement_request_submitted_details1, til_pawning_remarks1, tilOtherScanned1, til_card_number_inputted1, til_card_number_series1, til_card_number_prefilled2, til_card_holder_name2, til_distribution_status2, til_release_date2, til_release_by2, til_release_place2, til_card_physically_presented2, til_card_pin_is_attached2, til_reason_not_presented2, til_others_reason_not_presented2, til_reason_unclaimed2, til_others_reason_unclaimed2, til_card_replacement_request2, til_card_replacement_request_submitted_details2, til_pawning_remarks2, tilOtherScanned2, til_card_number_inputted2, til_card_number_series2, til_card_number_prefilled3, til_card_holder_name3, til_distribution_status3, til_release_date3, til_release_by3, til_release_place3, til_card_physically_presented3, til_card_pin_is_attached3, til_reason_not_presented3, til_others_reason_not_presented3, til_reason_unclaimed3, til_others_reason_unclaimed3, til_card_replacement_request3, til_card_replacement_request_submitted_details3, til_pawning_remarks3, tilOtherScanned3, til_card_number_inputted3, til_card_number_series3, til_card_number_prefilled4, til_card_holder_name4, til_distribution_status4, til_release_date4, til_release_by4, til_release_place4, til_card_physically_presented4, til_card_pin_is_attached4, til_reason_not_presented4, til_others_reason_not_presented4, til_reason_unclaimed4, til_others_reason_unclaimed4, til_card_replacement_request4, til_card_replacement_request_submitted_details4, til_pawning_remarks4, tilOtherScanned4, til_card_number_inputted4, til_card_number_series4, til_card_number_prefilled5, til_card_holder_name5, til_distribution_status5, til_release_date5, til_release_by5, til_release_place5, til_card_physically_presented5, til_card_pin_is_attached5, til_reason_not_presented5, til_others_reason_not_presented5, til_reason_unclaimed5, til_others_reason_unclaimed5, til_card_replacement_request5, til_card_replacement_request_submitted_details5, til_pawning_remarks5, tilOtherScanned5, til_card_number_inputted5, til_card_number_series5, til_current_scan_btn ,til_date_claimed_record,til_date_claimed_record1,til_date_claimed_record2,til_date_claimed_record3,til_date_claimed_record4,til_date_claimed_record5,til_distribution_status1_record,til_distribution_status2_record,til_distribution_status3_record,til_distribution_status4_record,til_distribution_status5_record;
     EditText edt_card_number_prefilled, edt_release_date, edt_release_by, edt_release_place, edt_others_reason_not_presented, edt_others_reason_unclaimed, edt_card_replacement_request_submitted_details, edt_lender_name, edt_date_pawned, edt_loan_amount, edt_lender_address, edt_date_retrieved, edt_interest, edt_reason, edt_offense_date, edt_remarks, edt_staff_intervention, edt_other_details, edt_card_number_inputted, edt_card_number_series, edt_representative_name, edt_card_number_prefilled1, edt_card_holder_name1, edt_release_date1, edt_release_by1, edt_release_place1, edt_others_reason_not_presented1, edt_others_reason_unclaimed1, edt_card_replacement_request_submitted_details1, edt_pawning_remarks1, edt_card_number_inputted1, edt_card_number_series1, edt_card_number_prefilled2, edt_card_holder_name2, edt_release_date2, edt_release_by2, edt_release_place2, edt_others_reason_not_presented2, edt_others_reason_unclaimed2, edt_card_replacement_request_submitted_details2, edt_pawning_remarks2, edt_card_number_inputted2, edt_card_number_series2, edt_card_number_prefilled3, edt_card_holder_name3, edt_release_date3, edt_release_by3, edt_release_place3, edt_others_reason_not_presented3, edt_others_reason_unclaimed3, edt_card_replacement_request_submitted_details3, edt_pawning_remarks3, edt_card_number_inputted3, edt_card_number_series3, edt_card_number_prefilled4, edt_card_holder_name4, edt_release_date4, edt_release_by4, edt_release_place4, edt_others_reason_not_presented4, edt_others_reason_unclaimed4, edt_card_replacement_request_submitted_details4, edt_pawning_remarks4, edt_card_number_inputted4, edt_card_number_series4, edt_card_number_prefilled5, edt_card_holder_name5, edt_release_date5, edt_release_by5, edt_release_place5, edt_others_reason_not_presented5, edt_others_reason_unclaimed5, edt_card_replacement_request_submitted_details5, edt_pawning_remarks5, edt_card_number_inputted5, edt_card_number_series5, aat_distribution_status_record, edt_release_date_record, aat_distribution_status_record1, edt_release_date_record1, aat_distribution_status_record2, edt_release_date_record2, aat_distribution_status_record3, edt_release_date_record3, aat_distribution_status_record4, edt_release_date_record4, aat_distribution_status_record5, edt_release_date_record5;;
     AutoCompleteTextView aat_distribution_status, aat_card_physically_presented, aat_card_pin_is_attached, aat_reason_not_presented, aat_reason_unclaimed, aat_card_replacement_request, aat_status, aat_offense_history, aat_id_exists, aat_distribution_status1, aat_card_physically_presented1, aat_card_pin_is_attached1, aat_reason_not_presented1, aat_reason_unclaimed1, aat_card_replacement_request1, aat_distribution_status2, aat_card_physically_presented2, aat_card_pin_is_attached2, aat_reason_not_presented2, aat_reason_unclaimed2, aat_card_replacement_request2, aat_distribution_status3, aat_card_physically_presented3, aat_card_pin_is_attached3, aat_reason_not_presented3, aat_reason_unclaimed3, aat_card_replacement_request3, aat_distribution_status4, aat_card_physically_presented4, aat_card_pin_is_attached4, aat_reason_not_presented4, aat_reason_unclaimed4, aat_card_replacement_request4, aat_distribution_status5, aat_card_physically_presented5, aat_card_pin_is_attached5, aat_reason_not_presented5, aat_reason_unclaimed5, aat_card_replacement_request5;
     ImageView ScannedImage, imgUri, imgAdditionalId, mGrantee, ivOtherScannedImage1, ivOtherScannedImageUrl1, ivOtherScannedImage2, ivOtherScannedImageUrl2, ivOtherScannedImage3, ivOtherScannedImageUrl3, ivOtherScannedImage4, ivOtherScannedImageUrl4, ivOtherScannedImage5, ivOtherScannedImageUrl5;
@@ -1817,6 +1817,13 @@ public class UpdateData extends AppCompatActivity {
 
                 break;
             case 2:
+                til_date_claimed_record = findViewById(R.id.til_date_claimed_record);
+                til_date_claimed_record1 = findViewById(R.id.til_date_claimed_record1);
+                til_date_claimed_record2 = findViewById(R.id.til_date_claimed_record2);
+                til_date_claimed_record3 = findViewById(R.id.til_date_claimed_record3);
+                til_date_claimed_record4 = findViewById(R.id.til_date_claimed_record4);
+                til_date_claimed_record5 = findViewById(R.id.til_date_claimed_record5);
+
                 til_card_number_prefilled = findViewById(R.id.til_card_number_prefilled);
                 til_distribution_status = findViewById(R.id.til_distribution_status);
                 til_release_date = findViewById(R.id.til_release_date);
@@ -1915,6 +1922,19 @@ public class UpdateData extends AppCompatActivity {
                 btnCancelOtherCard3 = findViewById(R.id.btnCancelOtherCard3);
                 btnCancelOtherCard4 = findViewById(R.id.btnCancelOtherCard4);
                 btnCancelOtherCard5 = findViewById(R.id.btnCancelOtherCard5);
+
+                til_distribution_status1_record = findViewById(R.id.til_distribution_status1_record);
+                til_distribution_status2_record = findViewById(R.id.til_distribution_status2_record);
+                til_distribution_status3_record = findViewById(R.id.til_distribution_status3_record);
+                til_distribution_status4_record = findViewById(R.id.til_distribution_status4_record);
+                til_distribution_status5_record = findViewById(R.id.til_distribution_status5_record);
+
+                til_date_claimed_record1 = findViewById(R.id.til_date_claimed_record1);
+                til_date_claimed_record2 = findViewById(R.id.til_date_claimed_record2);
+                til_date_claimed_record3 = findViewById(R.id.til_date_claimed_record3);
+                til_date_claimed_record4 = findViewById(R.id.til_date_claimed_record4);
+                til_date_claimed_record5 = findViewById(R.id.til_date_claimed_record5);
+
 
                 til_card_number_prefilled1 = findViewById(R.id.til_card_number_prefilled1);
                 til_card_number_prefilled2 = findViewById(R.id.til_card_number_prefilled2);
@@ -4765,11 +4785,11 @@ public class UpdateData extends AppCompatActivity {
                 edt_release_date5.setClickable(true);
                 edt_card_number_prefilled.setEnabled(false);
 
-//                edt_card_number_prefilled1.setEnabled(false);
-//                edt_card_number_prefilled2.setEnabled(false);
-//                edt_card_number_prefilled3.setEnabled(false);
-//                edt_card_number_prefilled4.setEnabled(false);
-//                edt_card_number_prefilled5.setEnabled(false);
+                edt_card_number_prefilled1.setEnabled(false);
+                edt_card_number_prefilled2.setEnabled(false);
+                edt_card_number_prefilled3.setEnabled(false);
+                edt_card_number_prefilled4.setEnabled(false);
+                edt_card_number_prefilled5.setEnabled(false);
 
                 aat_distribution_status_record1.setEnabled(false);
                 aat_distribution_status_record2.setEnabled(false);
@@ -5943,6 +5963,26 @@ public class UpdateData extends AppCompatActivity {
                 aat_distribution_status_record.setText(distribution_status_record);
                 edt_release_date_record.setText(release_date_record);
 
+                if(distribution_status_record.matches("Unclaimed")){
+                    til_date_claimed_record.setVisibility(View.GONE);
+                }
+                if(distribution_status_record1.matches("Unclaimed")){
+                    til_date_claimed_record1.setVisibility(View.GONE);
+                }
+                if(distribution_status_record2.matches("Unclaimed")){
+                    til_date_claimed_record2.setVisibility(View.GONE);
+                }
+                if(distribution_status_record3.matches("Unclaimed")){
+                    til_date_claimed_record3.setVisibility(View.GONE);
+                }
+                if(distribution_status_record4.matches("Unclaimed")){
+                    til_date_claimed_record4.setVisibility(View.GONE);
+                }
+                if(distribution_status_record5.matches("Unclaimed")){
+                    til_date_claimed_record5.setVisibility(View.GONE);
+                }
+
+
                 aat_distribution_status_record1.setText(distribution_status_record1);
                 edt_release_date_record1.setText(release_date_record1);
                 aat_distribution_status_record2.setText(distribution_status_record2);
@@ -5997,12 +6037,12 @@ public class UpdateData extends AppCompatActivity {
                 edt_card_number_prefilled4.setText(card_number_prefilled4);
                 edt_card_number_prefilled5.setText(card_number_prefilled5);
 
+                if (card_1.matches("") || card_1.matches("null")){edt_card_number_prefilled1.setEnabled(true);edt_card_holder_name1.setEnabled(true);til_distribution_status1_record.setVisibility(View.GONE);til_date_claimed_record1.setVisibility(View.GONE);btnCancelOtherCard1.setVisibility(View.VISIBLE);} else{edt_card_number_prefilled1.setEnabled(false);edt_card_holder_name1.setEnabled(false);til_distribution_status1_record.setVisibility(View.VISIBLE);til_date_claimed_record1.setVisibility(View.VISIBLE);btnCancelOtherCard1.setVisibility(View.GONE);}
+                if (card_2.matches("") || card_2.matches("null")){edt_card_number_prefilled2.setEnabled(true);edt_card_holder_name2.setEnabled(true);til_distribution_status2_record.setVisibility(View.GONE);til_date_claimed_record2.setVisibility(View.GONE);btnCancelOtherCard2.setVisibility(View.VISIBLE); }else{edt_card_number_prefilled2.setEnabled(false);edt_card_holder_name2.setEnabled(false);til_distribution_status2_record.setVisibility(View.VISIBLE);til_date_claimed_record2.setVisibility(View.VISIBLE);btnCancelOtherCard2.setVisibility(View.GONE);}
+                if (card_3.matches("") || card_3.matches("null")){edt_card_number_prefilled3.setEnabled(true);edt_card_holder_name3.setEnabled(true);til_distribution_status3_record.setVisibility(View.GONE);til_date_claimed_record3.setVisibility(View.GONE);btnCancelOtherCard3.setVisibility(View.VISIBLE); }else{edt_card_number_prefilled3.setEnabled(false);edt_card_holder_name3.setEnabled(false);til_distribution_status3_record.setVisibility(View.VISIBLE);til_date_claimed_record3.setVisibility(View.VISIBLE);btnCancelOtherCard3.setVisibility(View.GONE);}
+                if (card_4.matches("") || card_4.matches("null")){edt_card_number_prefilled4.setEnabled(true);edt_card_holder_name4.setEnabled(true);til_distribution_status4_record.setVisibility(View.GONE);til_date_claimed_record4.setVisibility(View.GONE);btnCancelOtherCard4.setVisibility(View.VISIBLE); }else{edt_card_number_prefilled4.setEnabled(false);edt_card_holder_name4.setEnabled(false);til_distribution_status4_record.setVisibility(View.VISIBLE);til_date_claimed_record4.setVisibility(View.VISIBLE);btnCancelOtherCard4.setVisibility(View.GONE);}
+                if (card_5.matches("") || card_5.matches("null")){edt_card_number_prefilled5.setEnabled(true);edt_card_holder_name5.setEnabled(true);til_distribution_status5_record.setVisibility(View.GONE);til_date_claimed_record5.setVisibility(View.GONE);btnCancelOtherCard5.setVisibility(View.VISIBLE); }else{edt_card_number_prefilled5.setEnabled(false);edt_card_holder_name5.setEnabled(false);til_distribution_status5_record.setVisibility(View.VISIBLE);til_date_claimed_record5.setVisibility(View.VISIBLE);btnCancelOtherCard5.setVisibility(View.GONE);}
 
-                if (card_1.matches("") || card_1.matches("null")){edt_card_number_prefilled1.setEnabled(true);}else{edt_card_number_prefilled1.setEnabled(false);}
-                if (card_2.matches("") || card_2.matches("null")){edt_card_number_prefilled2.setEnabled(true);}else{edt_card_number_prefilled2.setEnabled(false);}
-                if (card_3.matches("") || card_3.matches("null")){edt_card_number_prefilled3.setEnabled(true);}else{edt_card_number_prefilled3.setEnabled(false);}
-                if (card_4.matches("") || card_4.matches("null")){edt_card_number_prefilled4.setEnabled(true);}else{edt_card_number_prefilled4.setEnabled(false);}
-                if (card_5.matches("") || card_5.matches("null")){edt_card_number_prefilled5.setEnabled(true);}else{edt_card_number_prefilled5.setEnabled(false);}
 
                 edt_card_holder_name1.setText(card_holder_name1);
                 edt_card_holder_name2.setText(card_holder_name2);
