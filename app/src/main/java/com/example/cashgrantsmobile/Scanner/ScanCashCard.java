@@ -523,9 +523,7 @@ public class ScanCashCard extends AppCompatActivity {
         } else {
             sb.setLength(sb.length() - 1);
 
-//            String g = sb.setLength(sb.length() - 1);
-//
-//            Log.v(TAG,"Error" + e);
+            Log.v(TAG,"Errorsalength" + sb.length());
 
         }
         edt_card_number_inputted.setText(sb.toString());
