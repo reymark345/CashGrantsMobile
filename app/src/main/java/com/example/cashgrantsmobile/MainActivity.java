@@ -34,7 +34,7 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView CashCardScanner, InventoryList, PullPsgcData, SyncData, LogsData, Logout, UnvalidatedData;
+    CardView CashCardScanner, InventoryList, PullPsgcData, SyncData, LogsData, Logout, UnvalidatedData, SyncmonitoringData;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
     TextView txtInventoryCount, txtPullPsgcDataCount, txtLogsTotal, txtSyncData, txtScannedTotal, txtErrorTotal, txtUnvalidatedCount;
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         LogsData = (CardView) findViewById(R.id.logsItem);
         SyncData = (CardView) findViewById(R.id.cvSyncData);
         Logout = (CardView) findViewById(R.id.cvLogout);
+        SyncmonitoringData = findViewById(R.id.mc_syncmonitoring_field);
 
 
         //TextView
@@ -186,7 +187,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-//        Logout.setOnClickListener(v -> logout());
+        SyncmonitoringData.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.SyncMonitoring.SyncMonitoringList.class);
+            startActivity(intent);
+            finish();
+        });
+        Logout.setOnClickListener(v -> logout());
+
     }
 
     public void logout(){

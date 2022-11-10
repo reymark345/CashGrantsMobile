@@ -6,6 +6,7 @@ import static com.example.cashgrantsmobile.MainActivity.sqLiteHelper;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -40,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,6 +73,9 @@ public class SyncData extends AppCompatActivity {
     final Double[] progressCC = {0.00};
     String pullStatus = "";
 
+    Integer total_sync = 0;
+    Integer total_pull = 0;
+    Integer total_update = 0;
 
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
@@ -115,6 +120,83 @@ public class SyncData extends AppCompatActivity {
 
         gvMain.setAdapter(adapter);
         gvMain2.setAdapter(adapter2);
+    }
+
+    public void sync_monitoring() {
+        String url = BASE_URL + "/api/v1/staff/syncmonitoring";
+        tvStatus.setText("Sync Monitoring Creation...");
+
+        Integer user_id = 0;
+
+        Cursor users_data = sqLiteHelper.getData("SELECT user_id from Api LIMIT 1");
+        if (users_data.moveToNext()) {
+            user_id = users_data.getInt(0);
+        }
+        users_data.close();
+
+        RequestQueue queue = Volley.newRequestQueue(SyncData.this);
+
+        Integer finalUser_id = user_id;
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // on below line we are displaying a success toast message.
+                try {
+                    JSONObject data = new JSONObject(response);
+                    String status = data.getString("status");
+                    String description = data.getString("description");
+
+                    if (status.matches("success")){
+                        tvStatus.setText("Sync Monitoring Completed");
+                        initialize_logs();
+                        lst.add(description);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                tvStatus.setText("Sync Monitoring Error Encountered...");
+                try {
+                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject data = new JSONObject(responseBody);
+                    String description = data.getString("description");
+                    initialize_logs();
+                    lst.add(description);
+                } catch (Exception e) {
+                    initialize_logs();
+                    lst2.add("Network not found.");
+                }
+            }
+
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("sync_counter", String.valueOf(total_sync));
+                params.put("update_counter", String.valueOf(total_update));
+                params.put("pulldata_counter", String.valueOf(total_pull));
+                params.put("psgc_counter", "0");
+                params.put("user_id", String.valueOf(finalUser_id));
+
+                return params;
+            }
+        };
+        // below line is to make
+        // a json object request.
+        queue.add(request);
     }
 
     public void pullEmvData(Boolean init) {
@@ -167,13 +249,14 @@ public class SyncData extends AppCompatActivity {
                     progressPercent.setText(String.valueOf(progressCalc.intValue()));
                     progressBar.setProgress(progressCalc.intValue());
 
+
                     if (init) {
                         initialize_logs();
                         btnSync.setEnabled(true);
                         tvStatus.setText("Checking pulled data...");
                         if (progressCalc.intValue() == 100) {
                             lst.add("Pull data omitted.");
-                            progressTarget.setText("0");
+                            progressTarget.setText(getCountEmvDetails().toString());
                             progressPercent.setText("0");
                             progressBar.setProgress(0);
                             progressCount.setText("0");
@@ -192,6 +275,8 @@ public class SyncData extends AppCompatActivity {
                             lst.add("Pull data completed!.");
                             pullStatus = "completed";
                         } else {
+                            total_pull = total_pull + totalDataCount;
+                            tvStatus.setText("Pulling Data...");
                             sqLiteHelper.storeLogs("pull", "", "Pull Data Successfully.");
                             pullEmvData(false);
                         }
@@ -291,10 +376,14 @@ public class SyncData extends AppCompatActivity {
                         progressPercent.setText(String.valueOf(progressCalc.intValue()));
                         progressBar.setProgress(progressCalc.intValue());
                         JSONObject jsonData = dataSets.getJSONObject(i);
-                        sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"));
+                        if (sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"))) {
+                            total_update++;
+                        }
                     }
                     sqLiteHelper.storeLogs("update", "", "Update Data Completed.");
                     btnSync.setEnabled(true);
+
+                    sync_monitoring();
                 }
                 else{
                     Toasty.error(getApplicationContext(), "Error on updating the data.", Toast.LENGTH_SHORT, true).show();
@@ -679,6 +768,7 @@ public class SyncData extends AppCompatActivity {
                     initialize_logs();
                     if (status.matches("success")){
                         tvStatus.setText("Success syncing...");
+                        total_sync++;
 
                         JSONObject granteeObj = dataObject.getJSONObject("grantee_validations");
                         progressCC[0]++;
@@ -700,6 +790,7 @@ public class SyncData extends AppCompatActivity {
 
                         if (progressPercent.getText().toString().matches("100")) {
                             tvStatus.setText("Syncing completed...");
+                            updateEmvValidations();
                             Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
                         }
                     }
