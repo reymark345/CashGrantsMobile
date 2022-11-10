@@ -6179,11 +6179,16 @@ public class UpdateData extends AppCompatActivity {
                     til_card_physically_presented1.setVisibility(View.VISIBLE);//new
                 }
                 else if (distribution_status1.matches("Unclaimed")){
-                    Log.v(TAG,"Unclaimmmeed");
                     aat_card_physically_presented1.setText("");
                     aat_reason_not_presented1.setText("");
                     til_reason_unclaimed1.setVisibility(View.VISIBLE);
                     til_reason_not_presented1.setVisibility(View.GONE);
+                    if(reason_unclaimed1.matches("Others")){
+                        til_others_reason_unclaimed1.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        til_others_reason_unclaimed1.setVisibility(View.GONE);
+                    }
                 }
                 else {
                     til_reason_unclaimed1.setVisibility(View.GONE);
@@ -6228,11 +6233,16 @@ public class UpdateData extends AppCompatActivity {
                 }
 
                 else if (distribution_status2.matches("Unclaimed")){
-                    Log.v(TAG,"Unclaimmmeed");
                     aat_card_physically_presented2.setText("");
                     aat_reason_not_presented2.setText("");
                     til_reason_unclaimed2.setVisibility(View.VISIBLE);
                     til_reason_not_presented2.setVisibility(View.GONE);
+                    if(reason_unclaimed2.matches("Others")){
+                        til_others_reason_unclaimed2.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        til_others_reason_unclaimed2.setVisibility(View.GONE);
+                    }
                 }
                 else {
                     til_reason_unclaimed2.setVisibility(View.GONE);
@@ -6276,11 +6286,16 @@ public class UpdateData extends AppCompatActivity {
                     til_card_physically_presented3.setVisibility(View.VISIBLE);//new
                 }
                 else if (distribution_status3.matches("Unclaimed")){
-                    Log.v(TAG,"Unclaimmmeed");
                     aat_card_physically_presented3.setText("");
                     aat_reason_not_presented3.setText("");
                     til_reason_unclaimed3.setVisibility(View.VISIBLE);
                     til_reason_not_presented3.setVisibility(View.GONE);
+                    if(reason_unclaimed3.matches("Others")){
+                        til_others_reason_unclaimed3.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        til_others_reason_unclaimed3.setVisibility(View.GONE);
+                    }
                 }
                 else {
                     til_reason_unclaimed3.setVisibility(View.GONE);
@@ -6323,11 +6338,16 @@ public class UpdateData extends AppCompatActivity {
                     til_card_physically_presented4.setVisibility(View.VISIBLE);//new
                 }
                 else if (distribution_status4.matches("Unclaimed")){
-                    Log.v(TAG,"Unclaimmmeed");
                     aat_card_physically_presented4.setText("");
                     aat_reason_not_presented4.setText("");
                     til_reason_unclaimed4.setVisibility(View.VISIBLE);
                     til_reason_not_presented4.setVisibility(View.GONE);
+                    if(reason_unclaimed4.matches("Others")){
+                        til_others_reason_unclaimed4.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        til_others_reason_unclaimed4.setVisibility(View.GONE);
+                    }
                 }
                 else {
                     til_reason_unclaimed4.setVisibility(View.GONE);
@@ -6370,11 +6390,16 @@ public class UpdateData extends AppCompatActivity {
                     til_card_physically_presented5.setVisibility(View.VISIBLE);//new
                 }
                 else if (distribution_status5.matches("Unclaimed")){
-                    Log.v(TAG,"Unclaimmmeed");
                     aat_card_physically_presented5.setText("");
                     aat_reason_not_presented5.setText("");
                     til_reason_unclaimed5.setVisibility(View.VISIBLE);
                     til_reason_not_presented5.setVisibility(View.GONE);
+                    if(reason_unclaimed5.matches("Others")){
+                        til_others_reason_unclaimed5.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        til_others_reason_unclaimed5.setVisibility(View.GONE);
+                    }
                 }
                 else {
                     til_reason_unclaimed5.setVisibility(View.GONE);
