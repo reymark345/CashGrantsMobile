@@ -949,7 +949,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -968,7 +967,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_card_number_prefilled1"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -1448,7 +1446,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -1467,7 +1464,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_card_number_prefilled2"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -1947,7 +1943,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -1966,7 +1961,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_card_number_prefilled3"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -2445,7 +2439,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -2464,7 +2457,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_card_number_prefilled4"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -2945,7 +2937,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText
@@ -2964,7 +2955,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/til_card_number_prefilled5"
                         android:layout_marginTop="10dp"
-                        app:endIconMode="clear_text"
                         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                         <EditText

@@ -72,6 +72,10 @@
         <activity
             android:name=".SyncMonitoring.SyncMonitoringList"
             android:parentActivityName=".MainActivity"/>
+           
+        <activity
+            android:name=".ChangePassword"
+            android:parentActivityName=".MainActivity"/>
 
     </application>
 
