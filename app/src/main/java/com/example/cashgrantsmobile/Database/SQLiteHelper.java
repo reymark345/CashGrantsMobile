@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.cashgrantsmobile.MainActivity;
 
@@ -40,16 +39,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.close();
     }
 
-    public String convertDateFormat(String date_format) {
+    public String convertDateFormat(String date_format, String from_format, String to_format, Integer type) {
         String result = "";
         if (!date_format.matches("")) {
-            if (date_format.contains("-")) {
+            if (date_format.contains("-") && type == 1) {
                 result = date_format;
             } else {
                 try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(from_format);
                     Date convertedDate = dateFormat.parse(date_format);
-                    SimpleDateFormat sdfnewformat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdfnewformat = new SimpleDateFormat(to_format);
                     result = sdfnewformat.format(convertedDate);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -125,14 +124,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             pawning_validations_details.clearBindings();
             pawning_validations_details.bindString(1, lender_name);
             pawning_validations_details.bindString(2, lender_address);
-            pawning_validations_details.bindString(3, convertDateFormat(date_pawned));
-            pawning_validations_details.bindString(4, convertDateFormat(date_retrieved));
+            pawning_validations_details.bindString(3, convertDateFormat(date_pawned, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+            pawning_validations_details.bindString(4, convertDateFormat(date_retrieved, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             pawning_validations_details.bindString(5, loaned_amount);
             pawning_validations_details.bindString(6, status);
             pawning_validations_details.bindString(7, reason);
             pawning_validations_details.bindString(8, interest);
             pawning_validations_details.bindString(9, offense_history);
-            pawning_validations_details.bindString(10, convertDateFormat(offense_date));
+            pawning_validations_details.bindString(10, convertDateFormat(offense_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             pawning_validations_details.bindString(11, remarks);
             pawning_validations_details.bindString(12, staff_intervention);
             pawning_validations_details.bindString(13, other_details);
@@ -143,7 +142,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteStatement nma_validations = database.compileStatement(sql3);
         nma_validations.clearBindings();
         nma_validations.bindString(1, amount);
-        nma_validations.bindString(2, convertDateFormat(date_claimed));
+        nma_validations.bindString(2, convertDateFormat(date_claimed, "MM/dd/yyyy", "yyyy-MM-dd", 1));
         nma_validations.bindString(3, nma_reason);
         nma_validations.bindString(4, nma_remarks);
         nma_validations.bindString(5, strDate);
@@ -162,7 +161,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         card_validation_details.bindString(3, card_number_unputted);
         card_validation_details.bindString(4, card_number_series);
         card_validation_details.bindString(5, distribution_status);
-        card_validation_details.bindString(6, convertDateFormat(release_date));
+        card_validation_details.bindString(6, convertDateFormat(release_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
         card_validation_details.bindString(7, release_by);
         card_validation_details.bindString(8, release_place);
         card_validation_details.bindString(9, card_physically_presented);
@@ -176,7 +175,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         card_validation_details.bindString(17, others_reason_not_presented);
         card_validation_details.bindString(18, others_reason_unclaimed);
         card_validation_details.bindString(19, distribution_status_record);
-        card_validation_details.bindString(20, convertDateFormat(release_date_record));
+        card_validation_details.bindString(20, convertDateFormat(release_date_record, "MM/dd/yyyy", "yyyy-MM-dd", 1));
         card_validation_details.executeInsert();
 
         SQLiteStatement emv_validation_details = database.compileStatement(sql5);
@@ -217,7 +216,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations1.bindString(3, card_number_inputted1);
             other_card_validations1.bindString(4, card_number_series1);
             other_card_validations1.bindString(5, distribution_status1);
-            other_card_validations1.bindString(6, convertDateFormat(release_date1));
+            other_card_validations1.bindString(6, convertDateFormat(release_date1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations1.bindString(7, release_by1);
             other_card_validations1.bindString(8, release_place1);
             other_card_validations1.bindString(9, card_physically_presented1);
@@ -233,7 +232,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations1.bindString(18, others_reason_not_presented1);
                 other_card_validations1.bindString(19, others_reason_unclaimed1);
                 other_card_validations1.bindString(20, distribution_status_record1);
-                other_card_validations1.bindString(21, convertDateFormat(release_date_record1));
+                other_card_validations1.bindString(21, convertDateFormat(release_date_record1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations1.bindString(22, card_number_prefilled1);
 
             }
@@ -242,7 +241,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations1.bindString(17, others_reason_not_presented1);
                 other_card_validations1.bindString(18, others_reason_unclaimed1);
                 other_card_validations1.bindString(19, distribution_status_record1);
-                other_card_validations1.bindString(20, convertDateFormat(release_date_record1));
+                other_card_validations1.bindString(20, convertDateFormat(release_date_record1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations1.bindString(21, card_number_prefilled1);
             }
             other_card_validations1.executeInsert();
@@ -259,7 +258,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations2.bindString(3, card_number_inputted2);
             other_card_validations2.bindString(4, card_number_series2);
             other_card_validations2.bindString(5, distribution_status2);
-            other_card_validations2.bindString(6, convertDateFormat(release_date2));
+            other_card_validations2.bindString(6, convertDateFormat(release_date2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations2.bindString(7, release_by2);
             other_card_validations2.bindString(8, release_place2);
             other_card_validations2.bindString(9, card_physically_presented2);
@@ -277,7 +276,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations2.bindString(18, others_reason_not_presented2);
                 other_card_validations2.bindString(19, others_reason_unclaimed2);
                 other_card_validations2.bindString(20, distribution_status_record2);
-                other_card_validations2.bindString(21, convertDateFormat(release_date_record2));
+                other_card_validations2.bindString(21, convertDateFormat(release_date_record2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations2.bindString(22, card_number_prefilled2);
             }
             else {
@@ -286,7 +285,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations2.bindString(17, others_reason_not_presented2);
                 other_card_validations2.bindString(18, others_reason_unclaimed2);
                 other_card_validations2.bindString(19, distribution_status_record2);
-                other_card_validations2.bindString(20, convertDateFormat(release_date_record2));
+                other_card_validations2.bindString(20, convertDateFormat(release_date_record2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations2.bindString(21, card_number_prefilled2);
             }
             other_card_validations2.executeInsert();
@@ -304,7 +303,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations3.bindString(3, card_number_inputted3);
             other_card_validations3.bindString(4, card_number_series3);
             other_card_validations3.bindString(5, distribution_status3);
-            other_card_validations3.bindString(6, convertDateFormat(release_date3));
+            other_card_validations3.bindString(6, convertDateFormat(release_date3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations3.bindString(7, release_by3);
             other_card_validations3.bindString(8, release_place3);
             other_card_validations3.bindString(9, card_physically_presented3);
@@ -322,7 +321,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations3.bindString(18, others_reason_not_presented3);
                 other_card_validations3.bindString(19, others_reason_unclaimed3);
                 other_card_validations3.bindString(20, distribution_status_record3);
-                other_card_validations3.bindString(21, convertDateFormat(release_date_record3));
+                other_card_validations3.bindString(21, convertDateFormat(release_date_record3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations3.bindString(22, card_number_prefilled3);
             }
             else {
@@ -330,7 +329,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations3.bindString(17, others_reason_not_presented3);
                 other_card_validations3.bindString(18, others_reason_unclaimed3);
                 other_card_validations3.bindString(19, distribution_status_record3);
-                other_card_validations3.bindString(20, convertDateFormat(release_date_record3));
+                other_card_validations3.bindString(20, convertDateFormat(release_date_record3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations3.bindString(21, card_number_prefilled3);
                 //here
             }
@@ -348,7 +347,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations4.bindString(3, card_number_inputted4);
             other_card_validations4.bindString(4, card_number_series4);
             other_card_validations4.bindString(5, distribution_status4);
-            other_card_validations4.bindString(6, convertDateFormat(release_date4));
+            other_card_validations4.bindString(6, convertDateFormat(release_date4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations4.bindString(7, release_by4);
             other_card_validations4.bindString(8, release_place4);
             other_card_validations4.bindString(9, card_physically_presented4);
@@ -365,7 +364,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations4.bindString(18, others_reason_not_presented4);
                 other_card_validations4.bindString(19, others_reason_unclaimed4);
                 other_card_validations4.bindString(20, distribution_status_record4);
-                other_card_validations4.bindString(21, convertDateFormat(release_date_record4));
+                other_card_validations4.bindString(21, convertDateFormat(release_date_record4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations4.bindString(22, card_number_prefilled4);
 
             }
@@ -375,7 +374,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations4.bindString(17, others_reason_not_presented4);
                 other_card_validations4.bindString(18, others_reason_unclaimed4);
                 other_card_validations4.bindString(19, distribution_status_record4);
-                other_card_validations4.bindString(20, convertDateFormat(release_date_record4));
+                other_card_validations4.bindString(20, convertDateFormat(release_date_record4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations4.bindString(21, card_number_prefilled4);
             }
             other_card_validations4.executeInsert();
@@ -393,7 +392,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations5.bindString(3, card_number_inputted5);
             other_card_validations5.bindString(4, card_number_series5);
             other_card_validations5.bindString(5, distribution_status5);
-            other_card_validations5.bindString(6, convertDateFormat(release_date5));
+            other_card_validations5.bindString(6, convertDateFormat(release_date5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations5.bindString(7, release_by5);
             other_card_validations5.bindString(8, release_place5);
             other_card_validations5.bindString(9, card_physically_presented5);
@@ -410,7 +409,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations5.bindString(18, others_reason_not_presented5);
                 other_card_validations5.bindString(19, others_reason_unclaimed5);
                 other_card_validations5.bindString(20, distribution_status_record5);
-                other_card_validations5.bindString(21, convertDateFormat(release_date_record5));
+                other_card_validations5.bindString(21, convertDateFormat(release_date_record5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations5.bindString(22, card_number_prefilled5);
             }
             else {
@@ -419,7 +418,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 other_card_validations5.bindString(17, others_reason_not_presented5);
                 other_card_validations5.bindString(18, others_reason_unclaimed5);
                 other_card_validations5.bindString(19, distribution_status_record5);
-                other_card_validations5.bindString(20, convertDateFormat(release_date_record5));
+                other_card_validations5.bindString(20, convertDateFormat(release_date_record5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
                 other_card_validations5.bindString(21, card_number_prefilled5);
             }
             other_card_validations5.executeInsert();
@@ -534,14 +533,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             pawning_validations_details.clearBindings();
             pawning_validations_details.bindString(1, lender_name);
             pawning_validations_details.bindString(2, lender_address);
-            pawning_validations_details.bindString(3, convertDateFormat(date_pawned));
-            pawning_validations_details.bindString(4, convertDateFormat(date_retrieved));
+            pawning_validations_details.bindString(3, convertDateFormat(date_pawned, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+            pawning_validations_details.bindString(4, convertDateFormat(date_retrieved, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             pawning_validations_details.bindString(5, loaned_amount);
             pawning_validations_details.bindString(6, status);
             pawning_validations_details.bindString(7, reason);
             pawning_validations_details.bindString(8, interest);
             pawning_validations_details.bindString(9, offense_history);
-            pawning_validations_details.bindString(10, convertDateFormat(offense_date));
+            pawning_validations_details.bindString(10, convertDateFormat(offense_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             pawning_validations_details.bindString(11, remarks);
             pawning_validations_details.bindString(12, staff_intervention);
             pawning_validations_details.bindString(13, other_details);
@@ -552,7 +551,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteStatement nma_validations = database.compileStatement(sql3);
         nma_validations.clearBindings();
         nma_validations.bindString(1, amount);
-        nma_validations.bindString(2, convertDateFormat(date_claimed));
+        nma_validations.bindString(2, convertDateFormat(date_claimed, "MM/dd/yyyy", "yyyy-MM-dd", 1));
         nma_validations.bindString(3, nma_reason);
         nma_validations.bindString(4, nma_remarks);
         nma_validations.bindString(5, nma_others_reason);
@@ -566,7 +565,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         card_validation_details.bindString(3, card_number_unputted);
         card_validation_details.bindString(4, card_number_series);
         card_validation_details.bindString(5, distribution_status);
-        card_validation_details.bindString(6, convertDateFormat(release_date));
+        card_validation_details.bindString(6, convertDateFormat(release_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
         card_validation_details.bindString(7, release_by);
         card_validation_details.bindString(8, release_place);
         card_validation_details.bindString(9, card_physically_presented);
@@ -613,7 +612,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations1.bindString(3, card_number_inputted1);
             other_card_validations1.bindString(4, card_number_series1);
             other_card_validations1.bindString(5, distribution_status1);
-            other_card_validations1.bindString(6, convertDateFormat(release_date1));
+            other_card_validations1.bindString(6, convertDateFormat(release_date1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations1.bindString(7, release_by1);
             other_card_validations1.bindString(8, release_place1);
             other_card_validations1.bindString(9, card_physically_presented1);
@@ -658,7 +657,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations2.bindString(3, card_number_inputted2);
             other_card_validations2.bindString(4, card_number_series2);
             other_card_validations2.bindString(5, distribution_status2);
-            other_card_validations2.bindString(6, convertDateFormat(release_date2));
+            other_card_validations2.bindString(6, convertDateFormat(release_date2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations2.bindString(7, release_by2);
             other_card_validations2.bindString(8, release_place2);
             other_card_validations2.bindString(9, card_physically_presented2);
@@ -703,7 +702,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations3.bindString(3, card_number_inputted3);
             other_card_validations3.bindString(4, card_number_series3);
             other_card_validations3.bindString(5, distribution_status3);
-            other_card_validations3.bindString(6, convertDateFormat(release_date3));
+            other_card_validations3.bindString(6, convertDateFormat(release_date3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations3.bindString(7, release_by3);
             other_card_validations3.bindString(8, release_place3);
             other_card_validations3.bindString(9, card_physically_presented3);
@@ -751,7 +750,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations4.bindString(3, card_number_inputted4);
             other_card_validations4.bindString(4, card_number_series4);
             other_card_validations4.bindString(5, distribution_status4);
-            other_card_validations4.bindString(6, convertDateFormat(release_date4));
+            other_card_validations4.bindString(6, convertDateFormat(release_date4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations4.bindString(7, release_by4);
             other_card_validations4.bindString(8, release_place4);
             other_card_validations4.bindString(9, card_physically_presented4);
@@ -799,7 +798,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             other_card_validations5.bindString(3, card_number_inputted5);
             other_card_validations5.bindString(4, card_number_series5);
             other_card_validations5.bindString(5, distribution_status5);
-            other_card_validations5.bindString(6, convertDateFormat(release_date5));
+            other_card_validations5.bindString(6, convertDateFormat(release_date5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
             other_card_validations5.bindString(7, release_by5);
             other_card_validations5.bindString(8, release_place5);
             other_card_validations5.bindString(9, card_physically_presented5);
@@ -1126,14 +1125,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     }
 
-    public void updateEmvValidations(String validated, String id) {
-        SQLiteDatabase database = getWritableDatabase();
-        String sql = "UPDATE emv_validations SET validated_at = ? WHERE id = ?";
-        SQLiteStatement statement = database.compileStatement(sql);
-        statement.bindString(1, validated);
-        statement.bindString(2, id);
-        statement.execute();
-        database.close();
+    public boolean updateEmvValidations(String validated, String id) {
+        Cursor checkEmv = getData("SELECT * FROM emv_validations WHERE id = "+id+" AND (validated_at = '' OR validated_at = 'null')");
+        if (checkEmv.getCount() > 0) {
+            SQLiteDatabase database = getWritableDatabase();
+            String sql = "UPDATE emv_validations SET validated_at = ? WHERE id = ?";
+            SQLiteStatement statement = database.compileStatement(sql);
+            statement.bindString(1, validated);
+            statement.bindString(2, id);
+            statement.execute();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void deleteLogs() {
