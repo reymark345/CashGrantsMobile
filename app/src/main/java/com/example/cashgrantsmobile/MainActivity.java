@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         PullPsgcData = (CardView) findViewById(R.id.cvPullPsgcData);
         LogsData = (CardView) findViewById(R.id.logsItem);
         SyncData = (CardView) findViewById(R.id.cvSyncData);
-        Logout = (CardView) findViewById(R.id.cvLogout);
         SyncmonitoringData = findViewById(R.id.mc_syncmonitoring_field);
 
 
@@ -192,8 +191,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-        Logout.setOnClickListener(v -> logout());
-
     }
 
     public void logout(){
