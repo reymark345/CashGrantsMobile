@@ -522,6 +522,11 @@ public class ScanCashCard extends AppCompatActivity {
             sb.append(" ");
         } else {
             sb.setLength(sb.length() - 1);
+
+//            String g = sb.setLength(sb.length() - 1);
+//
+//            Log.v(TAG,"Error" + e);
+
         }
         edt_card_number_inputted.setText(sb.toString());
         edt_card_number_inputted.setSelection(sb.length());
@@ -1058,6 +1063,7 @@ public class ScanCashCard extends AppCompatActivity {
     public void scannedCardNumber(EditText card_number , TextInputLayout tilCard){
         card_number.addTextChangedListener(new TextWatcher() {
 
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -1087,8 +1093,6 @@ public class ScanCashCard extends AppCompatActivity {
                 }
                 prevCount = card_number.getText().toString().length();
                 Log.v(TAG,"testing dataaa"+prevCount);
-
-
             }
         });
     }
