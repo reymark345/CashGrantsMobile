@@ -1068,7 +1068,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = card_number.getText().toString();
+                String cardNumber = edt_card_number_inputted.getText().toString();
                 if(s.toString().length() != 23){
                     tilCard.setError(required_field);
                 }
@@ -1104,7 +1104,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = card_number.getText().toString();
+                String cardNumber = edt_card_number_inputted1.getText().toString();
                 if(s.toString().length() != 23){
                     tilCard.setError(required_field);
                 }
@@ -1140,7 +1140,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = card_number.getText().toString();
+                String cardNumber = edt_card_number_inputted2.getText().toString();
                 if(s.toString().length() != 23){
                     tilCard.setError(required_field);
                 }
@@ -1176,7 +1176,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = card_number.getText().toString();
+                String cardNumber = edt_card_number_inputted3.getText().toString();
                 if(s.toString().length() != 23){
                     tilCard.setError(required_field);
                 }
@@ -1212,7 +1212,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = card_number.getText().toString();
+                String cardNumber = edt_card_number_inputted4.getText().toString();
                 if(s.toString().length() != 23){
                     tilCard.setError(required_field);
                 }
@@ -1248,7 +1248,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = card_number.getText().toString();
+                String cardNumber = edt_card_number_inputted5.getText().toString();
                 if(s.toString().length() != 23){
                     tilCard.setError(required_field);
                 }
