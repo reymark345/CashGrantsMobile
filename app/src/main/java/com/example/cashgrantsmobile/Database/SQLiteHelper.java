@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
@@ -73,376 +74,385 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                                String release_date_record,String release_date_record1,String release_date_record2,String release_date_record3,String release_date_record4,String release_date_record5,
                                String card_number_prefilled1,String card_number_prefilled2,String card_number_prefilled3,String card_number_prefilled4,String card_number_prefilled5) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String strDate = sdf.format(new Date());
+                SQLiteDatabase database = getWritableDatabase();
+                try{
+                    database.beginTransaction();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String strDate = sdf.format(new Date());
 
-        Log.v(TAG,"valuee of  " + card_number_prefilled1);
-        SQLiteDatabase database = getWritableDatabase();
-        String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?,?,?,?)";
-        String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        String sql5,sql6,sql7,sql8,sql9,sql10;
-
-
-        if (additional_image!=null){
-            sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?,?,?)";
-        } else {
-            sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?,?,?)";
-        }
-
-        if (other_scanned_image1!=null){sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
-        else {sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
-        if (other_scanned_image2!=null){sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
-        else {sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
-        if (other_scanned_image3!=null){sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
-        else {sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
-        if (other_scanned_image4!=null){sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
-        else {sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
-        if (other_scanned_image5!=null){sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
-        else {sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
+                    String sql1 = "INSERT INTO grantee_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql2 = "INSERT INTO pawning_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql3 = "INSERT INTO nma_validations VALUES (NULL,?,?,?,?,?,?,?,?)";
+                    String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql5,sql6,sql7,sql8,sql9,sql10;
 
 
-        SQLiteStatement grantee_validations = database.compileStatement(sql1);
-        grantee_validations.clearBindings();
-        grantee_validations.bindString(1, hh_id);
-        grantee_validations.bindString(2, first_name);
-        grantee_validations.bindString(3, last_name);
-        grantee_validations.bindString(4, middle_name);
-        grantee_validations.bindString(5, ext_name);
-        grantee_validations.bindString(6, sex);
-        grantee_validations.bindString(7, province);
-        grantee_validations.bindString(8, municipality);
-        grantee_validations.bindString(9, barangay);
-        grantee_validations.bindString(10, set);
-        grantee_validations.bindBlob(11, grantee_image);
-        grantee_validations.bindString(12, strDate);
-        grantee_validations.bindString(13, other_ext_name);
-        grantee_validations.executeInsert();
+                    if (additional_image!=null){
+                        sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?,?,?)";
+                    } else {
+                        sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?,?,?)";
+                    }
 
-        if (reason_not_presented.matches("Pawned")){
-            SQLiteStatement pawning_validations_details = database.compileStatement(sql2);
-            pawning_validations_details.clearBindings();
-            pawning_validations_details.bindString(1, lender_name);
-            pawning_validations_details.bindString(2, lender_address);
-            pawning_validations_details.bindString(3, convertDateFormat(date_pawned, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            pawning_validations_details.bindString(4, convertDateFormat(date_retrieved, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            pawning_validations_details.bindString(5, loaned_amount);
-            pawning_validations_details.bindString(6, status);
-            pawning_validations_details.bindString(7, reason);
-            pawning_validations_details.bindString(8, interest);
-            pawning_validations_details.bindString(9, offense_history);
-            pawning_validations_details.bindString(10, convertDateFormat(offense_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            pawning_validations_details.bindString(11, remarks);
-            pawning_validations_details.bindString(12, staff_intervention);
-            pawning_validations_details.bindString(13, other_details);
-            pawning_validations_details.bindString(14, strDate);
-            pawning_validations_details.executeInsert();
-        }
-        
-        SQLiteStatement nma_validations = database.compileStatement(sql3);
-        nma_validations.clearBindings();
-        nma_validations.bindString(1, amount);
-        nma_validations.bindString(2, convertDateFormat(date_claimed, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-        nma_validations.bindString(3, nma_reason);
-        nma_validations.bindString(4, nma_remarks);
-        nma_validations.bindString(5, strDate);
-        nma_validations.bindString(6, nma_others_reason);
-        nma_validations.bindString(7, nma_non_emv);
-        nma_validations.bindString(8, nma_card_name);
-        nma_validations.executeInsert();
+                    if (other_scanned_image1!=null){sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
+                    else {sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
+                    if (other_scanned_image2!=null){sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
+                    else {sql7 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
+                    if (other_scanned_image3!=null){sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
+                    else {sql8 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
+                    if (other_scanned_image4!=null){sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
+                    else {sql9 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
+                    if (other_scanned_image5!=null){sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
+                    else {sql10 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),null,?,?,?,?,?,?)";}
 
 
+                    SQLiteStatement grantee_validations = database.compileStatement(sql1);
+                    grantee_validations.clearBindings();
+                    grantee_validations.bindString(1, hh_id);
+                    grantee_validations.bindString(2, first_name);
+                    grantee_validations.bindString(3, last_name);
+                    grantee_validations.bindString(4, middle_name);
+                    grantee_validations.bindString(5, ext_name);
+                    grantee_validations.bindString(6, sex);
+                    grantee_validations.bindString(7, province);
+                    grantee_validations.bindString(8, municipality);
+                    grantee_validations.bindString(9, barangay);
+                    grantee_validations.bindString(10, set);
+                    grantee_validations.bindBlob(11, grantee_image);
+                    grantee_validations.bindString(12, strDate);
+                    grantee_validations.bindString(13, other_ext_name);
+                    grantee_validations.executeInsert();
 
+                    if (reason_not_presented.matches("Pawned")){
+                        SQLiteStatement pawning_validations_details = database.compileStatement(sql2);
+                        pawning_validations_details.clearBindings();
+                        pawning_validations_details.bindString(1, lender_name);
+                        pawning_validations_details.bindString(2, lender_address);
+                        pawning_validations_details.bindString(3, convertDateFormat(date_pawned, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                        pawning_validations_details.bindString(4, convertDateFormat(date_retrieved, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                        pawning_validations_details.bindString(5, loaned_amount);
+                        pawning_validations_details.bindString(6, status);
+                        pawning_validations_details.bindString(7, reason);
+                        pawning_validations_details.bindString(8, interest);
+                        pawning_validations_details.bindString(9, offense_history);
+                        pawning_validations_details.bindString(10, convertDateFormat(offense_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                        pawning_validations_details.bindString(11, remarks);
+                        pawning_validations_details.bindString(12, staff_intervention);
+                        pawning_validations_details.bindString(13, other_details);
+                        pawning_validations_details.bindString(14, strDate);
+                        pawning_validations_details.executeInsert();
+                    }
 
-        SQLiteStatement card_validation_details = database.compileStatement(sql4);
-        card_validation_details.clearBindings();
-        card_validation_details.bindString(1, card_number_prefilled);
-        card_validation_details.bindString(2, card_number_system_generated);
-        card_validation_details.bindString(3, card_number_unputted);
-        card_validation_details.bindString(4, card_number_series);
-        card_validation_details.bindString(5, distribution_status);
-        card_validation_details.bindString(6, convertDateFormat(release_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-        card_validation_details.bindString(7, release_by);
-        card_validation_details.bindString(8, release_place);
-        card_validation_details.bindString(9, card_physically_presented);
-        card_validation_details.bindString(10, card_pin_is_attached);
-        card_validation_details.bindString(11, reason_not_presented);
-        card_validation_details.bindString(12, reason_unclaimed);
-        card_validation_details.bindString(13, card_replacement_request);
-        card_validation_details.bindString(14, card_replacement_submitted_details);
-        card_validation_details.bindBlob(15, card_image);
-        card_validation_details.bindString(16, strDate);
-        card_validation_details.bindString(17, others_reason_not_presented);
-        card_validation_details.bindString(18, others_reason_unclaimed);
-        card_validation_details.bindString(19, distribution_status_record);
-        card_validation_details.bindString(20, convertDateFormat(release_date_record, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-        card_validation_details.executeInsert();
+                    SQLiteStatement nma_validations = database.compileStatement(sql3);
+                    nma_validations.clearBindings();
+                    nma_validations.bindString(1, amount);
+                    nma_validations.bindString(2, convertDateFormat(date_claimed, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    nma_validations.bindString(3, nma_reason);
+                    nma_validations.bindString(4, nma_remarks);
+                    nma_validations.bindString(5, strDate);
+                    nma_validations.bindString(6, nma_others_reason);
+                    nma_validations.bindString(7, nma_non_emv);
+                    nma_validations.bindString(8, nma_card_name);
+                    nma_validations.executeInsert();
 
-        SQLiteStatement emv_validation_details = database.compileStatement(sql5);
-        emv_validation_details.clearBindings();
-        emv_validation_details.bindString(1, hh_status);
-        emv_validation_details.bindString(2, contact_no);
-        emv_validation_details.bindString(3, contact_no_of);
-        emv_validation_details.bindString(4, is_grantee);
-        emv_validation_details.bindString(5, is_minor);
-        emv_validation_details.bindString(6, relationship_to_grantee);
-        emv_validation_details.bindString(7, assigned_staff);
-        emv_validation_details.bindString(8, representative_name);
-        emv_validation_details.bindString(9, sync_at);
-        emv_validation_details.bindLong(10, user_id);
-        if (additional_image !=null){
-            emv_validation_details.bindBlob(11,additional_image);
-            emv_validation_details.bindString(12, overall_remarks);
-            emv_validation_details.bindString(13, strDate);
-            emv_validation_details.bindString(14, strDate);
-            emv_validation_details.bindString(15, contact_no_of_others);
-        }
-        else {
-            emv_validation_details.bindString(11, overall_remarks);
-            emv_validation_details.bindString(12, strDate);
-            emv_validation_details.bindString(13, strDate);
-            emv_validation_details.bindString(14, contact_no_of_others);
-        }
-        emv_validation_details.executeInsert();
+                    SQLiteStatement card_validation_details = database.compileStatement(sql4);
+                    card_validation_details.clearBindings();
+                    card_validation_details.bindString(1, card_number_prefilled);
+                    card_validation_details.bindString(2, card_number_system_generated);
+                    card_validation_details.bindString(3, card_number_unputted);
+                    card_validation_details.bindString(4, card_number_series);
+                    card_validation_details.bindString(5, distribution_status);
+                    card_validation_details.bindString(6, convertDateFormat(release_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    card_validation_details.bindString(7, release_by);
+                    card_validation_details.bindString(8, release_place);
+                    card_validation_details.bindString(9, card_physically_presented);
+                    card_validation_details.bindString(10, card_pin_is_attached);
+                    card_validation_details.bindString(11, reason_not_presented);
+                    card_validation_details.bindString(12, reason_unclaimed);
+                    card_validation_details.bindString(13, card_replacement_request);
+                    card_validation_details.bindString(14, card_replacement_submitted_details);
+                    card_validation_details.bindBlob(15, card_image);
+                    card_validation_details.bindString(16, strDate);
+                    card_validation_details.bindString(17, others_reason_not_presented);
+                    card_validation_details.bindString(18, others_reason_unclaimed);
+                    card_validation_details.bindString(19, distribution_status_record);
+                    card_validation_details.bindString(20, convertDateFormat(release_date_record, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    card_validation_details.executeInsert();
 
-        if (card_count >=1) {
-            SQLiteStatement other_card_validations1 = database.compileStatement(sql6);
-            other_card_validations1.clearBindings();
-            other_card_validations1.bindString(1, card_holder_name1);
-            other_card_validations1.bindString(2, card_number_system_generated1);
-            if (!card_number_inputted1.matches("")) {
-                card_number_inputted1 = card_number_inputted1;
-            }
-            other_card_validations1.bindString(3, card_number_inputted1);
-            other_card_validations1.bindString(4, card_number_series1);
-            other_card_validations1.bindString(5, distribution_status1);
-            other_card_validations1.bindString(6, convertDateFormat(release_date1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations1.bindString(7, release_by1);
-            other_card_validations1.bindString(8, release_place1);
-            other_card_validations1.bindString(9, card_physically_presented1);
-            other_card_validations1.bindString(10, card_pin_is_attached1);
-            other_card_validations1.bindString(11, reason_not_presented1);
-            other_card_validations1.bindString(12, reason_unclaimed1);
-            other_card_validations1.bindString(13, card_replacement_request1);
-            other_card_validations1.bindString(14, card_replacement_request_submitted_details1);
-            other_card_validations1.bindString(15, pawning_remarks1);
-            if (other_scanned_image1 !=null){
-                other_card_validations1.bindBlob(16, other_scanned_image1);
-                other_card_validations1.bindString(17, strDate);
-                other_card_validations1.bindString(18, others_reason_not_presented1);
-                other_card_validations1.bindString(19, others_reason_unclaimed1);
-                other_card_validations1.bindString(20, distribution_status_record1);
-                other_card_validations1.bindString(21, convertDateFormat(release_date_record1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations1.bindString(22, card_number_prefilled1);
+                    SQLiteStatement emv_validation_details = database.compileStatement(sql5);
+                    emv_validation_details.clearBindings();
+                    emv_validation_details.bindString(1, hh_status);
+                    emv_validation_details.bindString(2, contact_no);
+                    emv_validation_details.bindString(3, contact_no_of);
+                    emv_validation_details.bindString(4, is_grantee);
+                    emv_validation_details.bindString(5, is_minor);
+                    emv_validation_details.bindString(6, relationship_to_grantee);
+                    emv_validation_details.bindString(7, assigned_staff);
+                    emv_validation_details.bindString(8, representative_name);
+                    emv_validation_details.bindString(9, sync_at);
+                    emv_validation_details.bindLong(10, user_id);
+                    if (additional_image !=null){
+                        emv_validation_details.bindBlob(11,additional_image);
+                        emv_validation_details.bindString(12, overall_remarks);
+                        emv_validation_details.bindString(13, strDate);
+                        emv_validation_details.bindString(14, strDate);
+                        emv_validation_details.bindString(15, contact_no_of_others);
+                    }
+                    else {
+                        emv_validation_details.bindString(11, overall_remarks);
+                        emv_validation_details.bindString(12, strDate);
+                        emv_validation_details.bindString(13, strDate);
+                        emv_validation_details.bindString(14, contact_no_of_others);
+                    }
+                    emv_validation_details.executeInsert();
 
-            }
-            else {
-                other_card_validations1.bindString(16, strDate);
-                other_card_validations1.bindString(17, others_reason_not_presented1);
-                other_card_validations1.bindString(18, others_reason_unclaimed1);
-                other_card_validations1.bindString(19, distribution_status_record1);
-                other_card_validations1.bindString(20, convertDateFormat(release_date_record1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations1.bindString(21, card_number_prefilled1);
-            }
-            other_card_validations1.executeInsert();
-        }
+                    if (card_count >=1) {
+                        SQLiteStatement other_card_validations1 = database.compileStatement(sql6);
+                        other_card_validations1.clearBindings();
+                        other_card_validations1.bindString(1, card_holder_name1);
+                        other_card_validations1.bindString(2, card_number_system_generated1);
+                        if (!card_number_inputted1.matches("")) {
+                            card_number_inputted1 = card_number_inputted1;
+                        }
+                        other_card_validations1.bindString(3, card_number_inputted1);
+                        other_card_validations1.bindString(4, card_number_series1);
+                        other_card_validations1.bindString(5, distribution_status1);
+                        other_card_validations1.bindString(6, convertDateFormat(release_date1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                        other_card_validations1.bindString(7, release_by1);
+                        other_card_validations1.bindString(8, release_place1);
+                        other_card_validations1.bindString(9, card_physically_presented1);
+                        other_card_validations1.bindString(10, card_pin_is_attached1);
+                        other_card_validations1.bindString(11, reason_not_presented1);
+                        other_card_validations1.bindString(12, reason_unclaimed1);
+                        other_card_validations1.bindString(13, card_replacement_request1);
+                        other_card_validations1.bindString(14, card_replacement_request_submitted_details1);
+                        other_card_validations1.bindString(15, pawning_remarks1);
+                        if (other_scanned_image1 !=null){
+                            other_card_validations1.bindBlob(16, other_scanned_image1);
+                            other_card_validations1.bindString(17, strDate);
+                            other_card_validations1.bindString(18, others_reason_not_presented1);
+                            other_card_validations1.bindString(19, others_reason_unclaimed1);
+                            other_card_validations1.bindString(20, distribution_status_record1);
+                            other_card_validations1.bindString(21, convertDateFormat(release_date_record1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations1.bindString(22, card_number_prefilled1);
 
-        if (card_count >=2) {
-            SQLiteStatement other_card_validations2 = database.compileStatement(sql7);
-            other_card_validations2.clearBindings();
-            other_card_validations2.bindString(1, card_holder_name2);
-            other_card_validations2.bindString(2, card_number_system_generated2);
-            if (!card_number_inputted2.matches("")) {
-                card_number_inputted2 = card_number_inputted2;
-            }
-            other_card_validations2.bindString(3, card_number_inputted2);
-            other_card_validations2.bindString(4, card_number_series2);
-            other_card_validations2.bindString(5, distribution_status2);
-            other_card_validations2.bindString(6, convertDateFormat(release_date2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations2.bindString(7, release_by2);
-            other_card_validations2.bindString(8, release_place2);
-            other_card_validations2.bindString(9, card_physically_presented2);
-            other_card_validations2.bindString(10, card_pin_is_attached2);
-            other_card_validations2.bindString(11, reason_not_presented2);
-            other_card_validations2.bindString(12, reason_unclaimed2);
-            other_card_validations2.bindString(13, card_replacement_request2);
-            other_card_validations2.bindString(14, card_replacement_request_submitted_details2);
-            other_card_validations2.bindString(15, pawning_remarks2);
+                        }
+                        else {
+                            other_card_validations1.bindString(16, strDate);
+                            other_card_validations1.bindString(17, others_reason_not_presented1);
+                            other_card_validations1.bindString(18, others_reason_unclaimed1);
+                            other_card_validations1.bindString(19, distribution_status_record1);
+                            other_card_validations1.bindString(20, convertDateFormat(release_date_record1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations1.bindString(21, card_number_prefilled1);
+                        }
+                        other_card_validations1.executeInsert();
+                    }
 
-            if (other_scanned_image2 !=null){
-                other_card_validations2.bindBlob(16, other_scanned_image2);
-                other_card_validations2.bindString(17, strDate);
-                //here
-                other_card_validations2.bindString(18, others_reason_not_presented2);
-                other_card_validations2.bindString(19, others_reason_unclaimed2);
-                other_card_validations2.bindString(20, distribution_status_record2);
-                other_card_validations2.bindString(21, convertDateFormat(release_date_record2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations2.bindString(22, card_number_prefilled2);
-            }
-            else {
-                other_card_validations2.bindString(16, strDate);
-                //here
-                other_card_validations2.bindString(17, others_reason_not_presented2);
-                other_card_validations2.bindString(18, others_reason_unclaimed2);
-                other_card_validations2.bindString(19, distribution_status_record2);
-                other_card_validations2.bindString(20, convertDateFormat(release_date_record2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations2.bindString(21, card_number_prefilled2);
-            }
-            other_card_validations2.executeInsert();
+                    if (card_count >=2) {
+                        SQLiteStatement other_card_validations2 = database.compileStatement(sql7);
+                        other_card_validations2.clearBindings();
+                        other_card_validations2.bindString(1, card_holder_name2);
+                        other_card_validations2.bindString(2, card_number_system_generated2);
+                        if (!card_number_inputted2.matches("")) {
+                            card_number_inputted2 = card_number_inputted2;
+                        }
+                        other_card_validations2.bindString(3, card_number_inputted2);
+                        other_card_validations2.bindString(4, card_number_series2);
+                        other_card_validations2.bindString(5, distribution_status2);
+                        other_card_validations2.bindString(6, convertDateFormat(release_date2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                        other_card_validations2.bindString(7, release_by2);
+                        other_card_validations2.bindString(8, release_place2);
+                        other_card_validations2.bindString(9, card_physically_presented2);
+                        other_card_validations2.bindString(10, card_pin_is_attached2);
+                        other_card_validations2.bindString(11, reason_not_presented2);
+                        other_card_validations2.bindString(12, reason_unclaimed2);
+                        other_card_validations2.bindString(13, card_replacement_request2);
+                        other_card_validations2.bindString(14, card_replacement_request_submitted_details2);
+                        other_card_validations2.bindString(15, pawning_remarks2);
 
-        }
+                        if (other_scanned_image2 !=null){
+                            other_card_validations2.bindBlob(16, other_scanned_image2);
+                            other_card_validations2.bindString(17, strDate);
+                            //here
+                            other_card_validations2.bindString(18, others_reason_not_presented2);
+                            other_card_validations2.bindString(19, others_reason_unclaimed2);
+                            other_card_validations2.bindString(20, distribution_status_record2);
+                            other_card_validations2.bindString(21, convertDateFormat(release_date_record2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations2.bindString(22, card_number_prefilled2);
+                        }
+                        else {
+                            other_card_validations2.bindString(16, strDate);
+                            //here
+                            other_card_validations2.bindString(17, others_reason_not_presented2);
+                            other_card_validations2.bindString(18, others_reason_unclaimed2);
+                            other_card_validations2.bindString(19, distribution_status_record2);
+                            other_card_validations2.bindString(20, convertDateFormat(release_date_record2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations2.bindString(21, card_number_prefilled2);
+                        }
+                        other_card_validations2.executeInsert();
 
-        if (card_count >=3) {
-            SQLiteStatement other_card_validations3 = database.compileStatement(sql8);
-            other_card_validations3.clearBindings();
-            other_card_validations3.bindString(1, card_holder_name3);
-            other_card_validations3.bindString(2, card_number_system_generated3);
-            if (!card_number_inputted3.matches("")) {
-                card_number_inputted3 = card_number_inputted3;
-            }
-            other_card_validations3.bindString(3, card_number_inputted3);
-            other_card_validations3.bindString(4, card_number_series3);
-            other_card_validations3.bindString(5, distribution_status3);
-            other_card_validations3.bindString(6, convertDateFormat(release_date3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations3.bindString(7, release_by3);
-            other_card_validations3.bindString(8, release_place3);
-            other_card_validations3.bindString(9, card_physically_presented3);
-            other_card_validations3.bindString(10, card_pin_is_attached3);
-            other_card_validations3.bindString(11, reason_not_presented3);
-            other_card_validations3.bindString(12, reason_unclaimed3);
-            other_card_validations3.bindString(13, card_replacement_request3);
-            other_card_validations3.bindString(14, card_replacement_request_submitted_details3);
-            other_card_validations3.bindString(15, pawning_remarks3);
+                    }
 
-            if (other_scanned_image3 !=null){
-                other_card_validations3.bindBlob(16, other_scanned_image3);
-                other_card_validations3.bindString(17, strDate);
-                //here
-                other_card_validations3.bindString(18, others_reason_not_presented3);
-                other_card_validations3.bindString(19, others_reason_unclaimed3);
-                other_card_validations3.bindString(20, distribution_status_record3);
-                other_card_validations3.bindString(21, convertDateFormat(release_date_record3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations3.bindString(22, card_number_prefilled3);
-            }
-            else {
-                other_card_validations3.bindString(16, strDate);
-                other_card_validations3.bindString(17, others_reason_not_presented3);
-                other_card_validations3.bindString(18, others_reason_unclaimed3);
-                other_card_validations3.bindString(19, distribution_status_record3);
-                other_card_validations3.bindString(20, convertDateFormat(release_date_record3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations3.bindString(21, card_number_prefilled3);
-                //here
-            }
-            other_card_validations3.executeInsert();
-        }
+                    if (card_count >=3) {
+                        SQLiteStatement other_card_validations3 = database.compileStatement(sql8);
+                        other_card_validations3.clearBindings();
+                        other_card_validations3.bindString(1, card_holder_name3);
+                        other_card_validations3.bindString(2, card_number_system_generated3);
+                        if (!card_number_inputted3.matches("")) {
+                            card_number_inputted3 = card_number_inputted3;
+                        }
+                        other_card_validations3.bindString(3, card_number_inputted3);
+                        other_card_validations3.bindString(4, card_number_series3);
+                        other_card_validations3.bindString(5, distribution_status3);
+                        other_card_validations3.bindString(6, convertDateFormat(release_date3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                        other_card_validations3.bindString(7, release_by3);
+                        other_card_validations3.bindString(8, release_place3);
+                        other_card_validations3.bindString(9, card_physically_presented3);
+                        other_card_validations3.bindString(10, card_pin_is_attached3);
+                        other_card_validations3.bindString(11, reason_not_presented3);
+                        other_card_validations3.bindString(12, reason_unclaimed3);
+                        other_card_validations3.bindString(13, card_replacement_request3);
+                        other_card_validations3.bindString(14, card_replacement_request_submitted_details3);
+                        other_card_validations3.bindString(15, pawning_remarks3);
 
-        if (card_count >=4) {
-            SQLiteStatement other_card_validations4 = database.compileStatement(sql9);
-            other_card_validations4.clearBindings();
-            other_card_validations4.bindString(1, card_holder_name4);
-            other_card_validations4.bindString(2, card_number_system_generated4);
-            if (!card_number_inputted4.matches("")) {
-                card_number_inputted4 = card_number_inputted4;
-            }
-            other_card_validations4.bindString(3, card_number_inputted4);
-            other_card_validations4.bindString(4, card_number_series4);
-            other_card_validations4.bindString(5, distribution_status4);
-            other_card_validations4.bindString(6, convertDateFormat(release_date4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations4.bindString(7, release_by4);
-            other_card_validations4.bindString(8, release_place4);
-            other_card_validations4.bindString(9, card_physically_presented4);
-            other_card_validations4.bindString(10, card_pin_is_attached4);
-            other_card_validations4.bindString(11, reason_not_presented4);
-            other_card_validations4.bindString(12, reason_unclaimed4);
-            other_card_validations4.bindString(13, card_replacement_request4);
-            other_card_validations4.bindString(14, card_replacement_request_submitted_details4);
-            other_card_validations4.bindString(15, pawning_remarks4);
-            if (other_scanned_image4 !=null){
-                other_card_validations4.bindBlob(16, other_scanned_image4);
-                other_card_validations4.bindString(17, strDate);
-                //here
-                other_card_validations4.bindString(18, others_reason_not_presented4);
-                other_card_validations4.bindString(19, others_reason_unclaimed4);
-                other_card_validations4.bindString(20, distribution_status_record4);
-                other_card_validations4.bindString(21, convertDateFormat(release_date_record4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations4.bindString(22, card_number_prefilled4);
+                        if (other_scanned_image3 !=null){
+                            other_card_validations3.bindBlob(16, other_scanned_image3);
+                            other_card_validations3.bindString(17, strDate);
+                            //here
+                            other_card_validations3.bindString(18, others_reason_not_presented3);
+                            other_card_validations3.bindString(19, others_reason_unclaimed3);
+                            other_card_validations3.bindString(20, distribution_status_record3);
+                            other_card_validations3.bindString(21, convertDateFormat(release_date_record3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations3.bindString(22, card_number_prefilled3);
+                        }
+                        else {
+                            other_card_validations3.bindString(16, strDate);
+                            other_card_validations3.bindString(17, others_reason_not_presented3);
+                            other_card_validations3.bindString(18, others_reason_unclaimed3);
+                            other_card_validations3.bindString(19, distribution_status_record3);
+                            other_card_validations3.bindString(20, convertDateFormat(release_date_record3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations3.bindString(21, card_number_prefilled3);
+                            //here
+                        }
+                        other_card_validations3.executeInsert();
+                    }
 
-            }
-            else {
-                other_card_validations4.bindString(16, strDate);
-                //here
-                other_card_validations4.bindString(17, others_reason_not_presented4);
-                other_card_validations4.bindString(18, others_reason_unclaimed4);
-                other_card_validations4.bindString(19, distribution_status_record4);
-                other_card_validations4.bindString(20, convertDateFormat(release_date_record4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations4.bindString(21, card_number_prefilled4);
-            }
-            other_card_validations4.executeInsert();
-        }
+                    if (card_count >=4) {
+                        SQLiteStatement other_card_validations4 = database.compileStatement(sql9);
+                        other_card_validations4.clearBindings();
+                        other_card_validations4.bindString(1, card_holder_name4);
+                        other_card_validations4.bindString(2, card_number_system_generated4);
+                        if (!card_number_inputted4.matches("")) {
+                            card_number_inputted4 = card_number_inputted4;
+                        }
+                        other_card_validations4.bindString(3, card_number_inputted4);
+                        other_card_validations4.bindString(4, card_number_series4);
+                        other_card_validations4.bindString(5, distribution_status4);
+                        other_card_validations4.bindString(6, convertDateFormat(release_date4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                        other_card_validations4.bindString(7, release_by4);
+                        other_card_validations4.bindString(8, release_place4);
+                        other_card_validations4.bindString(9, card_physically_presented4);
+                        other_card_validations4.bindString(10, card_pin_is_attached4);
+                        other_card_validations4.bindString(11, reason_not_presented4);
+                        other_card_validations4.bindString(12, reason_unclaimed4);
+                        other_card_validations4.bindString(13, card_replacement_request4);
+                        other_card_validations4.bindString(14, card_replacement_request_submitted_details4);
+                        other_card_validations4.bindString(15, pawning_remarks4);
+                        if (other_scanned_image4 !=null){
+                            other_card_validations4.bindBlob(16, other_scanned_image4);
+                            other_card_validations4.bindString(17, strDate);
+                            //here
+                            other_card_validations4.bindString(18, others_reason_not_presented4);
+                            other_card_validations4.bindString(19, others_reason_unclaimed4);
+                            other_card_validations4.bindString(20, distribution_status_record4);
+                            other_card_validations4.bindString(21, convertDateFormat(release_date_record4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations4.bindString(22, card_number_prefilled4);
 
+                        }
+                        else {
+                            other_card_validations4.bindString(16, strDate);
+                            //here
+                            other_card_validations4.bindString(17, others_reason_not_presented4);
+                            other_card_validations4.bindString(18, others_reason_unclaimed4);
+                            other_card_validations4.bindString(19, distribution_status_record4);
+                            other_card_validations4.bindString(20, convertDateFormat(release_date_record4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations4.bindString(21, card_number_prefilled4);
+                        }
+                        other_card_validations4.executeInsert();
+                    }
+                    if (card_count >=5) {
+                        SQLiteStatement other_card_validations5 = database.compileStatement(sql10);
+                        other_card_validations5.clearBindings();
+                        other_card_validations5.bindString(1, card_holder_name5);
+                        other_card_validations5.bindString(2, card_number_system_generated5);
+                        if (!card_number_inputted5.matches("")) {
+                            card_number_inputted5 = card_number_inputted5;
+                        }
+                        other_card_validations5.bindString(3, card_number_inputted5);
+                        other_card_validations5.bindString(4, card_number_series5);
+                        other_card_validations5.bindString(5, distribution_status5);
+                        other_card_validations5.bindString(6, convertDateFormat(release_date5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                        other_card_validations5.bindString(7, release_by5);
+                        other_card_validations5.bindString(8, release_place5);
+                        other_card_validations5.bindString(9, card_physically_presented5);
+                        other_card_validations5.bindString(10, card_pin_is_attached5);
+                        other_card_validations5.bindString(11, reason_not_presented5);
+                        other_card_validations5.bindString(12, reason_unclaimed5);
+                        other_card_validations5.bindString(13, card_replacement_request5);
+                        other_card_validations5.bindString(14, card_replacement_request_submitted_details5);
+                        other_card_validations5.bindString(15, pawning_remarks5);
+                        if (other_scanned_image5 !=null){
+                            other_card_validations5.bindBlob(16, other_scanned_image5);
+                            other_card_validations5.bindString(17, strDate);
+                            //here
+                            other_card_validations5.bindString(18, others_reason_not_presented5);
+                            other_card_validations5.bindString(19, others_reason_unclaimed5);
+                            other_card_validations5.bindString(20, distribution_status_record5);
+                            other_card_validations5.bindString(21, convertDateFormat(release_date_record5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations5.bindString(22, card_number_prefilled5);
+                        }
+                        else {
+                            other_card_validations5.bindString(16, strDate);
+                            //here
+                            other_card_validations5.bindString(17, others_reason_not_presented5);
+                            other_card_validations5.bindString(18, others_reason_unclaimed5);
+                            other_card_validations5.bindString(19, distribution_status_record5);
+                            other_card_validations5.bindString(20, convertDateFormat(release_date_record5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                            other_card_validations5.bindString(21, card_number_prefilled5);
+                        }
+                        other_card_validations5.executeInsert();
+                    }
 
-        if (card_count >=5) {
-            SQLiteStatement other_card_validations5 = database.compileStatement(sql10);
-            other_card_validations5.clearBindings();
-            other_card_validations5.bindString(1, card_holder_name5);
-            other_card_validations5.bindString(2, card_number_system_generated5);
-            if (!card_number_inputted5.matches("")) {
-                card_number_inputted5 = card_number_inputted5;
-            }
-            other_card_validations5.bindString(3, card_number_inputted5);
-            other_card_validations5.bindString(4, card_number_series5);
-            other_card_validations5.bindString(5, distribution_status5);
-            other_card_validations5.bindString(6, convertDateFormat(release_date5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations5.bindString(7, release_by5);
-            other_card_validations5.bindString(8, release_place5);
-            other_card_validations5.bindString(9, card_physically_presented5);
-            other_card_validations5.bindString(10, card_pin_is_attached5);
-            other_card_validations5.bindString(11, reason_not_presented5);
-            other_card_validations5.bindString(12, reason_unclaimed5);
-            other_card_validations5.bindString(13, card_replacement_request5);
-            other_card_validations5.bindString(14, card_replacement_request_submitted_details5);
-            other_card_validations5.bindString(15, pawning_remarks5);
-            if (other_scanned_image5 !=null){
-                other_card_validations5.bindBlob(16, other_scanned_image5);
-                other_card_validations5.bindString(17, strDate);
-                //here
-                other_card_validations5.bindString(18, others_reason_not_presented5);
-                other_card_validations5.bindString(19, others_reason_unclaimed5);
-                other_card_validations5.bindString(20, distribution_status_record5);
-                other_card_validations5.bindString(21, convertDateFormat(release_date_record5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations5.bindString(22, card_number_prefilled5);
-            }
-            else {
-                other_card_validations5.bindString(16, strDate);
-                //here
-                other_card_validations5.bindString(17, others_reason_not_presented5);
-                other_card_validations5.bindString(18, others_reason_unclaimed5);
-                other_card_validations5.bindString(19, distribution_status_record5);
-                other_card_validations5.bindString(20, convertDateFormat(release_date_record5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-                other_card_validations5.bindString(21, card_number_prefilled5);
-            }
-            other_card_validations5.executeInsert();
-        }
+                    String sql_emv_validations = "UPDATE emv_validations SET validated_at = ? WHERE hh_id = ?";
+                    SQLiteStatement statement_emv_validations = database.compileStatement(sql_emv_validations);
+                    statement_emv_validations.bindString(1, strDate);
+                    statement_emv_validations.bindString(2, hh_id);
+                    statement_emv_validations.execute();
 
-        String sql_emv_validations = "UPDATE emv_validations SET validated_at = ? WHERE hh_id = ?";
-        SQLiteStatement statement_emv_validations = database.compileStatement(sql_emv_validations);
-        statement_emv_validations.bindString(1, strDate);
-        statement_emv_validations.bindString(2, hh_id);
-        statement_emv_validations.execute();
-        database.close();
+                    String sql_tmp_blob = "DELETE FROM tmp_blob WHERE id=1";
+                    SQLiteStatement statement_tmp_blob = database.compileStatement(sql_tmp_blob);
+                    statement_tmp_blob.clearBindings();
+                    statement_tmp_blob.execute();
 
-        deleteTmpBlob(1);
+                    database.setTransactionSuccessful();
+                }
+
+                catch(SQLException e) {
+                    Log.v(TAG,"Error in database" + e);
+                } finally {
+                    database.endTransaction();
+                    database.close();
+
+                }
 
     }
 
     public void deleteTmpBlob(Integer id) {
-        SQLiteDatabase database = getWritableDatabase();
+        SQLiteDatabase databaseTmp = getWritableDatabase();
         String sql_tmp_blob = "DELETE FROM tmp_blob WHERE id=" + id;
-        SQLiteStatement statement_tmp_blob = database.compileStatement(sql_tmp_blob);
+        SQLiteStatement statement_tmp_blob = databaseTmp.compileStatement(sql_tmp_blob);
         statement_tmp_blob.clearBindings();
         statement_tmp_blob.execute();
-        database.close();
+        databaseTmp.close();
     }
 
     public void updateDatabase(String hh_id,String first_name,String last_name,String middle_name,String ext_name,String sex,String province,String municipality, String barangay, String set,
@@ -458,454 +468,457 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                                byte[] card_image,byte[] grantee_image,byte[] additional_image,byte[] other_scanned_image1,byte[] other_scanned_image2,byte[] other_scanned_image3,byte[] other_scanned_image4,byte[] other_scanned_image5, String overall_remarks, String other_ext_name, String contact_no_of_others, String others_reason_not_presented, String others_reason_not_presented1, String others_reason_not_presented2, String others_reason_not_presented3, String others_reason_not_presented4, String others_reason_not_presented5, String others_reason_unclaimed, String others_reason_unclaimed1, String others_reason_unclaimed2, String others_reason_unclaimed3, String others_reason_unclaimed4, String others_reason_unclaimed5, String nma_others_reason, Integer evd_id, Integer gv_id, Integer cvd_id, Integer pvd_id, Integer nv_id, Integer ocv_id1, Integer ocv_id2, Integer ocv_id3, Integer ocv_id4, Integer ocv_id5,
                                String card_number_prefilled1,String card_number_prefilled2,String card_number_prefilled3,String card_number_prefilled4,String card_number_prefilled5) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String strDate = sdf.format(new Date());
-
-
-        Log.v(TAG,"Hello test" + card_number_prefilled3);
-
-
         SQLiteDatabase database = getWritableDatabase();
-        String sql1 = "UPDATE grantee_validations SET hh_id = ?, first_name = ?, last_name = ?, middle_name = ?, ext_name = ?, sex = ?, province_code = ?, municipality_code = ?, barangay_code = ?, hh_set = ?, grantee_image = ?, other_ext_name = ? WHERE id = ?";
-        String sql2 = "UPDATE pawning_validation_details SET lender_name = ?, lender_address = ?, date_pawned = ?, date_retrieved = ?, loan_amount = ?, status = ?, reason = ?, interest = ?, offense_history = ?, offense_date = ?, remarks = ?, staff_intervention = ?, other_details = ? WHERE id = ?";
-        String sql3 = "UPDATE nma_validations SET amount = ?, date_claimed = ?, reason = ?, remarks = ?, nma_others_reason = ? WHERE id = ?";
-        String sql4 = "UPDATE card_validation_details SET card_number_prefilled = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_submitted_details = ?, card_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ? WHERE id = ?";
-        String sql5,sql6,sql7,sql8,sql9,sql10,sql11,sql12,sql13,sql14,sql15;
+        try{
+            database.beginTransaction();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String strDate = sdf.format(new Date());
+                String sql1 = "UPDATE grantee_validations SET hh_id = ?, first_name = ?, last_name = ?, middle_name = ?, ext_name = ?, sex = ?, province_code = ?, municipality_code = ?, barangay_code = ?, hh_set = ?, grantee_image = ?, other_ext_name = ? WHERE id = ?";
+                String sql2 = "UPDATE pawning_validation_details SET lender_name = ?, lender_address = ?, date_pawned = ?, date_retrieved = ?, loan_amount = ?, status = ?, reason = ?, interest = ?, offense_history = ?, offense_date = ?, remarks = ?, staff_intervention = ?, other_details = ? WHERE id = ?";
+                String sql3 = "UPDATE nma_validations SET amount = ?, date_claimed = ?, reason = ?, remarks = ?, nma_others_reason = ? WHERE id = ?";
+                String sql4 = "UPDATE card_validation_details SET card_number_prefilled = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_submitted_details = ?, card_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ? WHERE id = ?";
+                String sql5,sql6,sql7,sql8,sql9,sql10,sql11,sql12,sql13,sql14,sql15;
 
 
-        if (additional_image!=null){
-            sql5 = "UPDATE emv_validation_details SET hh_status = ?, contact_no = ?, contact_no_of = ?, is_grantee = ?, is_minor = ?, relationship_to_grantee = ?, assigned_staff = ?, representative_name = ?, additional_image = ?, overall_remarks = ?, contact_no_of_others = ?,  updated_at = ? WHERE id = ?";
-        } else {
-            sql5 = "UPDATE emv_validation_details SET hh_status = ?, contact_no = ?, contact_no_of = ?, is_grantee = ?, is_minor = ?, relationship_to_grantee = ?, assigned_staff = ?, representative_name = ?, additional_image = NULL, overall_remarks = ?, contact_no_of_others = ?,  updated_at = ? WHERE id = ?";
-        }
-
-        if (other_scanned_image1!=null) {
-            sql6 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        } else {
-            sql6 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ? , card_number_prefilled = ? WHERE id = ?";
-        }
-        if (other_scanned_image2!=null) {
-            sql7 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        } else {
-            sql7 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        }
-        if (other_scanned_image3!=null) {
-            sql8 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        } else {
-            sql8 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        }
-        if (other_scanned_image4!=null) {
-            sql9 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        } else {
-            sql9 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        }
-        if (other_scanned_image5!=null) {
-            sql10 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        } else {
-            sql10 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
-        }
-
-        if (other_scanned_image1!=null){sql11 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
-        else {sql11 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
-        if (other_scanned_image2!=null){sql12 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
-        else {sql12 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
-        if (other_scanned_image3!=null){sql13 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
-        else {sql13 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
-        if (other_scanned_image4!=null){sql14 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
-        else {sql14 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
-        if (other_scanned_image5!=null){sql15 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
-        else {sql15 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
-
-
-        SQLiteStatement grantee_validations = database.compileStatement(sql1);
-        grantee_validations.clearBindings();
-        grantee_validations.bindString(1, hh_id);
-        grantee_validations.bindString(2, first_name);
-        grantee_validations.bindString(3, last_name);
-        grantee_validations.bindString(4, middle_name);
-        grantee_validations.bindString(5, ext_name);
-        grantee_validations.bindString(6, sex);
-        grantee_validations.bindString(7, province);
-        grantee_validations.bindString(8, municipality);
-        grantee_validations.bindString(9, barangay);
-        grantee_validations.bindString(10, set);
-        grantee_validations.bindBlob(11, grantee_image);
-        grantee_validations.bindString(12, other_ext_name);
-        grantee_validations.bindLong(13, gv_id);
-        grantee_validations.execute();
-
-        if (reason_not_presented.matches("Pawned")){
-            SQLiteStatement pawning_validations_details = database.compileStatement(sql2);
-            pawning_validations_details.clearBindings();
-            pawning_validations_details.bindString(1, lender_name);
-            pawning_validations_details.bindString(2, lender_address);
-            pawning_validations_details.bindString(3, convertDateFormat(date_pawned, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            pawning_validations_details.bindString(4, convertDateFormat(date_retrieved, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            pawning_validations_details.bindString(5, loaned_amount);
-            pawning_validations_details.bindString(6, status);
-            pawning_validations_details.bindString(7, reason);
-            pawning_validations_details.bindString(8, interest);
-            pawning_validations_details.bindString(9, offense_history);
-            pawning_validations_details.bindString(10, convertDateFormat(offense_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            pawning_validations_details.bindString(11, remarks);
-            pawning_validations_details.bindString(12, staff_intervention);
-            pawning_validations_details.bindString(13, other_details);
-            pawning_validations_details.bindLong(14, pvd_id);
-            pawning_validations_details.execute();
-        }
-
-        SQLiteStatement nma_validations = database.compileStatement(sql3);
-        nma_validations.clearBindings();
-        nma_validations.bindString(1, amount);
-        nma_validations.bindString(2, convertDateFormat(date_claimed, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-        nma_validations.bindString(3, nma_reason);
-        nma_validations.bindString(4, nma_remarks);
-        nma_validations.bindString(5, nma_others_reason);
-        nma_validations.bindLong(6, nv_id);
-        nma_validations.execute();
-
-        SQLiteStatement card_validation_details = database.compileStatement(sql4);
-        card_validation_details.clearBindings();
-        card_validation_details.bindString(1, card_number_prefilled);
-        card_validation_details.bindString(2, card_number_system_generated);
-        card_validation_details.bindString(3, card_number_unputted);
-        card_validation_details.bindString(4, card_number_series);
-        card_validation_details.bindString(5, distribution_status);
-        card_validation_details.bindString(6, convertDateFormat(release_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-        card_validation_details.bindString(7, release_by);
-        card_validation_details.bindString(8, release_place);
-        card_validation_details.bindString(9, card_physically_presented);
-        card_validation_details.bindString(10, card_pin_is_attached);
-        card_validation_details.bindString(11, reason_not_presented);
-        card_validation_details.bindString(12, reason_unclaimed);
-        card_validation_details.bindString(13, card_replacement_request);
-        card_validation_details.bindString(14, card_replacement_submitted_details);
-        card_validation_details.bindBlob(15, card_image);
-        card_validation_details.bindString(16, others_reason_not_presented);
-        card_validation_details.bindString(17, others_reason_unclaimed);
-        card_validation_details.bindLong(18, cvd_id);
-        card_validation_details.execute();
-
-        SQLiteStatement emv_validation_details = database.compileStatement(sql5);
-        emv_validation_details.clearBindings();
-        emv_validation_details.bindString(1, hh_status);
-        emv_validation_details.bindString(2, contact_no);
-        emv_validation_details.bindString(3, contact_no_of);
-        emv_validation_details.bindString(4, is_grantee);
-        emv_validation_details.bindString(5, is_minor);
-        emv_validation_details.bindString(6, relationship_to_grantee);
-        emv_validation_details.bindString(7, assigned_staff);
-        emv_validation_details.bindString(8, representative_name);
-        if (additional_image !=null){
-            emv_validation_details.bindBlob(9,additional_image);
-            emv_validation_details.bindString(10, overall_remarks);
-            emv_validation_details.bindString(11, contact_no_of_others);
-            emv_validation_details.bindString(12, strDate);
-            emv_validation_details.bindLong(13, evd_id);
-
-        }
-        else {
-            emv_validation_details.bindString(9, overall_remarks);
-            emv_validation_details.bindString(10, contact_no_of_others);
-            emv_validation_details.bindString(11, strDate);
-            emv_validation_details.bindLong(12, evd_id);
-
-        }
-        emv_validation_details.execute();
-        if (card_count >=1) {
-            SQLiteStatement other_card_validations1 = database.compileStatement((ocv_id1 == 0) ? sql11 : sql6);
-            other_card_validations1.clearBindings();
-            other_card_validations1.bindString(1, card_holder_name1);
-            other_card_validations1.bindString(2, card_number_system_generated1);
-            other_card_validations1.bindString(3, card_number_inputted1);
-            other_card_validations1.bindString(4, card_number_series1);
-            other_card_validations1.bindString(5, distribution_status1);
-            other_card_validations1.bindString(6, convertDateFormat(release_date1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations1.bindString(7, release_by1);
-            other_card_validations1.bindString(8, release_place1);
-            other_card_validations1.bindString(9, card_physically_presented1);
-            other_card_validations1.bindString(10, card_pin_is_attached1);
-            other_card_validations1.bindString(11, reason_not_presented1);
-            other_card_validations1.bindString(12, reason_unclaimed1);
-            other_card_validations1.bindString(13, card_replacement_request1);
-            other_card_validations1.bindString(14, card_replacement_request_submitted_details1);
-            other_card_validations1.bindString(15, pawning_remarks1);
-            if (ocv_id1 == 0) {
-                if (other_scanned_image1 !=null){
-                    other_card_validations1.bindLong(16, evd_id);
-                    other_card_validations1.bindBlob(17, other_scanned_image1);
-                    other_card_validations1.bindString(18, strDate);
-                    other_card_validations1.bindString(19, others_reason_not_presented1);
-                    other_card_validations1.bindString(20, others_reason_unclaimed1);
-                    other_card_validations1.bindString(21, card_number_prefilled1);
+                if (additional_image!=null){
+                    sql5 = "UPDATE emv_validation_details SET hh_status = ?, contact_no = ?, contact_no_of = ?, is_grantee = ?, is_minor = ?, relationship_to_grantee = ?, assigned_staff = ?, representative_name = ?, additional_image = ?, overall_remarks = ?, contact_no_of_others = ?,  updated_at = ? WHERE id = ?";
                 } else {
-                    other_card_validations1.bindLong(16, evd_id);
-                    other_card_validations1.bindString(17, strDate);
-                    other_card_validations1.bindString(18, others_reason_not_presented1);
-                    other_card_validations1.bindString(19, others_reason_unclaimed1);
-                    other_card_validations1.bindString(20, card_number_prefilled1);
+                    sql5 = "UPDATE emv_validation_details SET hh_status = ?, contact_no = ?, contact_no_of = ?, is_grantee = ?, is_minor = ?, relationship_to_grantee = ?, assigned_staff = ?, representative_name = ?, additional_image = NULL, overall_remarks = ?, contact_no_of_others = ?,  updated_at = ? WHERE id = ?";
                 }
-            } else {
-                if (other_scanned_image1 !=null){
-                    other_card_validations1.bindBlob(16, other_scanned_image1);
-                    other_card_validations1.bindString(17, others_reason_not_presented1);
-                    other_card_validations1.bindString(18, others_reason_unclaimed1);
-                    other_card_validations1.bindString(19, card_number_prefilled1);
-                    other_card_validations1.bindLong(20, ocv_id1);
 
+                if (other_scanned_image1!=null) {
+                    sql6 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
                 } else {
-                    other_card_validations1.bindString(16, others_reason_not_presented1);
-                    other_card_validations1.bindString(17, others_reason_unclaimed1);
-                    other_card_validations1.bindString(18, card_number_prefilled1);
-                    other_card_validations1.bindLong(19, ocv_id1);
-
+                    sql6 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ? , card_number_prefilled = ? WHERE id = ?";
                 }
-                ocv_id1 = 0;
-            }
-            other_card_validations1.execute();
-        }
-
-        if (card_count >=2) {
-            SQLiteStatement other_card_validations2 = database.compileStatement((ocv_id2 == 0) ? sql12 : sql7);
-            other_card_validations2.clearBindings();
-            other_card_validations2.bindString(1, card_holder_name2);
-            other_card_validations2.bindString(2, card_number_system_generated2);
-            other_card_validations2.bindString(3, card_number_inputted2);
-            other_card_validations2.bindString(4, card_number_series2);
-            other_card_validations2.bindString(5, distribution_status2);
-            other_card_validations2.bindString(6, convertDateFormat(release_date2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations2.bindString(7, release_by2);
-            other_card_validations2.bindString(8, release_place2);
-            other_card_validations2.bindString(9, card_physically_presented2);
-            other_card_validations2.bindString(10, card_pin_is_attached2);
-            other_card_validations2.bindString(11, reason_not_presented2);
-            other_card_validations2.bindString(12, reason_unclaimed2);
-            other_card_validations2.bindString(13, card_replacement_request2);
-            other_card_validations2.bindString(14, card_replacement_request_submitted_details2);
-            other_card_validations2.bindString(15, pawning_remarks2);
-            if (ocv_id2 == 0) {
-                if (other_scanned_image2 != null){
-                    other_card_validations2.bindLong(16, evd_id);
-                    other_card_validations2.bindBlob(17, other_scanned_image2);
-                    other_card_validations2.bindString(18, strDate);
-                    other_card_validations2.bindString(19, others_reason_not_presented2);
-                    other_card_validations2.bindString(20, others_reason_unclaimed2);
-                    other_card_validations2.bindString(21, card_number_prefilled2);
+                if (other_scanned_image2!=null) {
+                    sql7 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
                 } else {
-                    other_card_validations2.bindLong(16, evd_id);
-                    other_card_validations2.bindString(17, strDate);
-                    other_card_validations2.bindString(18, others_reason_not_presented2);
-                    other_card_validations2.bindString(19, others_reason_unclaimed2);
-                    other_card_validations2.bindString(20, card_number_prefilled2);
-
+                    sql7 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
                 }
-            } else {
-                if (other_scanned_image2 != null){
-                    other_card_validations2.bindBlob(16, other_scanned_image2);
-                    other_card_validations2.bindString(17, others_reason_not_presented2);
-                    other_card_validations2.bindString(18, others_reason_unclaimed2);
-                    other_card_validations2.bindString(19, card_number_prefilled2);
-                    other_card_validations2.bindLong(20, ocv_id2);
-
+                if (other_scanned_image3!=null) {
+                    sql8 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
                 } else {
-                    other_card_validations2.bindString(16, others_reason_not_presented2);
-                    other_card_validations2.bindString(17, others_reason_unclaimed2);
-                    other_card_validations2.bindString(18, card_number_prefilled2);
-                    other_card_validations2.bindLong(19, ocv_id2);
+                    sql8 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
+                }
+                if (other_scanned_image4!=null) {
+                    sql9 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
+                } else {
+                    sql9 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
+                }
+                if (other_scanned_image5!=null) {
+                    sql10 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = ?, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
+                } else {
+                    sql10 = "UPDATE other_card_validations SET card_holder_name = ?, card_number_system_generated = ?, card_number_inputted = ?, card_number_series = ?, distribution_status = ?, release_date = ?, release_by = ?, release_place = ?, card_physically_presented = ?, card_pin_is_attached = ?, reason_not_presented = ?, reason_unclaimed = ?, card_replacement_requests = ?, card_replacement_request_submitted_details = ?, pawning_remarks = ?, other_image = NULL, others_reason_not_presented = ?, others_reason_unclaimed = ?, card_number_prefilled = ? WHERE id = ?";
+                }
+
+                if (other_scanned_image1!=null){sql11 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
+                else {sql11 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
+                if (other_scanned_image2!=null){sql12 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
+                else {sql12 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
+                if (other_scanned_image3!=null){sql13 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
+                else {sql13 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
+                if (other_scanned_image4!=null){sql14 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
+                else {sql14 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
+                if (other_scanned_image5!=null){sql15 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,?)";}
+                else {sql15 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,NULL,NULL,?)";}
+
+
+                SQLiteStatement grantee_validations = database.compileStatement(sql1);
+                grantee_validations.clearBindings();
+                grantee_validations.bindString(1, hh_id);
+                grantee_validations.bindString(2, first_name);
+                grantee_validations.bindString(3, last_name);
+                grantee_validations.bindString(4, middle_name);
+                grantee_validations.bindString(5, ext_name);
+                grantee_validations.bindString(6, sex);
+                grantee_validations.bindString(7, province);
+                grantee_validations.bindString(8, municipality);
+                grantee_validations.bindString(9, barangay);
+                grantee_validations.bindString(10, set);
+                grantee_validations.bindBlob(11, grantee_image);
+                grantee_validations.bindString(12, other_ext_name);
+                grantee_validations.bindLong(13, gv_id);
+                grantee_validations.execute();
+
+                if (reason_not_presented.matches("Pawned")){
+                    SQLiteStatement pawning_validations_details = database.compileStatement(sql2);
+                    pawning_validations_details.clearBindings();
+                    pawning_validations_details.bindString(1, lender_name);
+                    pawning_validations_details.bindString(2, lender_address);
+                    pawning_validations_details.bindString(3, convertDateFormat(date_pawned, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    pawning_validations_details.bindString(4, convertDateFormat(date_retrieved, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    pawning_validations_details.bindString(5, loaned_amount);
+                    pawning_validations_details.bindString(6, status);
+                    pawning_validations_details.bindString(7, reason);
+                    pawning_validations_details.bindString(8, interest);
+                    pawning_validations_details.bindString(9, offense_history);
+                    pawning_validations_details.bindString(10, convertDateFormat(offense_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    pawning_validations_details.bindString(11, remarks);
+                    pawning_validations_details.bindString(12, staff_intervention);
+                    pawning_validations_details.bindString(13, other_details);
+                    pawning_validations_details.bindLong(14, pvd_id);
+                    pawning_validations_details.execute();
+                }
+
+                SQLiteStatement nma_validations = database.compileStatement(sql3);
+                nma_validations.clearBindings();
+                nma_validations.bindString(1, amount);
+                nma_validations.bindString(2, convertDateFormat(date_claimed, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                nma_validations.bindString(3, nma_reason);
+                nma_validations.bindString(4, nma_remarks);
+                nma_validations.bindString(5, nma_others_reason);
+                nma_validations.bindLong(6, nv_id);
+                nma_validations.execute();
+
+                SQLiteStatement card_validation_details = database.compileStatement(sql4);
+                card_validation_details.clearBindings();
+                card_validation_details.bindString(1, card_number_prefilled);
+                card_validation_details.bindString(2, card_number_system_generated);
+                card_validation_details.bindString(3, card_number_unputted);
+                card_validation_details.bindString(4, card_number_series);
+                card_validation_details.bindString(5, distribution_status);
+                card_validation_details.bindString(6, convertDateFormat(release_date, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                card_validation_details.bindString(7, release_by);
+                card_validation_details.bindString(8, release_place);
+                card_validation_details.bindString(9, card_physically_presented);
+                card_validation_details.bindString(10, card_pin_is_attached);
+                card_validation_details.bindString(11, reason_not_presented);
+                card_validation_details.bindString(12, reason_unclaimed);
+                card_validation_details.bindString(13, card_replacement_request);
+                card_validation_details.bindString(14, card_replacement_submitted_details);
+                card_validation_details.bindBlob(15, card_image);
+                card_validation_details.bindString(16, others_reason_not_presented);
+                card_validation_details.bindString(17, others_reason_unclaimed);
+                card_validation_details.bindLong(18, cvd_id);
+                card_validation_details.execute();
+
+                SQLiteStatement emv_validation_details = database.compileStatement(sql5);
+                emv_validation_details.clearBindings();
+                emv_validation_details.bindString(1, hh_status);
+                emv_validation_details.bindString(2, contact_no);
+                emv_validation_details.bindString(3, contact_no_of);
+                emv_validation_details.bindString(4, is_grantee);
+                emv_validation_details.bindString(5, is_minor);
+                emv_validation_details.bindString(6, relationship_to_grantee);
+                emv_validation_details.bindString(7, assigned_staff);
+                emv_validation_details.bindString(8, representative_name);
+                if (additional_image !=null){
+                    emv_validation_details.bindBlob(9,additional_image);
+                    emv_validation_details.bindString(10, overall_remarks);
+                    emv_validation_details.bindString(11, contact_no_of_others);
+                    emv_validation_details.bindString(12, strDate);
+                    emv_validation_details.bindLong(13, evd_id);
 
                 }
-                ocv_id2 = 0;
-            }
-            other_card_validations2.execute();
+                else {
+                    emv_validation_details.bindString(9, overall_remarks);
+                    emv_validation_details.bindString(10, contact_no_of_others);
+                    emv_validation_details.bindString(11, strDate);
+                    emv_validation_details.bindLong(12, evd_id);
+
+                }
+                emv_validation_details.execute();
+                if (card_count >=1) {
+                    SQLiteStatement other_card_validations1 = database.compileStatement((ocv_id1 == 0) ? sql11 : sql6);
+                    other_card_validations1.clearBindings();
+                    other_card_validations1.bindString(1, card_holder_name1);
+                    other_card_validations1.bindString(2, card_number_system_generated1);
+                    other_card_validations1.bindString(3, card_number_inputted1);
+                    other_card_validations1.bindString(4, card_number_series1);
+                    other_card_validations1.bindString(5, distribution_status1);
+                    other_card_validations1.bindString(6, convertDateFormat(release_date1, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    other_card_validations1.bindString(7, release_by1);
+                    other_card_validations1.bindString(8, release_place1);
+                    other_card_validations1.bindString(9, card_physically_presented1);
+                    other_card_validations1.bindString(10, card_pin_is_attached1);
+                    other_card_validations1.bindString(11, reason_not_presented1);
+                    other_card_validations1.bindString(12, reason_unclaimed1);
+                    other_card_validations1.bindString(13, card_replacement_request1);
+                    other_card_validations1.bindString(14, card_replacement_request_submitted_details1);
+                    other_card_validations1.bindString(15, pawning_remarks1);
+                    if (ocv_id1 == 0) {
+                        if (other_scanned_image1 !=null){
+                            other_card_validations1.bindLong(16, evd_id);
+                            other_card_validations1.bindBlob(17, other_scanned_image1);
+                            other_card_validations1.bindString(18, strDate);
+                            other_card_validations1.bindString(19, others_reason_not_presented1);
+                            other_card_validations1.bindString(20, others_reason_unclaimed1);
+                            other_card_validations1.bindString(21, card_number_prefilled1);
+                        } else {
+                            other_card_validations1.bindLong(16, evd_id);
+                            other_card_validations1.bindString(17, strDate);
+                            other_card_validations1.bindString(18, others_reason_not_presented1);
+                            other_card_validations1.bindString(19, others_reason_unclaimed1);
+                            other_card_validations1.bindString(20, card_number_prefilled1);
+                        }
+                    } else {
+                        if (other_scanned_image1 !=null){
+                            other_card_validations1.bindBlob(16, other_scanned_image1);
+                            other_card_validations1.bindString(17, others_reason_not_presented1);
+                            other_card_validations1.bindString(18, others_reason_unclaimed1);
+                            other_card_validations1.bindString(19, card_number_prefilled1);
+                            other_card_validations1.bindLong(20, ocv_id1);
+
+                        } else {
+                            other_card_validations1.bindString(16, others_reason_not_presented1);
+                            other_card_validations1.bindString(17, others_reason_unclaimed1);
+                            other_card_validations1.bindString(18, card_number_prefilled1);
+                            other_card_validations1.bindLong(19, ocv_id1);
+
+                        }
+                        ocv_id1 = 0;
+                    }
+                    other_card_validations1.execute();
+                }
+
+                if (card_count >=2) {
+                    SQLiteStatement other_card_validations2 = database.compileStatement((ocv_id2 == 0) ? sql12 : sql7);
+                    other_card_validations2.clearBindings();
+                    other_card_validations2.bindString(1, card_holder_name2);
+                    other_card_validations2.bindString(2, card_number_system_generated2);
+                    other_card_validations2.bindString(3, card_number_inputted2);
+                    other_card_validations2.bindString(4, card_number_series2);
+                    other_card_validations2.bindString(5, distribution_status2);
+                    other_card_validations2.bindString(6, convertDateFormat(release_date2, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    other_card_validations2.bindString(7, release_by2);
+                    other_card_validations2.bindString(8, release_place2);
+                    other_card_validations2.bindString(9, card_physically_presented2);
+                    other_card_validations2.bindString(10, card_pin_is_attached2);
+                    other_card_validations2.bindString(11, reason_not_presented2);
+                    other_card_validations2.bindString(12, reason_unclaimed2);
+                    other_card_validations2.bindString(13, card_replacement_request2);
+                    other_card_validations2.bindString(14, card_replacement_request_submitted_details2);
+                    other_card_validations2.bindString(15, pawning_remarks2);
+                    if (ocv_id2 == 0) {
+                        if (other_scanned_image2 != null){
+                            other_card_validations2.bindLong(16, evd_id);
+                            other_card_validations2.bindBlob(17, other_scanned_image2);
+                            other_card_validations2.bindString(18, strDate);
+                            other_card_validations2.bindString(19, others_reason_not_presented2);
+                            other_card_validations2.bindString(20, others_reason_unclaimed2);
+                            other_card_validations2.bindString(21, card_number_prefilled2);
+                        } else {
+                            other_card_validations2.bindLong(16, evd_id);
+                            other_card_validations2.bindString(17, strDate);
+                            other_card_validations2.bindString(18, others_reason_not_presented2);
+                            other_card_validations2.bindString(19, others_reason_unclaimed2);
+                            other_card_validations2.bindString(20, card_number_prefilled2);
+
+                        }
+                    } else {
+                        if (other_scanned_image2 != null){
+                            other_card_validations2.bindBlob(16, other_scanned_image2);
+                            other_card_validations2.bindString(17, others_reason_not_presented2);
+                            other_card_validations2.bindString(18, others_reason_unclaimed2);
+                            other_card_validations2.bindString(19, card_number_prefilled2);
+                            other_card_validations2.bindLong(20, ocv_id2);
+
+                        } else {
+                            other_card_validations2.bindString(16, others_reason_not_presented2);
+                            other_card_validations2.bindString(17, others_reason_unclaimed2);
+                            other_card_validations2.bindString(18, card_number_prefilled2);
+                            other_card_validations2.bindLong(19, ocv_id2);
+
+                        }
+                        ocv_id2 = 0;
+                    }
+                    other_card_validations2.execute();
+                }
+
+                if (card_count >=3) {
+                    SQLiteStatement other_card_validations3 = database.compileStatement((ocv_id3 == 0) ? sql13 : sql8);
+                    other_card_validations3.clearBindings();
+                    other_card_validations3.bindString(1, card_holder_name3);
+                    other_card_validations3.bindString(2, card_number_system_generated3);
+                    other_card_validations3.bindString(3, card_number_inputted3);
+                    other_card_validations3.bindString(4, card_number_series3);
+                    other_card_validations3.bindString(5, distribution_status3);
+                    other_card_validations3.bindString(6, convertDateFormat(release_date3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    other_card_validations3.bindString(7, release_by3);
+                    other_card_validations3.bindString(8, release_place3);
+                    other_card_validations3.bindString(9, card_physically_presented3);
+                    other_card_validations3.bindString(10, card_pin_is_attached3);
+                    other_card_validations3.bindString(11, reason_not_presented3);
+                    other_card_validations3.bindString(12, reason_unclaimed3);
+                    other_card_validations3.bindString(13, card_replacement_request3);
+                    other_card_validations3.bindString(14, card_replacement_request_submitted_details3);
+                    other_card_validations3.bindString(15, pawning_remarks3);
+                    if (ocv_id3 == 0) {
+                        if (other_scanned_image3 != null){
+                            other_card_validations3.bindLong(16, evd_id);
+                            other_card_validations3.bindBlob(17, other_scanned_image3);
+                            other_card_validations3.bindString(18, strDate);
+                            other_card_validations3.bindString(19, others_reason_not_presented3);
+                            other_card_validations3.bindString(20, others_reason_unclaimed3);
+                            other_card_validations3.bindString(21, card_number_prefilled3);
+                        }
+                        else {
+                            other_card_validations3.bindLong(16, evd_id);
+                            other_card_validations3.bindString(17, strDate);
+                            other_card_validations3.bindString(18, others_reason_not_presented3);
+                            other_card_validations3.bindString(19, others_reason_unclaimed3);
+                            other_card_validations3.bindString(20, card_number_prefilled3);
+
+                        }
+                    } else {
+                        if (other_scanned_image3 != null){
+                            other_card_validations3.bindBlob(16, other_scanned_image3);
+                            other_card_validations3.bindString(17, others_reason_not_presented3);
+                            other_card_validations3.bindString(18, others_reason_unclaimed3);
+                            other_card_validations3.bindString(19, card_number_prefilled3);
+                            other_card_validations3.bindLong(20, ocv_id3);
+
+                        }
+                        else {
+                            other_card_validations3.bindString(16, others_reason_not_presented3);
+                            other_card_validations3.bindString(17, others_reason_unclaimed3);
+                            other_card_validations3.bindString(18, card_number_prefilled3);
+                            other_card_validations3.bindLong(19, ocv_id3);
+
+                        }
+                        ocv_id3 = 0;
+                    }
+
+                    other_card_validations3.execute();
+                }
+
+                if (card_count >=4) {
+                    SQLiteStatement other_card_validations4 = database.compileStatement((ocv_id4 == 0) ? sql14 : sql9);
+                    other_card_validations4.clearBindings();
+                    other_card_validations4.bindString(1, card_holder_name4);
+                    other_card_validations4.bindString(2, card_number_system_generated4);
+                    other_card_validations4.bindString(3, card_number_inputted4);
+                    other_card_validations4.bindString(4, card_number_series4);
+                    other_card_validations4.bindString(5, distribution_status4);
+                    other_card_validations4.bindString(6, convertDateFormat(release_date4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    other_card_validations4.bindString(7, release_by4);
+                    other_card_validations4.bindString(8, release_place4);
+                    other_card_validations4.bindString(9, card_physically_presented4);
+                    other_card_validations4.bindString(10, card_pin_is_attached4);
+                    other_card_validations4.bindString(11, reason_not_presented4);
+                    other_card_validations4.bindString(12, reason_unclaimed4);
+                    other_card_validations4.bindString(13, card_replacement_request4);
+                    other_card_validations4.bindString(14, card_replacement_request_submitted_details4);
+                    other_card_validations4.bindString(15, pawning_remarks4);
+                    if (ocv_id4 == 0) {
+                        if (other_scanned_image4 != null){
+                            other_card_validations4.bindLong(16, evd_id);
+                            other_card_validations4.bindBlob(17, other_scanned_image4);
+                            other_card_validations4.bindString(18, strDate);
+                            other_card_validations4.bindString(19, others_reason_not_presented4);
+                            other_card_validations4.bindString(20, others_reason_unclaimed4);
+                            other_card_validations4.bindString(21, card_number_prefilled4);
+                        }
+                        else {
+                            other_card_validations4.bindLong(16, evd_id);
+                            other_card_validations4.bindString(17, strDate);
+                            other_card_validations4.bindString(18, others_reason_not_presented4);
+                            other_card_validations4.bindString(19, others_reason_unclaimed4);
+                            other_card_validations4.bindString(20, card_number_prefilled4);
+                        }
+                    } else {
+                        if (other_scanned_image4 != null){
+                            other_card_validations4.bindBlob(16, other_scanned_image4);
+                            other_card_validations4.bindString(17, others_reason_not_presented4);
+                            other_card_validations4.bindString(18, others_reason_unclaimed4);
+                            other_card_validations4.bindString(19, card_number_prefilled4);
+                            other_card_validations4.bindLong(20, ocv_id4);
+
+                        }
+                        else {
+                            other_card_validations4.bindString(16, others_reason_not_presented4);
+                            other_card_validations4.bindString(17, others_reason_unclaimed4);
+                            other_card_validations4.bindString(18, card_number_prefilled4);
+                            other_card_validations4.bindLong(19, ocv_id4);
+
+                        }
+                        ocv_id4 = 0;
+                    }
+                    other_card_validations4.execute();
+                }
+
+
+                if (card_count >=5) {
+                    SQLiteStatement other_card_validations5 = database.compileStatement((ocv_id5 == 0) ? sql15 : sql10);
+                    other_card_validations5.clearBindings();
+                    other_card_validations5.bindString(1, card_holder_name5);
+                    other_card_validations5.bindString(2, card_number_system_generated5);
+                    other_card_validations5.bindString(3, card_number_inputted5);
+                    other_card_validations5.bindString(4, card_number_series5);
+                    other_card_validations5.bindString(5, distribution_status5);
+                    other_card_validations5.bindString(6, convertDateFormat(release_date5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
+                    other_card_validations5.bindString(7, release_by5);
+                    other_card_validations5.bindString(8, release_place5);
+                    other_card_validations5.bindString(9, card_physically_presented5);
+                    other_card_validations5.bindString(10, card_pin_is_attached5);
+                    other_card_validations5.bindString(11, reason_not_presented5);
+                    other_card_validations5.bindString(12, reason_unclaimed5);
+                    other_card_validations5.bindString(13, card_replacement_request5);
+                    other_card_validations5.bindString(14, card_replacement_request_submitted_details5);
+                    other_card_validations5.bindString(15, pawning_remarks5);
+                    if (ocv_id5 == 0) {
+                        if (other_scanned_image5 !=null){
+                            other_card_validations5.bindLong(16, evd_id);
+                            other_card_validations5.bindBlob(17, other_scanned_image5);
+                            other_card_validations5.bindString(18, strDate);
+                            other_card_validations5.bindString(19, others_reason_not_presented5);
+                            other_card_validations5.bindString(20, others_reason_unclaimed5);
+                            other_card_validations5.bindString(21, card_number_prefilled5);
+                        }
+                        else {
+                            other_card_validations5.bindLong(16, evd_id);
+                            other_card_validations5.bindString(17, strDate);
+                            other_card_validations5.bindString(18, others_reason_not_presented5);
+                            other_card_validations5.bindString(19, others_reason_unclaimed5);
+                            other_card_validations5.bindString(20, card_number_prefilled5);
+                        }
+                    } else {
+                        if (other_scanned_image5 !=null){
+                            other_card_validations5.bindBlob(16, other_scanned_image5);
+                            other_card_validations5.bindString(17, others_reason_not_presented5);
+                            other_card_validations5.bindString(18, others_reason_unclaimed5);
+                            other_card_validations5.bindString(19, card_number_prefilled5);
+                            other_card_validations5.bindLong(20, ocv_id5);
+
+                        }
+                        else {
+                            other_card_validations5.bindString(16, others_reason_not_presented5);
+                            other_card_validations5.bindString(17, others_reason_unclaimed5);
+                            other_card_validations5.bindString(18, card_number_prefilled5);
+                            other_card_validations5.bindLong(19, ocv_id5);
+
+                        }
+                        ocv_id5 = 0;
+                    }
+                    other_card_validations5.execute();
+                }
+
+                deleteOtherCardValidations(ocv_id1,database);
+                deleteOtherCardValidations(ocv_id2,database);
+                deleteOtherCardValidations(ocv_id3,database);
+                deleteOtherCardValidations(ocv_id4,database);
+                deleteOtherCardValidations(ocv_id5,database);
+
+                String sql_tmp_blob = "DELETE FROM tmp_blob WHERE id=2";
+                SQLiteStatement statement_tmp_blob = database.compileStatement(sql_tmp_blob);
+                statement_tmp_blob.clearBindings();
+                statement_tmp_blob.execute();
+
+                database.setTransactionSuccessful();
+            } catch(SQLException e) {
+                Log.v(TAG,"Error in database Update" + e);
+        } finally {
+            database.endTransaction();
+            database.close();
         }
-
-        if (card_count >=3) {
-            SQLiteStatement other_card_validations3 = database.compileStatement((ocv_id3 == 0) ? sql13 : sql8);
-            other_card_validations3.clearBindings();
-            other_card_validations3.bindString(1, card_holder_name3);
-            other_card_validations3.bindString(2, card_number_system_generated3);
-            other_card_validations3.bindString(3, card_number_inputted3);
-            other_card_validations3.bindString(4, card_number_series3);
-            other_card_validations3.bindString(5, distribution_status3);
-            other_card_validations3.bindString(6, convertDateFormat(release_date3, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations3.bindString(7, release_by3);
-            other_card_validations3.bindString(8, release_place3);
-            other_card_validations3.bindString(9, card_physically_presented3);
-            other_card_validations3.bindString(10, card_pin_is_attached3);
-            other_card_validations3.bindString(11, reason_not_presented3);
-            other_card_validations3.bindString(12, reason_unclaimed3);
-            other_card_validations3.bindString(13, card_replacement_request3);
-            other_card_validations3.bindString(14, card_replacement_request_submitted_details3);
-            other_card_validations3.bindString(15, pawning_remarks3);
-            if (ocv_id3 == 0) {
-                if (other_scanned_image3 != null){
-                    other_card_validations3.bindLong(16, evd_id);
-                    other_card_validations3.bindBlob(17, other_scanned_image3);
-                    other_card_validations3.bindString(18, strDate);
-                    other_card_validations3.bindString(19, others_reason_not_presented3);
-                    other_card_validations3.bindString(20, others_reason_unclaimed3);
-                    other_card_validations3.bindString(21, card_number_prefilled3);
-                }
-                else {
-                    other_card_validations3.bindLong(16, evd_id);
-                    other_card_validations3.bindString(17, strDate);
-                    other_card_validations3.bindString(18, others_reason_not_presented3);
-                    other_card_validations3.bindString(19, others_reason_unclaimed3);
-                    other_card_validations3.bindString(20, card_number_prefilled3);
-
-                }
-            } else {
-                if (other_scanned_image3 != null){
-                    other_card_validations3.bindBlob(16, other_scanned_image3);
-                    other_card_validations3.bindString(17, others_reason_not_presented3);
-                    other_card_validations3.bindString(18, others_reason_unclaimed3);
-                    other_card_validations3.bindString(19, card_number_prefilled3);
-                    other_card_validations3.bindLong(20, ocv_id3);
-
-                }
-                else {
-                    other_card_validations3.bindString(16, others_reason_not_presented3);
-                    other_card_validations3.bindString(17, others_reason_unclaimed3);
-                    other_card_validations3.bindString(18, card_number_prefilled3);
-                    other_card_validations3.bindLong(19, ocv_id3);
-
-                }
-                ocv_id3 = 0;
-            }
-
-            other_card_validations3.execute();
-        }
-
-        if (card_count >=4) {
-            SQLiteStatement other_card_validations4 = database.compileStatement((ocv_id4 == 0) ? sql14 : sql9);
-            other_card_validations4.clearBindings();
-            other_card_validations4.bindString(1, card_holder_name4);
-            other_card_validations4.bindString(2, card_number_system_generated4);
-            other_card_validations4.bindString(3, card_number_inputted4);
-            other_card_validations4.bindString(4, card_number_series4);
-            other_card_validations4.bindString(5, distribution_status4);
-            other_card_validations4.bindString(6, convertDateFormat(release_date4, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations4.bindString(7, release_by4);
-            other_card_validations4.bindString(8, release_place4);
-            other_card_validations4.bindString(9, card_physically_presented4);
-            other_card_validations4.bindString(10, card_pin_is_attached4);
-            other_card_validations4.bindString(11, reason_not_presented4);
-            other_card_validations4.bindString(12, reason_unclaimed4);
-            other_card_validations4.bindString(13, card_replacement_request4);
-            other_card_validations4.bindString(14, card_replacement_request_submitted_details4);
-            other_card_validations4.bindString(15, pawning_remarks4);
-            if (ocv_id4 == 0) {
-                if (other_scanned_image4 != null){
-                    other_card_validations4.bindLong(16, evd_id);
-                    other_card_validations4.bindBlob(17, other_scanned_image4);
-                    other_card_validations4.bindString(18, strDate);
-                    other_card_validations4.bindString(19, others_reason_not_presented4);
-                    other_card_validations4.bindString(20, others_reason_unclaimed4);
-                    other_card_validations4.bindString(21, card_number_prefilled4);
-                }
-                else {
-                    other_card_validations4.bindLong(16, evd_id);
-                    other_card_validations4.bindString(17, strDate);
-                    other_card_validations4.bindString(18, others_reason_not_presented4);
-                    other_card_validations4.bindString(19, others_reason_unclaimed4);
-                    other_card_validations4.bindString(20, card_number_prefilled4);
-                }
-            } else {
-                if (other_scanned_image4 != null){
-                    other_card_validations4.bindBlob(16, other_scanned_image4);
-                    other_card_validations4.bindString(17, others_reason_not_presented4);
-                    other_card_validations4.bindString(18, others_reason_unclaimed4);
-                    other_card_validations4.bindString(19, card_number_prefilled4);
-                    other_card_validations4.bindLong(20, ocv_id4);
-
-                }
-                else {
-                    other_card_validations4.bindString(16, others_reason_not_presented4);
-                    other_card_validations4.bindString(17, others_reason_unclaimed4);
-                    other_card_validations4.bindString(18, card_number_prefilled4);
-                    other_card_validations4.bindLong(19, ocv_id4);
-
-                }
-                ocv_id4 = 0;
-            }
-            other_card_validations4.execute();
-        }
-
-
-        if (card_count >=5) {
-            SQLiteStatement other_card_validations5 = database.compileStatement((ocv_id5 == 0) ? sql15 : sql10);
-            other_card_validations5.clearBindings();
-            other_card_validations5.bindString(1, card_holder_name5);
-            other_card_validations5.bindString(2, card_number_system_generated5);
-            other_card_validations5.bindString(3, card_number_inputted5);
-            other_card_validations5.bindString(4, card_number_series5);
-            other_card_validations5.bindString(5, distribution_status5);
-            other_card_validations5.bindString(6, convertDateFormat(release_date5, "MM/dd/yyyy", "yyyy-MM-dd", 1));
-            other_card_validations5.bindString(7, release_by5);
-            other_card_validations5.bindString(8, release_place5);
-            other_card_validations5.bindString(9, card_physically_presented5);
-            other_card_validations5.bindString(10, card_pin_is_attached5);
-            other_card_validations5.bindString(11, reason_not_presented5);
-            other_card_validations5.bindString(12, reason_unclaimed5);
-            other_card_validations5.bindString(13, card_replacement_request5);
-            other_card_validations5.bindString(14, card_replacement_request_submitted_details5);
-            other_card_validations5.bindString(15, pawning_remarks5);
-            if (ocv_id5 == 0) {
-                if (other_scanned_image5 !=null){
-                    other_card_validations5.bindLong(16, evd_id);
-                    other_card_validations5.bindBlob(17, other_scanned_image5);
-                    other_card_validations5.bindString(18, strDate);
-                    other_card_validations5.bindString(19, others_reason_not_presented5);
-                    other_card_validations5.bindString(20, others_reason_unclaimed5);
-                    other_card_validations5.bindString(21, card_number_prefilled5);
-                }
-                else {
-                    other_card_validations5.bindLong(16, evd_id);
-                    other_card_validations5.bindString(17, strDate);
-                    other_card_validations5.bindString(18, others_reason_not_presented5);
-                    other_card_validations5.bindString(19, others_reason_unclaimed5);
-                    other_card_validations5.bindString(20, card_number_prefilled5);
-                }
-            } else {
-                if (other_scanned_image5 !=null){
-                    other_card_validations5.bindBlob(16, other_scanned_image5);
-                    other_card_validations5.bindString(17, others_reason_not_presented5);
-                    other_card_validations5.bindString(18, others_reason_unclaimed5);
-                    other_card_validations5.bindString(19, card_number_prefilled5);
-                    other_card_validations5.bindLong(20, ocv_id5);
-
-                }
-                else {
-                    other_card_validations5.bindString(16, others_reason_not_presented5);
-                    other_card_validations5.bindString(17, others_reason_unclaimed5);
-                    other_card_validations5.bindString(18, card_number_prefilled5);
-                    other_card_validations5.bindLong(19, ocv_id5);
-
-                }
-                ocv_id5 = 0;
-            }
-            other_card_validations5.execute();
-        }
-
-        database.close();
-
-        deleteTmpBlob(2);
-
-        deleteOtherCardValidations(ocv_id1);
-        deleteOtherCardValidations(ocv_id2);
-        deleteOtherCardValidations(ocv_id3);
-        deleteOtherCardValidations(ocv_id4);
-        deleteOtherCardValidations(ocv_id5);
-
     }
 
-    public void deleteOtherCardValidations(int ocv_id) {
-        SQLiteDatabase database = getWritableDatabase();
+    public void deleteOtherCardValidations(int ocv_id, SQLiteDatabase database) {
         String sql_ocv = "DELETE FROM other_card_validations WHERE id=" + ocv_id;
         SQLiteStatement statement_sql_ocv = database.compileStatement(sql_ocv);
         statement_sql_ocv.clearBindings();
         statement_sql_ocv.execute();
-        database.close();
     }
 
     public void deleteScannedData(Integer evd_id, Integer gv_id, Integer cvd_id, Integer nv_id, Integer pvd_id, JSONArray arr_ocv_id) {

@@ -342,6 +342,7 @@ public class UpdateData extends AppCompatActivity {
         Integer emv_details_id = in.getIntExtra("emv_id", 0);
 
         sqLiteHelper.deleteTmpBlob(2);
+
         getEntries(emv_details_id);
 
 
@@ -1733,7 +1734,7 @@ public class UpdateData extends AppCompatActivity {
                                 imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason, evd_id, gv_id, cvd_id, pvd_id, nv_id, ocv_id1, ocv_id2, ocv_id3, ocv_id4, ocv_id5,
                                 card_number_prefilled1,card_number_prefilled2,card_number_prefilled3,card_number_prefilled4,card_number_prefilled5);
                         sDialog.dismiss();
-
+                        Toasty.success(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
                         clear_preferences();
                         Intent intent = new Intent(UpdateData.this, InventoryList.class);
                         startActivity(intent);

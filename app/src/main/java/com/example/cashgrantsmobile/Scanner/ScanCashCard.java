@@ -1770,6 +1770,7 @@ public class ScanCashCard extends AppCompatActivity {
 
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
+                    Toasty.success(getApplicationContext(), "Save Successfully", Toast.LENGTH_SHORT).show();
                     clear_preferences();
                     sDialog.dismiss();
 
