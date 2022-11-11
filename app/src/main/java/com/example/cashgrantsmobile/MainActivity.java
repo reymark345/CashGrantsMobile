@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             else{
                 Intent intent = new Intent(MainActivity.this, ScanCashCard.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
         DarkMode.setOnClickListener(v -> {
@@ -163,33 +163,33 @@ public class MainActivity extends AppCompatActivity {
         InventoryList.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Inventory.InventoryList.class);
             startActivity(intent);
-            finish();
+//            finish();
 
         });
         UnvalidatedData.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Unvalidated.UnvalidatedData.class);
             startActivity(intent);
-            finish();
+//            finish();
         });
         PullPsgcData.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.PullUpdate.PullPsgcData.class);
             startActivity(intent);
-            finish();
+//            finish();
         });
         SyncData.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Sync.SyncData.class);
             startActivity(intent);
-            finish();
+//            finish();
         });
         LogsData.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.Logs.LogsData.class);
             startActivity(intent);
-            finish();
+//            finish();
         });
         SyncmonitoringData.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, com.example.cashgrantsmobile.SyncMonitoring.SyncMonitoringList.class);
             startActivity(intent);
-            finish();
+//            finish();
         });
     }
 
