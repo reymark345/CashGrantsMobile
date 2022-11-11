@@ -113,9 +113,8 @@ public class MainActivity extends AppCompatActivity {
             else if (item.getItemId() == R.id.change_password){
                 Intent intent = new Intent(MainActivity.this, ChangePassword.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
-
             return false;
         });
 
@@ -224,6 +223,12 @@ public class MainActivity extends AppCompatActivity {
                 .setConfirmClickListener(sDialog -> {
                     sDialog.dismiss();
                 }).show();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        dashboardDataCount();
     }
 
     public void darkModeStatus(){

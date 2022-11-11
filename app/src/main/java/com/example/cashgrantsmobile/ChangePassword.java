@@ -229,9 +229,7 @@ public class ChangePassword extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            Intent intent = new Intent(ChangePassword.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+           super.onBackPressed();
         }
         return super.onKeyDown(keyCode, event);
     }

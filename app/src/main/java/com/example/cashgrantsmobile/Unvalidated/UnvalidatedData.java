@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -78,11 +79,11 @@ public class UnvalidatedData extends AppCompatActivity {
             province_list.add(get_db_prov.getString(0).toUpperCase());
         }
 
-        try {
-            getData(list,adapter, null);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            getData(list,adapter, null);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         tvSearch.setOnClickListener(v -> searchItem());
     }
@@ -150,6 +151,8 @@ public class UnvalidatedData extends AppCompatActivity {
 
         Button btnSearch = dialog.findViewById(R.id.btn_search);
         Button btnReset = dialog.findViewById(R.id.btnReset);
+
+        btnReset.setVisibility(View.GONE);
 
         filterHousehold = dialog.findViewById(R.id.edtFilterHHID);
         filterFname = dialog.findViewById(R.id.edtFilterFname);
