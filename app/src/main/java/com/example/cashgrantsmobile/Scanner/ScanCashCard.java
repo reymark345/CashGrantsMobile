@@ -1416,6 +1416,7 @@ public class ScanCashCard extends AppCompatActivity {
             ivOtherScannedImage1.setImageResource(R.drawable.ic_image);
             aat_distribution_status1.setText("", false);
             edt_card_number_prefilled1.setText("");
+            edt_card_holder_name1.setText("");
             edt_release_date1.setText("");
             edt_release_by1.setText("");
             edt_release_place1.setText("");
@@ -1438,6 +1439,7 @@ public class ScanCashCard extends AppCompatActivity {
             ivOtherScannedImage2.setImageResource(R.drawable.ic_image);
             aat_distribution_status2.setText("", false);
             edt_card_number_prefilled2.setText("");
+            edt_card_holder_name2.setText("");
             edt_release_date2.setText("");
             edt_release_by2.setText("");
             edt_release_place2.setText("");
@@ -1460,6 +1462,7 @@ public class ScanCashCard extends AppCompatActivity {
             ivOtherScannedImage3.setImageResource(R.drawable.ic_image);
             aat_distribution_status3.setText("", false);
             edt_card_number_prefilled3.setText("");
+            edt_card_holder_name3.setText("");
             edt_release_date3.setText("");
             edt_release_by3.setText("");
             edt_release_place3.setText("");
@@ -1482,6 +1485,7 @@ public class ScanCashCard extends AppCompatActivity {
             ivOtherScannedImage4.setImageResource(R.drawable.ic_image);
             aat_distribution_status4.setText("", false);
             edt_card_number_prefilled4.setText("");
+            edt_card_holder_name4.setText("");
             edt_release_date4.setText("");
             edt_release_by4.setText("");
             edt_release_place4.setText("");
@@ -1504,6 +1508,7 @@ public class ScanCashCard extends AppCompatActivity {
             ivOtherScannedImage5.setImageResource(R.drawable.ic_image);
             aat_distribution_status5.setText("", false);
             edt_card_number_prefilled5.setText("");
+            edt_card_holder_name5.setText("");
             edt_release_date5.setText("");
             edt_release_by5.setText("");
             edt_release_place5.setText("");
@@ -4971,6 +4976,16 @@ public class ScanCashCard extends AppCompatActivity {
                             til_others_reason_not_presented1.setVisibility(View.GONE);
                             aat_reason_unclaimed1.setText("");
                             til_reason_unclaimed1.setVisibility(View.VISIBLE);
+
+                            edt_card_number_inputted1.setText("");
+                            edt_card_number_series1.setText("");
+                            til_distribution_status1.setError(null);
+                            rlOtherCardScanningField1.setVisibility(View.GONE);
+                            sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_1=NULL WHERE id=1");
+                            ivOtherScannedImage1.setImageResource(R.drawable.ic_image);
+
+
+
                         } else {
 
                             til_release_date1.setVisibility(View.VISIBLE);
@@ -5013,6 +5028,14 @@ public class ScanCashCard extends AppCompatActivity {
                             til_others_reason_not_presented2.setVisibility(View.GONE);
                             aat_reason_unclaimed2.setText("");
                             til_reason_unclaimed2.setVisibility(View.VISIBLE);
+
+                            edt_card_number_inputted2.setText("");
+                            edt_card_number_series2.setText("");
+                            til_distribution_status2.setError(null);
+                            rlOtherCardScanningField2.setVisibility(View.GONE);
+                            sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_2=NULL WHERE id=1");
+                            ivOtherScannedImage2.setImageResource(R.drawable.ic_image);
+
                         } else {
 
                             til_release_date2.setVisibility(View.VISIBLE);
@@ -5056,6 +5079,14 @@ public class ScanCashCard extends AppCompatActivity {
                             til_others_reason_not_presented3.setVisibility(View.GONE);
                             aat_reason_unclaimed3.setText("");
                             til_reason_unclaimed3.setVisibility(View.VISIBLE);
+
+                            edt_card_number_inputted3.setText("");
+                            edt_card_number_series3.setText("");
+                            til_distribution_status3.setError(null);
+                            rlOtherCardScanningField3.setVisibility(View.GONE);
+                            sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_3=NULL WHERE id=1");
+                            ivOtherScannedImage3.setImageResource(R.drawable.ic_image);
+
                         } else {
                             til_release_date3.setVisibility(View.VISIBLE);
                             til_release_place3.setVisibility(View.VISIBLE);
@@ -5097,6 +5128,13 @@ public class ScanCashCard extends AppCompatActivity {
                             til_others_reason_not_presented4.setVisibility(View.GONE);
                             aat_reason_unclaimed4.setText("");
                             til_reason_unclaimed4.setVisibility(View.VISIBLE);
+
+                            edt_card_number_inputted4.setText("");
+                            edt_card_number_series4.setText("");
+                            til_distribution_status4.setError(null);
+                            rlOtherCardScanningField4.setVisibility(View.GONE);
+                            sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_4=NULL WHERE id=1");
+                            ivOtherScannedImage4.setImageResource(R.drawable.ic_image);
 
                         } else {
                             til_release_date4.setVisibility(View.VISIBLE);
@@ -5140,6 +5178,13 @@ public class ScanCashCard extends AppCompatActivity {
                             til_others_reason_not_presented5.setVisibility(View.GONE);
                             aat_reason_unclaimed5.setText("");
                             til_reason_unclaimed5.setVisibility(View.VISIBLE);
+
+                            edt_card_number_inputted5.setText("");
+                            edt_card_number_series5.setText("");
+                            til_distribution_status5.setError(null);
+                            rlOtherCardScanningField5.setVisibility(View.GONE);
+                            sqLiteHelper.queryData("UPDATE tmp_blob SET other_card_e_image_5=NULL WHERE id=1");
+                            ivOtherScannedImage5.setImageResource(R.drawable.ic_image);
 
                         } else {
                             til_release_date5.setVisibility(View.VISIBLE);
@@ -5242,6 +5287,8 @@ public class ScanCashCard extends AppCompatActivity {
                             }
 
                         } else {
+                            edt_card_number_inputted1.setText("");
+                            edt_card_number_series1.setText("");
                             til_distribution_status1.setError(null);
                             til_reason_not_presented1.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField1.setVisibility(View.GONE);
@@ -5288,6 +5335,8 @@ public class ScanCashCard extends AppCompatActivity {
                             }
 
                         } else {
+                            edt_card_number_inputted2.setText("");
+                            edt_card_number_series2.setText("");
                             til_distribution_status2.setError(null);
                             til_reason_not_presented2.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField2.setVisibility(View.GONE);
@@ -5335,6 +5384,8 @@ public class ScanCashCard extends AppCompatActivity {
                             }
 
                         } else {
+                            edt_card_number_inputted3.setText("");
+                            edt_card_number_series3.setText("");
                             til_distribution_status3.setError(null);
                             til_reason_not_presented3.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField3.setVisibility(View.GONE);
@@ -5383,6 +5434,8 @@ public class ScanCashCard extends AppCompatActivity {
                             }
 
                         } else {
+                            edt_card_number_inputted4.setText("");
+                            edt_card_number_series4.setText("");
                             til_distribution_status4.setError(null);
                             til_reason_not_presented4.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField4.setVisibility(View.GONE);
@@ -5430,6 +5483,8 @@ public class ScanCashCard extends AppCompatActivity {
                             }
 
                         } else {
+                            edt_card_number_inputted5.setText("");
+                            edt_card_number_series5.setText("");
                             til_distribution_status5.setError(null);
                             til_reason_not_presented5.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField5.setVisibility(View.GONE);
