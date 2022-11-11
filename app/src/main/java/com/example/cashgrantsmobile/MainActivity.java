@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     CardView CashCardScanner, InventoryList, PullPsgcData, SyncData, LogsData, Logout, UnvalidatedData, SyncmonitoringData;
     ImageButton DarkMode;
     public static SQLiteHelper sqLiteHelper;
-    TextView txtInventoryCount, txtPullPsgcDataCount, txtLogsTotal, txtSyncData, txtScannedTotal, txtErrorTotal, txtUnvalidatedCount;
+    TextView txtInventoryCount, txtPullPsgcDataCount, txtLogsTotal, txtSyncData, txtScannedTotal, txtErrorTotal, txtUnvalidatedCount, txtUpdatedList;
     public boolean EnableNightMode = false;
     private final String night = "true";
     private final String light = "false";
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         txtPullPsgcDataCount = findViewById(R.id.textPullPsgcData);
         txtScannedTotal = findViewById(R.id.scannedTotal);
         txtErrorTotal = findViewById(R.id.errorTotal);
+        txtUpdatedList = findViewById(R.id.txt_updated_list);
         txtLogsTotal = findViewById(R.id.textLogsCount);
         txtSyncData = findViewById(R.id.txtSyncData);
         txtUnvalidatedCount = findViewById(R.id.txtUnvalidatedCount);
@@ -271,12 +272,14 @@ public class MainActivity extends AppCompatActivity {
         Cursor error_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='error'");
         Cursor logs_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'");
         Cursor unvalidated_total = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations WHERE validated_at ='null'");
+        Cursor updatedList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations WHERE validated_at !='null' AND validated_at !='' ");
 
         txtInventoryCount.setText(String.valueOf(listCount.getCount()));
         txtPullPsgcDataCount.setText(String.valueOf(psgcList.getCount()));
         txtSyncData.setText("None");
         txtScannedTotal.setText(String.valueOf(scanned_total.getCount()));
         txtErrorTotal.setText(String.valueOf(error_total.getCount()));
+        txtUpdatedList.setText(String.valueOf(updatedList.getCount()));
         txtLogsTotal.setText(String.valueOf(logs_total.getCount()));
         txtSyncData.setText(String.valueOf(emvList.getCount()));
         txtUnvalidatedCount.setText(String.valueOf(unvalidated_total.getCount()));

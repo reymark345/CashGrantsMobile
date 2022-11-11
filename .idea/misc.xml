@@ -44,7 +44,7 @@
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/inventory_list.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/logs_list.xml" value="0.17647058823529413" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/logs_list_item.xml" value="0.20474777448071216" />
-        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_inventory_list.xml" value="0.33" />
+        <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_inventory_list.xml" value="0.5" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_logs_list.xml" value="0.3569230769230769" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/search_syncmonitoring_list.xml" value="0.3625" />
         <entry key="..\:/FINDS/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/sync_data.xml" value="0.33" />
@@ -141,7 +141,7 @@
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/activity_splash.xml" value="0.1743659420289855" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/activity_splash_login.xml" value="0.25" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/check_internet_dialog.xml" value="0.35688405797101447" />
-        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_1.xml" value="0.11614583333333334" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_1.xml" value="0.25" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_2.xml" value="0.3140625" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_3.xml" value="0.25625" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layout/dashboard_item_4.xml" value="0.25625" />
