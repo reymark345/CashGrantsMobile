@@ -786,7 +786,7 @@ public class SyncData extends AppCompatActivity {
                         gvMain.setAdapter(adapter);
 
                         sqLiteHelper.storeLogs("sync", finalGv_hh_id, "Sync data successfully.");
-                        sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
+//                        sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
 
                         if (progressPercent.getText().toString().matches("100")) {
                             tvStatus.setText("Syncing completed...");
@@ -874,7 +874,7 @@ public class SyncData extends AppCompatActivity {
                     params.put("gv_province_code", finalGv_province_code);
                     params.put("gv_municipality_code", finalGv_municipality_code);
                     params.put("gv_barangay_code", finalGv_barangay_code);
-                    params.put("gv_hh_set", finalGv_hh_set);
+                    params.put("gv_set", finalGv_hh_set);
                     params.put("pvd_lender_name", finalPvd_lender_name);
                     params.put("pvd_lender_address", finalPvd_lender_address);
                     if (!finalPvd_date_pawned.matches("")) {
