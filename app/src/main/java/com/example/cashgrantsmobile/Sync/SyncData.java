@@ -786,7 +786,7 @@ public class SyncData extends AppCompatActivity {
                         gvMain.setAdapter(adapter);
 
                         sqLiteHelper.storeLogs("sync", finalGv_hh_id, "Sync data successfully.");
-//                        sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
+                        sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
 
                         if (progressPercent.getText().toString().matches("100")) {
                             tvStatus.setText("Syncing completed...");
