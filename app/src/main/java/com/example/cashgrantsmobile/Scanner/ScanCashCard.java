@@ -624,8 +624,18 @@ public class ScanCashCard extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 102){
             try {
+//                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//                imgAdditionalId.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+//                sqLiteHelper.insertImageTmp("additional_id_image", imageViewToByte(imgAdditionalId), 1);
+//                til_additionalID.setError(null);
+
+//                Bitmap bitmap = (Bitmap) data.getExtras().get("data");.
+
+
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                imgAdditionalId.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+                BitmapDrawable drawable = new BitmapDrawable(ScanCashCard.this.getResources(), bitmap);
+                drawable.setAntiAlias(false);
+                imgAdditionalId.setImageDrawable(drawable);
                 sqLiteHelper.insertImageTmp("additional_id_image", imageViewToByte(imgAdditionalId), 1);
                 til_additionalID.setError(null);
 
@@ -635,10 +645,20 @@ public class ScanCashCard extends AppCompatActivity {
         }
         else if (requestCode == 103){
             try {
+//                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//                mGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+//                sqLiteHelper.insertImageTmp("grantee_e_image", imageViewToByte(mGrantee), 1);
+//                tilGrantee.setError(null);
+
+
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                mGrantee.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+                BitmapDrawable drawable = new BitmapDrawable(ScanCashCard.this.getResources(), bitmap);
+                drawable.setAntiAlias(false);
+                mGrantee.setImageDrawable(drawable);
                 sqLiteHelper.insertImageTmp("grantee_e_image", imageViewToByte(mGrantee), 1);
                 tilGrantee.setError(null);
+
+
             } catch (Exception e) {
                 Log.v(TAG,"error" + e);
             }
