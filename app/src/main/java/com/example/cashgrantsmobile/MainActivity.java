@@ -271,23 +271,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Cursor listCount = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validation_details");
-        emvList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations");
+        emvList = MainActivity.sqLiteHelper.getData("SELECT COUNT(id) FROM emv_validations");
         psgcList = MainActivity.sqLiteHelper.getData("SELECT id FROM psgc");
         Cursor scanned_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"' AND type='scanned'");
         Cursor error_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'AND type='error'");
         Cursor logs_total = MainActivity.sqLiteHelper.getData("SELECT id FROM logs WHERE username='"+username+"'");
-        Cursor unvalidated_total = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations WHERE validated_at ='null'");
-        Cursor updatedList = MainActivity.sqLiteHelper.getData("SELECT id FROM emv_validations WHERE validated_at !='null' AND validated_at !='' ");
+        Cursor unvalidated_total = MainActivity.sqLiteHelper.getData("SELECT COUNT(id) FROM emv_validations WHERE validated_at ='null'");
+        Cursor updatedList = MainActivity.sqLiteHelper.getData("SELECT COUNT(id) FROM emv_validations WHERE validated_at !='null' AND validated_at !='' ");
 
         txtInventoryCount.setText(String.valueOf(listCount.getCount()));
         txtPullPsgcDataCount.setText(String.valueOf(psgcList.getCount()));
         txtSyncData.setText("None");
         txtScannedTotal.setText(String.valueOf(scanned_total.getCount()));
         txtErrorTotal.setText(String.valueOf(error_total.getCount()));
-        txtUpdatedList.setText(String.valueOf(updatedList.getCount()));
         txtLogsTotal.setText(String.valueOf(logs_total.getCount()));
-        txtSyncData.setText(String.valueOf(emvList.getCount()));
-        txtUnvalidatedCount.setText(String.valueOf(unvalidated_total.getCount()));
+
+        while (emvList.moveToNext()) {
+            txtSyncData.setText(String.valueOf(emvList.getString(0)));
+        }
+        while (unvalidated_total.moveToNext()) {
+            txtUnvalidatedCount.setText(String.valueOf(unvalidated_total.getString(0)));
+        }
+        while (updatedList.moveToNext()) {
+            txtUpdatedList.setText(String.valueOf(updatedList.getString(0)));
+        }
 
         listCount.close();
         emvList.close();
@@ -296,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
         error_total.close();
         logs_total.close();
         unvalidated_total.close();
+        updatedList.close();
     }
 
     public void clearSharedPref(){
