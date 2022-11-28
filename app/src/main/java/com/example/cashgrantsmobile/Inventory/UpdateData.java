@@ -6523,6 +6523,7 @@ public class UpdateData extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         til_nma_others_reason.setVisibility(View.GONE);
+                        edt_nma_others_reason.setText("");
                         if (aat_nma_reason.getText().toString().matches("Others")) {
                             til_nma_others_reason.setVisibility(View.VISIBLE);
                         }

@@ -639,6 +639,13 @@ public class ScanCashCard extends AppCompatActivity {
                 sqLiteHelper.insertImageTmp("additional_id_image", imageViewToByte(imgAdditionalId), 1);
                 til_additionalID.setError(null);
 
+//
+//                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//                BitmapDrawable drawable = new BitmapDrawable(ScanCashCard.this.getResources(), bitmap);
+//                drawable.setAntiAlias(false);
+//                imageView.setImageDrawable(drawable);
+
+
             }catch (Exception e){
                 Log.v(TAG,"Error" + e);
             }
@@ -987,6 +994,19 @@ public class ScanCashCard extends AppCompatActivity {
         try{
             Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
             image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 374, 500, false));
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
+            byte[] byteArray = stream.toByteArray();
+            return byteArray;
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+
+    public static byte[] imageViewToByteGranteeAddional(ImageView image) {
+        try{
+            Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 95, stream);
             byte[] byteArray = stream.toByteArray();
@@ -1778,8 +1798,8 @@ public class ScanCashCard extends AppCompatActivity {
                                 card_holder_name4,card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
                                 card_holder_name5,card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count,
                                 imageViewToByte(ScannedImage),
-                                imageViewToByte(mGrantee),
-                                imageViewToByte(imgAdditionalId),
+                                imageViewToByteGranteeAddional(mGrantee),
+                                imageViewToByteGranteeAddional(imgAdditionalId),
                                 imageViewToByte(ivOtherScannedImage1),
                                 imageViewToByte(ivOtherScannedImage2),
                                 imageViewToByte(ivOtherScannedImage3),
