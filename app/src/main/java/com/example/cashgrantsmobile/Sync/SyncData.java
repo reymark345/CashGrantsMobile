@@ -77,6 +77,7 @@ public class SyncData extends AppCompatActivity {
     Integer total_pull = 0;
     Integer total_update = 0;
 
+    Boolean pull_check = false;
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -141,6 +142,8 @@ public class SyncData extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                tvStatus = findViewById(R.id.tv_status);
+
                 // on below line we are displaying a success toast message.
                 try {
                     JSONObject data = new JSONObject(response);
@@ -160,6 +163,7 @@ public class SyncData extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
+                tvStatus = findViewById(R.id.tv_status);
                 tvStatus.setText("Sync Monitoring Error Encountered...");
                 try {
                     String responseBody = new String(error.networkResponse.data, "utf-8");
@@ -221,6 +225,7 @@ public class SyncData extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(SyncData.this);
 
+        tvStatus.setText("Pulling Data...");
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             try {
                 remoteData = null;
@@ -249,12 +254,11 @@ public class SyncData extends AppCompatActivity {
                     progressPercent.setText(String.valueOf(progressCalc.intValue()));
                     progressBar.setProgress(progressCalc.intValue());
 
-
                     if (init) {
                         initialize_logs();
                         btnSync.setEnabled(true);
                         tvStatus.setText("Checking pulled data...");
-                        if (progressCalc.intValue() == 100) {
+                        if (progressCalc == 100) {
                             lst.add("Pull data omitted.");
                             progressTarget.setText(getCountEmvDetails().toString());
                             progressPercent.setText("0");
@@ -262,26 +266,26 @@ public class SyncData extends AppCompatActivity {
                             progressCount.setText("0");
                             pullStatus = "completed";
                             tvStatus.setText("Preparing for syncing...");
+                        } else {
+                            pull_check = true;
                         }
-                    }
-
-                    if (!init) {
+                    } else {
                         MainActivity.sqLiteHelper.insertEmvData(dataSets);
-                        if (progressPercent.getText().toString().matches("100")) {
+                        total_pull = total_pull + dataSets.length();
+                        if (progressCalc == 100) {
                             btnSync.setEnabled(true);
                             Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
                             sqLiteHelper.storeLogs("pull", "", "Pull Data Completed.");
                             initialize_logs();
                             lst.add("Pull data completed!.");
+                            tvStatus.setText("Pull data completed");
                             pullStatus = "completed";
+                            syncEmvData();
                         } else {
-                            total_pull = total_pull + totalDataCount;
-                            tvStatus.setText("Pulling Data...");
                             sqLiteHelper.storeLogs("pull", "", "Pull Data Successfully.");
                             pullEmvData(false);
                         }
                     }
-
                 }
                 else{
                     btnSync.setEnabled(true);
@@ -352,6 +356,8 @@ public class SyncData extends AppCompatActivity {
         Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             // on below line we are displaying a success toast message.
+            tvStatus = findViewById(R.id.tv_status);
+
             try {
                 JSONObject data = new JSONObject(response);
                 JSONArray dataSets = data.getJSONArray("data");
@@ -773,11 +779,13 @@ public class SyncData extends AppCompatActivity {
                         JSONObject granteeObj = dataObject.getJSONObject("grantee_validations");
                         progressCC[0]++;
 
+                        progressTarget = findViewById(R.id.progressFigureLast);
                         progressPercent = findViewById(R.id.progressCount);
                         progressBar = findViewById(R.id.progressBar);
                         progressCount = findViewById(R.id.progressFigure);
                         Double progressCalc = progressCC[0] / getCountEmvDetails() * 100;
 
+                        progressTarget.setText(String.valueOf(getCountEmvDetails()));
                         progressCount.setText(String.valueOf(progressCC[0].intValue()));
                         progressPercent.setText(String.valueOf(progressCalc.intValue()));
                         progressBar.setProgress(progressCalc.intValue());
@@ -786,9 +794,9 @@ public class SyncData extends AppCompatActivity {
                         gvMain.setAdapter(adapter);
 
                         sqLiteHelper.storeLogs("sync", finalGv_hh_id, "Sync data successfully.");
-                        sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
+//                        sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
 
-                        if (progressPercent.getText().toString().matches("100")) {
+                        if (progressCalc == 100) {
                             tvStatus.setText("Syncing completed...");
                             updateEmvValidations();
                             Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
@@ -1026,6 +1034,8 @@ public class SyncData extends AppCompatActivity {
                     IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
                     registerReceiver(networkChangeListener, filter);
                     if (networkChangeListener.connection){
+                        initialize_logs();
+                        if(pull_check) lst.add("Pulling Data...");
                         pullEmvData(false);
                         sDialog.dismiss();
                     }
@@ -1036,12 +1046,10 @@ public class SyncData extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             super.onBackPressed();
-//            Intent intent = new Intent(SyncData.this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     protected void onStart() {
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
