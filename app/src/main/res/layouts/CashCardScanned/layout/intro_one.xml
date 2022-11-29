@@ -212,9 +212,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
+                    app:endIconMode="clear_text"
                     app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
-                    app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/ic_middle">
 
                     <EditText
@@ -385,7 +385,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_relationship_to_grantee"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
@@ -466,8 +465,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    app:helperText="Required"
                     app:endIconMode="clear_text"
+                    app:helperText="Required"
                     app:helperTextTextColor="@color/validation"
                     app:startIconDrawable="@drawable/ic_baseline_person_24">
 

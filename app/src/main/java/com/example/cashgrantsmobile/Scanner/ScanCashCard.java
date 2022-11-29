@@ -4560,6 +4560,7 @@ public class ScanCashCard extends AppCompatActivity {
                 aat_ext_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        edt_other_ext_name.setText("");
                         if (aat_ext_name.getText().toString().matches("Others")) {
                             til_other_ext_name.setVisibility(View.VISIBLE);
                         } else {
