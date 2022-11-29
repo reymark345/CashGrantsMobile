@@ -1197,8 +1197,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             statement.bindString(1, validated);
             statement.bindString(2, id);
             statement.execute();
+            database.close();
+            checkEmv.close();
             return true;
         } else {
+            checkEmv.close();
             return false;
         }
     }
