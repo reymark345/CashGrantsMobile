@@ -115,6 +115,7 @@ public class InventoryList extends AppCompatActivity {
                         in.putExtra("emv_id", emv_id);
                         startActivity(in);
                         finish();
+                        sDialog.dismiss();
                     }).show();
             });
         try {
