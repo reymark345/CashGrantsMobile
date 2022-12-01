@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -127,6 +128,9 @@ public class SyncData extends AppCompatActivity {
         String url = BASE_URL + "/api/v1/staff/syncmonitoring";
         tvStatus.setText("Sync Monitoring Creation...");
 
+        gvMain = (GridView) findViewById(R.id.gridView);
+        gvMain2 = (GridView) findViewById(R.id.gridView1);
+
         Integer user_id = 0;
 
         Cursor users_data = sqLiteHelper.getData("SELECT user_id from Api LIMIT 1");
@@ -142,6 +146,9 @@ public class SyncData extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
                 tvStatus = findViewById(R.id.tv_status);
 
                 // on below line we are displaying a success toast message.
@@ -152,31 +159,35 @@ public class SyncData extends AppCompatActivity {
 
                     if (status.matches("success")){
                         tvStatus.setText("Sync Monitoring Completed");
-                        initialize_logs();
+                        myEdit.putInt("sync_total_sync", 0);
+                        myEdit.putInt("sync_total_update", 0);
+                        myEdit.putInt("sync_total_pull", 0);
+                        myEdit.commit();
+
                         lst.add(description);
+                        gvMain.setSelection(gvMain.getCount());
+                        initialize_logs();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                tvStatus = findViewById(R.id.tv_status);
-                tvStatus.setText("Sync Monitoring Error Encountered...");
-                try {
-                    String responseBody = new String(error.networkResponse.data, "utf-8");
-                    JSONObject data = new JSONObject(responseBody);
-                    String description = data.getString("description");
-                    initialize_logs();
-                    lst.add(description);
-                } catch (Exception e) {
-                    initialize_logs();
-                    lst2.add("Network not found.");
-                }
+        }, error -> {
+            // method to handle errors.
+            tvStatus = findViewById(R.id.tv_status);
+            tvStatus.setText("Sync Monitoring Error Encountered...");
+            try {
+                String responseBody = new String(error.networkResponse.data, "utf-8");
+                JSONObject data = new JSONObject(responseBody);
+                String description = data.getString("description");
+                initialize_logs();
+                lst.add(description);
+                gvMain.setSelection(gvMain.getCount());
+            } catch (Exception e) {
+                initialize_logs();
+                lst2.add("Network not found.");
+                gvMain2.setSelection(gvMain2.getCount());
             }
-
         }) {
 
             @Override
@@ -188,10 +199,12 @@ public class SyncData extends AppCompatActivity {
 
             @Override
             protected Map<String, String> getParams() {
+                SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("sync_counter", String.valueOf(total_sync));
-                params.put("update_counter", String.valueOf(total_update));
-                params.put("pulldata_counter", String.valueOf(total_pull));
+
+                params.put("sync_counter", String.valueOf(sh.getInt("sync_total_sync", 0)));
+                params.put("update_counter", String.valueOf(sh.getInt("sync_total_update", 0)));
+                params.put("pulldata_counter", String.valueOf(sh.getInt("sync_total_pull", 0)));
                 params.put("psgc_counter", "0");
                 params.put("user_id", String.valueOf(finalUser_id));
 
@@ -227,6 +240,8 @@ public class SyncData extends AppCompatActivity {
 
         tvStatus.setText("Pulling Data...");
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
             try {
                 remoteData = null;
                 JSONObject data = new JSONObject(response);
@@ -260,6 +275,7 @@ public class SyncData extends AppCompatActivity {
                         tvStatus.setText("Checking pulled data...");
                         if (progressCalc == 100) {
                             lst.add("Pull data omitted.");
+                            gvMain.setSelection(gvMain.getCount());
                             progressTarget.setText(getCountEmvDetails().toString());
                             progressPercent.setText("0");
                             progressBar.setProgress(0);
@@ -272,12 +288,15 @@ public class SyncData extends AppCompatActivity {
                     } else {
                         MainActivity.sqLiteHelper.insertEmvData(dataSets);
                         total_pull = total_pull + dataSets.length();
+                        myEdit.putInt("sync_total_pull",  total_pull);
+                        myEdit.commit();
                         if (progressCalc == 100) {
                             btnSync.setEnabled(true);
                             Toasty.success(SyncData.this, "Completed", Toast.LENGTH_SHORT, true).show();
                             sqLiteHelper.storeLogs("pull", "", "Pull Data Completed.");
                             initialize_logs();
                             lst.add("Pull data completed!.");
+                            gvMain.setSelection(gvMain.getCount());
                             tvStatus.setText("Pull data completed");
                             pullStatus = "completed";
                             syncEmvData();
@@ -292,11 +311,13 @@ public class SyncData extends AppCompatActivity {
                     sqLiteHelper.storeLogs("error", "", "Pull: Error on pulling data.");
                     initialize_logs();
                     lst2.add("Error on pulling data.");
+                    gvMain2.setSelection(gvMain2.getCount());
                 }
 
             } catch (JSONException e) {
                 initialize_logs();
                 lst2.add("Request to PULL Data Error!");
+                gvMain2.setSelection(gvMain2.getCount());
                 btnSync.setEnabled(true);
                 e.printStackTrace();
             }
@@ -324,6 +345,7 @@ public class SyncData extends AppCompatActivity {
                     lst2.add("Pull: Network not found.");
                     Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                 }
+                gvMain2.setSelection(gvMain2.getCount());
             }
 
         }) {
@@ -355,9 +377,9 @@ public class SyncData extends AppCompatActivity {
         // in this we are calling a post method.
         Toasty.info(getApplicationContext(), "Now updating local data. Please wait!", Toast.LENGTH_SHORT, true).show();
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
-            // on below line we are displaying a success toast message.
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
             tvStatus = findViewById(R.id.tv_status);
-
             try {
                 JSONObject data = new JSONObject(response);
                 JSONArray dataSets = data.getJSONArray("data");
@@ -366,12 +388,13 @@ public class SyncData extends AppCompatActivity {
                 if (status.matches("success")){
                     initialize_logs();
                     lst.add("Update data succeed.");
+                    gvMain.setSelection(gvMain.getCount());
+
                     tvStatus.setText("Updating success...");
                     progressCount = findViewById(R.id.progressFigure);
                     progressTarget = findViewById(R.id.progressFigureLast);
                     progressPercent = findViewById(R.id.progressCount);
                     progressBar = findViewById(R.id.progressBar);
-
                     progressTarget.setText(String.valueOf(dataSets.length()));
 
                     for (int i = 0; i < dataSets.length(); i++) {
@@ -384,6 +407,8 @@ public class SyncData extends AppCompatActivity {
                         JSONObject jsonData = dataSets.getJSONObject(i);
                         if (sqLiteHelper.updateEmvValidations(jsonData.getString("validated_at"), jsonData.getString("id"))) {
                             total_update++;
+                            myEdit.putInt("sync_total_update",  total_update);
+                            myEdit.commit();
                         }
                     }
                     sqLiteHelper.storeLogs("update", "", "Update Data Completed.");
@@ -394,7 +419,9 @@ public class SyncData extends AppCompatActivity {
                 else{
                     Toasty.error(getApplicationContext(), "Error on updating the data.", Toast.LENGTH_SHORT, true).show();
                     initialize_logs();
-                    lst.add("Error on updating the data.");
+                    lst2.add("Error on updating the data.");
+                    gvMain2.setSelection(gvMain2.getCount());
+
                     sqLiteHelper.storeLogs("error", "", "Update Data Error.");
                 }
 
@@ -423,9 +450,10 @@ public class SyncData extends AppCompatActivity {
                 btnSync.setEnabled(true);
                 Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                 initialize_logs();
-                lst.add("Network not found.");
+                lst2.add("Network not found.");
                 sqLiteHelper.storeLogs("error", "", "Update Network not found.");
             }
+            gvMain2.setSelection(gvMain2.getCount());
         }) {
             @Override
             public Map<String, String> getHeaders() {
@@ -455,6 +483,8 @@ public class SyncData extends AppCompatActivity {
             tvStatus.setText("Preparing update...");
             initialize_logs();
             lst.add("Sync data omitted");
+            gvMain.setSelection(gvMain.getCount());
+
             updateEmvValidations();
             progressTarget.setText("0");
             progressPercent.setText("0");
@@ -765,6 +795,8 @@ public class SyncData extends AppCompatActivity {
             tvStatus.setText("Syncing...");
 
             request = new VolleyMultipartRequest(Request.Method.POST, url, response -> {
+                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 try {
                     JSONObject data = new JSONObject(new String(response.data));
                     String status = data.getString("status");
@@ -775,6 +807,8 @@ public class SyncData extends AppCompatActivity {
                     if (status.matches("success")){
                         tvStatus.setText("Success syncing...");
                         total_sync++;
+                        myEdit.putInt("sync_total_sync",  total_sync);
+                        myEdit.commit();
 
                         JSONObject granteeObj = dataObject.getJSONObject("grantee_validations");
                         progressCC[0]++;
@@ -791,7 +825,9 @@ public class SyncData extends AppCompatActivity {
                         progressBar.setProgress(progressCalc.intValue());
 
                         lst.add(description + " household id: " + granteeObj.getString("hh_id"));
-                        gvMain.setAdapter(adapter);
+                        gvMain.setSelection(gvMain.getCount());
+
+//                        gvMain.setAdapter(adapter);
 
                         sqLiteHelper.storeLogs("sync", finalGv_hh_id, "Sync data successfully.");
 //                        sqLiteHelper.deleteScannedData(finalEvd_id, finalGv_id, finalCvd_id, finalNv_id, finalPvd_id, arr_ocv_id);
@@ -806,7 +842,8 @@ public class SyncData extends AppCompatActivity {
                         tvStatus.setText("Syncing encountered an error...");
                         btnSync.setEnabled(true);
                         lst2.add("Error on syncing the data!");
-                        gvMain2.setAdapter(adapter2);
+                        gvMain2.setSelection(gvMain2.getCount());
+//                        gvMain2.setAdapter(adapter2);
                         sqLiteHelper.storeLogs("error", finalGv_hh_id, "Error on syncing data.");
                         Toasty.error(getApplicationContext(), "Error on pulling data.", Toast.LENGTH_SHORT, true).show();
                     }
@@ -832,24 +869,26 @@ public class SyncData extends AppCompatActivity {
                             String message = jsonMessage.getString("message");
                             Toasty.warning(SyncData.this, message, Toast.LENGTH_SHORT, true).show();
                             lst2.add(message);
-                            gvMain2.setAdapter(adapter2);
+//                            gvMain2.setAdapter(adapter2);
                             sqLiteHelper.storeLogs("error", finalGv_hh_id, "Sync: " + message);
                         } else if (responseCode == 404) {
                             JSONObject data = new JSONObject(responseBody);
                             String desc = data.getString("description");
                             Toasty.error(SyncData.this, "Error 404:" + desc, Toast.LENGTH_SHORT, true).show();
                             lst2.add(desc);
-                            gvMain2.setAdapter(adapter2);
+//                            gvMain2.setAdapter(adapter2);
                             sqLiteHelper.storeLogs("error", finalGv_hh_id, "Sync: Error 404");
                         }
                     } catch (Exception e) {
                         Log.d("Error co", String.valueOf(e));
                         queue.cancelAll(this);
                         lst2.add("Network not found");
-                        gvMain2.setAdapter(adapter2);
+                        gvMain2.setSelection(gvMain2.getCount());
+//                        gvMain2.setAdapter(adapter2);
                         sqLiteHelper.storeLogs("error", finalGv_hh_id, " Sync: Network Not Found");
                         Toasty.error(SyncData.this, "Network not found.", Toast.LENGTH_SHORT, true).show();
                     }
+                    gvMain.setSelection(gvMain.getCount());
                 }
 
             }) {
@@ -1034,12 +1073,22 @@ public class SyncData extends AppCompatActivity {
                     IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
                     registerReceiver(networkChangeListener, filter);
                     if (networkChangeListener.connection){
+                        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                        total_sync = sh.getInt("sync_total_sync", 0);
+                        total_update = sh.getInt("sync_total_update", 0);
+                        total_pull = sh.getInt("sync_total_pull", 0);
+                        progressCC[0] = Double.valueOf(0);
                         initialize_logs();
-                        if(pull_check) lst.add("Pulling Data...");
+                        if(pull_check) {
+                            lst.add("Pulling Data...");
+                            gvMain.setSelection(gvMain.getCount());
+                        }
                         pullEmvData(false);
                         sDialog.dismiss();
                     }
                 }).show());
+
+
     }
 
     @Override

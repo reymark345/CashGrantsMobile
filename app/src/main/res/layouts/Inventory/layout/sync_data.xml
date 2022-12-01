@@ -152,7 +152,6 @@
             android:layout_centerHorizontal="true"
             android:columnWidth="300dp"
             android:padding="10dp"
-            android:gravity="center"
             android:numColumns="auto_fit" />
     </LinearLayout>
 
