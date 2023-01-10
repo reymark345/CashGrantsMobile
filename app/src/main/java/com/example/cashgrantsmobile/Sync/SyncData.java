@@ -1000,7 +1000,7 @@ public class SyncData extends AppCompatActivity {
                     Map<String, DataPart> params = new HashMap<>();
                         if (finalCvd_card_image != null) {
                             Bitmap card_image = BitmapFactory.decodeByteArray(finalCvd_card_image, 0, finalCvd_card_image.length);
-                            params.put("gv_image", new DataPart("cvd_card_image.png",getFileDataFromDrawable(card_image) ) );
+                            params.put("cvd_card_image", new DataPart("cvd_card_image.png",getFileDataFromDrawable(card_image) ) );
                         }
                         if (finalEvd_additional_image != null) {
                             Bitmap additional_image = BitmapFactory.decodeByteArray(finalEvd_additional_image, 0, finalEvd_additional_image.length);
@@ -1008,7 +1008,7 @@ public class SyncData extends AppCompatActivity {
                         }
                         if (finalGv_grantee_image != null) {
                             Bitmap grantee_image = BitmapFactory.decodeByteArray(finalGv_grantee_image, 0, finalGv_grantee_image.length);
-                            params.put("cvd_card_image", new DataPart("gv_grantee_image.png",getFileDataFromDrawable(grantee_image) ));
+                            params.put("gv_image", new DataPart("gv_grantee_image.png",getFileDataFromDrawable(grantee_image) ));
                         }
 
                         for (int i = 1; i <= arr_other_card.length(); i++) {
