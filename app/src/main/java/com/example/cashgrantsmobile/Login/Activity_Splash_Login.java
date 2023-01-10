@@ -241,7 +241,7 @@ public class Activity_Splash_Login extends AppCompatActivity {
                 }
                 else {
                     hide_loading_bar();
-                    Toasty.error(Activity_Splash_Login.this, "All fields required ", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(Activity_Splash_Login.this, "All fields are required ", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });

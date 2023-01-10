@@ -14,7 +14,7 @@
         android:layout_height="130dp"
         android:layout_marginTop="80dp"
         android:scaleType="centerInside"
-        android:src="@drawable/cglogo"
+        android:src="@drawable/ecav_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -68,17 +68,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="Cash Grants Tracker"
+            android:text="ECaV"
             android:textColor="@color/textHeadline"
-            android:textSize="20sp" />
+            android:textSize="35sp" />
 
         <TextView
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="Sign in to continue"
+            android:text="EMV Cash Card Validation and Monitoring"
             android:textColor="@color/textDescription"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/edtUsername"
