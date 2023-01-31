@@ -85,7 +85,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
     Button btnLogin;
     EditText edtUsername, edtPassword;
-    public static String BASE_URL = "https://crg-finance-svr.entdswd.local/cgtracking";
+//    public static String BASE_URL = "https://crg-finance-svr.entdswd.local/cgtracking";
+    public static String BASE_URL = "http://172.26.153.140/cgtracking/public";
     public static SQLiteHelper sqLiteHelper;
     private LoadingBar loadingBar;
 
