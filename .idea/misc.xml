@@ -128,6 +128,7 @@
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_items.xml" value="0.35625" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_inventory_list.xml" value="0.13333333333333333" />
         <entry key="..\:/development/projects/CashGrantsMobile/app/src/main/res/layouts/Inventory/layout/activity_sync_data.xml" value="0.14673913043478262" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/drawable-v24/ic_complaint.xml" value="0.335" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/drawable-v24/ic_edit.xml" value="0.2975" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/drawable/edittext_bg.xml" value="0.327" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/drawable/ic_baseline_arrow_circle_down_24.xml" value="0.3105" />
@@ -160,6 +161,7 @@
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scan_cash_card.xml" value="0.1" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/activity_scanned_details.xml" value="0.33" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/attested_signature.xml" value="0.2653985507246377" />
+        <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/base_url.xml" value="0.3572916666666667" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/cash_card_scanner_entries.xml" value="0.23641304347826086" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/change_password.xml" value="0.25" />
         <entry key="..\:/laragon/www/CashGrantsMobile/app/src/main/res/layouts/CashCardScanned/layout/informant_signature.xml" value="0.34479166666666666" />

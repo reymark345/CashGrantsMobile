@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CashGrantsMobile"
         >
+
         <activity
             android:name=".Login.Activity_Splash_Login"
             android:exported="true">

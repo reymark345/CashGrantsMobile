@@ -4980,11 +4980,14 @@ public class ScanCashCard extends AppCompatActivity {
                             til_reason_unclaimed.setVisibility(View.VISIBLE);
                             til_card_physically_presented.setVisibility(View.GONE);
 
+
+
                         } else {
                             til_release_date.setVisibility(View.VISIBLE);
                             til_release_place.setVisibility(View.VISIBLE);
                             til_release_by.setVisibility(View.VISIBLE);
                             til_reason_unclaimed.setVisibility(View.GONE);
+                            til_others_reason_unclaimed.setVisibility(View.GONE);
                             til_card_physically_presented.setVisibility(View.VISIBLE);
                         }
                     }
@@ -6246,7 +6249,9 @@ public class ScanCashCard extends AppCompatActivity {
                     til_release_date.setVisibility(View.VISIBLE);
                     til_release_by.setVisibility(View.VISIBLE);
                     til_release_place.setVisibility(View.VISIBLE);
-                    til_card_physically_presented.setVisibility(View.VISIBLE);//new
+                    til_card_physically_presented.setVisibility(View.VISIBLE);
+                    til_others_reason_unclaimed.setVisibility(View.VISIBLE);
+
 
                 }
                 else if (distribution_status.matches("Unclaimed")){
@@ -6257,7 +6262,7 @@ public class ScanCashCard extends AppCompatActivity {
                     til_release_date.setVisibility(View.GONE);
                     til_release_by.setVisibility(View.GONE);
                     til_release_place.setVisibility(View.GONE);
-                    til_card_physically_presented.setVisibility(View.GONE); //new
+                    til_card_physically_presented.setVisibility(View.GONE);
                 }
 
                 if (card_physically_presented.matches("Yes")) {

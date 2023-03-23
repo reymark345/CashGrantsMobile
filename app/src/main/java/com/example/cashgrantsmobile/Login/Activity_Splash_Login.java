@@ -85,8 +85,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
     Button btnLogin;
     EditText edtUsername, edtPassword;
-//    public static String BASE_URL = "https://crg-finance-svr.entdswd.local/cgtracking";
-    public static String BASE_URL = "http://172.26.153.140/cgtracking/public";
+    TextView txtBaseURL;
+    public static String BASE_URL = null;
     public static SQLiteHelper sqLiteHelper;
     private LoadingBar loadingBar;
 
@@ -97,6 +97,11 @@ public class Activity_Splash_Login extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnAccess);
         edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
+        txtBaseURL = (TextView) findViewById(R.id.tv_forgotPassword);
+
+
+
+
 
         loadingBar = new LoadingBar(this);
         createDatabase();
@@ -104,6 +109,19 @@ public class Activity_Splash_Login extends AppCompatActivity {
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         String tokenStats = sh.getString("tokenStatus", "");
+        String base_url = sh.getString("BASE_URL", null);
+
+        if(base_url ==null){
+            BASE_URL = "https://crg-finance-svr.entdswd.local/cgtracking";
+            SharedPreferences.Editor myEdit = sh.edit();
+            myEdit.putString("BASE_URL", BASE_URL);
+            myEdit.commit();
+            Log.d("Error co11", BASE_URL);
+        }
+        else{
+            BASE_URL = base_url;
+            Log.d("Error co22", BASE_URL);
+        }
 
         if(tokenStats.matches("1")){
             Intent intent = new Intent(Activity_Splash_Login.this, MainActivity.class);
@@ -121,6 +139,14 @@ public class Activity_Splash_Login extends AppCompatActivity {
                 | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
+
+        txtBaseURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialogCancel();
+
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +181,8 @@ public class Activity_Splash_Login extends AppCompatActivity {
                                 String mobile = dataObject.getString("mobile");
                                 String name = dataObject.getString("name");
                                 String username = dataObject.getString("username");
+
+
 
                                 if (status.matches("success")){
 
@@ -252,6 +280,54 @@ public class Activity_Splash_Login extends AppCompatActivity {
     }
     public void hide_loading_bar(){
         loadingBar.Hide_loading_bar();
+    }
+
+    public void CustomDialogCancel() {
+
+        final Dialog dialog = new Dialog(Activity_Splash_Login.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.base_url);
+        EditText noteField = dialog.findViewById(R.id.edtBaseUrl);
+        TextInputLayout tilError = dialog.findViewById(R.id.til_baseUrl);
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        String url = sh.getString("BASE_URL", "");
+        noteField.setText(url);
+
+        Button submitButton = dialog.findViewById(R.id.btnSave);
+        Button defaultButton = dialog.findViewById(R.id.btnDefault);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (noteField.length()==0){
+                    tilError.setError("Please fill this blank");
+                }
+                else {
+
+                    String remarks = noteField.getText().toString();
+                    BASE_URL = remarks;
+                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                    String urls = remarks;
+                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                    myEdit.putString("BASE_URL", urls);
+                    myEdit.commit();
+                    dialog.dismiss();
+                    Toasty.success(Activity_Splash_Login.this, "BASE URL Successfully Save "+urls, Toast.LENGTH_SHORT, true).show();
+                }
+            }
+        });
+        defaultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                BASE_URL = "https://crg-finance-svr.entdswd.local/cgtracking";
+                noteField.setText(BASE_URL);
+
+                Toasty.success(Activity_Splash_Login.this, "DEFAULT BASE URL has been selected ", Toast.LENGTH_SHORT, true).show();
+            }
+        });
+        dialog.show();
     }
 
     public void createDatabase(){
