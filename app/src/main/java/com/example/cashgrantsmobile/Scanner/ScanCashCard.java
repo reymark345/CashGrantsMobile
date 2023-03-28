@@ -4979,9 +4979,7 @@ public class ScanCashCard extends AppCompatActivity {
                             til_release_by.setVisibility(View.GONE);
                             til_reason_unclaimed.setVisibility(View.VISIBLE);
                             til_card_physically_presented.setVisibility(View.GONE);
-
-
-
+                            til_card_replacement_request_submitted_details.setVisibility(View.GONE);
                         } else {
                             til_release_date.setVisibility(View.VISIBLE);
                             til_release_place.setVisibility(View.VISIBLE);
@@ -5303,8 +5301,9 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request1.setVisibility(View.GONE);
                         til_reason_not_presented1.setVisibility(View.GONE);
                         til_card_pin_is_attached1.setVisibility(View.GONE);
-                        til_card_number_inputted1.setVisibility(View.GONE); //newother
-                        til_card_number_series1.setVisibility(View.GONE); //newother
+                        til_card_number_inputted1.setVisibility(View.GONE);
+                        til_card_number_series1.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details1.setVisibility(View.GONE);
 
 
                         aat_card_pin_is_attached1.setText(null, false);
@@ -5352,8 +5351,9 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request2.setVisibility(View.GONE);
                         til_reason_not_presented2.setVisibility(View.GONE);
                         til_card_pin_is_attached2.setVisibility(View.GONE);
-                        til_card_number_inputted2.setVisibility(View.GONE); //newother
-                        til_card_number_series2.setVisibility(View.GONE); //newother
+                        til_card_number_inputted2.setVisibility(View.GONE);
+                        til_card_number_series2.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details2.setVisibility(View.GONE);
 
                         aat_card_pin_is_attached2.setText(null, false);
                         aat_reason_not_presented2.setText(null, false);
@@ -5401,8 +5401,9 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request3.setVisibility(View.GONE);
                         til_reason_not_presented3.setVisibility(View.GONE);
                         til_card_pin_is_attached3.setVisibility(View.GONE);
-                        til_card_number_inputted3.setVisibility(View.GONE); //newother
-                        til_card_number_series3.setVisibility(View.GONE); //newother
+                        til_card_number_inputted3.setVisibility(View.GONE);
+                        til_card_number_series3.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details3.setVisibility(View.GONE);
 
                         aat_card_pin_is_attached3.setText(null, false);
                         aat_reason_not_presented3.setText(null, false);
@@ -5450,8 +5451,9 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request4.setVisibility(View.GONE);
                         til_reason_not_presented4.setVisibility(View.GONE);
                         til_card_pin_is_attached4.setVisibility(View.GONE);
-                        til_card_number_inputted4.setVisibility(View.GONE); //newother
-                        til_card_number_series4.setVisibility(View.GONE); //newother
+                        til_card_number_inputted4.setVisibility(View.GONE);
+                        til_card_number_series4.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details4.setVisibility(View.GONE);
 
 
                         aat_card_pin_is_attached4.setText(null, false);
@@ -5500,8 +5502,9 @@ public class ScanCashCard extends AppCompatActivity {
                         til_card_replacement_request5.setVisibility(View.GONE);
                         til_reason_not_presented5.setVisibility(View.GONE);
                         til_card_pin_is_attached5.setVisibility(View.GONE);
-                        til_card_number_inputted5.setVisibility(View.GONE); //newother
-                        til_card_number_series5.setVisibility(View.GONE); //newother
+                        til_card_number_inputted5.setVisibility(View.GONE);
+                        til_card_number_series5.setVisibility(View.GONE);
+                        til_card_replacement_request_submitted_details5.setVisibility(View.GONE);
 
                         aat_card_pin_is_attached5.setText(null, false);
                         aat_reason_not_presented5.setText(null, false);
@@ -5518,8 +5521,8 @@ public class ScanCashCard extends AppCompatActivity {
 
                             til_card_pin_is_attached5.setVisibility(View.VISIBLE);
                             rlOtherCardScanningField5.setVisibility(View.VISIBLE);
-                            til_card_number_inputted5.setVisibility(View.VISIBLE); //newother
-                            til_card_number_series5.setVisibility(View.VISIBLE); //newother
+                            til_card_number_inputted5.setVisibility(View.VISIBLE);
+                            til_card_number_series5.setVisibility(View.VISIBLE);
                             if (aat_distribution_status5.getText().toString().matches("Unclaimed")){
                                 til_distribution_status5.setError("Must be Claimed if physical cash card presented");
                                 isValidationError++;
@@ -5568,9 +5571,6 @@ public class ScanCashCard extends AppCompatActivity {
                         edt_remarks.setText(null);
                         edt_staff_intervention.setText(null);
                         edt_other_details.setText(null);
-//                        if (aat_reason_not_presented.getText().toString().matches("Unclaimed")) {
-//                            til_reason_unclaimed.setVisibility(View.VISIBLE);
-//                        }
                         if (aat_reason_not_presented.getText().toString().matches("Lost/Stolen") || aat_reason_not_presented.getText().toString().matches("Damaged/Defective")) {
                              aat_card_replacement_request.setText("");
                              til_card_replacement_request.setVisibility(View.VISIBLE);
