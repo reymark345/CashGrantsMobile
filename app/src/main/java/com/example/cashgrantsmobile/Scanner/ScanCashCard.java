@@ -3676,9 +3676,6 @@ public class ScanCashCard extends AppCompatActivity {
                 til_conformed.setError(null);
             }
 
-
-
-
             store_preferences(4);
         } else {
             Log.v(ContentValues.TAG,"Error Current Btn Next");
@@ -4594,6 +4591,7 @@ public class ScanCashCard extends AppCompatActivity {
                     til_contact_no_of.setVisibility(View.GONE);
                     aat_contact_no_of.setText(null, false);
                     til_contact_no_of_others.setVisibility(View.GONE);
+                    til_contact_no_relationship.setVisibility(View.GONE);
                     edt_contact_no_of_others.setText(null);
                     edt_contact_no_relationship.setText(null);
                 } else if (contact_no.length() == 10) {

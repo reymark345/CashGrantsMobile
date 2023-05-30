@@ -145,13 +145,14 @@ public class UpdateData extends AppCompatActivity {
     RelativeLayout rlOtherCardScanningField1, rlOtherCardScanningField2, rlOtherCardScanningField3, rlOtherCardScanningField4, rlOtherCardScanningField5;
 
     //    Intro 3 XML Fields
-    TextInputLayout til_nma_amount, til_nma_reason, til_nma_others_reason, til_nma_date_claimed, til_nma_remarks, til_overall_remarks;
+    TextInputLayout til_nma_amount, til_nma_reason, til_nma_others_reason, til_nma_date_claimed, til_nma_remarks, til_overall_remarks,til_conformed;
     EditText edt_nma_amount, edt_nma_others_reason, edt_nma_date_claimed, edt_nma_remarks, edt_overall_remarks,edt_non_emv, edt_card_name;
-    AutoCompleteTextView aat_nma_reason;
+    AutoCompleteTextView aat_nma_reason, aat_nma_conformed;
 
 
     String[] Ans = new String[]{"Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
+    String[] dp_ovt_paunawa_conformed = new String[]{"Yes"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
     String[] Contact_no_of = new String[]{"Grantee", "Others"};
@@ -2490,7 +2491,9 @@ public class UpdateData extends AppCompatActivity {
                 edt_card_name.setEnabled(false);
                 break;
             case 4:
+                til_conformed = findViewById(R.id.til_conformed);
                 til_overall_remarks = findViewById(R.id.til_overall_remarks);
+                aat_nma_conformed = findViewById(R.id.aat_nma_conformed);
                 edt_overall_remarks = findViewById(R.id.edt_overall_remarks);
                 break;
 
@@ -3858,6 +3861,15 @@ public class UpdateData extends AppCompatActivity {
         } else if (current == 4){
             pressNext =false;
             xml_initialization(4);
+            String ovt_conformed = aat_nma_conformed.getText().toString();
+
+            if (ovt_conformed.matches("")){
+                til_conformed.setError(required_field);
+                isValidationError++;
+            } else {
+                til_conformed.setError(null);
+            }
+
             store_preferences(4);
         } else {
             Log.v(ContentValues.TAG,"Error Current Btn Next");
@@ -4326,9 +4338,12 @@ public class UpdateData extends AppCompatActivity {
                 myEdit.commit();
                 break;
             case 4:
+                String nma_conformed = aat_nma_conformed.getText().toString();
                 String overall_remarks = edt_overall_remarks.getText().toString();
+                myEdit.putString("ovt_conformed_u", nma_conformed);
                 myEdit.putString("overall_remarks_u", overall_remarks);
                 myEdit.commit();
+
                 break;
             default:
                 break;
@@ -6560,6 +6575,21 @@ public class UpdateData extends AppCompatActivity {
                 break;
             case 3:
                 xml_initialization(4);
+
+                ArrayAdapter<String> adapterConformedNMA = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, dp_ovt_paunawa_conformed);
+                adapterConformedNMA.setDropDownViewResource(simple_spinner_dropdown_item);
+                aat_nma_conformed.setAdapter(adapterConformedNMA);
+
+                String nma_conformed = sh.getString("ovt_conformed", "");
+//                aat_nma_conformed.setText(nma_conformed, false);
+
+                if (nma_conformed.matches("Yes")) {
+                    til_conformed.setVisibility(View.VISIBLE);
+                } else {
+                    til_conformed.setVisibility(View.GONE);
+                }
+
+
                 String overall_remarks = sh.getString("overall_remarks_u", "");
                 edt_overall_remarks.setText(overall_remarks);
                 break;
@@ -6589,6 +6619,7 @@ public class UpdateData extends AppCompatActivity {
         myEdit.putString("contact_no_of_others_u","");
         myEdit.putString("assigned_staff_u","");
         myEdit.putString("is_minor_u","");
+        myEdit.putString("contact_no_of_relationship_u","");
 
         //2
         myEdit.putString("card_number_prefilled_u", "");
@@ -6725,6 +6756,7 @@ public class UpdateData extends AppCompatActivity {
         myEdit.putString("card_number_prefilled5_u", "");
 
         //4
+        myEdit.putString("ovt_conformed_u", "");
         myEdit.putString("overall_remarks_u", "");
         myEdit.putInt("evd_id", 0);
         myEdit.putInt("gv_id", 0);
