@@ -4397,6 +4397,7 @@ public class ScanCashCard extends AppCompatActivity {
                     myEdit.putString("ovt_conformed", ovt_paunawa_conformed);
                     myEdit.commit();
 
+
                     aat_set.setText(hh_set_group);
                     edt_last_name.setText(last_name);
                     edt_first_name.setText(first_name);
@@ -6733,7 +6734,9 @@ public class ScanCashCard extends AppCompatActivity {
                 String nma_conformed = sh.getString("ovt_conformed", "");
 //                aat_nma_conformed.setText(nma_conformed, false);
 
-                if (nma_conformed.matches("Yes")) {
+                String lower_name_conformed =  nma_conformed.toLowerCase();
+
+                if (lower_name_conformed.matches("yes")) {
                     til_conformed.setVisibility(View.VISIBLE);
                 } else {
                     til_conformed.setVisibility(View.GONE);
