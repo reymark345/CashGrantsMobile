@@ -96,6 +96,7 @@ public class ScanCashCard extends AppCompatActivity {
     Uri image_uri;
 
     String hh_id,sex,hh_set_group,other_card_number_1,other_card_holder_name_1,other_card_number_2,other_card_holder_name_2,other_card_number_3,other_cardholder_name_3, first_name,last_name,middle_name,ext_name,hh_status,province,municipality,barangay,nma_amount,nma_non_emv,nma_card_name,grantee_card_number,grantee_card_release_date,grantee_card_release_date1,grantee_card_release_date2,grantee_card_release_date3,grantee_card_release_date4,grantee_card_release_date5,other_card_release_date_1,other_card_release_date_2,grantee_distribution_status,grantee_distribution_status_record,grantee_distribution_status_record1,grantee_distribution_status_record2,grantee_distribution_status_record3,grantee_distribution_status_record4,grantee_distribution_status_record5,other_card_distribution_status_1,other_card_distribution_status_2,upload_history_id,other_card_holder_1,other_card_holder_2,other_card_holder_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_4,other_card_distribution_status_4,other_card_release_date_4, other_card_number_5,other_card_holder_5,other_card_distribution_status_5,other_card_release_date_5,created_at,updated_at,validated_at;
+    String ovt_paunawa_conformed = "";
     Integer emv_monitoring_id,record_counter;
 
     private int prevCount = 0;
@@ -126,8 +127,8 @@ public class ScanCashCard extends AppCompatActivity {
 
 
 //    Intro 1 XML Fields
-    TextInputLayout til_hh_id, til_set, til_last_name, til_first_name, til_middle_name, til_ext_name, til_other_ext_name, til_hh_status, til_province_code, til_municipality_code, til_barangay_code, til_sex, til_is_grantee, til_relationship_to_grantee, til_contact_no, til_contact_no_of, til_contact_no_of_others, til_assigned_staff, til_is_minor;
-    EditText edt_hh_id, edt_last_name, edt_first_name, edt_middle_name, edt_other_ext_name, edt_contact_no, edt_contact_no_of_others, edt_assigned_staff;
+    TextInputLayout til_hh_id, til_set, til_last_name, til_first_name, til_middle_name, til_ext_name, til_other_ext_name, til_hh_status, til_province_code, til_municipality_code, til_barangay_code, til_sex, til_is_grantee, til_relationship_to_grantee, til_contact_no, til_contact_no_of, til_contact_no_of_others, til_assigned_staff, til_is_minor,til_contact_no_relationship;
+    EditText edt_hh_id, edt_last_name, edt_first_name, edt_middle_name, edt_other_ext_name, edt_contact_no, edt_contact_no_of_others, edt_assigned_staff, edt_contact_no_relationship;
     AutoCompleteTextView aat_set, aat_ext_name, aat_hh_status, aat_province_code, aat_municipality_code, aat_barangay_code, aat_sex, aat_is_grantee, aat_relationship_to_grantee, aat_contact_no_of, aat_is_minor;
 
 //    Intro 2 XML Fields
@@ -145,17 +146,19 @@ public class ScanCashCard extends AppCompatActivity {
     RelativeLayout rlOtherCardScanningField1, rlOtherCardScanningField2, rlOtherCardScanningField3, rlOtherCardScanningField4, rlOtherCardScanningField5;
 
 //    Intro 3 XML Fields
-    TextInputLayout til_nma_amount, til_nma_reason, til_nma_others_reason, til_nma_date_claimed, til_nma_remarks, til_overall_remarks;
+    TextInputLayout til_nma_amount, til_nma_reason, til_nma_others_reason, til_nma_date_claimed, til_nma_remarks, til_overall_remarks,til_conformed;
     EditText edt_nma_amount, edt_nma_others_reason, edt_nma_date_claimed, edt_nma_remarks, edt_overall_remarks, edt_non_emv, edt_card_name;
-    AutoCompleteTextView aat_nma_reason;
+    AutoCompleteTextView aat_nma_reason, aat_nma_conformed;
 
     String[] Ans = new String[]{"Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
+    String[] dp_ovt_paunawa_conformed = new String[]{"Yes"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
     String[] modifiedArray = Arrays.copyOfRange(Reasons, 1, Reasons.length);
 
     String[] Contact_no_of = new String[]{"Grantee", "Others"};
+    String[] Contact_no_of_rep = new String[]{"Grantee","Representative","Others"};
     String[] Interviewee = new String[]{"Grantee", "Representative"};
     String[] ClientStatus = new String[]{
             "1 - Active",
@@ -1098,6 +1101,18 @@ public class ScanCashCard extends AppCompatActivity {
         }
     }
 
+    public void scannedNonEmvNumber(String card_number){
+        StringBuilder formattedString = new StringBuilder();
+        for (int i = 0; i < card_number.length(); i++) {
+            if (i > 0 && i % 4 == 0) {
+                formattedString.append(" ");
+            }
+            formattedString.append(card_number.charAt(i));
+        }
+        String formattedResult = formattedString.toString();
+        edt_non_emv.setText(formattedResult);
+    }
+
 
     public void scannedCardNumber(EditText card_number , TextInputLayout tilCard){
         card_number.addTextChangedListener(new TextWatcher() {
@@ -1135,6 +1150,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
         });
     }
+
 
     public void scannedCardNumber1(EditText card_number , TextInputLayout tilCard){
         card_number.addTextChangedListener(new TextWatcher() {
@@ -1622,7 +1638,8 @@ public class ScanCashCard extends AppCompatActivity {
         String representative_name = sh.getString("representative_name","");
         String sync_at = sh.getString("sync_at","");
         int user_id = sh.getInt("user_id",0);
-        int emv_validation_id = sh.getInt("emv_alidation_id",0);
+        int emv_validation_id = sh.getInt("emv_validation_id",0);
+//        int emv_validation_id = sh.getInt("emv_alidation_id",0);
 
 
         String card_number_prefilled = sh.getString("card_number_prefilled","");
@@ -1650,16 +1667,7 @@ public class ScanCashCard extends AppCompatActivity {
         String release_date_record5 = sh.getString("release_date_record5","");
         //end"distribution_status_record"
 
-        Log.v(TAG,"test "+release_date_record);
-        Log.v(TAG,"test "+release_date_record1);
-        Log.v(TAG,"test "+release_date_record2);
-        Log.v(TAG,"test "+release_date_record3);
-        Log.v(TAG,"test "+release_date_record4);
-        Log.v(TAG,"test "+release_date_record5);
-
-
-
-
+//        Log.v(TAG,"test "+release_date_record);
         String release_date = sh.getString("release_date","");
         String release_by = sh.getString("release_by","");
         String release_place = sh.getString("release_place","");
@@ -1673,6 +1681,7 @@ public class ScanCashCard extends AppCompatActivity {
         String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details","");
         String overall_remarks = sh.getString("overall_remarks", "");
         String contact_no_of_others = sh.getString("contact_no_of_others", "");
+        String ovt_relationship_to_contact_no = sh.getString("contact_no_of_relationship", "");
         int emv_monitoring_id = sh.getInt("emv_monitoring_id",0);
 
         String card_holder_name1 = sh.getString("card_holder_name1","");
@@ -1807,7 +1816,7 @@ public class ScanCashCard extends AppCompatActivity {
                                 imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason,nma_non_emv,nma_card_name,
                                 distribution_status_record,distribution_status_record1,distribution_status_record2,distribution_status_record3,distribution_status_record4,distribution_status_record5,
                                 release_date_record,release_date_record1,release_date_record2,release_date_record3,release_date_record4,release_date_record5,
-                                card_number_prefilled1,card_number_prefilled2,card_number_prefilled3,card_number_prefilled4,card_number_prefilled5);
+                                card_number_prefilled1,card_number_prefilled2,card_number_prefilled3,card_number_prefilled4,card_number_prefilled5, ovt_relationship_to_contact_no);
 
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
@@ -1886,6 +1895,7 @@ public class ScanCashCard extends AppCompatActivity {
                 til_contact_no = findViewById(R.id.til_contact_no);
                 til_contact_no_of = findViewById(R.id.til_contact_no_of);
                 til_contact_no_of_others = findViewById(R.id.til_contact_no_of_others);
+                til_contact_no_relationship = findViewById(R.id.til_contact_no_relationship);
                 til_is_minor = findViewById(R.id.til_is_minor);
                 til_assigned_staff = findViewById(R.id.til_assigned_staff);
                 edt_hh_id = findViewById(R.id.edt_hh_id);
@@ -1906,6 +1916,7 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_contact_no = findViewById(R.id.edt_contact_no);
                 aat_contact_no_of = findViewById(R.id.aat_contact_no_of);
                 edt_contact_no_of_others = findViewById(R.id.edt_contact_no_of_others);
+                edt_contact_no_relationship = findViewById(R.id.edt_contact_no_relationship);
                 aat_is_minor = findViewById(R.id.aat_is_minor);
                 edt_assigned_staff = findViewById(R.id.edt_assigned_staff);
 
@@ -2269,7 +2280,10 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_card_name.setEnabled(false);
                 break;
             case 4:
+
+                til_conformed = findViewById(R.id.til_conformed);
                 til_overall_remarks = findViewById(R.id.til_overall_remarks);
+                aat_nma_conformed = findViewById(R.id.aat_nma_conformed);
                 edt_overall_remarks = findViewById(R.id.edt_overall_remarks);
                 break;
 
@@ -2315,6 +2329,8 @@ public class ScanCashCard extends AppCompatActivity {
             String contact_no = edt_contact_no.getText().toString();
             String contact_no_of = aat_contact_no_of.getText().toString();
             String contact_no_of_others = edt_contact_no_of_others.getText().toString();
+            String contact_no_of_relationship = edt_contact_no_relationship.getText().toString();
+
             String assigned_staff = edt_assigned_staff.getText().toString();
             String is_minor = aat_is_minor.getText().toString();
 
@@ -2434,6 +2450,13 @@ public class ScanCashCard extends AppCompatActivity {
                             } else {
                                 til_contact_no_of_others.setError(null);
                             }
+                            if(contact_no_of_relationship.matches("")){
+                                til_contact_no_relationship.setError(required_field);
+                                isValidationError++;
+                            }
+                            else{
+                                til_contact_no_relationship.setError(null);
+                            }
                         }
                     }
                 }
@@ -2445,7 +2468,6 @@ public class ScanCashCard extends AppCompatActivity {
             pressNext =false;
 
             xml_initialization(2);
-
 
             //old_data
             String distribution_status = aat_distribution_status.getText().toString();
@@ -2591,7 +2613,6 @@ public class ScanCashCard extends AppCompatActivity {
                         til_release_place.setError(null);
                     }
 
-                    //new
                     if (card_physically_presented.matches("")) {
                         til_card_physically_presented.setError(required_field);
                         isValidationError++;
@@ -3646,6 +3667,15 @@ public class ScanCashCard extends AppCompatActivity {
         } else if (current == 4) {
             pressNext =false;
             xml_initialization(4);
+
+            String ovt_conformed = aat_nma_conformed.getText().toString();
+            if (ovt_conformed.matches("")){
+                til_conformed.setError(required_field);
+                isValidationError++;
+            } else {
+                til_conformed.setError(null);
+            }
+
             store_preferences(4);
         } else {
             Log.v(ContentValues.TAG,"Error Current Btn Next");
@@ -3804,6 +3834,7 @@ public class ScanCashCard extends AppCompatActivity {
                 String contact_no = edt_contact_no.getText().toString();
                 String contact_no_of = aat_contact_no_of.getText().toString();
                 String contact_no_of_others = edt_contact_no_of_others.getText().toString();
+                String contact_no_of_relationship = edt_contact_no_relationship.getText().toString();
                 String assigned_staff = edt_assigned_staff.getText().toString();
                 String is_minor = aat_is_minor.getText().toString();
                 String representative_name = edt_representative_name.getText().toString();
@@ -3825,6 +3856,7 @@ public class ScanCashCard extends AppCompatActivity {
                 myEdit.putString("contact_no",contact_no);
                 myEdit.putString("contact_no_of",contact_no_of);
                 myEdit.putString("contact_no_of_others",contact_no_of_others);
+                myEdit.putString("contact_no_of_relationship",contact_no_of_relationship);
                 myEdit.putString("assigned_staff",assigned_staff);
                 myEdit.putString("is_minor",is_minor);
                 myEdit.putString("representative_name", representative_name);
@@ -4069,20 +4101,23 @@ public class ScanCashCard extends AppCompatActivity {
             case 3:
                 String nma_amount = edt_nma_amount.getText().toString();
                 String nma_reason = aat_nma_reason.getText().toString();
+
                 String nma_others_reason = edt_nma_others_reason.getText().toString();
                 String nma_date_claimed = edt_nma_date_claimed.getText().toString();
                 String nma_remarks = edt_nma_remarks.getText().toString();
 
                 myEdit.putString("nma_amount", nma_amount);
                 myEdit.putString("nma_reason", nma_reason);
+
                 myEdit.putString("nma_others_reason", nma_others_reason);
                 myEdit.putString("nma_date_claimed", nma_date_claimed);
                 myEdit.putString("nma_remarks", nma_remarks);
                 myEdit.commit();
                 break;
             case 4:
+                String nma_conformed = aat_nma_conformed.getText().toString();
                 String overall_remarks = edt_overall_remarks.getText().toString();
-
+                myEdit.putString("ovt_conformed", nma_conformed);
                 myEdit.putString("overall_remarks", overall_remarks);
                 myEdit.commit();
                 break;
@@ -4096,7 +4131,8 @@ public class ScanCashCard extends AppCompatActivity {
         String household_no ="";
         household_no = edt_hh_id.getText().toString();
         if (!household_no.matches("")){
-           Cursor search = MainActivity.sqLiteHelper.getData("SELECT id,first_name,last_name,middle_name,ext_name,hh_id,hh_status,province,municipality,barangay,sex,hh_set_group,nma_amount,grantee_card_number,grantee_distribution_status,grantee_card_release_date,other_card_number_1,other_card_holder_name_1,other_card_distribution_status_1,other_card_release_date_1,other_card_number_2,other_card_holder_name_2,other_card_distribution_status_2,other_card_release_date_2,other_card_number_3,other_card_holder_name_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_name_4,other_card_distribution_status_4,other_card_release_date_4,other_card_number_5,other_card_holder_name_5,other_card_distribution_status_5,other_card_release_date_5,upload_history_id,record_counter,created_at,updated_at,validated_at, nma_non_emv, nma_card_name FROM emv_validations WHERE hh_id='"+household_no+"'");
+            Cursor search = MainActivity.sqLiteHelper.getData("SELECT id,first_name,last_name,middle_name,ext_name,hh_id,hh_status,province,municipality,barangay,sex,hh_set_group,nma_amount,grantee_card_number,grantee_distribution_status,grantee_card_release_date,other_card_number_1,other_card_holder_name_1,other_card_distribution_status_1,other_card_release_date_1,other_card_number_2,other_card_holder_name_2,other_card_distribution_status_2,other_card_release_date_2,other_card_number_3,other_card_holder_name_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_name_4,other_card_distribution_status_4,other_card_release_date_4,other_card_number_5,other_card_holder_name_5,other_card_distribution_status_5,other_card_release_date_5,upload_history_id,record_counter,created_at,updated_at,validated_at, nma_non_emv, nma_card_name,ovt_paunawa_conformed FROM emv_validations WHERE hh_id='"+household_no+"'");
+//           Cursor search = MainActivity.sqLiteHelper.getData("SELECT id,first_name,last_name,middle_name,ext_name,hh_id,hh_status,province,municipality,barangay,sex,hh_set_group,nma_amount,grantee_card_number,grantee_distribution_status,grantee_card_release_date,other_card_number_1,other_card_holder_name_1,other_card_distribution_status_1,other_card_release_date_1,other_card_number_2,other_card_holder_name_2,other_card_distribution_status_2,other_card_release_date_2,other_card_number_3,other_card_holder_name_3,other_card_distribution_status_3,other_card_release_date_3,other_card_number_4,other_card_holder_name_4,other_card_distribution_status_4,other_card_release_date_4,other_card_number_5,other_card_holder_name_5,other_card_distribution_status_5,other_card_release_date_5,upload_history_id,record_counter,created_at,updated_at,validated_at, nma_non_emv, nma_card_name FROM emv_validations WHERE hh_id='"+household_no+"'");
             while (search.moveToNext()) {
                 emv_monitoring_id = search.getInt(0);
                 first_name = search.getString(1);
@@ -4152,17 +4188,15 @@ public class ScanCashCard extends AppCompatActivity {
                 validated_at = search.getString(40);
                 nma_non_emv = search.getString(41);
                 nma_card_name = search.getString(42);
-
+                ovt_paunawa_conformed = search.getString(43);
             }
 
             getOtherCard(household_no);
-
-
-             String other_card1 = String.valueOf(other_card_number_1);
-             String other_card2 = String.valueOf(other_card_number_2);
-             String other_card3 = String.valueOf(other_card_number_3);
-             String other_card4 = String.valueOf(other_card_number_4);
-             String other_card5 = String.valueOf(other_card_number_5);
+            String other_card1 = String.valueOf(other_card_number_1);
+            String other_card2 = String.valueOf(other_card_number_2);
+            String other_card3 = String.valueOf(other_card_number_3);
+            String other_card4 = String.valueOf(other_card_number_4);
+            String other_card5 = String.valueOf(other_card_number_5);
 
             String grantee_distribution_record1 = String.valueOf(grantee_distribution_status_record1);
             String grantee_distribution_record2 = String.valueOf(grantee_distribution_status_record2);
@@ -4180,6 +4214,32 @@ public class ScanCashCard extends AppCompatActivity {
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
 
+//            String[] otherCardNumbers = {other_card_number_1, other_card_number_2, other_card_number_3, other_card_number_4, other_card_number_5};
+//            String[] otherCards = {other_card1, other_card2, other_card3, other_card4, other_card5};
+//            for (int i = 0; i < otherCards.length; i++) {
+//                if (otherCards[i] != null && otherCards[i].equals("null")) {
+//                    otherCardNumbers[i] = "";
+//                }
+//            }
+//
+//            // Modify grantee_distribution_status_record variables
+//            String[] granteeDistributionStatusRecords = {grantee_distribution_status_record1, grantee_distribution_status_record2, grantee_distribution_status_record3, grantee_distribution_status_record4, grantee_distribution_status_record5};
+//            String[] granteeDistributionRecords = {grantee_distribution_record1, grantee_distribution_record2, grantee_distribution_record3, grantee_distribution_record4, grantee_distribution_record5};
+//            for (int i = 0; i < granteeDistributionRecords.length; i++) {
+//                if (granteeDistributionRecords[i] != null && granteeDistributionRecords[i].equals("null")) {
+//                    granteeDistributionStatusRecords[i] = "";
+//                }
+//            }
+//
+//            // Modify grantee_card_release_date variables
+//            String[] granteeCardReleaseDates = {grantee_card_release_date1, grantee_card_release_date2, grantee_card_release_date3, grantee_card_release_date4, grantee_card_release_date5};
+//            String[] granteeCardDates = {grantee_card_date1, grantee_card_date2, grantee_card_date3, grantee_card_date4, grantee_card_date5};
+//            for (int i = 0; i < granteeCardDates.length; i++) {
+//                if (granteeCardDates[i] != null && granteeCardDates[i].equals("null")) {
+//                    granteeCardReleaseDates[i] = "";
+//                }
+//            }
+
              if (other_card1.matches("null")){
                  other_card_number_1 = "";
              }
@@ -4195,7 +4255,6 @@ public class ScanCashCard extends AppCompatActivity {
              if (other_card5.matches("null")){
                  other_card_number_5 = "";
              }
-
 
             if (grantee_distribution_record1.matches("null")){
                 grantee_distribution_status_record1 = "";
@@ -4229,9 +4288,6 @@ public class ScanCashCard extends AppCompatActivity {
                 grantee_card_release_date5 = "";
             }
 
-
-
-
             clear_preferences();
             aat_set.setText(null, false);
             edt_last_name.setText(null);
@@ -4249,6 +4305,7 @@ public class ScanCashCard extends AppCompatActivity {
             edt_contact_no.setText(null);
             aat_contact_no_of.setText(null, false);
             edt_contact_no_of_others.setText(null);
+            edt_contact_no_relationship.setText(null);
             edt_assigned_staff.setText(null);
             aat_is_minor.setText(null);
 
@@ -4337,7 +4394,9 @@ public class ScanCashCard extends AppCompatActivity {
                     myEdit.putString("card_holder_name5", other_card_holder_5);
                     myEdit.putString("distribution_status5", other_card_distribution_status_5);
                     myEdit.putString("release_date5", other_card_release_date_5);
+                    myEdit.putString("ovt_conformed", ovt_paunawa_conformed);
                     myEdit.commit();
+
 
                     aat_set.setText(hh_set_group);
                     edt_last_name.setText(last_name);
@@ -4442,6 +4501,9 @@ public class ScanCashCard extends AppCompatActivity {
                 ArrayAdapter<String> adapterExtensionName = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ExtensionName);
                 ArrayAdapter<String> adapterProvince = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, prov_list);
 
+
+
+
                 adapterSex.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterAns.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterClientStatus.setDropDownViewResource(simple_spinner_dropdown_item);
@@ -4479,6 +4541,7 @@ public class ScanCashCard extends AppCompatActivity {
                 String contact_no = sh.getString("contact_no","");
                 String contact_no_of = sh.getString("contact_no_of","");
                 String contact_no_of_others = sh.getString("contact_no_of_others","");
+                String contact_no_of_relationship = sh.getString("contact_no_of_relationship","");
                 String assigned_staff = sh.getString("assigned_staff","");
                 String is_minor = sh.getString("is_minor","");
                 String representative_name = sh.getString("representative_name", "");
@@ -4510,6 +4573,7 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_contact_no.setText(contact_no);
                 aat_contact_no_of.setText(contact_no_of, false);
                 edt_contact_no_of_others.setText(contact_no_of_others);
+                edt_contact_no_relationship.setText(contact_no_of_relationship);
                 aat_is_minor.setText(assigned_staff, false);
                 edt_assigned_staff.setText(is_minor);
                 edt_representative_name.setText(representative_name);
@@ -4528,22 +4592,35 @@ public class ScanCashCard extends AppCompatActivity {
                     til_contact_no_of.setVisibility(View.GONE);
                     aat_contact_no_of.setText(null, false);
                     til_contact_no_of_others.setVisibility(View.GONE);
+                    til_contact_no_relationship.setVisibility(View.GONE);
                     edt_contact_no_of_others.setText(null);
+                    edt_contact_no_relationship.setText(null);
                 } else if (contact_no.length() == 10) {
                     if (contact_no_of.matches("Others")) {
                         til_contact_no_of_others.setVisibility(View.VISIBLE);
+                        til_contact_no_relationship.setVisibility(View.VISIBLE);
                     } else {
                         til_contact_no_of_others.setVisibility(View.GONE);
+                        til_contact_no_relationship.setVisibility(View.GONE);
                     }
                 }
 
                 if (aat_is_grantee.getText().toString().matches("Representative")) {
                     til_relationship_to_grantee.setVisibility(View.VISIBLE);
                     til_representative_name.setVisibility(View.VISIBLE);
+
+                    adapterContact_no_of = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Contact_no_of_rep);
+                    adapterContact_no_of.setDropDownViewResource(simple_spinner_dropdown_item);
+                    aat_contact_no_of.setAdapter(adapterContact_no_of);
+
                 } else {
                     til_relationship_to_grantee.setVisibility(View.GONE);
                     til_representative_name.setVisibility(View.GONE);
                     aat_relationship_to_grantee.setText(null, false);
+
+                    adapterContact_no_of = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Contact_no_of);
+                    adapterContact_no_of.setDropDownViewResource(simple_spinner_dropdown_item);
+                    aat_contact_no_of.setAdapter(adapterContact_no_of);
                 }
 
 
@@ -4595,8 +4672,14 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         if (aat_contact_no_of.getText().toString().matches("Others") && !edt_contact_no.getText().toString().matches("")) {
                             til_contact_no_of_others.setVisibility(View.VISIBLE);
+                            til_contact_no_relationship.setVisibility(View.VISIBLE);
                         } else {
+                            edt_contact_no_of_others.setText("");
+                            edt_contact_no_relationship.setText("");
+                            til_contact_no_of_others.setError(null);
                             til_contact_no_of_others.setVisibility(View.GONE);
+                            edt_contact_no_relationship.setText(null);
+                            til_contact_no_relationship.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -4612,6 +4695,7 @@ public class ScanCashCard extends AppCompatActivity {
                             til_contact_no_of_others.setVisibility(View.GONE);
                             aat_contact_no_of.setText(null,null);
                             edt_contact_no_of_others.setText(null);
+                            edt_contact_no_relationship.setText(null);
                         }
                         else{
                             til_contact_no.setError(null);
@@ -4627,11 +4711,14 @@ public class ScanCashCard extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (aat_contact_no_of.getText().toString().matches("Others")) {
                             til_contact_no_of_others.setVisibility(View.VISIBLE);
+                            til_contact_no_relationship.setVisibility(View.VISIBLE);
                         } else {
                             edt_contact_no_of_others.setText("");
+                            edt_contact_no_relationship.setText("");
                             til_contact_no_of_others.setError(null);
                             til_contact_no_of_others.setVisibility(View.GONE);
-                            edt_contact_no_of_others.setText(null);
+                            edt_contact_no_relationship.setText(null);
+                            til_contact_no_relationship.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -4644,11 +4731,20 @@ public class ScanCashCard extends AppCompatActivity {
                         if (aat_is_grantee.getText().toString().matches("Representative")) {
                             til_relationship_to_grantee.setVisibility(View.VISIBLE);
                             til_representative_name.setVisibility(View.VISIBLE);
+
+                            ArrayAdapter<String> adapterContact_no_of = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Contact_no_of_rep);
+                            adapterContact_no_of.setDropDownViewResource(simple_spinner_dropdown_item);
+                            aat_contact_no_of.setAdapter(adapterContact_no_of);
+
                         } else {
 
                             til_relationship_to_grantee.setVisibility(View.GONE);
                             til_representative_name.setVisibility(View.GONE);
                             aat_relationship_to_grantee.setText(null, false);
+
+                            ArrayAdapter<String> adapterContact_no_of = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, Contact_no_of);
+                            adapterContact_no_of.setDropDownViewResource(simple_spinner_dropdown_item);
+                            aat_contact_no_of.setAdapter(adapterContact_no_of);
                         }
                     }
                 });
@@ -6565,6 +6661,8 @@ public class ScanCashCard extends AppCompatActivity {
                 ArrayAdapter<String> adapterReasonNMA = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ReasonNMA);
                 adapterReasonNMA.setDropDownViewResource(simple_spinner_dropdown_item);
                 aat_nma_reason.setAdapter(adapterReasonNMA);
+
+
                 edt_nma_amount.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -6601,16 +6699,15 @@ public class ScanCashCard extends AppCompatActivity {
 
                 String nma_non_emv = sh.getString("nma_non_emv", "");
                 String nma_card_name = sh.getString("nma_card_name", "");
-
                 String nma_amount = sh.getString("nma_amount", "0");
                 String nma_reason = sh.getString("nma_reason", "");
                 String nma_others_reason = sh.getString("nma_others_reason", "");
                 String nma_date_claimed = sh.getString("nma_date_claimed", "");
                 String nma_remarks = sh.getString("nma_remarks", "");
 
-                edt_non_emv.setText(nma_non_emv);
+//                edt_non_emv.setText(nma_non_emv);
+                scannedNonEmvNumber(nma_non_emv);
                 edt_card_name.setText(nma_card_name);
-
                 edt_nma_amount.setText(nma_amount);
                 aat_nma_reason.setText(nma_reason, false);
                 edt_nma_others_reason.setText(nma_others_reason);
@@ -6627,7 +6724,24 @@ public class ScanCashCard extends AppCompatActivity {
                 }
                 break;
             case 3:
+
                 xml_initialization(4);
+
+                ArrayAdapter<String> adapterConformedNMA = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, dp_ovt_paunawa_conformed);
+                adapterConformedNMA.setDropDownViewResource(simple_spinner_dropdown_item);
+                aat_nma_conformed.setAdapter(adapterConformedNMA);
+
+                String nma_conformed = sh.getString("ovt_conformed", "");
+//                aat_nma_conformed.setText(nma_conformed, false);
+
+                String lower_name_conformed =  nma_conformed.toLowerCase();
+
+                if (lower_name_conformed.matches("yes")) {
+                    til_conformed.setVisibility(View.VISIBLE);
+                } else {
+                    til_conformed.setVisibility(View.GONE);
+                }
+
                 String overall_remarks = sh.getString("overall_remarks", "");
                 edt_overall_remarks.setText(overall_remarks);
                 break;
@@ -6658,6 +6772,7 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("contact_no_of_others","");
         myEdit.putString("assigned_staff","");
         myEdit.putString("is_minor","");
+        myEdit.putString("contact_no_of_relationship","");
 
         //2
         myEdit.putString("card_number_prefilled", "");
@@ -6791,9 +6906,8 @@ public class ScanCashCard extends AppCompatActivity {
         myEdit.putString("card_number_prefilled3", "");
         myEdit.putString("card_number_prefilled4", "");
         myEdit.putString("card_number_prefilled5", "");
-
-
         //4
+        myEdit.putString("ovt_conformed", "");
         myEdit.putString("overall_remarks", "");
         myEdit.commit();
     }

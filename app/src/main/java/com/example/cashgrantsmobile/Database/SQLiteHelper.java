@@ -72,7 +72,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                                byte[] card_image,byte[] grantee_image,byte[] additional_image,byte[] other_scanned_image1,byte[] other_scanned_image2,byte[] other_scanned_image3,byte[] other_scanned_image4,byte[] other_scanned_image5, String overall_remarks, String other_ext_name, String contact_no_of_others, String others_reason_not_presented, String others_reason_not_presented1, String others_reason_not_presented2, String others_reason_not_presented3, String others_reason_not_presented4, String others_reason_not_presented5, String others_reason_unclaimed, String others_reason_unclaimed1, String others_reason_unclaimed2, String others_reason_unclaimed3, String others_reason_unclaimed4, String others_reason_unclaimed5, String nma_others_reason, String nma_non_emv, String nma_card_name,
                                String distribution_status_record,String distribution_status_record1,String distribution_status_record2,String distribution_status_record3,String distribution_status_record4,String distribution_status_record5,
                                String release_date_record,String release_date_record1,String release_date_record2,String release_date_record3,String release_date_record4,String release_date_record5,
-                               String card_number_prefilled1,String card_number_prefilled2,String card_number_prefilled3,String card_number_prefilled4,String card_number_prefilled5) {
+                               String card_number_prefilled1,String card_number_prefilled2,String card_number_prefilled3,String card_number_prefilled4,String card_number_prefilled5, String ovt_relationship_to_contact_no) {
 
                 SQLiteDatabase database = getWritableDatabase();
                 try{
@@ -86,11 +86,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     String sql4 = "INSERT INTO card_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     String sql5,sql6,sql7,sql8,sql9,sql10;
 
-
                     if (additional_image!=null){
-                        sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?,?,?)";
+                        sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),?,?,?,?,?,?)";
                     } else {
-                        sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?,?,?)";
+                        sql5 = "INSERT INTO emv_validation_details VALUES (NULL,?,?,?,?,?,?,?,?,(SELECT max(id) FROM grantee_validations),(SELECT max(id) FROM pawning_validation_details),(SELECT max(id) FROM nma_validations),(SELECT max(id) FROM card_validation_details),?,?,(SELECT user_id FROM api),null,?,?,?,?,?)";
                     }
 
                     if (other_scanned_image1!=null){sql6 = "INSERT INTO other_card_validations VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,(SELECT max(id) FROM emv_validation_details),?,?,?,?,?,?,?)";}
@@ -196,12 +195,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                         emv_validation_details.bindString(13, strDate);
                         emv_validation_details.bindString(14, strDate);
                         emv_validation_details.bindString(15, contact_no_of_others);
+                        emv_validation_details.bindString(16, ovt_relationship_to_contact_no);
                     }
                     else {
                         emv_validation_details.bindString(11, overall_remarks);
                         emv_validation_details.bindString(12, strDate);
                         emv_validation_details.bindString(13, strDate);
                         emv_validation_details.bindString(14, contact_no_of_others);
+                        emv_validation_details.bindString(15, ovt_relationship_to_contact_no);
                     }
                     emv_validation_details.executeInsert();
 
@@ -1093,7 +1094,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                             "other_card_number_3,other_card_holder_name_3,other_card_distribution_status_3,other_card_release_date_3," +
                             "other_card_number_4,other_card_holder_name_4,other_card_distribution_status_4,other_card_release_date_4," +
                             "other_card_number_5,other_card_holder_name_5,other_card_distribution_status_5,other_card_release_date_5," +
-                            "upload_history_id,record_counter,created_at, updated_at, validated_at,nma_non_emv,nma_card_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                            "upload_history_id,record_counter,ovt_paunawa_conformed,created_at, updated_at, validated_at,nma_non_emv,nma_card_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                     SQLiteStatement statement = database.compileStatement(sql);
                     statement.clearBindings();
@@ -1135,15 +1136,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     statement.bindString(36, extractedData.getString("other_card_release_date_5"));
                     statement.bindString(37, extractedData.getString("upload_history_id"));
                     statement.bindString(38, extractedData.getString("record_counter"));
-                    statement.bindString(39, extractedData.getString("created_at"));
-                    statement.bindString(40, extractedData.getString("updated_at"));
-                    statement.bindString(41, extractedData.getString("validated_at"));
-                    statement.bindString(42, extractedData.getString("non_emv_card_number"));
-                    statement.bindString(43, extractedData.getString("card_name"));
+                    statement.bindString(39, extractedData.getString("ovt_paunawa_conformed"));
+                    statement.bindString(40, extractedData.getString("created_at"));
+                    statement.bindString(41, extractedData.getString("updated_at"));
+                    statement.bindString(42, extractedData.getString("validated_at"));
+                    statement.bindString(43, extractedData.getString("non_emv_card_number"));
+                    statement.bindString(44, extractedData.getString("card_name"));
                     statement.executeInsert();
                 }
                 catch(Exception e){
-                    Log.v(TAG,"Errordawwwohhh "+e );
+                    Log.v(TAG,"Error "+e );
                 }
 
             } catch (JSONException e) {
@@ -1152,7 +1154,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
 
     }
-
 
     public void insertPsgcData(JSONArray remoteData) {
         for (int i=0; i < remoteData.length(); i++) {

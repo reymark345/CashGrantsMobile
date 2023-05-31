@@ -475,7 +475,7 @@ public class SyncData extends AppCompatActivity {
 
         btnSync.setEnabled(false);
 
-        Cursor emv_validation_details = sqLiteHelper.getData("SELECT id, hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, grantee_validation_id, pawning_validation_detail_id, nma_validation_id, card_validation_detail_id, emv_validation_id, sync_at, user_id, additional_image, created_at, updated_at, overall_remarks, contact_no_of_others FROM emv_validation_details");
+        Cursor emv_validation_details = sqLiteHelper.getData("SELECT id, hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, grantee_validation_id, pawning_validation_detail_id, nma_validation_id, card_validation_detail_id, emv_validation_id, sync_at, user_id, additional_image, created_at, updated_at, overall_remarks, contact_no_of_others, relationship_to_contact_no FROM emv_validation_details");
 
         tvStatus.setText("Initializing syncing...");
 
@@ -510,6 +510,8 @@ public class SyncData extends AppCompatActivity {
             String evd_created_at;
             String evd_overall_remarks;
             byte[] evd_additional_image;
+            String evd_relationship_to_contact_no;
+
 
             int gv_id = 0;
             String gv_hh_id = "";
@@ -585,6 +587,7 @@ public class SyncData extends AppCompatActivity {
             } else {
                 evd_contact_no_of = emv_validation_details.getString(3);
             }
+            evd_relationship_to_contact_no = emv_validation_details.getString(21);
 
             Cursor grantee_validations = sqLiteHelper.getData("SELECT id, hh_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, hh_set, grantee_image, other_ext_name FROM grantee_validations WHERE id=" + emv_validation_details.getInt(9));
             while (grantee_validations.moveToNext()) {
@@ -728,6 +731,7 @@ public class SyncData extends AppCompatActivity {
             String finalEvd_hh_status = evd_hh_status;
             String finalEvd_contact_no = evd_contact_no;
             String finalEvd_contact_no_of = evd_contact_no_of;
+            String finalEvd_relationship_to_contact_no = evd_relationship_to_contact_no;
             String finalEvd_is_grantee = evd_is_grantee;
             String finalEvd_is_minor = evd_is_minor;
             String finalEvd_relationship_to_grantee = evd_relationship_to_grantee;
@@ -904,6 +908,7 @@ public class SyncData extends AppCompatActivity {
                     params.put("evd_hh_status", finalEvd_hh_status);
                     params.put("evd_contact_no", finalEvd_contact_no);
                     params.put("evd_contact_no_of", finalEvd_contact_no_of);
+                    params.put("evd_relationship_to_contact_no", finalEvd_relationship_to_contact_no);
                     params.put("evd_is_grantee", finalEvd_is_grantee);
                     params.put("evd_is_minor", finalEvd_is_minor);
                     params.put("evd_relationship_to_grantee", finalEvd_relationship_to_grantee);

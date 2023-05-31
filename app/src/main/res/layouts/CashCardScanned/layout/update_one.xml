@@ -457,7 +457,29 @@
                         android:id="@+id/edt_contact_no_of_others"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Other's Name"
+                        android:hint="Contact No.'s Name"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_contact_no_relationship"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_contact_no_of_others"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    app:endIconMode="clear_text"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/validation"
+                    app:startIconDrawable="@drawable/ic_relationship_to_grantee">
+
+                    <EditText
+                        android:id="@+id/edt_contact_no_relationship"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Relationship to Contact no."
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -466,7 +488,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/til_contact_no_of_others"
+                    android:layout_below="@+id/til_contact_no_relationship"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
