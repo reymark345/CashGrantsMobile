@@ -1679,9 +1679,11 @@ public class ScanCashCard extends AppCompatActivity {
         String reason_unclaimed = sh.getString("reason_unclaimed","");
         String card_replacement_request = sh.getString("card_replacement_request","");
         String card_replacement_submitted_details = sh.getString("card_replacement_submitted_details","");
+
+        String ovt_conformed = sh.getString("ovt_conformed", "");
         String overall_remarks = sh.getString("overall_remarks", "");
         String contact_no_of_others = sh.getString("contact_no_of_others", "");
-        String ovt_relationship_to_contact_no = sh.getString("contact_no_of_relationship", "");
+        String relationship_to_contact_no = sh.getString("contact_no_of_relationship", "");
         int emv_monitoring_id = sh.getInt("emv_monitoring_id",0);
 
         String card_holder_name1 = sh.getString("card_holder_name1","");
@@ -1796,16 +1798,18 @@ public class ScanCashCard extends AppCompatActivity {
                 @Override
                 public void onClick(SweetAlertDialog sDialog) {
 
-                    sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code,barangay_code,set,
+                    for (int i = 0; i < 250; i++) {
+
+                        sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, set,
                                 lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
                                 amount, date_claimed, nma_reason, nma_remarks,
-                                hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name,sync_at, user_id,emv_validation_id,
-                                card_number_prefilled, card_number_system_generated,  card_number_unputted,  card_number_series,  distribution_status,  release_date,  release_by,  release_place,  card_physically_presented,  card_pin_is_attached,  reason_not_presented, reason_unclaimed,  card_replacement_request,  card_replacement_submitted_details,  emv_monitoring_id,
-                                card_holder_name1,card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
-                                card_holder_name2,card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2,  release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
-                                card_holder_name3,card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3,  release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
-                                card_holder_name4,card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
-                                card_holder_name5,card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count,
+                                hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, sync_at, user_id, emv_validation_id,
+                                card_number_prefilled, card_number_system_generated, card_number_unputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_request, card_replacement_submitted_details, emv_monitoring_id,
+                                card_holder_name1, card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
+                                card_holder_name2, card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2, release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
+                                card_holder_name3, card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3, release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
+                                card_holder_name4, card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
+                                card_holder_name5, card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count,
                                 imageViewToByte(ScannedImage),
                                 imageViewToByteGranteeAddional(mGrantee),
                                 imageViewToByteGranteeAddional(imgAdditionalId),
@@ -1813,10 +1817,11 @@ public class ScanCashCard extends AppCompatActivity {
                                 imageViewToByte(ivOtherScannedImage2),
                                 imageViewToByte(ivOtherScannedImage3),
                                 imageViewToByte(ivOtherScannedImage4),
-                                imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason,nma_non_emv,nma_card_name,
-                                distribution_status_record,distribution_status_record1,distribution_status_record2,distribution_status_record3,distribution_status_record4,distribution_status_record5,
-                                release_date_record,release_date_record1,release_date_record2,release_date_record3,release_date_record4,release_date_record5,
-                                card_number_prefilled1,card_number_prefilled2,card_number_prefilled3,card_number_prefilled4,card_number_prefilled5, ovt_relationship_to_contact_no);
+                                imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason, nma_non_emv, nma_card_name,
+                                distribution_status_record, distribution_status_record1, distribution_status_record2, distribution_status_record3, distribution_status_record4, distribution_status_record5,
+                                release_date_record, release_date_record1, release_date_record2, release_date_record3, release_date_record4, release_date_record5,
+                                card_number_prefilled1, card_number_prefilled2, card_number_prefilled3, card_number_prefilled4, card_number_prefilled5, relationship_to_contact_no, ovt_conformed);
+                    }
 
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
@@ -4499,9 +4504,6 @@ public class ScanCashCard extends AppCompatActivity {
                 ArrayAdapter<String> adapterHouseholdSet = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, HouseholdSet);
                 ArrayAdapter<String> adapterExtensionName = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, ExtensionName);
                 ArrayAdapter<String> adapterProvince = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, prov_list);
-
-
-
 
                 adapterSex.setDropDownViewResource(simple_spinner_dropdown_item);
                 adapterAns.setDropDownViewResource(simple_spinner_dropdown_item);

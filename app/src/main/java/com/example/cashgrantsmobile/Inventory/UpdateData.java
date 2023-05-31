@@ -126,8 +126,8 @@ public class UpdateData extends AppCompatActivity {
 
 
     //    Intro 1 XML Fields
-    TextInputLayout til_hh_id, til_set, til_last_name, til_first_name, til_middle_name, til_ext_name, til_other_ext_name, til_hh_status, til_province_code, til_municipality_code, til_barangay_code, til_sex, til_is_grantee, til_relationship_to_grantee, til_contact_no, til_contact_no_of, til_contact_no_of_others, til_assigned_staff, til_is_minor;
-    EditText edt_hh_id, edt_last_name, edt_first_name, edt_middle_name, edt_other_ext_name, edt_contact_no, edt_contact_no_of_others, edt_assigned_staff;
+    TextInputLayout til_hh_id, til_set, til_last_name, til_first_name, til_middle_name, til_ext_name, til_other_ext_name, til_hh_status, til_province_code, til_municipality_code, til_barangay_code, til_sex, til_is_grantee, til_relationship_to_grantee, til_contact_no, til_contact_no_of, til_contact_no_of_others, til_assigned_staff, til_is_minor,til_contact_no_relationship;
+    EditText edt_hh_id, edt_last_name, edt_first_name, edt_middle_name, edt_other_ext_name, edt_contact_no, edt_contact_no_of_others, edt_assigned_staff, edt_contact_no_relationship;
     AutoCompleteTextView aat_set, aat_ext_name, aat_hh_status, aat_province_code, aat_municipality_code, aat_barangay_code, aat_sex, aat_is_grantee, aat_relationship_to_grantee, aat_contact_no_of, aat_is_minor;
 
     //    Intro 2 XML Fields
@@ -1632,7 +1632,6 @@ public class UpdateData extends AppCompatActivity {
         String card_replacement_request2 = sh.getString("card_replacement_request2_u","");
         String card_replacement_request_submitted_details2 = sh.getString("card_replacement_request_submitted_details2_u","");
         String pawning_remarks2 = sh.getString("pawning_remarks2_u","");
-
         String card_holder_name3 = sh.getString("card_holder_name3_u","");
         String card_number_system_generated3 = sh.getString("card_number_system_generated3_u","");
         String card_number_inputted3 = sh.getString("card_number_inputted3_u","");
@@ -1705,6 +1704,10 @@ public class UpdateData extends AppCompatActivity {
         Integer ocv_id4 = sh.getInt("ocv_id4", 0);
         Integer ocv_id5 = sh.getInt("ocv_id5", 0);
 
+        String relationship_to_contact_no = sh.getString("contact_no_of_relationship_u", "");
+
+
+
         new SweetAlertDialog(UpdateData.this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Update data?")
                 .setContentText("Please confirm to update data")
@@ -1733,7 +1736,7 @@ public class UpdateData extends AppCompatActivity {
                                 imageViewToByte(ivOtherScannedImage3),
                                 imageViewToByte(ivOtherScannedImage4),
                                 imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason, evd_id, gv_id, cvd_id, pvd_id, nv_id, ocv_id1, ocv_id2, ocv_id3, ocv_id4, ocv_id5,
-                                card_number_prefilled1,card_number_prefilled2,card_number_prefilled3,card_number_prefilled4,card_number_prefilled5);
+                                card_number_prefilled1,card_number_prefilled2,card_number_prefilled3,card_number_prefilled4,card_number_prefilled5,relationship_to_contact_no);
                         sDialog.dismiss();
                         Toasty.success(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
                         clear_preferences();
@@ -1799,6 +1802,7 @@ public class UpdateData extends AppCompatActivity {
                 til_contact_no = findViewById(R.id.til_contact_no);
                 til_contact_no_of = findViewById(R.id.til_contact_no_of);
                 til_contact_no_of_others = findViewById(R.id.til_contact_no_of_others);
+                til_contact_no_relationship = findViewById(R.id.til_contact_no_relationship);
                 til_is_minor = findViewById(R.id.til_is_minor);
                 til_assigned_staff = findViewById(R.id.til_assigned_staff);
                 edt_hh_id = findViewById(R.id.edt_hh_id);
@@ -1819,6 +1823,7 @@ public class UpdateData extends AppCompatActivity {
                 edt_contact_no = findViewById(R.id.edt_contact_no);
                 aat_contact_no_of = findViewById(R.id.aat_contact_no_of);
                 edt_contact_no_of_others = findViewById(R.id.edt_contact_no_of_others);
+                edt_contact_no_relationship = findViewById(R.id.edt_contact_no_relationship);
                 aat_is_minor = findViewById(R.id.aat_is_minor);
                 edt_assigned_staff = findViewById(R.id.edt_assigned_staff);
 
@@ -2537,6 +2542,7 @@ public class UpdateData extends AppCompatActivity {
             String contact_no = edt_contact_no.getText().toString();
             String contact_no_of = aat_contact_no_of.getText().toString();
             String contact_no_of_others = edt_contact_no_of_others.getText().toString();
+            String contact_no_of_relationship = edt_contact_no_relationship.getText().toString();
             String assigned_staff = edt_assigned_staff.getText().toString();
             String is_minor = aat_is_minor.getText().toString();
 
@@ -2657,6 +2663,13 @@ public class UpdateData extends AppCompatActivity {
                                 isValidationError++;
                             } else {
                                 til_contact_no_of_others.setError(null);
+                            }
+                            if(contact_no_of_relationship.matches("")){
+                                til_contact_no_relationship.setError(required_field);
+                                isValidationError++;
+                            }
+                            else{
+                                til_contact_no_relationship.setError(null);
                             }
                         }
                     }
@@ -4061,6 +4074,7 @@ public class UpdateData extends AppCompatActivity {
                 String contact_no = edt_contact_no.getText().toString();
                 String contact_no_of = aat_contact_no_of.getText().toString();
                 String contact_no_of_others = edt_contact_no_of_others.getText().toString();
+                String contact_no_of_relationship = edt_contact_no_relationship.getText().toString();
                 String assigned_staff = edt_assigned_staff.getText().toString();
                 String is_minor = aat_is_minor.getText().toString();
                 String representative_name = edt_representative_name.getText().toString();
@@ -4082,6 +4096,7 @@ public class UpdateData extends AppCompatActivity {
                 myEdit.putString("contact_no_u",contact_no);
                 myEdit.putString("contact_no_of_u",contact_no_of);
                 myEdit.putString("contact_no_of_others_u",contact_no_of_others);
+                myEdit.putString("contact_no_of_relationship_u",contact_no_of_relationship);
                 myEdit.putString("assigned_staff_u",assigned_staff);
                 myEdit.putString("is_minor_u",is_minor);
                 myEdit.putString("representative_name_u", representative_name);
@@ -4449,10 +4464,10 @@ public class UpdateData extends AppCompatActivity {
                 String contact_no = sh.getString("contact_no_u","");
                 String contact_no_of = sh.getString("contact_no_of_u","");
                 String contact_no_of_others = sh.getString("contact_no_of_others_u","");
+                String contact_no_of_relationship = sh.getString("contact_no_of_relationship_u","");
                 String assigned_staff = sh.getString("assigned_staff_u","");
                 String is_minor = sh.getString("is_minor_u","");
                 String representative_name = sh.getString("representative_name_u", "");
-
 
                 edt_hh_id.setText(hh_id);
                 edt_hh_id.setEnabled(false);
@@ -4481,6 +4496,7 @@ public class UpdateData extends AppCompatActivity {
                 edt_contact_no.setText(contact_no);
                 aat_contact_no_of.setText(contact_no_of, false);
                 edt_contact_no_of_others.setText(contact_no_of_others);
+                edt_contact_no_relationship.setText(contact_no_of_relationship);
                 aat_is_minor.setText(assigned_staff, false);
                 edt_assigned_staff.setText(is_minor);
                 edt_representative_name.setText(representative_name);
@@ -4496,15 +4512,20 @@ public class UpdateData extends AppCompatActivity {
                 }
 
                 if (contact_no.length() != 10) {
+
                     til_contact_no_of.setVisibility(View.GONE);
                     aat_contact_no_of.setText(null, false);
                     til_contact_no_of_others.setVisibility(View.GONE);
+                    til_contact_no_relationship.setVisibility(View.GONE);
                     edt_contact_no_of_others.setText(null);
+                    edt_contact_no_relationship.setText(null);
                 } else if (contact_no.length() == 10) {
                     if (contact_no_of.matches("Others")) {
                         til_contact_no_of_others.setVisibility(View.VISIBLE);
+                        til_contact_no_relationship.setVisibility(View.VISIBLE);
                     } else {
                         til_contact_no_of_others.setVisibility(View.GONE);
+                        til_contact_no_relationship.setVisibility(View.GONE);
                     }
                 }
 
@@ -4560,8 +4581,15 @@ public class UpdateData extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         if (aat_contact_no_of.getText().toString().matches("Others") && !edt_contact_no.getText().toString().matches("")) {
                             til_contact_no_of_others.setVisibility(View.VISIBLE);
+                            til_contact_no_relationship.setVisibility(View.VISIBLE);
                         } else {
+                            edt_contact_no_of_others.setText("");
+                            edt_contact_no_relationship.setText("");
+                            til_contact_no_of_others.setError(null);
                             til_contact_no_of_others.setVisibility(View.GONE);
+                            edt_contact_no_relationship.setText(null);
+                            til_contact_no_relationship.setVisibility(View.GONE);
+
                         }
                     }
                 });
@@ -4577,6 +4605,7 @@ public class UpdateData extends AppCompatActivity {
                             til_contact_no_of_others.setVisibility(View.GONE);
                             aat_contact_no_of.setText(null,null);
                             edt_contact_no_of_others.setText(null);
+                            edt_contact_no_relationship.setText(null);
                         }
                         else{
                             til_contact_no.setError(null);
@@ -4592,11 +4621,15 @@ public class UpdateData extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                         if (aat_contact_no_of.getText().toString().matches("Others")) {
                             til_contact_no_of_others.setVisibility(View.VISIBLE);
+                            til_contact_no_relationship.setVisibility(View.VISIBLE);
                         } else {
                             edt_contact_no_of_others.setText("");
+                            edt_contact_no_relationship.setText("");
                             til_contact_no_of_others.setError(null);
                             til_contact_no_of_others.setVisibility(View.GONE);
-                            edt_contact_no_of_others.setText(null);
+                            edt_contact_no_relationship.setText(null);
+                            til_contact_no_relationship.setVisibility(View.GONE);
+
                         }
                     }
                 });
@@ -4914,7 +4947,7 @@ public class UpdateData extends AppCompatActivity {
                             ll_additional_id_layout.setVisibility(View.VISIBLE);
                             getImage();
                         } else {
-                            Log.v(TAG,"Ngeeeeeeeeee");
+
                             sqLiteHelper.queryData("UPDATE tmp_blob SET additional_id_image=NULL WHERE id=2");
                             imgAdditionalId.setImageResource(R.drawable.ic_image);
                         }
@@ -6580,11 +6613,12 @@ public class UpdateData extends AppCompatActivity {
                 adapterConformedNMA.setDropDownViewResource(simple_spinner_dropdown_item);
                 aat_nma_conformed.setAdapter(adapterConformedNMA);
 
-                String nma_conformed = sh.getString("ovt_conformed", "");
+                String nma_conformed = sh.getString("ovt_conformed_u", "");
 //                aat_nma_conformed.setText(nma_conformed, false);
 
-                if (nma_conformed.matches("Yes")) {
+                if (nma_conformed.matches("Yes") || nma_conformed.matches("yes")) {
                     til_conformed.setVisibility(View.VISIBLE);
+                    aat_nma_conformed.setText(nma_conformed);
                 } else {
                     til_conformed.setVisibility(View.GONE);
                 }
@@ -6795,7 +6829,7 @@ public class UpdateData extends AppCompatActivity {
                 "gv.hh_id,gv.first_name,gv.last_name,gv.middle_name,gv.ext_name,gv.sex,gv.province_code,gv.municipality_code,gv.barangay_code,gv.hh_set,gv.grantee_image," +
                 "pvd.lender_name,pvd.lender_address,pvd.date_pawned,pvd.date_retrieved,pvd.loan_amount,pvd.status,pvd.reason,pvd.interest,pvd.offense_history,pvd.offense_date,pvd.remarks,pvd.staff_intervention,pvd.other_details," +
                 "cvd.card_number_prefilled,cvd.card_number_system_generated,cvd.card_number_inputted,cvd.card_number_series,cvd.distribution_status,cvd.release_date,cvd.release_by,cvd.release_place,cvd.card_physically_presented,cvd.card_pin_is_attached,cvd.reason_not_presented,cvd.reason_unclaimed,cvd.card_replacement_requests,cvd.card_replacement_submitted_details,cvd.card_image," +
-                "nv.amount,nv.date_claimed,nv.reason,nv.remarks, evd.overall_remarks, gv.other_ext_name, evd.contact_no_of_others, cvd.others_reason_not_presented, cvd.others_reason_unclaimed, nv.nma_others_reason, gv.id, cvd.id, nv.id, pvd.id, cvd.distribution_status_record, cvd.release_date_record, nv.nma_non_emv, nv.nma_card_name" +
+                "nv.amount,nv.date_claimed,nv.reason,nv.remarks, evd.overall_remarks, gv.other_ext_name, evd.contact_no_of_others, cvd.others_reason_not_presented, cvd.others_reason_unclaimed, nv.nma_others_reason, gv.id, cvd.id, nv.id, pvd.id, cvd.distribution_status_record, cvd.release_date_record, nv.nma_non_emv, nv.nma_card_name, evd.relationship_to_contact_no, evd.ovt_paunawa_conformed" +
                 " FROM emv_validation_details AS evd LEFT JOIN grantee_validations AS gv ON gv.id = evd.grantee_validation_id LEFT JOIN pawning_validation_details AS pvd ON pvd.id = evd.pawning_validation_detail_id LEFT JOIN card_validation_details AS cvd ON cvd.id = evd.card_validation_detail_id  LEFT JOIN nma_validations AS nv ON nv.id = evd.nma_validation_id WHERE evd.id="+id);
 
         while (cursor.moveToNext()) {
@@ -6885,6 +6919,8 @@ public class UpdateData extends AppCompatActivity {
             myEdit.putString("release_date_record_u", cursor.getString(67));
             myEdit.putString("nma_non_emv_u", cursor.getString(68));
             myEdit.putString("nma_card_name_u", cursor.getString(69));
+            myEdit.putString("contact_no_of_relationship_u", cursor.getString(70));
+            myEdit.putString("ovt_conformed_u", cursor.getString(71));
             myEdit.putInt("evd_id", cursor.getInt(0));
             myEdit.commit();
         }
