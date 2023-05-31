@@ -152,7 +152,7 @@ public class UpdateData extends AppCompatActivity {
 
     String[] Ans = new String[]{"Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
-    String[] dp_ovt_paunawa_conformed = new String[]{"Yes"};
+    String[] dp_ovt_paunawa_conformed = new String[]{"yes"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
     String[] Contact_no_of = new String[]{"Grantee", "Others"};
@@ -3874,14 +3874,19 @@ public class UpdateData extends AppCompatActivity {
         } else if (current == 4){
             pressNext =false;
             xml_initialization(4);
+
+            String nma_conformed = sh.getString("ovt_conformed_u", "");
+            String lower_name_conformed =  nma_conformed.toLowerCase();
+
             String ovt_conformed = aat_nma_conformed.getText().toString();
 
-            if (ovt_conformed.matches("")){
+            if(ovt_conformed.matches("") && lower_name_conformed.matches("yes")) {
                 til_conformed.setError(required_field);
                 isValidationError++;
             } else {
                 til_conformed.setError(null);
             }
+
 
             store_preferences(4);
         } else {
@@ -4354,8 +4359,10 @@ public class UpdateData extends AppCompatActivity {
                 break;
             case 4:
                 String nma_conformed = aat_nma_conformed.getText().toString();
+                if (!nma_conformed.matches("")) {
+                    myEdit.putString("ovt_conformed_u", nma_conformed);
+                }
                 String overall_remarks = edt_overall_remarks.getText().toString();
-                myEdit.putString("ovt_conformed_u", nma_conformed);
                 myEdit.putString("overall_remarks_u", overall_remarks);
                 myEdit.commit();
 

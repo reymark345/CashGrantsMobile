@@ -152,7 +152,7 @@ public class ScanCashCard extends AppCompatActivity {
 
     String[] Ans = new String[]{"Yes", "No"};
     String[] CardRequired = new String[]{"Yes", "No"};
-    String[] dp_ovt_paunawa_conformed = new String[]{"Yes"};
+    String[] dp_ovt_paunawa_conformed = new String[]{"yes"};
     String[] Sex = new String[]{"MALE", "FEMALE"};
     String[] Reasons = new String[]{"Lost/Stolen", "Damaged/Defective", "Pawned", "Not Turned Over", "Others"};
     String[] modifiedArray = Arrays.copyOfRange(Reasons, 1, Reasons.length);
@@ -1798,8 +1798,6 @@ public class ScanCashCard extends AppCompatActivity {
                 @Override
                 public void onClick(SweetAlertDialog sDialog) {
 
-                    for (int i = 0; i < 250; i++) {
-
                         sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, set,
                                 lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
                                 amount, date_claimed, nma_reason, nma_remarks,
@@ -1821,7 +1819,7 @@ public class ScanCashCard extends AppCompatActivity {
                                 distribution_status_record, distribution_status_record1, distribution_status_record2, distribution_status_record3, distribution_status_record4, distribution_status_record5,
                                 release_date_record, release_date_record1, release_date_record2, release_date_record3, release_date_record4, release_date_record5,
                                 card_number_prefilled1, card_number_prefilled2, card_number_prefilled3, card_number_prefilled4, card_number_prefilled5, relationship_to_contact_no, ovt_conformed);
-                    }
+
 
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
@@ -3673,8 +3671,17 @@ public class ScanCashCard extends AppCompatActivity {
             pressNext =false;
             xml_initialization(4);
 
+
+            String nma_conformed = sh.getString("ovt_conformed", "");
+//                aat_nma_conformed.setText(nma_conformed, false);
+
+            String lower_name_conformed =  nma_conformed.toLowerCase();
+
+
+
             String ovt_conformed = aat_nma_conformed.getText().toString();
-            if (ovt_conformed.matches("")){
+
+            if(ovt_conformed.matches("") && lower_name_conformed.matches("yes")) {
                 til_conformed.setError(required_field);
                 isValidationError++;
             } else {
@@ -4121,8 +4128,10 @@ public class ScanCashCard extends AppCompatActivity {
                 break;
             case 4:
                 String nma_conformed = aat_nma_conformed.getText().toString();
+                if (!nma_conformed.matches("")) {
+                    myEdit.putString("ovt_conformed", nma_conformed);
+                }
                 String overall_remarks = edt_overall_remarks.getText().toString();
-                myEdit.putString("ovt_conformed", nma_conformed);
                 myEdit.putString("overall_remarks", overall_remarks);
                 myEdit.commit();
                 break;
@@ -4401,6 +4410,8 @@ public class ScanCashCard extends AppCompatActivity {
                     myEdit.putString("release_date5", other_card_release_date_5);
                     myEdit.putString("ovt_conformed", ovt_paunawa_conformed);
                     myEdit.commit();
+
+
 
                     aat_set.setText(hh_set_group);
                     edt_last_name.setText(last_name);
@@ -6735,7 +6746,11 @@ public class ScanCashCard extends AppCompatActivity {
                 String nma_conformed = sh.getString("ovt_conformed", "");
 //                aat_nma_conformed.setText(nma_conformed, false);
 
-                if (nma_conformed.matches("Yes")) {
+                String lower_name_conformed =  nma_conformed.toLowerCase();
+
+
+
+                if (lower_name_conformed.matches("yes")) {
                     til_conformed.setVisibility(View.VISIBLE);
                 } else {
                     til_conformed.setVisibility(View.GONE);
