@@ -511,102 +511,82 @@ public class UpdateData extends AppCompatActivity {
         }
     }
 
-    private void appendOrStrip(String field, boolean shouldAppend) {
+
+    private void appendOrStrip(EditText editText, String field, boolean shouldAppend) {
         StringBuilder sb = new StringBuilder(field);
         if (shouldAppend) {
             sb.append(" ");
         } else {
-            sb.setLength(sb.length() - 1);
+            if (sb.length() > 0) {
+                sb.setLength(sb.length() - 1);
+            }
         }
-        edt_card_number_inputted.setText(sb.toString());
-        edt_card_number_inputted.setSelection(sb.length());
+        editText.setText(sb.toString());
+        editText.setSelection(sb.length());
     }
 
-    private void appendOrStrip1(String field, boolean shouldAppend) {
-        StringBuilder sb = new StringBuilder(field);
-        if (shouldAppend) {
-            sb.append(" ");
-        } else {
-            sb.setLength(sb.length() - 1);
-        }
-        edt_card_number_inputted1.setText(sb.toString());
-        edt_card_number_inputted1.setSelection(sb.length());
-    }
-
-    private void appendOrStrip2(String field, boolean shouldAppend) {
-        StringBuilder sb = new StringBuilder(field);
-        if (shouldAppend) {
-            sb.append(" ");
-        } else {
-            sb.setLength(sb.length() - 1);
-        }
-        edt_card_number_inputted2.setText(sb.toString());
-        edt_card_number_inputted2.setSelection(sb.length());
-    }
-    private void appendOrStrip3(String field, boolean shouldAppend) {
-        StringBuilder sb = new StringBuilder(field);
-        if (shouldAppend) {
-            sb.append(" ");
-        } else {
-            sb.setLength(sb.length() - 1);
-        }
-        edt_card_number_inputted3.setText(sb.toString());
-        edt_card_number_inputted3.setSelection(sb.length());
-    }
-    private void appendOrStrip4(String field, boolean shouldAppend) {
-        StringBuilder sb = new StringBuilder(field);
-        if (shouldAppend) {
-            sb.append(" ");
-        } else {
-            sb.setLength(sb.length() - 1);
-        }
-        edt_card_number_inputted4.setText(sb.toString());
-        edt_card_number_inputted4.setSelection(sb.length());
-    }
-
-    private void appendOrStrip5(String field, boolean shouldAppend) {
-        StringBuilder sb = new StringBuilder(field);
-        if (shouldAppend) {
-            sb.append(" ");
-        } else {
-            sb.setLength(sb.length() - 1);
-        }
-        edt_card_number_inputted5.setText(sb.toString());
-        edt_card_number_inputted5.setSelection(sb.length());
-    }
-
-//    private void appendOrStrip(String field, boolean shouldAppend, EditText textName) {
+//    private void appendOrStrip(String field, boolean shouldAppend) {
 //        StringBuilder sb = new StringBuilder(field);
 //        if (shouldAppend) {
 //            sb.append(" ");
 //        } else {
 //            sb.setLength(sb.length() - 1);
 //        }
+//        edt_card_number_inputted.setText(sb.toString());
+//        edt_card_number_inputted.setSelection(sb.length());
+//    }
 //
-//        if (textName.toString().contains("edt_card_number_inputted1")){
-//            edt_card_number_inputted1.setText(sb.toString());
-//            edt_card_number_inputted1.setSelection(sb.length());
+//    private void appendOrStrip1(String field, boolean shouldAppend) {
+//        StringBuilder sb = new StringBuilder(field);
+//        if (shouldAppend) {
+//            sb.append(" ");
+//        } else {
+//            sb.setLength(sb.length() - 1);
 //        }
-//        else if (textName.toString().contains("edt_card_number_inputted2")){
-//            edt_card_number_inputted2.setText(sb.toString());
-//            edt_card_number_inputted2.setSelection(sb.length());
+//        edt_card_number_inputted1.setText(sb.toString());
+//        edt_card_number_inputted1.setSelection(sb.length());
+//    }
+//
+//    private void appendOrStrip2(String field, boolean shouldAppend) {
+//        StringBuilder sb = new StringBuilder(field);
+//        if (shouldAppend) {
+//            sb.append(" ");
+//        } else {
+//            sb.setLength(sb.length() - 1);
 //        }
-//        else if (textName.toString().contains("edt_card_number_inputted3")){
-//            edt_card_number_inputted3.setText(sb.toString());
-//            edt_card_number_inputted3.setSelection(sb.length());
+//        edt_card_number_inputted2.setText(sb.toString());
+//        edt_card_number_inputted2.setSelection(sb.length());
+//    }
+//    private void appendOrStrip3(String field, boolean shouldAppend) {
+//        StringBuilder sb = new StringBuilder(field);
+//        if (shouldAppend) {
+//            sb.append(" ");
+//        } else {
+//            sb.setLength(sb.length() - 1);
 //        }
-//        else if (textName.toString().contains("edt_card_number_inputted4")){
-//            edt_card_number_inputted4.setText(sb.toString());
-//            edt_card_number_inputted4.setSelection(sb.length());
+//        edt_card_number_inputted3.setText(sb.toString());
+//        edt_card_number_inputted3.setSelection(sb.length());
+//    }
+//    private void appendOrStrip4(String field, boolean shouldAppend) {
+//        StringBuilder sb = new StringBuilder(field);
+//        if (shouldAppend) {
+//            sb.append(" ");
+//        } else {
+//            sb.setLength(sb.length() - 1);
 //        }
-//        else if (textName.toString().contains("edt_card_number_inputted5")){
-//            edt_card_number_inputted5.setText(sb.toString());
-//            edt_card_number_inputted5.setSelection(sb.length());
+//        edt_card_number_inputted4.setText(sb.toString());
+//        edt_card_number_inputted4.setSelection(sb.length());
+//    }
+//
+//    private void appendOrStrip5(String field, boolean shouldAppend) {
+//        StringBuilder sb = new StringBuilder(field);
+//        if (shouldAppend) {
+//            sb.append(" ");
+//        } else {
+//            sb.setLength(sb.length() - 1);
 //        }
-//        else {
-//            edt_card_number_inputted.setText(sb.toString());
-//            edt_card_number_inputted.setSelection(sb.length());
-//        }
+//        edt_card_number_inputted5.setText(sb.toString());
+//        edt_card_number_inputted5.setSelection(sb.length());
 //    }
 
     @Override
@@ -1071,14 +1051,13 @@ public class UpdateData extends AppCompatActivity {
 
     public void scannedCardNumber(EditText card_number , TextInputLayout tilCard){
         card_number.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = edt_card_number_inputted.getText().toString();
+                String cardNumber = card_number.getText().toString();
                 if(s.toString().length() != 23){
                     tilCard.setError(required_field);
                 }
@@ -1094,196 +1073,234 @@ public class UpdateData extends AppCompatActivity {
                 String field = editable.toString();
                 int currCount = field.length();
 
-                if (shouldIncrementOrDecrement(currCount, true)){
-                    appendOrStrip(field, true);
+                if (shouldIncrementOrDecrement(currCount, true)) {
+                    appendOrStrip(card_number, field, true);
                 } else if (shouldIncrementOrDecrement(currCount, false)) {
-                    appendOrStrip(field, false);
+                    appendOrStrip(card_number, field, false);
                 }
-                prevCount = card_number.getText().toString().length();
-
+                prevCount = field.length();
             }
         });
     }
 
-    public void scannedCardNumber1(EditText card_number , TextInputLayout tilCard){
-        card_number.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = edt_card_number_inputted1.getText().toString();
-                if(s.toString().length() != 23){
-                    tilCard.setError(required_field);
-                }
-                else if(!cardNumber.matches("[0-9 ]+")) {
-                    tilCard.setError("Invalid Format");
-                }
-                else{
-                    tilCard.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String field = editable.toString();
-                int currCount = field.length();
 
-                if (shouldIncrementOrDecrement(currCount, true)){
-                    appendOrStrip1(field, true);
-                } else if (shouldIncrementOrDecrement(currCount, false)) {
-                    appendOrStrip1(field, false);
-                }
-                prevCount = card_number.getText().toString().length();
-
-            }
-        });
-    }
-
-    public void scannedCardNumber2(EditText card_number , TextInputLayout tilCard){
-        card_number.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = edt_card_number_inputted2.getText().toString();
-                if(s.toString().length() != 23){
-                    tilCard.setError(required_field);
-                }
-                else if(!cardNumber.matches("[0-9 ]+")) {
-                    tilCard.setError("Invalid Format");
-                }
-                else{
-                    tilCard.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String field = editable.toString();
-                int currCount = field.length();
-
-                if (shouldIncrementOrDecrement(currCount, true)){
-                    appendOrStrip2(field, true);
-                } else if (shouldIncrementOrDecrement(currCount, false)) {
-                    appendOrStrip2(field, false);
-                }
-                prevCount = card_number.getText().toString().length();
-
-            }
-        });
-    }
-
-    public void scannedCardNumber3(EditText card_number , TextInputLayout tilCard){
-        card_number.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = edt_card_number_inputted3.getText().toString();
-                if(s.toString().length() != 23){
-                    tilCard.setError(required_field);
-                }
-                else if(!cardNumber.matches("[0-9 ]+")) {
-                    tilCard.setError("Invalid Format");
-                }
-                else{
-                    tilCard.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String field = editable.toString();
-                int currCount = field.length();
-
-                if (shouldIncrementOrDecrement(currCount, true)){
-                    appendOrStrip3(field, true);
-                } else if (shouldIncrementOrDecrement(currCount, false)) {
-                    appendOrStrip3(field, false);
-                }
-                prevCount = card_number.getText().toString().length();
-
-            }
-        });
-    }
-
-    public void scannedCardNumber4(EditText card_number , TextInputLayout tilCard){
-        card_number.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = edt_card_number_inputted4.getText().toString();
-                if(s.toString().length() != 23){
-                    tilCard.setError(required_field);
-                }
-                else if(!cardNumber.matches("[0-9 ]+")) {
-                    tilCard.setError("Invalid Format");
-                }
-                else{
-                    tilCard.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String field = editable.toString();
-                int currCount = field.length();
-
-                if (shouldIncrementOrDecrement(currCount, true)){
-                    appendOrStrip4(field, true);
-                } else if (shouldIncrementOrDecrement(currCount, false)) {
-                    appendOrStrip4(field, false);
-                }
-                prevCount = card_number.getText().toString().length();
-
-            }
-        });
-    }
-
-    public void scannedCardNumber5(EditText card_number , TextInputLayout tilCard){
-        card_number.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                String cardNumber = edt_card_number_inputted5.getText().toString();
-                if(s.toString().length() != 23){
-                    tilCard.setError(required_field);
-                }
-                else if(!cardNumber.matches("[0-9 ]+")) {
-                    tilCard.setError("Invalid Format");
-                }
-                else{
-                    tilCard.setError(null);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String field = editable.toString();
-                int currCount = field.length();
-
-                if (shouldIncrementOrDecrement(currCount, true)){
-                    appendOrStrip5(field, true);
-                } else if (shouldIncrementOrDecrement(currCount, false)) {
-                    appendOrStrip5(field, false);
-                }
-                prevCount = card_number.getText().toString().length();
-
-            }
-        });
-    }
+//    public void scannedCardNumber(EditText card_number , TextInputLayout tilCard){
+//        card_number.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+//                String cardNumber = edt_card_number_inputted.getText().toString();
+//                if(s.toString().length() != 23){
+//                    tilCard.setError(required_field);
+//                }
+//                else if(!cardNumber.matches("[0-9 ]+")) {
+//                    tilCard.setError("Invalid Format");
+//                }
+//                else{
+//                    tilCard.setError(null);
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String field = editable.toString();
+//                int currCount = field.length();
+//
+//                if (shouldIncrementOrDecrement(currCount, true)){
+//                    appendOrStrip(field, true);
+//                } else if (shouldIncrementOrDecrement(currCount, false)) {
+//                    appendOrStrip(field, false);
+//                }
+//                prevCount = card_number.getText().toString().length();
+//
+//            }
+//        });
+//    }
+//
+//    public void scannedCardNumber1(EditText card_number , TextInputLayout tilCard){
+//        card_number.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+//                String cardNumber = edt_card_number_inputted1.getText().toString();
+//                if(s.toString().length() != 23){
+//                    tilCard.setError(required_field);
+//                }
+//                else if(!cardNumber.matches("[0-9 ]+")) {
+//                    tilCard.setError("Invalid Format");
+//                }
+//                else{
+//                    tilCard.setError(null);
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String field = editable.toString();
+//                int currCount = field.length();
+//
+//                if (shouldIncrementOrDecrement(currCount, true)){
+//                    appendOrStrip1(field, true);
+//                } else if (shouldIncrementOrDecrement(currCount, false)) {
+//                    appendOrStrip1(field, false);
+//                }
+//                prevCount = card_number.getText().toString().length();
+//
+//            }
+//        });
+//    }
+//
+//    public void scannedCardNumber2(EditText card_number , TextInputLayout tilCard){
+//        card_number.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+//                String cardNumber = edt_card_number_inputted2.getText().toString();
+//                if(s.toString().length() != 23){
+//                    tilCard.setError(required_field);
+//                }
+//                else if(!cardNumber.matches("[0-9 ]+")) {
+//                    tilCard.setError("Invalid Format");
+//                }
+//                else{
+//                    tilCard.setError(null);
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String field = editable.toString();
+//                int currCount = field.length();
+//
+//                if (shouldIncrementOrDecrement(currCount, true)){
+//                    appendOrStrip2(field, true);
+//                } else if (shouldIncrementOrDecrement(currCount, false)) {
+//                    appendOrStrip2(field, false);
+//                }
+//                prevCount = card_number.getText().toString().length();
+//
+//            }
+//        });
+//    }
+//
+//    public void scannedCardNumber3(EditText card_number , TextInputLayout tilCard){
+//        card_number.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+//                String cardNumber = edt_card_number_inputted3.getText().toString();
+//                if(s.toString().length() != 23){
+//                    tilCard.setError(required_field);
+//                }
+//                else if(!cardNumber.matches("[0-9 ]+")) {
+//                    tilCard.setError("Invalid Format");
+//                }
+//                else{
+//                    tilCard.setError(null);
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String field = editable.toString();
+//                int currCount = field.length();
+//
+//                if (shouldIncrementOrDecrement(currCount, true)){
+//                    appendOrStrip3(field, true);
+//                } else if (shouldIncrementOrDecrement(currCount, false)) {
+//                    appendOrStrip3(field, false);
+//                }
+//                prevCount = card_number.getText().toString().length();
+//
+//            }
+//        });
+//    }
+//
+//    public void scannedCardNumber4(EditText card_number , TextInputLayout tilCard){
+//        card_number.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+//                String cardNumber = edt_card_number_inputted4.getText().toString();
+//                if(s.toString().length() != 23){
+//                    tilCard.setError(required_field);
+//                }
+//                else if(!cardNumber.matches("[0-9 ]+")) {
+//                    tilCard.setError("Invalid Format");
+//                }
+//                else{
+//                    tilCard.setError(null);
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String field = editable.toString();
+//                int currCount = field.length();
+//
+//                if (shouldIncrementOrDecrement(currCount, true)){
+//                    appendOrStrip4(field, true);
+//                } else if (shouldIncrementOrDecrement(currCount, false)) {
+//                    appendOrStrip4(field, false);
+//                }
+//                prevCount = card_number.getText().toString().length();
+//
+//            }
+//        });
+//    }
+//
+//    public void scannedCardNumber5(EditText card_number , TextInputLayout tilCard){
+//        card_number.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+//                String cardNumber = edt_card_number_inputted5.getText().toString();
+//                if(s.toString().length() != 23){
+//                    tilCard.setError(required_field);
+//                }
+//                else if(!cardNumber.matches("[0-9 ]+")) {
+//                    tilCard.setError("Invalid Format");
+//                }
+//                else{
+//                    tilCard.setError(null);
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String field = editable.toString();
+//                int currCount = field.length();
+//
+//                if (shouldIncrementOrDecrement(currCount, true)){
+//                    appendOrStrip5(field, true);
+//                } else if (shouldIncrementOrDecrement(currCount, false)) {
+//                    appendOrStrip5(field, false);
+//                }
+//                prevCount = card_number.getText().toString().length();
+//
+//            }
+//        });
+//    }
 
 //    public void scannedCardNumber(EditText card_number, TextInputLayout tilCard ){
 //        card_number.addTextChangedListener(new TextWatcher() {
@@ -4865,12 +4882,11 @@ public class UpdateData extends AppCompatActivity {
                 otherCardVisibility();
 
                 scannedCardNumber(edt_card_number_inputted,til_card_number_inputted);
-                scannedCardNumber1(edt_card_number_inputted1,til_card_number_inputted1);
-                scannedCardNumber2(edt_card_number_inputted2,til_card_number_inputted2);
-                scannedCardNumber3(edt_card_number_inputted3,til_card_number_inputted3);
-                scannedCardNumber4(edt_card_number_inputted4,til_card_number_inputted4);
-                scannedCardNumber5(edt_card_number_inputted5,til_card_number_inputted5);
-
+                scannedCardNumber(edt_card_number_inputted1,til_card_number_inputted1);
+                scannedCardNumber(edt_card_number_inputted2,til_card_number_inputted2);
+                scannedCardNumber(edt_card_number_inputted3,til_card_number_inputted3);
+                scannedCardNumber(edt_card_number_inputted4,til_card_number_inputted4);
+                scannedCardNumber(edt_card_number_inputted5,til_card_number_inputted5);
 
 
                 btnAddCard.setOnClickListener(new View.OnClickListener() {
