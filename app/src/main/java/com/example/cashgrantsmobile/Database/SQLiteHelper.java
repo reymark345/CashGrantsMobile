@@ -74,6 +74,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                                String release_date_record,String release_date_record1,String release_date_record2,String release_date_record3,String release_date_record4,String release_date_record5,
                                String card_number_prefilled1,String card_number_prefilled2,String card_number_prefilled3,String card_number_prefilled4,String card_number_prefilled5, String ovt_relationship_to_contact_no, String ovt_conformed) {
 
+
+                Log.v(TAG,"PAWNING_REMARKS");
+                Log.v(TAG,"1"+pawning_remarks1);
+                Log.v(TAG,"2"+pawning_remarks2);
+                Log.v(TAG,"3"+pawning_remarks3);
+                Log.v(TAG,"4"+pawning_remarks4);
+                Log.v(TAG,"5"+pawning_remarks5);
+
                 SQLiteDatabase database = getWritableDatabase();
                 try{
                     database.beginTransaction();

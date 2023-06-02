@@ -1665,7 +1665,6 @@ public class ScanCashCard extends AppCompatActivity {
         String release_date_record5 = sh.getString("release_date_record5","");
         //end"distribution_status_record"
 
-//        Log.v(TAG,"test "+release_date_record);
         String release_date = sh.getString("release_date","");
         String release_by = sh.getString("release_by","");
         String release_place = sh.getString("release_place","");
@@ -1780,11 +1779,6 @@ public class ScanCashCard extends AppCompatActivity {
         String card_number_prefilled3 = sh.getString("card_number_prefilled3", "");
         String card_number_prefilled4 = sh.getString("card_number_prefilled4", "");
         String card_number_prefilled5 = sh.getString("card_number_prefilled5", "");
-        Log.v(TAG,"distribution_status_record" + distribution_status_record);
-        Log.v(TAG,"distribution_status_record1" + distribution_status_record1);
-        Log.v(TAG,"distribution_status_record2" + distribution_status_record2);
-        Log.v(TAG,"distribution_status_record3" + distribution_status_record3);
-        Log.v(TAG,"distribution_status_record4" + distribution_status_record4);
 
         new SweetAlertDialog(ScanCashCard.this, SweetAlertDialog.WARNING_TYPE)
             .setTitleText("Save data?")
@@ -1795,28 +1789,27 @@ public class ScanCashCard extends AppCompatActivity {
             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sDialog) {
-
-                        sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, set,
-                                lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
-                                amount, date_claimed, nma_reason, nma_remarks,
-                                hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, sync_at, user_id, emv_validation_id,
-                                card_number_prefilled, card_number_system_generated, card_number_unputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_request, card_replacement_submitted_details, emv_monitoring_id,
-                                card_holder_name1, card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
-                                card_holder_name2, card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2, release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
-                                card_holder_name3, card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3, release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
-                                card_holder_name4, card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
-                                card_holder_name5, card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count,
-                                imageViewToByte(ScannedImage),
-                                imageViewToByteGranteeAddional(mGrantee),
-                                imageViewToByteGranteeAddional(imgAdditionalId),
-                                imageViewToByte(ivOtherScannedImage1),
-                                imageViewToByte(ivOtherScannedImage2),
-                                imageViewToByte(ivOtherScannedImage3),
-                                imageViewToByte(ivOtherScannedImage4),
-                                imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason, nma_non_emv, nma_card_name,
-                                distribution_status_record, distribution_status_record1, distribution_status_record2, distribution_status_record3, distribution_status_record4, distribution_status_record5,
-                                release_date_record, release_date_record1, release_date_record2, release_date_record3, release_date_record4, release_date_record5,
-                                card_number_prefilled1, card_number_prefilled2, card_number_prefilled3, card_number_prefilled4, card_number_prefilled5, relationship_to_contact_no, ovt_conformed);
+                    sqLiteHelper.insertDatabase(household_id, first_name, last_name, middle_name, ext_name, sex, province_code, municipality_code, barangay_code, set,
+                            lender_name, lender_address, date_pawned, date_retrieved, loaned_amount, status, reason, interest, offense_history, offense_date, remarks, staff_intervention, other_details,
+                            amount, date_claimed, nma_reason, nma_remarks,
+                            hh_status, contact_no, contact_no_of, is_grantee, is_minor, relationship_to_grantee, assigned_staff, representative_name, sync_at, user_id, emv_validation_id,
+                            card_number_prefilled, card_number_system_generated, card_number_unputted, card_number_series, distribution_status, release_date, release_by, release_place, card_physically_presented, card_pin_is_attached, reason_not_presented, reason_unclaimed, card_replacement_request, card_replacement_submitted_details, emv_monitoring_id,
+                            card_holder_name1, card_number_system_generated1, card_number_inputted1, card_number_series1, distribution_status1, release_date1, release_by1, release_place1, card_physically_presented1, card_pin_is_attached1, reason_not_presented1, reason_unclaimed1, card_replacement_request1, card_replacement_request_submitted_details1, pawning_remarks1,
+                            card_holder_name2, card_number_system_generated2, card_number_inputted2, card_number_series2, distribution_status2, release_date2, release_by2, release_place2, card_physically_presented2, card_pin_is_attached2, reason_not_presented2, reason_unclaimed2, card_replacement_request2, card_replacement_request_submitted_details2, pawning_remarks2,
+                            card_holder_name3, card_number_system_generated3, card_number_inputted3, card_number_series3, distribution_status3, release_date3, release_by3, release_place3, card_physically_presented3, card_pin_is_attached3, reason_not_presented3, reason_unclaimed3, card_replacement_request3, card_replacement_request_submitted_details3, pawning_remarks3,
+                            card_holder_name4, card_number_system_generated4, card_number_inputted4, card_number_series4, distribution_status4, release_date4, release_by4, release_place4, card_physically_presented4, card_pin_is_attached4, reason_not_presented4, reason_unclaimed4, card_replacement_request4, card_replacement_request_submitted_details4, pawning_remarks4,
+                            card_holder_name5, card_number_system_generated5, card_number_inputted5, card_number_series5, distribution_status5, release_date5, release_by5, release_place5, card_physically_presented5, card_pin_is_attached5, reason_not_presented5, reason_unclaimed5, card_replacement_request5, card_replacement_request_submitted_details5, pawning_remarks5, card_count,
+                            imageViewToByte(ScannedImage),
+                            imageViewToByteGranteeAddional(mGrantee),
+                            imageViewToByteGranteeAddional(imgAdditionalId),
+                            imageViewToByte(ivOtherScannedImage1),
+                            imageViewToByte(ivOtherScannedImage2),
+                            imageViewToByte(ivOtherScannedImage3),
+                            imageViewToByte(ivOtherScannedImage4),
+                            imageViewToByte(ivOtherScannedImage5), overall_remarks, other_ext_name, contact_no_of_others, others_reason_not_presented, others_reason_not_presented1, others_reason_not_presented2, others_reason_not_presented3, others_reason_not_presented4, others_reason_not_presented5, others_reason_unclaimed, others_reason_unclaimed1, others_reason_unclaimed2, others_reason_unclaimed3, others_reason_unclaimed4, others_reason_unclaimed5, nma_others_reason, nma_non_emv, nma_card_name,
+                            distribution_status_record, distribution_status_record1, distribution_status_record2, distribution_status_record3, distribution_status_record4, distribution_status_record5,
+                            release_date_record, release_date_record1, release_date_record2, release_date_record3, release_date_record4, release_date_record5,
+                            card_number_prefilled1, card_number_prefilled2, card_number_prefilled3, card_number_prefilled4, card_number_prefilled5, relationship_to_contact_no, ovt_conformed);
 
 
                     load_loading_bar();
@@ -2585,7 +2578,6 @@ public class ScanCashCard extends AppCompatActivity {
             if (distribution_status.matches("")) {
                 til_distribution_status.setError(required_field);
                 isValidationError++;
-                Log.v(TAG,"tracingerror 1 ");
             } else {
                 til_distribution_status.setError(null);
 
@@ -2593,7 +2585,6 @@ public class ScanCashCard extends AppCompatActivity {
                     if (release_date.matches("")) {
                         til_release_date.setError(required_field);
                         isValidationError++;
-                        Log.v(TAG,"tracingerror 2 ");
                     } else {
                         til_release_date.setError(null);
                     }
@@ -2601,7 +2592,6 @@ public class ScanCashCard extends AppCompatActivity {
                     if (release_by.matches("")) {
                         til_release_by.setError(required_field);
                         isValidationError++;
-                        Log.v(TAG,"tracingerror 3 ");
                     } else {
                         til_release_by.setError(null);
                     }
@@ -2609,7 +2599,6 @@ public class ScanCashCard extends AppCompatActivity {
                     if (release_place.matches("")) {
                         til_release_place.setError(required_field);
                         isValidationError++;
-                        Log.v(TAG,"tracingerror 4 ");
                     } else {
                         til_release_place.setError(null);
                     }
@@ -2617,7 +2606,6 @@ public class ScanCashCard extends AppCompatActivity {
                     if (card_physically_presented.matches("")) {
                         til_card_physically_presented.setError(required_field);
                         isValidationError++;
-                        Log.v(TAG,"tracingerror 8 ");
                     } else {
                         til_card_physically_presented.setError(null);
 
@@ -2625,7 +2613,6 @@ public class ScanCashCard extends AppCompatActivity {
                             if (distribution_status.matches("Unclaimed")){
                                 til_distribution_status.setError("Must be Claimed if Yes on physical cash card presented");
                                 isValidationError++;
-                                Log.v(TAG,"tracingerror 9 ");
                             }
                             else{
                                 til_distribution_status.setError(null);
@@ -2633,7 +2620,6 @@ public class ScanCashCard extends AppCompatActivity {
                             if (card_pin_is_attached.matches("")) {
                                 til_card_pin_is_attached.setError(required_field);
                                 isValidationError++;
-                                Log.v(TAG,"tracingerror 10 ");
                             } else {
                                 til_card_pin_is_attached.setError(null);
                             }
@@ -2641,7 +2627,6 @@ public class ScanCashCard extends AppCompatActivity {
                             if (reason_not_presented.matches("")) {
                                 til_reason_not_presented.setError(required_field);
                                 isValidationError++;
-                                Log.v(TAG,"tracingerror 11 ");
                             } else {
                                 til_reason_not_presented.setError(null);
 
@@ -2667,7 +2652,6 @@ public class ScanCashCard extends AppCompatActivity {
                                     if (card_replacement_request.matches("")) {
                                         til_card_replacement_request.setError(required_field);
                                         isValidationError++;
-                                        Log.v(TAG,"tracingerror 12 ");
                                     } else {
                                         til_card_replacement_request.setError(null);
 
@@ -2675,7 +2659,6 @@ public class ScanCashCard extends AppCompatActivity {
                                             if (card_replacement_request_submitted_details.matches("")) {
                                                 til_card_replacement_request_submitted_details.setError(required_field);
                                                 isValidationError++;
-                                                Log.v(TAG,"tracingerror 13 ");
                                             } else {
                                                 til_card_replacement_request_submitted_details.setError(null);
                                             }
@@ -2685,7 +2668,6 @@ public class ScanCashCard extends AppCompatActivity {
                                     if (lender_name.matches("")) {
                                         til_lender_name.setError(required_field);
                                         isValidationError++;
-                                        Log.v(TAG,"tracingerror 14 ");
                                     } else {
                                         til_lender_name.setError(null);
                                     }
@@ -2693,7 +2675,6 @@ public class ScanCashCard extends AppCompatActivity {
                                     if (others_reason_not_presented.matches("")) {
                                         til_others_reason_not_presented.setError(required_field);
                                         isValidationError++;
-                                        Log.v(TAG,"tracingerror 15 ");
                                     } else {
                                         til_others_reason_not_presented.setError(null);
                                     }
@@ -2708,14 +2689,12 @@ public class ScanCashCard extends AppCompatActivity {
                     if (reason_unclaimed.matches("")) {
                         til_reason_unclaimed.setError(required_field);
                         isValidationError++;
-                        Log.v(TAG,"tracingerror 5 ");
                     } else {
                         til_reason_unclaimed.setError(null);
                         if (reason_unclaimed.matches("Others")) {
                             if (others_reason_unclaimed.matches("")) {
                                 til_others_reason_unclaimed.setError(required_field);
                                 isValidationError++;
-                                Log.v(TAG,"tracingerror 6 ");
                             } else {
                                 til_others_reason_unclaimed.setError(null);
                             }
@@ -2727,14 +2706,11 @@ public class ScanCashCard extends AppCompatActivity {
 
             }
 
-
-
             if (aat_card_physically_presented.getText().toString().matches("Yes")) {
 
                 if (aat_distribution_status.getText().toString().matches("Unclaimed")){
                     til_distribution_status.setError("Must be Claimed if physical cash card presented");
                     isValidationError++;
-                    Log.v(TAG,"tracingerror 7 ");
                 }
             }
 //            else {
@@ -2745,17 +2721,14 @@ public class ScanCashCard extends AppCompatActivity {
             if (card_number_inputted.matches("")) {
                 til_card_number_inputted.setError(required_field);
                 isValidationError++;
-                Log.v(TAG,"tracingerror 16 ");
             }
             else if(card_number_inputted.length() != 23){
                 til_card_number_inputted.setError(required_cc_length);
                 isValidationError++;
-                Log.v(TAG,"tracingerror 17");
             }
             else if (!card_number_inputted.matches("[0-9 ]+")){
                 til_card_number_inputted.setError(required_cc_invalid_format);
                 isValidationError++;
-                Log.v(TAG,"tracingerror 18 ");
             }
             else {
                 til_card_number_inputted.setError(null);
@@ -2764,7 +2737,6 @@ public class ScanCashCard extends AppCompatActivity {
             if (card_number_series.matches("")) {
                 til_card_number_series.setError(required_field);
                 isValidationError++;
-                Log.v(TAG,"tracingerror 19 ");
             } else {
                 til_card_number_series.setError(null);
             }
@@ -2772,7 +2744,6 @@ public class ScanCashCard extends AppCompatActivity {
             if (id_exists.matches("")) {
                 til_id_exists.setError(required_field);
                 isValidationError++;
-                Log.v(TAG,"tracingerror 20 ");
             } else {
                 til_id_exists.setError(null);
             }
@@ -2784,7 +2755,6 @@ public class ScanCashCard extends AppCompatActivity {
                 if (aat_distribution_status5.getText().toString().matches("Unclaimed")){
                     til_distribution_status5.setError("Must be Claimed if physical cash card presented");
                     isValidationError++;
-                    Log.v(TAG,"tracingerror 21 ");
                 }
                 else {
                     til_distribution_status5.setError(null);
@@ -2916,20 +2886,17 @@ public class ScanCashCard extends AppCompatActivity {
                 if (card_physically_presented1.matches("")) {
                     til_card_physically_presented1.setError(required_field);
                     isValidationError++;
-                    Log.v(TAG, "newtracedaerror 5 ");
                 } else {
                     if (card_physically_presented1.matches("Yes")) {
                         if (distribution_status1.matches("Unclaimed")) {
                             til_distribution_status1.setError("Must be Claimed if Yes on physical cash card presented");
                             isValidationError++;
-                            Log.v(TAG, "newtracedaerror 6 ");
                         } else {
                             til_distribution_status1.setError(null);
                         }
                         if (card_pin_is_attached1.matches("")) {
                             til_card_pin_is_attached1.setError(required_field);
                             isValidationError++;
-                            Log.v(TAG, "newtracedaerror 7 ");
                         } else {
                             til_card_pin_is_attached1.setError(null);
                         }
@@ -2937,17 +2904,14 @@ public class ScanCashCard extends AppCompatActivity {
                         if (card_number_inputted1.matches("")) {
                             til_card_number_inputted1.setError(required_field);
                             isValidationError++;
-                            Log.v(TAG,"newtracedaerror 15 ");
                         }
                         else if(card_number_inputted1.length() != 23){
                             til_card_number_inputted1.setError(required_cc_length);
                             isValidationError++;
-                            Log.v(TAG,"newtracedaerror 16");
                         }
                         else if (!card_number_inputted1.matches("[0-9 ]+")){
                             til_card_number_inputted1.setError(required_cc_invalid_format);
                             isValidationError++;
-                            Log.v(TAG,"newtracedaerror 17 ");
                         }
 
                         else {
@@ -2957,7 +2921,6 @@ public class ScanCashCard extends AppCompatActivity {
                         if (card_number_series1.matches("")) {
                             til_card_number_series1.setError(required_field);
                             isValidationError++;
-                            Log.v(TAG,"newtracedaerror 18 ");
                         }
                         //end
 
@@ -2965,19 +2928,16 @@ public class ScanCashCard extends AppCompatActivity {
                         if (reason_not_presented1.matches("")) {
                             til_reason_not_presented1.setError(required_field);
                             isValidationError++;
-                            Log.v(TAG, "newtracedaerror 8 ");
                         } else {
                              if (reason_not_presented1.matches("Lost/Stolen") || reason_not_presented1.matches("Damaged/Defective")) {
                                 if (card_replacement_request1.matches("")) {
                                     til_card_replacement_request1.setError(required_field);
                                     isValidationError++;
-                                    Log.v(TAG, "newtracedaerror 11 ");
                                 } else {
                                     if (card_replacement_request1.matches("Yes")) {
                                         if (card_replacement_request_submitted_details1.matches("")) {
                                             til_card_replacement_request_submitted_details1.setError(required_field);
                                             isValidationError++;
-                                            Log.v(TAG, "newtracedaerror 12 ");
                                         }
                                     }
                                 }
@@ -2985,13 +2945,11 @@ public class ScanCashCard extends AppCompatActivity {
                                 if (pawning_remarks1.matches("")) {
                                     til_pawning_remarks1.setError(required_field);
                                     isValidationError++;
-                                    Log.v(TAG, "pawwneed daww ");
                                 }
                             } else if (reason_not_presented1.matches("Others")) {
                                 if (others_reason_not_presented1.matches("")) {
                                     til_others_reason_not_presented1.setError(required_field);
                                     isValidationError++;
-                                    Log.v(TAG, "newtracedaerror 14 ");
                                 }
                             }
                         }
@@ -3002,13 +2960,11 @@ public class ScanCashCard extends AppCompatActivity {
                 if (reason_unclaimed1.matches("")) {
                     til_reason_unclaimed1.setError(required_field);
                     isValidationError++;
-                    Log.v(TAG, "newtracedaerror 9 ");
                 } else {
                     if (reason_unclaimed1.matches("Others")) {
                         if (others_reason_unclaimed1.matches("")) {
                             til_others_reason_unclaimed1.setError(required_field);
                             isValidationError++;
-                            Log.v(TAG, "newtracedaerror 10 ");
                         }
                     }
                 }
@@ -3979,10 +3935,10 @@ public class ScanCashCard extends AppCompatActivity {
                 String card_number_series4 = edt_card_number_series4.getText().toString();
                 String card_number_series5 = edt_card_number_series5.getText().toString();
                 String pawning_remarks1 = edt_pawning_remarks1.getText().toString();
-                String pawning_remarks2 = edt_pawning_remarks1.getText().toString();
-                String pawning_remarks3 = edt_pawning_remarks1.getText().toString();
-                String pawning_remarks4 = edt_pawning_remarks1.getText().toString();
-                String pawning_remarks5 = edt_pawning_remarks1.getText().toString();
+                String pawning_remarks2 = edt_pawning_remarks2.getText().toString();
+                String pawning_remarks3 = edt_pawning_remarks3.getText().toString();
+                String pawning_remarks4 = edt_pawning_remarks4.getText().toString();
+                String pawning_remarks5 = edt_pawning_remarks5.getText().toString();
 
                 String card_number_prefilled1 = edt_card_number_prefilled1.getText().toString();
                 String card_number_prefilled2 = edt_card_number_prefilled2.getText().toString();
