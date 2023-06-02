@@ -34,6 +34,8 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -4714,6 +4716,48 @@ public class ScanCashCard extends AppCompatActivity {
                         }
                     }
                 });
+
+                InputFilter filter = new InputFilter() {
+                    public CharSequence filter(CharSequence source, int start, int end,
+                                               Spanned dest, int dstart, int dend) {
+                        StringBuilder filteredStringBuilder = new StringBuilder(end - start);
+                        for (int i = start; i < end; i++) {
+                            char character = source.charAt(i);
+                            if (Character.isLetterOrDigit(character) || character == '-') {
+                                filteredStringBuilder.append(character);
+                            }
+                        }
+                        return filteredStringBuilder.toString();
+                    }
+                };
+
+                InputFilter lengthFilter = new InputFilter.LengthFilter(30);
+
+
+                edt_hh_id.setFilters(new InputFilter[] { filter, lengthFilter });
+
+                edt_hh_id.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // Not used in this example
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        // Not used in this example
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        String inputText = s.toString();
+                        String filteredText = inputText.replaceAll("[^\\d-]", ""); // Remove any non-digit and non-hyphen characters
+                        if (!inputText.equals(filteredText)) {
+                            edt_hh_id.setText(filteredText);
+                            edt_hh_id.setSelection(filteredText.length());
+                        }
+                    }
+                });
+
                 break;
             case 1:
                 xml_initialization(2);
