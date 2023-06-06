@@ -3954,7 +3954,7 @@ public class UpdateData extends AppCompatActivity {
             get_prov_psgc.close();
         }
 
-        Cursor muni_data = sqLiteHelper.getData("SELECT name_old FROM psgc WHERE correspondence_code LIKE '%"+split_prov_psgc+"%' AND geographic_level='municipality'");
+        Cursor muni_data = sqLiteHelper.getData("SELECT name_new FROM psgc WHERE correspondence_code LIKE '%"+split_prov_psgc+"%' AND geographic_level='municipality'");
         municipality_list.clear();
         try {
             while(muni_data.moveToNext()) {
