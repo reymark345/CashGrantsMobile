@@ -4798,7 +4798,7 @@ public class ScanCashCard extends AppCompatActivity {
                     @Override
                     public void afterTextChanged(Editable s) {
                         String inputText = s.toString();
-                        String filteredText = inputText.replaceAll("[^\\d-]", ""); // Remove any non-digit and non-hyphen characters
+                        String filteredText = inputText.replaceAll("[^\\w-]", ""); // Remove any non-word character (letters, digits, and underscore) and non-hyphen characters
                         if (!inputText.equals(filteredText)) {
                             edt_hh_id.setText(filteredText);
                             edt_hh_id.setSelection(filteredText.length());
