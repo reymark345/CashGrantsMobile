@@ -91,7 +91,7 @@ public class ScanCashCard extends AppCompatActivity {
 
     String cameraPermission[];
     String StoragePermission[], required_field, required_length, required_btn, required_cc_length,required_cc_invalid_format;
-    Button btn_search_hh, rescanCashCard, btn_cash_card;
+    Button btn_search_hh, btn_reset_hh, btn_cash_card;
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     public static boolean pressNext = false;
@@ -4078,6 +4078,10 @@ public class ScanCashCard extends AppCompatActivity {
                 Toasty.error(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
             } else {
                 if  (validated_at.matches("null")){
+                    edt_hh_id.setEnabled(false);
+                    til_hh_id.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    btn_search_hh.setEnabled(false);
+
                     card_count = 0;
 
                     if (!other_card_number_1.matches("") && !other_card_number_1.matches("null")) {
@@ -4249,6 +4253,7 @@ public class ScanCashCard extends AppCompatActivity {
         switch (pos) {
             case 0:
                 btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
+                btn_reset_hh = (Button) findViewById(R.id.btnReset);
 
                 xml_initialization(1);
                 til_representative_name.setVisibility(View.GONE);
@@ -4315,6 +4320,16 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_ext_name.setText(other_ext_name);
                 aat_hh_status.setText(hh_status, false);
                 aat_province_code.setText(province, false);
+
+                if (!hh_id.matches("")){
+                    edt_hh_id.setEnabled(false);
+                    til_hh_id.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    btn_search_hh.setEnabled(false);
+                }else{
+                    edt_hh_id.setEnabled(true);
+                    til_hh_id.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                    btn_search_hh.setEnabled(true);
+                }
                 if (!province.matches("")) {
                     province_event();
                 }
@@ -4392,6 +4407,43 @@ public class ScanCashCard extends AppCompatActivity {
                         search_household();
                     }
                 });
+
+                btn_reset_hh.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        sqLiteHelper.deleteBlob();
+                        edt_hh_id.setEnabled(true);
+                        til_hh_id.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                        btn_search_hh.setEnabled(true);
+                        edt_hh_id.setText(null);
+                        aat_set.setText(null, false);
+                        edt_last_name.setText(null);
+                        edt_first_name.setText(null);
+                        edt_middle_name.setText(null);
+                        aat_ext_name.setText(null, false);
+                        edt_other_ext_name.setText(null);
+                        aat_hh_status.setText(null, false);
+                        aat_province_code.setText(null, false);
+                        aat_municipality_code.setText(null, false);
+                        aat_barangay_code.setText(null, false);
+                        aat_sex.setText(null, false);
+                        aat_is_grantee.setText(null, false);
+                        aat_relationship_to_grantee.setText(null, false);
+                        edt_contact_no.setText(null);
+                        aat_contact_no_of.setText(null, false);
+                        edt_contact_no_of_others.setText(null);
+                        edt_contact_no_relationship.setText(null);
+                        edt_assigned_staff.setText(null);
+                        aat_is_minor.setText(null);
+                        clear_preferences();
+                        Toasty.warning(getApplicationContext(),"Household Reset", Toasty.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+
 
                 aat_ext_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
