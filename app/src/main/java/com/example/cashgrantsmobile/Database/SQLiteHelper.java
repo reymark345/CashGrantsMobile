@@ -432,13 +432,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     statement_emv_validations.bindString(2, hh_id);
                     statement_emv_validations.execute();
 
-
-                    deleteBlob();
-
-//                    String sql_tmp_blob = "DELETE FROM tmp_blob WHERE id=1";
-//                    SQLiteStatement statement_tmp_blob = database.compileStatement(sql_tmp_blob);
-//                    statement_tmp_blob.clearBindings();
-//                    statement_tmp_blob.execute();
+                    String sql_tmp_blob = "DELETE FROM tmp_blob WHERE id=1";
+                    SQLiteStatement statement_tmp_blob = database.compileStatement(sql_tmp_blob);
+                    statement_tmp_blob.clearBindings();
+                    statement_tmp_blob.execute();
 
                     database.setTransactionSuccessful();
                 }
