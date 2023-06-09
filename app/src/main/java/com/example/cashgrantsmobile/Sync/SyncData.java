@@ -43,6 +43,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -905,95 +906,102 @@ public class SyncData extends AppCompatActivity {
                 @Override
                 protected Map<String,String> getParams(){
                     Map<String, String> params = new HashMap<>();
-                    params.put("evd_hh_status", finalEvd_hh_status);
-                    params.put("evd_contact_no", finalEvd_contact_no);
-                    params.put("evd_contact_no_of", finalEvd_contact_no_of);
-                    params.put("evd_relationship_to_contact_no", finalEvd_relationship_to_contact_no);
-                    params.put("evd_is_grantee", finalEvd_is_grantee);
-                    params.put("evd_is_minor", finalEvd_is_minor);
-                    params.put("evd_relationship_to_grantee", finalEvd_relationship_to_grantee);
-                    params.put("evd_assigned_staff", finalEvd_assigned_staff);
-                    params.put("evd_representative_name", finalEvd_representative_name);
-                    params.put("evd_user_id", finalEvd_user_id);
-                    params.put("evd_created_at", finalEvd_created_at);
-                    params.put("evd_overall_remarks", finalEvd_overall_remarks);
-                    params.put("gv_hh_id", finalGv_hh_id1);
-                    params.put("gv_first_name", finalGv_first_name);
-                    params.put("gv_last_name", finalGv_last_name);
-                    params.put("gv_middle_name", finalGv_middle_name);
-                    params.put("gv_ext_name", finalGv_ext_name);
-                    params.put("gv_sex", finalGv_sex);
-                    params.put("gv_province_code", finalGv_province_code);
-                    params.put("gv_municipality_code", finalGv_municipality_code);
-                    params.put("gv_barangay_code", finalGv_barangay_code);
-                    params.put("gv_set", finalGv_hh_set);
-                    params.put("pvd_lender_name", finalPvd_lender_name);
-                    params.put("pvd_lender_address", finalPvd_lender_address);
-                    if (!finalPvd_date_pawned.matches("")) {
-                        params.put("pvd_date_pawned", finalPvd_date_pawned);
-                    }
-                    if (!finalPvd_date_retrieved.matches("")) {
-                        params.put("pvd_date_retrieved", finalPvd_date_retrieved);
-                    }
-                    params.put("pvd_loan_amount", finalPvd_loan_amount);
-                    params.put("pvd_status", finalPvd_status);
-                    params.put("pvd_reason", finalPvd_reason);
-                    params.put("pvd_interest", finalPvd_interest);
-                    params.put("pvd_offense_history", finalPvd_offense_history);
-                    if (!finalPvd_offense_date.matches("")) {
-                        params.put("pvd_offense_date", finalPvd_offense_date);
-                    }
-                    params.put("pvd_remarks", finalPvd_remarks);
-                    params.put("pvd_staff_intervention", finalPvd_staff_intervention);
-                    params.put("pvd_other_details", finalPvd_other_details);
-                    params.put("nv_amount", finalNv_amount);
-                    if (!finalNv_date_claimed.matches("")) {
-                        params.put("nv_date_claimed", finalNv_date_claimed);
-                    }
-                    params.put("nv_nma_reason", finalNv_reason);
-                    params.put("nv_nma_remarks", finalNv_remarks);
-                    params.put("cvd_card_number_prefilled", "LBP" + finalCvd_card_number_prefilled.replace(" ", ""));
-                    params.put("cvd_card_number_system_generated", "LBP" + finalCvd_card_number_system_generated.replace(" ", ""));
-                    params.put("cvd_card_number_inputted", "LBP" + finalCvd_card_number_inputted.replace(" ", ""));
-                    params.put("cvd_card_number_series", finalCvd_card_number_series);
-                    params.put("cvd_distribution_status", finalCvd_distribution_status);
-                    if (!finalCvd_release_date.matches("")) {
-                        params.put("cvd_release_date", finalCvd_release_date);
-                    }
-                    params.put("cvd_release_by", finalCvd_release_by);
-                    params.put("cvd_release_place", finalCvd_release_place);
-                    params.put("cvd_card_physically_presented", finalCvd_card_physically_presented);
-                    params.put("cvd_card_pin_is_attached", finalCvd_card_pin_is_attached);
-                    params.put("cvd_reason_not_presented", finalCvd_reason_not_presented);
-                    params.put("cvd_reason_unclaimed", finalCvd_reason_unclaimed);
-                    params.put("cvd_card_replacement_request", finalCvd_card_replacement_requests);
-                    params.put("cvd_card_replacement_submitted_details", finalCvd_card_replacement_submitted_details);
 
-                    Log.d("OBJ OTHER CARD =", "Length " + arr_other_card.length());
-                    for (int i = 0; i < arr_other_card.length(); i++) {
-                        try {
-                            JSONObject new_obj = arr_other_card.getJSONObject(i);
-                            params.put("ocv_card_holder_name_" + (i + 1), new_obj.getString("card_holder_name"));
-                            params.put("ocv_card_number_system_generated_" + (i + 1), "LBP" + new_obj.getString("card_number_system_generated").replace(" ", ""));
-                            params.put("ocv_card_number_inputted_" + (i + 1), "LBP" + new_obj.getString("card_number_inputted").replace(" ", ""));
-                            params.put("ocv_card_number_series_" + (i + 1), new_obj.getString("card_number_series"));
-                            params.put("ocv_distribution_status_" + (i + 1), new_obj.getString("distribution_status"));
-                            if (!new_obj.getString("release_date").matches("")) {
-                                params.put("ocv_release_date_" + (i + 1), new_obj.getString("release_date"));
-                            }
-                            params.put("ocv_release_by_" + (i + 1), new_obj.getString("release_by"));
-                            params.put("ocv_release_place_" + (i + 1), new_obj.getString("release_place"));
-                            params.put("ocv_card_physically_presented_" + (i + 1), new_obj.getString("card_physically_presented"));
-                            params.put("ocv_card_pin_is_attached_" + (i + 1), new_obj.getString("card_pin_is_attached"));
-                            params.put("ocv_reason_not_presented_" + (i + 1), new_obj.getString("reason_not_presented"));
-                            params.put("ocv_reason_unclaimed_" + (i + 1), new_obj.getString("reason_unclaimed"));
-                            params.put("ocv_card_replacement_request_" + (i + 1), new_obj.getString("card_replacement_requests"));
-                            params.put("ocv_card_replacement_submitted_details_" + (i + 1), new_obj.getString("card_replacement_request_submitted_details"));
-                            params.put("ocv_pawning_remarks_" + (i + 1), new_obj.getString("pawning_remarks"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                    try {
+                        params.put("evd_id", finalEvd_id.toString());
+                        params.put("evd_hh_status", finalEvd_hh_status);
+                        params.put("evd_contact_no", finalEvd_contact_no);
+                        params.put("evd_contact_no_of", finalEvd_contact_no_of);
+                        params.put("evd_relationship_to_contact_no", finalEvd_relationship_to_contact_no);
+                        params.put("evd_is_grantee", finalEvd_is_grantee);
+                        params.put("evd_is_minor", finalEvd_is_minor);
+                        params.put("evd_relationship_to_grantee", URLEncoder.encode(finalEvd_relationship_to_grantee, "UTF-8"));
+                        params.put("evd_assigned_staff", URLEncoder.encode(finalEvd_assigned_staff, "UTF-8"));
+                        params.put("evd_representative_name", URLEncoder.encode(finalEvd_representative_name, "UTF-8"));
+                        params.put("evd_user_id", finalEvd_user_id);
+                        params.put("evd_created_at", finalEvd_created_at);
+                        params.put("evd_overall_remarks", URLEncoder.encode(finalEvd_overall_remarks, "UTF-8"));
+                        params.put("gv_hh_id", finalGv_hh_id1);
+                        params.put("gv_first_name", URLEncoder.encode(finalGv_first_name, "UTF-8"));
+                        params.put("gv_last_name", URLEncoder.encode(finalGv_last_name, "UTF-8"));
+                        params.put("gv_middle_name", URLEncoder.encode(finalGv_middle_name, "UTF-8"));
+                        params.put("gv_ext_name", URLEncoder.encode(finalGv_ext_name, "UTF-8"));
+                        params.put("gv_sex", finalGv_sex);
+                        params.put("gv_province_code", finalGv_province_code);
+                        params.put("gv_municipality_code", finalGv_municipality_code);
+                        params.put("gv_barangay_code", finalGv_barangay_code);
+                        params.put("gv_set", finalGv_hh_set);
+                        params.put("pvd_lender_name", URLEncoder.encode(finalPvd_lender_name, "UTF-8"));
+                        params.put("pvd_lender_address", URLEncoder.encode(finalPvd_lender_address, "UTF-8"));
+                        if (!finalPvd_date_pawned.matches("")) {
+                            params.put("pvd_date_pawned", finalPvd_date_pawned);
                         }
+                        if (!finalPvd_date_retrieved.matches("")) {
+                            params.put("pvd_date_retrieved", finalPvd_date_retrieved);
+                        }
+                        params.put("pvd_loan_amount", finalPvd_loan_amount);
+                        params.put("pvd_status", finalPvd_status);
+                        params.put("pvd_reason", URLEncoder.encode(finalPvd_reason, "UTF-8"));
+                        params.put("pvd_interest", finalPvd_interest);
+                        params.put("pvd_offense_history", finalPvd_offense_history);
+                        if (!finalPvd_offense_date.matches("")) {
+                            params.put("pvd_offense_date", finalPvd_offense_date);
+                        }
+                        params.put("pvd_remarks", URLEncoder.encode(finalPvd_remarks, "UTF-8"));
+                        params.put("pvd_staff_intervention", URLEncoder.encode(finalPvd_staff_intervention, "UTF-8"));
+                        params.put("pvd_other_details", URLEncoder.encode(finalPvd_other_details, "UTF-8"));
+                        params.put("nv_amount", finalNv_amount);
+                        if (!finalNv_date_claimed.matches("")) {
+                            params.put("nv_date_claimed", finalNv_date_claimed);
+                        }
+                        params.put("nv_nma_reason", URLEncoder.encode(finalNv_reason, "UTF-8"));
+                        params.put("nv_nma_remarks", URLEncoder.encode(finalNv_remarks, "UTF-8"));
+                        params.put("cvd_card_number_prefilled", "LBP" + finalCvd_card_number_prefilled.replace(" ", ""));
+                        params.put("cvd_card_number_system_generated", "LBP" + finalCvd_card_number_system_generated.replace(" ", ""));
+                        params.put("cvd_card_number_inputted", "LBP" + finalCvd_card_number_inputted.replace(" ", ""));
+                        params.put("cvd_card_number_series", finalCvd_card_number_series);
+                        params.put("cvd_distribution_status", finalCvd_distribution_status);
+                        if (!finalCvd_release_date.matches("")) {
+                            params.put("cvd_release_date", finalCvd_release_date);
+                        }
+                        params.put("cvd_release_by", URLEncoder.encode(finalCvd_release_by, "UTF-8"));
+                        params.put("cvd_release_place", URLEncoder.encode(finalCvd_release_place, "UTF-8"));
+                        params.put("cvd_card_physically_presented", finalCvd_card_physically_presented);
+                        params.put("cvd_card_pin_is_attached", finalCvd_card_pin_is_attached);
+                        params.put("cvd_reason_not_presented", URLEncoder.encode(finalCvd_reason_not_presented, "UTF-8"));
+                        params.put("cvd_reason_unclaimed", URLEncoder.encode(finalCvd_reason_unclaimed, "UTF-8"));
+                        params.put("cvd_card_replacement_request", finalCvd_card_replacement_requests);
+                        params.put("cvd_card_replacement_submitted_details", finalCvd_card_replacement_submitted_details);
+
+                        Log.d("OBJ OTHER CARD =", "Length " + arr_other_card.length());
+                        for (int i = 0; i < arr_other_card.length(); i++) {
+                            try {
+                                JSONObject new_obj = arr_other_card.getJSONObject(i);
+                                params.put("ocv_card_holder_name_" + (i + 1), URLEncoder.encode(new_obj.getString("card_holder_name"), "UTF-8"));
+                                params.put("ocv_card_number_system_generated_" + (i + 1), "LBP" + new_obj.getString("card_number_system_generated").replace(" ", ""));
+                                params.put("ocv_card_number_inputted_" + (i + 1), "LBP" + new_obj.getString("card_number_inputted").replace(" ", ""));
+                                params.put("ocv_card_number_series_" + (i + 1), new_obj.getString("card_number_series"));
+                                params.put("ocv_distribution_status_" + (i + 1), new_obj.getString("distribution_status"));
+                                if (!new_obj.getString("release_date").matches("")) {
+                                    params.put("ocv_release_date_" + (i + 1), new_obj.getString("release_date"));
+                                }
+                                params.put("ocv_release_by_" + (i + 1), URLEncoder.encode(new_obj.getString("release_by"), "UTF-8"));
+                                params.put("ocv_release_place_" + (i + 1), URLEncoder.encode(new_obj.getString("release_place"), "UTF-8"));
+                                params.put("ocv_card_physically_presented_" + (i + 1), new_obj.getString("card_physically_presented"));
+                                params.put("ocv_card_pin_is_attached_" + (i + 1), new_obj.getString("card_pin_is_attached"));
+                                params.put("ocv_reason_not_presented_" + (i + 1), URLEncoder.encode(new_obj.getString("reason_not_presented"), "UTF-8"));
+                                params.put("ocv_reason_unclaimed_" + (i + 1), URLEncoder.encode(new_obj.getString("reason_unclaimed"), "UTF-8"));
+                                params.put("ocv_card_replacement_request_" + (i + 1), new_obj.getString("card_replacement_requests"));
+                                params.put("ocv_card_replacement_submitted_details_" + (i + 1), new_obj.getString("card_replacement_request_submitted_details"));
+                                params.put("ocv_pawning_remarks_" + (i + 1), URLEncoder.encode(new_obj.getString("pawning_remarks"), "UTF-8"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
                     }
+
 
                     return params;
                 }
