@@ -75,13 +75,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                                String card_number_prefilled1,String card_number_prefilled2,String card_number_prefilled3,String card_number_prefilled4,String card_number_prefilled5, String ovt_relationship_to_contact_no, String ovt_conformed) {
 
 
-                Log.v(TAG,"PAWNING_REMARKS");
-                Log.v(TAG,"1"+pawning_remarks1);
-                Log.v(TAG,"2"+pawning_remarks2);
-                Log.v(TAG,"3"+pawning_remarks3);
-                Log.v(TAG,"4"+pawning_remarks4);
-                Log.v(TAG,"5"+pawning_remarks5);
-
                 SQLiteDatabase database = getWritableDatabase();
                 try{
                     database.beginTransaction();
@@ -455,6 +448,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
                 }
 
+    }
+
+    public void deleteBlob(){
+        SQLiteDatabase databaseTmp = getWritableDatabase();
+        String sql_tmp_blob = "DELETE FROM tmp_blob WHERE id=1";
+        SQLiteStatement statement_tmp_blob = databaseTmp.compileStatement(sql_tmp_blob);
+        statement_tmp_blob.clearBindings();
+        statement_tmp_blob.execute();
+        databaseTmp.close();
     }
 
     public void deleteTmpBlob(Integer id) {

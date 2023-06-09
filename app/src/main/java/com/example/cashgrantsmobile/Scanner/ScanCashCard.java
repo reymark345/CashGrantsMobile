@@ -68,6 +68,13 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.huawei.hmf.tasks.OnFailureListener;
+import com.huawei.hmf.tasks.OnSuccessListener;
+import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.mlsdk.MLAnalyzerFactory;
+import com.huawei.hms.mlsdk.common.MLFrame;
+import com.huawei.hms.mlsdk.text.MLText;
+import com.huawei.hms.mlsdk.text.MLTextAnalyzer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
@@ -76,7 +83,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
@@ -91,7 +101,7 @@ public class ScanCashCard extends AppCompatActivity {
 
     String cameraPermission[];
     String StoragePermission[], required_field, required_length, required_btn, required_cc_length,required_cc_invalid_format;
-    Button btn_search_hh, rescanCashCard, btn_cash_card;
+    Button btn_search_hh, btn_reset_hh, btn_cash_card;
     public static boolean scanned = true;
     public static boolean pressBtn_search = false;
     public static boolean pressNext = false;
@@ -693,6 +703,7 @@ public class ScanCashCard extends AppCompatActivity {
         }
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode ==RESULT_OK){
                 Uri resultUri = result.getUri();
@@ -727,9 +738,60 @@ public class ScanCashCard extends AppCompatActivity {
 
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 TextRecognizer recognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+                final String[] sTextFromET = {null};
 
+                if(!recognizer.isOperational()){
+                    try{
+                        MLTextAnalyzer analyzer = MLAnalyzerFactory.getInstance().getLocalTextAnalyzer();
+                        MLFrame frames = MLFrame.fromBitmap(bitmap);
 
+                        Task<MLText> task = analyzer.asyncAnalyseFrame(frames);
+                        task.addOnSuccessListener(new OnSuccessListener<MLText>() {
+                            @Override
+                                public void onSuccess(MLText text) {
+                                String recognizedText = null;
+                                    // Processing for successful recognitsion.
+                                List<MLText.Block> blocks = text.getBlocks();
+                                StringBuilder stringBuilder = new StringBuilder();
+                                for (MLText.Block block : blocks) {
+                                    recognizedText = block.getStringValue();
+                                    String blockText = block.getStringValue();
+                                    stringBuilder.append(blockText);
+                                }
+                                sTextFromET[0]=recognizedText.replaceAll("\\s+", "");
+                                sTextFromET[0] = sTextFromET[0].replace("A", "8");
+                                sTextFromET[0] = sTextFromET[0].replace("B", "6");
+                                sTextFromET[0] = sTextFromET[0].replace("a", "8");
+                                sTextFromET[0] = sTextFromET[0].replace("b", "6");
+                                sTextFromET[0] = sTextFromET[0].replace("D", "0");
+                                sTextFromET[0] = sTextFromET[0].replace("e", "8");
+                                sTextFromET[0] = sTextFromET[0].replace("E", "8");
+                                sTextFromET[0] = sTextFromET[0].replace("L", "6");
+                                sTextFromET[0] = sTextFromET[0].replace("S", "5");
+                                sTextFromET[0] = sTextFromET[0].replace("G", "6");
+                                sTextFromET[0] = sTextFromET[0].replace("%", "6");
+                                sTextFromET[0] = sTextFromET[0].replace("&", "6");
+                                sTextFromET[0] = sTextFromET[0].replace("?", "7");
+                                sTextFromET[0] = sTextFromET[0].replace("l", "1");
+                                sTextFromET[0] = sTextFromET[0].replace("+", "7");
+                                sTextFromET[0] = sTextFromET[0].replace("}", "7");
+                                sTextFromET[0] = sTextFromET[0].replace("O", "0");
+                                sTextFromET[0] = sTextFromET[0].replace("-", " ");
+                                sTextFromET[0] = sTextFromET[0].replaceAll("....", "$0 ");
+                                sTextFromETResult(sTextFromET[0]);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(Exception e) {
+                                Log.v(TAG,"ErrorFailureMLText" + e);
+                            }
+                        });
 
+                    } catch (Exception e) {
+                      Toast.makeText(this,"Error" + e,Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
                     Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                     SparseArray<TextBlock> items = recognizer.detect(frame);
                     StringBuilder sb = new StringBuilder();
@@ -740,182 +802,28 @@ public class ScanCashCard extends AppCompatActivity {
                         sb.append("\n");
                     }
 
-                    String sTextFromET=sb.toString().replaceAll("\\s+", "");
-                    sTextFromET = sTextFromET.replace("a", "8");
-                    sTextFromET = sTextFromET.replace("A", "8");
-                    sTextFromET = sTextFromET.replace("B", "6");
-                    sTextFromET = sTextFromET.replace("b", "6");
-                    sTextFromET = sTextFromET.replace("D", "0");
-                    sTextFromET = sTextFromET.replace("e", "8");
-                    sTextFromET = sTextFromET.replace("E", "8");
-                    sTextFromET = sTextFromET.replace("L", "6");
-                    sTextFromET = sTextFromET.replace("S", "5");
-                    sTextFromET = sTextFromET.replace("G", "6");
-                    sTextFromET = sTextFromET.replace("%", "6");
-                    sTextFromET = sTextFromET.replace("&", "6");
-                    sTextFromET = sTextFromET.replace("?", "7");
-                    sTextFromET = sTextFromET.replace("l", "1");
-                    sTextFromET = sTextFromET.replace("+", "7");
-                    sTextFromET = sTextFromET.replace("}", "7");
-                    sTextFromET = sTextFromET.replace("O", "0");
-                    sTextFromET = sTextFromET.replace("-", " ");
-                    sTextFromET = sTextFromET.replaceAll("....", "$0 ");
-                    image_uri = Uri.parse(image_uri.toString());
-                    try {
-                        Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
-                        switch (ScanImagePos) {
-                            case 1:
-                                ivOtherScannedImage1.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
-                                break;
-                            case 2:
-                                ivOtherScannedImage2.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
-                                break;
-                            case 3:
-                                ivOtherScannedImage3.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
-                                break;
-                            case 4:
-                                ivOtherScannedImage4.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
-                                break;
-                            case 5:
-                                ivOtherScannedImage5.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
-                                break;
-                            default:
-                                ScannedImage.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
-                                break;
-                        }
-
-
-                        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                        SharedPreferences.Editor myEdit = sharedPreferences.edit();
-
-                        switch (ScanImagePos) {
-                            case 1:
-                                tilOtherScanned1 = findViewById(R.id.tilOtherScanned1);
-                                tilOtherScanned1.setError(null);
-                                sqLiteHelper.insertImageTmp("other_card_e_image_1", imageViewToByte(ivOtherScannedImage1), 1);
-
-                                if (sTextFromET.length() >23){
-                                    String limitString = sTextFromET.substring(0,23);
-                                    edt_card_number_inputted1.setText(limitString);
-                                    myEdit.putString("card_number_system_generated1",  limitString);
-                                    String CardResult = edt_card_number_inputted1.getText().toString();
-                                    if (!CardResult.matches("[0-9 ]+")){
-                                        til_card_number_inputted1.setError("Invalid format");
-                                    }
-                                }
-                                else{
-                                    myEdit.putString("card_number_system_generated1", sTextFromET);
-                                    edt_card_number_inputted1.setText(sTextFromET);
-                                }
-                                myEdit.commit();
-                                break;
-                            case 2:
-                                tilOtherScanned2 = findViewById(R.id.tilOtherScanned2);
-                                tilOtherScanned2.setError(null);
-                                sqLiteHelper.insertImageTmp("other_card_e_image_2", imageViewToByte(ivOtherScannedImage2), 1);
-
-                                if (sTextFromET.length() >23){
-                                    String limitString = sTextFromET.substring(0,23);
-                                    edt_card_number_inputted2.setText(limitString);
-                                    myEdit.putString("card_number_system_generated2", limitString);
-                                    String CardResult = edt_card_number_inputted2.getText().toString();
-                                    if (!CardResult.matches("[0-9 ]+")){
-                                        til_card_number_inputted2.setError("Invalid format");
-                                    }
-                                }
-                                else{
-                                    myEdit.putString("card_number_system_generated2", sTextFromET);
-                                    edt_card_number_inputted2.setText(sTextFromET);
-                                }
-                                myEdit.commit();
-                                break;
-                            case 3:
-                                tilOtherScanned3 = findViewById(R.id.tilOtherScanned3);
-                                tilOtherScanned3.setError(null);
-                                sqLiteHelper.insertImageTmp("other_card_e_image_3", imageViewToByte(ivOtherScannedImage3), 1);
-
-                                if (sTextFromET.length() >23){
-                                    String limitString = sTextFromET.substring(0,23);
-                                    edt_card_number_inputted3.setText(limitString);
-                                    myEdit.putString("card_number_system_generated3", limitString);
-                                    String CardResult = edt_card_number_inputted3.getText().toString();
-                                    if (!CardResult.matches("[0-9 ]+")){
-                                        til_card_number_inputted3.setError("Invalid format");
-                                    }
-                                }
-                                else{
-                                    myEdit.putString("card_number_system_generated3", sTextFromET);
-                                    edt_card_number_inputted3.setText(sTextFromET);
-                                }
-                                myEdit.commit();
-                                break;
-                            case 4:
-                                tilOtherScanned4 = findViewById(R.id.tilOtherScanned4);
-                                tilOtherScanned4.setError(null);
-                                sqLiteHelper.insertImageTmp("other_card_e_image_4", imageViewToByte(ivOtherScannedImage4), 1);
-
-                                if (sTextFromET.length() >23){
-                                    String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated4", limitString);
-                                    edt_card_number_inputted4.setText(limitString);
-                                    String CardResult = edt_card_number_inputted4.getText().toString();
-                                    if (!CardResult.matches("[0-9 ]+")){
-                                        til_card_number_inputted4.setError("Invalid format");
-                                    }
-                                }
-                                else{
-                                    myEdit.putString("card_number_system_generated4", sTextFromET);
-                                    edt_card_number_inputted4.setText(sTextFromET);
-                                }
-                                myEdit.commit();
-                                break;
-                            case 5:
-                                tilOtherScanned5 = findViewById(R.id.tilOtherScanned5);
-                                tilOtherScanned5.setError(null);
-                                sqLiteHelper.insertImageTmp("other_card_e_image_5", imageViewToByte(ivOtherScannedImage5), 1);
-
-                                if (sTextFromET.length() >23){
-                                    String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated5", limitString);
-                                    edt_card_number_inputted5.setText(limitString);
-                                    String CardResult = edt_card_number_inputted5.getText().toString();
-                                    if (!CardResult.matches("[0-9 ]+")){
-                                        til_card_number_inputted5.setError("Invalid format");
-                                    }
-                                }
-                                else{
-                                    myEdit.putString("card_number_system_generated5", sTextFromET);
-                                    edt_card_number_inputted5.setText(sTextFromET);
-                                }
-                                myEdit.commit();
-                                break;
-                            default:
-                                til_current_scan_btn.setError(null);
-                                sqLiteHelper.insertImageTmp("scanned_e_image", imageViewToByte(ScannedImage), 1);
-
-
-                                if (sTextFromET.length() >23){
-                                    String limitString = sTextFromET.substring(0,23);
-                                    myEdit.putString("card_number_system_generated", limitString);
-                                    edt_card_number_inputted.setText(limitString);
-                                    String CardResult = edt_card_number_inputted.getText().toString();
-                                    if (!CardResult.matches("[0-9 ]+")){
-                                        til_card_number_inputted.setError("Invalid format");
-                                    }
-                                }
-                                else{
-                                    myEdit.putString("card_number_system_generated", sTextFromET);
-                                    edt_card_number_inputted.setText(sTextFromET);
-                                }
-                                myEdit.commit();
-                                break;
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-
-                    }
-
+                    sTextFromET[0]=sb.toString().replaceAll("\\s+", "");
+                    sTextFromET[0] = sTextFromET[0].replace("a", "8");
+                    sTextFromET[0] = sTextFromET[0].replace("A", "8");
+                    sTextFromET[0] = sTextFromET[0].replace("B", "6");
+                    sTextFromET[0] = sTextFromET[0].replace("b", "6");
+                    sTextFromET[0] = sTextFromET[0].replace("D", "0");
+                    sTextFromET[0] = sTextFromET[0].replace("e", "8");
+                    sTextFromET[0] = sTextFromET[0].replace("E", "8");
+                    sTextFromET[0] = sTextFromET[0].replace("L", "6");
+                    sTextFromET[0] = sTextFromET[0].replace("S", "5");
+                    sTextFromET[0] = sTextFromET[0].replace("G", "6");
+                    sTextFromET[0]= sTextFromET[0].replace("%", "6");
+                    sTextFromET[0] = sTextFromET[0].replace("&", "6");
+                    sTextFromET[0]= sTextFromET[0].replace("?", "7");
+                    sTextFromET[0] = sTextFromET[0].replace("l", "1");
+                    sTextFromET[0] = sTextFromET[0].replace("+", "7");
+                    sTextFromET[0]= sTextFromET[0].replace("}", "7");
+                    sTextFromET[0]= sTextFromET[0].replace("O", "0");
+                    sTextFromET[0]= sTextFromET[0].replace("-", " ");
+                    sTextFromET[0] = sTextFromET[0].replaceAll("....", "$0 ");
+                    sTextFromETResult(sTextFromET[0]);
+                }
             }
             else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 Exception error = result.getError();
@@ -923,6 +831,173 @@ public class ScanCashCard extends AppCompatActivity {
                 sqLiteHelper.storeLogs("error", "", "Scanned: " + error);
             }
         }
+    }
+
+    public void sTextFromETResult(String sTextFromET){
+
+        image_uri = Uri.parse(image_uri.toString());
+        try {
+
+            Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image_uri);
+            switch (ScanImagePos) {
+                case 1:
+                    ivOtherScannedImage1.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
+                    break;
+                case 2:
+                    ivOtherScannedImage2.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
+                    break;
+                case 3:
+                    ivOtherScannedImage3.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
+                    break;
+                case 4:
+                    ivOtherScannedImage4.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
+                    break;
+                case 5:
+                    ivOtherScannedImage5.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
+                    break;
+                default:
+                    ScannedImage.setImageBitmap(Bitmap.createScaledBitmap(bm, 374, 500, false));
+                    break;
+            }
+
+
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+            switch (ScanImagePos) {
+                case 1:
+                    tilOtherScanned1 = findViewById(R.id.tilOtherScanned1);
+                    tilOtherScanned1.setError(null);
+                    sqLiteHelper.insertImageTmp("other_card_e_image_1", imageViewToByte(ivOtherScannedImage1), 1);
+
+                    if (sTextFromET.length() >23){
+                        String limitString = sTextFromET.substring(0,23);
+                        edt_card_number_inputted1.setText(limitString);
+                        myEdit.putString("card_number_system_generated1",  limitString);
+                        String CardResult = edt_card_number_inputted1.getText().toString();
+                        if (!CardResult.matches("[0-9 ]+")){
+                            til_card_number_inputted1.setError("Invalid format");
+                        }
+                    }
+                    else{
+                        myEdit.putString("card_number_system_generated1", sTextFromET);
+                        edt_card_number_inputted1.setText(sTextFromET);
+                    }
+                    myEdit.commit();
+                    break;
+                case 2:
+                    tilOtherScanned2 = findViewById(R.id.tilOtherScanned2);
+                    tilOtherScanned2.setError(null);
+                    sqLiteHelper.insertImageTmp("other_card_e_image_2", imageViewToByte(ivOtherScannedImage2), 1);
+
+                    if (sTextFromET.length() >23){
+                        String limitString = sTextFromET.substring(0,23);
+                        edt_card_number_inputted2.setText(limitString);
+                        myEdit.putString("card_number_system_generated2", limitString);
+                        String CardResult = edt_card_number_inputted2.getText().toString();
+                        if (!CardResult.matches("[0-9 ]+")){
+                            til_card_number_inputted2.setError("Invalid format");
+                        }
+                    }
+                    else{
+                        myEdit.putString("card_number_system_generated2", sTextFromET);
+                        edt_card_number_inputted2.setText(sTextFromET);
+                    }
+                    myEdit.commit();
+                    break;
+                case 3:
+                    tilOtherScanned3 = findViewById(R.id.tilOtherScanned3);
+                    tilOtherScanned3.setError(null);
+                    sqLiteHelper.insertImageTmp("other_card_e_image_3", imageViewToByte(ivOtherScannedImage3), 1);
+
+                    if (sTextFromET.length() >23){
+                        String limitString = sTextFromET.substring(0,23);
+                        edt_card_number_inputted3.setText(limitString);
+                        myEdit.putString("card_number_system_generated3", limitString);
+                        String CardResult = edt_card_number_inputted3.getText().toString();
+                        if (!CardResult.matches("[0-9 ]+")){
+                            til_card_number_inputted3.setError("Invalid format");
+                        }
+                    }
+                    else{
+                        myEdit.putString("card_number_system_generated3", sTextFromET);
+                        edt_card_number_inputted3.setText(sTextFromET);
+                    }
+                    myEdit.commit();
+                    break;
+                case 4:
+                    tilOtherScanned4 = findViewById(R.id.tilOtherScanned4);
+                    tilOtherScanned4.setError(null);
+                    sqLiteHelper.insertImageTmp("other_card_e_image_4", imageViewToByte(ivOtherScannedImage4), 1);
+
+                    if (sTextFromET.length() >23){
+                        String limitString = sTextFromET.substring(0,23);
+                        myEdit.putString("card_number_system_generated4", limitString);
+                        edt_card_number_inputted4.setText(limitString);
+                        String CardResult = edt_card_number_inputted4.getText().toString();
+                        if (!CardResult.matches("[0-9 ]+")){
+                            til_card_number_inputted4.setError("Invalid format");
+                        }
+                    }
+                    else{
+                        myEdit.putString("card_number_system_generated4", sTextFromET);
+                        edt_card_number_inputted4.setText(sTextFromET);
+                    }
+                    myEdit.commit();
+                    break;
+                case 5:
+                    tilOtherScanned5 = findViewById(R.id.tilOtherScanned5);
+                    tilOtherScanned5.setError(null);
+                    sqLiteHelper.insertImageTmp("other_card_e_image_5", imageViewToByte(ivOtherScannedImage5), 1);
+
+                    if (sTextFromET.length() >23){
+                        String limitString = sTextFromET.substring(0,23);
+                        myEdit.putString("card_number_system_generated5", limitString);
+                        edt_card_number_inputted5.setText(limitString);
+                        String CardResult = edt_card_number_inputted5.getText().toString();
+                        if (!CardResult.matches("[0-9 ]+")){
+                            til_card_number_inputted5.setError("Invalid format");
+                        }
+                    }
+                    else{
+                        myEdit.putString("card_number_system_generated5", sTextFromET);
+                        edt_card_number_inputted5.setText(sTextFromET);
+                    }
+                    myEdit.commit();
+                    break;
+                default:
+                    til_current_scan_btn.setError(null);
+                    sqLiteHelper.insertImageTmp("scanned_e_image", imageViewToByte(ScannedImage), 1);
+
+                    if ((sTextFromET != null ? sTextFromET.length() : 0) > 23) {
+                        String limitString = sTextFromET.substring(0,23);
+                        Log.v(TAG,"Testnidaw22" + limitString );
+
+                        myEdit.putString("card_number_system_generated", limitString);
+                        edt_card_number_inputted.setText(limitString);
+                        String CardResult = edt_card_number_inputted.getText().toString();
+                        if (!CardResult.matches("[0-9 ]+")){
+                            til_card_number_inputted.setError("Invalid format");
+                        }
+                    }
+                    else{
+                        myEdit.putString("card_number_system_generated", sTextFromET);
+                        edt_card_number_inputted.setText(sTextFromET);
+                        Log.v(TAG,"Testnidaw333");
+                    }
+                    myEdit.commit();
+                    break;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void processText(String text) {
+        // Process the text as needed
+        Log.v(TAG, "Processed Textme: " + text);
+        // Do further operations or pass the text to another method
     }
 
     public void getImage(){
@@ -1157,265 +1232,7 @@ public class ScanCashCard extends AppCompatActivity {
             }
         });
     }
-
-
-//    public void scannedCardNumber(EditText card_number , TextInputLayout tilCard){
-//        card_number.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-//                String cardNumber = edt_card_number_inputted.getText().toString();
-//                if(s.toString().length() != 23){
-//                    tilCard.setError(required_field);
-//                }
-//                else if(!cardNumber.matches("[0-9 ]+")) {
-//                    tilCard.setError("Invalid Format");
-//                }
-//                else{
-//                    tilCard.setError(null);
-//                }
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String field = editable.toString();
-//                int currCount = field.length();
-//
-//                if (shouldIncrementOrDecrement(currCount, true)){
-//                    appendOrStrip(field, true);
-//                } else if (shouldIncrementOrDecrement(currCount, false)) {
-//                    appendOrStrip(field, false);
-//                }
-////                prevCount = card_number.getText().toString().length();
-//                prevCount = field.length();
-//                Log.v(TAG,"testing dataaa"+prevCount);
-//            }
-//        });
-//    }
-
-
-//    public void scannedCardNumber1(EditText card_number , TextInputLayout tilCard){
-//        card_number.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-//                String cardNumber = edt_card_number_inputted1.getText().toString();
-//                if(s.toString().length() != 23){
-//                    tilCard.setError(required_field);
-//                }
-//                else if(!cardNumber.matches("[0-9 ]+")) {
-//                    tilCard.setError("Invalid Format");
-//                }
-//                else{
-//                    tilCard.setError(null);
-//                }
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String field = editable.toString();
-//                int currCount = field.length();
-//
-//                if (shouldIncrementOrDecrement(currCount, true)){
-//                    appendOrStrip1(field, true);
-//                } else if (shouldIncrementOrDecrement(currCount, false)) {
-//                    appendOrStrip1(field, false);
-//                }
-////                prevCount = card_number.getText().toString().length();
-//                prevCount = field.length();
-//            }
-//        });
-//    }
-//
-//    public void scannedCardNumber2(EditText card_number , TextInputLayout tilCard){
-//        card_number.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-//                String cardNumber = edt_card_number_inputted2.getText().toString();
-//                if(s.toString().length() != 23){
-//                    tilCard.setError(required_field);
-//                }
-//                else if(!cardNumber.matches("[0-9 ]+")) {
-//                    tilCard.setError("Invalid Format");
-//                }
-//                else{
-//                    tilCard.setError(null);
-//                }
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String field = editable.toString();
-//                int currCount = field.length();
-//
-//                if (shouldIncrementOrDecrement(currCount, true)){
-//                    appendOrStrip2(field, true);
-//                } else if (shouldIncrementOrDecrement(currCount, false)) {
-//                    appendOrStrip2(field, false);
-//                }
-////                prevCount = card_number.getText().toString().length();
-//                prevCount = field.length();
-//
-//            }
-//        });
-//    }
-//
-//    public void scannedCardNumber3(EditText card_number , TextInputLayout tilCard){
-//        card_number.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-//                String cardNumber = edt_card_number_inputted3.getText().toString();
-//                if(s.toString().length() != 23){
-//                    tilCard.setError(required_field);
-//                }
-//                else if(!cardNumber.matches("[0-9 ]+")) {
-//                    tilCard.setError("Invalid Format");
-//                }
-//                else{
-//                    tilCard.setError(null);
-//                }
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String field = editable.toString();
-//                int currCount = field.length();
-//
-//                if (shouldIncrementOrDecrement(currCount, true)){
-//                    appendOrStrip3(field, true);
-//                } else if (shouldIncrementOrDecrement(currCount, false)) {
-//                    appendOrStrip3(field, false);
-//                }
-////                prevCount = card_number.getText().toString().length();
-//                prevCount = field.length();
-//
-//            }
-//        });
-//    }
-//
-//    public void scannedCardNumber4(EditText card_number , TextInputLayout tilCard){
-//        card_number.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-//                String cardNumber = edt_card_number_inputted4.getText().toString();
-//                if(s.toString().length() != 23){
-//                    tilCard.setError(required_field);
-//                }
-//                else if(!cardNumber.matches("[0-9 ]+")) {
-//                    tilCard.setError("Invalid Format");
-//                }
-//                else{
-//                    tilCard.setError(null);
-//                }
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String field = editable.toString();
-//                int currCount = field.length();
-//
-//                if (shouldIncrementOrDecrement(currCount, true)){
-//                    appendOrStrip4(field, true);
-//                } else if (shouldIncrementOrDecrement(currCount, false)) {
-//                    appendOrStrip4(field, false);
-//                }
-////                prevCount = card_number.getText().toString().length();
-//                prevCount = field.length();
-//
-//            }
-//        });
-//    }
-//
-//    public void scannedCardNumber5(EditText card_number , TextInputLayout tilCard){
-//        card_number.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-//                String cardNumber = edt_card_number_inputted5.getText().toString();
-//                if(s.toString().length() != 23){
-//                    tilCard.setError(required_field);
-//                }
-//                else if(!cardNumber.matches("[0-9 ]+")) {
-//                    tilCard.setError("Invalid Format");
-//                }
-//                else{
-//                    tilCard.setError(null);
-//                }
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String field = editable.toString();
-//                int currCount = field.length();
-//
-//                if (shouldIncrementOrDecrement(currCount, true)){
-//                    appendOrStrip5(field, true);
-//                } else if (shouldIncrementOrDecrement(currCount, false)) {
-//                    appendOrStrip5(field, false);
-//                }
-////                prevCount = card_number.getText().toString().length();
-//                prevCount = field.length();
-//
-//            }
-//        });
-//    }
-
-
-
-//    public void scannedCardNumber(EditText card_number, TextInputLayout tilCard ){
-//        card_number.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-//                String cardNumber = card_number.getText().toString();
-//                if(s.toString().length() != 23){
-//                    tilCard.setError(required_field);
-//                }
-//                else if(!cardNumber.matches("[0-9 ]+")) {
-//                    tilCard.setError("Invalid Format");
-//                }
-//                else{
-//                    tilCard.setError(null);
-//                }
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String field = editable.toString();
-//                int currCount = field.length();
-//
-//                if (shouldIncrementOrDecrement(currCount, true)){
-//                    appendOrStrip(field, true,card_number);
-//                } else if (shouldIncrementOrDecrement(currCount, false)) {
-//                    appendOrStrip(field, false, card_number);
-//                }
-//                prevCount = card_number.getText().toString().length();
-//            }
-//        });
-//    }
-
+    
     private void otherCardVisibility() {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sh.edit();
@@ -1860,7 +1677,6 @@ public class ScanCashCard extends AppCompatActivity {
                             distribution_status_record, distribution_status_record1, distribution_status_record2, distribution_status_record3, distribution_status_record4, distribution_status_record5,
                             release_date_record, release_date_record1, release_date_record2, release_date_record3, release_date_record4, release_date_record5,
                             card_number_prefilled1, card_number_prefilled2, card_number_prefilled3, card_number_prefilled4, card_number_prefilled5, relationship_to_contact_no, ovt_conformed);
-
 
                     load_loading_bar();
                     edt_overall_remarks.setEnabled(false);
@@ -4335,6 +4151,10 @@ public class ScanCashCard extends AppCompatActivity {
                 Toasty.error(getApplicationContext(),"Household number not found", Toasty.LENGTH_SHORT).show();
             } else {
                 if  (validated_at.matches("null")){
+                    edt_hh_id.setEnabled(false);
+                    til_hh_id.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    btn_search_hh.setEnabled(false);
+
                     card_count = 0;
 
                     if (!other_card_number_1.matches("") && !other_card_number_1.matches("null")) {
@@ -4506,6 +4326,7 @@ public class ScanCashCard extends AppCompatActivity {
         switch (pos) {
             case 0:
                 btn_search_hh = (Button) findViewById(R.id.btnSearchHh);
+                btn_reset_hh = (Button) findViewById(R.id.btnReset);
 
                 xml_initialization(1);
                 til_representative_name.setVisibility(View.GONE);
@@ -4572,6 +4393,16 @@ public class ScanCashCard extends AppCompatActivity {
                 edt_other_ext_name.setText(other_ext_name);
                 aat_hh_status.setText(hh_status, false);
                 aat_province_code.setText(province, false);
+
+                if (!hh_id.matches("")){
+                    edt_hh_id.setEnabled(false);
+                    til_hh_id.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    btn_search_hh.setEnabled(false);
+                }else{
+                    edt_hh_id.setEnabled(true);
+                    til_hh_id.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                    btn_search_hh.setEnabled(true);
+                }
                 if (!province.matches("")) {
                     province_event();
                 }
@@ -4649,6 +4480,43 @@ public class ScanCashCard extends AppCompatActivity {
                         search_household();
                     }
                 });
+
+                btn_reset_hh.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        sqLiteHelper.deleteBlob();
+                        edt_hh_id.setEnabled(true);
+                        til_hh_id.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                        btn_search_hh.setEnabled(true);
+                        edt_hh_id.setText(null);
+                        aat_set.setText(null, false);
+                        edt_last_name.setText(null);
+                        edt_first_name.setText(null);
+                        edt_middle_name.setText(null);
+                        aat_ext_name.setText(null, false);
+                        edt_other_ext_name.setText(null);
+                        aat_hh_status.setText(null, false);
+                        aat_province_code.setText(null, false);
+                        aat_municipality_code.setText(null, false);
+                        aat_barangay_code.setText(null, false);
+                        aat_sex.setText(null, false);
+                        aat_is_grantee.setText(null, false);
+                        aat_relationship_to_grantee.setText(null, false);
+                        edt_contact_no.setText(null);
+                        aat_contact_no_of.setText(null, false);
+                        edt_contact_no_of_others.setText(null);
+                        edt_contact_no_relationship.setText(null);
+                        edt_assigned_staff.setText(null);
+                        aat_is_minor.setText(null);
+                        clear_preferences();
+                        Toasty.warning(getApplicationContext(),"Household Reset", Toasty.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+
 
                 aat_ext_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
